@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2013-2015 by PSA Peugeot Citroën. All rights reserved
+
+    This file is part of SEED stack.
+
+    SEED stack is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SEED stack is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with SEED stack.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE taglet-list SYSTEM "taglet_definitions.dtd">
+
+<!--
+ #
+ # See taglet_definitions.dtd for valid tags and attributes
+ #
+ #
+ # Each <taglet>-tag results in the registration of one particular taglet.
+ # The value of the "name" attribute specifies the javadoc tag for the taglet.
+ # The value of the "allowMultipleTags" attribute specifies if more than one
+ # appearance of the javadoc tag per doc element is allowed. If not, all but
+ # the first tag will be ignored.
+ #
+ # The <usage>-tag specifies the taglet scope as per the taglet API.
+ #
+ # The <singular>-tag specifies the term under which the tag comment appears
+ # if only one javadoc tag or no <plural>-tag is present.
+ # The optional <plural>-tag specifies the term under which the tag comment
+ # appears if multiple javadoc tags are allowed and present.
+ #
+ #
+ # In general, it is a good idea to use at least one '.' character in the
+ # name of custom tags to avoid potential conflicts/overrides.
+ #
+-->
+<taglet-list>
+	<taglet name="y.complexity"
+		template="simpleComment"
+		allowMultipleTags="false">
+		<usage inField="false"
+			inConstructor="true"
+			inMethod="true"
+			inOverview="false"
+			inPackage="false"
+			inType="true"
+			isInlineTag="false"/>
+		<headline>
+			<singular>Complexity</singular>
+		</headline>
+	</taglet>
+	<taglet name="y.precondition"
+		template="simpleComment"
+		allowMultipleTags="true">
+		<usage inField="false"
+			inConstructor="true"
+			inMethod="true"
+			inOverview="false"
+			inPackage="false"
+			inType="true"
+			isInlineTag="false"/>
+		<headline>
+			<singular>Precondition</singular>
+			<plural>Preconditions</plural>
+		</headline>
+	</taglet>
+	<taglet name="y.postcondition"
+		template="simpleComment"
+		allowMultipleTags="true">
+		<usage inField="false"
+			inConstructor="true"
+			inMethod="true"
+			inOverview="false"
+			inPackage="false"
+			inType="true"
+			isInlineTag="false"/>
+		<headline>
+			<singular>Postcondition</singular>
+			<plural>Postconditions</plural>
+		</headline>
+	</taglet>
+	<taglet name="y.author"
+		template="simpleList"
+		allowMultipleTags="true">
+		<usage inField="true"
+			inConstructor="true"
+			inMethod="true"
+			inOverview="true"
+			inPackage="true"
+			inType="true"
+			isInlineTag="false"/>
+		<headline>
+			<singular>Author</singular>
+		</headline>
+	</taglet>
+</taglet-list>

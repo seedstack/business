@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2013-2015 by PSA Peugeot Citroën. All rights reserved
+
+    This file is part of SEED stack.
+
+    SEED stack is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SEED stack is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with SEED stack.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<!-- DTD for taglet templates -->
+
+<!ELEMENT template-list (template+)>
+<!ELEMENT template (headline, content)>
+<!ELEMENT headline (#PCDATA)>
+<!ELEMENT content (content-sep?, content-start?, content-item, content-end?)>
+<!ELEMENT content-sep (#PCDATA)>
+<!ELEMENT content-start (#PCDATA)>
+<!ELEMENT content-item (#PCDATA)>
+<!ELEMENT content-end (#PCDATA)>
+
+<!ATTLIST template
+          name  CDATA  #REQUIRED>
+<!ATTLIST content
+          separator  CDATA  #IMPLIED>

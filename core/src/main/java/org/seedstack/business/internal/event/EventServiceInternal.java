@@ -1,0 +1,92 @@
+/**
+ * Copyright (c) 2013-2015 by The SeedStack authors. All rights reserved.
+ *
+ * This file is part of SeedStack, An enterprise-oriented full development stack.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+package org.seedstack.business.internal.event;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.inject.Injector;
+import org.seedstack.business.api.Event;
+import org.seedstack.business.api.EventHandler;
+import org.seedstack.business.api.EventService;
+import org.seedstack.seed.core.api.SeedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import java.util.Collection;
+
+/**
+ * Internal implementation of EventService.
+ *
+ * @author pierre.thirouin@ext.mpsa.com
+ *         Date: 04/06/2014
+ */
+class EventServiceInternal implements EventService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventServiceInternal.class);
+
+    private final ImmutableListMultimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlerClassesByEvent;
+
+    private final Injector injector;
+
+    private static final ThreadLocal<Multimap<Class<? extends Event>, Event>> context = new ThreadLocal<Multimap<Class<? extends Event>, Event>>() {
+        @Override
+        protected Multimap<Class<? extends Event>, Event> initialValue() {
+            return ArrayListMultimap.create();
+        }
+    };
+
+    @Inject
+    EventServiceInternal(Injector injector, Multimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlerClassesByEvent) {
+        this.injector = injector;
+        this.eventHandlerClassesByEvent = ImmutableListMultimap.copyOf(eventHandlerClassesByEvent);
+    }
+
+    @Override
+    public <E extends Event> void fire(E event) {
+        LOGGER.debug("Synchronously fired {}", event.getClass().getName());
+        for (Class<? extends Event> eventClass : eventHandlerClassesByEvent.keys()) {
+            if (eventClass.isAssignableFrom(event.getClass())) {
+                checkCyclicCall(eventClass, event);
+                Multimap<Class<? extends Event>, Event> currentEventClasses = context.get();
+
+                boolean isFirstCall = currentEventClasses.isEmpty();
+
+                context.get().put(eventClass, event);
+                try {
+                    notifyHandlers(eventClass, event);
+                } catch (Exception e) {
+                    throw SeedException.wrap(e, EventErrorCodes.HANDLER_EXECUTION_FAILED).put("event", eventClass);
+                } finally {
+                    if (isFirstCall) {
+                        context.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkCyclicCall(Class<? extends Event> eventClass, Event event) {
+        if (context.get().get(eventClass).contains(event)) {
+            throw SeedException.createNew(EventErrorCodes.CYCLE_WAS_DETECTED_IN_FIRED_EVENT).put("event", eventClass);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <E extends Event> void notifyHandlers(Class<? extends E> eventClass, E event) {
+        Collection<Class<? extends EventHandler>> eventHandlers = eventHandlerClassesByEvent.get(eventClass);
+        for (Class<? extends EventHandler> eventHandlerClass : eventHandlers) {
+            LOGGER.debug("Notify handler {}", eventHandlerClass.getName());
+            EventHandler eventHandler = injector.getInstance(eventHandlerClass);
+            eventHandler.handle(event);
+        }
+    }
+}

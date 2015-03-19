@@ -1,0 +1,111 @@
+<!--
+
+    Copyright (c) 2013-2015 by The SeedStack authors. All rights reserved.
+
+    This file is part of SeedStack, An enterprise-oriented full development stack.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.seedstack.business</groupId>
+        <artifactId>business</artifactId>
+        <version>2.0.0-M1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>business-doc</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-distribution-javadoc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                        <configuration>
+                            <doclet>ydoc.doclets.YStandard</doclet>
+                            <docletPath> ${project.basedir}/yworks-uml-doclet/lib/ydoc.jar:${project.basedir}/yworks-uml-doclet/resources</docletPath>
+                            <additionalparam>-umltypegen -umlpackagegen</additionalparam>
+                            <additionalJOption>-J-Djava.awt.headless=true</additionalJOption>
+                            <doctitle>SeedStack business framework</doctitle>
+                            <detectOfflineLinks>false</detectOfflineLinks>
+                            <includeDependencySources>true</includeDependencySources>
+                            <includeTransitiveDependencySources>false</includeTransitiveDependencySources>
+                            <excludePackageNames>*.internal.*</excludePackageNames>
+                            <additionalDependencies>
+                                <additionalDependency>
+                                    <groupId>javax.servlet</groupId>
+                                    <artifactId>javax.servlet-api</artifactId>
+                                    <version>3.0.1</version>
+                                </additionalDependency>
+                                <additionalDependency>
+                                    <groupId>javax.persistence</groupId>
+                                    <artifactId>persistence-api</artifactId>
+                                    <version>1.0.2</version>
+                                </additionalDependency>
+                            </additionalDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>fix-javadoc-stylesheet</id>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-specs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-core-test</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-audit</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-audit-logback</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-jpa</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seedstack.business</groupId>
+            <artifactId>business-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

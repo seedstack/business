@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2013-2015 by The SeedStack authors. All rights reserved.
+
+    This file is part of SeedStack, An enterprise-oriented full development stack.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.seedstack</groupId>
+        <artifactId>java-parent</artifactId>
+        <version>2.0.0-M1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.seedstack.business</groupId>
+    <artifactId>business</artifactId>
+    <version>2.0.0-M1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>business</name>
+
+    <inceptionYear>2013</inceptionYear>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seedstack.seed</groupId>
+                <artifactId>seed-bom</artifactId>
+                <version>2.0.0-M1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>java-bom</artifactId>
+                <version>${seedstack-poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>logging-bom</artifactId>
+                <version>${seedstack-poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>commons-bom</artifactId>
+                <version>${seedstack-poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>integrationtest-bom</artifactId>
+                <version>${seedstack-poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>hibernate-bom</artifactId>
+                <version>${seedstack-poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>core</module>
+        <module>core-test</module>
+        <module>jpa</module>
+        <module>specs</module>
+        <module>web</module>
+        <module>audit</module>
+        <module>audit-logback</module>
+        <module>bom</module>
+        <module>doc</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

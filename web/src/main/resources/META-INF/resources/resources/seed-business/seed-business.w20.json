@@ -1,0 +1,11 @@
+{
+    "id": "seed-business",
+    "name": "SEED business fragment",
+
+    "modules": {
+        "seed-business": {
+            "path": "{seed-business}/modules/seed-business",
+            "autoload": true
+        }
+    }
+}

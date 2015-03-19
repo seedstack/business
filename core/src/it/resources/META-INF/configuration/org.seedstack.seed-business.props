@@ -1,0 +1,29 @@
+#
+# Copyright (c) 2013-2015 by The SeedStack authors. All rights reserved.
+#
+# This file is part of SeedStack, An enterprise-oriented full development stack.
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+[org.seedstack.seed.transaction]
+manager=org.seedstack.seed.transaction.internal.LocalTransactionManager
+default-handler = org.seedstack.seed.persistence.inmemory.internal.InMemoryTransactionHandler
+
+[org.seedstack.seed.persistence.jpa]
+units=hsql-in-memory
+unit.hsql-in-memory.property.javax.persistence.jdbc.driver=org.hsqldb.jdbcDriver
+unit.hsql-in-memory.property.javax.persistence.jdbc.url=jdbc:hsqldb:mem:testdb
+unit.hsql-in-memory.property.javax.persistence.jdbc.user=sa
+unit.hsql-in-memory.property.javax.persistence.jdbc.password=
+unit.hsql-in-memory.property.hibernate.dialect=org.hibernate.dialect.HSQLDialect
+unit.hsql-in-memory.property.hibernate.hbm2ddl.auto=create
+unit.hsql-in-memory.property.sql.enforce_strict_size=true
+
+[org.seedstack.business.api.domain.identity.*]
+identity.handler-qualifier = simple-UUID 
+
+[org.seedstack.business.event]
+domain.watch=true
