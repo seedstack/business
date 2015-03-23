@@ -12,18 +12,17 @@
  */
 package org.seedstack.business.core.domain;
 
-import com.google.common.primitives.Primitives;
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.domain.DomainErrorCodes;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.seed.core.api.SeedException;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Type;
 
 /**
  * FactoryInternal allows the creations of {@link org.seedstack.business.api.domain.DomainObject} objects using their constructors.
@@ -63,8 +62,8 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 	 */
 	@SuppressWarnings("unchecked")
     @Inject
-	public FactoryInternal(@Assisted Class<?>[] domainObjectClass) {
-        Class<?>[] clonedClasses = domainObjectClass.clone();
+	public FactoryInternal(@Assisted Object[] domainObjectClass) {
+        Object[] clonedClasses = domainObjectClass.clone();
         SeedCheckUtils.checkIfNotNull(clonedClasses);
         SeedCheckUtils.checkIf(clonedClasses.length == 1);
 		this.domainObjectClass = (Class<DO>) clonedClasses[0];
@@ -77,7 +76,7 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 
 	@Override
 	public DO create(Object... args) {
-		Constructor<?> constructor = getConstructor(args);
+		Constructor<?> constructor = MethodMatcher.findMatchingConstructor(getProducedClass(), args);
 		DO domainObject;
 		if (constructor == null) {
 			throw SeedException.createNew(DomainErrorCodes.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
@@ -93,42 +92,6 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
 		}
 		return domainObject;
-	}
-
-	private Constructor<?> getConstructor(Object... args) {
-		Constructor<?>[] constructors = domainObjectClass.getDeclaredConstructors();
-		Constructor<?> checkedConstructors = null;
-		for (Constructor<?> constructor : constructors) {
-			Type[] parameterTypes = constructor.getParameterTypes();
-			if (parameterTypes.length == args.length && checkConstructorTypes(parameterTypes, args)) {
-				if (checkedConstructors == null) {
-					checkedConstructors = constructor;
-				} else {
-					throw SeedException.createNew(DomainErrorCodes.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
-					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
-				}
-			}
-		}
-		return checkedConstructors;
-	}
-
-	private boolean checkConstructorTypes(Type[] parameterTypes, Object[] args) {
-		for (int i = 0; i < args.length; i++) {
-			Object object = args[i];
-			Type parameterType = parameterTypes[i];
-			if (object != null) {
-				Class<?> objectType = object.getClass();
-				Class<?> unWrapPrimitive = null;
-				if (Primitives.isWrapperType(objectType)) {
-					unWrapPrimitive = Primitives.unwrap(objectType);
-				}
-				if (!(((Class<?>) parameterType).isAssignableFrom(objectType) || (unWrapPrimitive != null && ((Class<?>) parameterType)
-						.isAssignableFrom(unWrapPrimitive)))) {
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 
 }

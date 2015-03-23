@@ -19,6 +19,9 @@ import org.seedstack.seed.core.api.SeedException;
 /**
  * This abstract class is the base class for all Entities in Seed Business Framework.
  *
+ * It provides an {@code equals()} method based on the entity identity. This also enforce
+ * the entity to valid, i.e. not null. Otherwise a SeedException will be thrown.
+ *
  * @param <ID> The type of the entityId of the Entity.
  * @author epo.jemba@ext.mpsa.com
  */

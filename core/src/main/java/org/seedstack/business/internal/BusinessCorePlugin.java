@@ -19,46 +19,46 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import io.nuun.kernel.core.AbstractPlugin;
+import org.javatuples.Tuple;
 import org.kametic.specifications.AbstractSpecification;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.DomainObject;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.domain.GenericDomainPolicy;
-import org.seedstack.business.api.domain.GenericDomainService;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.domain.annotations.DomainFactory;
-import org.seedstack.business.api.domain.annotations.DomainPolicy;
-import org.seedstack.business.api.domain.annotations.DomainRepository;
-import org.seedstack.business.api.domain.annotations.DomainRepositoryImpl;
-import org.seedstack.business.api.domain.annotations.DomainService;
+import org.seedstack.business.api.domain.*;
+import org.seedstack.business.api.domain.annotations.*;
 import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
 import org.seedstack.business.api.interfaces.GenericInterfacesService;
 import org.seedstack.business.api.interfaces.annotations.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.query.finder.Finder;
 import org.seedstack.business.core.domain.FactoryInternal;
-import org.seedstack.business.internal.strategy.BindingStrategy;
+import org.seedstack.business.core.interfaces.AutomaticAssembler;
+import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
+import org.seedstack.business.core.interfaces.DefaultAssembler;
+import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
+import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
-import org.seedstack.business.internal.strategy.ProviderFactory;
+import org.seedstack.business.internal.strategy.api.ProviderFactory;
 import org.seedstack.seed.core.utils.SeedBindingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 
 /**
  * This plugin is a multi round plugin.
+ * <p/>
+ * It uses two round because it needs to scan user interfaces, for instance those annotated with {@code @Finder}.
+ * Then in the second round, it scan the implementations of the scanned interfaces.
+ * <p/>
+ * This plugin also bind default implementation for repository, factory and assembler. For this, it uses the
+ * {@link org.seedstack.business.internal.strategy.api.BindingStrategy}.
  *
  * @author epo.jemba@ext.mpsa.com
  * @author redouane.loulou@ext.mpsa.com
@@ -121,6 +121,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
     private Collection<Class<?>> domainRepoImpls;
 
+    private final Specification<Class<?>> dtoWithDefaultAssemblerSpec = and(classAnnotatedWith(DtoOf.class));
+    private Map<Type, Class<?>> linksForDefaultAssemblers = new HashMap<Type, Class<?>>();
     private Map<Class<?>, Specification<Class<?>>> interfaceScanSpecification = new HashMap<Class<?>, Specification<Class<?>>>();
 
     private Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
@@ -143,7 +145,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
             return classpathScanRequestBuilder().specification(aggregateRootSpec).specification(valueObjectSpec).specification(domainRepoImplSpec)
                     .specification(domainRepoSpec).specification(domainServiceSpec).specification(applicationServiceSpec)
                     .specification(interfacesServiceSpecs).specification(finderServiceSpecs).specification(policySpecs)
-                    .specification(domainFactorySpecs).specification(assemblerSpecs).build();
+                    .specification(domainFactorySpecs).specification(assemblerSpecs).specification(dtoWithDefaultAssemblerSpec).build();
         } else {
             // ROUND 2 ===========================
             return descendantTypesOf(repositoriesInterfaces, domainServiceInterfaces, applicationServiceInterfaces,
@@ -225,6 +227,16 @@ public class BusinessCorePlugin extends AbstractPlugin {
             assemblersClasses = scannedTypesBySpecification.get(assemblerSpecs);
             LOGGER.debug("Assembler class => {}", assemblersClasses);
 
+            // default assembler
+            Collection<Class<?>> dtoWithDefaultAssemblerClasses = scannedTypesBySpecification.get(dtoWithDefaultAssemblerSpec);
+            for (Class<?> dtoWithDefaultAssemblerClass : dtoWithDefaultAssemblerClasses) {
+                DtoOf dtoOf = dtoWithDefaultAssemblerClass.getAnnotation(DtoOf.class);
+                if (dtoOf.value().length == 1) {
+                    linksForDefaultAssemblers.put(dtoOf.value()[0], dtoWithDefaultAssemblerClass);
+                } else if (dtoOf.value().length > 1) {
+                    linksForDefaultAssemblers.put(Tuples.typeOfTuple(dtoOf.value()), dtoWithDefaultAssemblerClass);
+                }
+            }
 
             return InitState.NON_INITIALIZED;
         } else {
@@ -247,6 +259,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
             }
             bindingStrategies.add(buildDefaultFactoryBindings());
 
+            bindingStrategies.addAll(buildDefaultAssemblerBindings(linksForDefaultAssemblers));
 
             return InitState.INITIALIZED;
         }
@@ -282,9 +295,11 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
     private BindingStrategy buildDefaultFactoryBindings() {
         Specification<Class<?>> creatable = and(descendantOf(Producible.class), descendantOf(DomainObject.class));
+
         // iterate on all the domain element to bind
         Multimap<Type, Class<?>> defaultFactoryToBind = ArrayListMultimap.create();
         for (Map.Entry<Key<?>, Class<?>> keyClassEntry : bindings.entrySet()) {
+
             // filter on those which are creatable by a domain factory
             if (creatable.isSatisfiedBy(keyClassEntry.getKey().getTypeLiteral().getRawType())) {
                 defaultFactoryToBind.put(keyClassEntry.getKey().getTypeLiteral().getType(), keyClassEntry.getValue());
@@ -295,6 +310,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
     @SuppressWarnings("rawtypes")
     private Collection<BindingStrategy> buildDefaultRepositoryBindings() {
+        // this method support multiple default implementation for repository (one for each persistence technology).
+
         Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
         Collection<Class<?>[]> generics = new ArrayList<Class<?>[]>();
         for (Class<?> aggregateClass : aggregateClasses) {
@@ -307,6 +324,22 @@ public class BusinessCorePlugin extends AbstractPlugin {
         return bindingStrategies;
     }
 
+    private Collection<BindingStrategy> buildDefaultAssemblerBindings(Map<Type, Class<?>> linksForDefaultAssemblers) {
+        Set<Type[]> autoAssemblerGenerics = new HashSet<Type[]>();
+        Set<Type[]> autoTupleAssemblerGenerics = new HashSet<Type[]>();
+        for (Map.Entry<Type, Class<?>> entry : linksForDefaultAssemblers.entrySet()) {
+            if (entry.getKey() instanceof ParameterizedType && Tuple.class.isAssignableFrom((Class) ((ParameterizedType) entry.getKey()).getRawType())) {
+                autoTupleAssemblerGenerics.add(new Type[]{entry.getKey(), entry.getValue()});
+            } else {
+                autoAssemblerGenerics.add(new Type[]{entry.getKey(), entry.getValue()});
+            }
+        }
+
+        Collection<BindingStrategy> bs = new ArrayList<BindingStrategy>();
+        bs.add(new GenericBindingStrategy(autoAssemblerGenerics, AutomaticAssembler.class, DefaultAssembler.class, new ProviderFactory<AutomaticAssembler>()));
+        bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, AutomaticTupleAssembler.class, DefaultTupleAssembler.class, new ProviderFactory<AutomaticAssembler>()));
+        return bs;
+    }
     protected Specification<Class<?>> classIs(final Class<?> attendee) {
         return new AbstractSpecification<Class<?>>() {
 

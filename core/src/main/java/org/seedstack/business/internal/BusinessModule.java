@@ -15,9 +15,16 @@ import com.google.inject.Key;
 import com.google.inject.Provides;
 import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
+import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
+import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
+import org.seedstack.business.api.interfaces.assembler.dsl.FluentAssemblerImpl;
+import org.seedstack.business.core.interfaces.assembler.dsl.AssembleImpl;
+import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistry;
+import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistryInternal;
 import org.seedstack.business.internal.datasecurity.BusinessDataSecurityModule;
-import org.seedstack.business.internal.strategy.BindingContext;
-import org.seedstack.business.internal.strategy.BindingStrategy;
+import org.seedstack.business.internal.strategy.api.BindingContext;
+import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +77,10 @@ class BusinessModule extends AbstractModule {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void configure() {
+        bind(Assemble.class).to(AssembleImpl.class);
+        bind(AssembleSecurely.class).to(AssembleImpl.class);
+        bind(InternalRegistry.class).to(InternalRegistryInternal.class);
+        bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
 		for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
 			logger.trace("binding {} to {}.", binding.getKey(), binding.getValue().getSimpleName());
 			bind(binding.getKey()).to((Class) binding.getValue());
@@ -93,7 +104,7 @@ class BusinessModule extends AbstractModule {
         // The bound types are included in the context, so they will be ignored by the strategy.
         // For instance if a Repository<Customer, CustomerId> was already bound to a user's repository,
         // no default repository will be added.
-        // On the other side, the keys bound by the strategy wont be added in the context so that all the default
+        // On the other side, the keys bound by the strategy wont be added in the exclude list so that all the default
         // repositories will be bound.
         bindingContext = new BindingContext();
         bindingContext.bound(bindings.keySet()).excluded(bindings.keySet());

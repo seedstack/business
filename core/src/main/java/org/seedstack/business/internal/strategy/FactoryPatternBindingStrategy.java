@@ -16,7 +16,10 @@ import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.util.Types;
-import org.seedstack.business.internal.domain.repository.GenericImplementationFactory;
+import org.seedstack.business.internal.strategy.api.BindingContext;
+import org.seedstack.business.internal.strategy.api.BindingStrategy;
+import org.seedstack.business.internal.strategy.api.GenericImplementationFactory;
+import org.seedstack.business.internal.strategy.api.ProviderFactory;
 import org.seedstack.seed.core.utils.SeedBindingUtils;
 
 import java.lang.reflect.Type;
@@ -63,7 +66,7 @@ public class FactoryPatternBindingStrategy implements BindingStrategy {
 
     private final Class<?> injectedClass;
 
-    private final ProviderFactory<?> providerHandler;
+    private final ProviderFactory<?> providerFactory;
 
     /**
      * Constructors.
@@ -78,7 +81,7 @@ public class FactoryPatternBindingStrategy implements BindingStrategy {
         this.typeVariables = producedTypeMap;
         this.injecteeClass = injecteeClass;
         this.injectedClass = injectedClass;
-        this.providerHandler = providerFactory;
+        this.providerFactory = providerFactory;
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +94,7 @@ public class FactoryPatternBindingStrategy implements BindingStrategy {
 
             Key<?> key = SeedBindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
             if (!bindingContext.isExcluded(key.getTypeLiteral())) {
-                Provider<?> provider = providerHandler.createProvider(injectedClass, producedImplementationType);
+                Provider<?> provider = providerFactory.createProvider(injectedClass, producedImplementationType);
                 binder.requestInjection(provider);
                 binder.bind(key).toProvider((Provider) provider);
                 factoryBuilder.implement(key, (Class) injectedClass);
