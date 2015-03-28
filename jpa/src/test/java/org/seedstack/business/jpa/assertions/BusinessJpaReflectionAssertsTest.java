@@ -7,15 +7,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.jpa.assertions.asserts;
+package org.seedstack.business.jpa.assertions;
 
+import org.junit.Test;
 import org.seedstack.business.jpa.samples.domain.base.*;
 import org.seedstack.business.jpa.samples.domain.simple.SampleSimpleFactory;
 import org.seedstack.business.jpa.samples.domain.simple.SampleSimpleFactoryImpl;
 import org.seedstack.business.jpa.samples.infrastructure.jpa.repository.SampleBaseJpaRepository;
 import org.seedstack.business.jpa.samples.utils.Loader;
 import org.seedstack.business.jpa.samples.utils.LoaderImpl;
-import org.junit.Test;
 import org.seedstack.seed.core.api.SeedException;
 
 /**

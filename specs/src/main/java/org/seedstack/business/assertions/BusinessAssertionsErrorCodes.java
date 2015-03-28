@@ -7,21 +7,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.jpa.assertions.asserts;
+package org.seedstack.business.assertions;
 
 
-import org.seedstack.seed.core.assertions.CoreObjectAssert;
+import org.seedstack.seed.core.api.ErrorCode;
 
 /**
  * @author epo.jemba@ext.mpsa.com
  */
-public class BusinessJpaObjectAssert extends CoreObjectAssert<Object> {
-
-    /**
-     * Constructor.
-     * @param actual the candidate
-     */
-    public BusinessJpaObjectAssert(Object actual) {
-        super(actual);
-    }
+public enum BusinessAssertionsErrorCodes implements ErrorCode {
+	CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC,
+	CLASS_MUST_NOT_BE_ABSTRACT,
+	CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
+	CLASS_MUST_EXTENDS ,
+	CLASS_MUST_BE_INTERFACE,
+	CLASS_MUST_HAVE_ONLY_PACKAGED_VIEW_SETTERS,
 }

@@ -7,8 +7,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assertions.asserts;
+package org.seedstack.business.assertions;
 
+import org.seedstack.business.assertions.BusinessReflectionAsserts;
 import org.seedstack.business.sample.application.DiscountApplicationService;
 import org.seedstack.business.sample.application.DiscountApplicationServiceInternal;
 import org.seedstack.business.sample.domain.discount.BadValueObject;

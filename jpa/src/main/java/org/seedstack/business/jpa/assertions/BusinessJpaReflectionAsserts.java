@@ -7,10 +7,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.jpa.assertions.asserts;
+package org.seedstack.business.jpa.assertions;
 
-import org.seedstack.business.assertions.BusinessErrorCodes;
-import org.seedstack.business.assertions.asserts.BusinessReflectionAsserts;
+import org.seedstack.business.assertions.BusinessAssertionsErrorCodes;
+import org.seedstack.business.assertions.BusinessReflectionAsserts;
 import org.seedstack.business.core.domain.base.BaseFactory;
 import org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository;
 import org.apache.commons.collections.iterators.ArrayIterator;
@@ -24,18 +24,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
-/**
- * This class provides assertions on classes depending on the JPA infrastructure.
- *
- * @author epo.jemba@ext.mpsa.com
- */
 public final class BusinessJpaReflectionAsserts {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessJpaReflectionAsserts.class);
     private static final String PARENT_CLASS_NAME = "parentClassName";
     private static final String MORE = "more";
 
-    protected BusinessJpaReflectionAsserts() {
+    private BusinessJpaReflectionAsserts() {
     }
 
     /**
@@ -45,14 +39,14 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertJpaRepositoryClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneRepositoryInterface(),
-                BusinessJpaErrorCodes.CLASS_MUST_IMPLEMENTS_A_REPOSITORY_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_REPOSITORY_INTERFACE
 
         );
 
         // we check that the class extends GenericJpaRepository
         $(
                 actual, DomainSpecifications.classInherits(BaseJpaRepository.class),
-                BusinessErrorCodes.CLASS_MUST_EXTENDS,
+                BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS,
                 PARENT_CLASS_NAME, BaseJpaRepository.class.getName(),
                 MORE, "Please do not forget to remove all methods already defined."
         );
@@ -64,16 +58,16 @@ public final class BusinessJpaReflectionAsserts {
      */
     public static void assertDefaultFactoryClassIsValid(Class<?> actual) {
         $(
-            actual, parentInterfacesHasOneFactoryInterface(),
-            BusinessJpaErrorCodes.CLASS_MUST_IMPLEMENTS_A_FACTORY_INTERFACE
+                actual, parentInterfacesHasOneFactoryInterface(),
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_FACTORY_INTERFACE
         );
 
         // we check that the class extends GenericJpaRepository
         $(
-            actual, DomainSpecifications.classInherits(BaseFactory.class),
-            BusinessErrorCodes.CLASS_MUST_EXTENDS,
-            PARENT_CLASS_NAME, BaseFactory.class.getName(),
-            MORE, "Please do not forget to remove all methods already defined."
+                actual, DomainSpecifications.classInherits(BaseFactory.class),
+                BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS,
+                PARENT_CLASS_NAME, BaseFactory.class.getName(),
+                MORE, "Please do not forget to remove all methods already defined."
         );
     }
 
@@ -84,7 +78,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDefaultDomainServiceClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneDomainServiceInterface(),
-                BusinessJpaErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_SERVICE_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_SERVICE_INTERFACE
         );
     }
 
@@ -95,7 +89,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDefaultApplicationServiceClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneApplicationServiceInterface(),
-                BusinessJpaErrorCodes.CLASS_MUST_IMPLEMENTS_A_APPLICATION_SERVICE_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_APPLICATION_SERVICE_INTERFACE
         );
 
     }
@@ -105,11 +99,11 @@ public final class BusinessJpaReflectionAsserts {
      * @param actual the class to check
      */
     public static void assertDomainPolicyInternalClassIsValid(Class<?> actual) {
-    	$(
-    			actual, parentInterfacesHasOneDomainPolicyInterface(),
-    			BusinessJpaErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_POLICY_INTERFACE
-    	);
-    	
+        $(
+                actual, parentInterfacesHasOneDomainPolicyInterface(),
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_POLICY_INTERFACE
+        );
+
     }
 
     private static Specification<Class<?>> parentInterfacesHasOneRepositoryInterface() {
@@ -173,24 +167,25 @@ public final class BusinessJpaReflectionAsserts {
     }
 
     private static Specification<Class<?>> parentInterfacesHasOneApplicationServiceInterface() {
-    	return new AbstractSpecification<Class<?>>() {
-    		
-    		@Override
-    		public boolean isSatisfiedBy(Class<?> candidate) {
-    			boolean oneInterfaceIsGenericRepo = false;
-    			for (Class<?> interfaceClass : candidate.getInterfaces()) {
-    				try {
-    					BusinessReflectionAsserts.assertApplicationServiceInterfaceClassIsValid(interfaceClass);
-    					oneInterfaceIsGenericRepo = true;
-    					break;
-    				} catch (Exception e) {
+        return new AbstractSpecification<Class<?>>() {
+
+            @Override
+            public boolean isSatisfiedBy(Class<?> candidate) {
+                boolean oneInterfaceIsGenericRepo = false;
+                for (Class<?> interfaceClass : candidate.getInterfaces()) {
+                    try {
+                        BusinessReflectionAsserts.assertApplicationServiceInterfaceClassIsValid(interfaceClass);
+                        oneInterfaceIsGenericRepo = true;
+                        break;
+                    } catch (Exception e) {
                         LOGGER.debug(e.getMessage(), e);
-    				}
-    			}
-    			return oneInterfaceIsGenericRepo;
-    		}
-    	};
+                    }
+                }
+                return oneInterfaceIsGenericRepo;
+            }
+        };
     }
+
     private static Specification<Class<?>> parentInterfacesHasOneDomainPolicyInterface() {
         return new AbstractSpecification<Class<?>>() {
 
@@ -211,7 +206,8 @@ public final class BusinessJpaReflectionAsserts {
         };
     }
 
-    private static <T> void $(T actual, Specification<T> specification, ErrorCode errorCode, String... messages) { // NOSONAR
+    @SuppressWarnings("unchecked")
+    private static <T> void $(T actual, Specification<T> specification, ErrorCode errorCode, String... messages) {
         if (!specification.isSatisfiedBy(actual)) {
             SeedException seedException = SeedException.createNew(errorCode);
 
@@ -228,7 +224,7 @@ public final class BusinessJpaReflectionAsserts {
                 seedException.put("className", ((Class) actual).getName());
             }
 
-            seedException.thenThrows();
+            throw seedException;
         }
     }
 }

@@ -7,23 +7,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assertions;
+package org.seedstack.business.jpa.assertions;
+
+
+import org.seedstack.seed.core.assertions.CoreObjectAssert;
 
 /**
- * This class provides assertions for business core.
- *
  * @author epo.jemba@ext.mpsa.com
  */
-public final class BusinessAssertions {
+public class BusinessJpaObjectAssert extends CoreObjectAssert<Object> {
 
-	private BusinessAssertions() {
-	}
-	
-	/**
-	 * @param actual class to check
-	 * @return the actual Assert
-	 */
-	public static BusinessClassAssert assertThat(Class<?> actual) {
-		return new BusinessClassAssert(actual);
-	}
+    /**
+     * Constructor.
+     * @param actual the candidate
+     */
+    public BusinessJpaObjectAssert(Object actual) {
+        super(actual);
+    }
 }

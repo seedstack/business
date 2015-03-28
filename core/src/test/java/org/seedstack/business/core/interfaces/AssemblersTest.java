@@ -306,7 +306,7 @@ public class AssemblersTest {
         Quartet<Activation, Customer, Order, Product> mergedEntities =
                 underTest.createThenMergeAggregatesWithDto(representation, new TypeLiteral<Quartet<Activation,Customer,Order,Product>>() {});
 
-        assertThat(mergedEntities).isNotNull();
+        assertThat((Object)mergedEntities).isNotNull();
 
         assertThat(mergedEntities.getValue0()).isNotNull();
         assertThat(mergedEntities.getValue0().getDescription()).isNotNull();
@@ -491,7 +491,7 @@ public class AssemblersTest {
         );
 
 
-        Assertions.assertThat(quartet).isNotNull();
+        Assertions.assertThat((Object)quartet).isNotNull();
         Assertions.assertThat(quartet.getValue0()).isNotNull();
         Assertions.assertThat(quartet.getValue0().getDescription()).isNotNull();
         Assertions.assertThat(quartet.getValue0().getDescription()).isEqualTo("new activation description");

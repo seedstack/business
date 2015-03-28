@@ -15,8 +15,8 @@
 
     <parent>
         <groupId>org.seedstack</groupId>
-        <artifactId>java-parent</artifactId>
-        <version>2.0.0-M1-SNAPSHOT</version>
+        <artifactId>parent</artifactId>
+        <version>2.0.0-M1</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
@@ -24,60 +24,6 @@
     <version>2.0.0-M1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
-
-    <inceptionYear>2013</inceptionYear>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.seedstack.seed</groupId>
-                <artifactId>seed-bom</artifactId>
-                <version>2.0.0-M1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack</groupId>
-                <artifactId>java-bom</artifactId>
-                <version>${seedstack-poms.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack</groupId>
-                <artifactId>logging-bom</artifactId>
-                <version>${seedstack-poms.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack</groupId>
-                <artifactId>commons-bom</artifactId>
-                <version>${seedstack-poms.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack</groupId>
-                <artifactId>integrationtest-bom</artifactId>
-                <version>${seedstack-poms.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack</groupId>
-                <artifactId>hibernate-bom</artifactId>
-                <version>${seedstack-poms.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>1.3.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <modules>
         <module>core</module>
@@ -91,31 +37,72 @@
         <module>doc</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seedstack.seed</groupId>
+                <artifactId>seed-bom</artifactId>
+                <version>2.0.0-M1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>java-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>logging-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>commons-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>unittest-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>integrationtest-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seedstack</groupId>
+                <artifactId>hibernate-bom</artifactId>
+                <version>${seedstack.poms.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <repositories>
         <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/content/groups/staging</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus Staging</name>
+            <url>https://oss.sonatype.org/content/groups/staging</url>
         </pluginRepository>
     </pluginRepositories>
-
 </project>

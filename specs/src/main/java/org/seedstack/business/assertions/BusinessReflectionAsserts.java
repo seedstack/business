@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assertions.asserts;
+package org.seedstack.business.assertions;
 
 
 import org.seedstack.business.api.application.annotations.ApplicationService;
@@ -21,7 +21,7 @@ import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.domain.base.BaseEntity;
 import org.seedstack.business.api.domain.base.BaseValueObject;
 import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
-import org.seedstack.business.assertions.BusinessErrorCodes;
+import org.seedstack.business.assertions.BusinessAssertionsErrorCodes;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.kametic.specifications.Specification;
 import org.seedstack.seed.core.api.SeedException;
@@ -57,7 +57,7 @@ public final class BusinessReflectionAsserts {
         // we check that the constructors are not public
         $(
                 actual, DomainSpecifications.not(DomainSpecifications.classConstructorIsPublic()),
-                BusinessErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC,
+                BusinessAssertionsErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC,
                 CONSTRUCTOR_NAME, actual.getSimpleName(),
                 CONSTRUCTOR_CLASS_NAME, actual.getSimpleName()
         );
@@ -65,20 +65,20 @@ public final class BusinessReflectionAsserts {
         // we check the class is not abstract
         $(
                 actual, DomainSpecifications.not(DomainSpecifications.classModifierIs(Modifier.ABSTRACT)),
-                BusinessErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT, CLASS_NAME, actual.getName()
+                BusinessAssertionsErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT, CLASS_NAME, actual.getName()
         );
 
         // we check for the annotation
         $(
                 actual, DomainSpecifications.classInherits(BaseAggregateRoot.class),
-                BusinessErrorCodes.CLASS_MUST_EXTENDS, CLASS_NAME, actual.getName(), PARENT_CLASS_NAME, BaseAggregateRoot.class.getName(),
+                BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS, CLASS_NAME, actual.getName(), PARENT_CLASS_NAME, BaseAggregateRoot.class.getName(),
                 MORE, "Or one of of its children classes."
         );
 
         // we check for the annotation
         $(
                 actual, DomainSpecifications.ancestorMetaAnnotatedWith(DomainAggregateRoot.class),
-                BusinessErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH
+                BusinessAssertionsErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH
         );
 
         // check @id in fields
@@ -94,26 +94,26 @@ public final class BusinessReflectionAsserts {
 		// we check that the constructors are not public
         $(
             actual , DomainSpecifications.not(DomainSpecifications.classConstructorIsPublic()) ,
-            BusinessErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC ,
+            BusinessAssertionsErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC ,
                 CONSTRUCTOR_CLASS_NAME, actual.getSimpleName()
 		);
 		
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.not(DomainSpecifications.classModifierIs(Modifier.ABSTRACT)) ,
-            BusinessErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT  , CLASS_NAME, actual.getName() );
+            BusinessAssertionsErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT  , CLASS_NAME, actual.getName() );
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classInherits(BaseValueObject.class) ,
-            BusinessErrorCodes.CLASS_MUST_EXTENDS , CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, BaseValueObject.class.getName(),
+            BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS , CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, BaseValueObject.class.getName(),
                 MORE, "Or one of of its children classes."
 		);
 		
 		// we check value object
         $(
             actual , DomainSpecifications.classHasOnlyPackageViewSetters()  ,
-            BusinessErrorCodes.CLASS_MUST_HAVE_ONLY_PACKAGED_VIEW_SETTERS , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_HAVE_ONLY_PACKAGED_VIEW_SETTERS , CLASS_NAME, actual.getName()
         );
 	}
 
@@ -126,7 +126,7 @@ public final class BusinessReflectionAsserts {
 		// we check that the constructors are not public
         $(
           actual , DomainSpecifications.not(DomainSpecifications.classConstructorIsPublic()) ,
-          BusinessErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC,
+          BusinessAssertionsErrorCodes.CLASS_CONSTRUCTORS_MUST_NOT_BE_PUBLIC,
                 CONSTRUCTOR_NAME, actual.getSimpleName(),
                 CONSTRUCTOR_CLASS_NAME, actual.getSimpleName()
         );
@@ -134,21 +134,21 @@ public final class BusinessReflectionAsserts {
         // we check the class is not abstract
         $(
             actual, DomainSpecifications.not(DomainSpecifications.classModifierIs(Modifier.ABSTRACT)) ,
-            BusinessErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT  , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_NOT_BE_ABSTRACT  , CLASS_NAME, actual.getName()
         );
 
 
         // we check for the annotation
         $(
             actual , DomainSpecifications.classInherits(BaseEntity.class) ,
-            BusinessErrorCodes.CLASS_MUST_EXTENDS , CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, BaseEntity.class.getName() ,
+            BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS , CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, BaseEntity.class.getName() ,
                 MORE, "Or one of of its children classes."
         );
 
         // we check for the annotation
         $(
             actual , DomainSpecifications.ancestorMetaAnnotatedWith(DomainEntity.class) ,
-            BusinessErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
+            BusinessAssertionsErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
                 CLASS_NAME, actual.getName() ,
                 ANNOTATION_NAME, DomainEntity.class.getName()
          );
@@ -164,13 +164,13 @@ public final class BusinessReflectionAsserts {
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.classIsInterface() ,
-            BusinessErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
 		);
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classInherits(GenericRepository.class) ,
-            BusinessErrorCodes.CLASS_MUST_EXTENDS ,
+            BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS ,
                 CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, GenericRepository.class.getName(),
                 MORE, ""
 		);
@@ -185,13 +185,13 @@ public final class BusinessReflectionAsserts {
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.classIsInterface(),
-            BusinessErrorCodes.CLASS_MUST_BE_INTERFACE, CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_BE_INTERFACE, CLASS_NAME, actual.getName()
         );
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classInherits(GenericFactory.class) ,
-            BusinessErrorCodes.CLASS_MUST_EXTENDS ,
+            BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS ,
                 CLASS_NAME, actual.getName() , PARENT_CLASS_NAME, GenericFactory.class.getName(),
                 MORE, ""
 		);
@@ -206,13 +206,13 @@ public final class BusinessReflectionAsserts {
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.classIsInterface() ,
-            BusinessErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
         );
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classMetaAnnotatedWith(DomainService.class),
-            BusinessErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
+            BusinessAssertionsErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
                 CLASS_NAME, actual.getName() ,
                 ANNOTATION_NAME, DomainService.class.getName()
 		 );
@@ -228,13 +228,13 @@ public final class BusinessReflectionAsserts {
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.classIsInterface() ,
-            BusinessErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
         );
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classMetaAnnotatedWith(ApplicationService.class),
-            BusinessErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
+            BusinessAssertionsErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
                 CLASS_NAME, actual.getName() ,
                 ANNOTATION_NAME, ApplicationService.class.getName()
         );
@@ -249,20 +249,20 @@ public final class BusinessReflectionAsserts {
 		// we check the class is not abstract
         $(
             actual, DomainSpecifications.classIsInterface() ,
-            BusinessErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
+            BusinessAssertionsErrorCodes.CLASS_MUST_BE_INTERFACE  , CLASS_NAME, actual.getName()
         );
 		
 		// we check for the annotation
         $(
             actual , DomainSpecifications.classMetaAnnotatedWith(DomainPolicy.class),
-            BusinessErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
+            BusinessAssertionsErrorCodes.CLASS_OR_PARENT_MUST_BE_ANNOTATED_WITH,
                 CLASS_NAME, actual.getName() ,
                 ANNOTATION_NAME, DomainPolicy.class.getName()
         );
 	}
 
     @SuppressWarnings("unchecked")
-	private static <T> void $(T actual, Specification<T> specification, BusinessErrorCodes errorCode, String... messages) { //NOSONAR
+	private static <T> void $(T actual, Specification<T> specification, BusinessAssertionsErrorCodes errorCode, String... messages) { //NOSONAR
         if (!specification.isSatisfiedBy(actual)) {
             SeedException seedException  = SeedException.createNew(errorCode);
 			
@@ -276,13 +276,7 @@ public final class BusinessReflectionAsserts {
 	            seedException.put(key, value);
 	        }
 			
-			seedException.thenThrows();
+			throw seedException;
 		}
 	}
-
-
-
-
-	
-
 }

@@ -9,12 +9,9 @@
  */
 package org.seedstack.business.assertions;
 
-import org.seedstack.business.assertions.asserts.BusinessReflectionAsserts;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.internal.Objects;
 import org.seedstack.seed.core.assertions.CoreClassAssert;
-
-import java.lang.annotation.Annotation;
 
 
 /**
@@ -37,7 +34,7 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
      *
 	 * @return itself
 	 */
-	public  S isValidAggregateRootClass() {
+	public S isValidAggregateRootClass() {
 		assertNotNull(info, actual);
 
 		BusinessReflectionAsserts.assertAggregateRootClassIsValid(actual);
@@ -47,6 +44,7 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 
     /**
      * Checks if the class is a valid value object.
+	 *
      * @return itself
      */
 	public S isValidValueObjectClass() {
@@ -59,6 +57,7 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 
     /**
      * Checks if the class is a valid entity.
+	 *
      * @return itself
      */
 	public S isValidEntityClass() {
@@ -72,6 +71,7 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 
     /**
      * Checks if the class is a valid repository.
+	 *
      * @return itself
      */
 	public S isValidRepositoryInterfaceClass() {
@@ -84,6 +84,7 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 
     /**
      * Checks if the class is a valid factory interface.
+	 *
      * @return itself
      */
 	public S isValidFactoryInterfaceClass() {
@@ -92,11 +93,11 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 		BusinessReflectionAsserts.assertFactoryInterfaceClassIsValid(actual);
 
 		return myself;
-
 	}
 
     /**
      * Checks if the class is a valid domain service interface.
+	 *
      * @return itself
      */
 	public S isValidDomainServiceInterfaceClass() {
@@ -106,11 +107,11 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 		BusinessReflectionAsserts.assertDomainServiceInterfaceClassIsValid(actual);
 
 		return myself;
-
 	}
 
     /**
      * Checks if the class is a valid application service interface.
+	 *
      * @return itself
      */
 	public S isValidApplicationServiceInterfaceClass() {
@@ -120,58 +121,9 @@ public class BusinessClassAssert<S extends BusinessClassAssert<S>> extends CoreC
 		BusinessReflectionAsserts.assertApplicationServiceInterfaceClassIsValid(actual);
 
 		return myself;
-
 	}
-
-	/***  Inheritance  **/
 
 	private static void assertNotNull(AssertionInfo info, Class<?> actual) {
 		Objects.instance().assertNotNull(info, actual);
 	}
-
-	@Override
-	public S isAssignableFrom(Class<?>... others) {
-		return super.isAssignableFrom(others);
-	}
-
-	@Override
-	public S isNotInterface() {
-		return super.isNotInterface();
-	}
-
-	@Override
-	public S isInterface() {
-		return super.isInterface();
-	}
-
-	@Override
-	public S isAnnotation() {
-		return super.isAnnotation();
-	}
-
-	@Override
-	public S isNotAnnotation() {
-		return super.isNotAnnotation();
-	}
-
-	@Override
-	public S hasAnnotations(Class<? extends Annotation>... annotations) {
-		return super.hasAnnotations(annotations);
-	}
-
-	@Override
-	public S hasAnnotation(Class<? extends Annotation> annotation) {
-		return super.hasAnnotation(annotation);
-	}
-
-	@Override
-	public S hasFields(String... fields) {
-		return super.hasFields(fields);
-	}
-
-	@Override
-	public S hasDeclaredFields(String... fields) {
-		return super.hasDeclaredFields(fields);
-	}
-
 }

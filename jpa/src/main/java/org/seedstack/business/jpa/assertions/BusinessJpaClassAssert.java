@@ -7,14 +7,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.jpa.assertions.asserts;
+package org.seedstack.business.jpa.assertions;
 
-import org.seedstack.business.assertions.asserts.BusinessReflectionAsserts;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.internal.Objects;
+import org.seedstack.business.assertions.BusinessReflectionAsserts;
 import org.seedstack.seed.core.assertions.CoreClassAssert;
-
-import java.lang.annotation.Annotation;
 
 /**
  * This class provides assertions on JPA.
@@ -31,7 +29,6 @@ public class BusinessJpaClassAssert extends CoreClassAssert<BusinessJpaClassAsse
     public BusinessJpaClassAssert(Class<?> actual) {
         super(actual, BusinessJpaClassAssert.class);
     }
-
 
     /**
      * Chains asserts.
@@ -223,69 +220,7 @@ public class BusinessJpaClassAssert extends CoreClassAssert<BusinessJpaClassAsse
         return myself;
     }
 
-
-    /**
-     * Inheritance
-     */
-
     private static void assertNotNull(AssertionInfo info, Class<?> actual) {
         Objects.instance().assertNotNull(info, actual);
     }
-
-    @Override
-    public BusinessJpaClassAssert isInjectable() {
-        return super.isInjectable();
-    }
-
-    @Override
-    public BusinessJpaClassAssert isInjectedWithInstanceOf(Class<?> candidate) {
-        return super.isInjectedWithInstanceOf(candidate);
-    }
-
-    @Override
-    public BusinessJpaClassAssert isAssignableFrom(Class<?>... others) {
-        return super.isAssignableFrom(others);
-    }
-
-    @Override
-    public BusinessJpaClassAssert isNotInterface() {
-        return super.isNotInterface();
-    }
-
-    @Override
-    public BusinessJpaClassAssert isInterface() {
-        return super.isInterface();
-    }
-
-    @Override
-    public BusinessJpaClassAssert isAnnotation() {
-        return super.isAnnotation();
-    }
-
-    @Override
-    public BusinessJpaClassAssert isNotAnnotation() {
-        return super.isNotAnnotation();
-    }
-
-    @Override
-    public BusinessJpaClassAssert hasAnnotations(
-            Class<? extends Annotation>... annotations) {
-        return super.hasAnnotations(annotations);
-    }
-
-    @Override
-    public BusinessJpaClassAssert hasAnnotation(Class<? extends Annotation> annotation) {
-        return super.hasAnnotation(annotation);
-    }
-
-    @Override
-    public BusinessJpaClassAssert hasFields(String... fields) {
-        return super.hasFields(fields);
-    }
-
-    @Override
-    public BusinessJpaClassAssert hasDeclaredFields(String... fields) {
-        return super.hasDeclaredFields(fields);
-    }
-
 }

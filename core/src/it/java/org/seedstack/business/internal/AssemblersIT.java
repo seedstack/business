@@ -217,7 +217,7 @@ public class AssemblersIT extends AbstractSeedIT {
     			assemblers.createThenMergeAggregatesWithDto
     			(representation, new TypeLiteral<Quartet<Activation,Customer,Order,Product>>(){});
 
-    	assertThat(mergedEntities).isNotNull();
+    	assertThat((Object)mergedEntities).isNotNull();
 
      	Assertions.assertThat(mergedEntities.getValue0()).isNotNull();
     	Assertions.assertThat(mergedEntities.getValue0().getDescription()).isNotNull();
@@ -415,7 +415,7 @@ public class AssemblersIT extends AbstractSeedIT {
     			);
 
 
-    	Assertions.assertThat(quartet).isNotNull();
+    	Assertions.assertThat((Object)quartet).isNotNull();
     	Assertions.assertThat(quartet.getValue0()).isNotNull();
     	Assertions.assertThat(quartet.getValue0().getDescription()).isNotNull();
     	Assertions.assertThat(quartet.getValue0().getDescription()).isEqualTo("new activation description");
