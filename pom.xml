@@ -91,6 +91,13 @@
         </dependencies>
     </dependencyManagement>
 
+    <scm>
+        <url>https://github.com/seedstack/business</url>
+        <connection>scm:git:git://github.com/seedstack/business.git</connection>
+        <developerConnection>scm:git:git@github.com:seedstack/business.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <repositories>
         <repository>
             <id>sonatype-nexus-staging</id>
