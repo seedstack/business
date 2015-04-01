@@ -1,4 +1,4 @@
-# SeedStack Business Framework [![Build status](https://travis-ci.org/seedstack/business.svg?branch=master)](https://travis-ci.org/seedstack/business)
+# SeedStack Business Framework [![Build status](https://travis-ci.org/seedstack/business.svg?branch=master)](https://travis-ci.org/seedstack/business) [![Stories in Ready](https://badge.waffle.io/seedstack/business.png?label=ready&title=Ready)](https://waffle.io/seedstack/business)
 
 Based on the Domain-Driven-Design methodology, the business framework will help you structure and implement your business code cleanly and efficiently.
 
