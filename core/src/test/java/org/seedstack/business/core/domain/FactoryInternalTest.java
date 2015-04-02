@@ -153,11 +153,6 @@ public class FactoryInternalTest {
 			return nom;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.seedstack.business.api.domain.Entity#getEntityId()
-		 */
 		@Override
 		public Integer getEntityId() {
 			return id;

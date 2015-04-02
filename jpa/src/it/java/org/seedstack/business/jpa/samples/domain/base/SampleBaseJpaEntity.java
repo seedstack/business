@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.domain.base;
 
-import org.seedstack.business.jpa.domain.BaseJpaEntity;
+import org.seedstack.business.api.domain.base.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,7 +22,7 @@ import java.util.Date;
  *
  */
 @Entity
-public class SampleBaseJpaEntity extends BaseJpaEntity<Long>
+public class SampleBaseJpaEntity extends BaseEntity<Long>
 {
 	
 	private String field1;

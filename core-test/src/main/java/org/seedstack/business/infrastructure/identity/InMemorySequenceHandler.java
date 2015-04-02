@@ -18,29 +18,18 @@ import org.seedstack.business.api.domain.base.BaseEntity;
 import org.seedstack.business.api.domain.identity.SequenceHandler;
 
 import javax.inject.Named;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 
  * @author redouane.loulou@ext.mpsa.com
- *
  */
 @Named("inmemory-sequence")
 public class InMemorySequenceHandler implements SequenceHandler<BaseEntity<Long>, Long> {
+	private static final AtomicLong sequence = new AtomicLong(1L);
 
-	
-	private static final InMemorySequence inMemorySequence = new InMemorySequence();
-	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.seedstack.business.api.domain.identity.IdentityHandler#handle(Entity, Configuration)
-     * @param entity
-     * @param entityConfiguration
-	 */
 	@Override
-	public Long handle(Entity entity,
-			Configuration entityConfiguration) {
-		return inMemorySequence.next();
+	public Long handle(Entity entity, Configuration entityConfiguration) {
+		return sequence.incrementAndGet();
 	}
 
 
