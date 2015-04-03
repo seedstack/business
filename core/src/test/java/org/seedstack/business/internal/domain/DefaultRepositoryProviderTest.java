@@ -11,8 +11,8 @@ package org.seedstack.business.internal.domain;
 
 import org.seedstack.business.core.domain.InMemoryRepository;
 import org.seedstack.business.internal.domain.repository.GenericImplementationProvider;
-import org.seedstack.business.sample.domain.customer.Customer;
-import org.seedstack.business.sample.domain.customer.CustomerId;
+import org.seedstack.business.fixtures.domain.customer.Customer;
+import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

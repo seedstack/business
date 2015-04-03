@@ -9,9 +9,9 @@
  */
 package org.seedstack.business.internal;
 
-import org.seedstack.business.sample.application.IndexService;
-import org.seedstack.business.sample.application.SingletonService;
-import org.seedstack.business.sample.domain.activation.ActivationException;
+import org.seedstack.business.fixtures.application.IndexService;
+import org.seedstack.business.fixtures.application.SingletonService;
+import org.seedstack.business.fixtures.domain.activation.ActivationException;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.seedstack.seed.it.AbstractSeedIT;

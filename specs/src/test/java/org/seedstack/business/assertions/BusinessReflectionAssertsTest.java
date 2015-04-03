@@ -9,15 +9,14 @@
  */
 package org.seedstack.business.assertions;
 
-import org.seedstack.business.assertions.BusinessReflectionAsserts;
-import org.seedstack.business.sample.application.DiscountApplicationService;
-import org.seedstack.business.sample.application.DiscountApplicationServiceInternal;
-import org.seedstack.business.sample.domain.discount.BadValueObject;
-import org.seedstack.business.sample.domain.discount.Discount;
-import org.seedstack.business.sample.domain.discount.DiscountPolicy;
-import org.seedstack.business.sample.domain.discount.Price;
-import org.seedstack.business.sample.domain.reporting.ReportTest;
-import org.seedstack.business.sample.domain.export.*;
+import org.seedstack.business.fixtures.application.DiscountApplicationService;
+import org.seedstack.business.fixtures.application.DiscountApplicationServiceInternal;
+import org.seedstack.business.fixtures.domain.discount.BadValueObject;
+import org.seedstack.business.fixtures.domain.discount.Discount;
+import org.seedstack.business.fixtures.domain.discount.DiscountPolicy;
+import org.seedstack.business.fixtures.domain.discount.Price;
+import org.seedstack.business.fixtures.domain.reporting.ReportTest;
+import org.seedstack.business.fixtures.domain.export.*;
 import org.junit.Test;
 import org.seedstack.seed.core.api.SeedException;
 

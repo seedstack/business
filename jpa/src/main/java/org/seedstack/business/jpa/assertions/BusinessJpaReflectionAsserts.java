@@ -39,7 +39,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertJpaRepositoryClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneRepositoryInterface(),
-                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_REPOSITORY_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENT_A_REPOSITORY_INTERFACE
 
         );
 
@@ -59,7 +59,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDefaultFactoryClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneFactoryInterface(),
-                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_FACTORY_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENT_A_FACTORY_INTERFACE
         );
 
         // we check that the class extends GenericJpaRepository
@@ -78,7 +78,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDefaultDomainServiceClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneDomainServiceInterface(),
-                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_SERVICE_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENT_A_DOMAIN_SERVICE_INTERFACE
         );
     }
 
@@ -89,7 +89,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDefaultApplicationServiceClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneApplicationServiceInterface(),
-                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_APPLICATION_SERVICE_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENT_A_APPLICATION_SERVICE_INTERFACE
         );
 
     }
@@ -101,7 +101,7 @@ public final class BusinessJpaReflectionAsserts {
     public static void assertDomainPolicyInternalClassIsValid(Class<?> actual) {
         $(
                 actual, parentInterfacesHasOneDomainPolicyInterface(),
-                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENTS_A_DOMAIN_POLICY_INTERFACE
+                BusinessJpaAssertionsErrorCodes.CLASS_MUST_IMPLEMENT_A_DOMAIN_POLICY_INTERFACE
         );
 
     }

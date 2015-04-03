@@ -12,30 +12,10 @@ package org.seedstack.business.api.domain;
 
 import org.seedstack.seed.core.api.ErrorCode;
 
-/**
- * Domain error codes.
- */
 public enum DomainErrorCodes implements ErrorCode {
-	
-	/**
-	 * This code is raised when an instantiation issue occurred.
-	 * <p>
-	 * Specifically inside Factory and Assemblers.
-	 */
-	AGGREGATEROOT_INSTANTIATION_ISSUE,
-	
-	/**
-	 * This code is raised when a creation issue occurred.
-	 * <p>
-	 * Specifically inside Factory and Assemblers.
-	 */
-	AGGREGATEROOT_CREATION_ISSUE,
-	
-	/**
-	 * This code is raised when an entity is used with no identity defined. 
-	 * <p>
-	 * Specifically inside Factory and Assemblers.
-	 */
-	ENTITY_WITHOUT_IDENTITY_ISSUE
-
+	AGGREGATE_ROOT_CREATION_ISSUE,
+	ENTITY_WITHOUT_IDENTITY_ISSUE,
+	DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND,
+	UNABLE_TO_INVOKE_CONSTRUCTOR,
+	AMBIGUOUS_CONSTRUCTOR_FOUND
 }

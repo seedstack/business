@@ -9,9 +9,9 @@
  */
 package org.seedstack.business.internal;
 
-import org.seedstack.business.sample.domain.activation.Activation;
-import org.seedstack.business.sample.domain.activation.ActivationException;
-import org.seedstack.business.sample.domain.activation.ActivationFactory;
+import org.seedstack.business.fixtures.domain.activation.Activation;
+import org.seedstack.business.fixtures.domain.activation.ActivationException;
+import org.seedstack.business.fixtures.domain.activation.ActivationFactory;
 import org.junit.Test;
 import org.seedstack.seed.it.AbstractSeedIT;
 import org.seedstack.seed.validation.api.ValidationException;

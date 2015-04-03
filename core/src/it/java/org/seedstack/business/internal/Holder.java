@@ -9,21 +9,18 @@
  */
 package org.seedstack.business.internal;
 
-import org.seedstack.business.api.interfaces.assembler.Assemblers;
-import org.seedstack.business.helpers.Factories;
-import org.seedstack.business.helpers.Repositories;
-import org.seedstack.business.sample.application.IndexService;
-import org.seedstack.business.sample.domain.activation.ActivationFactory;
-import org.seedstack.business.sample.domain.activation.ActivationRepository;
-import org.seedstack.business.sample.domain.customer.CustomerFactory;
-import org.seedstack.business.sample.domain.customer.CustomerRepository;
-import org.seedstack.business.sample.domain.customer.CustomerSampleService;
-import org.seedstack.business.sample.domain.order.OrderFactory;
-import org.seedstack.business.sample.domain.order.OrderRepository;
-import org.seedstack.business.sample.domain.product.ProductFactory;
-import org.seedstack.business.sample.domain.product.ProductNamePolicy;
-import org.seedstack.business.sample.domain.product.ProductRepository;
-import org.seedstack.business.sample.interfaces.customer.presentation1.CustomerFinder;
+import org.seedstack.business.fixtures.application.IndexService;
+import org.seedstack.business.fixtures.domain.activation.ActivationFactory;
+import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
+import org.seedstack.business.fixtures.domain.customer.CustomerFactory;
+import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
+import org.seedstack.business.fixtures.domain.customer.CustomerSampleService;
+import org.seedstack.business.fixtures.domain.order.OrderFactory;
+import org.seedstack.business.fixtures.domain.order.OrderRepository;
+import org.seedstack.business.fixtures.domain.product.ProductFactory;
+import org.seedstack.business.fixtures.domain.product.ProductNamePolicy;
+import org.seedstack.business.fixtures.domain.product.ProductRepository;
+import org.seedstack.business.fixtures.interfaces.customer.presentation1.CustomerFinder;
 import org.seedstack.seed.core.api.Configuration;
 import org.seedstack.seed.it.api.ITBind;
 
@@ -64,15 +61,6 @@ public class Holder {
 
 	@Inject
 	ProductFactory productFactory;
-
-	@Inject
-	Repositories repos;
-
-	@Inject
-	Factories factories;
-
-	@Inject
-	Assemblers assemblers;
 
 	@Inject
 	ProductNamePolicy productNamePolicy;

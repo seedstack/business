@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
-import org.seedstack.business.sample.domain.discount.Discount;
+import org.seedstack.business.fixtures.domain.discount.Discount;
 
 import static org.mockito.Mockito.mock;
 

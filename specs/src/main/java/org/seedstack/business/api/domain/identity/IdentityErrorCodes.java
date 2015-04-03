@@ -31,5 +31,4 @@ public enum IdentityErrorCodes implements ErrorCode {
 	NO_IDENTITY_HANDLER_DEFINE_FOR_ENTITY_ID,
 	NO_SEQUENCE_NAME_FOUND_FOR_ENTITY,
 	ID_CAST_EXCEPTION
-
 }

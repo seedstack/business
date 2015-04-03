@@ -9,8 +9,9 @@
  */
 package org.seedstack.business.jpa.samples.domain.embed;
 
-import org.seedstack.business.jpa.domain.embeddedid.EmbedJpaAggregateRoot;
+import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.util.Date;
 
@@ -21,9 +22,10 @@ import java.util.Date;
  *
  */
 @Entity
-public class SampleEmbedJpaAggregateRoot extends EmbedJpaAggregateRoot<SampleEmbeddedKey> 
+public class SampleEmbedJpaAggregateRoot extends BaseAggregateRoot<SampleEmbeddedKey>
 {
-	
+	@EmbeddedId
+	private SampleEmbeddedKey entityId;
 	private String field1;
 	private String field2;
 	private Date  field3;
@@ -31,6 +33,10 @@ public class SampleEmbedJpaAggregateRoot extends EmbedJpaAggregateRoot<SampleEmb
 	SampleEmbedJpaAggregateRoot() {		
 	}
 
+	@Override
+	public SampleEmbeddedKey getEntityId() {
+		return entityId;
+	}
 
 	public String getField1() {
 		return field1;

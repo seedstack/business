@@ -9,8 +9,8 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import org.seedstack.business.sample.domain.discount.Discount;
-import org.seedstack.business.sample.domain.export.Export;
+import org.seedstack.business.fixtures.domain.discount.Discount;
+import org.seedstack.business.fixtures.domain.export.Export;
 import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
 import org.junit.Test;
