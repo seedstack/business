@@ -27,12 +27,12 @@
 
     <modules>
         <module>core</module>
-        <module>core-test</module>
         <module>jpa</module>
         <module>specs</module>
         <module>web</module>
         <module>audit</module>
         <module>audit-logback</module>
+        <module>test</module>
         <module>bom</module>
         <module>doc</module>
     </modules>

@@ -19,7 +19,7 @@
         <version>2.0.0-M2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>business-core-test</artifactId>
+    <artifactId>business-test</artifactId>
 
     <dependencies>
         <dependency>
@@ -27,7 +27,6 @@
             <artifactId>business-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-unittest-support</artifactId>
