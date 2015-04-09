@@ -22,7 +22,7 @@ unit.hsql-in-memory.property.hibernate.dialect=org.hibernate.dialect.HSQLDialect
 unit.hsql-in-memory.property.hibernate.hbm2ddl.auto=create
 unit.hsql-in-memory.property.sql.enforce_strict_size=true
 
-[org.seedstack.business.api.domain.identity.*]
+[org.seedstack.business.identity.fixtures.*]
 identity.handler-qualifier = simple-UUID 
 
 [org.seedstack.business.event]

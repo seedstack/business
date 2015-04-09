@@ -16,6 +16,7 @@ import com.google.inject.Injector;
 import org.seedstack.business.api.Event;
 import org.seedstack.business.api.EventHandler;
 import org.seedstack.business.api.EventService;
+import org.seedstack.business.api.domain.events.EventErrorCodes;
 import org.seedstack.seed.core.api.SeedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,6 +15,7 @@ package org.seedstack.business.core.domain;
 import com.google.common.primitives.Primitives;
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.Producible;
+import org.seedstack.business.api.domain.DomainErrorCodes;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.seed.core.api.SeedException;
@@ -77,9 +78,9 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 	@Override
 	public DO create(Object... args) {
 		Constructor<?> constructor = getConstructor(args);
-		DO domainObject = null;
+		DO domainObject;
 		if (constructor == null) {
-			throw SeedException.createNew(FactoriesErrorCodes.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
+			throw SeedException.createNew(DomainErrorCodes.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
 					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
 		}
 		try {
@@ -88,7 +89,7 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
             domainObject = (DO) constructor.newInstance(args);
 
 		} catch (Exception e) {
-			throw SeedException.wrap(e, FactoriesErrorCodes.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
+			throw SeedException.wrap(e, DomainErrorCodes.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
 					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
 		}
 		return domainObject;
@@ -103,7 +104,7 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 				if (checkedConstructors == null) {
 					checkedConstructors = constructor;
 				} else {
-					throw SeedException.createNew(FactoriesErrorCodes.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
+					throw SeedException.createNew(DomainErrorCodes.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
 					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
 				}
 			}

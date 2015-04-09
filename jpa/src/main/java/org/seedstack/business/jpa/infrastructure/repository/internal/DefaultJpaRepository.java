@@ -12,7 +12,7 @@ package org.seedstack.business.jpa.infrastructure.repository.internal;
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.annotations.DomainRepositoryImpl;
-import org.seedstack.business.jpa.infrastructure.repository.GenericJpaRepository;
+import org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import javax.inject.Inject;
@@ -31,10 +31,10 @@ import javax.inject.Inject;
  * @author pierre.thirouin@ext.mpsa.com
  *         Date: 17/09/2014
  * @see org.seedstack.business.api.domain.Repository
- * @see org.seedstack.business.jpa.infrastructure.repository.GenericJpaRepository
+ * @see org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository
  */
 @DomainRepositoryImpl
-public class DefaultJpaRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> extends GenericJpaRepository<AGGREGATE, KEY> {
+public class DefaultJpaRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> extends BaseJpaRepository<AGGREGATE, KEY> {
 
     /**
      * Constructs a DefaultJpaRepository.

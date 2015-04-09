@@ -9,9 +9,10 @@
  */
 package org.seedstack.business.jpa.samples.domain.simple;
 
-import org.seedstack.business.jpa.domain.id.SimpleJpaAggregateRoot;
+import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -23,9 +24,10 @@ import java.util.Date;
  *
  */
 @Entity
-public class SampleSimpleJpaAggregateRoot extends SimpleJpaAggregateRoot<Integer>
+public class SampleSimpleJpaAggregateRoot extends BaseAggregateRoot<Integer>
 {
-	
+	@Id
+	private Integer entityId;
 	@Size(min=2)
 	private String field1;
 	@Size(min=2)
@@ -38,7 +40,11 @@ public class SampleSimpleJpaAggregateRoot extends SimpleJpaAggregateRoot<Integer
 	SampleSimpleJpaAggregateRoot() {		
 	}
 
-	
+	@Override
+	public Integer getEntityId() {
+		return entityId;
+	}
+
 	void setEntityId(Integer entityId)
 	{
 		this.entityId = entityId;

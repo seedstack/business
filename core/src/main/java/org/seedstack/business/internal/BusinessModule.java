@@ -9,38 +9,25 @@
  */
 package org.seedstack.business.internal;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import org.aopalliance.intercept.MethodInterceptor;
+import com.google.common.collect.Sets;
+import com.google.inject.AbstractModule;
+import com.google.inject.Key;
+import com.google.inject.Provides;
 import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.domain.Repositories;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.Assemblers;
-import org.seedstack.business.core.domain.FactoriesInternal;
-import org.seedstack.business.core.domain.RepositoriesInternal;
-import org.seedstack.business.core.interfaces.AssemblersInternal;
-import org.seedstack.business.helpers.Factories;
 import org.seedstack.business.internal.datasecurity.BusinessDataSecurityModule;
 import org.seedstack.business.internal.strategy.BindingContext;
 import org.seedstack.business.internal.strategy.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-import com.google.inject.AbstractModule;
-import com.google.inject.Key;
-import com.google.inject.Provides;
-import com.google.inject.matcher.AbstractMatcher;
-import com.google.inject.matcher.Matcher;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * The business module.
@@ -72,8 +59,6 @@ class BusinessModule extends AbstractModule {
 	 *            the map of interface and class to bind
 	 * @param bindingStrategies
 	 *            the collection of binding strategy
-	 * @param validationService
-	 *            the validation service
 	 */
 	public BusinessModule(Collection<Class<?>> assemblersClasses, Map<Key<?>, Class<?>> bindings,
 			Collection<BindingStrategy> bindingStrategies) {
@@ -85,17 +70,6 @@ class BusinessModule extends AbstractModule {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void configure() {
-
-		// Linked bindings to handle the deprecated Assemblers
-		bind(Assemblers.class).to(org.seedstack.business.helpers.Assemblers.class);
-		bind(org.seedstack.business.helpers.Assemblers.class).to(AssemblersInternal.class);
-		bind(Repositories.class).to(org.seedstack.business.helpers.Repositories.class);
-		bind(org.seedstack.business.helpers.Repositories.class).to(RepositoriesInternal.class);
-		bind(org.seedstack.business.api.domain.Factories.class).to(Factories.class);
-		bind(Factories.class).to(FactoriesInternal.class);
-		// When the old assembler class will be deleted, the above bindings will be removed and the new Assemblers will
-		// be annotated by @InterfacesService (Can't be done before because Assemblers would bound twice)
-
 		for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
 			logger.trace("binding {} to {}.", binding.getKey(), binding.getValue().getSimpleName());
 			bind(binding.getKey()).to((Class) binding.getValue());
@@ -112,11 +86,6 @@ class BusinessModule extends AbstractModule {
 		// client sub classes of Factories and Repositories
         // TODO control over good and bad injection inside Domain objects
 
-        // AOP on Assemblers (used for exception wrapping)
-        MethodInterceptor helpersInterceptor = new HelpersMethodInterceptor();
-        // no need to requestInjection for this one.
-        bindInterceptor(helpersClass(), publicMethods(), helpersInterceptor);
-
 		install(new BusinessDataSecurityModule());
 	}
 
@@ -132,34 +101,6 @@ class BusinessModule extends AbstractModule {
 			bindingStrategy.resolve(binder(), bindingContext);
 		}
     }
-
-    /**
-     * Matches the AssemblerInternal class.
-     *
-     * @return the matcher
-     */
-	private Matcher<? super Class<?>> helpersClass() {
-		return new AbstractMatcher<Class<?>>() {
-			@Override
-			public boolean matches(Class<?> t) {
-				return t.equals(AssemblersInternal.class);
-			}
-		};
-	}
-
-    /**
-     * Matches the public methods.
-     *
-     * @return the matcher
-     */
-	private Matcher<? super Method> publicMethods() {
-		return new AbstractMatcher<Method>() {
-			@Override
-			public boolean matches(Method candidate) {
-				return Modifier.isPublic(candidate.getModifiers());
-			}
-		};
-	}
 
 	/**
 	 * @return the set of assembler classes
@@ -196,7 +137,7 @@ class BusinessModule extends AbstractModule {
 		Set<Key<?>> factories = Sets.newHashSet();
 		for (Key candidateInterface : bindings.keySet()) {
 			Class interfaceClass = candidateInterface.getTypeLiteral().getRawType();
-			if (!GenericFactory.class.equals(interfaceClass) && GenericFactory.class.isAssignableFrom(interfaceClass)) {
+			if (!GenericFactory.class.equals((Class<?>)interfaceClass) && GenericFactory.class.isAssignableFrom(interfaceClass)) {
 				factories.add(candidateInterface);
 			}
 			// Note:

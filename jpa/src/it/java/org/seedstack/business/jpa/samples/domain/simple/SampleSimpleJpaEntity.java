@@ -9,9 +9,10 @@
  */
 package org.seedstack.business.jpa.samples.domain.simple;
 
-import org.seedstack.business.jpa.domain.id.SimpleJpaEntity;
+import org.seedstack.business.api.domain.base.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -21,9 +22,10 @@ import java.util.Date;
  *
  */
 @Entity
-public class SampleSimpleJpaEntity extends SimpleJpaEntity<Long> 
+public class SampleSimpleJpaEntity extends BaseEntity<Long>
 {
-	
+	@Id
+	private Long entityId;
 	private String field1;
 	private String field2;
 	private Date  field3;
@@ -31,6 +33,10 @@ public class SampleSimpleJpaEntity extends SimpleJpaEntity<Long>
 	SampleSimpleJpaEntity() {		
 	}
 
+	@Override
+	public Long getEntityId() {
+		return entityId;
+	}
 
 	public String getField1() {
 		return field1;

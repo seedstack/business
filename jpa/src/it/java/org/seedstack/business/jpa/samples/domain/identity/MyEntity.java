@@ -28,11 +28,6 @@ public class MyEntity extends BaseEntity<UUID> {
 	@Identity(handler = UUIDHandler.class)
 	private UUID id;
 	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.seedstack.business.api.domain.base.BaseEntity#getEntityId()
-	 */
 	@Override
 	public UUID getEntityId() {
 		return id;

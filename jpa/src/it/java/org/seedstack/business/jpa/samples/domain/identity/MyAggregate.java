@@ -34,11 +34,6 @@ public class MyAggregate extends BaseAggregateRoot<Long> {
 	
 	private Set<MyEntity> mySubAggregates;
 	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.seedstack.business.api.domain.base.BaseEntity#getEntityId()
-	 */
 	@Override
 	public Long getEntityId() {
 		return id;

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.GenericRepository;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 public interface SampleBaseRepository extends GenericRepository<SampleBaseJpaAggregateRoot, String> {
 }
