@@ -84,7 +84,7 @@
         </dependency>
         <dependency>
             <groupId>org.seedstack.business</groupId>
-            <artifactId>business-core-test</artifactId>
+            <artifactId>business-test</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
