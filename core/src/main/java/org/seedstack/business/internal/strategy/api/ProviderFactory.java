@@ -10,14 +10,15 @@
 /**
  * 
  */
-package org.seedstack.business.internal.strategy;
+package org.seedstack.business.internal.strategy.api;
 
 import com.google.inject.Provider;
-import org.seedstack.business.internal.domain.repository.GenericImplementationProvider;
+
+import java.lang.reflect.Type;
 
 /**
  * This factory is used to create {@link GenericImplementationProvider}s with resolved generic. This should be used
- * when instantiating a {@link GenericBindingStrategy}.
+ * when instantiating a {@link org.seedstack.business.internal.strategy.GenericBindingStrategy}.
  *
  * @author redouane.loulou@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com
@@ -31,7 +32,7 @@ public class ProviderFactory<T> {
      * @param genericResolvedClasses the resolved generics
      * @return the new provider
      */
-	Provider<T> createProvider(Class<?> defaultClassImpl,  Class<?>... genericResolvedClasses) {
+	public Provider<T> createProvider(Class<?> defaultClassImpl, Type... genericResolvedClasses) {
 		return new GenericImplementationProvider<T>(defaultClassImpl, genericResolvedClasses);
 	}
 

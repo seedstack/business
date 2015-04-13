@@ -19,7 +19,6 @@ import javax.inject.Inject;
  * A base default repository. It forces subclasses to implements an assisted constructor.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 30/09/2014
  * @param <A> 
  * @param <K> 
  */

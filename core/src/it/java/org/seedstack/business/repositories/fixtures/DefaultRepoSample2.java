@@ -26,7 +26,7 @@ import javax.inject.Named;
 public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
 
     @Inject
-    public DefaultRepoSample2(@Assisted Class<?>[] genericClasses) {
+    public DefaultRepoSample2(@Assisted Object[] genericClasses) {
         super((Class)genericClasses[0], (Class)genericClasses[1]);
     }
 

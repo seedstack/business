@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
 
     @Inject
-    public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Class aggregateRootClass, @Assisted("keyClass") Class keyClass) {
-        super(aggregateRootClass, keyClass);
+    public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass, @Assisted("keyClass") Object keyClass) {
+        super((Class)aggregateRootClass, (Class)keyClass);
     }
 }

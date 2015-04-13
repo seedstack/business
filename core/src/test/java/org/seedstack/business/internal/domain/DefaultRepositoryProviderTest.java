@@ -10,7 +10,7 @@
 package org.seedstack.business.internal.domain;
 
 import org.seedstack.business.core.domain.InMemoryRepository;
-import org.seedstack.business.internal.domain.repository.GenericImplementationProvider;
+import org.seedstack.business.internal.strategy.api.GenericImplementationProvider;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 

@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class DefaultRepoSample<A extends AggregateRoot<K>, K> extends AbstractDefaultRepoSample<A,K>  {
 
     @Inject
-    public DefaultRepoSample(@Assisted Class<?>[] genericClasses) {
+    public DefaultRepoSample(@Assisted Object[] genericClasses) {
         super(genericClasses[0], genericClasses[1]);
     }
 

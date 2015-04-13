@@ -43,8 +43,8 @@ public class DefaultJpaRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> ext
      */
     @SuppressWarnings("unchecked")
     @Inject
-    public DefaultJpaRepository(@Assisted Class<?>[] genericClasses) {
-        Class<?>[] clonedClasses = genericClasses.clone();
+    public DefaultJpaRepository(@Assisted Object[] genericClasses) {
+        Object[] clonedClasses = genericClasses.clone();
         SeedCheckUtils.checkIfNotNull(clonedClasses);
         SeedCheckUtils.checkIf(clonedClasses.length == 2);
         this.aggregateRootClass = (Class) clonedClasses[0];

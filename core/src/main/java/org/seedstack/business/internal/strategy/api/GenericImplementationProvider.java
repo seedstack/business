@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.domain.repository;
+package org.seedstack.business.internal.strategy.api;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -16,19 +16,23 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 
 import javax.inject.Inject;
+import java.lang.reflect.Type;
 
 /**
- * Provides a default repository. This repository is injectable. It also contains the aggregate root class and the key class it is
- * related to. This allows to get them at runtime without reflection.
+ * This class is a generic provider.
+ *
+ * It passes an array of object to the provided object constructor. This array contains the generic types of
+ * the created object. It will balance the fact that we won't be able to use reflection to get the generic type
+ * on the created object.
  * 
- * @author pierre.thirouin@ext.mpsa.com Date: 26/09/2014
+ * @author pierre.thirouin@ext.mpsa.com
  * @param <T> Type to get from the generic provider.  
  */
 public class GenericImplementationProvider<T> implements Provider<T> {
 
 	private final Class<?> defaultImplClass;
 
-	Class<?>[] genericClasses;
+	Type[] genericClasses;
 
 	@Inject
 	private Injector injector;
@@ -41,7 +45,7 @@ public class GenericImplementationProvider<T> implements Provider<T> {
 	 * @param genericClasses
 	 *            generic array classes
 	 */
-	public GenericImplementationProvider(Class<?> defaultImplClass, Class<?>... genericClasses) {
+	public GenericImplementationProvider(Class<?> defaultImplClass, Type... genericClasses) {
 		this.defaultImplClass = defaultImplClass;
 		this.genericClasses = genericClasses;
 	}
