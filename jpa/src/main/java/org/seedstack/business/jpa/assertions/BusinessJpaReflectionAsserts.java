@@ -9,14 +9,14 @@
  */
 package org.seedstack.business.jpa.assertions;
 
+import org.apache.commons.collections.iterators.ArrayIterator;
+import org.kametic.specifications.AbstractSpecification;
+import org.kametic.specifications.Specification;
+import org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications;
 import org.seedstack.business.assertions.BusinessAssertionsErrorCodes;
 import org.seedstack.business.assertions.BusinessReflectionAsserts;
 import org.seedstack.business.core.domain.base.BaseFactory;
 import org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository;
-import org.apache.commons.collections.iterators.ArrayIterator;
-import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
-import org.kametic.specifications.AbstractSpecification;
-import org.kametic.specifications.Specification;
 import org.seedstack.seed.core.api.ErrorCode;
 import org.seedstack.seed.core.api.SeedException;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public final class BusinessJpaReflectionAsserts {
 
         // we check that the class extends GenericJpaRepository
         $(
-                actual, DomainSpecifications.classInherits(BaseJpaRepository.class),
+                actual, BaseClassSpecifications.classInherits(BaseJpaRepository.class),
                 BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS,
                 PARENT_CLASS_NAME, BaseJpaRepository.class.getName(),
                 MORE, "Please do not forget to remove all methods already defined."
@@ -64,7 +64,7 @@ public final class BusinessJpaReflectionAsserts {
 
         // we check that the class extends GenericJpaRepository
         $(
-                actual, DomainSpecifications.classInherits(BaseFactory.class),
+                actual, BaseClassSpecifications.classInherits(BaseFactory.class),
                 BusinessAssertionsErrorCodes.CLASS_MUST_EXTENDS,
                 PARENT_CLASS_NAME, BaseFactory.class.getName(),
                 MORE, "Please do not forget to remove all methods already defined."

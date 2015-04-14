@@ -20,28 +20,22 @@ import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import io.nuun.kernel.core.AbstractPlugin;
 import org.javatuples.Tuple;
-import org.kametic.specifications.AbstractSpecification;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.application.GenericApplicationService;
-import org.seedstack.business.api.application.annotations.ApplicationService;
-import org.seedstack.business.api.domain.*;
-import org.seedstack.business.api.domain.annotations.*;
-import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
-import org.seedstack.business.api.interfaces.GenericInterfacesService;
-import org.seedstack.business.api.interfaces.annotations.InterfacesService;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.api.domain.DomainObject;
+import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.api.interfaces.query.finder.Finder;
 import org.seedstack.business.core.domain.FactoryInternal;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
 import org.seedstack.business.core.interfaces.DefaultAssembler;
 import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
 import org.seedstack.business.helpers.Tuples;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
+import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.strategy.api.ProviderFactory;
 import org.seedstack.seed.core.utils.SeedBindingUtils;
 import org.slf4j.Logger;
@@ -50,6 +44,10 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+
+import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.classIsInterface;
+import static org.seedstack.business.api.domain.meta.specifications.DomainSpecifications.*;
 
 /**
  * This plugin is a multi round plugin.
@@ -70,61 +68,19 @@ public class BusinessCorePlugin extends AbstractPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessCorePlugin.class);
     private static final String INTERFACE_REQUESTS = " interface requests : ";
 
-    private final Specification<Class<?>> domainRepoSpec = and(DomainSpecifications.ancestorMetaAnnotatedWith(DomainRepository.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()));
-
     private Collection<Class<?>> repositoriesInterfaces;
-
-    private final Specification<Class<?>> domainServiceSpec = and(DomainSpecifications.ancestorMetaAnnotatedWith(DomainService.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()), not(classIs(GenericDomainService.class)));
-
     private Collection<Class<?>> domainServiceInterfaces;
-
-    private final Specification<Class<?>> applicationServiceSpec = and(DomainSpecifications.ancestorMetaAnnotatedWith(ApplicationService.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()), not(classIs(GenericApplicationService.class)));
     private Collection<Class<?>> applicationServiceInterfaces;
-
-    private final Specification<Class<?>> finderServiceSpecs = and(DomainSpecifications.ancestorMetaAnnotatedWith(Finder.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()));
-
     private Collection<Class<?>> finderServiceInterfaces;
-
-    private final Specification<Class<?>> policySpecs = and(DomainSpecifications.ancestorMetaAnnotatedWith(DomainPolicy.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()), not(classIs(GenericDomainPolicy.class)));
-
     private Collection<Class<?>> policyInterfaces;
-
-    private final Specification<Class<?>> interfacesServiceSpecs = and(DomainSpecifications.ancestorMetaAnnotatedWith(InterfacesService.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()), not(classIs(GenericInterfacesService.class)));
-
     private Collection<Class<?>> interfacesServiceInterfaces;
-
-    private final Specification<Class<?>> domainFactorySpecs = and(DomainSpecifications.ancestorMetaAnnotatedWith(DomainFactory.class),
-            DomainSpecifications.classIsInterface(), not(DomainSpecifications.classIsAnnotation()));
-
     private Collection<Class<?>> domainFactoryInterfaces;
-
-    private final Specification<Class<?>> assemblerSpecs = and(not(DomainSpecifications.classIsInterface()),
-            not(DomainSpecifications.classIsAbstract()), descendantOf(Assembler.class));
-
     private Collection<Class<?>> assemblersClasses;
-
-    private final Specification<Class<?>> aggregateRootSpec = DomainSpecifications.aggregateSpecification();
     private Collection<Class<?>> aggregateClasses;
-
-
-    private final Specification<Class<?>> valueObjectSpec = DomainSpecifications.valueObjectSpecification();
     private Collection<Class<?>> valueObjectClasses;
-
-    private final Specification<Class<?>> domainRepoImplSpec = and(classAnnotatedWith(DomainRepositoryImpl.class),
-            not(DomainSpecifications.classIsInterface()), not(DomainSpecifications.classIsAbstract()), not(DomainSpecifications.classIsAnnotation()));
-
     private Collection<Class<?>> domainRepoImpls;
-
-    private final Specification<Class<?>> dtoWithDefaultAssemblerSpec = and(classAnnotatedWith(DtoOf.class));
     private Map<Type, Class<?>> linksForDefaultAssemblers = new HashMap<Type, Class<?>>();
     private Map<Class<?>, Specification<Class<?>>> interfaceScanSpecification = new HashMap<Class<?>, Specification<Class<?>>>();
-
     private Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
     private Map<Key<?>, Class<?>> bindings = new HashMap<Key<?>, Class<?>>();
 
@@ -142,10 +98,19 @@ public class BusinessCorePlugin extends AbstractPlugin {
     public Collection<ClasspathScanRequest> classpathScanRequests() {
 
         if (roundEnvironment.firstRound()) {
-            return classpathScanRequestBuilder().specification(aggregateRootSpec).specification(valueObjectSpec).specification(domainRepoImplSpec)
-                    .specification(domainRepoSpec).specification(domainServiceSpec).specification(applicationServiceSpec)
-                    .specification(interfacesServiceSpecs).specification(finderServiceSpecs).specification(policySpecs)
-                    .specification(domainFactorySpecs).specification(assemblerSpecs).specification(dtoWithDefaultAssemblerSpec).build();
+            return classpathScanRequestBuilder()
+                    .specification(aggregateRootSpecification)
+                    .specification(valueObjectSpecification)
+                    .specification(domainRepoImplSpecification)
+                    .specification(domainRepoSpecification)
+                    .specification(domainServiceSpecification)
+                    .specification(applicationServiceSpecification)
+                    .specification(interfacesServiceSpecification)
+                    .specification(finderServiceSpecification)
+                    .specification(policySpecification)
+                    .specification(domainFactorySpecification)
+                    .specification(assemblerSpecification)
+                    .specification(dtoWithDefaultAssemblerSpecification).build();
         } else {
             // ROUND 2 ===========================
             return descendantTypesOf(repositoriesInterfaces, domainServiceInterfaces, applicationServiceInterfaces,
@@ -164,7 +129,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
         for (Collection<Class<?>> interfaces : interfacesArgs) {
             for (Class<?> anInterface : interfaces) {
                 LOGGER.debug(INTERFACE_REQUESTS + anInterface.getName());
-                Specification<Class<?>> spec = and(descendantOf(anInterface), not(DomainSpecifications.classIsInterface()), not(DomainSpecifications.classIsAbstract()));
+                Specification<Class<?>> spec = and(descendantOf(anInterface), not(classIsInterface()), not(classIsAbstract()));
                 classpathScanRequestBuilder = classpathScanRequestBuilder.specification(spec);
                 interfaceScanSpecification.put(anInterface, spec);
             }
@@ -179,56 +144,56 @@ public class BusinessCorePlugin extends AbstractPlugin {
             LOGGER.debug(" ================================== ");
             // Domain Repositories
             Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext.scannedTypesBySpecification();
-            repositoriesInterfaces = scannedTypesBySpecification.get(domainRepoSpec);
+            repositoriesInterfaces = scannedTypesBySpecification.get(domainRepoSpecification);
             LOGGER.debug(" Repository Interface => {}", repositoriesInterfaces);
 
             // Domain Repository implementations
             scannedTypesBySpecification = initContext.scannedTypesBySpecification();
-            domainRepoImpls = scannedTypesBySpecification.get(domainRepoImplSpec);
+            domainRepoImpls = scannedTypesBySpecification.get(domainRepoImplSpecification);
             LOGGER.debug(" Domain repository default implementation => {}", domainRepoImpls);
 
             // Domain aggregate root
             scannedTypesBySpecification = initContext.scannedTypesBySpecification();
-            aggregateClasses = scannedTypesBySpecification.get(aggregateRootSpec);
+            aggregateClasses = scannedTypesBySpecification.get(aggregateRootSpecification);
             LOGGER.debug(" Aggregate roots => {}", aggregateClasses);
 
             // Domain value objects
             scannedTypesBySpecification = initContext.scannedTypesBySpecification();
-            valueObjectClasses = scannedTypesBySpecification.get(valueObjectSpec);
+            valueObjectClasses = scannedTypesBySpecification.get(valueObjectSpecification);
             LOGGER.debug(" Aggregate roots => {}", valueObjectClasses);
 
             // Domain Service Specs
-            domainServiceInterfaces = scannedTypesBySpecification.get(domainServiceSpec);
+            domainServiceInterfaces = scannedTypesBySpecification.get(domainServiceSpecification);
             LOGGER.debug(" Domain Service Interface => {}", domainServiceInterfaces);
 
             // Application services specs
-            applicationServiceInterfaces = scannedTypesBySpecification.get(applicationServiceSpec);
+            applicationServiceInterfaces = scannedTypesBySpecification.get(applicationServiceSpecification);
             LOGGER.debug(" Application Service Interface => {}", applicationServiceInterfaces);
 
-            interfacesServiceInterfaces = scannedTypesBySpecification.get(interfacesServiceSpecs);
+            interfacesServiceInterfaces = scannedTypesBySpecification.get(interfacesServiceSpecification);
             LOGGER.debug(" Interfaces Service Interface => {}", interfacesServiceInterfaces);
 
             // Finders specs
-            finderServiceInterfaces = scannedTypesBySpecification.get(finderServiceSpecs);
+            finderServiceInterfaces = scannedTypesBySpecification.get(finderServiceSpecification);
             LOGGER.debug(" Finder Interface => {}", finderServiceInterfaces);
 
             LOGGER.debug(" Finder Interface cleans ");
             LOGGER.debug(" Finder Interface clean => {}", finderServiceInterfaces);
 
             // Policy specs
-            policyInterfaces = scannedTypesBySpecification.get(policySpecs);
+            policyInterfaces = scannedTypesBySpecification.get(policySpecification);
             LOGGER.debug(" Policy Interface => {}", policyInterfaces);
 
             // Factories specs
-            domainFactoryInterfaces = scannedTypesBySpecification.get(domainFactorySpecs);
+            domainFactoryInterfaces = scannedTypesBySpecification.get(domainFactorySpecification);
             LOGGER.debug(" Factory Interface => {}", domainFactoryInterfaces);
 
             // Assemblers
-            assemblersClasses = scannedTypesBySpecification.get(assemblerSpecs);
+            assemblersClasses = scannedTypesBySpecification.get(assemblerSpecification);
             LOGGER.debug("Assembler class => {}", assemblersClasses);
 
             // default assembler
-            Collection<Class<?>> dtoWithDefaultAssemblerClasses = scannedTypesBySpecification.get(dtoWithDefaultAssemblerSpec);
+            Collection<Class<?>> dtoWithDefaultAssemblerClasses = scannedTypesBySpecification.get(dtoWithDefaultAssemblerSpecification);
             for (Class<?> dtoWithDefaultAssemblerClass : dtoWithDefaultAssemblerClasses) {
                 DtoOf dtoOf = dtoWithDefaultAssemblerClass.getAnnotation(DtoOf.class);
                 if (dtoOf.value().length == 1) {
@@ -339,16 +304,5 @@ public class BusinessCorePlugin extends AbstractPlugin {
         bs.add(new GenericBindingStrategy(autoAssemblerGenerics, AutomaticAssembler.class, DefaultAssembler.class, new ProviderFactory<AutomaticAssembler>()));
         bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, AutomaticTupleAssembler.class, DefaultTupleAssembler.class, new ProviderFactory<AutomaticAssembler>()));
         return bs;
-    }
-    protected Specification<Class<?>> classIs(final Class<?> attendee) {
-        return new AbstractSpecification<Class<?>>() {
-
-            @Override
-            public boolean isSatisfiedBy(Class<?> candidate) {
-
-                return candidate != null && candidate.equals(attendee);
-            }
-
-        };
     }
 }
