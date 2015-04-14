@@ -21,7 +21,6 @@ import org.seedstack.business.api.interfaces.GenericInterfacesService;
 import org.seedstack.business.api.interfaces.annotations.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.api.interfaces.assembler.TupleType;
 import org.seedstack.business.api.interfaces.query.finder.Finder;
 import org.seedstack.business.api.interfaces.query.finder.GenericFinder;
 
@@ -99,7 +98,7 @@ public class DomainSpecificationsTest {
                 .isEqualTo(DomainSpecifications.applicationServiceSpecification);
     }
 
-    static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo, TupleType> {
+    static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
         public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
 
@@ -108,9 +107,6 @@ public class DomainSpecificationsTest {
 
         @Override
         public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }
-
-        @Override
-        public TupleType getAggregateClass() { return null; }
 
         @Override
         public Class<MySimplePojo> getDtoClass() { return null; }

@@ -13,20 +13,17 @@ package org.seedstack.business.api.interfaces.assembler;
 import org.seedstack.seed.core.api.Logging;
 import org.slf4j.Logger;
 
-import java.lang.reflect.Type;
-
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
  *
  * @param <AGGREGATE_ROOT>      the aggregate root
  * @param <DTO>                 the dto type
- * @param <AGGREGATE_ROOT_TYPE> the aggregate root type
  * @author epo.jemba@ext.mpsa.com
  * @see BaseAssembler
  * @see BaseTupleAssembler
  */
-public abstract class AbstractBaseAssembler<AGGREGATE_ROOT, DTO, AGGREGATE_ROOT_TYPE extends Type>
-        implements Assembler<AGGREGATE_ROOT, DTO, AGGREGATE_ROOT_TYPE> {
+public abstract class AbstractBaseAssembler<AGGREGATE_ROOT, DTO>
+        implements Assembler<AGGREGATE_ROOT, DTO> {
 
 	@Logging
 	private Logger logger;

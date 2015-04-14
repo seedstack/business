@@ -42,8 +42,7 @@ class RepositoryMethodInterceptor implements MethodInterceptor {
         if (!Repository.class.isAssignableFrom(invocation.getThis().getClass().getSuperclass())) {
             throw SeedException.createNew(EventErrorCodes.INTERCEPTED_CLASS_SHOULD_BE_A_REPOSITORY);
         }
-        Class<? extends AggregateRoot<?>> aggregateRoot =
-                (Class<? extends AggregateRoot<?>>)((Repository<?,?>) invocation.getThis()).getAggregateRootClass();
+        Class<? extends AggregateRoot<?>> aggregateRoot = ((Repository<?,?>) invocation.getThis()).getAggregateRootClass();
         if (EventModule.checkAnnotation(invocation.getMethod(), Read.class)) {
             eventService.fire(new AggregateReadEvent(invocation.getMethod(), invocation.getArguments(), aggregateRoot));
         } else if (EventModule.checkAnnotation(invocation.getMethod(), Persist.class)) {

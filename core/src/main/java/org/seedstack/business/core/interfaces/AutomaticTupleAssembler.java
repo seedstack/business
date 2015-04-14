@@ -28,7 +28,7 @@ import java.lang.reflect.Type;
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  *         24/02/2015
  */
-public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D, Type> {
+public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 
     protected ParameterizedType aggregateClasses;
     protected Class<D> dtoClass;
@@ -93,11 +93,6 @@ public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends Abstra
         for (Object o : targetAggregate) {
             mergeModelMapper.map(sourceDto, o);
         }
-    }
-
-    @Override
-    public ParameterizedType getAggregateClass() {
-        return aggregateClasses;
     }
 
     protected abstract ModelMapper configureAssembly();

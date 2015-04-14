@@ -22,7 +22,7 @@ import java.lang.reflect.Type;
  * @param <Dto> the actual dto type.
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractBaseAssembler<T, Dto, TupleType> {
+public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractBaseAssembler<T, Dto> {
 
 	private TupleType aggregateClasses;
 
@@ -85,11 +85,6 @@ public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractB
     @Override
     public void mergeAggregateWithDto(T targetAggregate, Dto sourceDto) {
         doMergeAggregateWithDto(targetAggregate, sourceDto);
-    }
-
-    @Override
-    public TupleType getAggregateClass() {
-        return aggregateClasses;
     }
 
     /**

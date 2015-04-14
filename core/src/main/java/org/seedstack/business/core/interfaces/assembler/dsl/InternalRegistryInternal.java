@@ -18,7 +18,6 @@ import com.google.inject.util.Types;
 import org.javatuples.Tuple;
 import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
@@ -53,19 +52,25 @@ public class InternalRegistryInternal implements InternalRegistry {
     }
 
     @Override
-    public Assembler<?, ?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto) {
-        Assembler<?, ?, ?> o;
+    public Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto) {
+        Assembler<?, ?> o;
         try {
-            o = (Assembler<?, ?, ?>) getInstance(BaseAssembler.class, aggregateRoot, dto);
+            o = (Assembler<?, ?>) getInstance(Assembler.class, aggregateRoot, dto);
         } catch (ConfigurationException e) {
-            logger.trace("Unable to find a  base assembler for " + aggregateRoot + ", fallback on automatic assembler.");
-            o = (Assembler<?, ?, ?>) getInstance(AutomaticAssembler.class, aggregateRoot, dto);
+            logger.trace("Unable to find a  base assembler for " + aggregateRoot + ", fallback on automatic assembler.", e);
+            try {
+                o = (Assembler<?, ?>) getInstance(AutomaticAssembler.class, aggregateRoot, dto);
+            } catch (ConfigurationException e2) {
+                logger.debug(e2.getMessage(), e2);
+                throw new IllegalStateException("No assembler found for assembling " + aggregateRoot.getSimpleName() + " and " + dto.getSimpleName() +
+                        ". Check that you have created an Assembler for them or that you have annotated " + dto.getSimpleName() + " with @DtoOf(" + aggregateRoot.getSimpleName() + ".class)");
+            }
         }
         return o;
     }
 
     @Override
-    public Assembler<?, ?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto) {
+    public Assembler<?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto) {
         List<Class<? extends AggregateRoot<?>>> aggregateClasses = Lists.newArrayList();
         for (Object o : aggregateRootTuple) {
             if (!(o instanceof AggregateRoot<?>)) {
@@ -77,15 +82,15 @@ public class InternalRegistryInternal implements InternalRegistry {
     }
 
     @Override
-    public Assembler<?, ?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto) {
+    public Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto) {
         Class<? extends Tuple> tupleRawType = Tuples.classOfTuple(aggregateRootTuple); // e.g. Pair or Tiplet
         ParameterizedType tupleType = Types.newParameterizedType(tupleRawType, aggregateRootTuple.toArray(new Type[aggregateRootTuple.size()]));
-        Assembler<?, ?, ?> o;
+        Assembler<?, ?> o;
         try {
-            o = (Assembler<?, ?, ?>) getInstance(BaseTupleAssembler.class, tupleType, dto, Tuple.class);
+            o = (Assembler<?, ?>) getInstance(BaseTupleAssembler.class, tupleType, dto, Tuple.class);
         } catch (ConfigurationException e) {
             logger.trace("Unable to find a  base tuple assembler for " + tupleType + ", fallback on automatic tuple assembler.");
-            o = (Assembler<?, ?, ?>) getInstance(AutomaticTupleAssembler.class, tupleType, dto);
+            o = (Assembler<?, ?>) getInstance(AutomaticTupleAssembler.class, tupleType, dto);
         }
         return o;
     }
