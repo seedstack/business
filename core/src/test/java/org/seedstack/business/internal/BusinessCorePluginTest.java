@@ -57,7 +57,7 @@ public class BusinessCorePluginTest {
 	
 	@Test
 	public void aggregateSpecification_works_fine () {
-		Assertions.assertThat(DomainSpecifications.aggregateSpecification().isSatisfiedBy(Discount.class)).isTrue();
+		Assertions.assertThat(DomainSpecifications.aggregateRootSpecification.isSatisfiedBy(Discount.class)).isTrue();
 	}
 
 }
