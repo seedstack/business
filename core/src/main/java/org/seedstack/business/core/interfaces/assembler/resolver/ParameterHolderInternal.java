@@ -10,7 +10,7 @@
 package org.seedstack.business.core.interfaces.assembler.resolver;
 
 import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>

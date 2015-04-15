@@ -23,7 +23,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  * @param <D> the dto
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D, Class<A>> {
+public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 
     protected Class<A> aggregateClass;
     protected Class<D> dtoClass;
@@ -63,11 +63,6 @@ public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends 
     @Override
     public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
         mergeModelMapper.map(sourceDto, targetAggregate);
-    }
-
-    @Override
-    public Class<A> getAggregateClass() {
-        return aggregateClass;
     }
 
     protected abstract ModelMapper configureAssembly();

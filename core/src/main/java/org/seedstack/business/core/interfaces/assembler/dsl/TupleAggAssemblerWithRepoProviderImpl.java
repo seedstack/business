@@ -16,7 +16,7 @@ import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoAndFactProvider;
 import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoProvider;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -70,9 +70,7 @@ import java.lang.reflect.ParameterizedType;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO extends Object>
-                    extends AbstractBaseAssembler<AGGREGATE_ROOT, DTO, Class<AGGREGATE_ROOT>>  {
-
-	private Class<AGGREGATE_ROOT> aggregateRootClass;
+        extends AbstractBaseAssembler<AGGREGATE_ROOT, DTO> {
 
     /**
      * Default needed constructor.
@@ -80,45 +78,35 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
     @SuppressWarnings({"unchecked", "rawtypes"})
     public BaseAssembler() {
         Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        this.aggregateRootClass = (Class<AGGREGATE_ROOT>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[0];
         dtoClass = (Class<DTO>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     /**
-     * Returns the type of the aggregate used by the assembler.
-     *
-     * @return a Class descendant of {@link AggregateRoot}
-     * @see Assembler#getAggregateClass()
-     */
-    @Override
-    public Class<AGGREGATE_ROOT> getAggregateClass() {
-        return this.aggregateRootClass;
-    }
-
-    /**
-     * This method is used by developers or by {@link Assemblers} to assemble a new DTO from the given aggregate.
+     * This method is used by developers or by the DSL to assemble a new DTO from the given aggregate.
      * <ul>
      * <li>It calls {@link AbstractBaseAssembler#newDto()} for the DTO creation
      * <li>and {@link #doAssembleDtoFromAggregate(Object, org.seedstack.business.api.domain.AggregateRoot)}
      * for the assembly algorithm.
      * </ul>
-     * this Method adds data security. It intercepts and secures data according to the {@link DataSecurityService}.
+     * this Method adds data security. It intercepts and secures data according to the
+     * {@link org.seedstack.seed.security.api.data.DataSecurityService}.
+     *
      * @param sourceAggregate The aggregate from which create the DTO.
      * @return the assembled DTO
      * @see Assembler#assembleDtoFromAggregate(Object)
      */
-	@Override
-	public DTO assembleDtoFromAggregate(AGGREGATE_ROOT sourceAggregate) {
-		DTO newDto = newDto();
-		doAssembleDtoFromAggregate(newDto, sourceAggregate);
+    @Override
+    public DTO assembleDtoFromAggregate(AGGREGATE_ROOT sourceAggregate) {
+        DTO newDto = newDto();
+        doAssembleDtoFromAggregate(newDto, sourceAggregate);
 
-		return newDto;
-	}
+        return newDto;
+    }
 
-	@Override
-	public void updateDtoFromAggregate(DTO sourceDto, AGGREGATE_ROOT sourceAggregate) {
-		doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
-	}
+    @Override
+    public void updateDtoFromAggregate(DTO sourceDto, AGGREGATE_ROOT sourceAggregate) {
+        doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
+    }
 
     /**
      * This method has to be overridden by users to actually assemble the DTO from the aggregate.
@@ -137,7 +125,7 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
     protected abstract void doAssembleDtoFromAggregate(DTO targetDto, AGGREGATE_ROOT sourceAggregate);
 
     /**
-     * This method is used by developers or by {@link Assemblers} to actually merge the aggregate.
+     * This method is used by developers or by the DSL to actually merge the aggregate.
      * <p/>
      * It will call {@link #doMergeAggregateWithDto(org.seedstack.business.api.domain.AggregateRoot, Object)}, which
      * is overridden by developers.

@@ -10,6 +10,7 @@
 package org.seedstack.business.api.interfaces.assembler;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 import java.lang.reflect.ParameterizedType;
@@ -22,9 +23,7 @@ import java.lang.reflect.Type;
  * @param <Dto> the actual dto type.
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractBaseAssembler<T, Dto, TupleType> {
-
-	private TupleType aggregateClasses;
+public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractBaseAssembler<T, Dto> {
 
 	/**
 	 * Default needed constructor. Initialize internal private fields {@code TupleType aggregateClasses}.
@@ -32,21 +31,8 @@ public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractB
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseTupleAssembler() {
         Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-		ParameterizedType p1 = (ParameterizedType) class1.getGenericSuperclass();
-        // descendant of tuple.
-		ParameterizedType tupleType = (ParameterizedType) p1.getActualTypeArguments()[0];
 
-		Type rawTupleType = tupleType.getRawType();
-		Class<? extends Tuple> tupleClass = (Class<? extends Tuple>) rawTupleType;
-		Type[] actualTypeArguments = tupleType.getActualTypeArguments();
-		int length = actualTypeArguments.length;
-		Class[] aggregateClassesArray = new Class[length];
-
-		System.arraycopy(actualTypeArguments, 0, aggregateClassesArray, 0, length);
-
-		aggregateClasses = new TupleType(tupleClass, aggregateClassesArray);
-
-		dtoClass = (Class<Dto>) ((ParameterizedType) class1 .getGenericSuperclass()).getActualTypeArguments()[1];
+		dtoClass = (Class<Dto>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
 	}
 
     /**
@@ -85,11 +71,6 @@ public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractB
     @Override
     public void mergeAggregateWithDto(T targetAggregate, Dto sourceDto) {
         doMergeAggregateWithDto(targetAggregate, sourceDto);
-    }
-
-    @Override
-    public TupleType getAggregateClass() {
-        return aggregateClasses;
     }
 
     /**

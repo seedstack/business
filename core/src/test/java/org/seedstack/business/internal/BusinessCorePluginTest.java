@@ -40,15 +40,6 @@ public class BusinessCorePluginTest {
         underTestBusinessCorePlugin.provideRoundEnvironment(environment);
     }
 
-//	@Test
-//	public void test_BindingRequests() {
-//        Collection<BindingRequest> bindingRequests = underTestBusinessCorePlugin.bindingRequests();
-//        assertThat(bindingRequests.size()).isEqualTo(1);
-//
-//        BindingRequest bindingRequest = bindingRequests.iterator().next();
-//        assertThat(bindingRequest.specification.isSatisfiedBy(Discount.class)).isTrue();
-//	}
-
     @Test
     public void test_classpathScanRequests() {
         underTestBusinessCorePlugin.classpathScanRequests();

@@ -49,7 +49,6 @@ public class BaseAssemblerIT {
 	
 	@Test
 	public void class_returned_by_dto_should_work_fine() {
-		Assertions.assertThat(normalAssembler.getAggregateClass()).isEqualTo(MyAggregateRoot.class);
 		Assertions.assertThat(normalAssembler.getDtoClass()).isEqualTo(MyUnrestrictedDto.class);
 	}
 	

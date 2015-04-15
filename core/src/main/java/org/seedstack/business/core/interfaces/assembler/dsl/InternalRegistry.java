@@ -37,7 +37,7 @@ public interface InternalRegistry {
      * @param dto           the dto class
      * @return the assembler
      */
-    Assembler<?, ?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto);
+    Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto);
 
     /**
      * Returns an BaseTupleAssembler matching the given tuple of aggregate roots and the dto class.
@@ -52,7 +52,7 @@ public interface InternalRegistry {
      * @param dto                the dto class
      * @return the assembler
      */
-    Assembler<?, ?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto);
+    Assembler<?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto);
 
     /**
      * Returns an BaseTupleAssembler matching the given list of aggregate root classes and the dto class.
@@ -65,7 +65,7 @@ public interface InternalRegistry {
      * @param dto                the dto class
      * @return the assembler
      */
-    Assembler<?, ?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto);
+    Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto);
 
     /**
      * Returns a generic factory for the given aggregate root.

@@ -9,11 +9,9 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
+import org.javatuples.Pair;
 import org.seedstack.business.fixtures.domain.discount.Discount;
 import org.seedstack.business.fixtures.domain.export.Export;
-import org.assertj.core.api.Assertions;
-import org.javatuples.Pair;
-import org.junit.Test;
 
 /**
  *
@@ -22,23 +20,12 @@ import org.junit.Test;
  *
  */
 public class BaseTupleAssemblerTest {
-	
-	@Test
-	public void testGetEntityClass() {
-		TestAssembler testAssembler = new TestAssembler();
-		
-		Assertions.assertThat(testAssembler.getAggregateClass().rawType).isEqualTo(Pair.class);
-		Assertions.assertThat(testAssembler.getAggregateClass().aggregateRootTypes[0]).isEqualTo(Discount.class);
-		Assertions.assertThat(testAssembler.getAggregateClass().aggregateRootTypes[1]).isEqualTo(Export.class);
-	}
-	
-	static class Representation
-	{
+
+	static class Representation {
 		String discount;
 		String export;
 		
 		public Representation() {
-			
 		}
 
 		public String getDiscount() {

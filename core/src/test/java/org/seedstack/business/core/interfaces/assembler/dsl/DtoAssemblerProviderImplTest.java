@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.*;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 
 import java.util.ArrayList;
 import java.util.List;

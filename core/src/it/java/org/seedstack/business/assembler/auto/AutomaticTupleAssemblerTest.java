@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

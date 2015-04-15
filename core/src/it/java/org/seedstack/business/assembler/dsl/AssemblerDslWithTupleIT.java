@@ -22,7 +22,7 @@ import org.seedstack.business.core.interfaces.assembler.dsl.fixture.Customer;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.Order;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderDto;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderFactory;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

@@ -9,9 +9,6 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import java.lang.reflect.Type;
-
-
 /**
  * This interface represents the Assembler concepts between an aggregate and a DTO.
  * <p/>
@@ -21,9 +18,8 @@ import java.lang.reflect.Type;
  *
  * @param <AggregateRoot>     the aggregate root
  * @param <Dto>               the dto type
- * @param <AggregateRootType> the aggregate root class type
  */
-public interface Assembler<AggregateRoot, Dto, AggregateRootType extends Type> {
+public interface Assembler<AggregateRoot, Dto> {
 
 
     /**
@@ -49,13 +45,6 @@ public interface Assembler<AggregateRoot, Dto, AggregateRootType extends Type> {
      * @param sourceDto       The dto to copy data from.
      */
     void mergeAggregateWithDto(AggregateRoot targetAggregate, Dto sourceDto);
-
-    /**
-     * Returns the aggregate type handled by the assembler.
-     *
-     * @return Class<AggregateRootType>
-     */
-    AggregateRootType getAggregateClass();
 
     /**
      * Returns the DTO type handled by the assembler.
