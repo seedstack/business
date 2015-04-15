@@ -73,10 +73,10 @@ public class InternalRegistryInternal implements InternalRegistry {
     public Assembler<?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto) {
         List<Class<? extends AggregateRoot<?>>> aggregateClasses = Lists.newArrayList();
         for (Object o : aggregateRootTuple) {
-            if (!(o instanceof AggregateRoot<?>)) {
+            if (!(o instanceof Class<?>) || !AggregateRoot.class.isAssignableFrom((Class)o)) {
                 throw new IllegalArgumentException("The aggregateRootTuple parameter should only contain aggregates. But found " + o);
             }
-            aggregateClasses.add((Class<? extends AggregateRoot<?>>) o.getClass());
+            aggregateClasses.add((Class<? extends AggregateRoot<?>>) o);
         }
         return tupleAssemblerOf(aggregateClasses, dto);
     }

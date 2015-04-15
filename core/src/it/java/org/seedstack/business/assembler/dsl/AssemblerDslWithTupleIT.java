@@ -14,15 +14,10 @@ import org.javatuples.Pair;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.Customer;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.Order;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderDto;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderFactory;
-import org.seedstack.business.api.Tuples;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.*;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -41,48 +36,51 @@ public class AssemblerDslWithTupleIT {
     private Repository<Order, String> orderRepository;
 
     @Inject
-    private OrderFactory orderFactory;
+    private CustomerRepository customerRepository;
 
     @Inject
-    private Factory<Customer> customerFactory;
+    private OrderFactory orderFactory;
 
     @Inject
     private FluentAssembler fluently;
 
     @Test
-    @Ignore
     public void testAssembleFromFactory() {
-        OrderDto orderDto = new OrderDto("1", "light saber");
-        orderDto.setCustomerName("luke");
+        Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerClasses = Tuples.create(Order.class, Customer.class);
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(orderDto).to(orderCustomerClasses).fromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(recipe).<Pair<Order, Customer>>to(Order.class, Customer.class).fromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
-        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("1");
+        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
         Assertions.assertThat(orderCustomerPair.getValue0().getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, so it is set by the assembler
-        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("luke");
+        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
     }
 
     @Test
-    @Ignore
     public void testAssembleFromRepository() {
-        Order order = orderFactory.create("1", "death star");
+        Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
+
+        Order order = orderFactory.create("order1", "death star");
         order.setOtherDetails("some details");
         orderRepository.persist(order);
 
-        Order aggregateRoot = null;
+        Customer customer = new Customer("customer1");
+        customerRepository.persist(customer);
+
+        Pair<Order, Customer> orderCustomerPair = null;
         try {
-            aggregateRoot = fluently.assemble().dto(new OrderDto("1", "light saber")).to(Order.class).fromRepository().orFail();
+            orderCustomerPair = fluently.assemble().dto(recipe).<Pair<Order, Customer>>to(Order.class, Customer.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             fail();
         }
-        Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
-        Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber");
-        // other details come from the aggregate loaded from the repository
-        Assertions.assertThat(aggregateRoot.getOtherDetails()).isEqualTo("some details");
+        Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
+        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
+        Assertions.assertThat(orderCustomerPair.getValue0().getProduct()).isEqualTo("light saber");
+        // the customer name is not part of the factory parameters, so it is set by the assembler
+        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
     }
 
     @Test

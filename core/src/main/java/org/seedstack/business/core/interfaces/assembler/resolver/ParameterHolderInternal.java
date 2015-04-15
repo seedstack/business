@@ -10,80 +10,78 @@
 package org.seedstack.business.core.interfaces.assembler.resolver;
 
 import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
-import org.seedstack.business.api.Tuples;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
 public class ParameterHolderInternal implements ParameterHolder {
 
-    private Object[] parameters = new Object[2];
+    private final Map<Integer, Map<Integer, Object>> parametersByAggregate = new HashMap<Integer, Map<Integer, Object>>();
 
     @Override
     public void put(String source, int index, Object value) {
-        if (parameters[index] != null) {
-            throw new IllegalArgumentException(source + ": the index " + index + " is already used. You might have forgotten to specify the tupleIndex");
-        }
-        parameters[index] = value;
+        put(source, -1, index, value);
     }
 
     @Override
-    public void put(String source, int index, int tupleIndex, Object value) {
-        TupleHolder tupleHolder;
-        Object o = parameters[index];
-        if (o == null) {
-            tupleHolder = new TupleHolder();
-        } else {
-            if (o instanceof TupleHolder) {
-                tupleHolder = (TupleHolder) o;
-            } else {
-                throw new IllegalArgumentException(source + ": the  index " + index + " is already used. You might have forgotten to specify the tupleIndex");
+    public void put(String sourceMethod, int aggregateIndex, int index, Object value) {
+        Map<Integer, Object> parameters = parametersByAggregate.get(aggregateIndex);
+
+        if (parameters == null) {
+            parameters = new HashMap<Integer, Object>();
+        }
+
+        if (parameters.get(index) != null) {
+            String message = String.format("%s - the parameter at the index %d is already specified", sourceMethod, index);
+            if (aggregateIndex > -1) {
+                message += " for the aggregate root " + aggregateIndex;
             }
+            throw new IllegalArgumentException(message);
         }
-
-        tupleHolder.put(source, tupleIndex, value);
-        parameters[index] = tupleHolder;
-    }
-
-    class TupleHolder {
-
-        private Object[] attributes = new Object[2];
-
-        public void put(String source, int tupleIndex, Object value) {
-            if (attributes[tupleIndex] != null) {
-                throw new IllegalArgumentException(source + ": the tuple index " + tupleIndex + " is already used.");
-            }
-            attributes[tupleIndex] = value;
-        }
-
-        public Object[] attributes() {
-            return attributes;
-        }
+        parameters.put(index, value);
+        parametersByAggregate.put(aggregateIndex, parameters);
     }
 
     @Override
     public Object[] parameters() {
-        return transformTupleHoldersToTuples(parameters);
+        return parametersOfAggregateRoot(-1);
     }
 
     @Override
-    public Object first() {
-        return parameters[0];
+    public Object[] parametersOfAggregateRoot(int aggregateIndex) {
+        if (parametersByAggregate.get(aggregateIndex) != null) {
+            return parametersByAggregate.get(aggregateIndex).values().toArray();
+        } else {
+            return new Object[0];
+        }
+    }
+
+    @Override
+    public Object uniqueElement() {
+        if (parametersByAggregate.get(-1) != null) {
+            return parametersByAggregate.get(-1).get(-1);
+        }
+        return null;
+    }
+
+    @Override
+    public Object uniqueElementForAggregateRoot(int aggregateIndex) {
+        if (parametersByAggregate.get(aggregateIndex) != null) {
+            return parametersByAggregate.get(aggregateIndex).get(-1);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isEmptyForAggregateRoot(int aggregateIndex) {
+        return parametersByAggregate.isEmpty() || parametersByAggregate.get(aggregateIndex) == null || parametersByAggregate.get(aggregateIndex).isEmpty();
     }
 
     @Override
     public boolean isEmpty() {
-        return parameters == null || parameters.length == 0;
-    }
-
-    private Object[] transformTupleHoldersToTuples(Object[] parameters) {
-        for (int i = 0; i < parameters.length; i++) {
-            Object parameter = parameters[i];
-            if (parameter instanceof TupleHolder) {
-                TupleHolder tupleHolder = (TupleHolder) parameter;
-                parameters[i] = Tuples.create(tupleHolder.attributes);
-            }
-        }
-        return parameters;
+        return isEmptyForAggregateRoot(-1) && isEmptyForAggregateRoot(0);
     }
 }

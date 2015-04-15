@@ -16,6 +16,7 @@ import org.javatuples.*;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +28,42 @@ import java.util.List;
 public final class Tuples {
 
     private Tuples() {
+    }
+
+    /**
+     * Transforms a list of object into a tuple. Does not work array of more than ten element.
+     *
+     * @param objects the list of object
+     * @param <TUPLE> the tuple type
+     * @return a tuple
+     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     */
+    @SuppressWarnings("unchecked")
+    public static <TUPLE extends Tuple> TUPLE  create(List<?> objects) {
+        SeedCheckUtils.checkIf(objects.size() <= 10, "Can't create a Tuple of more than ten element.");
+
+        Class<? extends Tuple> tupleClass = classOfTuple(objects.toArray(new Object[objects.size()]));
+
+        return  (TUPLE) Reflection
+                .staticMethod("fromCollection")
+                .withReturnType(tupleClass)
+                .withParameterTypes(Collection.class)
+                .in(tupleClass).invoke(objects);
+    }
+
+    /**
+     * Transforms an array of object into a tuple. Does not work array of more than ten element.
+     *
+     * @param objects the array of object
+     * @param <TUPLE> the tuple type
+     * @return a tuple
+     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <TUPLE extends Tuple> TUPLE  create(Object firstObject, Object... objects) {
+        List list = Lists.newArrayList(firstObject);
+        list.addAll(Arrays.asList(objects));
+        return (TUPLE) create(list);
     }
 
     /**
@@ -45,19 +82,6 @@ public final class Tuples {
     }
 
     /**
-     * Transforms an array of object into a tuple. Does not work array of more than ten element.
-     *
-     * @param objects the array of object
-     * @param <TUPLE> the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <TUPLE extends Tuple> TUPLE  create(Object... objects) {
-        return (TUPLE) createTupleFromList((List) Lists.newArrayList(objects));
-    }
-
-    /**
      * Transforms a list of object into a tuple. Does not work array of more than ten element.
      *
      * @param objects the list of object
@@ -72,25 +96,8 @@ public final class Tuples {
         return  create(objects);
     }
 
-    /**
-     * Transforms a list of object into a tuple. Does not work array of more than ten element.
-     *
-     * @param objects the list of object
-     * @param <TUPLE> the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
-     */
-    @SuppressWarnings("unchecked")
-    public static <TUPLE extends Tuple> TUPLE  create(List<Object> objects) {
-        SeedCheckUtils.checkIf(objects.size() <= 10, "Can't create a Tuple of more than ten element.");
-
-        Class<? extends Tuple> tupleClass = classOfTuple(objects.toArray(new Object[objects.size()]));
-
-        return  (TUPLE) Reflection
-                .staticMethod("fromCollection")
-                .withReturnType(tupleClass)
-                .withParameterTypes(Collection.class)
-                .in(tupleClass).invoke(objects);
+    public static Class<? extends Tuple> classOfTuple(List<?> objects) {
+        return classOfTuple(objects.toArray());
     }
 
     /**

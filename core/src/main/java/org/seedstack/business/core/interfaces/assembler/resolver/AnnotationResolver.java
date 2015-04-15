@@ -9,79 +9,93 @@
  */
 package org.seedstack.business.core.interfaces.assembler.resolver;
 
-import org.fest.reflect.core.Reflection;
 import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
 import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
 import org.seedstack.business.api.interfaces.assembler.resolver.DtoInfoResolver;
 import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * Implementation of the {@link org.seedstack.business.api.interfaces.assembler.resolver.DtoInfoResolver}
+ * based on the MatchingFactoryParameter and MatchingFactoryParameter annotation.
+ * <p>
+ * See Their respective documentation to understand {@code AnnotationResolver} implementation.
+ * </p>
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @see org.seedstack.business.api.interfaces.assembler.MatchingEntityId
+ * @see org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter
  */
 public class AnnotationResolver implements DtoInfoResolver {
 
+    public static final String MATCHING_FACT_PARAM = MatchingFactoryParameter.class.getSimpleName();
+    public static final String MATCHING_ENTITY_ID = MatchingEntityId.class.getSimpleName();
+
     @Override
     public ParameterHolder resolveId(Object dto) {
-        return resolveParameterFromDto(dto, MatchingEntityId.class);
-    }
-
-    @Override
-    public ParameterHolder resolveAggregate(Object dto) {
-        return resolveParameterFromDto(dto, MatchingFactoryParameter.class);
-    }
-
-    private ParameterHolder resolveParameterFromDto(Object dto, Class<? extends Annotation> annotationClass) {
         ParameterHolder parameterHolder = new ParameterHolderInternal();
 
-        // filter methods annotated with the annotationClass
         Method[] methods = dto.getClass().getMethods();
         for (Method method : methods) {
-            Annotation annotation = method.getAnnotation(annotationClass);
+            MatchingEntityId annotation = method.getAnnotation(MatchingEntityId.class);
             if (annotation != null) {
-                int fieldIndex = fieldIndex(annotation);
-                int typeIndex = typeIndex(annotation);
+                if (annotation.index() == -1) {
+                    // Only if the id is not a value object ! If the constructor has one parameter set the index to 0.
+                    // TODO test and document the behavior described above
+                    if (parameterHolder.uniqueElement() != null) {
+                        String message = method.toString() + " - There is already a method annotated with @" + MATCHING_ENTITY_ID
+                                + " don't forget to specify the index to indicate the matching parameter: @" + MATCHING_ENTITY_ID + "(index = 0)";
+                        throw new IllegalArgumentException(message);
+                    }
+                    parameterHolder.put(method.getName(), annotation.typeIndex(), -1, getAttributeFromMethod(dto, method)); // The index set to -1 as it is another use case
 
-                if (fieldIndex == -1) {
-                    // TODO : this case might be handle later
-                    if (parameterHolder.first() != null) {
-                        throw new IllegalArgumentException("Missing index on @MatchingEntityId annotation for " + method.getName());
-                    }
-                    parameterHolder.put(method.getName(), 0, getAttributeFromMethod(dto, method));
                 } else {
-                    if (typeIndex == -1) {
-                        parameterHolder.put(method.getName(), fieldIndex, getAttributeFromMethod(dto, method));
-                    } else {
-                        parameterHolder.put(method.getName(), fieldIndex, typeIndex, getAttributeFromMethod(dto, method));
-                    }
+                    parameterHolder.put(method.getName(), annotation.typeIndex(), annotation.index(), getAttributeFromMethod(dto, method));
                 }
             }
         }
 
-        // No @MatchingEntityId found
+        // No annotation found
         if (parameterHolder.isEmpty()) {
-            throw new IllegalArgumentException("Missing @MatchingEntityId annotation on " + dto.getClass().getSimpleName() + "'s id.");
+            String message = String.format("Missing %s annotation on %s's id.", MATCHING_ENTITY_ID, dto.getClass().getSimpleName());
+            throw new IllegalArgumentException(message);
         }
 
         return parameterHolder;
     }
 
-    // ------
-    // These two methods are needed because of the lack of interface for annotations.
-    // This is the contract that annotations used by the resolveParameterFromDto() method should follow.
+    @Override
+    public ParameterHolder resolveAggregate(Object dto) {
+        ParameterHolder parameterHolder = new ParameterHolderInternal();
 
-    private int fieldIndex(Annotation anno) {
-        return Reflection.method("index").withReturnType(int.class).withParameterTypes().in(anno).invoke();
+        Method[] methods = dto.getClass().getMethods();
+        for (Method method : methods) {
+            MatchingFactoryParameter annotation = method.getAnnotation(MatchingFactoryParameter.class);
+            if (annotation != null) {
+                if (annotation.index() == -1) {
+                    // If there is only one parameter in the factory method you can avoid to set the index
+                    if (parameterHolder.uniqueElement() != null) {
+                        String message = method.getName() + " - There is already a method annotated with @" + MATCHING_FACT_PARAM
+                                + " don't forget to specify the index to indicate the matching parameter: @" + MATCHING_FACT_PARAM + "(index = 0)";
+                        throw new IllegalArgumentException(message);
+                    }
+                    parameterHolder.put(method.toString(), 0, getAttributeFromMethod(dto, method)); // The index set to 0
+
+                } else {
+                    parameterHolder.put(method.toString(), annotation.typeIndex(), annotation.index(), getAttributeFromMethod(dto, method));
+                }
+            }
+        }
+
+        // No annotation found
+        if (parameterHolder.isEmpty()) {
+            String message = String.format("Missing %s annotation on %s's id.", MATCHING_FACT_PARAM, dto.getClass().getSimpleName());
+            throw new IllegalArgumentException(message);
+        }
+
+        return parameterHolder;
     }
-
-    private int typeIndex(Annotation anno) {
-        return Reflection.method("typeIndex").withReturnType(int.class).withParameterTypes().in(anno).invoke();
-    }
-
-    // ------
 
     private Object getAttributeFromMethod(Object dto, Method method) {
         try {

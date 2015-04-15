@@ -10,10 +10,13 @@
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,8 +39,12 @@ public class AggAssemblerProviderImpl implements BaseAggAssemblerProvider, AggAs
     }
 
     @Override
-    public <T extends Tuple> TupleAggAssemblerWithRepoProvider<T> to(T aggregateRootTuple) {
-        assemblerContext.setAggregateClasses(aggregateRootTuple);
+    public <T extends Tuple> TupleAggAssemblerWithRepoProvider<T> to(Class<? extends AggregateRoot<?>> firstAggregateClass, Class<? extends AggregateRoot<?>> secondAggregateClass, Class<? extends AggregateRoot<?>>... otherAggregateClasses) {
+        List<Class<?>> aggregateRootClasses = new ArrayList<Class<?>>();
+        aggregateRootClasses.add(firstAggregateClass);
+        aggregateRootClasses.add(secondAggregateClass);
+        aggregateRootClasses.addAll(Arrays.asList(otherAggregateClasses));
+        assemblerContext.setAggregateClasses(Tuples.create((List)aggregateRootClasses));
         return new TupleAggAssemblerWithRepoProviderImpl<T>(registry, assemblerContext);
     }
 

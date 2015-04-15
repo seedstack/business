@@ -16,8 +16,59 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation serves for doing the match between representation/dto methods
- * to factory create method parameters. 
+ * This annotation allows the use of the {@code fromFactory()} method of the assembler DSL. If you don't use
+ * this DSL feature, this annotated is unnecessary.
+ * <p>
+ * It binds the DTO's annotated method to one parameter of a factory method used to create the
+ * assembled aggregate.
+ * </p>
+ * <p>
+ * It also handle the case of a DTO assembled from a tuple of aggregate roots.
+ * </p>
+ * Case 1: Basic use case.
+ * <pre>
+ * public class CustomerDto {
+ *
+ *     {@literal @}MatchingFactoryParameter(index = 0)
+ *     public String getName() {...}
+ *
+ *     {@literal @}MatchingFactoryParameter(index = 1)
+ *     public Date getBirthDate() {...}
+ *
+ *     // No need for annotation here as the address is not part of the factory method
+ *     public Address getAddress() {...}
+ * }
+ *
+ * public class RecipeAssembler extends BaseAssembler&lt;Customer, CustomerDto&gt; { ... }
+ *
+ * public class CustomerFactory {
+ *     public Customer createCustomer(String name, Date birthDate);
+ * }
+ * </pre>
+ * Case 2: The DTO is an assembly of multiple aggregates.
+ * <pre>
+ * public class RecipeDto {
+ *
+ *     {@literal @}MatchingFactoryParameter(index = 0, typeIndex = 0)
+ *     public String getCustomerName() {...}
+ *
+ *     {@literal @}MatchingFactoryParameter(index = 1, typeIndex = 0)
+ *     public Date getCustomerBirthDate() {...}
+ *
+ *     {@literal @}MatchingFactoryParameter(index = 0, typeIndex = 1)
+ *     public int getOrderId() {...}
+ * }
+ *
+ * public class RecipeAssembler extends BaseTupleAssembler&lt;Pair&lt;Customer, Order&gt;, RecipeDto&gt; { ... }
+ *
+ * public class CustomerFactory {
+ *     Customer createCustomer(String name, Date birthDate);
+ * }
+ *
+ * public class OrderFactory {
+ *     Customer createOrder(int orderId);
+ * }
+ * </pre>
  *  
  * @author epo.jemba@ext.mpsa.com
  *
@@ -27,16 +78,19 @@ import java.lang.annotation.Target;
 public @interface MatchingFactoryParameter {
 
     /**
+     * Indicates which factory parameter the annotated method match.
+     *
      * @return the parameter index in the factory method.
      */
 	int index() default -1;
 
     /**
-     * When using a BaseTupleAssembler, this type index is used to indicate to in
+     * When using a tuple assembler, i.e. when assembling a DTO to tuple of aggregate roots.
+     * This index indicates for which aggregate root this factory parameter is used.
      *
-     * @return the entity index in the tuple.
+     * @return the aggregate index
      *
      * @see BaseTupleAssembler
      */
-    int typeIndex () default -1;
+    int typeIndex() default -1;
 }

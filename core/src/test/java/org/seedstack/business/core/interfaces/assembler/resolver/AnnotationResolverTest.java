@@ -10,8 +10,6 @@
 package org.seedstack.business.core.interfaces.assembler.resolver;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
-import org.javatuples.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.business.api.interfaces.assembler.resolver.DtoInfoResolver;
@@ -35,10 +33,6 @@ public class AnnotationResolverTest {
     public static final String lastName = "doe";
 
     private DtoInfoResolver underTest;
-    private Case1Dto case1Dto;
-    private Case2Dto case2Dto;
-    private Case3Dto case3Dto;
-    private Case4Dto case4Dto;
     private CaseFail1Dto caseFail1Dto;
     private CaseFail2Dto caseFail2Dto;
     private CaseFail3Dto caseFail3Dto;
@@ -47,42 +41,45 @@ public class AnnotationResolverTest {
     public void setup() {
         underTest = new AnnotationResolver();
 
-        case1Dto = new Case1Dto(1, firstName);
-        case2Dto = new Case2Dto(firstName, birthDate);
-        case3Dto = new Case3Dto(firstName, lastName);
-        case4Dto = new Case4Dto(firstName, lastName);
         caseFail1Dto = new CaseFail1Dto(firstName, lastName);
         caseFail2Dto = new CaseFail2Dto(firstName, lastName);
         caseFail3Dto = new CaseFail3Dto(firstName, lastName);
     }
 
     @Test
-    public void testResolveId() {
-        SoftAssertions softAssertions = new SoftAssertions();
+    public void testSimpleId() {
+        ParameterHolder holder = underTest.resolveId(new Case1Dto(1, firstName));
+        Assertions.assertThat(holder).isNotNull();
+        Assertions.assertThat(holder.uniqueElement()).isEqualTo(1);
+    }
 
-        ParameterHolder id1 = underTest.resolveId(case1Dto);
-        softAssertions.assertThat(id1).as("ResolveId() - Cas 1: the id correspond to one field").isNotNull();
-        softAssertions.assertThat(id1.first()).as("Cas 1:").isEqualTo(1);
+    @Test
+    public void testValueObjectId() {
+        ParameterHolder holder = underTest.resolveId(new Case2Dto(firstName, birthDate));
+        Assertions.assertThat(holder).isNotNull();
+        Assertions.assertThat(holder.parameters()).hasSize(2);
+        Assertions.assertThat(holder.parameters()).isEqualTo(new Object[]{firstName, birthDate});
+    }
 
-        // TODO: case 2 is useless - delete it or make it work without specifying the index
+    @Test
+    public void testSimpleIdForTuples() {
+        ParameterHolder holder = underTest.resolveId(new Case3Dto(firstName, lastName));
+        Assertions.assertThat(holder).isNotNull();
+        Assertions.assertThat(holder.parameters()).isEmpty();
+        Assertions.assertThat(holder.parametersOfAggregateRoot(0)).isEqualTo(new Object[]{firstName});
+        Assertions.assertThat(holder.parametersOfAggregateRoot(1)).isEqualTo(new Object[]{lastName});
+    }
 
-        ParameterHolder id2 = underTest.resolveId(case2Dto);
-        softAssertions.assertThat(id2).as("ResolveId() - Cas 2: the id is composite").isNotNull();
-        softAssertions.assertThat(id2.parameters()).as("Cas 2").isEqualTo(new Object[]{firstName, birthDate});
+    @Test
+    public void testValueObjectIdForTuples() {
+        ParameterHolder holder = underTest.resolveId(new Case4Dto(firstName, lastName, "oderItem", "description"));
+        Assertions.assertThat(holder).isNotNull();
 
-        ParameterHolder id3 =  underTest.resolveId(case3Dto);
-        softAssertions.assertThat(id3).as("ResolveId() - Cas 3: the id is composite and have elements of same type").isNotNull();
-        softAssertions.assertThat(id3.parameters()).as("Cas 3").isEqualTo(new Object[]{firstName, lastName});
+        Assertions.assertThat(holder.parametersOfAggregateRoot(0)).hasSize(2);
+        Assertions.assertThat(holder.parametersOfAggregateRoot(0)).isEqualTo(new Object[]{firstName, lastName});
 
-        ParameterHolder id4 = underTest.resolveId(case4Dto);
-        softAssertions.assertThat(id4).as("ResolveId() - Cas 4: the id is composite and contains a value object").isNotNull();
-        softAssertions.assertThat(id4.parameters()[0]).as("Cas 4").isNotNull();
-        //noinspection unchecked
-        Pair<String, String> name = (Pair<String, String>) id4.first();
-        softAssertions.assertThat(name.getValue0()).as("Cas 4").isEqualTo(firstName);
-        softAssertions.assertThat(name.getValue1()).as("Cas 4").isEqualTo(lastName);
-
-        softAssertions.assertAll();
+        Assertions.assertThat(holder.parametersOfAggregateRoot(1)).hasSize(2);
+        Assertions.assertThat(holder.parametersOfAggregateRoot(1)).isEqualTo(new Object[]{"oderItem", "description"});
     }
 
     @Test

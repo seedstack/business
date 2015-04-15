@@ -20,16 +20,13 @@ public class Customer extends BaseAggregateRoot<String> {
 
     String name;
 
+    public Customer(String id) {
+        this.id = id;
+    }
+
     @Override
     public String getEntityId() {
         return id;
-    }
-
-    public Customer() {
-    }
-
-    public Customer(String name) {
-        this.name = name;
     }
 
     public String getName() {

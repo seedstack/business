@@ -23,6 +23,7 @@ import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 
 /**
  * FactoryInternal allows the creations of {@link org.seedstack.business.api.domain.DomainObject} objects using their constructors.
@@ -79,17 +80,17 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 		Constructor<?> constructor = MethodMatcher.findMatchingConstructor(getProducedClass(), args);
 		DO domainObject;
 		if (constructor == null) {
-			throw SeedException.createNew(DomainErrorCodes.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
-					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
-		}
-		try {
+            throw SeedException.createNew(DomainErrorCodes.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
+                    .put("domainObject", getProducedClass()).put("parameters", Arrays.toString(args));
+        }
+        try {
 			constructor.setAccessible(true);
             //noinspection unchecked
             domainObject = (DO) constructor.newInstance(args);
 
 		} catch (Exception e) {
 			throw SeedException.wrap(e, DomainErrorCodes.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
-					.put("domainObject", getProducedClass().getSimpleName()).put("parameters", args);
+					.put("domainObject", getProducedClass()).put("parameters", Arrays.toString(args));
 		}
 		return domainObject;
 	}

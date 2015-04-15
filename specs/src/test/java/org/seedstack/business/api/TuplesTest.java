@@ -9,6 +9,7 @@
  */
 package org.seedstack.business.api;
 
+import com.google.common.collect.Lists;
 import com.google.inject.util.Types;
 import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
@@ -17,6 +18,7 @@ import org.javatuples.Tuple;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Tests the helper class {@link org.seedstack.business.api.Tuples}.
@@ -26,16 +28,28 @@ import java.lang.reflect.Type;
 public class TuplesTest {
 
     @Test
-    public void testCreateTupleFromList() {
-        Tuple tuple = Tuples.create(String.class, Long.class);
+    public void testCreateTupleFromVarArgs() {
+
         Pair<Integer, String> pair = Tuples.create(10, "foo");
         Assertions.assertThat((Iterable<?>) pair).isEqualTo(new Pair<Integer, String>(10, "foo"));
+
+        Tuple tuple = Tuples.create(String.class, Long.class);
         Assertions.assertThat((Iterable<?>) tuple).isInstanceOf(Pair.class);
         Assertions.assertThat(tuple.containsAll(String.class, Long.class)).isTrue();
         Assertions.assertThat(tuple.getSize()).isEqualTo(2);
 
         tuple = Tuples.create(String.class, Long.class, Float.class);
         Assertions.assertThat((Iterable<?>) tuple).isInstanceOf(Triplet.class);
+    }
+
+    @Test
+    public void testCreateTupleFromList() {
+        List<?> classes = Lists.newArrayList(String.class, Long.class);
+        Tuple tuple = Tuples.create(classes);
+
+        Assertions.assertThat((Iterable<?>) tuple).isInstanceOf(Pair.class);
+        Assertions.assertThat(tuple.containsAll(String.class, Long.class)).isTrue();
+        Assertions.assertThat(tuple.getSize()).isEqualTo(2);
     }
 
     @Test

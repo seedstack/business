@@ -9,14 +9,17 @@
  */
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
+import org.javatuples.Triplet;
 import org.javatuples.Tuple;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoAndFactProvider;
 import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoProvider;
-import org.seedstack.business.api.Tuples;
+import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +29,6 @@ import java.util.List;
  */
 public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends BaseAggAssemblerWithRepoProviderImpl implements TupleAggAssemblerWithRepoProvider<T>, TupleAggAssemblerWithRepoAndFactProvider<T> {
 
-    private final List<Repository<?, ?>> repositories = new ArrayList<Repository<?, ?>>(2);
-
     public TupleAggAssemblerWithRepoProviderImpl(InternalRegistry registry, AssemblerContext assemblerContext) {
         super(registry, assemblerContext);
     }
@@ -36,9 +37,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
 
     @Override
     public TupleAggAssemblerWithRepoAndFactProvider<T> fromRepository() {
-        for (Object o : assemblerContext.getAggregateClasses()) {
-            repositories.add(registry.repositoryOf((Class<? extends AggregateRoot<?>>) o));
-        }
+        // it just redirect to the good interface
         return this;
     }
 
@@ -46,12 +45,19 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
     @Override
     public T fromFactory() {
         List<Object> aggregateRoots = new ArrayList<Object>();
+        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(assemblerContext.getDto());
+        int aggregateIndex = 0;
         for (Object o : assemblerContext.getAggregateClasses()) {
             if (o instanceof Class<?>) {
                 Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
                 GenericFactory<?> genericFactory = registry.genericFactoryOf(aggregateClass);
-                aggregateRoots.add(getAggregateFromFactory(genericFactory, aggregateClass));
+                Object aggregate = getAggregateFromFactory(genericFactory, aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
+                aggregateRoots.add(aggregate);
+            } else {
+                // TODO seed exception
+                throw new IllegalArgumentException(o + " should be a class. the .to(Tuple aggregateClasses) method only accepts tuple of aggregate root classes.");
             }
+            aggregateIndex++;
         }
         return (T) assembleWithDto(Tuples.create(aggregateRoots));
     }
@@ -61,41 +67,98 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
     @SuppressWarnings("unchecked")
     @Override
     public T orFail() throws AggregateNotFoundException {
-        List<Object> aggregateRoots = new ArrayList<Object>();
-        for (Object o : assemblerContext.getAggregateClasses()) {
-            Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
-            Object id = resolveId(assemblerContext.getDto(), aggregateClass);
-            AggregateRoot<?> a = loadFromRepo(id);
+        // list of triplet - each triplet contains the aggregate root instance, its class and its id (useful if the AR is null).
+        List<Triplet<Object, Class<?>, Object>> aggregateRootsMetadata = loadFromRepository();
 
-            if (a == null) {
-                throw new AggregateNotFoundException(String.format("Unable to load aggregate %s for id: %s", aggregateClass, id));
+        boolean shouldThrow = false;
+
+        List<AggregateRoot<?>> aggregateRoots = new ArrayList<AggregateRoot<?>>();
+
+        StringBuilder stringBuilder = new StringBuilder().append("Unable to load ");
+        for (Triplet<Object, Class<?>, Object> triplet : aggregateRootsMetadata) {
+
+            if (triplet.getValue0() == null) {
+                // If at least one aggregate root is null we throw a AggregateNotFoundException
+                shouldThrow = true;
+                stringBuilder.append("aggregate: ").append(triplet.getValue1()).append(" for id: ").append(triplet.getValue2());
+            } else {
+                aggregateRoots.add((AggregateRoot<?>) triplet.getValue0());
             }
-
-            aggregateRoots.add(a);
         }
+
+        if (shouldThrow) {
+            throw new AggregateNotFoundException(stringBuilder.toString());
+        }
+
         return (T) assembleWithDto(Tuples.create(aggregateRoots));
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T thenFromFactory() {
-        List<Object> aggregateRoots = new ArrayList<Object>();
-        for (Object o : assemblerContext.getAggregateClasses()) {
-            // load from the repository
-            Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
-            Object id = resolveId(assemblerContext.getDto(), aggregateClass);
-            AggregateRoot<?> a = loadFromRepo(id);
+        // list of triplet - each triplet contains the aggregate root instance, its class and its id (useful if the AR is null).
+        List<Triplet<Object, Class<?>, Object>> aggregateRootsMetadata = loadFromRepository();
 
-            if (a != null) {
-                // then assemble the dto in the previously created aggregate root
-                aggregateRoots.add(a);
+        List<AggregateRoot<?>> aggregateRoots = new ArrayList<AggregateRoot<?>>();
+
+        StringBuilder errorMessage = new StringBuilder().append("Unable to load ");
+        for (Triplet<Object, Class<?>, Object> triplet : aggregateRootsMetadata) {
+
+            if (triplet.getValue0() == null) {
+                errorMessage.append("aggregate: ").append(triplet.getValue1()).append(" for id: ").append(triplet.getValue2());
             } else {
-                // otherwise fallback on the factory
-                GenericFactory<?> genericFactory = registry.genericFactoryOf(aggregateClass);
-                aggregateRoots.add(getAggregateFromFactory(genericFactory, aggregateClass));
+                aggregateRoots.add((AggregateRoot<?>) triplet.getValue0());
             }
         }
-        return Tuples.create(aggregateRoots);
+
+        T result;
+        if (aggregateRootsMetadata.isEmpty()) {
+            // should not append
+            result = null;
+        } else if (aggregateRoots.isEmpty()) {
+            // No aggregate root persisted -> fallback on factories
+            result = fromFactory();
+        } else if (aggregateRootsMetadata.size() != aggregateRoots.size()) {
+            // data are inconsistent some required aggregate roots are persisted but not all
+            throw new IllegalStateException(errorMessage.toString());
+        } else {
+            // all aggregate roots are loaded -> assemble them and return them
+            result = (T) assembleWithDto(Tuples.create(aggregateRoots));
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Triplet<Object, Class<?>, Object>> loadFromRepository() {
+        Tuple aggregateClasses = assemblerContext.getAggregateClasses();
+        Tuple ids = resolveIds(assemblerContext.getDto(), aggregateClasses);
+
+        List<Triplet<Object, Class<?>, Object>> aggregateRoots = new ArrayList<Triplet<Object, Class<?>, Object>>();
+        for (int i = 0; i < ids.getSize(); i++) {
+            Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) aggregateClasses.getValue(i);
+            Object id = ids.getValue(i);
+
+            Repository repository = registry.repositoryOf(aggregateClass);
+            AggregateRoot<?> aggregateRoot = repository.load(id);
+
+            aggregateRoots.add(new Triplet<Object, Class<?>, Object>(aggregateRoot, aggregateClass, id));
+        }
+
+        return aggregateRoots;
+    }
+
+    /**
+     * Assemble one or a tuple of aggregate root from a dto.
+     *
+     * @param aggregateRoots the aggregate root(s) to assemble
+     * @param <T> type of aggregate root(s). It could be a {@code Tuple} or an {@code AggregateRoot}
+     * @return the assembled aggregate root(s)
+     */
+    protected  <T> T assembleWithDto(T aggregateRoots) {
+        Assembler assembler = registry.tupleAssemblerOf(assemblerContext.getAggregateClasses(), assemblerContext.getDto().getClass());
+        //noinspection unchecked
+        assembler.mergeAggregateWithDto(aggregateRoots, assemblerContext.getDto());
+        return aggregateRoots;
     }
 
 }
