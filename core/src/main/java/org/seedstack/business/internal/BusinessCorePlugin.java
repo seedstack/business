@@ -34,7 +34,7 @@ import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
 import org.seedstack.business.core.interfaces.DefaultAssembler;
 import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;

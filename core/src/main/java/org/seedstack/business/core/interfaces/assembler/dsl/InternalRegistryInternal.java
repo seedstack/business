@@ -21,7 +21,7 @@ import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.core.api.Logging;
 import org.slf4j.Logger;

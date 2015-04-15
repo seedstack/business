@@ -15,7 +15,7 @@ import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 
 import java.util.List;
 

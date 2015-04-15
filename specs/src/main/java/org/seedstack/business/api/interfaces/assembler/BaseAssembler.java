@@ -72,15 +72,12 @@ import java.lang.reflect.ParameterizedType;
 public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO extends Object>
         extends AbstractBaseAssembler<AGGREGATE_ROOT, DTO> {
 
-    private Class<AGGREGATE_ROOT> aggregateRootClass;
-
     /**
      * Default needed constructor.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public BaseAssembler() {
         Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        this.aggregateRootClass = (Class<AGGREGATE_ROOT>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[0];
         dtoClass = (Class<DTO>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
     }
 

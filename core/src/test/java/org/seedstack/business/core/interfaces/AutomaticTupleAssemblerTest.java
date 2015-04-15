@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>

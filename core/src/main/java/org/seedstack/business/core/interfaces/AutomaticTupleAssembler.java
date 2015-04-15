@@ -14,7 +14,7 @@ import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
 import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
-import org.seedstack.business.helpers.Tuples;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 import java.lang.reflect.ParameterizedType;
