@@ -36,4 +36,8 @@ public class Case2Dto {
     public Date getBirthDate() {
         return birthDate;
     }
+
+    public String otherDetails() {
+        return "something";
+    }
 }

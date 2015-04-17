@@ -65,7 +65,7 @@ class EventModule extends AbstractModule {
     protected void configure() {
         for (Class<? extends EventHandler> eventHandlerClass : eventHandlerClasses) {
             bind(eventHandlerClass);
-            LOGGER.info("binding {} in scope {}", eventHandlerClass, Scopes.NO_SCOPE);
+            LOGGER.debug("binding {} in scope {}", eventHandlerClass, Scopes.NO_SCOPE);
         }
         bind(EVENT_HANDLER_MAP_TYPE_LITERAL).toInstance(eventHandlersByEvent);
         bind(EventService.class).to(EventServiceInternal.class).in(Scopes.SINGLETON);

@@ -16,23 +16,23 @@ import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
  */
 public class Case3Dto {
 
-    String firstName;
+    String customerName;
 
-    String lastName;
+    String orderItem;
 
-    public Case3Dto(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Case3Dto(String customerName, String orderItem) {
+        this.customerName = customerName;
+        this.orderItem = orderItem;
     }
 
-    @MatchingEntityId(index = 0)
-    public String getFirstName() {
-        return firstName;
+    @MatchingEntityId(typeIndex = 0)
+    public String getCustomerName() {
+        return customerName;
     }
 
-    @MatchingEntityId(index = 1)
-    public String getLastName() {
-        return lastName;
+    @MatchingEntityId(typeIndex = 1)
+    public String getOrderItem() {
+        return orderItem;
     }
 
 }
