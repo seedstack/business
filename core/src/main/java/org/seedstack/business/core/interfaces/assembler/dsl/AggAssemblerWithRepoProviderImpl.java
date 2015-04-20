@@ -10,49 +10,47 @@
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggAssemblerWithRepoAndFactProvider;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggAssemblerWithRepoProvider;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl implements AggAssemblerWithRepoProvider<A>, AggAssemblerWithRepoAndFactProvider<A> {
+public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements AggAssemblerWithRepoProvider<A>, AggAssemblerWithRepoAndFactProvider<A> {
 
-    public AggAssemblerWithRepoProviderImpl(InternalRegistry registry, AssemblerContext assemblerContext) {
-        super(registry, assemblerContext);
+    private final Class<A> aggregateClass;
+    private final Object dto;
+
+    public AggAssemblerWithRepoProviderImpl(InternalRegistry registry, Class<A> aggregateClass, Object dto) {
+        super(registry);
+        this.aggregateClass = aggregateClass;
+        this.dto = dto;
     }
 
     // --------------------------- AggAssemblerWithRepoProvider
 
     @Override
     public AggAssemblerWithRepoAndFactProvider<A> fromRepository() {
-        assemblerContext.setRepository(registry.repositoryOf(assemblerContext.getAggregateClass()));
+        // Just redirect to the expected DSL path
         return this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public A fromFactory() {
-        GenericFactory<A> genericFactory = (GenericFactory<A>) registry.genericFactoryOf(assemblerContext.getAggregateClass());
-        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(assemblerContext.getDto());
-        A aggregateRoot = (A) getAggregateFromFactory(genericFactory, assemblerContext.getAggregateClass(), parameterHolder.parameters());
-        return assembleWithDto(aggregateRoot);
+        return fromFactory(aggregateClass,dto);
     }
 
     /**
      * Loads an aggregate roots from a repository.
      *
      * @param key the aggregate roots identity
-     * @param <A> the aggregate root type
      * @return the loaded aggregate root
      */
-    protected <A> A loadFromRepo(Object key) {
-        Repository repository = assemblerContext.getRepository();
+    protected A loadFromRepo(Object key) {
+        Repository repository = registry.repositoryOf(aggregateClass);
         //noinspection unchecked
         return (A) repository.load(key);
     }
@@ -61,43 +59,29 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
 
     @Override
     public A orFail() throws AggregateNotFoundException {
-        Object id = resolveId(assemblerContext.getDto(), assemblerContext.getAggregateClass());
+        Object id = resolveId(dto, aggregateClass);
         A a = loadFromRepo(id);
 
         if (a == null) {
-            throw new AggregateNotFoundException(String.format("Unable to load aggregate %s for id: %s", assemblerContext.getAggregateClass(), id));
+            throw new AggregateNotFoundException(String.format("Unable to load aggregate %s for id: %s", aggregateClass, id));
         }
 
-        return assembleWithDto(a);
+        return assembleWithDto(a, dto);
     }
 
     @Override
     public A thenFromFactory() {
         // load from the repository
-        Object id = resolveId(assemblerContext.getDto(), assemblerContext.getAggregateClass());
+        Object id = resolveId(dto, aggregateClass);
         A a = loadFromRepo(id);
 
         if (a != null) {
             // then assemble the dto in the previously created aggregate root
-            return assembleWithDto(a);
+            return assembleWithDto(a, dto);
         } else {
             // otherwise fallback on the factory
             return fromFactory();
         }
-    }
-
-    /**
-     * Assemble one or a tuple of aggregate root from a dto.
-     *
-     * @param aggregateRoots the aggregate root(s) to assemble
-     * @param <T> type of aggregate root(s). It could be a {@code Tuple} or an {@code AggregateRoot}
-     * @return the assembled aggregate root(s)
-     */
-    protected  <T> T assembleWithDto(T aggregateRoots) {
-        Assembler assembler = registry.assemblerOf(assemblerContext.getAggregateClass(), assemblerContext.getDto().getClass());
-        //noinspection unchecked
-        assembler.mergeAggregateWithDto(aggregateRoots, assemblerContext.getDto());
-        return aggregateRoots;
     }
 
 }

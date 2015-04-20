@@ -15,7 +15,6 @@ import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
 
 import javax.inject.Inject;
-import java.lang.reflect.ParameterizedType;
 
 /**
  * This class is a default  tuple assembler based on ModelMapper.
@@ -32,7 +31,8 @@ public class DefaultTupleAssembler<T extends Tuple, D> extends AutomaticTupleAss
     @SuppressWarnings("unchecked")
     @Inject
     public DefaultTupleAssembler(@Assisted Object[] genericClasses) {
-        super((ParameterizedType) genericClasses.clone()[0], (Class) genericClasses.clone()[1]);
+        // TODO the first parameter is useless remove it
+        super((Class) genericClasses.clone()[1]);
     }
 
     @Override

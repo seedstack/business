@@ -29,8 +29,13 @@ import java.util.List;
  */
 public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends BaseAggAssemblerWithRepoProviderImpl implements TupleAggAssemblerWithRepoProvider<T>, TupleAggAssemblerWithRepoAndFactProvider<T> {
 
-    public TupleAggAssemblerWithRepoProviderImpl(InternalRegistry registry, AssemblerContext assemblerContext) {
-        super(registry, assemblerContext);
+    private final List<Class<? extends AggregateRoot<?>>> aggregateClasses;
+    private final Object dto;
+
+    public TupleAggAssemblerWithRepoProviderImpl(InternalRegistry registry, List<Class<? extends AggregateRoot<?>>> aggregateClasses, Object dto) {
+        super(registry);
+        this.aggregateClasses = aggregateClasses;
+        this.dto = dto;
     }
 
     // --------------------------- TupleAggAssemblerWithRepoProvider
@@ -45,13 +50,13 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
     @Override
     public T fromFactory() {
         List<Object> aggregateRoots = new ArrayList<Object>();
-        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(assemblerContext.getDto());
+        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
         int aggregateIndex = 0;
-        for (Object o : assemblerContext.getAggregateClasses()) {
+        for (Object o : aggregateClasses) {
             if (o instanceof Class<?>) {
                 Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
                 GenericFactory<?> genericFactory = registry.genericFactoryOf(aggregateClass);
-                Object aggregate = getAggregateFromFactory(genericFactory, aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
+                Object aggregate = getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
                 aggregateRoots.add(aggregate);
             } else {
                 // TODO seed exception
@@ -130,12 +135,11 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
 
     @SuppressWarnings("unchecked")
     private List<Triplet<Object, Class<?>, Object>> loadFromRepository() {
-        Tuple aggregateClasses = assemblerContext.getAggregateClasses();
-        Tuple ids = resolveIds(assemblerContext.getDto(), aggregateClasses);
+        Tuple ids = resolveIds(dto, aggregateClasses);
 
         List<Triplet<Object, Class<?>, Object>> aggregateRoots = new ArrayList<Triplet<Object, Class<?>, Object>>();
         for (int i = 0; i < ids.getSize(); i++) {
-            Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) aggregateClasses.getValue(i);
+            Class<? extends AggregateRoot<?>> aggregateClass = aggregateClasses.get(i);
             Object id = ids.getValue(i);
 
             Repository repository = registry.repositoryOf(aggregateClass);
@@ -155,9 +159,9 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
      * @return the assembled aggregate root(s)
      */
     protected  <T> T assembleWithDto(T aggregateRoots) {
-        Assembler assembler = registry.tupleAssemblerOf(assemblerContext.getAggregateClasses(), assemblerContext.getDto().getClass());
+        Assembler assembler = registry.tupleAssemblerOf(aggregateClasses, dto.getClass());
         //noinspection unchecked
-        assembler.mergeAggregateWithDto(aggregateRoots, assemblerContext.getDto());
+        assembler.mergeAggregateWithDto(aggregateRoots, dto);
         return aggregateRoots;
     }
 

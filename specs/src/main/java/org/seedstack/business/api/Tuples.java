@@ -16,6 +16,7 @@ import org.javatuples.*;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -159,5 +160,22 @@ public final class Tuples {
      */
     public static ParameterizedType typeOfTuple(Class<?>... classes) {
         return Types.newParameterizedType(classOfTuple(classes), classes);
+    }
+
+    public static <T> List<T> toList(Tuple tuple) {
+        List<Object> objects = new ArrayList<Object>(tuple.getSize());
+        for (Object o : tuple) {
+            objects.add(o);
+        }
+        //noinspection unchecked
+        return (List<T>) objects;
+    }
+
+    public static List<?> toListOfClasses(Tuple tuple) {
+        List<Class<?>> objects = new ArrayList<Class<?>>(tuple.getSize());
+        for (Object o : tuple) {
+            objects.add(o.getClass());
+        }
+        return objects;
     }
 }

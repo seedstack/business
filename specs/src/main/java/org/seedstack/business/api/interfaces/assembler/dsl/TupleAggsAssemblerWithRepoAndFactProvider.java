@@ -7,16 +7,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.core.interfaces.assembler.dsl.fixture;
+package org.seedstack.business.api.interfaces.assembler.dsl;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.javatuples.Tuple;
+
+import java.util.List;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public class OrderFactoryInternal extends BaseFactory<Order> implements OrderFactory {
+public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
 
-    public Order create(String id, String product) {
-        return new Order(id, product);
-    }
+    List<T> orFail() throws AggregateNotFoundException;
+
+    List<T> thenFromFactory();
 }

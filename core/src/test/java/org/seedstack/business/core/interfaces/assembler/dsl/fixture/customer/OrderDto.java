@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.core.interfaces.assembler.dsl.fixture;
+package org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer;
 
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
@@ -18,7 +18,7 @@ import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
 */
 @DtoOf(Order.class) // specify the link to the aggregate root
 public class OrderDto {
-    String id;
+    String orderId;
     String product;
     String customerName;
     int price;
@@ -27,20 +27,20 @@ public class OrderDto {
     }
 
     public OrderDto(String id, String product) {
-        this.id = id;
+        this.orderId = id;
         this.product = product;
     }
 
     public OrderDto(String id, String product, int price) {
-        this.id = id;
+        this.orderId = id;
         this.product = product;
         this.price = price;
     }
 
     @MatchingEntityId // no need for index because id is primitive
     @MatchingFactoryParameter(index = 0)
-    public String getId() {
-        return id;
+    public String getOrderId() {
+        return orderId;
     }
 
     @MatchingFactoryParameter(index = 1)

@@ -11,14 +11,20 @@ package org.seedstack.business.core.interfaces.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
+import org.javatuples.Pair;
+import org.javatuples.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.powermock.reflect.Whitebox;
+import org.seedstack.business.api.Tuples;
+import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.AutoAssembler;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.Order;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderDto;
+import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoProvider;
+import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,43 +32,84 @@ import java.util.List;
  */
 public class AggAssemblerProviderImplTest {
 
-    private AggAssemblerProviderImpl underTest;
-
     private InternalRegistry registry;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void before() {
         registry = Mockito.mock(InternalRegistryInternal.class);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void testToAggregate() {
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        AssemblerContext context = new AssemblerContext();
-        context.setDto(new OrderDto("1", "lightsaber"));
+        List<?> aggregateRootTuple = Lists.newArrayList(Order.class, Customer.class);
+        Mockito.when(registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class)).
+                thenReturn((Assembler) new DefaultTupleAssembler<Pair<Order, Customer>, Recipe>(new Object[]{null, Recipe.class}));
+    }
 
-        underTest = new AggAssemblerProviderImpl(registry, context);
+    @Test
+    public void testToAggregate() {
+        AggAssemblerProviderImpl<OrderDto> underTest = new AggAssemblerProviderImpl<OrderDto>(registry, new OrderDto("1", "lightsaber"));
+
         Order order = underTest.to(new Order());
 
         Assertions.assertThat(order.getProduct()).isEqualTo("lightsaber");
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testToAggregateTuple() {
-        Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        AssemblerContext context = new AssemblerContext();
-        context.setDtos(Lists.newArrayList(new OrderDto("1", "lightsaber"), new OrderDto("1", "death star")));
+        Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, recipe);
+        Pair<Order, Customer> order = underTest.to(new Order(), new Customer("customer1"));
 
-        underTest = new AggAssemblerProviderImpl(registry, context);
-        List<Order> order = underTest.to(Lists.newArrayList(new Order(), new Order()));
+        Assertions.assertThat((Iterable<?>) order).isNotNull();
+        Assertions.assertThat((Iterable<?>) order).isNotEmpty();
+        Assertions.assertThat(order.getValue0().getProduct()).isEqualTo("lightsaber");
+        Assertions.assertThat(order.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(order.getValue1().getName()).isEqualTo("luke");
+    }
 
-        Assertions.assertThat(order).isNotNull();
-        Assertions.assertThat(order).isNotEmpty();
-        Assertions.assertThat(order.get(0).getProduct()).isEqualTo("lightsaber");
-        Assertions.assertThat(order.get(1).getProduct()).isEqualTo("death star");
+    @Test
+    public void testToUnTypedTuple() {
+
+        Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, recipe);
+        Tuple order = underTest.to(Tuples.create(new Order(), new Customer("customer1")));
+
+        Assertions.assertThat((Iterable<?>) order).isNotNull();
+        Assertions.assertThat((Iterable<?>) order).isNotEmpty();
+        Assertions.assertThat(((Order) order.getValue(0)).getProduct()).isEqualTo("lightsaber");
+        Assertions.assertThat(((Customer) order.getValue(1)).getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(((Customer) order.getValue(1)).getName()).isEqualTo("luke");
+    }
+
+    @Test
+    public void testToAggregateClass() {
+        Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, dto);
+
+        assertToMethod(underTest.to(Order.class, Customer.class), dto, Order.class, Customer.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class);
+        assertToMethod(underTest.to(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
+    }
+
+    @Test
+    public void testToAggregateClassWithNullValue() {
+        Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, dto);
+
+        assertToMethod(underTest.to(null, null, null, Customer.class), dto, null, null, null, Customer.class);
+    }
+
+    private void assertToMethod(TupleAggAssemblerWithRepoProvider<?> to, Object dto, Class<?>... classes) {
+        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Whitebox.getInternalState(to, "aggregateClasses");
+        Assertions.assertThat(aggregateClasses).isEqualTo(Arrays.asList(classes));
+        Object obj = Whitebox.getInternalState(to, "dto");
+        Assertions.assertThat(obj).isEqualTo(dto);
     }
 }

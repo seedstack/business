@@ -9,6 +9,7 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
+import com.google.gag.annotation.team.Visionary;
 import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
 
 /**
@@ -21,6 +22,7 @@ import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
  *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
+@Visionary("Epo Jemba")
 public interface FluentAssembler {
 
     /**

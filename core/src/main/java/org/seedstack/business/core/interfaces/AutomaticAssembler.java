@@ -25,7 +25,6 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  */
 public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 
-    protected Class<A> aggregateClass;
     protected Class<D> dtoClass;
     private ModelMapper assembleModelMapper;
     private ModelMapper mergeModelMapper;
@@ -37,16 +36,14 @@ public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends 
         // TODO <pith> : check modelmappers are not null
 
         Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        aggregateClass = (Class<A>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[0];
         dtoClass = (Class<D>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[1];
     }
 
-    public AutomaticAssembler(Class<A> aggregateClass, Class<D> dtoClass) {
+    public AutomaticAssembler(Class<D> dtoClass) {
         assembleModelMapper = configureAssembly();
         mergeModelMapper = configureMerge();
         // TODO <pith> : check modelmappers are not null
 
-        this.aggregateClass = aggregateClass;
         this.dtoClass = dtoClass;
     }
 

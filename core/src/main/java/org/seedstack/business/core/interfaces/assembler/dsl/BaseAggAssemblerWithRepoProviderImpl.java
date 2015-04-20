@@ -12,6 +12,7 @@ package org.seedstack.business.core.interfaces.assembler.dsl;
 import org.javatuples.Tuple;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.*;
+import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.resolver.DtoInfoResolver;
 import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
 import org.seedstack.business.core.interfaces.assembler.resolver.AnnotationResolver;
@@ -28,21 +29,18 @@ import java.util.List;
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public class BaseAggAssemblerWithRepoProviderImpl {
+public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
     protected final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
-    protected final AssemblerContext assemblerContext;
     protected final InternalRegistry registry;
 
     /**
      * Constructor.
      *
      * @param registry the internal registry used to get domain objects
-     * @param assemblerContext the assembler context which share the data given to the DSL.
      */
-    public BaseAggAssemblerWithRepoProviderImpl(InternalRegistry registry, AssemblerContext assemblerContext) {
+    public BaseAggAssemblerWithRepoProviderImpl(InternalRegistry registry) {
         this.registry = registry;
-        this.assemblerContext = assemblerContext;
     }
 
     protected Object resolveId(Object dto, Class<? extends AggregateRoot<?>> aggregateRootClass) {
@@ -57,7 +55,7 @@ public class BaseAggAssemblerWithRepoProviderImpl {
         return paramsToIds(aggregateRootClass, parameterHolder, -1);
     }
 
-    protected Tuple resolveIds(Object dto, Tuple aggregateRootClasses) {
+    protected Tuple resolveIds(Object dto, List<Class<? extends AggregateRoot<?>>> aggregateRootClasses) {
         SeedCheckUtils.checkIfNotNull(dto);
         SeedCheckUtils.checkIfNotNull(aggregateRootClasses);
 
@@ -103,13 +101,33 @@ public class BaseAggAssemblerWithRepoProviderImpl {
         return id;
     }
 
-    protected Object getAggregateFromFactory(GenericFactory<?> factory, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
+    protected A fromFactory(Class<? extends AggregateRoot<?>> aggregateClass, Object dto) {
+        GenericFactory<A> genericFactory = (GenericFactory<A>) registry.genericFactoryOf(aggregateClass);
+        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
+        A aggregateRoot = (A) getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parameters());
+        return assembleWithDto(aggregateRoot, dto);
+    }
+
+    /**
+     * Assemble one aggregate root from a dto.
+     *
+     * @param aggregateRoots the aggregate root to assemble
+     * @return the assembled aggregate root
+     */
+    protected A assembleWithDto(A aggregateRoots, Object dto) {
+        Assembler assembler = registry.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.getClass(), dto.getClass());
+        //noinspection unchecked
+        assembler.mergeAggregateWithDto(aggregateRoots, dto);
+        return aggregateRoots;
+    }
+
+    protected Object getAggregateFromFactory(GenericFactory<?> factory, Class<?> dtoClass, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
         SeedCheckUtils.checkIfNotNull(factory);
         SeedCheckUtils.checkIfNotNull(aggregateClass);
         SeedCheckUtils.checkIfNotNull(parameters);
 
         if (parameters.length == 0) {
-            throw new IllegalArgumentException(assemblerContext.getDto().getClass() + " - No factory parameters found in the DTO. Please check the @MatchingFactoryParameter annotation.");
+            throw new IllegalArgumentException(dtoClass + " - No factory parameters found in the DTO. Please check the @MatchingFactoryParameter annotation.");
         }
 
         if (Factory.class.isAssignableFrom(factory.getClass())) {
@@ -129,9 +147,9 @@ public class BaseAggAssemblerWithRepoProviderImpl {
                 //noinspection unchecked
                 return factoryMethod.invoke(factory, parameters);
             } catch (IllegalAccessException e) {
-                throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e);
+                throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e.getCause() != null ? e.getCause() : e);
             } catch (InvocationTargetException e) {
-                throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e);
+                throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e.getCause() != null ? e.getCause() : e);
             }
         }
     }
