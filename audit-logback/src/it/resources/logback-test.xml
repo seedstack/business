@@ -26,7 +26,7 @@
         <appender-ref ref="AUDIT_APPENDER" />
     </logger>
 
-    <root level="info">
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

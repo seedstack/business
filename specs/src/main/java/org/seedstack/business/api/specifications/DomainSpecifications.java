@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.api.domain.meta.specifications;
+package org.seedstack.business.api.specifications;
 
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.application.GenericApplicationService;
@@ -22,7 +22,8 @@ import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.query.finder.Finder;
 
-import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.*;
+import static org.seedstack.business.api.specifications.BaseClassSpecifications.*;
+
 
 /**
  * This class provides helper methods for domain specifications.
