@@ -26,7 +26,7 @@ import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
+import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.core.domain.FactoryInternal;
@@ -47,8 +47,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.classIsAbstract;
-import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.classIsInterface;
+import static org.seedstack.business.api.specifications.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.business.api.specifications.BaseClassSpecifications.classIsInterface;
 
 /**
  * This plugin is a multi round plugin.

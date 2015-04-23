@@ -16,7 +16,7 @@ import org.seedstack.business.api.domain.annotations.*;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.domain.base.BaseEntity;
 import org.seedstack.business.api.domain.base.BaseValueObject;
-import org.seedstack.business.api.domain.meta.specifications.DomainSpecifications;
+import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.api.interfaces.GenericInterfacesService;
 import org.seedstack.business.api.interfaces.annotations.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;

@@ -20,7 +20,7 @@
     <logger name="org.reflections" level="OFF"/>
     <logger name="io.nuun" level="WARN"/>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

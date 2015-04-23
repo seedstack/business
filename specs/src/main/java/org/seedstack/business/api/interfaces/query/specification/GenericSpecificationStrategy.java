@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.api.interfaces.query.specification;
 
-import org.seedstack.business.api.domain.specification.Specification;
+import org.kametic.specifications.Specification;
 
 import java.util.List;
 

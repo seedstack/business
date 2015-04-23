@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assertions;
+package org.seedstack.business.api.assertions;
 
 
 import com.google.gag.annotation.remark.WTF;
@@ -28,7 +28,7 @@ import org.seedstack.seed.core.api.SeedException;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
 
-import static org.seedstack.business.api.domain.meta.specifications.BaseClassSpecifications.*;
+import static org.seedstack.business.api.specifications.BaseClassSpecifications.*;
 /**
  * This class gives helper methods for asserting on business classes.
  * 
