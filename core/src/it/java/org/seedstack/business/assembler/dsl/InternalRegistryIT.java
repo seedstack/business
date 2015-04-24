@@ -9,6 +9,7 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +23,13 @@ import org.seedstack.business.assembler.fixtures.MyUnrestrictedDto;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.DefaultAssembler;
 import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistry;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.AutoAssembler;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.AutoAssembler;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Customer;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Recipe;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Tests the DSL internal registry.
@@ -75,9 +79,16 @@ public class InternalRegistryIT {
     }
 
     @Test
+    public void testAssemblerOfTuple() {
+        List<?> aggregateRootTuple = Lists.newArrayList(org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order.class, Customer.class);
+        Assembler<?, ?> assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class);
+        Assertions.assertThat(assembler).isNotNull();
+    }
+
+    @Test
     public void testAssemblerOfWithAutomaticAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(org.seedstack.business.core.interfaces.assembler.dsl.fixture.Order.class
-                , org.seedstack.business.core.interfaces.assembler.dsl.fixture.OrderDto.class);
+        Assembler<?, ?> assembler = registry.assemblerOf(org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order.class
+                , org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(AutomaticAssembler.class);
         Assertions.assertThat(assembler).isNotInstanceOf(DefaultAssembler.class);

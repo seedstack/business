@@ -18,7 +18,7 @@ import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.*;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.*;
 
 import static org.junit.Assert.fail;
 
@@ -31,6 +31,7 @@ public class AggAssemblerWithRepoProviderImplTest {
     private OrderFactory orderFactory;
     private Repository<Order, String> repository;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void before() {
         registry = Mockito.mock(InternalRegistryInternal.class);
@@ -38,16 +39,11 @@ public class AggAssemblerWithRepoProviderImplTest {
         orderFactory = new OrderFactoryInternal();
         order = new Order("1", "death star");
 
-        AssemblerContext context = new AssemblerContext();
-        context.setDto(new OrderDto("1", "lightsaber"));
-        context.setAggregateClass(Order.class);
-
         Mockito.when(registry.repositoryOf(Order.class)).thenReturn((Repository) repository);
-        Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((GenericFactory)orderFactory);
+        Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((GenericFactory) orderFactory);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        //Mockito.when(injector.getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(Factory.class, aggregateIdClass))))).thenReturn((Assembler)new AutoAssembler());
-        underTest = new AggAssemblerWithRepoProviderImpl(registry, context);
+        underTest = new AggAssemblerWithRepoProviderImpl<Order>(registry, Order.class, new OrderDto("1", "lightsaber"));
     }
 
     @Test

@@ -9,19 +9,17 @@
  */
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
-import com.google.common.collect.Lists;
 import com.google.inject.ConfigurationException;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.javatuples.Tuple;
+import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
-import org.seedstack.business.api.Tuples;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.core.api.Logging;
 import org.slf4j.Logger;
@@ -70,31 +68,19 @@ public class InternalRegistryInternal implements InternalRegistry {
     }
 
     @Override
-    public Assembler<?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto) {
-        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Lists.newArrayList();
-        for (Object o : aggregateRootTuple) {
-            if (!(o instanceof Class<?>) || !AggregateRoot.class.isAssignableFrom((Class)o)) {
-                throw new IllegalArgumentException("The aggregateRootTuple parameter should only contain aggregates. But found " + o);
-            }
-            aggregateClasses.add((Class<? extends AggregateRoot<?>>) o);
-        }
-        return tupleAssemblerOf(aggregateClasses, dto);
-    }
-
-    @Override
     public Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto) {
         Class<? extends Tuple> tupleRawType = Tuples.classOfTuple(aggregateRootTuple); // e.g. Pair or Tiplet
-        ParameterizedType tupleType = Types.newParameterizedType(tupleRawType, aggregateRootTuple.toArray(new Type[aggregateRootTuple.size()]));
+        Type[] typeArguments = aggregateRootTuple.toArray(new Type[aggregateRootTuple.size()]);
+        ParameterizedType tupleType = Types.newParameterizedType(tupleRawType, typeArguments);
         Assembler<?, ?> o;
         try {
-            o = (Assembler<?, ?>) getInstance(BaseTupleAssembler.class, tupleType, dto, Tuple.class);
+            o = (Assembler<?, ?>) getInstance(Assembler.class, tupleType, dto);
         } catch (ConfigurationException e) {
             logger.trace("Unable to find a  base tuple assembler for " + tupleType + ", fallback on automatic tuple assembler.");
             o = (Assembler<?, ?>) getInstance(AutomaticTupleAssembler.class, tupleType, dto);
         }
         return o;
     }
-
 
     @Override
     public GenericFactory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot) {

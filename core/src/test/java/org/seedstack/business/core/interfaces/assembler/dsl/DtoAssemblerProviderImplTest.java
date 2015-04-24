@@ -18,8 +18,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.*;
 import org.seedstack.business.api.Tuples;
+import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +34,21 @@ public class DtoAssemblerProviderImplTest {
     private InternalRegistry registry;
 
     @Before
+    @SuppressWarnings("unchecked")
     public void before() {
         registry = Mockito.mock(InternalRegistryInternal.class);
+        Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
+
+        List<Class<? extends AggregateRoot<?>>> aggregateRootClasses = new ArrayList<Class<? extends AggregateRoot<?>>>();
+        aggregateRootClasses.add(Order.class);
+        aggregateRootClasses.add(Customer.class);
+        Mockito.when(registry.tupleAssemblerOf(aggregateRootClasses, OrderDto.class)).thenReturn((Assembler) new AutoTupleAssembler());
     }
 
     @Test
     public void testToDto() {
-        Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
+        underTest = new DtoAssemblerProviderImpl(registry, new Order("lightsaber"));
 
-        AssemblerContext context = new AssemblerContext();
-        context.setAggregate(new Order("lightsaber"));
-
-        underTest = new DtoAssemblerProviderImpl(registry, context);
         OrderDto orderDto = underTest.to(OrderDto.class);
 
         Assertions.assertThat(orderDto).isNotNull();
@@ -57,12 +60,7 @@ public class DtoAssemblerProviderImplTest {
     public void testToDtoWithTuple() {
         Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
 
-        Mockito.when(registry.tupleAssemblerOf(tuple, OrderDto.class)).thenReturn((Assembler)new AutoTupleAssembler());
-
-        AssemblerContext context = new AssemblerContext();
-        context.setAggregateTuple(tuple);
-
-        underTest = new DtoAssemblerProviderImpl(registry, context);
+        underTest = new DtoAssemblerProviderImpl(registry, tuple);
         OrderDto orderDto = underTest.to(OrderDto.class);
 
         Assertions.assertThat(orderDto).isNotNull();
@@ -72,16 +70,11 @@ public class DtoAssemblerProviderImplTest {
 
     @Test
     public void testToDtos() {
-        Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler)new AutoAssembler());
-
-        AssemblerContext context = new AssemblerContext();
-        // TODO <pith> : try to add the possibility to pass a List<? extends AggregateRoot<?>>, e.g. List<Order>
-        List<AggregateRoot<?>> aggregateRoots = new ArrayList<AggregateRoot<?>>();
+        List<Order> aggregateRoots = new ArrayList<Order>();
         aggregateRoots.add(new Order("lightsaber"));
         aggregateRoots.add(new Order("death star"));
-        context.setAggregates(aggregateRoots);
 
-        underTest2 = new DtosAssemblerProviderImpl(registry, context);
+        underTest2 = new DtosAssemblerProviderImpl(registry, aggregateRoots, null);
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();
@@ -94,13 +87,9 @@ public class DtoAssemblerProviderImplTest {
     @Ignore
     public void testToDtosWithTuple() {
         Tuple tuple1 = Tuples.create(new Order("lightsaber"), new Customer("luke")); // used to get the class of the tuple
-        Mockito.when(registry.tupleAssemblerOf(tuple1, OrderDto.class)).thenReturn((Assembler)new AutoTupleAssembler());
-
-        AssemblerContext context = new AssemblerContext();
         Tuple tuple2 = Tuples.create(new Order("death star"), new Customer("dark vador"));
-        context.setAggregateTuples(Lists.newArrayList(tuple1, tuple2));
 
-        underTest2 = new DtosAssemblerProviderImpl(registry, context);
+        underTest2 = new DtosAssemblerProviderImpl(registry, null, Lists.newArrayList(tuple1, tuple2));
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();

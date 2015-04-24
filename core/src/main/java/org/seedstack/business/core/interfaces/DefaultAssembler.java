@@ -30,7 +30,7 @@ public class DefaultAssembler<A extends AggregateRoot<?>,D> extends AutomaticAss
     @SuppressWarnings("unchecked")
     @Inject
     public DefaultAssembler(@Assisted Object[] genericClasses) {
-        super((Class) genericClasses.clone()[0], (Class) genericClasses.clone()[1]);
+        super((Class) genericClasses.clone()[1]);
     }
 
     @Override

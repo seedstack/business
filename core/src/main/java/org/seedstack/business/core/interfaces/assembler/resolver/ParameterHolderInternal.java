@@ -37,7 +37,7 @@ public class ParameterHolderInternal implements ParameterHolder {
         if (parameters.get(index) != null) {
             String message = String.format("%s - the parameter at the index %d is already specified", sourceMethod, index);
             if (aggregateIndex > -1) {
-                message += " for the aggregate root " + aggregateIndex;
+                message += " for the typeIndex=" + aggregateIndex;
             }
             throw new IllegalArgumentException(message);
         }

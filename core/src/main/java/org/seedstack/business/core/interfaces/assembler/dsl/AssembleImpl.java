@@ -25,60 +25,50 @@ import java.util.List;
  */
 public class AssembleImpl implements Assemble, AssembleSecurely {
 
-    private final AssemblerContext assemblerContext = new AssemblerContext();
-
     @Inject
     private InternalRegistry registry;
 
+    private boolean dataSecurityEnabled = false;
+
     /**
      * Constructor.
-     * <p>
-     * Disable the data security feature by default.
-     * </p>
      */
     public AssembleImpl() {
-        assemblerContext.setSecured(false);
     }
 
     @Override
-    public AggsAssemblerProvider dtos(List<Object> dtos) {
-        assemblerContext.setDtos(dtos);
-        return new AggAssemblerProviderImpl(registry, assemblerContext);
+    public <D> AggsAssemblerProvider<D> dtos(List<D> dtos) {
+        return new AggsAssemblerProviderImpl<D>(registry, dtos);
     }
 
     @Override
-    public AggAssemblerProvider dto(Object dto) {
-        assemblerContext.setDto(dto);
-        return new AggAssemblerProviderImpl(registry, assemblerContext);
+    public <D> AggAssemblerProvider<D> dto(D dto) {
+        return new AggAssemblerProviderImpl<D>(registry, dto);
     }
 
     @Override
     public DtoAssemblerProvider aggregate(AggregateRoot<?> aggregateRoot) {
-        assemblerContext.setAggregate(aggregateRoot);
-        return new DtoAssemblerProviderImpl(registry, assemblerContext);
+        return new DtoAssemblerProviderImpl(registry, aggregateRoot);
     }
 
     @Override
     public DtosAssemblerProvider aggregates(List<? extends AggregateRoot<?>> aggregateRoots) {
-        assemblerContext.setAggregates((List<AggregateRoot<?>>) aggregateRoots);
-        return new DtosAssemblerProviderImpl(registry, assemblerContext);
+        return new DtosAssemblerProviderImpl(registry, aggregateRoots, null);
     }
 
     @Override
     public DtoAssemblerProvider tuple(Tuple aggregateRoots) {
-        assemblerContext.setAggregateTuple(aggregateRoots);
-        return new DtoAssemblerProviderImpl(registry, assemblerContext);
+        return new DtoAssemblerProviderImpl(registry, aggregateRoots);
     }
 
     @Override
     public DtosAssemblerProvider tuples(List<? extends Tuple> aggregateRoots) {
-        assemblerContext.setAggregateTuples(aggregateRoots);
-        return new DtosAssemblerProviderImpl(registry, assemblerContext);
+        return new DtosAssemblerProviderImpl(registry, null, aggregateRoots);
     }
 
     @Override
     public Assemble securely() {
-        assemblerContext.setSecured(true);
+        dataSecurityEnabled = true;
         return this;
     }
 }

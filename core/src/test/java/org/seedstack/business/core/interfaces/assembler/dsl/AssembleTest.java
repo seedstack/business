@@ -49,7 +49,7 @@ public class AssembleTest {
         order = fluently.assemble().securely().dto(orderDto).to(Order.class).fromFactory();
 
         // list of dto to tuple of aggregates
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(orderDto).<Pair<Order, Customer>>to(Order.class, Customer.class).fromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(orderDto).to(Order.class, Customer.class).fromFactory();
 
         // list of dtos to list of aggregates
         orders = fluently.assemble().dtos(dtos).to(orders);

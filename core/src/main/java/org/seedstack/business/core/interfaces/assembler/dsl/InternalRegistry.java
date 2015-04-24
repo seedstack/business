@@ -9,7 +9,6 @@
  */
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
-import org.javatuples.Tuple;
 import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 
@@ -38,21 +37,6 @@ public interface InternalRegistry {
      * @return the assembler
      */
     Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto);
-
-    /**
-     * Returns an BaseTupleAssembler matching the given tuple of aggregate roots and the dto class.
-     * <p>
-     * Be careful, contrarily to the other {@code tupleAssemblerOf()} method, it contains the
-     * aggregate roots and not their classes.
-     * </p>
-     * If no assembler were created by the client developer, the method returns an
-     * {@link org.seedstack.business.core.interfaces.AutomaticTupleAssembler}.
-     *
-     * @param aggregateRootTuple a tuple of aggregate root.
-     * @param dto                the dto class
-     * @return the assembler
-     */
-    Assembler<?, ?> tupleAssemblerOf(Tuple aggregateRootTuple, Class<?> dto);
 
     /**
      * Returns an BaseTupleAssembler matching the given list of aggregate root classes and the dto class.

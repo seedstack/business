@@ -28,7 +28,7 @@ public interface Assemble {
      * @param dto the list of dtos
      * @return an AggsAssemblerProvider
      */
-    AggsAssemblerProvider dtos(List<Object> dto);
+    <D> AggsAssemblerProvider<D> dtos(List<D> dto);
 
     /**
      * Assembles a dto.
@@ -36,7 +36,7 @@ public interface Assemble {
      * @param dto the dto
      * @return an AggAssemblerProvider
      */
-    AggAssemblerProvider dto(Object dto);
+    <D> AggAssemblerProvider<D> dto(D dto);
 
     /**
      * Assembles an aggregate root.

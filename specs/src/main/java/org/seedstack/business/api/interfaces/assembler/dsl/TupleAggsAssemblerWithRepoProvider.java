@@ -7,12 +7,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.core.interfaces.assembler.dsl.fixture;
+package org.seedstack.business.api.interfaces.assembler.dsl;
 
-import org.seedstack.business.api.domain.GenericRepository;
+import org.javatuples.Tuple;
+
+import java.util.List;
 
 /**
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public interface CustomerRepository extends GenericRepository<Customer, String> {
+public interface TupleAggsAssemblerWithRepoProvider<T extends Tuple> {
+
+    TupleAggsAssemblerWithRepoAndFactProvider<T> fromRepository();
+
+    List<T> fromFactory();
 }

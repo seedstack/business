@@ -48,10 +48,10 @@ public class AnnotationResolver implements DtoInfoResolver {
                                 + " don't forget to specify the index to indicate the matching parameter: @" + MATCHING_ENTITY_ID + "(index = 0)";
                         throw new IllegalArgumentException(message);
                     }
-                    parameterHolder.put(method.getName(), annotation.typeIndex(), -1, getAttributeFromMethod(dto, method)); // The index set to -1 as it is another use case
+                    parameterHolder.put(method.toString(), annotation.typeIndex(), -1, getAttributeFromMethod(dto, method)); // The index set to -1 as it is another use case
 
                 } else {
-                    parameterHolder.put(method.getName(), annotation.typeIndex(), annotation.index(), getAttributeFromMethod(dto, method));
+                    parameterHolder.put(method.toString(), annotation.typeIndex(), annotation.index(), getAttributeFromMethod(dto, method));
                 }
             }
         }

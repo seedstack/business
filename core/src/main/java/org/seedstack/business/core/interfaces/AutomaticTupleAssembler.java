@@ -14,11 +14,7 @@ import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
 import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
-import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * This assembler automatically assembles aggregates in DTO and vice versa.
@@ -30,7 +26,6 @@ import java.lang.reflect.Type;
  */
 public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 
-    protected ParameterizedType aggregateClasses;
     protected Class<D> dtoClass;
     private ModelMapper assembleModelMapper;
     private ModelMapper mergeModelMapper;
@@ -42,25 +37,10 @@ public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends Abstra
         // TODO <pith> : check modelmappers are not null
 
         Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        ParameterizedType p1 = (ParameterizedType) class1.getGenericSuperclass();
-        // descendant of tuple.
-        ParameterizedType tupleType = (ParameterizedType) p1.getActualTypeArguments()[0];
-
-        Type rawTupleType = tupleType.getRawType();
-        Class<? extends Tuple> tupleClass = (Class<? extends Tuple>) rawTupleType;
-        Type[] actualTypeArguments = tupleType.getActualTypeArguments();
-        int length = actualTypeArguments.length;
-        Class[] aggregateClassesArray = new Class[length];
-
-        System.arraycopy(actualTypeArguments, 0, aggregateClassesArray, 0, length);
-
-        aggregateClasses = Tuples.typeOfTuple(aggregateClassesArray);
-
         dtoClass = (Class<D>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[1];
     }
 
-    public AutomaticTupleAssembler(ParameterizedType aggregateClasses, Class<D> dtoClass) {
-        this.aggregateClasses = aggregateClasses;
+    public AutomaticTupleAssembler(Class<D> dtoClass) {
         this.dtoClass = dtoClass;
 
         assembleModelMapper = configureAssembly();

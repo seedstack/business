@@ -9,8 +9,12 @@
  */
 package org.seedstack.business.core.interfaces.assembler.dsl;
 
+import com.google.common.collect.Lists;
+import org.javatuples.Tuple;
+import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.dsl.DtoAssemblerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +24,15 @@ public class DtoAssemblerProviderImpl implements DtoAssemblerProvider {
 
     private final DtosAssemblerProviderImpl dtosAssemblerProvider;
 
-    public DtoAssemblerProviderImpl(InternalRegistry registry, AssemblerContext context) {
-        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(registry, context);
+    public DtoAssemblerProviderImpl(InternalRegistry registry, AggregateRoot<?> aggregate) {
+        List<? extends AggregateRoot<?>> aggregates = Lists.newArrayList(aggregate);
+        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(registry, aggregates, null);
+    }
+
+    public DtoAssemblerProviderImpl(InternalRegistry registry, Tuple aggregateTuple) {
+        List<Tuple> aggregateTuples = new ArrayList<Tuple>();
+        aggregateTuples.add(aggregateTuple);
+        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(registry, null, aggregateTuples);
     }
 
     @Override
