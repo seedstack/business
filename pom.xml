@@ -91,6 +91,45 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <configuration>
+                        <includedLicenses>
+                            <includedLicense>Apache 2</includedLicense>
+                            <includedLicense>BSD</includedLicense>
+                            <includedLicense>LGPL 2.1</includedLicense>
+                            <includedLicense>LGPL 3.0</includedLicense>
+                            <includedLicense>MIT</includedLicense>
+                            <includedLicense>MPL 1.1</includedLicense>
+                            <includedLicense>MPL 2.0</includedLicense>
+                            <includedLicense>Public Domain</includedLicense>
+                            <includedLicense>The JSON License</includedLicense>
+                            <includedLicense>WTFPL</includedLicense>
+
+                            <!-- Some licenses are ignored because they are alternatives to acceptable licenses and the plugin doesn't handle alternate licenses -->
+                            <includedLicense>IGNORED_LICENSE</includedLicense>
+                        </includedLicenses>
+                        <licenseMerges>
+                                 <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
+                                 <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
+                                 <licenseMerge>BSD|The New BSD License</licenseMerge>
+                                 <licenseMerge>BSD|BSD License</licenseMerge>
+                                 <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
+                                 <licenseMerge>MIT|MIT license</licenseMerge>
+                                 <licenseMerge>MIT|MIT License</licenseMerge>
+
+                                 <licenseMerge>IGNORED_LICENSE|Eclipse Public License - v 1.0</licenseMerge>
+                        </licenseMerges>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <scm>
         <url>https://github.com/seedstack/business</url>
         <connection>scm:git:git://github.com/seedstack/business.git</connection>
