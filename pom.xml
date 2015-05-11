@@ -116,6 +116,7 @@
                         <licenseMerges>
                                  <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
                                  <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
+                                 <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
                                  <licenseMerge>BSD|The New BSD License</licenseMerge>
                                  <licenseMerge>BSD|BSD License</licenseMerge>
                                  <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
