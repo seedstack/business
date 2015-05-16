@@ -25,7 +25,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>generate-distribution-javadoc</id>
@@ -34,11 +33,8 @@
                             <goal>javadoc</goal>
                         </goals>
                         <configuration>
-                            <doclet>ydoc.doclets.YStandard</doclet>
-                            <docletPath> ${project.basedir}/yworks-uml-doclet/lib/ydoc.jar:${project.basedir}/yworks-uml-doclet/resources</docletPath>
-                            <additionalparam>-umltypegen -umlpackagegen</additionalparam>
                             <additionalJOption>-J-Djava.awt.headless=true</additionalJOption>
-                            <doctitle>SeedStack business framework</doctitle>
+                            <doctitle>SeedStack Business framework</doctitle>
                             <detectOfflineLinks>false</detectOfflineLinks>
                             <includeDependencySources>true</includeDependencySources>
                             <includeTransitiveDependencySources>false</includeTransitiveDependencySources>
@@ -56,15 +52,6 @@
                                 </additionalDependency>
                             </additionalDependencies>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>fix-javadoc-stylesheet</id>
-                        <phase>prepare-package</phase>
                     </execution>
                 </executions>
             </plugin>
