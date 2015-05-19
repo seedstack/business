@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 06/06/2014
  */
 public class MyHandler implements EventHandler<MyEvent> {
 

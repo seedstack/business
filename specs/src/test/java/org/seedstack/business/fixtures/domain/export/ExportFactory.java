@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.GenericFactory;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public interface ExportFactory extends GenericFactory<Export> {
 }

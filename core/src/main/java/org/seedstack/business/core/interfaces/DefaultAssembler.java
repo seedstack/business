@@ -22,7 +22,7 @@ import javax.inject.Inject;
  * If an injection point {@code AutomaticAssembler&lt;A, D&gt;} is defined and any class extending {@code AutomaticAssembler}
  * for A and D exists, this default assembler will be injected.
  * </p>
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @Ignore
 public class DefaultAssembler<A extends AggregateRoot<?>,D> extends AutomaticAssembler<A, D> {

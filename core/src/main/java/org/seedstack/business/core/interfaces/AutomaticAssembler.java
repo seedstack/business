@@ -21,7 +21,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  *
  * @param <A> the aggregate root
  * @param <D> the dto
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public abstract class AutomaticAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 

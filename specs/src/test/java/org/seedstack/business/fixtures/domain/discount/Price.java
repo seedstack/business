@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.base.BaseValueObject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public class Price extends BaseValueObject {
 

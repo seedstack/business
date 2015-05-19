@@ -20,7 +20,6 @@ import org.seedstack.seed.core.api.SeedException;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 public class BusinessJpaReflectionAssertsTest {
 

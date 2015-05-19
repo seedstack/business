@@ -15,7 +15,6 @@ import org.seedstack.business.events.EventServiceIT;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 05/06/2014
  */
 public class GenericEventHandler implements EventHandler<Event> {
 

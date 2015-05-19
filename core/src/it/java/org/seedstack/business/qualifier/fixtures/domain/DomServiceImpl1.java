@@ -11,7 +11,6 @@ package org.seedstack.business.qualifier.fixtures.domain;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 public class DomServiceImpl1 extends MyAbstractDomainService {
 }

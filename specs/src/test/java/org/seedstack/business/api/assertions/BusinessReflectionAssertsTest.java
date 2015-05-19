@@ -22,13 +22,12 @@ import org.seedstack.seed.core.api.SeedException;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public class BusinessReflectionAssertsTest {
 
     @Test
     public void assertAggregateRootClassIsValid() {
-         BusinessReflectionAsserts.assertAggregateRootClassIsValid(Discount.class);
+        BusinessReflectionAsserts.assertAggregateRootClassIsValid(Discount.class);
     }
 
     @Test(expected = SeedException.class)

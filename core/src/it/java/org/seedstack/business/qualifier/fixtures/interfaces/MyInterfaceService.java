@@ -13,7 +13,6 @@ import org.seedstack.business.api.interfaces.annotations.InterfacesService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @InterfacesService
 public interface MyInterfaceService {

@@ -13,7 +13,6 @@ import org.seedstack.business.api.application.annotations.ApplicationService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @ApplicationService
 public interface MyApplicationService {

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.events.DomainEvent;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 public class Event2 extends DomainEvent {
 }

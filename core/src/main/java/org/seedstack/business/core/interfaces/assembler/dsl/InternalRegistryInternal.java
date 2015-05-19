@@ -30,7 +30,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class InternalRegistryInternal implements InternalRegistry {
 

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.base.BaseEntity;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public class ExportItem extends BaseEntity<String> {
 

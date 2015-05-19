@@ -22,7 +22,6 @@ import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @RunWith(SeedITRunner.class)
 public class QualifiersIT {

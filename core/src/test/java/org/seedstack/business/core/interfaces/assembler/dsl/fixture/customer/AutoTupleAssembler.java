@@ -14,7 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
 
 /**
-* @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
 public class AutoTupleAssembler extends AutomaticTupleAssembler<Pair<Order, Customer>, OrderDto> {
     @Override

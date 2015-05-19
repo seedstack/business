@@ -11,7 +11,6 @@ package org.seedstack.business.jpa.samples.domain.base;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 public class MyDefaultDomainService implements MyDomainService {
 }

@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 public class Handler2 implements EventHandler<Event2> {
 

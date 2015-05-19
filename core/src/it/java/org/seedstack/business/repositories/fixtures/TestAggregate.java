@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 23/09/2014
  */
 public class TestAggregate extends BaseAggregateRoot<String> {
     @Override

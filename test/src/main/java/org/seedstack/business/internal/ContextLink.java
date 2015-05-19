@@ -20,7 +20,6 @@ import java.util.Map;
  * It registers the handlers called with their corresponding event.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 10/06/2014
  */
 class ContextLink {
 

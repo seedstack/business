@@ -29,7 +29,7 @@ import javax.inject.Inject;
  * @param <AGGREGATE> the aggregate root
  * @param <KEY>       the aggregate key
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 17/09/2014
+
  * @see org.seedstack.business.api.domain.Repository
  * @see org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository
  */

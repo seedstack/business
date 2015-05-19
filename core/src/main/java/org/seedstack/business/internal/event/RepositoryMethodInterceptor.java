@@ -29,7 +29,6 @@ import javax.inject.Inject;
  * Intercepts repositories and fire an event depending on action type, eg. Read, Persist, Delete.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 class RepositoryMethodInterceptor implements MethodInterceptor {
 

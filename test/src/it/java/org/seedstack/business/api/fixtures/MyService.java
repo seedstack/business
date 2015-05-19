@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 06/06/2014
  */
 @ITBind
 public class MyService {

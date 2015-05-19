@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.seedstack.business.core.interfaces.AutomaticAssembler;
 
 /**
-* @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
 public class AutoAssembler extends AutomaticAssembler<Order, OrderDto> {
     @Override

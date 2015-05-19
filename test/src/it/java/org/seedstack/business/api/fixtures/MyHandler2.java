@@ -14,7 +14,6 @@ import org.seedstack.business.api.EventHandler;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 10/06/2014
  */
 public class MyHandler2 implements EventHandler<Event> {
     @Override

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.GenericDomainPolicy;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 public interface MyDomainPolicy<T> extends GenericDomainPolicy {
 }

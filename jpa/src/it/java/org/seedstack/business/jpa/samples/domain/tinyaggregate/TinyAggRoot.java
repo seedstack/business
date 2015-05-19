@@ -16,7 +16,6 @@ import javax.persistence.Id;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 26/09/2014
  */
 @Entity
 public class TinyAggRoot extends BaseAggregateRoot<String> {

@@ -34,7 +34,6 @@ import java.util.List;
  * It also determines the strategy to adopt for event: will they be sync or async ?
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
  */
 public class EventPlugin extends AbstractPlugin {
 

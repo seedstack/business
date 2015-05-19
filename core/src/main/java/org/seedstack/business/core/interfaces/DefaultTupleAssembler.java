@@ -23,7 +23,7 @@ import javax.inject.Inject;
  * </p>
  *
  * @see org.seedstack.business.core.interfaces.DefaultAssembler
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @Ignore
 public class DefaultTupleAssembler<T extends Tuple, D> extends AutomaticTupleAssembler<T, D> {

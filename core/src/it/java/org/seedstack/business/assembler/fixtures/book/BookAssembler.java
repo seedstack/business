@@ -12,7 +12,7 @@ package org.seedstack.business.assembler.fixtures.book;
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
 

@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
  * </pre>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 public abstract class BaseAggregateEvent extends DomainEvent {
 

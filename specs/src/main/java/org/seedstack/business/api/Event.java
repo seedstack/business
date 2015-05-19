@@ -13,7 +13,7 @@ package org.seedstack.business.api;
  * Interface for business events.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
+
  * @see EventHandler
  * @see EventService
  */

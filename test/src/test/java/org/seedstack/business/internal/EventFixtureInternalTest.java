@@ -28,7 +28,6 @@ import static org.mockito.Mockito.mock;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public class EventFixtureInternalTest {
 

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.annotations.DomainService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 @DomainService
 public interface MyDomainService {

@@ -22,7 +22,6 @@ import javax.inject.Inject;
  * Sample of EventHandler used for test.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 13/06/2014
  */
 public class AggregateEventHandler implements EventHandler<AggregatePersistedEvent> {
 
@@ -45,7 +44,7 @@ public class AggregateEventHandler implements EventHandler<AggregatePersistedEve
             } else {
                 EventTransactionIT.aopWorks = true; // listen persist event on user's repo
             }
-        } else if(TinyAggRoot.class.equals(event.getAggregateRoot())) {
+        } else if (TinyAggRoot.class.equals(event.getAggregateRoot())) {
             EventTransactionIT.aopWorksOnDefaultRepo = true; // listen persist event on default repo
         }
     }

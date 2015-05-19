@@ -13,7 +13,6 @@ import org.seedstack.business.api.Event;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 06/06/2014
  */
 public class MyEvent implements Event {
 

@@ -13,7 +13,6 @@ import org.seedstack.business.api.EventHandler;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
  */
 public class MyEventHandlerFailed implements EventHandler<MyEvent2> {
 

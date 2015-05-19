@@ -24,7 +24,7 @@ import org.seedstack.business.api.domain.base.BaseValueObject;
  * </p>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 13/06/2014
+
  * @see org.seedstack.business.api.domain.base.BaseValueObject
  * @see org.seedstack.business.api.Event
  */

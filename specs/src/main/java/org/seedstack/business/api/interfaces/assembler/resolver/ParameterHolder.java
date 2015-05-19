@@ -12,7 +12,7 @@ package org.seedstack.business.api.interfaces.assembler.resolver;
 /**
  * This class holds the parameter of a method. It is used to collect parameters and then match them to a method.
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see org.seedstack.business.api.interfaces.assembler.resolver.DtoInfoResolver
  */
 public interface ParameterHolder {

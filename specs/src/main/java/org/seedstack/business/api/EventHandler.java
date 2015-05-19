@@ -14,7 +14,7 @@ package org.seedstack.business.api;
  *
  * @param <E> the type of event to handle
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
+
  * @see Event
  * @see EventService
  */

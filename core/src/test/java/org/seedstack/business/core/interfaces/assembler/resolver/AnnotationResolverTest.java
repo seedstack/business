@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
 /**
  * This class tests all the use cases for our old resolver algorithms.
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see AnnotationResolver
  */
 public class AnnotationResolverTest {

@@ -13,9 +13,8 @@ import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 29/09/2014
  */
-public class TinyAssembler extends BaseAssembler<TinyAggRoot, TinyDto>{
+public class TinyAssembler extends BaseAssembler<TinyAggRoot, TinyDto> {
 
     @Override
     protected void doAssembleDtoFromAggregate(TinyDto targetDto, TinyAggRoot sourceAggregate) {

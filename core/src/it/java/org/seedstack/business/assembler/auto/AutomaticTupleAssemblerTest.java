@@ -22,8 +22,7 @@ import org.seedstack.seed.it.SeedITRunner;
 import javax.inject.Inject;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
- *         24/02/2015
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @RunWith(SeedITRunner.class)
 public class AutomaticTupleAssemblerTest {

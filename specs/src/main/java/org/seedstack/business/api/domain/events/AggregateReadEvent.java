@@ -25,13 +25,12 @@ import java.lang.reflect.Method;
  * </pre>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 12/06/2014
  */
 public class AggregateReadEvent extends BaseAggregateEvent {
 
-	private static final long serialVersionUID = 8010048916752719639L;
+    private static final long serialVersionUID = 8010048916752719639L;
 
-	/**
+    /**
      * Constructor.
      *
      * @param methodCalled  intercepted method

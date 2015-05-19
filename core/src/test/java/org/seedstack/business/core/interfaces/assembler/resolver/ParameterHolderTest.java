@@ -16,7 +16,7 @@ import org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder;
 /**
  * Test {@link org.seedstack.business.api.interfaces.assembler.resolver.ParameterHolder} implementation.
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class ParameterHolderTest {
 

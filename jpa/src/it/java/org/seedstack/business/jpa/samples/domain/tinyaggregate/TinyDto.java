@@ -14,7 +14,6 @@ import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 29/09/2014
  */
 public class TinyDto {
 

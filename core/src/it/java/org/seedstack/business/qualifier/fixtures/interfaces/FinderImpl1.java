@@ -11,7 +11,6 @@ package org.seedstack.business.qualifier.fixtures.interfaces;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @Q1
 public class FinderImpl1 implements MyFinder {

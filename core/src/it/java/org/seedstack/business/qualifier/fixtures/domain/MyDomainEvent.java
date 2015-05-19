@@ -12,8 +12,7 @@ package org.seedstack.business.qualifier.fixtures.domain;
 import org.seedstack.business.api.domain.events.DomainEvent;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
- *         08/12/2014
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class MyDomainEvent extends DomainEvent {
 

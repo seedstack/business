@@ -28,7 +28,6 @@ import java.util.UUID;
  * This class tests that events are fired when repository methods are called.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 13/06/2014
  */
 @RunWith(SeedITRunner.class)
 public class EventTransactionIT {

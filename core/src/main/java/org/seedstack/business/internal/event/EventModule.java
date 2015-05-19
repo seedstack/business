@@ -39,7 +39,6 @@ import java.util.List;
  * Event module. Bind EventHandlers, EventService and optionally add an interceptor on repositories.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
  */
 @EventConcern
 class EventModule extends AbstractModule {

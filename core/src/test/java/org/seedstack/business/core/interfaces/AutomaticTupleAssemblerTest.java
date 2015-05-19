@@ -18,8 +18,7 @@ import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.Tuples;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
- *         24/02/2015
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class AutomaticTupleAssemblerTest {
 

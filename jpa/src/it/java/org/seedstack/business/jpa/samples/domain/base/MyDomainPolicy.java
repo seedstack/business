@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.annotations.DomainPolicy;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 @DomainPolicy
 public interface MyDomainPolicy {

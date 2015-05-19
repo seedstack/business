@@ -21,8 +21,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  *
  * @param <T> the tuple
  * @param <D> the dto
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
- *         24/02/2015
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public abstract class AutomaticTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 

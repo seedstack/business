@@ -15,7 +15,6 @@ import org.seedstack.business.jpa.samples.domain.base.SampleBaseRepository;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 public class SampleBaseJpaRepository extends BaseJpaRepository<SampleBaseJpaAggregateRoot, String> implements SampleBaseRepository {
 }

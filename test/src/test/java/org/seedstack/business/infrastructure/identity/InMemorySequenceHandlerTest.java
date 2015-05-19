@@ -14,7 +14,6 @@ import org.junit.Test;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 19/08/2014
  */
 public class InMemorySequenceHandlerTest {
 

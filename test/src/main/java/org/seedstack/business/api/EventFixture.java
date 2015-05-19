@@ -69,7 +69,6 @@ package org.seedstack.business.api;
  * <em> Test if <code>MyHandler</code> handler received <code>myEvent</code> event when <code>doSomething()</code> method of <code>MyService</code> is called.</em>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 10/06/2014
  */
 public interface EventFixture {
 

@@ -14,7 +14,6 @@ import org.seedstack.business.api.domain.annotations.DomainService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @DomainService
 public interface MyDomainService extends GenericDomainService {

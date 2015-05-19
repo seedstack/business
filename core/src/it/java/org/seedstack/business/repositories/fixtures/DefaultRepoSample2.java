@@ -19,7 +19,6 @@ import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 22/09/2014
  */
 @DomainRepositoryImpl
 @Named("mock")

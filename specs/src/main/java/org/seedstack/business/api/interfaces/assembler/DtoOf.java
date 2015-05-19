@@ -17,14 +17,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to indicate the aggregate classes needed to assemble this dto.
+ * This annotation is used to indicate to the default assembler
+ * the aggregate classes into which this dto should assemble.
  * <p>
- * This is <b>needed only if you use a default assembler</b> to assemble this dto. Otherwise the
- * concrete assembler class you provide is enough.
+ * This is <b>only needed for default assemblers</b>.
  * </p>
- * <p>
  * Usage:
- * </p>
  * <pre>
  * {@literal @}DtoOf(Customer.class)
  * public class CustomerDto {
@@ -45,7 +43,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE})

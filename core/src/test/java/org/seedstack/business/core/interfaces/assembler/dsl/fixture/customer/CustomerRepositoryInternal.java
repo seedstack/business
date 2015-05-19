@@ -15,7 +15,7 @@ import org.seedstack.business.core.domain.base.BaseRepository;
 import java.util.Map;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements CustomerRepository {
 

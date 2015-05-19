@@ -12,18 +12,17 @@ package org.seedstack.business.api.domain.annotations;
 import org.seedstack.business.api.BusinessElement;
 
 import java.lang.annotation.*;
+
 /**
- * 
- * DomainElement marks all domain annotations or types 
- * 
+ * DomainElement marks all domain annotations or types
+ *
  * @author redouane.loulou@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com
- *
  */
 @Documented
 @BusinessElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE,ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface DomainElement {
 
 }

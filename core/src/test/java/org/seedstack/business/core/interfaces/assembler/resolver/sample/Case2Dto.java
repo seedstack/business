@@ -14,7 +14,7 @@ import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
 import java.util.Date;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class Case2Dto {
 

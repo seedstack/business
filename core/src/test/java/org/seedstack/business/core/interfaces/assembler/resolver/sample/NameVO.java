@@ -10,7 +10,7 @@
 package org.seedstack.business.core.interfaces.assembler.resolver.sample;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class NameVO {
 

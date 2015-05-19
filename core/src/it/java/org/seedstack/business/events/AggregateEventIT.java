@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 @Store("ProductInMemoryRepository")
 @RunWith(SeedITRunner.class)

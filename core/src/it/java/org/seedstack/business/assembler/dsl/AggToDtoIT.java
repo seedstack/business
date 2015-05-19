@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @RunWith(SeedITRunner.class)
 public class AggToDtoIT {

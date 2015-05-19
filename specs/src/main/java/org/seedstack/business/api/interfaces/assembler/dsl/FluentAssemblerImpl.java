@@ -20,7 +20,7 @@ import javax.inject.Provider;
  * It uses a Guice provider to get the DSL entry point. Each time you call the {@code assemble()}
  * method a new DSL instance is provided.
  * </p>
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 

@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * <p>
  * See Their respective documentation to understand {@code AnnotationResolver} implementation.
  * </p>
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see org.seedstack.business.api.interfaces.assembler.MatchingEntityId
  * @see org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter
  */

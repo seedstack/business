@@ -16,7 +16,6 @@ import java.lang.annotation.*;
  * For instance, it could be used on a factory.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 05/06/2014
  */
 @Documented
 @Inherited

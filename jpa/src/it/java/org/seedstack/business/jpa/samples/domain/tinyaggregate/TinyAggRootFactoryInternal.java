@@ -11,7 +11,6 @@ package org.seedstack.business.jpa.samples.domain.tinyaggregate;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 26/09/2014
  */
 public class TinyAggRootFactoryInternal /*extends BaseFactory<TinyAggRoot> implements TinyAggRootFactory*/ {
 //    @Override

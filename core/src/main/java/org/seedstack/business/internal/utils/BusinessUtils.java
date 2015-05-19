@@ -14,7 +14,7 @@ import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public final class BusinessUtils {
 

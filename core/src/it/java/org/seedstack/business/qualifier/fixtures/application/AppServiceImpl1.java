@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @Named("1")
 public class AppServiceImpl1 implements MyApplicationService {

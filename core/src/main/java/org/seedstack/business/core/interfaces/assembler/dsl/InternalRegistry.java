@@ -21,7 +21,7 @@ import java.util.List;
  * This class is required by the genericity of the DSL, but may not be useful for client users.
  * </p>
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface InternalRegistry {
 

@@ -12,7 +12,7 @@ package org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer;
 import org.seedstack.business.api.domain.GenericFactory;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface OrderFactory extends GenericFactory<Order> {
 

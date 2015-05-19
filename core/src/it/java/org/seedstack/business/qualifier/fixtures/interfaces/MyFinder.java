@@ -13,7 +13,6 @@ import org.seedstack.business.api.interfaces.query.finder.Finder;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 07/10/2014
  */
 @Finder
 public interface MyFinder {

@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * The {@code HandlerProvider} class provide method to assert on event handled.
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 11/06/2014
  */
 public interface HandlerProvider {
 

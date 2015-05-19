@@ -10,7 +10,7 @@
 package org.seedstack.business.qualifier.fixtures.domain;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  *         20/11/2014
  */
 public abstract class MyAbstractDomainService implements MyDomainService {

@@ -13,7 +13,6 @@ import org.seedstack.business.api.domain.GenericRepository;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 18/08/2014
  */
 public interface ExportRepository extends GenericRepository<Export, String> {
 }

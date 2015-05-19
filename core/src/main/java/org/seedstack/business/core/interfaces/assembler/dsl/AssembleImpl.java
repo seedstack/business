@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Implements {@link org.seedstack.business.api.interfaces.assembler.dsl.Assemble}.
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class AssembleImpl implements Assemble {
 

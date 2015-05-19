@@ -23,7 +23,6 @@ package org.seedstack.business.api;
  * </pre>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 04/06/2014
  * @see Event
  * @see EventHandler
  */

@@ -16,7 +16,7 @@ import org.seedstack.business.api.interfaces.assembler.dsl.AggAssemblerWithRepoP
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements AggAssemblerWithRepoProvider<A>, AggAssemblerWithRepoAndFactProvider<A> {
 

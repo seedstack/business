@@ -13,7 +13,6 @@ import org.seedstack.business.api.EventHandler;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 10/06/2014
  */
 public class MyHandler3 implements EventHandler<DummyEvent> {
     @Override

@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public final class MethodMatcher {
 

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * A part of the assembler DSL defining the source object(s) used to assemble.
  *
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface Assemble {
 

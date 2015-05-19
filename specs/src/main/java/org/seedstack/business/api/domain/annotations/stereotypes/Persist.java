@@ -15,7 +15,6 @@ import java.lang.annotation.*;
  * This annotation indicates a persistence operation. This could be used in repository.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 05/06/2014
  */
 @Documented
 @Inherited

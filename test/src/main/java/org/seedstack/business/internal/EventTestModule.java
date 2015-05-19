@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
  * Module for event fixtures.
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 06/06/2014
  */
 @Install
 class EventTestModule extends AbstractModule {

@@ -8,7 +8,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.api.domain;
 
@@ -16,10 +16,9 @@ import org.seedstack.business.api.domain.annotations.DomainElement;
 
 /**
  * DomainObject is an interface implemented by all domain object
- * 
+ *
  * @author redouane.loulou@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com
- *
  */
 @DomainElement
 public interface DomainObject {

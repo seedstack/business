@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 10/06/2014
  */
 @RunWith(SeedITRunner.class)
 public class EventFixtureIT {

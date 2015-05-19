@@ -25,16 +25,15 @@ import java.lang.reflect.Method;
  * </pre>
  *
  * @author pierre.thirouin@ext.mpsa.com
- *         Date: 12/06/2014
  */
 public class AggregateDeletedEvent extends BaseAggregateEvent {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	/**
+    /**
      * Constructor.
      *
      * @param methodCalled  intercepted method
