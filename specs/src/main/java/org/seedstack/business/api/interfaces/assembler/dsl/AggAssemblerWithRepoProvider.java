@@ -12,12 +12,32 @@ package org.seedstack.business.api.interfaces.assembler.dsl;
 import org.seedstack.business.api.domain.AggregateRoot;
 
 /**
-* @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * Specifies whether the aggregate root should be retrieved from a repository or created from a factory.
+ *
+* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
 public interface AggAssemblerWithRepoProvider<A extends AggregateRoot<?>> {
 
+    /**
+     * Loads the aggregate from its repository.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingEntityId} annotation on
+     * the DTO to find the aggregate ID.
+     * </p>
+     *
+     * @return next DSL element
+     */
     AggAssemblerWithRepoAndFactProvider<A> fromRepository();
 
+    /**
+     * Create the aggregate from its factory.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @return the aggregate
+     */
     A fromFactory();
 
 }

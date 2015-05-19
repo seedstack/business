@@ -70,7 +70,7 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
     }
 
     @Override
-    public A thenFromFactory() {
+    public A orFromFactory() {
         // load from the repository
         Object id = resolveId(dto, aggregateClass);
         A a = loadFromRepo(id);

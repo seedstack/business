@@ -107,7 +107,7 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
     }
 
     @Override
-    public List<T> thenFromFactory() {
+    public List<T> orFromFactory() {
         boolean atLeastOneAggregateNotFound = false;
         boolean atLeastOneAggregateFound = false;
         List<T> aggregateRootTuples = new ArrayList<T>(dtos.size());

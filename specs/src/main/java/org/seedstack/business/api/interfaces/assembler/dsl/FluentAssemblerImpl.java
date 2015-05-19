@@ -25,9 +25,14 @@ import javax.inject.Provider;
 public class FluentAssemblerImpl implements FluentAssembler {
 
     @Inject
-    private Provider<AssembleSecurely> assembleSecurelyProvider;
+    private Provider<Assemble> assembleSecurelyProvider;
 
-    public AssembleSecurely assemble(){
+    /**
+     * The assembler DSL entry point.
+     *
+     * @return the next DSL element
+     */
+    public Assemble assemble(){
         return assembleSecurelyProvider.get();
     }
 }

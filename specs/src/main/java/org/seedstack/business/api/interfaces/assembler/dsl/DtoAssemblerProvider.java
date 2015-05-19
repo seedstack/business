@@ -14,5 +14,12 @@ package org.seedstack.business.api.interfaces.assembler.dsl;
 */
 public interface DtoAssemblerProvider {
 
+    /**
+     * Returns a dto.
+     *
+     * @param dtoClass the dto class to assemble
+     * @param <D> the dto type
+     * @return the dto
+     */
     <D> D to(Class<D> dtoClass);
 }
