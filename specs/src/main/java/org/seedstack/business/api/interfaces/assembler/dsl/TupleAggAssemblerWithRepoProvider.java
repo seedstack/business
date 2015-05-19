@@ -12,11 +12,31 @@ package org.seedstack.business.api.interfaces.assembler.dsl;
 import org.javatuples.Tuple;
 
 /**
+ * Specifies whether the aggregate root tuple should be retrieved from a repository or created from a factory.
+ *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
 public interface TupleAggAssemblerWithRepoProvider<T extends Tuple> {
 
+    /**
+     * Loads the aggregate root tuple from their repository.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingEntityId} annotation on
+     * the DTO to find the aggregate IDs.
+     * </p>
+     *
+     * @return next DSL element
+     */
     TupleAggAssemblerWithRepoAndFactProvider<T> fromRepository();
 
+    /**
+     * Create the aggregate root tuple from their factory.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @return the list of aggregate tuple
+     */
     T fromFactory();
 }

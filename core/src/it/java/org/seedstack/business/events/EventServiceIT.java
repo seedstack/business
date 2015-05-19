@@ -19,7 +19,8 @@ import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
+
 
 /**
  * Tests fire event whether the handler throws an exception or not.

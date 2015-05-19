@@ -18,17 +18,14 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Implements {@link org.seedstack.business.api.interfaces.assembler.dsl.Assemble}
- * and {@link org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely}.
+ * Implements {@link org.seedstack.business.api.interfaces.assembler.dsl.Assemble}.
  *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-public class AssembleImpl implements Assemble, AssembleSecurely {
+public class AssembleImpl implements Assemble {
 
     @Inject
     private InternalRegistry registry;
-
-    private boolean dataSecurityEnabled = false;
 
     /**
      * Constructor.
@@ -66,9 +63,4 @@ public class AssembleImpl implements Assemble, AssembleSecurely {
         return new DtosAssemblerProviderImpl(registry, null, aggregateRoots);
     }
 
-    @Override
-    public Assemble securely() {
-        dataSecurityEnabled = true;
-        return this;
-    }
 }

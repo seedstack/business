@@ -14,11 +14,32 @@ import org.javatuples.Tuple;
 import java.util.List;
 
 /**
+ * Specifies the behavior in the case where the aggregate tuples cannot be loaded from the repository.
+ *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
 public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
 
+    /**
+     * Returns the aggregate root tuples or throws an {@code AggregateNotFoundException}
+     * if the one of the aggregate roots cannot be loaded from their repository.
+     *
+     * @return the assembled aggregate root
+     * @throws AggregateNotFoundException if the aggregate doesn't exist
+     */
     List<T> orFail() throws AggregateNotFoundException;
 
-    List<T> thenFromFactory();
+    /**
+     * Returns the aggregate root tuples. If the all the aggregate roots cannot be loaded from their repository,
+     * they are created from their factory. If some of the aggregate roots can be loaded but not all an
+     * IllegalStateException is thrown.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @return the assembled aggregate root tuples
+     * @throws IllegalStateException if some but not all aggregate roots are loaded
+     */
+    List<T> orFromFactory();
 }

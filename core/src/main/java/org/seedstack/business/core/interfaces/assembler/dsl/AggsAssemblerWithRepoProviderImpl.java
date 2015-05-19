@@ -81,7 +81,7 @@ public class AggsAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> exten
     }
 
     @Override
-    public List<A> thenFromFactory() {
+    public List<A> orFromFactory() {
         boolean atLeastOneAggregateNotFound = false;
         boolean atLeastOneAggregateFound = false;
         List<A> aggregateRoots = new ArrayList<A>(dtos.size());

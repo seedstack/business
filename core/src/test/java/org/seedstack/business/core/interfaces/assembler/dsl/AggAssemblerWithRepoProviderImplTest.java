@@ -91,7 +91,7 @@ public class AggAssemblerWithRepoProviderImplTest {
         // Get it by the repository first
         Mockito.when(repository.load("1")).thenReturn(order);
 
-        AggregateRoot<?> aggregateRoot = underTest.fromRepository().thenFromFactory();
+        AggregateRoot<?> aggregateRoot = underTest.fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot).isEqualTo(order);
@@ -101,7 +101,7 @@ public class AggAssemblerWithRepoProviderImplTest {
         // Then from the factory
         Mockito.when(repository.load("1")).thenReturn(order);
 
-        aggregateRoot = underTest.fromRepository().thenFromFactory();
+        aggregateRoot = underTest.fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot).isEqualTo(order);

@@ -100,7 +100,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromRepository().thenFromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");

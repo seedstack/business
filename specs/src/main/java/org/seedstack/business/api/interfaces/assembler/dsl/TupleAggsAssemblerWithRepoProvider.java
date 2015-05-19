@@ -14,11 +14,31 @@ import org.javatuples.Tuple;
 import java.util.List;
 
 /**
+ * Specifies whether the aggregate root tuples should be retrieved from a repository or created from a factory.
+ *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
 public interface TupleAggsAssemblerWithRepoProvider<T extends Tuple> {
 
+    /**
+     * Loads the aggregate root tuples from their repository.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingEntityId} annotation on
+     * the DTO to find the aggregate IDs.
+     * </p>
+     *
+     * @return next DSL element
+     */
     TupleAggsAssemblerWithRepoAndFactProvider<T> fromRepository();
 
+    /**
+     * Create the aggregate root tuples from their factory.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @return the list of aggregate root tuples
+     */
     List<T> fromFactory();
 }

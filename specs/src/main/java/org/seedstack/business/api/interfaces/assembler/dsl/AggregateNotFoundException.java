@@ -10,13 +10,23 @@
 package org.seedstack.business.api.interfaces.assembler.dsl;
 
 /**
+ * Indicates that a repository can't find an aggregate root.
+ *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
 public class AggregateNotFoundException extends Exception {
 
+    /**
+     * Constructor.
+     */
     public AggregateNotFoundException() {
     }
 
+    /**
+     * Constructor with message.
+     *
+     * @param message the message to throw
+     */
     public AggregateNotFoundException(String message) {
         super(message);
     }

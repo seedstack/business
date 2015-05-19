@@ -18,7 +18,6 @@ import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderDto;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderFactory;
@@ -44,9 +43,6 @@ public class AssemblerDslIT {
     private OrderFactory orderFactory;
 
     @Inject
-    private AssembleSecurely assembleSecurely;
-
-    @Inject
     private Assemble assemble;
 
     @Inject
@@ -59,9 +55,6 @@ public class AssemblerDslIT {
 
     @Test
     public void testAssembleInjectee() {
-        Object injector = Whitebox.getInternalState(assembleSecurely, "registry");
-        Assertions.assertThat(injector).isNotNull();
-
         Object injector2 = Whitebox.getInternalState(assemble, "registry");
         Assertions.assertThat(injector2).isNotNull();
     }
@@ -112,7 +105,7 @@ public class AssemblerDslIT {
     public void testAssembleFromRepositoryOrFactory() {
         OrderDto dto = new OrderDto("1", "light saber", PRICE);
 
-        Order aggregateRoot = fluently.assemble().dto(dto).to(Order.class).fromRepository().thenFromFactory();
+        Order aggregateRoot = fluently.assemble().dto(dto).to(Order.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");

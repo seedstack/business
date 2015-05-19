@@ -9,26 +9,24 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import com.google.gag.annotation.team.Visionary;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
+import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
 
 /**
- * FluentAssembler provides the entry point for an assembler DSL.
+ * FluentAssembler provides the entry point for the assembler DSL.
  * <p>
- * It allows to programmatically assemble aggregate roots into DTOs with additional features
- * like automatically retrieving the aggregate from its repository. Or automatically creating
+ * It allows to programmatically assemble aggregate roots into DTOs or vice versa, with additional
+ * features like automatically retrieving an aggregate from its repository. Or automatically creating
  * it from its factory.
  * </p>
  *
  * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
  */
-@Visionary("Epo Jemba")
 public interface FluentAssembler {
 
     /**
-     * DSL entry point.
+     * Assembler DSL entry point.
      *
      * @return an Assemble class
      */
-    AssembleSecurely assemble();
+    Assemble assemble();
 }

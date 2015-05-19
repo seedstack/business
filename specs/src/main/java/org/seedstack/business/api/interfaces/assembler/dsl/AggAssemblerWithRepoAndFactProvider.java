@@ -12,12 +12,31 @@ package org.seedstack.business.api.interfaces.assembler.dsl;
 import org.seedstack.business.api.domain.AggregateRoot;
 
 /**
-* @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * Specifies the behavior in the case where the aggregate cannot be loaded from the repository.
+ *
+* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
 public interface AggAssemblerWithRepoAndFactProvider<A extends AggregateRoot<?>> {
 
+    /**
+     * Returns the aggregate root or throws an {@code AggregateNotFoundException}
+     * if the aggregate root cannot be loaded from the repository.
+     *
+     * @return the assembled aggregate root
+     * @throws AggregateNotFoundException if the aggregate doesn't exist
+     */
     A orFail() throws AggregateNotFoundException;
 
-    A thenFromFactory();
+    /**
+     * Returns the aggregate root. If the aggregate root cannot be loaded from the repository,
+     * it is created from the factory.
+     * <p>
+     * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @return the assembled aggregate root
+     */
+    A orFromFactory();
 
 }

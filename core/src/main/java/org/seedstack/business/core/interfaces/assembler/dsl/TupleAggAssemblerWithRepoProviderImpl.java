@@ -100,7 +100,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
 
     @SuppressWarnings("unchecked")
     @Override
-    public T thenFromFactory() {
+    public T orFromFactory() {
         // list of triplet - each triplet contains the aggregate root instance, its class and its id (useful if the AR is null).
         List<Triplet<Object, Class<?>, Object>> aggregateRootsMetadata = loadFromRepository();
 
@@ -144,7 +144,6 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
 
             Repository repository = registry.repositoryOf(aggregateClass);
             AggregateRoot<?> aggregateRoot = repository.load(id);
-
             aggregateRoots.add(new Triplet<Object, Class<?>, Object>(aggregateRoot, aggregateClass, id));
         }
 

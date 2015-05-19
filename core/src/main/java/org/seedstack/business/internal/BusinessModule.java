@@ -13,7 +13,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssembleSecurely;
 import org.seedstack.business.api.interfaces.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.core.interfaces.assembler.dsl.AssembleImpl;
 import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistry;
@@ -68,7 +67,6 @@ class BusinessModule extends AbstractModule {
 	@Override
 	protected void configure() {
         bind(Assemble.class).to(AssembleImpl.class);
-        bind(AssembleSecurely.class).to(AssembleImpl.class);
         bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
         bind(InternalRegistry.class).to(InternalRegistryInternal.class);
 

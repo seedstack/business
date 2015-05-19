@@ -15,7 +15,10 @@ import org.seedstack.business.api.domain.AggregateRoot;
 import java.util.List;
 
 /**
- * @author Pierre Thirouin <pierre.thirouin@ext.mpsa.com>
+ * Specifies the target aggregate to assemble.
+ *
+ * @param <D>
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface AggAssemblerProvider<D> {
 
@@ -28,10 +31,26 @@ public interface AggAssemblerProvider<D> {
      */
     <A extends AggregateRoot<?>> AggAssemblerWithRepoProvider<A> to(Class<A> aggregateRootClass);
 
+    /**
+     * Assembles the dto to an aggregate root.
+     *
+     * @param aggregateRoot the aggregate root instance
+     * @param <A>           the aggregate root type
+     * @return the assembled aggregate root
+     */
     <A extends AggregateRoot<?>> A to(A aggregateRoot);
 
     // --- The above methods are for tuples of instances ---
 
+    /**
+     * Assembles the dto to a pair of aggregate roots.
+     *
+     * @param first  the first aggregate root of the pair
+     * @param second the second aggregate root of the pair
+     * @param <A1>   the first aggregate root type
+     * @param <A2>   the second aggregate root type
+     * @return the aggregate root pair
+     */
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
     Pair<A1, A2> to(A1 first, A2 second);
 

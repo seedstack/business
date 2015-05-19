@@ -45,9 +45,6 @@ public class AssembleTest {
         // from factory
         order = fluently.assemble().dto(orderDto).to(Order.class).fromFactory();
 
-        // data security
-        order = fluently.assemble().securely().dto(orderDto).to(Order.class).fromFactory();
-
         // list of dto to tuple of aggregates
         Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(orderDto).to(Order.class, Customer.class).fromFactory();
 
@@ -62,7 +59,7 @@ public class AssembleTest {
         }
 
         // from repo or fact
-        order = fluently.assemble().dto(orderDto).to(Order.class).fromRepository().thenFromFactory();
+        order = fluently.assemble().dto(orderDto).to(Order.class).fromRepository().orFromFactory();
 
         // aggregate to dto
         OrderDto orderDto1 = fluently.assemble().aggregate(myOrder).to(OrderDto.class);
