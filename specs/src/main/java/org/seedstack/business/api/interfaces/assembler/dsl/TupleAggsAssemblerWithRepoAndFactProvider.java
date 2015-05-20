@@ -20,8 +20,11 @@ import java.util.List;
 <<<<<<< HEAD
 =======
  */
+<<<<<<< HEAD
 >>>>>>> rename author to respect javadoc format
  */
+=======
+>>>>>>> Change default assembler behavior
 public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
 
     /**

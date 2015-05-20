@@ -10,36 +10,35 @@
 package org.seedstack.business.api.interfaces.assembler;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.api.Tuples;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * This class is used by developers as bases for Tuple based Assemblers.
  *
- * @param <T>   the tuple type for this assembler.
- * @param <Dto> the actual dto type.
+ * @param <T> the tuple type for this assembler.
+ * @param <D> the actual dto type.
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractBaseAssembler<T, Dto> {
-
-	/**
-	 * Default needed constructor. Initialize internal private fields {@code TupleType aggregateClasses}.
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public BaseTupleAssembler() {
-        Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-
-		dtoClass = (Class<Dto>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
-	}
+public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 
     /**
-     * This method is used by developers or by {@link Assemblers} to assemble a new DTO from the given aggregate.
+     * Default needed constructor. Initialize internal private fields {@code TupleType aggregateClasses}.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public BaseTupleAssembler() {
+        Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
+
+        dtoClass = (Class<D>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
+    }
+
+    /**
+     * This method is used by developers or by {@link org.seedstack.business.api.interfaces.assembler.FluentAssembler}
+     * to assemble a new DTO from the given aggregate.
      * <ul>
-     * <li>It calls {@link #newDto()} for the DTO creation;
-     * <li>and {@link #doAssembleDtoFromAggregate(Object, org.javatuples.Tuple)} for the assembly algorithm.
+     * <li>It calls {@link #newDto()} for the DTO creation;</li>
+     * <li>and {@link #doAssembleDtoFromAggregate(Object, org.javatuples.Tuple)} for the assembly algorithm.</li>
      * </ul>
      *
      * @param sourceAggregate The aggregate from which create the DTO.
@@ -47,29 +46,31 @@ public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractB
      * @see Assembler#assembleDtoFromAggregate(Object)
      */
     @Override
-    public Dto assembleDtoFromAggregate(T sourceAggregate) {
-        Dto newDto = newDto();
+    public D assembleDtoFromAggregate(T sourceAggregate) {
+        D newDto = newDto();
         doAssembleDtoFromAggregate(newDto, sourceAggregate);
 
         return newDto;
     }
 
     @Override
-    public void updateDtoFromAggregate(Dto sourceDto, T sourceAggregate) {
+    public void updateDtoFromAggregate(D sourceDto, T sourceAggregate) {
         doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
     }
 
     /**
-     * This method is used by developers or by {@link Assemblers} to actually merge the aggregate.
+     * This method is used by developers or by {@link org.seedstack.business.api.interfaces.assembler.FluentAssembler}
+     * to actually merge the aggregate.
      * <p>
      * It will call {@link #doMergeAggregateWithDto(org.javatuples.Tuple, Object)}, which is overridden by developers.
+     * </p>
      *
      * @param targetAggregate the aggregate to merge
      * @param sourceDto       the dto to copy data from
      * @see Assembler#mergeAggregateWithDto(Object, Object)
      */
     @Override
-    public void mergeAggregateWithDto(T targetAggregate, Dto sourceDto) {
+    public void mergeAggregateWithDto(T targetAggregate, D sourceDto) {
         doMergeAggregateWithDto(targetAggregate, sourceDto);
     }
 
@@ -81,28 +82,27 @@ public abstract class BaseTupleAssembler<T extends Tuple, Dto> extends AbstractB
      * targetDto.setName(sourceAggregate.getName());
      * targetDto.setDescription(sourceAggregate.getDescription());
      * </pre>
-     *
+     * <p>
      * This method will be called by the public method {@link #assembleDtoFromAggregate(org.javatuples.Tuple)}
+     * </p>
      *
      * @param targetDto       the dto to assemble
      * @param sourceAggregate the aggregate to copy data from
      */
-    protected abstract void doAssembleDtoFromAggregate(Dto targetDto, T sourceAggregate);
+    protected abstract void doAssembleDtoFromAggregate(D targetDto, T sourceAggregate);
 
     /**
      * This method has to be overridden by users to actually merge an aggregate with the DTO.
      * <pre>
-     * ...
      * targetAggregate.setName(sourceDto.getName());
      * targetAggregate.setDescription(sourceDto.getDescription());
-     * ...
      * </pre>
      * This method will be called by the public method
      * {@link #mergeAggregateWithDto(org.javatuples.Tuple, Object)}
      *
      * @param targetAggregate the aggregate to merge
-     * @param sourceDto the dto to copy data from
+     * @param sourceDto       the dto to copy data from
      */
-    protected abstract void doMergeAggregateWithDto(T targetAggregate, Dto sourceDto);
+    protected abstract void doMergeAggregateWithDto(T targetAggregate, D sourceDto);
 
 }

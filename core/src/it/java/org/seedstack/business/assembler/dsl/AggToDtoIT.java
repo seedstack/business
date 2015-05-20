@@ -11,7 +11,6 @@ package org.seedstack.business.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
@@ -50,11 +49,9 @@ public class AggToDtoIT {
         Assertions.assertThat(dto.getPublishDate()).isEqualTo(PUBLISH_DATE);
     }
 
-    @Test
-    @Ignore
+    @Test(expected = NullPointerException.class)
     public void test_Assemble_Aggregate_To_Dto_null_case() {
-        BookDto to = fluently.assemble().aggregate(null).to(BookDto.class);
-        Assertions.assertThat(to).isNull();
+        fluently.assemble().aggregate(null).to(BookDto.class);
     }
 
     @Test

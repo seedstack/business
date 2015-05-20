@@ -18,10 +18,10 @@ import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderDto;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderFactory;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderRepositoryInternal;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderFactory;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderRepositoryInternal;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

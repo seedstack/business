@@ -10,6 +10,7 @@
 package org.seedstack.business.assembler.dsl;
 
 import com.google.common.collect.Lists;
+import com.google.inject.name.Named;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,12 +21,12 @@ import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.assembler.fixtures.MyAggregateRoot;
 import org.seedstack.business.assembler.fixtures.MyAssembler;
 import org.seedstack.business.assembler.fixtures.MyUnrestrictedDto;
-import org.seedstack.business.core.interfaces.ModelMapperAssembler;
-import org.seedstack.business.core.interfaces.DefaultModelMappedAssembler;
-import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistry;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.AutoAssembler;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Customer;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Recipe;
+import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
+import org.seedstack.business.internal.interfaces.assembler.DefaultModelMappedAssembler;
+import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistry;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.AutoAssembler;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Customer;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Recipe;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -46,7 +47,8 @@ public class InternalRegistryIT {
     private Assembler<MyAggregateRoot, MyUnrestrictedDto> expectedAssembler;
 
     @Inject
-    private ModelMapperAssembler<Order, OrderDto> expectedModelMapperAssembler;
+    @Named("ModelMapper")
+    private Assembler<Order, OrderDto> expectedModelMapperAssembler;
 
     @Test
     public void testAssemblerOfWithProvidedAssembler() {
@@ -80,15 +82,15 @@ public class InternalRegistryIT {
 
     @Test
     public void testAssemblerOfTuple() {
-        List<?> aggregateRootTuple = Lists.newArrayList(org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order.class, Customer.class);
+        List<?> aggregateRootTuple = Lists.newArrayList(org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order.class, Customer.class);
         Assembler<?, ?> assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class);
         Assertions.assertThat(assembler).isNotNull();
     }
 
     @Test
     public void testAssemblerOfWithAutomaticAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order.class
-                , org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderDto.class);
+        Assembler<?, ?> assembler = registry.assemblerOf(org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order.class
+                , org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
         Assertions.assertThat(assembler).isNotInstanceOf(DefaultModelMappedAssembler.class);

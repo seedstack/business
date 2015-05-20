@@ -16,6 +16,8 @@ import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
+import org.seedstack.business.internal.interfaces.assembler.DefaultModelMappedAssembler;
 
 import java.util.HashMap;
 import java.util.List;

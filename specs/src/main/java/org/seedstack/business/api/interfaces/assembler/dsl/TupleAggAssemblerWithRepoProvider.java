@@ -18,8 +18,11 @@ import org.javatuples.Tuple;
 <<<<<<< HEAD
 =======
  */
+<<<<<<< HEAD
 >>>>>>> rename author to respect javadoc format
  */
+=======
+>>>>>>> Change default assembler behavior
 public interface TupleAggAssemblerWithRepoProvider<T extends Tuple> {
 
     /**

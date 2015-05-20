@@ -10,19 +10,20 @@
 package org.seedstack.business.api.domain;
 
 import org.junit.Test;
+import org.seedstack.business.api.DefaultImpl;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
 import org.seedstack.business.api.domain.annotations.*;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.domain.base.BaseEntity;
 import org.seedstack.business.api.domain.base.BaseValueObject;
-import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.api.interfaces.GenericInterfacesService;
 import org.seedstack.business.api.interfaces.annotations.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.query.finder.Finder;
 import org.seedstack.business.api.interfaces.query.finder.GenericFinder;
+import org.seedstack.business.api.specifications.DomainSpecifications;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,6 +113,21 @@ public class DomainSpecificationsTest {
         public Class<MySimplePojo> getDtoClass() { return null; }
     }
 
+    @DefaultImpl
+    static class DefaultMyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
+        @Override
+        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
+
+        @Override
+        public void updateDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
+
+        @Override
+        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }
+
+        @Override
+        public Class<MySimplePojo> getDtoClass() { return null; }
+    }
+
     @Test
     public void testAssemblerSpecification() {
         assertThat(DomainSpecifications.assemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isTrue();
@@ -120,6 +136,26 @@ public class DomainSpecificationsTest {
 
         assertThat(DomainSpecifications.assemblerSpecification).describedAs("specification should be comparable")
                 .isEqualTo(DomainSpecifications.assemblerSpecification);
+    }
+
+    @Test
+    public void testClassicAssemblerSpecification() {
+        assertThat(DomainSpecifications.classicAssemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isTrue();
+
+        assertThat(DomainSpecifications.classicAssemblerSpecification.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
+
+        assertThat(DomainSpecifications.classicAssemblerSpecification).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.classicAssemblerSpecification);
+    }
+
+    @Test
+    public void testDefaultAssemblerSpecification() {
+        assertThat(DomainSpecifications.defaultAssemblerSpecification.isSatisfiedBy(DefaultMyAssembler1.class)).isTrue();
+
+        assertThat(DomainSpecifications.defaultAssemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isFalse();
+
+        assertThat(DomainSpecifications.defaultAssemblerSpecification).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.defaultAssemblerSpecification);
     }
 
     @DomainFactory
