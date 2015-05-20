@@ -30,10 +30,10 @@ import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.core.domain.FactoryInternal;
-import org.seedstack.business.core.interfaces.AutomaticAssembler;
-import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
-import org.seedstack.business.core.interfaces.DefaultAssembler;
-import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperTupleAssembler;
+import org.seedstack.business.core.interfaces.DefaultModelMappedAssembler;
+import org.seedstack.business.core.interfaces.DefaultModelMapperTupleAssembler;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
@@ -354,8 +354,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
         }
 
         Collection<BindingStrategy> bs = new ArrayList<BindingStrategy>();
-        bs.add(new GenericBindingStrategy(autoAssemblerGenerics, AutomaticAssembler.class, DefaultAssembler.class, new ProviderFactory<AutomaticAssembler>()));
-        bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, AutomaticTupleAssembler.class, DefaultTupleAssembler.class, new ProviderFactory<AutomaticAssembler>()));
+        bs.add(new GenericBindingStrategy(autoAssemblerGenerics, ModelMapperAssembler.class, DefaultModelMappedAssembler.class, new ProviderFactory<ModelMapperAssembler>()));
+        bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, ModelMapperTupleAssembler.class, DefaultModelMapperTupleAssembler.class, new ProviderFactory<ModelMapperAssembler>()));
         return bs;
     }
 }

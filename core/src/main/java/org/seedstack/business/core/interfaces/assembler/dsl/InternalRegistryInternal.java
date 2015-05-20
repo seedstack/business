@@ -18,8 +18,8 @@ import org.javatuples.Tuple;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.core.interfaces.AutomaticAssembler;
-import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperTupleAssembler;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.core.api.Logging;
 import org.slf4j.Logger;
@@ -57,7 +57,7 @@ public class InternalRegistryInternal implements InternalRegistry {
         } catch (ConfigurationException e) {
             logger.trace("Unable to find a  base assembler for " + aggregateRoot + ", fallback on automatic assembler.", e);
             try {
-                o = (Assembler<?, ?>) getInstance(AutomaticAssembler.class, aggregateRoot, dto);
+                o = (Assembler<?, ?>) getInstance(ModelMapperAssembler.class, aggregateRoot, dto);
             } catch (ConfigurationException e2) {
                 logger.debug(e2.getMessage(), e2);
                 throw new IllegalStateException("No assembler found for assembling " + aggregateRoot.getSimpleName() + " and " + dto.getSimpleName() +
@@ -77,7 +77,7 @@ public class InternalRegistryInternal implements InternalRegistry {
             o = (Assembler<?, ?>) getInstance(Assembler.class, tupleType, dto);
         } catch (ConfigurationException e) {
             logger.trace("Unable to find a  base tuple assembler for " + tupleType + ", fallback on automatic tuple assembler.");
-            o = (Assembler<?, ?>) getInstance(AutomaticTupleAssembler.class, tupleType, dto);
+            o = (Assembler<?, ?>) getInstance(ModelMapperTupleAssembler.class, tupleType, dto);
         }
         return o;
     }

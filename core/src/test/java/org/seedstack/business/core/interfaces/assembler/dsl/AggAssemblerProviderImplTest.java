@@ -21,7 +21,7 @@ import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoProvider;
-import org.seedstack.business.core.interfaces.DefaultTupleAssembler;
+import org.seedstack.business.core.interfaces.DefaultModelMapperTupleAssembler;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.*;
 
 import java.util.Arrays;
@@ -42,7 +42,7 @@ public class AggAssemblerProviderImplTest {
 
         List<?> aggregateRootTuple = Lists.newArrayList(Order.class, Customer.class);
         Mockito.when(registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class)).
-                thenReturn((Assembler) new DefaultTupleAssembler<Pair<Order, Customer>, Recipe>(new Object[]{null, Recipe.class}));
+                thenReturn((Assembler) new DefaultModelMapperTupleAssembler<Pair<Order, Customer>, Recipe>(new Object[]{null, Recipe.class}));
     }
 
     @Test

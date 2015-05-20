@@ -29,7 +29,7 @@ public interface InternalRegistry {
      * Returns an BaseAssembler matching the given aggregate root class and the dto class.
      * <p>
      * If no assembler were created by the client developer, the method returns an
-     * {@link org.seedstack.business.core.interfaces.AutomaticAssembler}.
+     * {@link org.seedstack.business.core.interfaces.ModelMapperAssembler}.
      * </p>
      *
      * @param aggregateRoot the aggregate root class.
@@ -42,7 +42,7 @@ public interface InternalRegistry {
      * Returns an BaseTupleAssembler matching the given list of aggregate root classes and the dto class.
      * <p>
      * If no assembler were created by the client developer, the method returns an
-     * {@link org.seedstack.business.core.interfaces.AutomaticTupleAssembler}.
+     * {@link org.seedstack.business.core.interfaces.ModelMapperTupleAssembler}.
      * </p>
      *
      * @param aggregateRootTuple a list of aggregate root classes.

@@ -7,28 +7,41 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assembler.auto;
+package org.seedstack.business.core.interfaces;
 
 import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
 import org.seedstack.business.api.Tuples;
-import org.seedstack.seed.it.SeedITRunner;
-
-import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-@RunWith(SeedITRunner.class)
-public class AutomaticTupleAssemblerTest {
+public class ModelMapperTupleAssemblerTest {
 
-    @Inject
-    private AutomaticTupleAssembler<Pair<Order, Customer>, OrderDTO> defaultTupleAssembler;
+    private ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> automaticAssembler;
+//    private DefaultAssembler<Order, OrderDTO> defaultAssembler;
+
+    static class AutoAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> {
+        @Override
+        protected ModelMapper configureAssembly() {
+            return new ModelMapper();
+        }
+
+        @Override
+        protected ModelMapper configureMerge() {
+            return new ModelMapper();
+        }
+    }
+
+    @Before
+    public void before() {
+        automaticAssembler = new AutoAssembler();
+//        defaultAssembler = new DefaultAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
+    }
 
     @Test
     public void testAssembleDtoFromAggregate() {
@@ -36,12 +49,17 @@ public class AutomaticTupleAssemblerTest {
         Order order = new Order(new Address("main street", "bevillecity"));
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        OrderDTO orderDTO = defaultTupleAssembler.assembleDtoFromAggregate(tuple);
+        OrderDTO orderDTO = automaticAssembler.assembleDtoFromAggregate(tuple);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+
+//        orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
+//
+//        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
+//        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
     }
 
     @Test
@@ -52,7 +70,7 @@ public class AutomaticTupleAssemblerTest {
 
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        defaultTupleAssembler.updateDtoFromAggregate(orderDTO, tuple);
+        automaticAssembler.updateDtoFromAggregate(orderDTO, tuple);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -60,14 +78,14 @@ public class AutomaticTupleAssemblerTest {
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
     }
 
-    //@Test
+    @Test
     public void testMergeAggregateWithDto() {
         Customer customer = new Customer(new Name("John", "Doe"));
         Order order = new Order(null);
         OrderDTO orderDTO = new OrderDTO("John", "Doe", "main street", "bevillecity");
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        defaultTupleAssembler.mergeAggregateWithDto(tuple, orderDTO);
+        automaticAssembler.mergeAggregateWithDto(tuple, orderDTO);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -78,12 +96,12 @@ public class AutomaticTupleAssemblerTest {
     static class Order extends BaseAggregateRoot<String> {
         String id;
 
-        Address billingAddress;
-
         @Override
         public String getEntityId() {
             return id;
         }
+
+        Address billingAddress;
 
         public Order() {
         }
@@ -101,15 +119,8 @@ public class AutomaticTupleAssemblerTest {
         }
     }
 
-    static class Customer extends BaseAggregateRoot<String> {
-        String id;
-
+    static class Customer {
         Name name;
-
-        @Override
-        public String getEntityId() {
-            return id;
-        }
 
         public Customer() {
         }
@@ -188,7 +199,6 @@ public class AutomaticTupleAssemblerTest {
         }
     }
 
-    @DtoOf({Order.class, Customer.class})
     static class OrderDTO {
         String customerFirstName;
         String customerLastName;

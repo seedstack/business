@@ -20,8 +20,8 @@ import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.assembler.fixtures.MyAggregateRoot;
 import org.seedstack.business.assembler.fixtures.MyAssembler;
 import org.seedstack.business.assembler.fixtures.MyUnrestrictedDto;
-import org.seedstack.business.core.interfaces.AutomaticAssembler;
-import org.seedstack.business.core.interfaces.DefaultAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperAssembler;
+import org.seedstack.business.core.interfaces.DefaultModelMappedAssembler;
 import org.seedstack.business.core.interfaces.assembler.dsl.InternalRegistry;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.AutoAssembler;
 import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Customer;
@@ -46,7 +46,7 @@ public class InternalRegistryIT {
     private Assembler<MyAggregateRoot, MyUnrestrictedDto> expectedAssembler;
 
     @Inject
-    private AutomaticAssembler<Order, OrderDto> expectedAutomaticAssembler;
+    private ModelMapperAssembler<Order, OrderDto> expectedModelMapperAssembler;
 
     @Test
     public void testAssemblerOfWithProvidedAssembler() {
@@ -71,11 +71,11 @@ public class InternalRegistryIT {
     public void testAssemblerOfWithDefaultAssembler() {
         Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
-        Assertions.assertThat(assembler).isInstanceOf(AutomaticAssembler.class);
-        Assertions.assertThat(assembler).isInstanceOf(DefaultAssembler.class);
+        Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
+        Assertions.assertThat(assembler).isInstanceOf(DefaultModelMappedAssembler.class);
 
-        Assertions.assertThat(expectedAutomaticAssembler).isNotNull();
-        Assertions.assertThat(assembler.getClass()).isEqualTo(expectedAutomaticAssembler.getClass());
+        Assertions.assertThat(expectedModelMapperAssembler).isNotNull();
+        Assertions.assertThat(assembler.getClass()).isEqualTo(expectedModelMapperAssembler.getClass());
     }
 
     @Test
@@ -90,8 +90,8 @@ public class InternalRegistryIT {
         Assembler<?, ?> assembler = registry.assemblerOf(org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.Order.class
                 , org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
-        Assertions.assertThat(assembler).isInstanceOf(AutomaticAssembler.class);
-        Assertions.assertThat(assembler).isNotInstanceOf(DefaultAssembler.class);
+        Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
+        Assertions.assertThat(assembler).isNotInstanceOf(DefaultModelMappedAssembler.class);
 
         Assertions.assertThat(assembler).isInstanceOf(AutoAssembler.class);
     }

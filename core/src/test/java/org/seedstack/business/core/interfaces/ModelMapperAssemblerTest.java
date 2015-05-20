@@ -7,18 +7,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.assembler.auto;
+package org.seedstack.business.core.interfaces;
 
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.core.interfaces.AutomaticAssembler;
-import org.seedstack.seed.it.SeedITRunner;
 
-import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,22 +24,52 @@ import java.util.Map;
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-@RunWith(SeedITRunner.class)
-public class AutomaticAssemblerTest {
+public class ModelMapperAssemblerTest {
 
-    @Inject
-    private AutomaticAssembler<Order, OrderDTO> defaultAssembler;
+    private ModelMapperAssembler<Order, OrderDTO> modelMapperAssembler;
+    private DefaultModelMappedAssembler<Order, OrderDTO> defaultModelMappedAssembler;
+
+    static class AutoAssembler extends ModelMapperAssembler<Order, OrderDTO> {
+        @Override
+        protected ModelMapper configureAssembly() {
+            return new ModelMapper();
+        }
+
+        @Override
+        protected ModelMapper configureMerge() {
+            ModelMapper modelMapper = new ModelMapper();
+            PropertyMap<OrderDTO, Order> orderMap = new PropertyMap<OrderDTO, Order>() {
+                protected void configure() {
+                    map().getBillingAddress().setStreet(source.billingStreet);
+                    map(source.billingCity, destination.billingAddress.getCity());
+                }
+            };
+            modelMapper.addMappings(orderMap);
+            return modelMapper;
+        }
+    }
+
+    @Before
+    public void before() {
+        modelMapperAssembler = new AutoAssembler();
+        defaultModelMappedAssembler = new DefaultModelMappedAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
+    }
 
     @Test
     public void testAssembleDtoFromAggregate() {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
 
-        OrderDTO orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = modelMapperAssembler.assembleDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+
+        orderDTO = defaultModelMappedAssembler.assembleDtoFromAggregate(order);
+
+        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
+        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
     }
 
     @Test
@@ -52,14 +80,14 @@ public class AutomaticAssemblerTest {
         specs.put("price", "cheap");
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), features, specs);
 
-        OrderDTO orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = modelMapperAssembler.assembleDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
 
-        orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
+        orderDTO = defaultModelMappedAssembler.assembleDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -70,7 +98,7 @@ public class AutomaticAssemblerTest {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
         OrderDTO orderDTO = new OrderDTO("Jane", "Doe", "", "");
 
-        defaultAssembler.updateDtoFromAggregate(orderDTO, order);
+        modelMapperAssembler.updateDtoFromAggregate(orderDTO, order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -78,7 +106,7 @@ public class AutomaticAssemblerTest {
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
     }
 
-    //@Test
+    @Test
     public void testMergeAggregateWithDto() {
         Order order = new Order(new Customer(new Name("Jane", "Doe")), new Address(), null, null);
         order.setIgnoredProp("this should not be deleted");
@@ -87,7 +115,7 @@ public class AutomaticAssemblerTest {
         // This custom assembler test a custom mapping for the merge
         // this mapping is necessary because the name are not matching billing != billingAddress
 
-        defaultAssembler.mergeAggregateWithDto(order, orderDTO);
+        modelMapperAssembler.mergeAggregateWithDto(order, orderDTO);
 
         Assertions.assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("John");
         Assertions.assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");
@@ -241,7 +269,6 @@ public class AutomaticAssemblerTest {
         }
     }
 
-    @DtoOf(Order.class)
     static class OrderDTO {
         String customerFirstName;
         String customerLastName;

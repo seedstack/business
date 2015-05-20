@@ -11,12 +11,12 @@ package org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer;
 
 import org.javatuples.Pair;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.core.interfaces.AutomaticTupleAssembler;
+import org.seedstack.business.core.interfaces.ModelMapperTupleAssembler;
 
 /**
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
-public class AutoTupleAssembler extends AutomaticTupleAssembler<Pair<Order, Customer>, OrderDto> {
+public class AutoTupleAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDto> {
     @Override
     protected ModelMapper configureAssembly() {
         return new ModelMapper();
