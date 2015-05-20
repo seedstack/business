@@ -15,14 +15,7 @@ import org.javatuples.Tuple;
  * Specifies whether the aggregate root tuple should be retrieved from a repository or created from a factory.
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-<<<<<<< HEAD
-=======
  */
-<<<<<<< HEAD
->>>>>>> rename author to respect javadoc format
- */
-=======
->>>>>>> Change default assembler behavior
 public interface TupleAggAssemblerWithRepoProvider<T extends Tuple> {
 
     /**

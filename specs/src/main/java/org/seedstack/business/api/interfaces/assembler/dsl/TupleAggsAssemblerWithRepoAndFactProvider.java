@@ -17,14 +17,7 @@ import java.util.List;
  * Specifies the behavior in the case where the aggregate tuples cannot be loaded from the repository.
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-<<<<<<< HEAD
-=======
  */
-<<<<<<< HEAD
->>>>>>> rename author to respect javadoc format
- */
-=======
->>>>>>> Change default assembler behavior
 public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
 
     /**
