@@ -10,7 +10,7 @@
 package org.seedstack.business.api.specifications;
 
 import org.kametic.specifications.Specification;
-import org.seedstack.business.api.DefaultImpl;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
 import org.seedstack.business.api.domain.GenericDomainPolicy;
@@ -113,10 +113,10 @@ public final class DomainSpecifications {
                 descendantOf(Assembler.class));
 
     public static final Specification<Class<?>> classicAssemblerSpecification = and(
-            assemblerSpecification, not(classAnnotatedWith(DefaultImpl.class)));
+            assemblerSpecification, not(classAnnotatedWith(GenericImplementation.class)));
 
     public static final Specification<Class<?>> defaultAssemblerSpecification = and(
-            assemblerSpecification, classAnnotatedWith(DefaultImpl.class));
+            assemblerSpecification, classAnnotatedWith(GenericImplementation.class));
 
     public static final Specification<Class<?>> domainRepoImplSpecification = and(
                 classAnnotatedWith(DomainRepositoryImpl.class),

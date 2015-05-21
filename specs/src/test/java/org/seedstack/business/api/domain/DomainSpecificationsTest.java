@@ -10,7 +10,7 @@
 package org.seedstack.business.api.domain;
 
 import org.junit.Test;
-import org.seedstack.business.api.DefaultImpl;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
 import org.seedstack.business.api.domain.annotations.*;
@@ -113,7 +113,7 @@ public class DomainSpecificationsTest {
         public Class<MySimplePojo> getDtoClass() { return null; }
     }
 
-    @DefaultImpl
+    @GenericImplementation
     static class DefaultMyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
         public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }

@@ -12,7 +12,7 @@ package org.seedstack.business.internal.interfaces.assembler;
 import com.google.inject.assistedinject.Assisted;
 import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.api.DefaultImpl;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperTupleAssembler;
 
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ import javax.inject.Named;
  * @see DefaultModelMappedAssembler
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-@DefaultImpl
+@GenericImplementation
 @Named("ModelMapper")
 public class DefaultModelMapperTupleAssembler<T extends Tuple, D> extends ModelMapperTupleAssembler<T, D> {
 

@@ -11,7 +11,7 @@ package org.seedstack.business.internal.interfaces.assembler;
 
 import com.google.inject.assistedinject.Assisted;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.api.DefaultImpl;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
 
@@ -21,12 +21,12 @@ import javax.inject.Named;
 /**
  * This class is a default assembler based on ModelMapper.
  * <p>
- * If an injection point {@code AutomaticAssembler&lt;A, D&gt;} is defined and any class extending {@code AutomaticAssembler}
+ * If an injection point {@code ModelMapperAssembler&lt;A, D&gt;} is defined and any class extending {@code ModelMapperAssembler}
  * for A and D exists, this default assembler will be injected.
  * </p>
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-@DefaultImpl
+@GenericImplementation
 @Named("ModelMapper")
 public class DefaultModelMappedAssembler<A extends AggregateRoot<?>,D> extends ModelMapperAssembler<A, D> {
 

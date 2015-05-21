@@ -10,7 +10,7 @@
 package org.seedstack.business.assembler.auto.fixture;
 
 import com.google.inject.assistedinject.Assisted;
-import org.seedstack.business.api.DefaultImpl;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
 
@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-@DefaultImpl
+@GenericImplementation
 @Named("Dummy")
 public class DummyDefaultAssembler<A extends AggregateRoot<?>,D> extends AbstractBaseAssembler<A, D> {
 
