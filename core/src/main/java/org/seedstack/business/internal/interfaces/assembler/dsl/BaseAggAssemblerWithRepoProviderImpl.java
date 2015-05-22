@@ -32,15 +32,15 @@ import java.util.List;
 public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
     protected final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
-    protected final InternalRegistry registry;
+    protected final AssemblerDslContext context;
 
     /**
      * Constructor.
      *
-     * @param registry the internal registry used to get domain objects
+     * @param context contains the internal registry used to get domain objects
      */
-    public BaseAggAssemblerWithRepoProviderImpl(InternalRegistry registry) {
-        this.registry = registry;
+    public BaseAggAssemblerWithRepoProviderImpl(AssemblerDslContext context) {
+        this.context = context;
     }
 
     protected Object resolveId(Object dto, Class<? extends AggregateRoot<?>> aggregateRootClass) {
@@ -90,7 +90,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
                 throw new IllegalStateException("The " + aggregateRootClass.getCanonicalName() + "'s id is not a value object, so you don't have to specify the index in @MatchingEntityId(index = 0)");
             }
             // Get the "magic" factory for the aggregate id class
-            Factory<?> factory = registry.defaultFactoryOf(aggregateIdClass);
+            Factory<?> factory = context.defaultFactoryOf(aggregateIdClass);
             // Create the id based on the id constructor matching the given parameters
             // TODO <pith> : check the case when one of the parameters is null
             id = factory.create(parameterHolder.parametersOfAggregateRoot(aggregateIndex));
@@ -102,7 +102,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
     }
 
     protected A fromFactory(Class<? extends AggregateRoot<?>> aggregateClass, Object dto) {
-        GenericFactory<A> genericFactory = (GenericFactory<A>) registry.genericFactoryOf(aggregateClass);
+        GenericFactory<A> genericFactory = (GenericFactory<A>) context.genericFactoryOf(aggregateClass);
         ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
         A aggregateRoot = (A) getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parameters());
         return assembleWithDto(aggregateRoot, dto);
@@ -115,7 +115,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
      * @return the assembled aggregate root
      */
     protected A assembleWithDto(A aggregateRoots, Object dto) {
-        Assembler assembler = registry.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.getClass(), dto.getClass());
+        Assembler assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.getClass(), dto.getClass());
         //noinspection unchecked
         assembler.mergeAggregateWithDto(aggregateRoots, dto);
         return aggregateRoots;

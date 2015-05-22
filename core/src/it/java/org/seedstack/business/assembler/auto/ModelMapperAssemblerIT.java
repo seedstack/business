@@ -17,10 +17,10 @@ import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.api.interfaces.assembler.ModelMapper;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,7 @@ import java.util.Map;
 public class ModelMapperAssemblerIT {
 
     @Inject
-    @Named("ModelMapper")
+    @ModelMapper
     private Assembler<Order, OrderDTO> defaultAssembler;
 
     @Test

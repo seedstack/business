@@ -41,21 +41,21 @@ public class FluentAssemblerImpl implements FluentAssembler {
     @Override
     public AssemblerProvider assemble(Annotation qualifier) {
         AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerAnnotationQualifier(qualifier);
+        context.setAssemblerQualifier(qualifier);
         return assemblerProviderFactory.create(context);
     }
 
     @Override
     public AssemblerProvider assemble(AssemblerTypes qualifier) {
         AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerAnnotationClassQualifier(qualifier.get());
+        context.setAssemblerQualifierClass(qualifier.get());
         return assemblerProviderFactory.create(context);
     }
 
     @Override
     public AssemblerProvider assemble(Class<? extends Annotation> qualifier) {
         AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerAnnotationClassQualifier(qualifier);
+        context.setAssemblerQualifierClass(qualifier);
         return assemblerProviderFactory.create(context);
     }
 }

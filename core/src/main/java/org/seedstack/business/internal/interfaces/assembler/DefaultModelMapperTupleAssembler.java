@@ -12,23 +12,22 @@ package org.seedstack.business.internal.interfaces.assembler;
 import com.google.inject.assistedinject.Assisted;
 import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperTupleAssembler;
+import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * This class is a default  tuple assembler based on ModelMapper.
  * <p>
- * This is the same as {@link DefaultModelMappedAssembler} but it supports tuple of aggregates.
+ * This is the same as {@link DefaultModelMapperAssembler} but it supports tuple of aggregates.
  * </p>
  *
- * @see DefaultModelMappedAssembler
+ * @see DefaultModelMapperAssembler
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
-@Named("ModelMapper")
+@org.seedstack.business.api.interfaces.assembler.ModelMapper
 public class DefaultModelMapperTupleAssembler<T extends Tuple, D> extends ModelMapperTupleAssembler<T, D> {
 
     @SuppressWarnings("unchecked")

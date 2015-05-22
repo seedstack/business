@@ -24,7 +24,7 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
     private final Object dto;
 
     public AggAssemblerWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, Object dto) {
-        super(context.getRegistry());
+        super(context);
         this.aggregateClass = aggregateClass;
         this.dto = dto;
     }
@@ -50,7 +50,7 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
      * @return the loaded aggregate root
      */
     protected A loadFromRepo(Object key) {
-        Repository repository = registry.repositoryOf(aggregateClass);
+        Repository repository = context.repositoryOf(aggregateClass);
         //noinspection unchecked
         return (A) repository.load(key);
     }

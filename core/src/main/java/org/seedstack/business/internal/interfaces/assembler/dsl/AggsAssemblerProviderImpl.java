@@ -26,12 +26,10 @@ import java.util.List;
 public class AggsAssemblerProviderImpl<D> implements AggsAssemblerProvider<D> {
 
     private final AssemblerDslContext context;
-    private final InternalRegistry registry;
     private final List<D> dtos;
 
     public AggsAssemblerProviderImpl(AssemblerDslContext context, List<D> dtos) {
         this.context = context;
-        this.registry = context.getRegistry();
         this.dtos = dtos;
     }
 
@@ -107,7 +105,7 @@ public class AggsAssemblerProviderImpl<D> implements AggsAssemblerProvider<D> {
             if (aggregateRoots.size() != dtos.size()) {
                 throw new IllegalArgumentException("The list of dto should have the same size as the list of aggregate");
             }
-            Assembler assembler = registry.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.get(0).getClass(), dtos.get(0).getClass());
+            Assembler assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.get(0).getClass(), dtos.get(0).getClass());
             for (int i = 0; i < aggregateRoots.size(); i++) {
                 assembler.mergeAggregateWithDto(aggregateRoots.get(i), dtos.get(i));
             }

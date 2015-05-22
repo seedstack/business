@@ -20,14 +20,12 @@ import java.util.List;
  * This registry is used internally to dynamically provide DDD objects according to the aggregate root
  * they are associated to. It also avoid the proliferation of the injector in other classes of the DSL.
  * <p>
- * This class is required by the genericity of the DSL, but may not be useful for client users.
+ * This class is required because of the DSL genericity, but it may not be useful for client users.
  * </p>
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface InternalRegistry {
-
-    Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto, @Nullable Annotation qualifier);
 
     /**
      * Returns an BaseAssembler matching the given aggregate root class and the dto class.
@@ -42,7 +40,17 @@ public interface InternalRegistry {
      */
     Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto);
 
-    Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, Annotation qualifier);
+    /**
+     * Returns an BaseAssembler matching the given aggregate root class and the dto class.
+     *
+     * @param aggregateRoot the aggregate root class.
+     * @param dto           the dto class
+     * @param qualifier     the assembler qualifier
+     * @return the assembler
+     */
+    Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto, @Nullable Annotation qualifier);
+
+    Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto, @Nullable Class<? extends Annotation> qualifier);
 
     /**
      * Returns an BaseTupleAssembler matching the given list of aggregate root classes and the dto class.
@@ -56,6 +64,10 @@ public interface InternalRegistry {
      * @return the assembler
      */
     Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto);
+
+    Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, @Nullable Annotation qualifier);
+
+    Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, @Nullable Class<? extends Annotation> qualifier);
 
     /**
      * Returns a generic factory for the given aggregate root.

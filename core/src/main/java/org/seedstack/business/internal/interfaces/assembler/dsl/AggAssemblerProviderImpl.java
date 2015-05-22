@@ -27,12 +27,10 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
 
     private final AssemblerDslContext context;
     private final D dto;
-    private final InternalRegistry registry;
 
     public AggAssemblerProviderImpl(AssemblerDslContext context, D dto) {
         this.context = context;
         this.dto = dto;
-        registry = context.getRegistry();
     }
 
     @Override
@@ -106,7 +104,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Pair<A1, A2> to(A1 first, A2 second) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass());
         Pair<A1, A2> aggregateRootTuple = Tuples.create(first, second);
-        Assembler<Pair<A1, A2>, D> assembler = (Assembler<Pair<A1, A2>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Pair<A1, A2>, D> assembler = (Assembler<Pair<A1, A2>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -116,7 +114,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Triplet<A1, A2, A3> to(A1 first, A2 second, A3 third) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass());
         Triplet<A1, A2, A3> aggregateRootTuple = Tuples.create(first, second, third);
-        Assembler<Triplet<A1, A2, A3>, D> assembler = (Assembler<Triplet<A1, A2, A3>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Triplet<A1, A2, A3>, D> assembler = (Assembler<Triplet<A1, A2, A3>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -126,7 +124,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Quartet<A1, A2, A3, A4> to(A1 first, A2 second, A3 third, A4 fourth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass());
         Quartet<A1, A2, A3, A4> aggregateRootTuple = Tuples.create(first, second, third, fourth);
-        Assembler<Quartet<A1, A2, A3, A4>, D> assembler = (Assembler<Quartet<A1, A2, A3, A4>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Quartet<A1, A2, A3, A4>, D> assembler = (Assembler<Quartet<A1, A2, A3, A4>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -136,7 +134,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Quintet<A1, A2, A3, A4, A5> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass());
         Quintet<A1, A2, A3, A4, A5> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth);
-        Assembler<Quintet<A1, A2, A3, A4, A5>, D> assembler = (Assembler<Quintet<A1, A2, A3, A4, A5>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Quintet<A1, A2, A3, A4, A5>, D> assembler = (Assembler<Quintet<A1, A2, A3, A4, A5>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -146,7 +144,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Sextet<A1, A2, A3, A4, A5, A6> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass(), sixth.getClass());
         Sextet<A1, A2, A3, A4, A5, A6> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth, sixth);
-        Assembler<Sextet<A1, A2, A3, A4, A5, A6>, D> assembler = (Assembler<Sextet<A1, A2, A3, A4, A5, A6>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Sextet<A1, A2, A3, A4, A5, A6>, D> assembler = (Assembler<Sextet<A1, A2, A3, A4, A5, A6>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -156,7 +154,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Septet<A1, A2, A3, A4, A5, A6, A7> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass(), sixth.getClass(), seventh.getClass());
         Septet<A1, A2, A3, A4, A5, A6, A7> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth, sixth, seventh);
-        Assembler<Septet<A1, A2, A3, A4, A5, A6, A7>, D> assembler = (Assembler<Septet<A1, A2, A3, A4, A5, A6, A7>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Septet<A1, A2, A3, A4, A5, A6, A7>, D> assembler = (Assembler<Septet<A1, A2, A3, A4, A5, A6, A7>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -166,7 +164,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Octet<A1, A2, A3, A4, A5, A6, A7, A8> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass(), sixth.getClass(), seventh.getClass(), eighth.getClass());
         Octet<A1, A2, A3, A4, A5, A6, A7, A8> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth, sixth, seventh, eighth);
-        Assembler<Octet<A1, A2, A3, A4, A5, A6, A7, A8>, D> assembler = (Assembler<Octet<A1, A2, A3, A4, A5, A6, A7, A8>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Octet<A1, A2, A3, A4, A5, A6, A7, A8>, D> assembler = (Assembler<Octet<A1, A2, A3, A4, A5, A6, A7, A8>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -176,7 +174,7 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth, A9 ninth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass(), sixth.getClass(), seventh.getClass(), eighth.getClass(), ninth.getClass());
         Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth);
-        Assembler<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>, D> assembler = (Assembler<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>, D> assembler = (Assembler<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
@@ -186,21 +184,21 @@ public class AggAssemblerProviderImpl<D> implements AggAssemblerProvider<D> {
     Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10> to(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth, A9 ninth, A10 tenth) {
         List<?> aggregateRootClasses = Lists.newArrayList(first.getClass(), second.getClass(), third.getClass(), fourth.getClass(), fifth.getClass(), sixth.getClass(), seventh.getClass(), eighth.getClass(), ninth.getClass(), tenth.getClass());
         Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10> aggregateRootTuple = Tuples.create(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth);
-        Assembler<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>, D> assembler = (Assembler<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>, D>) registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
+        Assembler<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>, D> assembler = (Assembler<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>, D>) context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
 
     @Override
     public Tuple to(Tuple aggregateRootTuple) {
-        Assembler assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) Tuples.toListOfClasses(aggregateRootTuple), dto.getClass());
+        Assembler assembler = context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) Tuples.toListOfClasses(aggregateRootTuple), dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }
 
     @Override
     public <A extends AggregateRoot<?>> A to(A aggregateRoot) {
-        Assembler<A, D> assembler = (Assembler<A, D>) registry.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoot.getClass(), dto.getClass());
+        Assembler<A, D> assembler = (Assembler<A, D>) context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoot.getClass(), dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRoot, dto);
         return aggregateRoot;
     }

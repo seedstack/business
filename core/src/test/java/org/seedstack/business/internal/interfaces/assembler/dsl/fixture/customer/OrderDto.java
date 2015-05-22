@@ -9,14 +9,13 @@
  */
 package org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer;
 
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
 import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
 
 /**
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
-@DtoOf(Order.class) // specify the link to the aggregate root
+//@DtoOf(Order.class) // specify the link to the aggregate root
 public class OrderDto {
     String orderId;
     String product;

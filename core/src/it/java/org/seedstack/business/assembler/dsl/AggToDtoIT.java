@@ -10,6 +10,7 @@
 package org.seedstack.business.assembler.dsl;
 
 import com.google.common.collect.Lists;
+import com.google.inject.name.Names;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,8 @@ public class AggToDtoIT {
         StoredBook book = new StoredBook(new BookId(THE_THREE_MUSKETEERS, ALEXANDRE_DUMAS));
         book.setEditor("unknown");
         book.setPublishDate(PUBLISH_DATE);
-        BookDto dto = fluently.assemble().aggregate(book).to(BookDto.class);
+
+        BookDto dto = fluently.assemble(Names.named("Book")).aggregate(book).to(BookDto.class); // test qualifiers
 
         Assertions.assertThat(dto.getAuthor()).isEqualTo(ALEXANDRE_DUMAS);
         Assertions.assertThat(dto.getTitle()).isEqualTo(THE_THREE_MUSKETEERS);
@@ -64,7 +66,7 @@ public class AggToDtoIT {
         book2.setEditor("other editor");
         book2.setPublishDate(PUBLISH_DATE);
 
-        List<BookDto> dtos = fluently.assemble().aggregates(Lists.newArrayList(book, book2)).to(BookDto.class);
+        List<BookDto> dtos = fluently.assemble(Names.named("Book")).aggregates(Lists.newArrayList(book, book2)).to(BookDto.class);
 
         Assertions.assertThat(dtos).isNotNull();
         Assertions.assertThat(dtos).isNotEmpty();

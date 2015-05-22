@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.internal.interfaces.assembler.dsl.AssemblerDslContext;
@@ -65,7 +64,7 @@ public class AssemblerDslIT {
     public void testAssembleFromFactory() {
         OrderDto orderDto = new OrderDto("1", "light saber");
         orderDto.setPrice(PRICE);
-        Order aggregateRoot = fluently.assemble(AssemblerTypes.MODEL_MAPPER).dto(orderDto).to(Order.class).fromFactory();
+        Order aggregateRoot = fluently.assemble().dto(orderDto).to(Order.class).fromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");

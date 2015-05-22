@@ -16,11 +16,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.api.interfaces.assembler.ModelMapper;
 import org.seedstack.business.assembler.auto.fixture.*;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
@@ -29,7 +29,7 @@ import javax.inject.Named;
 public class ModelMapperTupleAssemblerIT {
 
     @Inject
-    @Named("ModelMapper")
+    @ModelMapper
     private Assembler<Pair<Order, Customer>, Recipe> defaultTupleAssembler;
 
     @Test

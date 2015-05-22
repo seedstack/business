@@ -33,7 +33,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
     private final Object dto;
 
     public TupleAggAssemblerWithRepoProviderImpl(AssemblerDslContext context, List<Class<? extends AggregateRoot<?>>> aggregateClasses, Object dto) {
-        super(context.getRegistry());
+        super(context);
         this.aggregateClasses = aggregateClasses;
         this.dto = dto;
     }
@@ -55,7 +55,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
         for (Object o : aggregateClasses) {
             if (o instanceof Class<?>) {
                 Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
-                GenericFactory<?> genericFactory = registry.genericFactoryOf(aggregateClass);
+                GenericFactory<?> genericFactory = context.genericFactoryOf(aggregateClass);
                 Object aggregate = getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
                 aggregateRoots.add(aggregate);
             } else {
@@ -142,7 +142,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
             Class<? extends AggregateRoot<?>> aggregateClass = aggregateClasses.get(i);
             Object id = ids.getValue(i);
 
-            Repository repository = registry.repositoryOf(aggregateClass);
+            Repository repository = context.repositoryOf(aggregateClass);
             AggregateRoot<?> aggregateRoot = repository.load(id);
             aggregateRoots.add(new Triplet<Object, Class<?>, Object>(aggregateRoot, aggregateClass, id));
         }
@@ -158,7 +158,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
      * @return the assembled aggregate root(s)
      */
     protected  <T> T assembleWithDto(T aggregateRoots) {
-        Assembler assembler = registry.tupleAssemblerOf(aggregateClasses, dto.getClass());
+        Assembler assembler = context.tupleAssemblerOf(aggregateClasses, dto.getClass());
         //noinspection unchecked
         assembler.mergeAggregateWithDto(aggregateRoots, dto);
         return aggregateRoots;

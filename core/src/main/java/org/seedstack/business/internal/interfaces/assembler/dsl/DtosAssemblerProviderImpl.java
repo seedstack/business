@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
 
-    private final InternalRegistry registry;
     private final AssemblerDslContext context;
 
     private final List<? extends AggregateRoot<?>> aggregates;
@@ -31,7 +30,6 @@ public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
 
     public DtosAssemblerProviderImpl(AssemblerDslContext context, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
         this.context = context;
-        this.registry = context.getRegistry();
         this.aggregates = aggregates;
         this.aggregateTuples = aggregateTuples;
     }
@@ -60,11 +58,11 @@ public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
         Assembler assembler = null;
 
         if (aggregates != null && !aggregates.isEmpty()) {
-            assembler = registry.assemblerOf((Class<? extends AggregateRoot<?>>) aggregates.get(0).getClass(), dtoClass);
+            assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregates.get(0).getClass(), dtoClass);
         } else if (aggregateTuples != null && !aggregateTuples.isEmpty()) {
             Tuple firstTuple = aggregateTuples.get(0);
             List<?> aggregateRootClasses = Tuples.toListOfClasses(firstTuple);
-            assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dtoClass);
+            assembler = context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dtoClass);
         }
         return assembler;
     }
