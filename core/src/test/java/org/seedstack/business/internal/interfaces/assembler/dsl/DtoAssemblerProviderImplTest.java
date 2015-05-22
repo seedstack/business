@@ -31,12 +31,13 @@ public class DtoAssemblerProviderImplTest {
 
     private DtoAssemblerProviderImpl underTest;
     private DtosAssemblerProviderImpl underTest2;
-    private InternalRegistry registry;
+    private AssemblerDslContext context = new AssemblerDslContext();
 
     @Before
     @SuppressWarnings("unchecked")
     public void before() {
-        registry = Mockito.mock(InternalRegistryInternal.class);
+        InternalRegistry registry = Mockito.mock(InternalRegistryInternal.class);
+        context.setRegistry(registry);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
         List<Class<? extends AggregateRoot<?>>> aggregateRootClasses = new ArrayList<Class<? extends AggregateRoot<?>>>();
@@ -47,7 +48,7 @@ public class DtoAssemblerProviderImplTest {
 
     @Test
     public void testToDto() {
-        underTest = new DtoAssemblerProviderImpl(registry, new Order("lightsaber"));
+        underTest = new DtoAssemblerProviderImpl(context, new Order("lightsaber"));
 
         OrderDto orderDto = underTest.to(OrderDto.class);
 
@@ -60,7 +61,7 @@ public class DtoAssemblerProviderImplTest {
     public void testToDtoWithTuple() {
         Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
 
-        underTest = new DtoAssemblerProviderImpl(registry, tuple);
+        underTest = new DtoAssemblerProviderImpl(context, tuple);
         OrderDto orderDto = underTest.to(OrderDto.class);
 
         Assertions.assertThat(orderDto).isNotNull();
@@ -74,7 +75,7 @@ public class DtoAssemblerProviderImplTest {
         aggregateRoots.add(new Order("lightsaber"));
         aggregateRoots.add(new Order("death star"));
 
-        underTest2 = new DtosAssemblerProviderImpl(registry, aggregateRoots, null);
+        underTest2 = new DtosAssemblerProviderImpl(context, aggregateRoots, null);
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();
@@ -89,7 +90,7 @@ public class DtoAssemblerProviderImplTest {
         Tuple tuple1 = Tuples.create(new Order("lightsaber"), new Customer("luke")); // used to get the class of the tuple
         Tuple tuple2 = Tuples.create(new Order("death star"), new Customer("dark vador"));
 
-        underTest2 = new DtosAssemblerProviderImpl(registry, null, Lists.newArrayList(tuple1, tuple2));
+        underTest2 = new DtosAssemblerProviderImpl(context, null, Lists.newArrayList(tuple1, tuple2));
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();

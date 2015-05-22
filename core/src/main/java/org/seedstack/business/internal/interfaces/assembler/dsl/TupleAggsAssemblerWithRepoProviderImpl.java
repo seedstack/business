@@ -32,8 +32,8 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
     private final List<Class<? extends AggregateRoot<?>>> aggregateClasses;
     private final List<?> dtos;
 
-    public TupleAggsAssemblerWithRepoProviderImpl(InternalRegistry registry, List<Class<? extends AggregateRoot<?>>> aggregateClasses, List<?> dtos) {
-        super(registry);
+    public TupleAggsAssemblerWithRepoProviderImpl(AssemblerDslContext context, List<Class<? extends AggregateRoot<?>>> aggregateClasses, List<?> dtos) {
+        super(context.getRegistry());
         this.aggregateClasses = aggregateClasses;
         this.dtos = dtos;
     }

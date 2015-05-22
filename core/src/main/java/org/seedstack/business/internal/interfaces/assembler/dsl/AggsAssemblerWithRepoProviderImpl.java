@@ -26,8 +26,8 @@ public class AggsAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> exten
     private final Class<A> aggregateClass;
     private final List<?> dtos;
 
-    public AggsAssemblerWithRepoProviderImpl(InternalRegistry registry, Class<A> aggregateClass, List<?> dtos) {
-        super(registry);
+    public AggsAssemblerWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, List<?> dtos) {
+        super(context.getRegistry());
         this.aggregateClass = aggregateClass;
         this.dtos = dtos;
     }

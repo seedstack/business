@@ -23,13 +23,15 @@ import java.util.List;
  */
 public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
 
-    private InternalRegistry registry;
+    private final InternalRegistry registry;
+    private final AssemblerDslContext context;
 
     private final List<? extends AggregateRoot<?>> aggregates;
     private final List<? extends Tuple> aggregateTuples;
 
-    public DtosAssemblerProviderImpl(InternalRegistry registry, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
-        this.registry = registry;
+    public DtosAssemblerProviderImpl(AssemblerDslContext context, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
+        this.context = context;
+        this.registry = context.getRegistry();
         this.aggregates = aggregates;
         this.aggregateTuples = aggregateTuples;
     }

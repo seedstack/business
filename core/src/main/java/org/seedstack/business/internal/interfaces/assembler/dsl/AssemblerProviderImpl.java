@@ -10,6 +10,7 @@
 package org.seedstack.business.internal.interfaces.assembler.dsl;
 
 
+import com.google.inject.assistedinject.Assisted;
 import org.javatuples.Tuple;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.dsl.*;
@@ -18,49 +19,51 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Implements {@link org.seedstack.business.api.interfaces.assembler.dsl.Assemble}.
+ * Implements {@link org.seedstack.business.api.interfaces.assembler.dsl.AssemblerProvider}.
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class AssembleImpl implements Assemble {
+public class AssemblerProviderImpl implements AssemblerProvider {
 
-    @Inject
-    private InternalRegistry registry;
+    private final AssemblerDslContext context;
 
     /**
-     * Constructor.
+     * Assisted constructor.
      */
-    public AssembleImpl() {
+    @Inject
+    public AssemblerProviderImpl(InternalRegistry registry, @Assisted AssemblerDslContext context) {
+        this.context = context;
+        context.setRegistry(registry);
     }
 
     @Override
     public <D> AggsAssemblerProvider<D> dtos(List<D> dtos) {
-        return new AggsAssemblerProviderImpl<D>(registry, dtos);
+        return new AggsAssemblerProviderImpl<D>(context, dtos);
     }
 
     @Override
     public <D> AggAssemblerProvider<D> dto(D dto) {
-        return new AggAssemblerProviderImpl<D>(registry, dto);
+        return new AggAssemblerProviderImpl<D>(context, dto);
     }
 
     @Override
     public DtoAssemblerProvider aggregate(AggregateRoot<?> aggregateRoot) {
-        return new DtoAssemblerProviderImpl(registry, aggregateRoot);
+        return new DtoAssemblerProviderImpl(context, aggregateRoot);
     }
 
     @Override
     public DtosAssemblerProvider aggregates(List<? extends AggregateRoot<?>> aggregateRoots) {
-        return new DtosAssemblerProviderImpl(registry, aggregateRoots, null);
+        return new DtosAssemblerProviderImpl(context, aggregateRoots, null);
     }
 
     @Override
     public DtoAssemblerProvider tuple(Tuple aggregateRoots) {
-        return new DtoAssemblerProviderImpl(registry, aggregateRoots);
+        return new DtoAssemblerProviderImpl(context, aggregateRoots);
     }
 
     @Override
     public DtosAssemblerProvider tuples(List<? extends Tuple> aggregateRoots) {
-        return new DtosAssemblerProviderImpl(registry, null, aggregateRoots);
+        return new DtosAssemblerProviderImpl(context, null, aggregateRoots);
     }
 
 }

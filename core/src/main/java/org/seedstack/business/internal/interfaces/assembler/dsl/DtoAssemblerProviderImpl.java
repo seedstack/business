@@ -24,15 +24,15 @@ public class DtoAssemblerProviderImpl implements DtoAssemblerProvider {
 
     private final DtosAssemblerProviderImpl dtosAssemblerProvider;
 
-    public DtoAssemblerProviderImpl(InternalRegistry registry, AggregateRoot<?> aggregate) {
+    public DtoAssemblerProviderImpl(AssemblerDslContext context, AggregateRoot<?> aggregate) {
         List<? extends AggregateRoot<?>> aggregates = Lists.newArrayList(aggregate);
-        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(registry, aggregates, null);
+        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(context, aggregates, null);
     }
 
-    public DtoAssemblerProviderImpl(InternalRegistry registry, Tuple aggregateTuple) {
+    public DtoAssemblerProviderImpl(AssemblerDslContext context, Tuple aggregateTuple) {
         List<Tuple> aggregateTuples = new ArrayList<Tuple>();
         aggregateTuples.add(aggregateTuple);
-        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(registry, null, aggregateTuples);
+        this.dtosAssemblerProvider = new DtosAssemblerProviderImpl(context, null, aggregateTuples);
     }
 
     @Override

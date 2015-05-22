@@ -23,8 +23,8 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
     private final Class<A> aggregateClass;
     private final Object dto;
 
-    public AggAssemblerWithRepoProviderImpl(InternalRegistry registry, Class<A> aggregateClass, Object dto) {
-        super(registry);
+    public AggAssemblerWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, Object dto) {
+        super(context.getRegistry());
         this.aggregateClass = aggregateClass;
         this.dto = dto;
     }
