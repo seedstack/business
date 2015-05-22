@@ -24,7 +24,7 @@ import java.lang.reflect.ParameterizedType;
  * </p>
  * For instance:
  * <pre>
- * public class ProductAssembler extends BaseAssembler{@literal <Product,ProductRepresentation>} {
+ * public class ProductAssembler extends BaseAssembler&lt;Product,ProductRepresentation&gt; {
  *
  *     {@literal @}Override
  *     protected void doAssembleDtoFromAggregate(ProductRepresentation targetDto, Product sourceAggregate) {

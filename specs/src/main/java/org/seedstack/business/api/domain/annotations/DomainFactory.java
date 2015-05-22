@@ -12,17 +12,17 @@ package org.seedstack.business.api.domain.annotations;
 import java.lang.annotation.*;
 
 /**
- * This annotation is a marker for {@link GenericFactory}.
+ * This annotation is a marker for {@link org.seedstack.business.api.domain.GenericFactory}.
  * <p>
- * {@link GenericFactory} is the interface to extend to create a Domain Factory interface. 
- * 
- * @author epo.jemba@ext.mpsa.com
+ * {@code GenericFactory} is the interface to extend to create a Domain Factory interface.
+ * </p>
  *
+ * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE , ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface DomainFactory {
-    
+
 }

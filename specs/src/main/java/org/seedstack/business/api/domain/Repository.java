@@ -26,14 +26,14 @@ import org.seedstack.business.api.domain.annotations.stereotypes.Read;
  * The following is a valid Domain repository interface.
  * <pre>
  *
- *  public interface ProductRepository extends Repository{@literal <Product,String>} {
+ *  public interface ProductRepository extends Repository&lt;Product,String&gt; {
  *     // nothing needed, but you can add methods with specifics
  *     // then implements them
  *  }
  * </pre>
  *
  * <p/>
- * Then this interface has to be implemented by the actual repository implementation . See {@link BaseRepository} for details.
+ * Then this interface has to be implemented by the actual repository implementation.
  *
  * @param <AGGREGATE> the type of the aggregate root class.
  * @param <KEY>       the type of the aggregate root class.
@@ -55,7 +55,7 @@ public interface Repository<AGGREGATE extends AggregateRoot<KEY>, KEY> {
      * Deletes an aggregate from the persistence by its key.
      *
      * @param id the aggregate key
-     * @Deprecated This method will be removed in the next version. The {@link #delete(AggregateRoot)} method should be
+     * @deprecated This method will be removed in the next version. The {@link #delete(AggregateRoot)} method should be
      * used instead.
      */
     @Delete

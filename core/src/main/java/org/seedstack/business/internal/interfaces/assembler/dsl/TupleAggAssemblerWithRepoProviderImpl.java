@@ -59,7 +59,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
                 Object aggregate = getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
                 aggregateRoots.add(aggregate);
             } else {
-                // TODO seed exception
+                // TODO replace by a seed exception
                 throw new IllegalArgumentException(o + " should be a class. the .to(Tuple aggregateClasses) method only accepts tuple of aggregate root classes.");
             }
             aggregateIndex++;

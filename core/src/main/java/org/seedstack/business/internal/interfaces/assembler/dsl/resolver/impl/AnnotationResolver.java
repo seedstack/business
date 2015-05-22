@@ -42,7 +42,7 @@ public class AnnotationResolver implements DtoInfoResolver {
             if (annotation != null) {
                 if (annotation.index() == -1) {
                     // Only if the id is not a value object ! If the constructor has one parameter set the index to 0.
-                    // TODO test and document the behavior described above
+                    // TODO <pith> add more tests and documentation on this
                     if (parameterHolder.uniqueElement() != null) {
                         String message = method.toString() + " - There is already a method annotated with @" + MATCHING_ENTITY_ID
                                 + " don't forget to specify the index to indicate the matching parameter: @" + MATCHING_ENTITY_ID + "(index = 0)";
