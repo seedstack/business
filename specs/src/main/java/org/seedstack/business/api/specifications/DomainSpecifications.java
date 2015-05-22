@@ -10,6 +10,7 @@
 package org.seedstack.business.api.specifications;
 
 import org.kametic.specifications.Specification;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
 import org.seedstack.business.api.domain.GenericDomainPolicy;
@@ -63,6 +64,9 @@ public final class DomainSpecifications {
                 not(classIsInterface())
         );
 
+    /**
+     * The domain repository specification.
+     */
     public static final Specification<Class<?>> domainRepoSpecification = and(
                 ancestorMetaAnnotatedWith(DomainRepository.class),
                 classIsInterface(),
@@ -107,6 +111,12 @@ public final class DomainSpecifications {
                 not(classIsInterface()),
                 not(classIsAbstract()),
                 descendantOf(Assembler.class));
+
+    public static final Specification<Class<?>> classicAssemblerSpecification = and(
+            assemblerSpecification, not(classAnnotatedWith(GenericImplementation.class)));
+
+    public static final Specification<Class<?>> defaultAssemblerSpecification = and(
+            assemblerSpecification, classAnnotatedWith(GenericImplementation.class));
 
     public static final Specification<Class<?>> domainRepoImplSpecification = and(
                 classAnnotatedWith(DomainRepositoryImpl.class),

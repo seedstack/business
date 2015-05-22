@@ -10,50 +10,44 @@
 package org.seedstack.business.api.interfaces.assembler;
 
 
-import org.seedstack.seed.core.api.Logging;
-import org.slf4j.Logger;
-
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
  *
- * @param <AGGREGATE_ROOT>      the aggregate root
- * @param <DTO>                 the dto type
+ * @param <A> the aggregate root
+ * @param <D> the dto type
  * @author epo.jemba@ext.mpsa.com
- * @see BaseAssembler
- * @see BaseTupleAssembler
+ * @see org.seedstack.business.api.interfaces.assembler.BaseAssembler
+ * @see org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler
  */
-public abstract class AbstractBaseAssembler<AGGREGATE_ROOT, DTO>
-        implements Assembler<AGGREGATE_ROOT, DTO> {
+public abstract class AbstractBaseAssembler<A, D>
+        implements Assembler<A, D> {
 
-	@Logging
-	private Logger logger;
+    protected Class<D> dtoClass;
 
-	protected Class<DTO> dtoClass;
+    @Override
+    public Class<D> getDtoClass() {
+        return this.dtoClass;
+    }
 
-	@Override
-	public Class<DTO> getDtoClass() {
-		return this.dtoClass;
-	}
+    /**
+     * This protected method is in charge of creating a new instance of the DTO.
+     * <p>
+     * The actual implementation is fine for simple POJO, but it can be
+     * extended. The developers will then use {@link #getDtoClass()} to retrieve
+     * the destination class.
+     * </p>
+     *
+     * @return the DTO instance.
+     */
+    protected D newDto() {
+        D newInstance;
+        try {
+            newInstance = dtoClass.newInstance();
+        } catch (Exception e) {
+            throw new IllegalStateException("Error when creating new instance of " + dtoClass.getName(), e);
+        }
 
-	/**
-	 * This protected method is in charge of creating a new instance of the DTO.
-	 * <p>
-	 * The actual implementation is fine for simple POJO, but it can be
-	 * extended. The developers will then use {@link #getDtoClass()} to retrieve
-	 * the destination class.
-	 *
-	 * @return the DTO instance.
-	 */
-	protected DTO newDto() {
-		DTO newInstance;
-		try {
-			newInstance = dtoClass.newInstance();
-		} catch (Exception e) {
-			logger.error("Error when creating new instance of " + dtoClass.getName(), e);
-            throw new IllegalStateException(e);
-		}
-
-		return newInstance;
-	}
+        return newInstance;
+    }
 
 }

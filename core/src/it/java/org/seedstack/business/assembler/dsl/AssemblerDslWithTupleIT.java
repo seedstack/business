@@ -11,13 +11,13 @@ package org.seedstack.business.assembler.dsl;
 
 import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
-import org.junit.Ignore;
+import org.javatuples.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.core.interfaces.assembler.dsl.fixture.customer.*;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.*;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -29,8 +29,6 @@ import static junit.framework.TestCase.fail;
  */
 @RunWith(SeedITRunner.class)
 public class AssemblerDslWithTupleIT {
-
-    public static final int PRICE = 10000;
 
     @Inject
     private Repository<Order, String> orderRepository;
@@ -81,10 +79,12 @@ public class AssemblerDslWithTupleIT {
         // the customer name is not part of the factory parameters, so it is set by the assembler
         Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
         Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
+
+        orderRepository.delete(order);
+        customerRepository.delete(customer);
     }
 
     @Test
-    @Ignore
     public void testAssembleFromRepositoryOrFail() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
         try {
@@ -96,7 +96,6 @@ public class AssemblerDslWithTupleIT {
     }
 
     @Test
-    @Ignore
     public void testAssembleFromRepositoryOrFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
@@ -111,18 +110,21 @@ public class AssemblerDslWithTupleIT {
     }
 
     @Test
-    @Ignore
     public void testAssembleFromDto() {
         Order order = orderFactory.create("1", "death star");
         order.setOtherDetails("some details");
+        Customer customer = new Customer("customer1");
+        customer.setName("lucky");
 
-        Order aggregateRoot = fluently.assemble().dto(new OrderDto("1", "light saber", PRICE)).to(order);
+        Tuple tuple = fluently.assemble().dto(new Recipe("customer1", "luke", "order1", "light saber")).to(Pair.with(order, customer));
 
-        Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
-        Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber"); // updated info
-        Assertions.assertThat(aggregateRoot.getPrice()).isEqualTo(PRICE);
+        Assertions.assertThat((Iterable<?>) tuple).isNotNull();
+        Assertions.assertThat(tuple.getValue(0)).isNotNull();
+        Assertions.assertThat(tuple.getValue(1)).isNotNull();
 
-        Assertions.assertThat(aggregateRoot.getOtherDetails()).isEqualTo("some details"); // kept info
+        Assertions.assertThat(((Order) tuple.getValue(0)).getEntityId()).isEqualTo("1");
+        Assertions.assertThat(((Order) tuple.getValue(0)).getOtherDetails()).isEqualTo("some details"); // kept info
+        Assertions.assertThat(((Order) tuple.getValue(0)).getProduct()).isEqualTo("light saber"); // new info
+        Assertions.assertThat(((Customer) tuple.getValue(1)).getName()).isEqualTo("luke"); // updated info
     }
 }

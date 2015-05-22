@@ -16,12 +16,12 @@ import java.lang.reflect.ParameterizedType;
 
 /**
  * This class is the class to be extended by the users in order to create an Assembler.
- * <p/>
+ * <p>
  * User must implements
  * {@link BaseAssembler#doAssembleDtoFromAggregate(Object, org.seedstack.business.api.domain.AggregateRoot)} and
  * {@link BaseAssembler#doMergeAggregateWithDto(org.seedstack.business.api.domain.AggregateRoot, Object)} to provide
  * implementation of the copy.
- * <p/>
+ * </p>
  * For instance:
  * <pre>
  * public class ProductAssembler extends BaseAssembler{@literal <Product,ProductRepresentation>} {
@@ -54,23 +54,13 @@ import java.lang.reflect.ParameterizedType;
  * <pre>
  * productAssembler.mergeAggregateWithDto(productToMerge, productRepresentationSource);
  * </pre>
- * Note that {@link Assemblers} will automatically have a reference of {@code ProductAssembler} and the following will
- * be respectively equivalent to the previous use.
- * <pre>
- * {@literal @}Inject
- * Assemblers assemblers;
- * ...
- * ProductRepresentation productRepresentation = assemblers.assembleDtoFromAggregate(ProductRepresentation.class, productFromRepo);
- * ...
- * assemblers.mergeAggregateWithDto(productToMerge, productRepresentationSource);
- * </pre>
  *
- * @param <AGGREGATE_ROOT> the aggregate root type
- * @param <DTO>            the dto type
+ * @param <A> the aggregate root type
+ * @param <D> the dto type
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO extends Object>
-        extends AbstractBaseAssembler<AGGREGATE_ROOT, DTO> {
+public abstract class BaseAssembler<A extends AggregateRoot<?>, D>
+        extends AbstractBaseAssembler<A, D> {
 
     /**
      * Default needed constructor.
@@ -78,7 +68,7 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
     @SuppressWarnings({"unchecked", "rawtypes"})
     public BaseAssembler() {
         Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        dtoClass = (Class<DTO>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
+        dtoClass = (Class<D>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     /**
@@ -96,15 +86,15 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
      * @see Assembler#assembleDtoFromAggregate(Object)
      */
     @Override
-    public DTO assembleDtoFromAggregate(AGGREGATE_ROOT sourceAggregate) {
-        DTO newDto = newDto();
+    public D assembleDtoFromAggregate(A sourceAggregate) {
+        D newDto = newDto();
         doAssembleDtoFromAggregate(newDto, sourceAggregate);
 
         return newDto;
     }
 
     @Override
-    public void updateDtoFromAggregate(DTO sourceDto, AGGREGATE_ROOT sourceAggregate) {
+    public void updateDtoFromAggregate(D sourceDto, A sourceAggregate) {
         doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
     }
 
@@ -122,7 +112,7 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
      * @param targetDto       the target dto
      * @param sourceAggregate the source aggregate
      */
-    protected abstract void doAssembleDtoFromAggregate(DTO targetDto, AGGREGATE_ROOT sourceAggregate);
+    protected abstract void doAssembleDtoFromAggregate(D targetDto, A sourceAggregate);
 
     /**
      * This method is used by developers or by the DSL to actually merge the aggregate.
@@ -135,7 +125,7 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
      * @see Assembler#mergeAggregateWithDto(Object, Object)
      */
     @Override
-    public void mergeAggregateWithDto(AGGREGATE_ROOT targetAggregate, DTO sourceDto) {
+    public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
         doMergeAggregateWithDto(targetAggregate, sourceDto);
     }
 
@@ -153,6 +143,6 @@ public abstract class BaseAssembler<AGGREGATE_ROOT extends AggregateRoot<?>, DTO
      * @param sourceDto       the source dto
      * @param targetAggregate the target aggregate
      */
-    protected abstract void doMergeAggregateWithDto(AGGREGATE_ROOT targetAggregate, DTO sourceDto);
+    protected abstract void doMergeAggregateWithDto(A targetAggregate, D sourceDto);
 
 }

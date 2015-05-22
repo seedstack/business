@@ -11,16 +11,14 @@ package org.seedstack.business.api.interfaces.assembler;
 
 /**
  * This interface represents the Assembler concepts between an aggregate and a DTO.
- * <p/>
+ * <p>
  * This is a helper to transform an aggregate to a DTO and vice versa.
- * <p/>
- * Underlying class will have to provide the gateway implementation.
+ * </p>
  *
- * @param <AggregateRoot>     the aggregate root
- * @param <Dto>               the dto type
+ * @param <A> the aggregate root
+ * @param <D> the dto type
  */
-public interface Assembler<AggregateRoot, Dto> {
-
+public interface Assembler<A, D> {
 
     /**
      * Creates a new DTO and fill it from the aggregate.
@@ -28,7 +26,7 @@ public interface Assembler<AggregateRoot, Dto> {
      * @param sourceAggregate The aggregate to copy data from.
      * @return a DTO type
      */
-    Dto assembleDtoFromAggregate(AggregateRoot sourceAggregate);
+    D assembleDtoFromAggregate(A sourceAggregate);
 
     /**
      * Updates the given DTO from the aggregate.
@@ -36,7 +34,7 @@ public interface Assembler<AggregateRoot, Dto> {
      * @param sourceDto       The dto to update.
      * @param sourceAggregate The aggregate to copy data from.
      */
-    void updateDtoFromAggregate(Dto sourceDto, AggregateRoot sourceAggregate);
+    void updateDtoFromAggregate(D sourceDto, A sourceAggregate);
 
     /**
      * Merges a source DTO into an existing aggregate.
@@ -44,12 +42,12 @@ public interface Assembler<AggregateRoot, Dto> {
      * @param targetAggregate The aggregate to merge.
      * @param sourceDto       The dto to copy data from.
      */
-    void mergeAggregateWithDto(AggregateRoot targetAggregate, Dto sourceDto);
+    void mergeAggregateWithDto(A targetAggregate, D sourceDto);
 
     /**
      * Returns the DTO type handled by the assembler.
      *
      * @return Class<Dto>
      */
-    Class<Dto> getDtoClass();
+    Class<D> getDtoClass();
 }
