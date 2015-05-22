@@ -11,13 +11,11 @@ package org.seedstack.business.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
-import org.seedstack.business.api.interfaces.assembler.dsl.FluentAssemblerImpl;
-import org.seedstack.business.internal.interfaces.assembler.dsl.AssembleImpl;
-import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistry;
-import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistryInternal;
+import org.seedstack.business.api.interfaces.assembler.dsl.AssemblerProvider;
 import org.seedstack.business.internal.datasecurity.BusinessDataSecurityModule;
+import org.seedstack.business.internal.interfaces.assembler.dsl.*;
 import org.seedstack.business.internal.strategy.api.BindingContext;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.slf4j.Logger;
@@ -66,9 +64,11 @@ class BusinessModule extends AbstractModule {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void configure() {
-        bind(Assemble.class).to(AssembleImpl.class);
         bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
         bind(InternalRegistry.class).to(InternalRegistryInternal.class);
+        install(new FactoryModuleBuilder()
+                .implement(AssemblerProvider.class, AssemblerProviderImpl.class)
+                .build(AssemblerProviderFactory.class));
 
 		for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
 			logger.trace("Binding {} to {}.", binding.getKey(), binding.getValue().getSimpleName());

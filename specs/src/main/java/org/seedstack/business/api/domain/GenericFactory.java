@@ -15,16 +15,17 @@ import org.seedstack.business.api.domain.annotations.DomainFactory;
 
 /**
  * This interface has to be extended in order to create a Domain Factory interface. 
- * <p/>
+ * <p>
  * To be a valid factory interface, Type must respect the followings:
+ * </p>
  * <ul>
- *   <li> be an interface 
- *   <li> extends {@link GenericFactory}
- *   <li> have at least one method that return an Aggregate Root type or another Domain Concept.
+ *   <li>be an interface</li>
+ *   <li>extends {@link org.seedstack.business.api.domain.GenericFactory}</li>
+ *   <li>have at least one method that return an Aggregate Root type or another Domain Concept.</li>
  * </ul> 
  * The following is a valid Domain factory interface.
  * <pre>
- *  public interface ProductFactory extends GenericFactory{@literal <Product>} {
+ *  public interface ProductFactory extends GenericFactory&lt;Product&gt; {
  *      Product createProduct(String productId, EAN13 ean13);
  *  }
  * </pre>

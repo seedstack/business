@@ -35,6 +35,8 @@ public class AggAssemblerWithRepoProviderImplTest {
     @Before
     public void before() {
         registry = Mockito.mock(InternalRegistryInternal.class);
+        AssemblerDslContext context = new AssemblerDslContext();
+        context.setRegistry(registry);
         repository = Mockito.mock(Repository.class);
         orderFactory = new OrderFactoryInternal();
         order = new Order("1", "death star");
@@ -43,7 +45,7 @@ public class AggAssemblerWithRepoProviderImplTest {
         Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((GenericFactory) orderFactory);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        underTest = new AggAssemblerWithRepoProviderImpl<Order>(registry, Order.class, new OrderDto("1", "lightsaber"));
+        underTest = new AggAssemblerWithRepoProviderImpl<Order>(context, Order.class, new OrderDto("1", "lightsaber"));
     }
 
     @Test

@@ -30,7 +30,7 @@ public interface View<Item> extends Serializable {
 	/**
 	 * return the view of a result. 
 	 * 
-	 * @return 
+	 * @return the list of items
 	 */
 	List<Item> getView();
 

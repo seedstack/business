@@ -11,9 +11,12 @@ package org.seedstack.business.assembler.fixtures.book;
 
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 
+import javax.inject.Named;
+
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
+@Named("Book") // just to test the DSL with qualifier
 public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
 
     @Override

@@ -17,10 +17,10 @@ import java.util.Map;
 
 /**
  * Repository for in memory persistence.
- * <p/>
+ * <p>
  * When no specific repository exist for the aggregate, this repository will be injected for
- * {@link org.seedstack.business.api.domain.Repository} with the qualifier {@link @InMemory}.
- * <p/>
+ * {@link org.seedstack.business.api.domain.Repository} with the qualifier {@literal @}InMemory.
+ * </p>
  *
  * @author epo.jemba@ext.mpsa.com
  */
@@ -39,7 +39,7 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
      * Constructor.
      *
      * @param aggregateRootClass the aggregate root class
-     * @param kClass the aggregate key class
+     * @param kClass             the aggregate key class
      */
     public InMemoryRepository(Class<Aggregate> aggregateRootClass, Class<Key> kClass) {
         super(aggregateRootClass, kClass);

@@ -17,7 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
-import org.seedstack.business.internal.interfaces.assembler.DefaultModelMappedAssembler;
+import org.seedstack.business.internal.interfaces.assembler.DefaultModelMapperAssembler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.Map;
 public class ModelMapperAssemblerTest {
 
     private ModelMapperAssembler<Order, OrderDTO> modelMapperAssembler;
-    private DefaultModelMappedAssembler<Order, OrderDTO> defaultModelMappedAssembler;
+    private DefaultModelMapperAssembler<Order, OrderDTO> defaultModelMappedAssembler;
 
     static class AutoAssembler extends ModelMapperAssembler<Order, OrderDTO> {
         @Override
@@ -54,7 +54,7 @@ public class ModelMapperAssemblerTest {
     @Before
     public void before() {
         modelMapperAssembler = new AutoAssembler();
-        defaultModelMappedAssembler = new DefaultModelMappedAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
+        defaultModelMappedAssembler = new DefaultModelMapperAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
     }
 
     @Test

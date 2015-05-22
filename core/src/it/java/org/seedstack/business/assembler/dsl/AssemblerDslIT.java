@@ -17,7 +17,8 @@ import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
+import org.seedstack.business.internal.interfaces.assembler.dsl.AssemblerDslContext;
+import org.seedstack.business.internal.interfaces.assembler.dsl.AssemblerProviderFactory;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderFactory;
@@ -43,7 +44,7 @@ public class AssemblerDslIT {
     private OrderFactory orderFactory;
 
     @Inject
-    private Assemble assemble;
+    private AssemblerProviderFactory assembleFactory;
 
     @Inject
     private FluentAssembler fluently;
@@ -55,8 +56,8 @@ public class AssemblerDslIT {
 
     @Test
     public void testAssembleInjectee() {
-        Object injector2 = Whitebox.getInternalState(assemble, "registry");
-        Assertions.assertThat(injector2).isNotNull();
+        Object context = Whitebox.getInternalState(assembleFactory.create(new AssemblerDslContext()), "context");
+        Assertions.assertThat(context).isNotNull();
     }
 
     @Test

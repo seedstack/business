@@ -32,8 +32,8 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
     private final List<Class<? extends AggregateRoot<?>>> aggregateClasses;
     private final List<?> dtos;
 
-    public TupleAggsAssemblerWithRepoProviderImpl(InternalRegistry registry, List<Class<? extends AggregateRoot<?>>> aggregateClasses, List<?> dtos) {
-        super(registry);
+    public TupleAggsAssemblerWithRepoProviderImpl(AssemblerDslContext context, List<Class<? extends AggregateRoot<?>>> aggregateClasses, List<?> dtos) {
+        super(context);
         this.aggregateClasses = aggregateClasses;
         this.dtos = dtos;
     }
@@ -57,11 +57,11 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
             for (Object o : aggregateClasses) {
                 if (o instanceof Class<?>) {
                     Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
-                    GenericFactory<?> genericFactory = registry.genericFactoryOf(aggregateClass);
+                    GenericFactory<?> genericFactory = context.genericFactoryOf(aggregateClass);
                     Object aggregate = getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
                     aggregateRoots.add(aggregate);
                 } else {
-                    // TODO seed exception
+                    // TODO replace by a seed exception
                     throw new IllegalArgumentException(o + " should be a class. the .to(Tuple aggregateClasses) method only accepts tuple of aggregate root classes.");
                 }
                 aggregateIndex++;
@@ -166,7 +166,7 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
             Class<? extends AggregateRoot<?>> aggregateClass = aggregateClasses.get(i);
             Object id = ids.getValue(i);
 
-            Repository repository = registry.repositoryOf(aggregateClass);
+            Repository repository = context.repositoryOf(aggregateClass);
             AggregateRoot<?> aggregateRoot = repository.load(id);
 
             aggregateRoots.add(new Triplet<Object, Class<?>, Object>(aggregateRoot, aggregateClass, id));
@@ -183,7 +183,7 @@ public class TupleAggsAssemblerWithRepoProviderImpl<T extends Tuple> extends Bas
      */
     protected T assembleWithDto(Object dto, List<?> aggregateRoots) {
         T aggregateRootTuple = Tuples.create(aggregateRoots);
-        Assembler assembler = registry.tupleAssemblerOf(aggregateClasses, dto.getClass());
+        Assembler assembler = context.tupleAssemblerOf(aggregateClasses, dto.getClass());
         //noinspection unchecked
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;

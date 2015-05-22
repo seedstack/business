@@ -11,12 +11,11 @@ package org.seedstack.business.internal.interfaces.assembler;
 
 import com.google.inject.assistedinject.Assisted;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
+import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * This class is a default assembler based on ModelMapper.
@@ -27,12 +26,12 @@ import javax.inject.Named;
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
-@Named("ModelMapper")
-public class DefaultModelMappedAssembler<A extends AggregateRoot<?>,D> extends ModelMapperAssembler<A, D> {
+@org.seedstack.business.api.interfaces.assembler.ModelMapper
+public class DefaultModelMapperAssembler<A extends AggregateRoot<?>,D> extends ModelMapperAssembler<A, D> {
 
     @SuppressWarnings("unchecked")
     @Inject
-    public DefaultModelMappedAssembler(@Assisted Object[] genericClasses) {
+    public DefaultModelMapperAssembler(@Assisted Object[] genericClasses) {
         super((Class) genericClasses.clone()[1]);
     }
 

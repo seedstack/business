@@ -10,7 +10,6 @@
 package org.seedstack.business.assembler.dsl;
 
 import com.google.common.collect.Lists;
-import com.google.inject.name.Named;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +17,12 @@ import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.api.interfaces.assembler.ModelMapper;
 import org.seedstack.business.assembler.fixtures.MyAggregateRoot;
 import org.seedstack.business.assembler.fixtures.MyAssembler;
 import org.seedstack.business.assembler.fixtures.MyUnrestrictedDto;
 import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
-import org.seedstack.business.internal.interfaces.assembler.DefaultModelMappedAssembler;
+import org.seedstack.business.internal.interfaces.assembler.DefaultModelMapperAssembler;
 import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistry;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.AutoAssembler;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Customer;
@@ -47,7 +47,7 @@ public class InternalRegistryIT {
     private Assembler<MyAggregateRoot, MyUnrestrictedDto> expectedAssembler;
 
     @Inject
-    @Named("ModelMapper")
+    @ModelMapper
     private Assembler<Order, OrderDto> expectedModelMapperAssembler;
 
     @Test
@@ -74,7 +74,7 @@ public class InternalRegistryIT {
         Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
-        Assertions.assertThat(assembler).isInstanceOf(DefaultModelMappedAssembler.class);
+        Assertions.assertThat(assembler).isInstanceOf(DefaultModelMapperAssembler.class);
 
         Assertions.assertThat(expectedModelMapperAssembler).isNotNull();
         Assertions.assertThat(assembler.getClass()).isEqualTo(expectedModelMapperAssembler.getClass());
@@ -93,7 +93,7 @@ public class InternalRegistryIT {
                 , org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
-        Assertions.assertThat(assembler).isNotInstanceOf(DefaultModelMappedAssembler.class);
+        Assertions.assertThat(assembler).isNotInstanceOf(DefaultModelMapperAssembler.class);
 
         Assertions.assertThat(assembler).isInstanceOf(AutoAssembler.class);
     }

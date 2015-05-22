@@ -32,13 +32,14 @@ import java.util.List;
  */
 public class AggAssemblerProviderImplTest {
 
-    private InternalRegistry registry;
+    private AssemblerDslContext context = new AssemblerDslContext();
 
     @SuppressWarnings("unchecked")
     @Before
     public void before() {
-        registry = Mockito.mock(InternalRegistryInternal.class);
+        InternalRegistry registry = Mockito.mock(InternalRegistryInternal.class);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
+        context.setRegistry(registry);
 
         List<?> aggregateRootTuple = Lists.newArrayList(Order.class, Customer.class);
         Mockito.when(registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class)).
@@ -47,7 +48,7 @@ public class AggAssemblerProviderImplTest {
 
     @Test
     public void testToAggregate() {
-        AggAssemblerProviderImpl<OrderDto> underTest = new AggAssemblerProviderImpl<OrderDto>(registry, new OrderDto("1", "lightsaber"));
+        AggAssemblerProviderImpl<OrderDto> underTest = new AggAssemblerProviderImpl<OrderDto>(context, new OrderDto("1", "lightsaber"));
 
         Order order = underTest.to(new Order());
 
@@ -58,7 +59,7 @@ public class AggAssemblerProviderImplTest {
     public void testToAggregateTuple() {
 
         Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
-        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, recipe);
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(context, recipe);
         Pair<Order, Customer> order = underTest.to(new Order(), new Customer("customer1"));
 
         Assertions.assertThat((Iterable<?>) order).isNotNull();
@@ -72,7 +73,7 @@ public class AggAssemblerProviderImplTest {
     public void testToUnTypedTuple() {
 
         Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
-        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, recipe);
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(context, recipe);
         Tuple order = underTest.to(Tuples.create(new Order(), new Customer("customer1")));
 
         Assertions.assertThat((Iterable<?>) order).isNotNull();
@@ -85,7 +86,7 @@ public class AggAssemblerProviderImplTest {
     @Test
     public void testToAggregateClass() {
         Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
-        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, dto);
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(context, dto);
 
         assertToMethod(underTest.to(Order.class, Customer.class), dto, Order.class, Customer.class);
         assertToMethod(underTest.to(Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class);
@@ -101,7 +102,7 @@ public class AggAssemblerProviderImplTest {
     @Test
     public void testToAggregateClassWithNullValue() {
         Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
-        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(registry, dto);
+        AggAssemblerProviderImpl<Recipe> underTest = new AggAssemblerProviderImpl<Recipe>(context, dto);
 
         assertToMethod(underTest.to(null, null, null, Customer.class), dto, null, null, null, Customer.class);
     }

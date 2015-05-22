@@ -9,7 +9,9 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import org.seedstack.business.api.interfaces.assembler.dsl.Assemble;
+import org.seedstack.business.api.interfaces.assembler.dsl.AssemblerProvider;
+
+import java.lang.annotation.Annotation;
 
 /**
  * FluentAssembler provides the entry point for the assembler DSL.
@@ -28,5 +30,26 @@ public interface FluentAssembler {
      *
      * @return an Assemble class
      */
-    Assemble assemble();
+    AssemblerProvider assemble();
+
+    /**
+     * Assembler DSL entry point.
+     *
+     * @return an Assemble class
+     */
+    AssemblerProvider assemble(Annotation qualifier);
+
+    /**
+     * Assembler DSL entry point.
+     *
+     * @return an Assemble class
+     */
+    AssemblerProvider assemble(Class<? extends Annotation> qualifier);
+
+    /**
+     * Assembler DSL entry point.
+     *
+     * @return an Assemble class
+     */
+    AssemblerProvider assemble(AssemblerTypes qualifier);
 }

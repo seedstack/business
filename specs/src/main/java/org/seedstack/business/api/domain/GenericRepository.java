@@ -11,23 +11,24 @@ package org.seedstack.business.api.domain;
 
 /**
  * This interface has to be extended in order to create a Domain Repository <em>interface</em>.
- * <p/>
- * To be a valid repository interface, Type must respect the followings :
+ * <p>
+ * To be a valid repository interface, Type must respect the followings:
+ * </p>
  * <ul>
- * <li> be an interface
- * <li> extends {@link GenericRepository}
+ * <li>be an interface</li>
+ * <li>extends {@link GenericRepository}</li>
  * </ul>
- * <p/>
+ * <p>
  * The following is a valid Domain repository interface.
+ * </p>
  * <pre>
- *
- *  public interface ProductRepository extends GenericRepository{@literal <Product,String>} {
+ *  public interface ProductRepository extends GenericRepository&lt;Product,String&gt; {
  *     // nothing needed, but you can add methods with specifics
  *     // then implements them
  *  }
  * </pre>
  * <p/>
- * Then this interface has to be implemented by the actual repository implementation . See {@link BaseRepository} for details.
+ * Then this interface has to be implemented by the actual repository implementation.
  *
  * @param <AGGREGATE> the type of the aggregate root class.
  * @param <KEY>       the type of the aggregate root class.
