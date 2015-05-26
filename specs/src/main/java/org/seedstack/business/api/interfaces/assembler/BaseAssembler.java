@@ -94,7 +94,7 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D>
     }
 
     @Override
-    public void updateDtoFromAggregate(D sourceDto, A sourceAggregate) {
+    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
         doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
     }
 

@@ -11,19 +11,19 @@ package org.seedstack.business.internal.interfaces.assembler.dsl;
 
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggAssemblerWithRepoAndFactProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggAssemblerWithRepoProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateWithRepositoryThenFactoryProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateWithRepositoryProvider;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements AggAssemblerWithRepoProvider<A>, AggAssemblerWithRepoAndFactProvider<A> {
+public class MergeMergeAggregateWithRepositoryProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements MergeAggregateWithRepositoryProvider<A>, MergeAggregateWithRepositoryThenFactoryProvider<A> {
 
     private final Class<A> aggregateClass;
     private final Object dto;
 
-    public AggAssemblerWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, Object dto) {
+    public MergeMergeAggregateWithRepositoryProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, Object dto) {
         super(context);
         this.aggregateClass = aggregateClass;
         this.dto = dto;
@@ -32,7 +32,7 @@ public class AggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extend
     // --------------------------- AggAssemblerWithRepoProvider
 
     @Override
-    public AggAssemblerWithRepoAndFactProvider<A> fromRepository() {
+    public MergeAggregateWithRepositoryThenFactoryProvider<A> fromRepository() {
         // Just redirect to the expected DSL path
         return this;
     }

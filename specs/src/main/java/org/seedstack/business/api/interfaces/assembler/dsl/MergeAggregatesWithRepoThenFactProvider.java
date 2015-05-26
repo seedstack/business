@@ -9,28 +9,28 @@
  */
 package org.seedstack.business.api.interfaces.assembler.dsl;
 
-import org.javatuples.Tuple;
+import org.seedstack.business.api.domain.AggregateRoot;
 
 import java.util.List;
 
 /**
- * Specifies the behavior in the case where the aggregate tuples cannot be loaded from the repository.
+ * Specifies the behavior in the case where the aggregates cannot be loaded from the repository.
  *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
-public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
+* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
+*/
+public interface MergeAggregatesWithRepoThenFactProvider<A extends AggregateRoot<?>> {
 
     /**
-     * Returns the aggregate root tuples or throws an {@code AggregateNotFoundException}
-     * if the one of the aggregate roots cannot be loaded from their repository.
+     * Returns the aggregate roots or throws an {@code AggregateNotFoundException}
+     * if one of the aggregate roots cannot be loaded from their repository.
      *
      * @return the assembled aggregate root
      * @throws AggregateNotFoundException if the aggregate doesn't exist
      */
-    List<T> orFail() throws AggregateNotFoundException;
+    List<A> orFail() throws AggregateNotFoundException;
 
     /**
-     * Returns the aggregate root tuples. If the all the aggregate roots cannot be loaded from their repository,
+     * Returns the aggregate roots. If the all the aggregate roots cannot be loaded from their repository,
      * they are created from their factory. If some of the aggregate roots can be loaded but not all an
      * IllegalStateException is thrown.
      * <p>
@@ -38,8 +38,9 @@ public interface TupleAggsAssemblerWithRepoAndFactProvider<T extends Tuple> {
      * the DTO to find the factory method parameters.
      * </p>
      *
-     * @return the assembled aggregate root tuples
+     * @return the assembled aggregate roots
      * @throws IllegalStateException if some but not all aggregate roots are loaded
      */
-    List<T> orFromFactory();
+    List<A> orFromFactory();
+
 }

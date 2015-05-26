@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public interface TupleAggsAssemblerWithRepoProvider<T extends Tuple> {
+public interface MergeTuplesWithRepositoryProvider<T extends Tuple> {
 
     /**
      * Loads the aggregate root tuples from their repository.
@@ -29,7 +29,7 @@ public interface TupleAggsAssemblerWithRepoProvider<T extends Tuple> {
      *
      * @return next DSL element
      */
-    TupleAggsAssemblerWithRepoAndFactProvider<T> fromRepository();
+    MergeTuplesWithRepositoryThenFactoryProvider<T> fromRepository();
 
     /**
      * Create the aggregate root tuples from their factory.

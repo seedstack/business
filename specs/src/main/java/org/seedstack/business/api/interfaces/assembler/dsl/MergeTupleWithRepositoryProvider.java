@@ -16,7 +16,7 @@ import org.javatuples.Tuple;
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public interface TupleAggAssemblerWithRepoProvider<T extends Tuple> {
+public interface MergeTupleWithRepositoryProvider<T extends Tuple> {
 
     /**
      * Loads the aggregate root tuple from their repository.
@@ -27,7 +27,7 @@ public interface TupleAggAssemblerWithRepoProvider<T extends Tuple> {
      *
      * @return next DSL element
      */
-    TupleAggAssemblerWithRepoAndFactProvider<T> fromRepository();
+    MergeTupleWithRepositoryThenFactoryProvider<T> fromRepository();
 
     /**
      * Create the aggregate root tuple from their factory.

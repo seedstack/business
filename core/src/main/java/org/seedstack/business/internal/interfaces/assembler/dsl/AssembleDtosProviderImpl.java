@@ -13,22 +13,25 @@ import org.javatuples.Tuple;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.DtosAssemblerProvider;
+import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
+import org.seedstack.business.api.interfaces.assembler.dsl.AssembleDtosProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.AssembleDtosWithQualifierProvider;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
+public class AssembleDtosProviderImpl implements AssembleDtosWithQualifierProvider {
 
     private final AssemblerDslContext context;
 
     private final List<? extends AggregateRoot<?>> aggregates;
     private final List<? extends Tuple> aggregateTuples;
 
-    public DtosAssemblerProviderImpl(AssemblerDslContext context, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
+    public AssembleDtosProviderImpl(AssemblerDslContext context, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
         this.context = context;
         this.aggregates = aggregates;
         this.aggregateTuples = aggregateTuples;
@@ -65,5 +68,27 @@ public class DtosAssemblerProviderImpl implements DtosAssemblerProvider {
             assembler = context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dtoClass);
         }
         return assembler;
+    }
+
+    AssemblerDslContext getContext() {
+        return context;
+    }
+
+    @Override
+    public AssembleDtosProvider with(Annotation qualifier) {
+        context.setAssemblerQualifier(qualifier);
+        return this;
+    }
+
+    @Override
+    public AssembleDtosProvider with(Class<? extends Annotation> qualifier) {
+        context.setAssemblerQualifierClass(qualifier);
+        return this;
+    }
+
+    @Override
+    public AssembleDtosProvider with(AssemblerTypes qualifier) {
+        context.setAssemblerQualifierClass(qualifier.get());
+        return this;
     }
 }

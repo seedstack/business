@@ -71,7 +71,7 @@ public class ModelMapperTupleAssemblerTest {
 
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        automaticAssembler.updateDtoFromAggregate(orderDTO, tuple);
+        automaticAssembler.assembleDtoFromAggregate(orderDTO, tuple);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");

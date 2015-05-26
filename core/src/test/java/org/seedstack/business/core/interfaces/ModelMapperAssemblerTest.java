@@ -100,7 +100,7 @@ public class ModelMapperAssemblerTest {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
         OrderDTO orderDTO = new OrderDTO("Jane", "Doe", "", "");
 
-        modelMapperAssembler.updateDtoFromAggregate(orderDTO, order);
+        modelMapperAssembler.assembleDtoFromAggregate(orderDTO, order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");

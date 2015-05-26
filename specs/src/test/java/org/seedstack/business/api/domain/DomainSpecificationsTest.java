@@ -104,7 +104,7 @@ public class DomainSpecificationsTest {
         public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
 
         @Override
-        public void updateDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
+        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
 
         @Override
         public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }
@@ -119,7 +119,7 @@ public class DomainSpecificationsTest {
         public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
 
         @Override
-        public void updateDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
+        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
 
         @Override
         public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }

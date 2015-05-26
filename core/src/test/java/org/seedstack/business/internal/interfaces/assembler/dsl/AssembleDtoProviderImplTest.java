@@ -27,10 +27,10 @@ import java.util.List;
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class DtoAssemblerProviderImplTest {
+public class AssembleDtoProviderImplTest {
 
-    private DtoAssemblerProviderImpl underTest;
-    private DtosAssemblerProviderImpl underTest2;
+    private AssembleDtoProviderImpl underTest;
+    private AssembleDtosProviderImpl underTest2;
     private AssemblerDslContext context = new AssemblerDslContext();
 
     @Before
@@ -48,7 +48,7 @@ public class DtoAssemblerProviderImplTest {
 
     @Test
     public void testToDto() {
-        underTest = new DtoAssemblerProviderImpl(context, new Order("lightsaber"));
+        underTest = new AssembleDtoProviderImpl(context, new Order("lightsaber"));
 
         OrderDto orderDto = underTest.to(OrderDto.class);
 
@@ -61,7 +61,7 @@ public class DtoAssemblerProviderImplTest {
     public void testToDtoWithTuple() {
         Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
 
-        underTest = new DtoAssemblerProviderImpl(context, tuple);
+        underTest = new AssembleDtoProviderImpl(context, tuple);
         OrderDto orderDto = underTest.to(OrderDto.class);
 
         Assertions.assertThat(orderDto).isNotNull();
@@ -75,7 +75,7 @@ public class DtoAssemblerProviderImplTest {
         aggregateRoots.add(new Order("lightsaber"));
         aggregateRoots.add(new Order("death star"));
 
-        underTest2 = new DtosAssemblerProviderImpl(context, aggregateRoots, null);
+        underTest2 = new AssembleDtosProviderImpl(context, aggregateRoots, null);
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();
@@ -90,7 +90,7 @@ public class DtoAssemblerProviderImplTest {
         Tuple tuple1 = Tuples.create(new Order("lightsaber"), new Customer("luke")); // used to get the class of the tuple
         Tuple tuple2 = Tuples.create(new Order("death star"), new Customer("dark vador"));
 
-        underTest2 = new DtosAssemblerProviderImpl(context, null, Lists.newArrayList(tuple1, tuple2));
+        underTest2 = new AssembleDtosProviderImpl(context, null, Lists.newArrayList(tuple1, tuple2));
         List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
 
         Assertions.assertThat(orderDtos).isNotNull();

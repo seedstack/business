@@ -9,16 +9,20 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import org.seedstack.business.api.interfaces.assembler.dsl.AssemblerProvider;
+import org.javatuples.Tuple;
+import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.api.interfaces.assembler.dsl.*;
 
-import java.lang.annotation.Annotation;
+import java.util.List;
 
 /**
  * FluentAssembler provides the entry point for the assembler DSL.
  * <p>
- * It allows to programmatically assemble aggregate roots into DTOs or vice versa, with additional
- * features like automatically retrieving an aggregate from its repository. Or automatically creating
- * it from its factory.
+ * As {@link org.seedstack.business.api.interfaces.assembler.Assembler} it allows to assemble aggregate
+ * to DTOs, or merge DTOs into aggregates. But compare to {@code Assembler}, it's not typed so you can
+ * do it programmatically, the DSL will find the appropriate assembler to call. It also provides more
+ * advanced features like automatically retrieving an aggregate from its repository. Or automatically
+ * creating it from its factory.
  * </p>
  *
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
@@ -26,30 +30,53 @@ import java.lang.annotation.Annotation;
 public interface FluentAssembler {
 
     /**
-     * Assembler DSL entry point.
+     * Assembles an aggregate root.
      *
-     * @return an Assemble class
+     * @param aggregateRoot the aggregate root
+     * @return a DtoAssemblerProvider
      */
-    AssemblerProvider assemble();
+    AssembleDtoWithQualifierProvider assemble(AggregateRoot<?> aggregateRoot);
 
     /**
-     * Assembler DSL entry point.
+     * Assembles a list of aggregates.
      *
-     * @return an Assemble class
+     * @param aggregateRoots the list of aggregate roots
+     * @return a DtosAssemblerProvider
      */
-    AssemblerProvider assemble(Annotation qualifier);
+    AssembleDtosWithQualifierProvider assemble(List<? extends AggregateRoot<?>> aggregateRoots);
 
     /**
-     * Assembler DSL entry point.
+     * Assembles a tuple of aggregates.
      *
-     * @return an Assemble class
+     * @param aggregateRoots the tuple of aggregate roots
+     * @return a DtoAssemblerProvider
      */
-    AssemblerProvider assemble(Class<? extends Annotation> qualifier);
+    AssembleDtoWithQualifierProvider assembleTuple(Tuple aggregateRoots);
 
     /**
-     * Assembler DSL entry point.
+     * Assembles a list of tuple of aggregates.
      *
-     * @return an Assemble class
+     * @param aggregateRoots the list of tuple of aggregate roots
+     * @return a DtosAssemblerProvider
      */
-    AssemblerProvider assemble(AssemblerTypes qualifier);
+    AssembleDtosWithQualifierProvider assembleTuple(List<? extends Tuple> aggregateRoots);
+
+    /**
+     * Merges a DTO.
+     *
+     * @param dto the dto to merge
+     * @param <D> the DTO type
+     * @return a MergeAggregateOrTupleWithQualifierProvider
+     */
+    <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto);
+
+    /**
+     * Merges a list of DTOs.
+     *
+     * @param dtos the list of DTOs
+     * @param <D> the DTO type
+     * @return a MergeAggregatesOrTuplesWithQualifierProvider
+     */
+    <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos);
+
 }

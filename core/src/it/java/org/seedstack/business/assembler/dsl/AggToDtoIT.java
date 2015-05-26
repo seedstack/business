@@ -14,6 +14,7 @@ import com.google.inject.name.Names;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.assembler.fixtures.book.BookDto;
 import org.seedstack.business.assembler.fixtures.book.BookId;
@@ -44,7 +45,7 @@ public class AggToDtoIT {
         book.setEditor("unknown");
         book.setPublishDate(PUBLISH_DATE);
 
-        BookDto dto = fluently.assemble(Names.named("Book")).aggregate(book).to(BookDto.class); // test qualifiers
+        BookDto dto = fluently.assemble(book).with((Names.named("Book"))).to(BookDto.class); // test qualifiers
 
         Assertions.assertThat(dto.getAuthor()).isEqualTo(ALEXANDRE_DUMAS);
         Assertions.assertThat(dto.getTitle()).isEqualTo(THE_THREE_MUSKETEERS);
@@ -53,7 +54,7 @@ public class AggToDtoIT {
 
     @Test(expected = NullPointerException.class)
     public void test_Assemble_Aggregate_To_Dto_null_case() {
-        fluently.assemble().aggregate(null).to(BookDto.class);
+        fluently.assemble((AggregateRoot<?>) null).to(BookDto.class);
     }
 
     @Test
@@ -66,7 +67,7 @@ public class AggToDtoIT {
         book2.setEditor("other editor");
         book2.setPublishDate(PUBLISH_DATE);
 
-        List<BookDto> dtos = fluently.assemble(Names.named("Book")).aggregates(Lists.newArrayList(book, book2)).to(BookDto.class);
+        List<BookDto> dtos = fluently.assemble(Lists.newArrayList(book, book2)).with(Names.named("Book")).to(BookDto.class);
 
         Assertions.assertThat(dtos).isNotNull();
         Assertions.assertThat(dtos).isNotEmpty();
@@ -82,7 +83,7 @@ public class AggToDtoIT {
 
     @Test
     public void test_Assemble_Aggregates_To_Dtos_null_case() {
-        List<BookDto> to = fluently.assemble().aggregates(null).to(BookDto.class);
+        List<BookDto> to = fluently.assemble((List<? extends AggregateRoot<?>>) null).to(BookDto.class);
         Assertions.assertThat(to).isNotNull();
         Assertions.assertThat(to).isEmpty();
     }
