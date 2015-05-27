@@ -11,7 +11,6 @@ package org.seedstack.business.assembler.dsl;
 
 import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
-import org.javatuples.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.Repository;
@@ -46,7 +45,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -69,7 +68,7 @@ public class AssemblerDslWithTupleIT {
 
         Pair<Order, Customer> orderCustomerPair = null;
         try {
-            orderCustomerPair = fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromRepository().orFail();
+            orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             fail();
         }
@@ -88,7 +87,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFail() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
         try {
-            fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromRepository().orFail();
+            fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFail();
             fail();
         } catch (AggregateNotFoundException e) {
             Assertions.assertThat(e).isNotNull();
@@ -99,7 +98,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(recipe).to(Order.class, Customer.class).fromRepository().orFromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -116,15 +115,14 @@ public class AssemblerDslWithTupleIT {
         Customer customer = new Customer("customer1");
         customer.setName("lucky");
 
-        Tuple tuple = fluently.assemble().dto(new Recipe("customer1", "luke", "order1", "light saber")).to(Pair.with(order, customer));
+        fluently.merge(new Recipe("customer1", "luke", "order1", "light saber")).into(order, customer);
 
-        Assertions.assertThat((Iterable<?>) tuple).isNotNull();
-        Assertions.assertThat(tuple.getValue(0)).isNotNull();
-        Assertions.assertThat(tuple.getValue(1)).isNotNull();
+        Assertions.assertThat(order).isNotNull();
+        Assertions.assertThat(customer).isNotNull();
 
-        Assertions.assertThat(((Order) tuple.getValue(0)).getEntityId()).isEqualTo("1");
-        Assertions.assertThat(((Order) tuple.getValue(0)).getOtherDetails()).isEqualTo("some details"); // kept info
-        Assertions.assertThat(((Order) tuple.getValue(0)).getProduct()).isEqualTo("light saber"); // new info
-        Assertions.assertThat(((Customer) tuple.getValue(1)).getName()).isEqualTo("luke"); // updated info
+        Assertions.assertThat(order.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(order.getOtherDetails()).isEqualTo("some details"); // kept info
+        Assertions.assertThat(order.getProduct()).isEqualTo("light saber"); // new info
+        Assertions.assertThat(customer.getName()).isEqualTo("luke"); // updated info
     }
 }

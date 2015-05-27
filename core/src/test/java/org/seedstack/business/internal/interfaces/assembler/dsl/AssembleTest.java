@@ -10,6 +10,7 @@
 package org.seedstack.business.internal.interfaces.assembler.dsl;
 
 import com.google.common.collect.Lists;
+import com.google.inject.name.Names;
 import org.javatuples.Pair;
 import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
@@ -37,37 +38,43 @@ public class AssembleTest {
 
     private FluentAssembler fluently;
 
-    public void testDsl() {
+    public void testMergeToAggregateInstance() {
 
         // dto to aggregate
-        order = fluently.assemble().dto(orderDto).to(myOrder);
+        fluently.merge(orderDto).into(myOrder);
 
-        // from factory
-        order = fluently.assemble().dto(orderDto).to(Order.class).fromFactory();
-
-        // list of dto to tuple of aggregates
-        Pair<Order, Customer> orderCustomerPair = fluently.assemble().dto(orderDto).to(Order.class, Customer.class).fromFactory();
+        fluently.merge(orderDto).into(myOrder, myOrder2);
 
         // list of dtos to list of aggregates
-        orders = fluently.assemble().dtos(dtos).to(orders);
+        fluently.merge(dtos).into(orders);
+    }
+
+    public void testMergeToAggregateClass() {
+        // from factory
+        order = fluently.merge(orderDto).into(Order.class).fromFactory();
+
+        // list of dto to tuple of aggregates
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(orderDto).into(Order.class, Customer.class).fromFactory();
 
         // from repo or fail
         try {
-            order = fluently.assemble().dto(orderDto).to(Order.class).fromRepository().orFail();
+            order = fluently.merge(orderDto).into(Order.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             e.printStackTrace();
         }
 
         // from repo or fact
-        order = fluently.assemble().dto(orderDto).to(Order.class).fromRepository().orFromFactory();
+        order = fluently.merge(orderDto).into(Order.class).fromRepository().orFromFactory();
+    }
 
+    public void testAssemble() {
         // aggregate to dto
-        OrderDto orderDto1 = fluently.assemble().aggregate(myOrder).to(OrderDto.class);
+        OrderDto orderDto1 = fluently.assemble(myOrder).with(Names.named("MyQualifier")).to(OrderDto.class);
 
         // tuple of aggregate to dto
-        orderDto1 = fluently.assemble().tuple(Tuples.create(Order.class, Customer.class)).to(OrderDto.class);
+        orderDto1 = fluently.assembleTuple(Tuples.create(Order.class, Customer.class)).to(OrderDto.class);
 
-        List<OrderDto> orderDtos = fluently.assemble().tuples(
+        List<OrderDto> orderDtos = fluently.assembleTuple(
                 Lists.newArrayList(Tuples.create(order, customer), Tuples.create(order2, customer2))
         ).to(OrderDto.class);
     }

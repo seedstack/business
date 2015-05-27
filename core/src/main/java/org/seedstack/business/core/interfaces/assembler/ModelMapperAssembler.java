@@ -53,7 +53,7 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
     }
 
     @Override
-    public void updateDtoFromAggregate(D sourceDto, A sourceAggregate) {
+    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
         assembleModelMapper.map(sourceAggregate, sourceDto);
     }
 

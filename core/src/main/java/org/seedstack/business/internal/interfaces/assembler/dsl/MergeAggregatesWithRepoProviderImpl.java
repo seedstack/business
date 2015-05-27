@@ -12,8 +12,8 @@ package org.seedstack.business.internal.interfaces.assembler.dsl;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggsAssemblerWithRepoAndFactProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggsAssemblerWithRepoProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregatesWithRepoThenFactProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregatesWithRepoProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class AggsAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements AggsAssemblerWithRepoProvider<A>, AggsAssemblerWithRepoAndFactProvider<A> {
+public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements MergeAggregatesWithRepoProvider<A>, MergeAggregatesWithRepoThenFactProvider<A> {
 
     private final Class<A> aggregateClass;
     private final List<?> dtos;
 
-    public AggsAssemblerWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, List<?> dtos) {
+    public MergeAggregatesWithRepoProviderImpl(AssemblerDslContext context, Class<A> aggregateClass, List<?> dtos) {
         super(context);
         this.aggregateClass = aggregateClass;
         this.dtos = dtos;
@@ -35,7 +35,7 @@ public class AggsAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> exten
     // --------------------------- AggAssemblerWithRepoProvider
 
     @Override
-    public AggsAssemblerWithRepoAndFactProvider<A> fromRepository() {
+    public MergeAggregatesWithRepoThenFactProvider<A> fromRepository() {
         // Just redirect to the expected DSL path
         return this;
     }

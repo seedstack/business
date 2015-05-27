@@ -9,12 +9,13 @@
  */
 package org.seedstack.business.internal.interfaces.assembler.dsl;
 
-import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
+import org.javatuples.Tuple;
+import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssemblerProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.*;
 
 import javax.inject.Inject;
-import java.lang.annotation.Annotation;
+import java.util.List;
 
 /**
  * Implementation of {@link org.seedstack.business.api.interfaces.assembler.FluentAssembler}.
@@ -26,36 +27,41 @@ import java.lang.annotation.Annotation;
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 
+    private AssemblerDslContext context;
+
     @Inject
-    private AssemblerProviderFactory assemblerProviderFactory;
-
-    /**
-     * The assembler DSL entry point.
-     *
-     * @return the next DSL element
-     */
-    public AssemblerProvider assemble(){
-        return assemblerProviderFactory.create(new AssemblerDslContext());
+    public FluentAssemblerImpl(InternalRegistry registry) {
+        context = new AssemblerDslContext();
+        context.setRegistry(registry);
     }
 
     @Override
-    public AssemblerProvider assemble(Annotation qualifier) {
-        AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerQualifier(qualifier);
-        return assemblerProviderFactory.create(context);
+    public AssembleDtoWithQualifierProvider assemble(AggregateRoot<?> aggregateRoot) {
+        return new AssembleDtoProviderImpl(context, aggregateRoot);
     }
 
     @Override
-    public AssemblerProvider assemble(AssemblerTypes qualifier) {
-        AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerQualifierClass(qualifier.get());
-        return assemblerProviderFactory.create(context);
+    public AssembleDtosWithQualifierProvider assemble(List<? extends AggregateRoot<?>> aggregateRoots) {
+        return new AssembleDtosProviderImpl(context, aggregateRoots, null);
     }
 
     @Override
-    public AssemblerProvider assemble(Class<? extends Annotation> qualifier) {
-        AssemblerDslContext context = new AssemblerDslContext();
-        context.setAssemblerQualifierClass(qualifier);
-        return assemblerProviderFactory.create(context);
+    public AssembleDtoWithQualifierProvider assembleTuple(Tuple aggregateRoots) {
+        return new AssembleDtoProviderImpl(context, aggregateRoots);
+    }
+
+    @Override
+    public AssembleDtosWithQualifierProvider assembleTuple(List<? extends Tuple> aggregateRoots) {
+        return new AssembleDtosProviderImpl(context, null, aggregateRoots);
+    }
+
+    @Override
+    public <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto) {
+        return new MergeAggregateOrTupleProviderImpl<D>(context, dto);
+    }
+
+    @Override
+    public <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos) {
+        return new MergeAggregatesOrTuplesProviderImpl<D>(context, dtos);
     }
 }

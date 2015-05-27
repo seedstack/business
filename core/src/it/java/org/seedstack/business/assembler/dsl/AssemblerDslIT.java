@@ -13,12 +13,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.internal.interfaces.assembler.dsl.AssemblerDslContext;
-import org.seedstack.business.internal.interfaces.assembler.dsl.AssemblerProviderFactory;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderFactory;
@@ -44,9 +41,6 @@ public class AssemblerDslIT {
     private OrderFactory orderFactory;
 
     @Inject
-    private AssemblerProviderFactory assembleFactory;
-
-    @Inject
     private FluentAssembler fluently;
 
     @Before
@@ -55,16 +49,10 @@ public class AssemblerDslIT {
     }
 
     @Test
-    public void testAssembleInjectee() {
-        Object context = Whitebox.getInternalState(assembleFactory.create(new AssemblerDslContext()), "context");
-        Assertions.assertThat(context).isNotNull();
-    }
-
-    @Test
     public void testAssembleFromFactory() {
         OrderDto orderDto = new OrderDto("1", "light saber");
         orderDto.setPrice(PRICE);
-        Order aggregateRoot = fluently.assemble().dto(orderDto).to(Order.class).fromFactory();
+        Order aggregateRoot = fluently.merge(orderDto).into(Order.class).fromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
@@ -81,7 +69,7 @@ public class AssemblerDslIT {
 
         Order aggregateRoot = null;
         try {
-            aggregateRoot = fluently.assemble().dto(new OrderDto("1", "light saber")).to(Order.class).fromRepository().orFail();
+            aggregateRoot = fluently.merge(new OrderDto("1", "light saber")).into(Order.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             fail();
         }
@@ -95,7 +83,7 @@ public class AssemblerDslIT {
     @Test
     public void testAssembleFromRepositoryOrFail() {
         try {
-            fluently.assemble().dto(new OrderDto("1", "light saber")).to(Order.class).fromRepository().orFail();
+            fluently.merge(new OrderDto("1", "light saber")).into(Order.class).fromRepository().orFail();
             fail();
         } catch (AggregateNotFoundException e) {
             Assertions.assertThat(e).isNotNull();
@@ -106,7 +94,7 @@ public class AssemblerDslIT {
     public void testAssembleFromRepositoryOrFactory() {
         OrderDto dto = new OrderDto("1", "light saber", PRICE);
 
-        Order aggregateRoot = fluently.assemble().dto(dto).to(Order.class).fromRepository().orFromFactory();
+        Order aggregateRoot = fluently.merge(dto).into(Order.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
         Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
@@ -120,13 +108,13 @@ public class AssemblerDslIT {
         Order order = orderFactory.create("1", "death star");
         order.setOtherDetails("some details");
 
-        Order aggregateRoot = fluently.assemble().dto(new OrderDto("1", "light saber", PRICE)).to(order);
+        fluently.merge(new OrderDto("1", "light saber", PRICE)).into(order);
 
-        Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
-        Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber"); // updated info
-        Assertions.assertThat(aggregateRoot.getPrice()).isEqualTo(PRICE);
+        Assertions.assertThat(order).isNotNull();
+        Assertions.assertThat(order.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(order.getProduct()).isEqualTo("light saber"); // updated info
+        Assertions.assertThat(order.getPrice()).isEqualTo(PRICE);
 
-        Assertions.assertThat(aggregateRoot.getOtherDetails()).isEqualTo("some details"); // kept info
+        Assertions.assertThat(order.getOtherDetails()).isEqualTo("some details"); // kept info
     }
 }

@@ -10,42 +10,54 @@
 package org.seedstack.business.api.interfaces.assembler;
 
 /**
- * This interface represents the Assembler concepts between an aggregate and a DTO.
+ * This interface represents the Assembler pattern.
  * <p>
- * This is a helper to transform an aggregate to a DTO and vice versa.
+ * It provides two types of transformations:
  * </p>
+ * <ul>
+ *     <li>assembling data from one or multiple aggregates into a representation of the model or a part of the model.</li>
+ *     <li>merging data from a DTO into one or multiple aggregates</li>
+ * </ul>
  *
  * @param <A> the aggregate root
  * @param <D> the dto type
+ * @see org.seedstack.business.api.interfaces.assembler.FluentAssembler
  */
 public interface Assembler<A, D> {
 
     /**
-     * Creates a new DTO and fill it from the aggregate.
+     * Creates a new DTO and assemble it from the aggregate.
+     * <p>
+     * Equivalent of {@link #assembleDtoFromAggregate(Object, Object) assembleDtoFromAggregate(new D(), sourceAggregate)}
+     * </p>
      *
-     * @param sourceAggregate The aggregate to copy data from.
-     * @return a DTO type
+     * @param sourceAggregate The source aggregate
+     * @return the resulting dto
      */
     D assembleDtoFromAggregate(A sourceAggregate);
 
     /**
-     * Updates the given DTO from the aggregate.
+     * Updates an existing DTO with a source aggregate root.
      *
-     * @param sourceDto       The dto to update.
-     * @param sourceAggregate The aggregate to copy data from.
+     * @param targetDto       The target dto
+     * @param sourceAggregate The source aggregate
      */
-    void updateDtoFromAggregate(D sourceDto, A sourceAggregate);
+    void assembleDtoFromAggregate(D targetDto, A sourceAggregate);
 
     /**
-     * Merges a source DTO into an existing aggregate.
+     * Merges a source DTO into an existing aggregate root.
      *
-     * @param targetAggregate The aggregate to merge.
-     * @param sourceDto       The dto to copy data from.
+     * @param targetAggregate The target aggregate
+     * @param sourceDto       The source dto
      */
     void mergeAggregateWithDto(A targetAggregate, D sourceDto);
 
     /**
      * Returns the DTO type handled by the assembler.
+     * <p>
+     * This method is used by {@link #assembleDtoFromAggregate(Object)}
+     * to determine the DTO type to instantiate.
+     * </p>
      *
      * @return Class<Dto>
      */

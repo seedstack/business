@@ -17,8 +17,8 @@ import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoAndFactProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.TupleAggAssemblerWithRepoProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryThenFactoryProvider;
+import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryProvider;
 import org.seedstack.business.internal.interfaces.assembler.dsl.resolver.ParameterHolder;
 
 import java.util.ArrayList;
@@ -27,12 +27,12 @@ import java.util.List;
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends BaseAggAssemblerWithRepoProviderImpl implements TupleAggAssemblerWithRepoProvider<T>, TupleAggAssemblerWithRepoAndFactProvider<T> {
+public class MergeMergeTupleWithRepositoryProviderImpl<T extends Tuple> extends BaseAggAssemblerWithRepoProviderImpl implements MergeTupleWithRepositoryProvider<T>, MergeTupleWithRepositoryThenFactoryProvider<T> {
 
     private final List<Class<? extends AggregateRoot<?>>> aggregateClasses;
     private final Object dto;
 
-    public TupleAggAssemblerWithRepoProviderImpl(AssemblerDslContext context, List<Class<? extends AggregateRoot<?>>> aggregateClasses, Object dto) {
+    public MergeMergeTupleWithRepositoryProviderImpl(AssemblerDslContext context, List<Class<? extends AggregateRoot<?>>> aggregateClasses, Object dto) {
         super(context);
         this.aggregateClasses = aggregateClasses;
         this.dto = dto;
@@ -41,7 +41,7 @@ public class TupleAggAssemblerWithRepoProviderImpl<T extends Tuple> extends Base
     // --------------------------- TupleAggAssemblerWithRepoProvider
 
     @Override
-    public TupleAggAssemblerWithRepoAndFactProvider<T> fromRepository() {
+    public MergeTupleWithRepositoryThenFactoryProvider<T> fromRepository() {
         // it just redirect to the good interface
         return this;
     }

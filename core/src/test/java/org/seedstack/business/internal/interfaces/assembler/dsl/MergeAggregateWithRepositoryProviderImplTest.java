@@ -22,9 +22,9 @@ import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer
 
 import static org.junit.Assert.fail;
 
-public class AggAssemblerWithRepoProviderImplTest {
+public class MergeAggregateWithRepositoryProviderImplTest {
 
-    private AggAssemblerWithRepoProviderImpl underTest;
+    private MergeMergeAggregateWithRepositoryProviderImpl underTest;
 
     private InternalRegistry registry;
     private Order order;
@@ -45,7 +45,7 @@ public class AggAssemblerWithRepoProviderImplTest {
         Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((GenericFactory) orderFactory);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        underTest = new AggAssemblerWithRepoProviderImpl<Order>(context, Order.class, new OrderDto("1", "lightsaber"));
+        underTest = new MergeMergeAggregateWithRepositoryProviderImpl<Order>(context, Order.class, new OrderDto("1", "lightsaber"));
     }
 
     @Test

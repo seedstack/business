@@ -11,35 +11,33 @@ package org.seedstack.business.api.interfaces.assembler.dsl;
 
 import org.seedstack.business.api.domain.AggregateRoot;
 
-import java.util.List;
-
 /**
- * Specifies whether the aggregate roots should be retrieved from a repository or created from a factory.
+ * Specifies whether the aggregate root should be retrieved from a repository or created from a factory.
  *
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
 */
-public interface AggsAssemblerWithRepoProvider<A extends AggregateRoot<?>> {
+public interface MergeAggregateWithRepositoryProvider<A extends AggregateRoot<?>> {
 
     /**
-     * Loads the aggregates from their repository.
+     * Loads the aggregate from its repository.
      * <p>
      * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingEntityId} annotation on
-     * the DTO to find the aggregate IDs.
+     * the DTO to find the aggregate ID.
      * </p>
      *
      * @return next DSL element
      */
-    AggsAssemblerWithRepoAndFactProvider<A> fromRepository();
+    MergeAggregateWithRepositoryThenFactoryProvider<A> fromRepository();
 
     /**
-     * Create the aggregates from their factory.
+     * Create the aggregate from its factory.
      * <p>
      * It uses the {@link org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter} annotation on
      * the DTO to find the factory method parameters.
      * </p>
      *
-     * @return the list of aggregates
+     * @return the aggregate
      */
-    List<A> fromFactory();
+    A fromFactory();
 
 }

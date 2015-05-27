@@ -44,7 +44,7 @@ public class DummyDefaultAssembler<A extends AggregateRoot<?>,D> extends Abstrac
     }
 
     @Override
-    public void updateDtoFromAggregate(D sourceDto, A sourceAggregate) {
+    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
         hodorify(getDtoClass(), sourceDto);
     }
 

@@ -54,7 +54,7 @@ public class ModelMapperTupleAssemblerIT {
 
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        defaultTupleAssembler.updateDtoFromAggregate(recipe, tuple);
+        defaultTupleAssembler.assembleDtoFromAggregate(recipe, tuple);
 
         Assertions.assertThat(recipe.getCustomerFirstName()).isEqualTo("John");
         Assertions.assertThat(recipe.getCustomerLastName()).isEqualTo("Doe");
