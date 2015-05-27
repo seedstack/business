@@ -71,7 +71,7 @@ public class InternalRegistryIT {
 
     @Test
     public void testAssemblerOfWithDefaultAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class);
+        Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class, ModelMapper.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(ModelMapperAssembler.class);
         Assertions.assertThat(assembler).isInstanceOf(DefaultModelMapperAssembler.class);
@@ -83,7 +83,7 @@ public class InternalRegistryIT {
     @Test
     public void testAssemblerOfTuple() {
         List<?> aggregateRootTuple = Lists.newArrayList(org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order.class, Customer.class);
-        Assembler<?, ?> assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class);
+        Assembler<?, ?> assembler = registry.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootTuple, Recipe.class, ModelMapper.class);
         Assertions.assertThat(assembler).isNotNull();
     }
 
