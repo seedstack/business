@@ -16,5 +16,5 @@ import org.seedstack.seed.core.api.ErrorCode;
  */
 public enum  AssemblerErrorCodes implements ErrorCode {
     UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER,
-    FAILED_TO_FALLBACK_TO_DEFAULT_ASSEMBLER
+    UNABLE_TO_FIND_ASSEMBLER
 }

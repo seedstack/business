@@ -14,6 +14,7 @@ import org.javatuples.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.*;
@@ -45,7 +46,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -68,7 +69,7 @@ public class AssemblerDslWithTupleIT {
 
         Pair<Order, Customer> orderCustomerPair = null;
         try {
-            orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFail();
+            orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             fail();
         }
@@ -87,7 +88,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFail() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
         try {
-            fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFail();
+            fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFail();
             fail();
         } catch (AggregateNotFoundException e) {
             Assertions.assertThat(e).isNotNull();
@@ -98,7 +99,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromRepository().orFromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -115,7 +116,7 @@ public class AssemblerDslWithTupleIT {
         Customer customer = new Customer("customer1");
         customer.setName("lucky");
 
-        fluently.merge(new Recipe("customer1", "luke", "order1", "light saber")).into(order, customer);
+        fluently.merge(new Recipe("customer1", "luke", "order1", "light saber")).with(AssemblerTypes.MODEL_MAPPER).into(order, customer);
 
         Assertions.assertThat(order).isNotNull();
         Assertions.assertThat(customer).isNotNull();

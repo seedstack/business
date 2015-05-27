@@ -19,7 +19,6 @@ import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.AssemblerErrorCodes;
-import org.seedstack.business.api.interfaces.assembler.ModelMapper;
 import org.seedstack.business.internal.utils.BusinessReflectUtils;
 import org.seedstack.seed.core.api.Logging;
 import org.seedstack.seed.core.api.SeedException;
@@ -94,12 +93,10 @@ public class InternalRegistryInternal implements InternalRegistry {
                 o = (Assembler<?, ?>) getInstance(Assembler.class, qualifier, aggregateRoot, dto);
             } else if (qualifierClass != null) {
                 o = (Assembler<?, ?>) getInstance(Assembler.class, qualifierClass, aggregateRoot, dto);
-            }else {
+            } else {
                 o = (Assembler<?, ?>) getInstance(Assembler.class, aggregateRoot, dto);
             }
         } catch (ConfigurationException e) {
-            logger.trace("Unable to find a  base assembler for " + aggregateRoot + ", fallback on automatic assembler.", e);
-
             SeedException seedException = SeedException.createNew(AssemblerErrorCodes.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
                     .put("aggregateRoot", aggregateRoot)
                     .put("dto", dto);
@@ -109,15 +106,10 @@ public class InternalRegistryInternal implements InternalRegistry {
             } else if (qualifierClass != null) {
                 seedException.put("qualifier", qualifierClass.getSimpleName());
                 throw seedException;
-            }
-
-            try {
-                o = (Assembler<?, ?>) getInstance(Assembler.class, ModelMapper.class, aggregateRoot, dto);
-            } catch (ConfigurationException e2) {
-                throw SeedException.wrap(e2, AssemblerErrorCodes.FAILED_TO_FALLBACK_TO_DEFAULT_ASSEMBLER)
+            } else {
+                throw SeedException.createNew(AssemblerErrorCodes.UNABLE_TO_FIND_ASSEMBLER)
                         .put("aggregateRoot", aggregateRoot)
-                        .put("dto", dto)
-                        .put("qualifier", ModelMapper.class.getSimpleName());
+                        .put("dto", dto);
             }
         }
         return o;

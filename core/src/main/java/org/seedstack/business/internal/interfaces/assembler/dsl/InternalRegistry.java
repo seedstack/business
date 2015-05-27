@@ -28,11 +28,7 @@ import java.util.List;
 public interface InternalRegistry {
 
     /**
-     * Returns an BaseAssembler matching the given aggregate root class and the dto class.
-     * <p>
-     * If no assembler were created by the client developer, the method returns an
-     * {@link org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler}.
-     * </p>
+     * Returns the Assembler matching the given aggregate root class and the dto class.
      *
      * @param aggregateRoot the aggregate root class.
      * @param dto           the dto class
@@ -41,7 +37,7 @@ public interface InternalRegistry {
     Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto);
 
     /**
-     * Returns an BaseAssembler matching the given aggregate root class and the dto class.
+     * Returns the Assembler matching the given aggregate root class and the dto class for the specified qualifier.
      *
      * @param aggregateRoot the aggregate root class.
      * @param dto           the dto class
@@ -50,23 +46,43 @@ public interface InternalRegistry {
      */
     Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto, @Nullable Annotation qualifier);
 
+    /**
+     * Returns the Assembler matching the given aggregate root class and the dto class for the specified qualifier.
+     *
+     * @param aggregateRoot the aggregate root class
+     * @param dto           the dto class
+     * @param qualifier     the assembler qualifier
+     * @return the assembler
+     */
     Assembler<?, ?> assemblerOf(Class<? extends AggregateRoot<?>> aggregateRoot, Class<?> dto, @Nullable Class<? extends Annotation> qualifier);
 
     /**
-     * Returns an BaseTupleAssembler matching the given list of aggregate root classes and the dto class.
-     * <p>
-     * If no assembler were created by the client developer, the method returns an
-     * {@link org.seedstack.business.core.interfaces.assembler.ModelMapperTupleAssembler}.
-     * </p>
+     * Returns the Assembler matching the given list of aggregate root classes and the dto class.
      *
-     * @param aggregateRootTuple a list of aggregate root classes.
+     * @param aggregateRootTuple a list of aggregate root classes
      * @param dto                the dto class
      * @return the assembler
      */
     Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto);
 
+    /**
+     * Returns the Assembler matching the given list of aggregate root classes and the dto class for the specified qualifier.
+     *
+     * @param aggregateRootTuple a list of aggregate root classes
+     * @param dto                the dto class
+     * @param qualifier          the assembler qualifier
+     * @return the assembler
+     */
     Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, @Nullable Annotation qualifier);
 
+    /**
+     * Returns the Assembler matching the given list of aggregate root classes and the dto class for the specified qualifier.
+     *
+     * @param aggregateRootTuple a list of aggregate root classes
+     * @param dto                the dto class
+     * @param qualifier          the assembler qualifier
+     * @return  the assembler
+     */
     Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, @Nullable Class<? extends Annotation> qualifier);
 
     /**
@@ -88,7 +104,7 @@ public interface InternalRegistry {
      * @param domainObject the domain object produced by the factory
      * @return the factory
      * @throws java.lang.IllegalArgumentException if the passed domainObject does not implement
-     * {@link org.seedstack.business.api.domain.DomainObject}
+     *                                            {@link org.seedstack.business.api.domain.DomainObject}
      */
     Factory<?> defaultFactoryOf(Class<? extends DomainObject> domainObject);
 
