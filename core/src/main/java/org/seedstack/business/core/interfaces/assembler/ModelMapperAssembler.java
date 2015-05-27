@@ -31,19 +31,13 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ModelMapperAssembler() {
-        assembleModelMapper = configureAssembly();
-        mergeModelMapper = configureMerge();
-        // TODO <pith> : check modelmappers are not null
-
+        initModelMappers();
         Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
         dtoClass = (Class<D>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[1];
     }
 
     public ModelMapperAssembler(Class<D> dtoClass) {
-        assembleModelMapper = configureAssembly();
-        mergeModelMapper = configureMerge();
-        // TODO <pith> : check modelmappers are not null
-
+        initModelMappers();
         this.dtoClass = dtoClass;
     }
 
@@ -60,6 +54,17 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
     @Override
     public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
         mergeModelMapper.map(sourceDto, targetAggregate);
+    }
+
+    void initModelMappers() {
+        this.assembleModelMapper = configureAssembly();
+        if (assembleModelMapper == null) {
+            assembleModelMapper = new ModelMapper();
+        }
+        this.mergeModelMapper = configureMerge();
+        if (mergeModelMapper == null) {
+            mergeModelMapper = new ModelMapper();
+        }
     }
 
     protected abstract ModelMapper configureAssembly();
