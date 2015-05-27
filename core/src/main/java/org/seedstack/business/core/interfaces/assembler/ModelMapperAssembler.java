@@ -57,17 +57,14 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
     }
 
     void initModelMappers() {
-        this.assembleModelMapper = configureAssembly();
-        if (assembleModelMapper == null) {
-            assembleModelMapper = new ModelMapper();
-        }
-        this.mergeModelMapper = configureMerge();
-        if (mergeModelMapper == null) {
-            mergeModelMapper = new ModelMapper();
-        }
+        this.assembleModelMapper = new ModelMapper();
+        configureAssembly(assembleModelMapper);
+
+        this.mergeModelMapper = new ModelMapper();
+        configureMerge(mergeModelMapper);
     }
 
-    protected abstract ModelMapper configureAssembly();
+    protected abstract void configureAssembly(ModelMapper modelMapper);
 
-    protected abstract ModelMapper configureMerge();
+    protected abstract void configureMerge(ModelMapper modelMapper);
 }

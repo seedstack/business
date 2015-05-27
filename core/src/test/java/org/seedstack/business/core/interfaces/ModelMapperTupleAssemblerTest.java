@@ -28,13 +28,11 @@ public class ModelMapperTupleAssemblerTest {
 
     static class AutoAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> {
         @Override
-        protected ModelMapper configureAssembly() {
-            return new ModelMapper();
+        protected void configureAssembly(ModelMapper modelMapper) {
         }
 
         @Override
-        protected ModelMapper configureMerge() {
-            return new ModelMapper();
+        protected void configureMerge(ModelMapper modelMapper) {
         }
     }
 

@@ -36,12 +36,10 @@ public class DefaultModelMapperAssembler<A extends AggregateRoot<?>,D> extends M
     }
 
     @Override
-    protected ModelMapper configureAssembly() {
-        return new ModelMapper();
+    protected void configureAssembly(ModelMapper modelMapper) {
     }
 
     @Override
-    protected ModelMapper configureMerge() {
-        return new ModelMapper();
+    protected void configureMerge(ModelMapper modelMapper) {
     }
 }

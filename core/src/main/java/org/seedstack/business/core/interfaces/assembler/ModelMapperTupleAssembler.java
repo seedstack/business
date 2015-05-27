@@ -31,19 +31,15 @@ public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends Abst
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ModelMapperTupleAssembler() {
-        assembleModelMapper = configureAssembly();
-        mergeModelMapper = configureMerge();
-        // TODO <pith> : check modelmappers are not null
+        initModelMappers();
 
         Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
         dtoClass = (Class<D>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[1];
     }
 
     public ModelMapperTupleAssembler(Class<D> dtoClass) {
+        initModelMappers();
         this.dtoClass = dtoClass;
-
-        assembleModelMapper = configureAssembly();
-        mergeModelMapper = configureMerge();
     }
 
     @Override
@@ -74,7 +70,15 @@ public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends Abst
         }
     }
 
-    protected abstract ModelMapper configureAssembly();
+    void initModelMappers() {
+        this.assembleModelMapper = new ModelMapper();
+        configureAssembly(assembleModelMapper);
 
-    protected abstract ModelMapper configureMerge();
+        this.mergeModelMapper = new ModelMapper();
+        configureMerge(mergeModelMapper);
+    }
+
+    protected abstract void configureAssembly(ModelMapper modelMapper);
+
+    protected abstract void configureMerge(ModelMapper modelMapper);
 }

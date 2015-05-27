@@ -33,13 +33,11 @@ public class ModelMapperAssemblerTest {
 
     static class AutoAssembler extends ModelMapperAssembler<Order, OrderDTO> {
         @Override
-        protected ModelMapper configureAssembly() {
-            return new ModelMapper();
+        protected void configureAssembly(ModelMapper modelMapper) {
         }
 
         @Override
-        protected ModelMapper configureMerge() {
-            ModelMapper modelMapper = new ModelMapper();
+        protected void configureMerge(ModelMapper modelMapper) {
             PropertyMap<OrderDTO, Order> orderMap = new PropertyMap<OrderDTO, Order>() {
                 protected void configure() {
                     map().getBillingAddress().setStreet(source.billingStreet);
@@ -47,7 +45,6 @@ public class ModelMapperAssemblerTest {
                 }
             };
             modelMapper.addMappings(orderMap);
-            return modelMapper;
         }
     }
 

@@ -18,12 +18,10 @@ import org.seedstack.business.core.interfaces.assembler.ModelMapperTupleAssemble
 */
 public class AutoTupleAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDto> {
     @Override
-    protected ModelMapper configureAssembly() {
-        return new ModelMapper();
+    protected void configureAssembly(ModelMapper modelMapper) {
     }
 
     @Override
-    protected ModelMapper configureMerge() {
-        return new ModelMapper();
+    protected void configureMerge(ModelMapper modelMapper) {
     }
 }

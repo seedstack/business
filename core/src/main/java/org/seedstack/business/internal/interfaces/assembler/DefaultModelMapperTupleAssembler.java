@@ -38,12 +38,10 @@ public class DefaultModelMapperTupleAssembler<T extends Tuple, D> extends ModelM
     }
 
     @Override
-    protected ModelMapper configureAssembly() {
-        return new ModelMapper();
+    protected void configureAssembly(ModelMapper modelMapper) {
     }
 
     @Override
-    protected ModelMapper configureMerge() {
-        return new ModelMapper();
+    protected void configureMerge(ModelMapper modelMapper) {
     }
 }
