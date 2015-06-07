@@ -15,7 +15,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * This class is used by developers as bases for Tuple based Assemblers.
+ * This class is used by developers as bases for Tuple based assemblers.
  *
  * @param <T> the tuple type for this assembler.
  * @param <D> the actual dto type.

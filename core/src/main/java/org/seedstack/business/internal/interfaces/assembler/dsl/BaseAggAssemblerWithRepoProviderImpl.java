@@ -11,8 +11,12 @@ package org.seedstack.business.internal.interfaces.assembler.dsl;
 
 import org.javatuples.Tuple;
 import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.domain.*;
+import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.api.domain.DomainObject;
+import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.api.domain.GenericFactory;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.internal.interfaces.assembler.dsl.resolver.DtoInfoResolver;
 import org.seedstack.business.internal.interfaces.assembler.dsl.resolver.ParameterHolder;
 import org.seedstack.business.internal.interfaces.assembler.dsl.resolver.impl.AnnotationResolver;
@@ -86,7 +90,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
             // The first parameter is already the id we are looking for
             id = element;
         } else {
-            if (!ValueObject.class.isAssignableFrom(aggregateIdClass)) {
+            if (!DomainSpecifications.valueObjectSpecification.isSatisfiedBy(aggregateIdClass)) {
                 throw new IllegalStateException("The " + aggregateRootClass.getCanonicalName() + "'s id is not a value object, so you don't have to specify the index in @MatchingEntityId(index = 0)");
             }
             // Get the "magic" factory for the aggregate id class
