@@ -91,10 +91,9 @@ class IdentityModule extends AbstractModule {
 			@Override
 			public boolean matches(Method candidate) {
 
-				boolean match = GenericFactory.class.isAssignableFrom(candidate.getDeclaringClass())
-						&& (SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate, Create.class) != null
-                                    || SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate.getDeclaringClass(), Create.class) != null);
-				return match;
+                return GenericFactory.class.isAssignableFrom(candidate.getDeclaringClass())
+                        && (SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate, Create.class) != null
+                        || SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate.getDeclaringClass(), Create.class) != null);
 			}
 
 		};

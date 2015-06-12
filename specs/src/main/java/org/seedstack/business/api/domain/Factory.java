@@ -10,7 +10,6 @@
 package org.seedstack.business.api.domain;
 
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.annotations.stereotypes.Create;
 
 /**
  * Factory allows creation of {@link DomainObject} that are {@link org.seedstack.business.api.Producible} object.
@@ -27,7 +26,6 @@ public interface Factory<DO extends DomainObject & Producible> extends GenericFa
      * @param args arguments
      * @return an instance of DomainObject
      */
-    @Create
     DO create(Object... args);
 
 }
