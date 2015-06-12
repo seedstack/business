@@ -130,13 +130,13 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
         SeedCheckUtils.checkIfNotNull(aggregateClass);
         SeedCheckUtils.checkIfNotNull(parameters);
 
-        if (parameters.length == 0) {
-            throw new IllegalArgumentException(dtoClass + " - No factory parameters found in the DTO. Please check the @MatchingFactoryParameter annotation.");
-        }
-
         if (Factory.class.isAssignableFrom(factory.getClass())) {
             Factory<?> defaultFactory = (Factory<?>) factory;
-            return defaultFactory.create(parameters);
+            if (parameters.length == 0) {
+                return defaultFactory.create();
+            } else {
+                return defaultFactory.create(parameters);
+            }
         } else {
             // Find the method in the factory which match the signature determined with the previously extracted parameters
             Method factoryMethod = MethodMatcher.findMatchingMethod(factory.getClass(), aggregateClass, parameters);
@@ -149,7 +149,11 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
             // Invoke the factory to create the aggregate root
             try {
                 //noinspection unchecked
-                return factoryMethod.invoke(factory, parameters);
+                if (parameters.length == 0) {
+                    return factoryMethod.invoke(factory);
+                } else {
+                    return factoryMethod.invoke(factory, parameters);
+                }
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e.getCause() != null ? e.getCause() : e);
             } catch (InvocationTargetException e) {

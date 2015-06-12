@@ -14,8 +14,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.auto.BasicAggregate;
+import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.auto.BasicDto;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.Order;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderDto;
 import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer.OrderFactory;
@@ -23,6 +26,8 @@ import org.seedstack.business.internal.interfaces.assembler.dsl.fixture.customer
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
+
+import java.util.UUID;
 
 import static junit.framework.TestCase.fail;
 
@@ -116,5 +121,20 @@ public class AssemblerDslIT {
         Assertions.assertThat(order.getPrice()).isEqualTo(PRICE);
 
         Assertions.assertThat(order.getOtherDetails()).isEqualTo("some details"); // kept info
+    }
+
+    @Test
+    public void testWithFullDefault() {
+        UUID id = UUID.randomUUID();
+        // Uses:
+        // - identity creation strategy
+        // - default factory without params
+        // - default assembler
+        BasicAggregate aggregate = fluently.merge(new BasicDto(id, "aaa", "bbb")).with(AssemblerTypes.MODEL_MAPPER)
+                .into(BasicAggregate.class).fromFactory();
+        Assertions.assertThat(aggregate.getEntityId()).isNotNull();
+        Assertions.assertThat(aggregate.getEntityId()).isNotEqualTo(id);
+        Assertions.assertThat(aggregate.getField1()).isEqualTo("aaa");
+        Assertions.assertThat(aggregate.getField2()).isEqualTo("bbb");
     }
 }
