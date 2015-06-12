@@ -16,6 +16,7 @@ import com.google.inject.Inject;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateFactory;
 import org.seedstack.business.identity.fixtures.MyEntity;
@@ -32,15 +33,23 @@ public class IdentityHandlerIT {
 	@Inject
 	private MyAggregateFactory myAggregateFactory;
 
+    @Inject
+    private Factory<MyAggregate> factory;
 	
 	@Test
-	public void test(){
+	public void testCustomFactory(){
 		MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
-		Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
-		Assertions.assertThat(myAggregate.getMySubEntity().getEntityId()).isNotNull();
-		for (MyEntity entity : myAggregate.getMySubEntities()) {
-			Assertions.assertThat(entity.getEntityId()).isNotNull();
-
-		}
+        Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
+        Assertions.assertThat(myAggregate.getMySubEntity().getEntityId()).isNotNull();
+        for (MyEntity entity : myAggregate.getMySubEntities()) {
+            Assertions.assertThat(entity.getEntityId()).isNotNull();
+        }
 	}
+
+    @Test
+    public void testDefaultFactory() {
+        MyAggregate myAggregate = factory.create();
+        Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
+    }
+
 }

@@ -16,13 +16,17 @@ import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.domain.DomainErrorCodes;
 import org.seedstack.business.api.domain.DomainObject;
+import org.seedstack.business.api.domain.Entity;
 import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.api.domain.annotations.identity.Identity;
+import org.seedstack.business.api.domain.identity.IdentityService;
 import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.seed.core.api.SeedException;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 /**
@@ -55,6 +59,9 @@ import java.util.Arrays;
 public class FactoryInternal<DO extends DomainObject & Producible> implements Factory<DO> {
 
 	protected Class<DO> domainObjectClass;
+
+    @Inject
+    private IdentityService identityService;
 
 	/**
 	 * Constructor.
@@ -92,7 +99,32 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 			throw SeedException.wrap(e, DomainErrorCodes.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
 					.put("domainObject", getProducedClass()).put("parameters", Arrays.toString(args));
 		}
-		return domainObject;
+        domainObject = populateIdentity(domainObject);
+        return domainObject;
 	}
+
+    /**
+     * If the domain object is an {@link org.seedstack.business.api.domain.Entity} and has a field annotated
+     * by {@link org.seedstack.business.api.domain.annotations.identity.Identity}. Use the
+     * {@link org.seedstack.business.api.domain.identity.IdentityService} in order to populate the entity's identity.
+     * <p>
+     * Note: The {@link org.seedstack.business.api.domain.annotations.stereotypes.Create} annotation cannot be used
+     * here because the {@code create()} method doesn't always return an Entity and all the entities doesn't use the
+     * identity creation strategy.
+     * </p>
+     * @param domainObject the domain object to populate
+     * @return the domain object
+     */
+    private DO populateIdentity(DO domainObject) {
+        if (Entity.class.isAssignableFrom(domainObject.getClass())) {
+            Entity<?> entity = (Entity<?>) domainObject;
+            for (Field field : entity.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(Identity.class)) {
+                    domainObject = (DO) identityService.identify(entity);
+                }
+            }
+        }
+        return domainObject;
+    }
 
 }

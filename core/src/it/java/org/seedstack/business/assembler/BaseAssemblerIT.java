@@ -9,8 +9,6 @@
  */
 package org.seedstack.business.assembler;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +17,6 @@ import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.seed.security.api.WithUser;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,28 +30,12 @@ public class BaseAssemblerIT {
 	private MySecuredAssembler mySecuredAssembler;
 	
 	@Test
-	public void distance() {
-		ArrayList<String> newArrayList1 = Lists.newArrayList("nom" ,  "age" , "addresse");
-		ArrayList<String> newArrayList2 = Lists.newArrayList("fist","name" ,  "last" , "age" , "address");
-		
-		for (String string1 : newArrayList1) {
-			for (String string2 : newArrayList2) {
-				int levenshteinDistance = StringUtils.getLevenshteinDistance(string1, string2);
-				if (levenshteinDistance <= 2  && string1.charAt(0) == string2.charAt(0)) {
-					System.out.println(String.format("%s %s : %s", string1 , string2 , ""+levenshteinDistance));
-				}
-			}
-		}
-	}
-	
-	@Test
 	public void class_returned_by_dto_should_work_fine() {
 		Assertions.assertThat(normalAssembler.getDtoClass()).isEqualTo(MyUnrestrictedDto.class);
 	}
 	
 	@Test
 	public void entity_to_dto_way_should_work_fine() {
-		
 		MyAggregateRoot entity1 = new MyAggregateRoot();
 		entity1.setFirstName("Epo");
 		entity1.setLastName("Jemba");
@@ -67,8 +48,7 @@ public class BaseAssemblerIT {
 		assertThat(dto1.getAge()).isEqualTo(35);
 		assertThat(dto1.getAddresse()).isEqualTo("1 rue de la paix, 75001, Paris");
 	}
-	
-	
+
 	@Test
 	@WithUser(id = "Anakin", password = "imsodark" )
 	public void entity_to_dto_way_should_work_fine_with_secured_assembler() {
@@ -85,7 +65,6 @@ public class BaseAssemblerIT {
 		assertThat(dto1.getAge()).isEqualTo(0);
 		assertThat(dto1.getAddresse()).isEqualTo("1 rue de la paix, 75001, Paris");
 	}
-	
 
 	@Test
 	public void dto_to_entity_way_should_work_fine() {
