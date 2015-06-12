@@ -19,19 +19,15 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import io.nuun.kernel.core.AbstractPlugin;
-import org.javatuples.Tuple;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.core.domain.FactoryInternal;
-import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
@@ -40,7 +36,6 @@ import org.seedstack.seed.core.utils.SeedBindingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -141,9 +136,10 @@ public class BusinessCorePlugin extends AbstractPlugin {
     @SuppressWarnings("rawtypes")
     @Override
     public InitState init(InitContext initContext) {
+        Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext.scannedTypesBySpecification();
+
         // The first round is used to scan interfaces
         if (roundEnvironment.firstRound()) {
-            Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext.scannedTypesBySpecification();
             repositoriesInterfaces = scannedTypesBySpecification.get(DomainSpecifications.domainRepoSpecification);
             LOGGER.debug("Repository Interface(s) => {}", repositoriesInterfaces);
 
@@ -180,17 +176,6 @@ public class BusinessCorePlugin extends AbstractPlugin {
             defaultAssemblersClasses = scannedTypesBySpecification.get(DomainSpecifications.defaultAssemblerSpecification);
             LOGGER.debug("Default assembler classes => {}", defaultAssemblersClasses);
 
-            // default assembler
-            Collection<Class<?>> dtoWithDefaultAssemblerClasses = scannedTypesBySpecification.get(DomainSpecifications.dtoWithDefaultAssemblerSpecification);
-            for (Class<?> dtoWithDefaultAssemblerClass : dtoWithDefaultAssemblerClasses) {
-                DtoOf dtoOf = dtoWithDefaultAssemblerClass.getAnnotation(DtoOf.class);
-                if (dtoOf.value().length == 1) {
-                    linksForDefaultAssemblers.put(dtoOf.value()[0], dtoWithDefaultAssemblerClass);
-                } else if (dtoOf.value().length > 1) {
-                    linksForDefaultAssemblers.put(Tuples.typeOfTuple(dtoOf.value()), dtoWithDefaultAssemblerClass);
-                }
-            }
-
             return InitState.NON_INITIALIZED;
         } else {
             // The second round is used to scan implementations of the previously scanned interfaces
@@ -203,12 +188,12 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
             //noinspection unchecked
             List<Collection<Class<?>>> collections = Lists.newArrayList(
-                    domainServiceInterfaces,
                     applicationServiceInterfaces,
-                    interfacesServiceInterfaces,
-                    finderServiceInterfaces,
-                    policyInterfaces,
                     domainFactoryInterfaces,
+                    domainServiceInterfaces,
+                    finderServiceInterfaces,
+                    interfacesServiceInterfaces,
+                    policyInterfaces,
                     repositoriesInterfaces,
                     assemblerClass
             );
@@ -229,7 +214,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
             bindingStrategies.add(buildDefaultFactoryBindings());
 
             // Bindings for default assemblers
-            bindingStrategies.addAll(buildDefaultAssemblerBindings(linksForDefaultAssemblers));
+            Collection<Class<?>> dtoWithDefaultAssemblerClasses = scannedTypesBySpecification.get(DomainSpecifications.dtoWithDefaultAssemblerSpecification);
+            bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblersClasses).collect(dtoWithDefaultAssemblerClasses));
 
             return InitState.INITIALIZED;
         }
@@ -339,34 +325,5 @@ public class BusinessCorePlugin extends AbstractPlugin {
             bindingStrategies.add(new GenericBindingStrategy(generics, Repository.class, domainRepoImpl, new ProviderFactory<Repository>()));
         }
         return bindingStrategies;
-    }
-
-    /**
-     * Prepares the binding strategies in order to bind default assemblers. There is two default assemblers in order
-     * to handle the tuple case.
-     *
-     * @return a binding strategy
-     */
-    private Collection<BindingStrategy> buildDefaultAssemblerBindings(Map<Type, Class<?>> linksForDefaultAssemblers) {
-        Set<Type[]> autoAssemblerGenerics = new HashSet<Type[]>();
-        Set<Type[]> autoTupleAssemblerGenerics = new HashSet<Type[]>();
-        for (Map.Entry<Type, Class<?>> entry : linksForDefaultAssemblers.entrySet()) {
-            if (entry.getKey() instanceof ParameterizedType && Tuple.class.isAssignableFrom((Class) ((ParameterizedType) entry.getKey()).getRawType())) {
-                autoTupleAssemblerGenerics.add(new Type[]{entry.getKey(), entry.getValue()});
-            } else {
-                autoAssemblerGenerics.add(new Type[]{entry.getKey(), entry.getValue()});
-            }
-        }
-
-        Collection<BindingStrategy> bs = new ArrayList<BindingStrategy>();
-        for (Class<?> defaultAssemblersClass : defaultAssemblersClasses) {
-            Class<?> keyType = TypeToken.of(defaultAssemblersClass).resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
-            if (keyType.isAssignableFrom(Tuple.class)) {
-                bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, Assembler.class, defaultAssemblersClass, new ProviderFactory<ModelMapperAssembler>()));
-            } else {
-                bs.add(new GenericBindingStrategy(autoAssemblerGenerics, Assembler.class, defaultAssemblersClass, new ProviderFactory<ModelMapperAssembler>()));
-            }
-        }
-        return bs;
     }
 }
