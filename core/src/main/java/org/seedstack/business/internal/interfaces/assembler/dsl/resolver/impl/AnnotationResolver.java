@@ -88,12 +88,6 @@ public class AnnotationResolver implements DtoInfoResolver {
             }
         }
 
-        // No annotation found
-        if (parameterHolder.isEmpty()) {
-            String message = String.format("Missing %s annotation on %s's id.", MATCHING_FACT_PARAM, dto.getClass().getSimpleName());
-            throw new IllegalArgumentException(message);
-        }
-
         return parameterHolder;
     }
 

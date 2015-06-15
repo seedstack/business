@@ -33,7 +33,7 @@ public final class MethodMatcher {
             // if the return type is not specified (i.e null) we only check the parameters
             boolean matchReturnType = returnType == null || returnType.equals(method.getReturnType());
 
-            if (parameterTypes.length == params.length && checkParameterTypes(parameterTypes, params) && matchReturnType) {
+            if (checkParams(parameterTypes, params) && matchReturnType) {
                 if (checkedMethod == null) {
                     checkedMethod = method;
                 } else {
@@ -43,6 +43,10 @@ public final class MethodMatcher {
             }
         }
         return checkedMethod;
+    }
+
+    private static boolean checkParams(Type[] parameterTypes, Object[] params) {
+        return params.length == 0 || (parameterTypes.length == params.length && checkParameterTypes(parameterTypes, params));
     }
 
     public static Method findMatchingMethod(Class<?> classToInspect, Object... params) {
