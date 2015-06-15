@@ -19,7 +19,7 @@ public class AuditLogbackPlugin extends AbstractPlugin {
 
     @Override
     public String name() {
-        return "seed-business-audit-logback";
+        return "business-audit-logback";
     }
 
     @Override

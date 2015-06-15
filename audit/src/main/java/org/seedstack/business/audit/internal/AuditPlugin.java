@@ -14,14 +14,13 @@ import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
+import org.seedstack.business.audit.api.TrailExceptionHandler;
+import org.seedstack.business.audit.spi.TrailWriter;
+import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
-import org.seedstack.business.audit.api.TrailExceptionHandler;
-import org.seedstack.business.audit.spi.TrailWriter;
-import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 
 /**
  * Plugin for audit
@@ -38,7 +37,7 @@ public class AuditPlugin extends AbstractPlugin {
 
     @Override
     public String name() {
-        return "seed-business-audit";
+        return "business-audit";
     }
 
     @Override

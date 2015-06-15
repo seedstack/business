@@ -77,7 +77,6 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
 		this.domainObjectClass = (Class<DO>) clonedClasses[0];
 	}
 
-	@Override
 	public Class<DO> getProducedClass() {
 		return domainObjectClass;
 	}

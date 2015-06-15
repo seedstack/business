@@ -11,14 +11,16 @@ package org.seedstack.business.repositories.fixtures;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.annotations.DomainRepositoryImpl;
+import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@DomainRepositoryImpl
+@Named("DefaultRepo")
+@GenericImplementation
 public class DefaultRepoSample<A extends AggregateRoot<K>, K> extends AbstractDefaultRepoSample<A,K>  {
 
     @Inject

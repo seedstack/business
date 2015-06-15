@@ -23,7 +23,6 @@ public interface BindingStrategy {
 	 * Resolves the bindings for the given strategy using the current module binder.
 	 * 
 	 * @param binder the current Binder
-	 * @param bindingContext the current Binder
 	 */
-	void resolve(Binder binder , BindingContext bindingContext);
+	void resolve(Binder binder);
 }

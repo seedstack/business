@@ -10,6 +10,7 @@
 package org.seedstack.business.api.specifications;
 
 import org.kametic.specifications.Specification;
+import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.application.GenericApplicationService;
 import org.seedstack.business.api.application.annotations.ApplicationService;
@@ -123,6 +124,7 @@ public final class DomainSpecifications {
     public static final Specification<Class<?>> domainFactorySpecification = and(
             ancestorMetaAnnotatedWith(DomainFactory.class),
             classIsInterface(),
+            not(classIs(Factory.class)),
             not(classIsAnnotation()));
 
     /**
@@ -146,23 +148,21 @@ public final class DomainSpecifications {
      * matching the {@link #dtoWithDefaultAssemblerSpecification} specification.
      * </p>
      */
-    public static final Specification<Class<?>> defaultAssemblerSpecification = and(
-            assemblerSpecification, classAnnotatedWith(GenericImplementation.class));
+    public static final Specification<Class<?>> defaultAssemblerSpecification =
+            assemblerSpecification.and(classAnnotatedWith(GenericImplementation.class));
 
-    @Deprecated
-    public static final Specification<Class<?>> domainRepoImplSpecification = and(
-            classAnnotatedWith(DomainRepositoryImpl.class),
+    public static final Specification<Class<?>> defaultRepositorySpecification = and(
             not(classIsInterface()),
             not(classIsAbstract()),
-            not(classIsAnnotation()));
+            ancestorMetaAnnotatedWith(DomainRepository.class),
+            classAnnotatedWith(GenericImplementation.class));
 
     /**
      * The specification for the dtos which require an default assembler to be bound.
      *
      * @see #defaultAssemblerSpecification
      */
-    public static final Specification<Class<?>> dtoWithDefaultAssemblerSpecification = and(
-            classAnnotatedWith(DtoOf.class));
+    public static final Specification<Class<?>> dtoWithDefaultAssemblerSpecification = classAnnotatedWith(DtoOf.class);
 
     /**
      * The identity handler specification. It matches all the classes implementing

@@ -15,10 +15,8 @@ import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.core.interfaces.assembler.ModelMapperAssembler;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.business.internal.strategy.api.ProviderFactory;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -78,12 +76,10 @@ class DefaultAssemblerCollector {
             Class<?> aggregateType = TypeToken.of(defaultAssemblersClass).resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
 
             if (aggregateType.isAssignableFrom(Tuple.class) && !autoTupleAssemblerGenerics.isEmpty()) {
-                bs.add(new GenericBindingStrategy(autoTupleAssemblerGenerics, Assembler.class,
-                        defaultAssemblersClass, new ProviderFactory<ModelMapperAssembler>()));
+                bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoTupleAssemblerGenerics));
 
             } else if (!autoAssemblerGenerics.isEmpty()){
-                bs.add(new GenericBindingStrategy(autoAssemblerGenerics, Assembler.class,
-                        defaultAssemblersClass, new ProviderFactory<ModelMapperAssembler>()));
+                bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoAssemblerGenerics));
             }
         }
         return bs;

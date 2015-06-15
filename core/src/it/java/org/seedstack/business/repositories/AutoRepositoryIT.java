@@ -31,6 +31,7 @@ import javax.inject.Named;
 public class AutoRepositoryIT {
 
     @Inject
+    @Named("DefaultRepo")
     Repository<TestAggregate, String> testRepo;
 
     @Inject @Named("mock")

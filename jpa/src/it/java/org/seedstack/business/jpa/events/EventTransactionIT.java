@@ -18,6 +18,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.persistence.jpa.api.Jpa;
 import org.seedstack.seed.transaction.api.Propagation;
 import org.seedstack.seed.transaction.api.Transactional;
 
@@ -41,7 +42,7 @@ public class EventTransactionIT {
     @Inject
     private SampleBaseJpaFactory sampleBaseJpaFactory;
 
-    @Inject
+    @Inject @Jpa
     private Repository<TinyAggRoot, String> tinyRepo;
 
     @Inject

@@ -29,11 +29,20 @@ public class DefaultAssemblerSpiIT {
     @Named("Dummy")
     private Assembler<Order, OrderDto> defaultAssembler;
 
+    @Inject
+    private Assembler<Order, OrderDto> customAssembler;
+
     @Test
     public void test_using_custom_default_assembler() {
         Assertions.assertThat(defaultAssembler).isNotNull();
         Assertions.assertThat(defaultAssembler).isInstanceOf(DummyDefaultAssembler.class);
         OrderDto orderDto = defaultAssembler.assembleDtoFromAggregate(new Order(new Address("street", "city")));
         Assertions.assertThat(orderDto.getId()).isEqualTo("hodor");
+    }
+
+    @Test
+    public void test_custom_assembler() {
+        Assertions.assertThat(customAssembler).isNotNull();
+        Assertions.assertThat(customAssembler).isInstanceOf(OrderDtoAssembler.class);
     }
 }

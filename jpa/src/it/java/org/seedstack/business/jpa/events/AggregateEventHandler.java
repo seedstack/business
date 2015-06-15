@@ -15,6 +15,7 @@ import org.seedstack.business.api.domain.events.AggregatePersistedEvent;
 import org.seedstack.business.jpa.samples.domain.base.SampleBaseJpaAggregateRoot;
 import org.seedstack.business.jpa.samples.domain.tinyaggregate.TinyAggRoot;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
+import org.seedstack.seed.persistence.jpa.api.Jpa;
 
 import javax.inject.Inject;
 
@@ -25,7 +26,7 @@ import javax.inject.Inject;
  */
 public class AggregateEventHandler implements EventHandler<AggregatePersistedEvent> {
 
-    @Inject
+    @Inject @Jpa
     private Repository<TinyAggRoot, String> repository;
 
     static int counter;

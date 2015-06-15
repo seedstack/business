@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.strategy.api;
+package org.seedstack.business.internal.strategy;
 
 
 /**
@@ -16,7 +16,7 @@ package org.seedstack.business.internal.strategy.api;
  * @author pierre.thirouin@ext.mpsa.com
  * @param <T> the produced type
  */
-public interface GenericImplementationFactory<T> {
+interface GenericGuiceFactory<T> {
 
     /**
      * Create an instance of T, with its resolved type variables.

@@ -193,14 +193,35 @@ public class DomainSpecificationsTest {
         assertThat(DomainSpecifications.domainRepoSpecification.isSatisfiedBy(MyRepository3.class)).isFalse();
     }
 
-    @DomainRepositoryImpl
-    static class MyRepositoryImpl1 {}
+    @GenericImplementation
+    static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements GenericRepository<A,K> {
+        @Override
+        public A load(K id) { return null; }
+
+        @Override
+        public void delete(K id) { }
+
+        @Override
+        public void delete(A a) { }
+
+        @Override
+        public void persist(A a) { }
+
+        @Override
+        public A save(A a) { return null; }
+
+        @Override
+        public Class<A> getAggregateRootClass() { return null; }
+
+        @Override
+        public Class<K> getKeyClass() { return null; }
+    }
 
     @Test
     public void testDomainRepoImplSpecification() {
-        assertThat(DomainSpecifications.domainRepoImplSpecification.isSatisfiedBy(MyRepositoryImpl1.class)).isTrue();
+        assertThat(DomainSpecifications.defaultRepositorySpecification.isSatisfiedBy(MyRepositoryImpl1.class)).isTrue();
 
-        assertThat(DomainSpecifications.domainRepoImplSpecification.isSatisfiedBy(MyRepository1.class)).isFalse();
+        assertThat(DomainSpecifications.defaultRepositorySpecification.isSatisfiedBy(MyRepository1.class)).isFalse();
     }
 
     @DomainService

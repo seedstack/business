@@ -11,8 +11,8 @@ package org.seedstack.business.repositories.fixtures;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.annotations.DomainRepositoryImpl;
 import org.seedstack.business.core.domain.base.BaseRepository;
+import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +20,7 @@ import javax.inject.Named;
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@DomainRepositoryImpl
+@GenericImplementation
 @Named("mock")
 public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
 
