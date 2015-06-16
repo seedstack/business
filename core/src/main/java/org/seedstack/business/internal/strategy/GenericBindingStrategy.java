@@ -16,7 +16,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.util.Types;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.seed.core.utils.SeedBindingUtils;
+import org.seedstack.business.internal.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -93,25 +93,25 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
     public void resolve(Binder binder) {
         // Bind all the possible types for one class or interface.
         // For instance: Repository<Customer,String>, Repository<Order, Long>, etc.
-        FactoryModuleBuilder factoryBuilder = new FactoryModuleBuilder();
+        FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
         if (typeVariableClasses != null) {
             for (Class[] classes : typeVariableClasses) {
-                bindKey(binder, factoryBuilder, classes);
+                bindKey(binder, guiceFactoryBuilder, classes);
             }
         } else {
             for (Type[] typeVariable : typeVariables) {
-                bindKey(binder, factoryBuilder, typeVariable);
+                bindKey(binder, guiceFactoryBuilder, typeVariable);
             }
         }
 
         TypeLiteral<?> guiceAssistedFactory = TypeLiteral.get(Types.newParameterizedType(DEFAULT_IMPL_FACTORY_CLASS, genericImplClass));
-        binder.install(factoryBuilder.build(guiceAssistedFactory));
+        binder.install(guiceFactoryBuilder.build(guiceAssistedFactory));
     }
 
     @SuppressWarnings("unchecked")
     private void bindKey(Binder binder, FactoryModuleBuilder factoryBuilder, Type[] classes) {
         // Get the key to bind
-        Key<?> key = SeedBindingUtils.resolveKey(injecteeClass, genericImplClass, classes);
+        Key<?> key = BindingUtils.resolveKey(injecteeClass, genericImplClass, classes);
 
         // Prepare the Guice provider
         Provider<?> provider = new GenericGuiceProvider<T>(genericImplClass, classes);

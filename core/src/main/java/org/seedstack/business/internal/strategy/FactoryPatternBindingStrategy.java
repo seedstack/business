@@ -17,7 +17,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.util.Types;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.seed.core.utils.SeedBindingUtils;
+import org.seedstack.business.internal.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -103,7 +103,7 @@ public class FactoryPatternBindingStrategy<T> implements BindingStrategy {
             Type producedType = classes.getKey();
             Class<?> producedImplementationType = classes.getValue();
 
-            Key<?> key = SeedBindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
+            Key<?> key = BindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
             Provider<?> provider = new GenericGuiceProvider<T>(injectedClass, producedImplementationType);
             binder.requestInjection(provider);
             binder.bind(key).toProvider((Provider) provider);

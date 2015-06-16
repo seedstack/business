@@ -20,7 +20,7 @@ import org.kametic.specifications.Specification;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.seed.core.utils.SeedBindingUtils;
+import org.seedstack.business.internal.utils.BindingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -220,13 +220,13 @@ public class BusinessCorePlugin extends AbstractPlugin {
      * @param initContext the context containing the implementations
      * @param interfaces  the interfaces to bind
      * @return the map of interface/implementation to bind
-     * @see org.seedstack.seed.core.utils.SeedBindingUtils#resolveBindingDefinitions(Class, Class, Class[])
+     * @see org.seedstack.business.internal.utils.BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
      */
     private Map<Key<?>, Class<?>> associatesInterfaceToImplementations(InitContext initContext, Collection<Class<?>> interfaces) {
         Map<Key<?>, Class<?>> keyMap = new HashMap<Key<?>, Class<?>>();
         for (Class<?> anInterface : interfaces) {
             Collection<Class<?>> subTypes = initContext.scannedTypesBySpecification().get(specsByInterfaceMap.get(anInterface));
-            keyMap.putAll(SeedBindingUtils.resolveBindingDefinitions(anInterface, subTypes));
+            keyMap.putAll(BindingUtils.resolveBindingDefinitions(anInterface, subTypes));
         }
         return keyMap;
     }
