@@ -11,6 +11,7 @@ package org.seedstack.business.internal;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Key;
+import io.nuun.kernel.api.Plugin;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
@@ -21,6 +22,7 @@ import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
+import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,18 +48,19 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessCorePlugin.class);
 
-    private Collection<Class<?>> repositoriesInterfaces;
-    private Collection<Class<?>> domainServiceInterfaces;
-    private Collection<Class<?>> applicationServiceInterfaces;
-    private Collection<Class<?>> finderServiceInterfaces;
-    private Collection<Class<?>> policyInterfaces;
-    private Collection<Class<?>> interfacesServiceInterfaces;
-    private Collection<Class<?>> domainFactoryInterfaces;
-    private Collection<Class<?>> assemblersClasses;
-    private Collection<Class<?>> defaultAssemblersClasses;
     private Collection<Class<?>> aggregateClasses;
+    private Collection<Class<?>> applicationServiceInterfaces;
+    private Collection<Class<?>> assemblersClasses;
+    private Collection<Class<?>> domainFactoryInterfaces;
+    private Collection<Class<?>> domainServiceInterfaces;
+    private Collection<Class<?>> finderServiceInterfaces;
+    private Collection<Class<?>> interfacesServiceInterfaces;
+    private Collection<Class<?>> policyInterfaces;
+    private Collection<Class<?>> repositoriesInterfaces;
     private Collection<Class<?>> valueObjectClasses;
-    private Collection<Class<?>> domainRepoImpls;
+
+    private Collection<Class<?>> defaultAssemblerClasses;
+    private Collection<Class<?>> defaultRepositoryClasses;
 
     private Map<Class<?>, Specification<Class<?>>> specsByInterfaceMap = new HashMap<Class<?>, Specification<Class<?>>>();
     private Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
@@ -69,35 +72,43 @@ public class BusinessCorePlugin extends AbstractPlugin {
     }
 
     @Override
+    public Collection<Class<? extends Plugin>> requiredPlugins() {
+        //noinspection unchecked
+        return Lists.<Class<? extends Plugin>>newArrayList(ApplicationPlugin.class);
+    }
+
+    @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
 
         if (roundEnvironment.firstRound()) {
             return classpathScanRequestBuilder()
-                    .specification(DomainSpecifications.aggregateRootSpecification)
-                    .specification(DomainSpecifications.valueObjectSpecification)
-                    .specification(DomainSpecifications.defaultRepositorySpecification)
-                    .specification(DomainSpecifications.domainRepoSpecification)
-                    .specification(DomainSpecifications.domainServiceSpecification)
-                    .specification(DomainSpecifications.applicationServiceSpecification)
-                    .specification(DomainSpecifications.interfacesServiceSpecification)
-                    .specification(DomainSpecifications.finderServiceSpecification)
-                    .specification(DomainSpecifications.policySpecification)
-                    .specification(DomainSpecifications.domainFactorySpecification)
-                    .specification(DomainSpecifications.classicAssemblerSpecification)
-                    .specification(DomainSpecifications.defaultAssemblerSpecification)
-                    .specification(DomainSpecifications.dtoWithDefaultAssemblerSpecification).build();
+                    .specification(DomainSpecifications.AGGREGATE_ROOT)
+                    .specification(DomainSpecifications.APPLICATION_SERVICE)
+                    .specification(DomainSpecifications.CLASSIC_ASSEMBLER)
+                    .specification(DomainSpecifications.DOMAIN_SERVICE)
+                    .specification(DomainSpecifications.FACTORY)
+                    .specification(DomainSpecifications.FINDER)
+                    .specification(DomainSpecifications.INTERFACE_SERVICE)
+                    .specification(DomainSpecifications.POLICY)
+                    .specification(DomainSpecifications.REPOSITORY)
+                    .specification(DomainSpecifications.VALUE_OBJECT)
+
+                    .specification(DomainSpecifications.DEFAULT_ASSEMBLER)
+                    .specification(DomainSpecifications.DEFAULT_REPOSITORY)
+                    .specification(DomainSpecifications.DTO_OF).build();
         } else {
             // ROUND 2 ===========================
+
             //noinspection unchecked
             return classpathRequestForDescendantTypesOf(
-                    repositoriesInterfaces,
-                    domainServiceInterfaces,
                     applicationServiceInterfaces,
+                    domainFactoryInterfaces,
+                    domainServiceInterfaces,
+                    finderServiceInterfaces,
+                    finderServiceInterfaces,
                     interfacesServiceInterfaces,
-                    finderServiceInterfaces,
-                    finderServiceInterfaces,
                     policyInterfaces,
-                    domainFactoryInterfaces).build();
+                    repositoriesInterfaces).build();
         }
     }
 
@@ -127,41 +138,43 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
         // The first round is used to scan interfaces
         if (roundEnvironment.firstRound()) {
-            repositoriesInterfaces = spec.get(DomainSpecifications.domainRepoSpecification);
-            LOGGER.debug("Repository Interface(s) => {}", repositoriesInterfaces);
-
-            domainRepoImpls = spec.get(DomainSpecifications.defaultRepositorySpecification);
-            LOGGER.debug("Domain repository default implementation(s) => {}", domainRepoImpls);
-
-            aggregateClasses = spec.get(DomainSpecifications.aggregateRootSpecification);
+            aggregateClasses = spec.get(DomainSpecifications.AGGREGATE_ROOT);
             LOGGER.debug("Aggregate root(s) => {}", aggregateClasses);
 
-            valueObjectClasses = spec.get(DomainSpecifications.valueObjectSpecification);
-            LOGGER.debug("Value object(s) => {}", valueObjectClasses);
-
-            domainServiceInterfaces = spec.get(DomainSpecifications.domainServiceSpecification);
-            LOGGER.debug("Domain Service Interface(s) => {}", domainServiceInterfaces);
-
-            applicationServiceInterfaces = spec.get(DomainSpecifications.applicationServiceSpecification);
+            applicationServiceInterfaces = spec.get(DomainSpecifications.APPLICATION_SERVICE);
             LOGGER.debug("Application Service Interface(s) => {}", applicationServiceInterfaces);
 
-            interfacesServiceInterfaces = spec.get(DomainSpecifications.interfacesServiceSpecification);
-            LOGGER.debug("Interfaces Service Interface(s) => {}", interfacesServiceInterfaces);
-
-            finderServiceInterfaces = spec.get(DomainSpecifications.finderServiceSpecification);
-            LOGGER.debug("Finder Interface(s) => {}", finderServiceInterfaces);
-
-            policyInterfaces = spec.get(DomainSpecifications.policySpecification);
-            LOGGER.debug("Policy Interface(s) => {}", policyInterfaces);
-
-            domainFactoryInterfaces = spec.get(DomainSpecifications.domainFactorySpecification);
-            LOGGER.debug("Factory Interface(s) => {}", domainFactoryInterfaces);
-
-            assemblersClasses = spec.get(DomainSpecifications.classicAssemblerSpecification);
+            assemblersClasses = spec.get(DomainSpecifications.CLASSIC_ASSEMBLER);
             LOGGER.debug("Assembler class(es) => {}", assemblersClasses);
 
-            defaultAssemblersClasses = spec.get(DomainSpecifications.defaultAssemblerSpecification);
-            LOGGER.debug("Default assembler classes => {}", defaultAssemblersClasses);
+            domainFactoryInterfaces = spec.get(DomainSpecifications.FACTORY);
+            LOGGER.debug("Factory Interface(s) => {}", domainFactoryInterfaces);
+
+            domainServiceInterfaces = spec.get(DomainSpecifications.DOMAIN_SERVICE);
+            LOGGER.debug("Domain Service Interface(s) => {}", domainServiceInterfaces);
+
+            finderServiceInterfaces = spec.get(DomainSpecifications.FINDER);
+            LOGGER.debug("Finder Interface(s) => {}", finderServiceInterfaces);
+
+            interfacesServiceInterfaces = spec.get(DomainSpecifications.INTERFACE_SERVICE);
+            LOGGER.debug("Interfaces Service Interface(s) => {}", interfacesServiceInterfaces);
+
+            policyInterfaces = spec.get(DomainSpecifications.POLICY);
+            LOGGER.debug("Policy Interface(s) => {}", policyInterfaces);
+
+            repositoriesInterfaces = spec.get(DomainSpecifications.REPOSITORY);
+            LOGGER.debug("Repository Interface(s) => {}", repositoriesInterfaces);
+
+            valueObjectClasses = spec.get(DomainSpecifications.VALUE_OBJECT);
+            LOGGER.debug("Value object(s) => {}", valueObjectClasses);
+
+            // Default implementations
+
+            defaultRepositoryClasses = spec.get(DomainSpecifications.DEFAULT_REPOSITORY);
+            LOGGER.debug("Default repositories => {}", defaultRepositoryClasses);
+
+            defaultAssemblerClasses = spec.get(DomainSpecifications.DEFAULT_ASSEMBLER);
+            LOGGER.debug("Default assembler(s) => {}", defaultAssemblerClasses);
 
             return InitState.NON_INITIALIZED;
         } else {
@@ -171,7 +184,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
             // -- add assemblers to the default mode even if they have no client user interfaces
             List<Class<?>> assemblerClass = new ArrayList<Class<?>>();
             assemblerClass.add(Assembler.class);
-            specsByInterfaceMap.put(Assembler.class, DomainSpecifications.classicAssemblerSpecification);
+            specsByInterfaceMap.put(Assembler.class, DomainSpecifications.CLASSIC_ASSEMBLER);
 
             //noinspection unchecked
             List<Collection<Class<?>>> collections = Lists.newArrayList(
@@ -189,7 +202,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
             }
 
             // Bindings for default repositories
-            bindingStrategies = new DefaultRepositoryCollector(aggregateClasses, domainRepoImpls).collect();
+            bindingStrategies = new DefaultRepositoryCollector(aggregateClasses, defaultRepositoryClasses).collect();
 
             // Bindings for default factories
             Collection<Class<?>> aggregateOrVOClasses = new ArrayList<Class<?>>();
@@ -198,8 +211,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
             bindingStrategies.addAll(new DefaultFactoryCollector(aggregateOrVOClasses, bindings).collect());
 
             // Bindings for default assemblers
-            Collection<Class<?>> dtoWithDefaultAssemblerClasses = spec.get(DomainSpecifications.dtoWithDefaultAssemblerSpecification);
-            bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblersClasses).collect(dtoWithDefaultAssemblerClasses));
+            Collection<Class<?>> dtoWithDefaultAssemblerClasses = spec.get(DomainSpecifications.DTO_OF);
+            bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoWithDefaultAssemblerClasses));
 
             return InitState.INITIALIZED;
         }

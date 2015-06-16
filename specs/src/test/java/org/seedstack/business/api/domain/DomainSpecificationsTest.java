@@ -49,13 +49,13 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testAggregateRootSpecification() {
-        assertThat(DomainSpecifications.aggregateRootSpecification.isSatisfiedBy(MyAggregateRoot1.class)).isTrue();
-        assertThat(DomainSpecifications.aggregateRootSpecification.isSatisfiedBy(MyAggregateRoot2.class)).isTrue();
+        assertThat(DomainSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot1.class)).isTrue();
+        assertThat(DomainSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot2.class)).isTrue();
 
-        assertThat(DomainSpecifications.aggregateRootSpecification.isSatisfiedBy(MySimplePojo.class)).isFalse();
+        assertThat(DomainSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MySimplePojo.class)).isFalse();
 
-        assertThat(DomainSpecifications.aggregateRootSpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.aggregateRootSpecification);
+        assertThat(DomainSpecifications.AGGREGATE_ROOT).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.AGGREGATE_ROOT);
     }
 
     static class MyEntity1 extends BaseEntity<String> {
@@ -71,13 +71,13 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testEntitySpecification() {
-        assertThat(DomainSpecifications.entitySpecification.isSatisfiedBy(MyEntity1.class)).isTrue();
-        assertThat(DomainSpecifications.entitySpecification.isSatisfiedBy(MyEntity2.class)).isTrue();
+        assertThat(DomainSpecifications.ENTITY.isSatisfiedBy(MyEntity1.class)).isTrue();
+        assertThat(DomainSpecifications.ENTITY.isSatisfiedBy(MyEntity2.class)).isTrue();
 
-        assertThat(DomainSpecifications.entitySpecification.isSatisfiedBy(MySimplePojo.class)).isFalse();
+        assertThat(DomainSpecifications.ENTITY.isSatisfiedBy(MySimplePojo.class)).isFalse();
 
-        assertThat(DomainSpecifications.entitySpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.entitySpecification);
+        assertThat(DomainSpecifications.ENTITY).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.ENTITY);
     }
 
     static interface MyApplicationService1 extends GenericApplicationService { }
@@ -90,13 +90,13 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testApplicationServiceSpecification() {
-        assertThat(DomainSpecifications.applicationServiceSpecification.isSatisfiedBy(MyApplicationService1.class)).isTrue();
-        assertThat(DomainSpecifications.applicationServiceSpecification.isSatisfiedBy(MyApplicationService2.class)).isTrue();
+        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService1.class)).isTrue();
+        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService2.class)).isTrue();
 
-        assertThat(DomainSpecifications.applicationServiceSpecification.isSatisfiedBy(MyApplicationService3.class)).isFalse();
+        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService3.class)).isFalse();
 
-        assertThat(DomainSpecifications.applicationServiceSpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.applicationServiceSpecification);
+        assertThat(DomainSpecifications.APPLICATION_SERVICE).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.APPLICATION_SERVICE);
     }
 
     static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
@@ -130,32 +130,32 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testAssemblerSpecification() {
-        assertThat(DomainSpecifications.assemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isTrue();
+        assertThat(DomainSpecifications.ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
 
-        assertThat(DomainSpecifications.assemblerSpecification.isSatisfiedBy(MySimplePojo.class)).isFalse();
+        assertThat(DomainSpecifications.ASSEMBLER.isSatisfiedBy(MySimplePojo.class)).isFalse();
 
-        assertThat(DomainSpecifications.assemblerSpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.assemblerSpecification);
+        assertThat(DomainSpecifications.ASSEMBLER).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.ASSEMBLER);
     }
 
     @Test
     public void testClassicAssemblerSpecification() {
-        assertThat(DomainSpecifications.classicAssemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isTrue();
+        assertThat(DomainSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
 
-        assertThat(DomainSpecifications.classicAssemblerSpecification.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
+        assertThat(DomainSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
 
-        assertThat(DomainSpecifications.classicAssemblerSpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.classicAssemblerSpecification);
+        assertThat(DomainSpecifications.CLASSIC_ASSEMBLER).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.CLASSIC_ASSEMBLER);
     }
 
     @Test
     public void testDefaultAssemblerSpecification() {
-        assertThat(DomainSpecifications.defaultAssemblerSpecification.isSatisfiedBy(DefaultMyAssembler1.class)).isTrue();
+        assertThat(DomainSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isTrue();
 
-        assertThat(DomainSpecifications.defaultAssemblerSpecification.isSatisfiedBy(MyAssembler1.class)).isFalse();
+        assertThat(DomainSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isFalse();
 
-        assertThat(DomainSpecifications.defaultAssemblerSpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.defaultAssemblerSpecification);
+        assertThat(DomainSpecifications.DEFAULT_ASSEMBLER).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.DEFAULT_ASSEMBLER);
     }
 
     @DomainFactory
@@ -168,13 +168,13 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testDomainFactorySpecification() {
-        assertThat(DomainSpecifications.domainFactorySpecification.isSatisfiedBy(MyFactory1.class)).isTrue();
-        assertThat(DomainSpecifications.domainFactorySpecification.isSatisfiedBy(MyFactory2.class)).isTrue();
+        assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory1.class)).isTrue();
+        assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory2.class)).isTrue();
 
-        assertThat(DomainSpecifications.domainFactorySpecification.isSatisfiedBy(MyFactory3.class)).isFalse();
+        assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory3.class)).isFalse();
 
-        assertThat(DomainSpecifications.domainFactorySpecification).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.domainFactorySpecification);
+        assertThat(DomainSpecifications.FACTORY).describedAs("specification should be comparable")
+                .isEqualTo(DomainSpecifications.FACTORY);
     }
 
     @DomainRepository
@@ -187,10 +187,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testDomainRepoSpecification() {
-        assertThat(DomainSpecifications.domainRepoSpecification.isSatisfiedBy(MyRepository1.class)).isTrue();
-        assertThat(DomainSpecifications.domainRepoSpecification.isSatisfiedBy(MyRepository2.class)).isTrue();
+        assertThat(DomainSpecifications.REPOSITORY.isSatisfiedBy(MyRepository1.class)).isTrue();
+        assertThat(DomainSpecifications.REPOSITORY.isSatisfiedBy(MyRepository2.class)).isTrue();
 
-        assertThat(DomainSpecifications.domainRepoSpecification.isSatisfiedBy(MyRepository3.class)).isFalse();
+        assertThat(DomainSpecifications.REPOSITORY.isSatisfiedBy(MyRepository3.class)).isFalse();
     }
 
     @GenericImplementation
@@ -219,9 +219,9 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testDomainRepoImplSpecification() {
-        assertThat(DomainSpecifications.defaultRepositorySpecification.isSatisfiedBy(MyRepositoryImpl1.class)).isTrue();
+        assertThat(DomainSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepositoryImpl1.class)).isTrue();
 
-        assertThat(DomainSpecifications.defaultRepositorySpecification.isSatisfiedBy(MyRepository1.class)).isFalse();
+        assertThat(DomainSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepository1.class)).isFalse();
     }
 
     @DomainService
@@ -233,10 +233,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testDomainServiceSpecification() {
-        assertThat(DomainSpecifications.domainServiceSpecification.isSatisfiedBy(MyDomainServiceSpecification1.class)).isTrue();
-        assertThat(DomainSpecifications.domainServiceSpecification.isSatisfiedBy(MyDomainServiceSpecification2.class)).isTrue();
+        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification1.class)).isTrue();
+        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification2.class)).isTrue();
 
-        assertThat(DomainSpecifications.domainServiceSpecification.isSatisfiedBy(MyDomainServiceSpecification3.class)).isFalse();
+        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification3.class)).isFalse();
     }
 
     @InterfacesService
@@ -248,10 +248,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testInterfacesServiceSpecification() {
-        assertThat(DomainSpecifications.interfacesServiceSpecification.isSatisfiedBy(MyInterfacesServiceSpecification1.class)).isTrue();
-        assertThat(DomainSpecifications.interfacesServiceSpecification.isSatisfiedBy(MyInterfacesServiceSpecification2.class)).isTrue();
+        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification1.class)).isTrue();
+        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification2.class)).isTrue();
 
-        assertThat(DomainSpecifications.interfacesServiceSpecification.isSatisfiedBy(MyInterfacesServiceSpecification3.class)).isFalse();
+        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification3.class)).isFalse();
     }
 
     @DtoOf(MyAggregateRoot1.class)
@@ -262,10 +262,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testDtoWithDefaultAssemblerSpecification() {
-        assertThat(DomainSpecifications.dtoWithDefaultAssemblerSpecification.isSatisfiedBy(MyPojo1.class)).isTrue();
-        assertThat(DomainSpecifications.dtoWithDefaultAssemblerSpecification.isSatisfiedBy(MyPojo2.class)).isTrue();
+        assertThat(DomainSpecifications.DTO_OF.isSatisfiedBy(MyPojo1.class)).isTrue();
+        assertThat(DomainSpecifications.DTO_OF.isSatisfiedBy(MyPojo2.class)).isTrue();
 
-        assertThat(DomainSpecifications.dtoWithDefaultAssemblerSpecification.isSatisfiedBy(MySimplePojo.class)).isFalse();
+        assertThat(DomainSpecifications.DTO_OF.isSatisfiedBy(MySimplePojo.class)).isFalse();
     }
 
     @Finder
@@ -278,10 +278,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testFinderServiceSpecification() {
-        assertThat(DomainSpecifications.finderServiceSpecification.isSatisfiedBy(MyFinder1.class)).isTrue();
-        assertThat(DomainSpecifications.finderServiceSpecification.isSatisfiedBy(MyFinder2.class)).isTrue();
+        assertThat(DomainSpecifications.FINDER.isSatisfiedBy(MyFinder1.class)).isTrue();
+        assertThat(DomainSpecifications.FINDER.isSatisfiedBy(MyFinder2.class)).isTrue();
 
-        assertThat(DomainSpecifications.finderServiceSpecification.isSatisfiedBy(MyFinder3.class)).isFalse();
+        assertThat(DomainSpecifications.FINDER.isSatisfiedBy(MyFinder3.class)).isFalse();
     }
 
     @DomainPolicy
@@ -294,10 +294,10 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testPolicyServiceSpecification() {
-        assertThat(DomainSpecifications.policySpecification.isSatisfiedBy(MyPolicy1.class)).isTrue();
-        assertThat(DomainSpecifications.policySpecification.isSatisfiedBy(MyPolicy2.class)).isTrue();
+        assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy1.class)).isTrue();
+        assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy2.class)).isTrue();
 
-        assertThat(DomainSpecifications.policySpecification.isSatisfiedBy(MyPolicy3.class)).isFalse();
+        assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy3.class)).isFalse();
     }
 
     @DomainValueObject
@@ -308,9 +308,9 @@ public class DomainSpecificationsTest {
 
     @Test
     public void testValueObjectServiceSpecification() {
-        assertThat(DomainSpecifications.valueObjectSpecification.isSatisfiedBy(MyValueObject1.class)).isTrue();
-        assertThat(DomainSpecifications.valueObjectSpecification.isSatisfiedBy(MyValueObject2.class)).isTrue();
+        assertThat(DomainSpecifications.VALUE_OBJECT.isSatisfiedBy(MyValueObject1.class)).isTrue();
+        assertThat(DomainSpecifications.VALUE_OBJECT.isSatisfiedBy(MyValueObject2.class)).isTrue();
 
-        assertThat(DomainSpecifications.valueObjectSpecification.isSatisfiedBy(MySimplePojo.class)).isFalse();
+        assertThat(DomainSpecifications.VALUE_OBJECT.isSatisfiedBy(MySimplePojo.class)).isFalse();
     }
 }

@@ -36,13 +36,13 @@ public class IdentityPlugin extends AbstractPlugin {
 
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
-        return classpathScanRequestBuilder().specification(DomainSpecifications.identityHandlerSpecification).build();
+        return classpathScanRequestBuilder().specification(DomainSpecifications.IDENTITY_HANDLER).build();
     }
 
 	@Override
 	@SuppressWarnings("rawtypes")
 	public InitState init(InitContext initContext) {
-		identityHandlerClasses = initContext.scannedTypesBySpecification().get(DomainSpecifications.identityHandlerSpecification);
+		identityHandlerClasses = initContext.scannedTypesBySpecification().get(DomainSpecifications.IDENTITY_HANDLER);
 		return InitState.INITIALIZED;
 	}
 

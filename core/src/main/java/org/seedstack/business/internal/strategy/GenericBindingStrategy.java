@@ -120,6 +120,5 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
 
         // Prepare the factory for assisted injection
         factoryBuilder.implement(key, (Class) genericImplClass);
-
     }
 }

@@ -41,7 +41,7 @@ public final class DomainSpecifications {
     /**
      * The aggregate root specification.
      */
-    public static final Specification<Class<?>> aggregateRootSpecification = and(
+    public static final Specification<Class<?>> AGGREGATE_ROOT = and(
             ancestorMetaAnnotatedWith(DomainAggregateRoot.class),
             not(classIsAbstract()),
             not(classIsInterface())
@@ -50,7 +50,7 @@ public final class DomainSpecifications {
     /**
      * The domain entities specification.
      */
-    public static final Specification<Class<?>> entitySpecification = and(
+    public static final Specification<Class<?>> ENTITY = and(
             ancestorMetaAnnotatedWith(DomainEntity.class),
             not(classIsAbstract()),
             not(classIsInterface())
@@ -59,7 +59,7 @@ public final class DomainSpecifications {
     /**
      * The domain value objects specification.
      */
-    public static final Specification<Class<?>> valueObjectSpecification = and(
+    public static final Specification<Class<?>> VALUE_OBJECT = and(
             ancestorMetaAnnotatedWith(DomainValueObject.class),
             not(classIsAbstract()),
             not(classIsInterface())
@@ -68,7 +68,7 @@ public final class DomainSpecifications {
     /**
      * The domain repository specification.
      */
-    public static final Specification<Class<?>> domainRepoSpecification = and(
+    public static final Specification<Class<?>> REPOSITORY = and(
             ancestorMetaAnnotatedWith(DomainRepository.class),
             classIsInterface(),
             not(classIsAnnotation())
@@ -77,7 +77,7 @@ public final class DomainSpecifications {
     /**
      * The domain service specification.
      */
-    public static final Specification<Class<?>> domainServiceSpecification = and(
+    public static final Specification<Class<?>> DOMAIN_SERVICE = and(
             ancestorMetaAnnotatedWith(DomainService.class),
             classIsInterface(),
             not(classIsAnnotation()),
@@ -86,7 +86,7 @@ public final class DomainSpecifications {
     /**
      * The application service specification.
      */
-    public static final Specification<Class<?>> applicationServiceSpecification = and(
+    public static final Specification<Class<?>> APPLICATION_SERVICE = and(
             ancestorMetaAnnotatedWith(ApplicationService.class),
             classIsInterface(),
             not(classIsAnnotation()),
@@ -95,7 +95,7 @@ public final class DomainSpecifications {
     /**
      * The finder service specification.
      */
-    public static final Specification<Class<?>> finderServiceSpecification = and(
+    public static final Specification<Class<?>> FINDER = and(
             ancestorMetaAnnotatedWith(Finder.class),
             classIsInterface(),
             not(classIsAnnotation()));
@@ -103,7 +103,7 @@ public final class DomainSpecifications {
     /**
      * The policy specification.
      */
-    public static final Specification<Class<?>> policySpecification = and(
+    public static final Specification<Class<?>> POLICY = and(
             ancestorMetaAnnotatedWith(DomainPolicy.class),
             classIsInterface(),
             not(classIsAnnotation()),
@@ -112,7 +112,7 @@ public final class DomainSpecifications {
     /**
      * The interface service specification.
      */
-    public static final Specification<Class<?>> interfacesServiceSpecification = and(
+    public static final Specification<Class<?>> INTERFACE_SERVICE = and(
             ancestorMetaAnnotatedWith(InterfacesService.class),
             classIsInterface(),
             not(classIsAnnotation()),
@@ -121,7 +121,7 @@ public final class DomainSpecifications {
     /**
      * The domain factory specification.
      */
-    public static final Specification<Class<?>> domainFactorySpecification = and(
+    public static final Specification<Class<?>> FACTORY = and(
             ancestorMetaAnnotatedWith(DomainFactory.class),
             classIsInterface(),
             not(classIs(Factory.class)),
@@ -130,7 +130,7 @@ public final class DomainSpecifications {
     /**
      * The assembler specification. It accepts all assemblers: default assemblers and classic assemblers.
      */
-    public static final Specification<Class<?>> assemblerSpecification = and(
+    public static final Specification<Class<?>> ASSEMBLER = and(
             not(classIsInterface()),
             not(classIsAbstract()),
             descendantOf(Assembler.class));
@@ -138,20 +138,20 @@ public final class DomainSpecifications {
     /**
      * The assembler specification matching only the classic assembler, i.e. non-default assemblers.
      */
-    public static final Specification<Class<?>> classicAssemblerSpecification = and(
-            assemblerSpecification, not(classAnnotatedWith(GenericImplementation.class)));
+    public static final Specification<Class<?>> CLASSIC_ASSEMBLER = and(
+            ASSEMBLER, not(classAnnotatedWith(GenericImplementation.class)));
 
     /**
      * The assembler specification matching only the default assemblers.
      * <p>
      * Default assemblers are assembler implementation which are bound for all the DTOs
-     * matching the {@link #dtoWithDefaultAssemblerSpecification} specification.
+     * matching the {@link #DTO_OF} specification.
      * </p>
      */
-    public static final Specification<Class<?>> defaultAssemblerSpecification =
-            assemblerSpecification.and(classAnnotatedWith(GenericImplementation.class));
+    public static final Specification<Class<?>> DEFAULT_ASSEMBLER =
+            ASSEMBLER.and(classAnnotatedWith(GenericImplementation.class));
 
-    public static final Specification<Class<?>> defaultRepositorySpecification = and(
+    public static final Specification<Class<?>> DEFAULT_REPOSITORY = and(
             not(classIsInterface()),
             not(classIsAbstract()),
             ancestorMetaAnnotatedWith(DomainRepository.class),
@@ -160,15 +160,15 @@ public final class DomainSpecifications {
     /**
      * The specification for the dtos which require an default assembler to be bound.
      *
-     * @see #defaultAssemblerSpecification
+     * @see #DEFAULT_ASSEMBLER
      */
-    public static final Specification<Class<?>> dtoWithDefaultAssemblerSpecification = classAnnotatedWith(DtoOf.class);
+    public static final Specification<Class<?>> DTO_OF = classAnnotatedWith(DtoOf.class);
 
     /**
      * The identity handler specification. It matches all the classes implementing
      * the identity handler SPI.
      */
-    public static final Specification<Class<?>> identityHandlerSpecification = and(
+    public static final Specification<Class<?>> IDENTITY_HANDLER = and(
             not(classIsInterface()),
             not(classIsAbstract()),
             descendantOf(IdentityHandler.class));

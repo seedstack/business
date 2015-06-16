@@ -90,7 +90,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
             // The first parameter is already the id we are looking for
             id = element;
         } else {
-            if (!DomainSpecifications.valueObjectSpecification.isSatisfiedBy(aggregateIdClass)) {
+            if (!DomainSpecifications.VALUE_OBJECT.isSatisfiedBy(aggregateIdClass)) {
                 throw new IllegalStateException("The " + aggregateRootClass.getCanonicalName() + "'s id is not a value object, so you don't have to specify the index in @MatchingEntityId(index = 0)");
             }
             // Get the "magic" factory for the aggregate id class
