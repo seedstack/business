@@ -28,5 +28,11 @@ identity.handler-qualifier = simple-UUID
 [org.seedstack.business.internal.interfaces.assembler.dsl.fixture.*]
 identity.handler-qualifier = simple-UUID
 
+[org.seedstack.business.repositories.fixtures.*]
+default.repository.qualifier=DefaultRepo
+
+[org.seedstack.business.repositories.fixtures.TestAggregate2]
+default.repository.qualifier=org.seedstack.business.repositories.fixtures.MyQualifier
+
 [org.seedstack.business.event]
 domain.watch=true

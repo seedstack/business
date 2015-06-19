@@ -22,6 +22,7 @@ import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.specifications.DomainSpecifications;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
+import org.seedstack.seed.core.api.Application;
 import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
     private Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
     private Map<Key<?>, Class<?>> bindings = new HashMap<Key<?>, Class<?>>();
 
+    private Application application = null;
+
     @Override
     public String name() {
         return "business-core";
@@ -73,8 +76,9 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
     @Override
     public Collection<Class<? extends Plugin>> requiredPlugins() {
-        //noinspection unchecked
-        return Lists.<Class<? extends Plugin>>newArrayList(ApplicationPlugin.class);
+        Collection<Class<? extends Plugin>> plugins = new ArrayList<Class<? extends Plugin>>();
+        plugins.add(ApplicationPlugin.class);
+        return plugins;
     }
 
     @Override
@@ -138,6 +142,13 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
         // The first round is used to scan interfaces
         if (roundEnvironment.firstRound()) {
+            application = null;
+            for (Plugin plugin : initContext.pluginsRequired()) {
+                if (plugin instanceof ApplicationPlugin) {
+                    application = ((ApplicationPlugin) plugin).getApplication();
+                }
+            }
+
             aggregateClasses = spec.get(DomainSpecifications.AGGREGATE_ROOT);
             LOGGER.debug("Aggregate root(s) => {}", aggregateClasses);
 
@@ -202,7 +213,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
             }
 
             // Bindings for default repositories
-            bindingStrategies = new DefaultRepositoryCollector(aggregateClasses, defaultRepositoryClasses).collect();
+
+            bindingStrategies = new DefaultRepositoryCollector(aggregateClasses, defaultRepositoryClasses, application).collect();
 
             // Bindings for default factories
             Collection<Class<?>> aggregateOrVOClasses = new ArrayList<Class<?>>();

@@ -20,7 +20,7 @@ import org.seedstack.business.internal.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * GenericBindingStrategy resolves bindings for generic classes to implementations with unresolved type variables.
@@ -33,12 +33,11 @@ import java.util.Set;
  * </pre>
  * For all the possible type variables (for instance for all the aggregate with their key).
  * <pre>
- * Collection&lt;Class&lt;?&gt;[]&gt; typeVariables = Lists.newArrayList();
- * typeVariables.add(new Object[]{MyAggregate1.class, MyKey1.class});
- * typeVariables.add(new Object[]{MyAggregate2.class, MyKey2.class});
+ * Collection&lt;Class&lt;?&gt;[]&gt; constructorParams = Lists.newArrayList();
+ * constructorParams.add(new Object[]{MyAggregate1.class, MyKey1.class});
+ * constructorParams.add(new Object[]{MyAggregate2.class, MyKey2.class});
  *
- * GenericBindingStrategy bindingStrategy = new GenericBindingStrategy(typeVariables, MyClass.class,
- *         MyImplClass.class, new ProviderFactory&lt;MyClass&gt;());
+ * GenericBindingStrategy bindingStrategy = new GenericBindingStrategy(MyClass.class, MyImplClass.class, constructorParams);
  * </pre>
  * This will allow to inject as follows:
  * <pre>
@@ -59,19 +58,18 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
     private final Class<?> injecteeClass;
     private final Class<?> genericImplClass;
 
-    private Collection<Class<?>[]> typeVariableClasses;
-    private Collection<Type[]> typeVariables;
-
+    private Map<Type[], Key<?>> constructorParamsMap;
+    private Collection<Type[]> constructorParams;
 
     /**
      * Constructors.
      *
-     * @param injecteeClass       the class to bind
-     * @param genericImplClass    the implementation to bind with unresolved typeVariables
-     * @param typeVariableClasses the collection of resolved typeVariables
+     * @param injecteeClass     the class to bind
+     * @param genericImplClass  the implementation to bind with unresolved constructorParams
+     * @param constructorParams the collection of resolved constructorParams
      */
-    public GenericBindingStrategy(Class<T> injecteeClass, Class<? extends T> genericImplClass, Collection<Class<?>[]> typeVariableClasses) {
-        this.typeVariableClasses = typeVariableClasses;
+    public GenericBindingStrategy(Class<?> injecteeClass, Class<?> genericImplClass, Map<Type[], Key<?>> constructorParams) {
+        this.constructorParamsMap = constructorParams;
         this.injecteeClass = injecteeClass;
         this.genericImplClass = genericImplClass;
     }
@@ -79,12 +77,12 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
     /**
      * Constructors.
      *
-     * @param injecteeClass    the class to bind
-     * @param genericImplClass the implementation to bind with unresolved typeVariables
-     * @param typeVariables    the collection of resolved typeVariables
+     * @param injecteeClass     the class to bind
+     * @param genericImplClass  the implementation to bind with unresolved constructorParams
+     * @param constructorParams the collection of resolved constructorParams
      */
-    public GenericBindingStrategy(Class<?> injecteeClass, Class<?> genericImplClass, Set<Type[]> typeVariables) {
-        this.typeVariables = typeVariables;
+    public GenericBindingStrategy(Class<?> injecteeClass, Class<?> genericImplClass, Collection<Type[]> constructorParams) {
+        this.constructorParams = constructorParams;
         this.injecteeClass = injecteeClass;
         this.genericImplClass = genericImplClass;
     }
@@ -94,13 +92,14 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
         // Bind all the possible types for one class or interface.
         // For instance: Repository<Customer,String>, Repository<Order, Long>, etc.
         FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
-        if (typeVariableClasses != null) {
-            for (Class[] classes : typeVariableClasses) {
-                bindKey(binder, guiceFactoryBuilder, classes);
+
+        if (constructorParamsMap != null) {
+            for (Map.Entry<Type[], Key<?>> entry : constructorParamsMap.entrySet()) {
+                bindKey(binder, guiceFactoryBuilder, entry.getKey(), entry.getValue());
             }
         } else {
-            for (Type[] typeVariable : typeVariables) {
-                bindKey(binder, guiceFactoryBuilder, typeVariable);
+            for (Type[] params : constructorParams) {
+                bindKey(binder, guiceFactoryBuilder, params, null);
             }
         }
 
@@ -109,16 +108,20 @@ public class GenericBindingStrategy<T> implements BindingStrategy {
     }
 
     @SuppressWarnings("unchecked")
-    private void bindKey(Binder binder, FactoryModuleBuilder factoryBuilder, Type[] classes) {
+    private void bindKey(Binder binder, FactoryModuleBuilder guiceFactoryBuilder, Type[] params, Key<?> defaultKey) {
+        // If a default key is provided use a linked binding to bind it
+        if (defaultKey != null) {
+            binder.bind(defaultKey.getTypeLiteral()).to((Key) defaultKey);
+        }
         // Get the key to bind
-        Key<?> key = BindingUtils.resolveKey(injecteeClass, genericImplClass, classes);
+        Key<?> key = BindingUtils.resolveKey(injecteeClass, genericImplClass, params);
 
         // Prepare the Guice provider
-        Provider<?> provider = new GenericGuiceProvider<T>(genericImplClass, classes);
+        Provider<?> provider = new GenericGuiceProvider<T>(genericImplClass, params);
         binder.requestInjection(provider);
         binder.bind(key).toProvider((Provider) provider);
 
         // Prepare the factory for assisted injection
-        factoryBuilder.implement(key, (Class) genericImplClass);
+        guiceFactoryBuilder.implement(key, (Class) genericImplClass);
     }
 }

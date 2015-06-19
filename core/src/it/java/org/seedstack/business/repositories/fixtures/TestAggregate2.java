@@ -7,13 +7,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal;
+package org.seedstack.business.repositories.fixtures;
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.business.api.domain.base.BaseAggregateRoot;
 
 /**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
+ * @author pierre.thirouin@ext.mpsa.com
  */
-public enum BusinessCoreErrorCodes implements ErrorCode {
-    DUPLICATED_KEYS_FOUND, CLASS_IS_NOT_AN_ANNOTATION
+public class TestAggregate2 extends BaseAggregateRoot<String> {
+    @Override
+    public String getEntityId() {
+        return "test";
+    }
 }

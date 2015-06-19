@@ -66,10 +66,10 @@ class DefaultFactoryCollector {
      * @return a binding strategy
      */
     private BindingStrategy buildAggregateDefaultFactoryBindings() {
-        Collection<Class<?>[]> generics = new ArrayList<Class<?>[]>();
+        Collection<Type[]> generics = new ArrayList<Type[]>();
         if (aggregateOrVOClasses != null && !aggregateOrVOClasses.isEmpty()) {
             for (Class<?> aggregateClass : aggregateOrVOClasses) {
-                generics.add(new Class<?>[]{aggregateClass});
+                generics.add(new Type[]{aggregateClass});
             }
         }
         if (!generics.isEmpty()) {
