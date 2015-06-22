@@ -16,7 +16,6 @@ import org.seedstack.business.internal.datasecurity.BusinessDataSecurityModule;
 import org.seedstack.business.internal.interfaces.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistry;
 import org.seedstack.business.internal.interfaces.assembler.dsl.InternalRegistryInternal;
-import org.seedstack.business.internal.strategy.api.BindingContext;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,22 +76,12 @@ class BusinessModule extends AbstractModule {
 			bind(assembler);
 		}
 
-		resolveBindingStrategies();
+        // Bind strategies
+		for (BindingStrategy bindingStrategy : bindingStrategies) {
+			bindingStrategy.resolve(binder());
+		}
 
 		install(new BusinessDataSecurityModule());
 	}
-
-	private void resolveBindingStrategies() {
-        // The bound types are included in the context, so they will be ignored by the strategy.
-        // For instance if a Repository<Customer, CustomerId> was already bound to a user's repository,
-        // no default repository will be added.
-        // On the other side, the keys bound by the strategy wont be added in the exclude list so that all the default
-        // repositories will be bound.
-        BindingContext bindingContext = new BindingContext();
-        bindingContext.bound(bindings.keySet()).excluded(bindings.keySet());
-		for (BindingStrategy bindingStrategy : bindingStrategies) {
-			bindingStrategy.resolve(binder(), bindingContext);
-		}
-    }
 
 }

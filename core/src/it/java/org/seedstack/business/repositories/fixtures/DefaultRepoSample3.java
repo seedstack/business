@@ -15,17 +15,16 @@ import org.seedstack.business.core.domain.base.BaseRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
 @GenericImplementation
-@Named("mock")
-public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
+@MyQualifier
+public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
 
     @Inject
-    public DefaultRepoSample2(@Assisted Object[] genericClasses) {
+    public DefaultRepoSample3(@Assisted Object[] genericClasses) {
         super((Class)genericClasses[0], (Class)genericClasses[1]);
     }
 

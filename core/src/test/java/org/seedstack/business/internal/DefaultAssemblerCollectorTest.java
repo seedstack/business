@@ -44,7 +44,7 @@ public class DefaultAssemblerCollectorTest {
     public void testCollect() {
         Collection<BindingStrategy> strategies = underTest.collect(Lists.<Class<?>>newArrayList(Dto1.class, Dto2.class, Dto3.class));
         Assertions.assertThat(strategies).hasSize(2); // 2 default assembler implementation
-        Collection<Type[]> typeVariables = Whitebox.getInternalState(strategies.iterator().next(), "typeVariables");
+        Collection<Type[]> typeVariables = Whitebox.getInternalState(strategies.iterator().next(), "constructorParams");
         Assertions.assertThat(typeVariables).hasSize(3); // 3 dtos
     }
 

@@ -16,11 +16,8 @@ import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.util.Types;
-import org.seedstack.business.internal.strategy.api.BindingContext;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.business.internal.strategy.api.GenericImplementationFactory;
-import org.seedstack.business.internal.strategy.api.ProviderFactory;
-import org.seedstack.seed.core.utils.SeedBindingUtils;
+import org.seedstack.business.internal.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -31,7 +28,7 @@ import java.util.Map;
  * For instance, given the following multimap:
  * </p>
  * <pre>
- * Multimap{@literal <Class<?>, Class<?>>} producedTypeMap = ArrayListMultimap.create();
+ * Multimap&lt;Class&lt;?&gt;, Class&lt;?&gt;&gt; producedTypeMap = ArrayListMultimap.create();
  * // MyPolicy is the produced type
  * // MyPolicyImpl is the produced type implementation.
  * producedTypeMap.put(MyPolicy.class, MyPolicyImpl.class);
@@ -45,7 +42,7 @@ import java.util.Map;
  * This allows to inject a factory of {@code MyPolicy}.
  * <pre>
  * {@literal @}Inject
- * Factory{@literal <MyPolicy>} f; <= new FactoryInternal{@literal <MyPolicy>}(MyPolicyImpl.class);
+ * Factory&lt;MyPolicy&gt; f; &lt;= new FactoryInternal&lt;MyPolicy&gt;(MyPolicyImpl.class);
  * </pre>
  * The injected object will be a {@code FactoryInternal} of {@code MyPolicy}
  * with {@code MyPolicyImpl.class} passed to the constructor. Like this, the factory will be a factory of type {@code MyPolicy},
@@ -56,55 +53,67 @@ import java.util.Map;
  *
  * @author pierre.thirouin@ext.mpsa.com
  */
-public class FactoryPatternBindingStrategy implements BindingStrategy {
+public class FactoryPatternBindingStrategy<T> implements BindingStrategy {
 
-    private static final Class<?> FACTORY_CLASS = GenericImplementationFactory.class;
+    private static final Class<?> FACTORY_CLASS = GenericGuiceFactory.class;
 
     private final Multimap<Type, Class<?>> typeVariables;
 
     private final Class<?> injecteeClass;
 
     private final Class<?> injectedClass;
-
-    private final ProviderFactory<?> providerFactory;
+    private final boolean bindAssistedFactory;
 
     /**
      * Constructors.
      *
-     * @param producedTypeMap the map of produced type and produced type implementation
      * @param injecteeClass   the class to bind
      * @param injectedClass   the implementation to bind with unresolved producedTypeMap
-     * @param providerFactory the provider factory
+     * @param producedTypeMap the map of produced type and produced type implementation
      */
-    public FactoryPatternBindingStrategy(Multimap<Type, Class<?>> producedTypeMap, Class<?> injecteeClass, Class<?> injectedClass,
-                                         ProviderFactory<?> providerFactory) {
+    public FactoryPatternBindingStrategy(Class<?> injecteeClass, Class<?> injectedClass,
+                                         Multimap<Type, Class<?>> producedTypeMap) {
         this.typeVariables = producedTypeMap;
         this.injecteeClass = injecteeClass;
         this.injectedClass = injectedClass;
-        this.providerFactory = providerFactory;
+        this.bindAssistedFactory = true;
+    }
+
+    /**
+     * Constructors.
+     *
+     * @param injecteeClass       the class to bind
+     * @param injectedClass       the implementation to bind with unresolved producedTypeMap
+     * @param producedTypeMap     the map of produced type and produced type implementation
+     * @param bindAssistedFactory allow to control the binding of the Guice assisted factory
+     */
+    public FactoryPatternBindingStrategy(Class<?> injecteeClass, Class<?> injectedClass,
+                                         Multimap<Type, Class<?>> producedTypeMap, boolean bindAssistedFactory) {
+        this.typeVariables = producedTypeMap;
+        this.injecteeClass = injecteeClass;
+        this.injectedClass = injectedClass;
+        this.bindAssistedFactory = bindAssistedFactory;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void resolve(Binder binder, BindingContext bindingContext) {
-        FactoryModuleBuilder factoryBuilder = new FactoryModuleBuilder();
+    public void resolve(Binder binder) {
+        FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
         for (Map.Entry<Type, Class<?>> classes : typeVariables.entries()) {
             Type producedType = classes.getKey();
             Class<?> producedImplementationType = classes.getValue();
 
-            Key<?> key = SeedBindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
-            if (!bindingContext.isExcluded(key.getTypeLiteral())) {
-                Provider<?> provider = providerFactory.createProvider(injectedClass, producedImplementationType);
-                binder.requestInjection(provider);
-                binder.bind(key).toProvider((Provider) provider);
-                factoryBuilder.implement(key, (Class) injectedClass);
-                bindingContext.bound(key);
-            }
+            Key<?> key = BindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
+            Provider<?> provider = new GenericGuiceProvider<T>(injectedClass, producedImplementationType);
+            binder.requestInjection(provider);
+            binder.bind(key).toProvider((Provider) provider);
+            guiceFactoryBuilder.implement(key, (Class) injectedClass);
         }
-        TypeLiteral<?> factoryInterface = TypeLiteral.get(Types.newParameterizedType(FACTORY_CLASS, injectedClass));
-        if (!bindingContext.isExcluded(factoryInterface)) {
-            binder.install(factoryBuilder.build(factoryInterface));
-            bindingContext.excluded(Key.get(factoryInterface));
+
+        // Assisted factory should not be bound twice
+        if (bindAssistedFactory) {
+            TypeLiteral<?> guiceAssistedFactory = TypeLiteral.get(Types.newParameterizedType(FACTORY_CLASS, injectedClass));
+            binder.install(guiceFactoryBuilder.build(guiceAssistedFactory));
         }
     }
 }

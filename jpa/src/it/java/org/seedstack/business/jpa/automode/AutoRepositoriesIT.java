@@ -16,6 +16,7 @@ import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.jpa.samples.domain.tinyaggregate.TinyAggRoot;
 import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.persistence.jpa.api.Jpa;
 import org.seedstack.seed.transaction.api.Transactional;
 
 import javax.inject.Inject;
@@ -26,7 +27,7 @@ import javax.inject.Inject;
 @Transactional
 @RunWith(SeedITRunner.class)
 public class AutoRepositoriesIT {
-    @Inject
+    @Inject @Jpa
     Repository<TinyAggRoot, String> repository;
 
     @Inject

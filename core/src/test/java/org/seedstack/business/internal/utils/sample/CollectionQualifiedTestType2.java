@@ -7,22 +7,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.strategy.api;
+/**
+ * 
+ */
+package org.seedstack.business.internal.utils.sample;
 
-import com.google.inject.Binder;
+import javax.inject.Named;
+import java.util.Collection;
 
 /**
- * The BindingStrategy interface deports strategies to resolve bindings.
+ * Dummy Type for test
  * 
  * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
+ *
  */
-public interface BindingStrategy {
+@Named("collectionQualifiedTestType")
+public class CollectionQualifiedTestType2 extends TestType<Collection<String>, String> {
 
-	/**
-	 * Resolves the bindings for the given strategy using the current module binder.
-	 * 
-	 * @param binder the current Binder
-	 */
-	void resolve(Binder binder);
 }

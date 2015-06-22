@@ -9,16 +9,14 @@
  */
 package org.seedstack.business.repositories;
 
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.repositories.fixtures.DefaultRepoSample;
-import org.seedstack.business.repositories.fixtures.DefaultRepoSample2;
-import org.seedstack.business.repositories.fixtures.TestAggregate;
-import org.seedstack.business.fixtures.domain.customer.Customer;
-import org.seedstack.business.fixtures.domain.customer.CustomerId;
-import org.seedstack.business.fixtures.infrastructure.persistence.customer.CustomerInMemoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.fixtures.domain.customer.Customer;
+import org.seedstack.business.fixtures.domain.customer.CustomerId;
+import org.seedstack.business.fixtures.infrastructure.persistence.customer.CustomerInMemoryRepository;
+import org.seedstack.business.repositories.fixtures.*;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -31,6 +29,7 @@ import javax.inject.Named;
 public class AutoRepositoryIT {
 
     @Inject
+    @Named("DefaultRepo")
     Repository<TestAggregate, String> testRepo;
 
     @Inject @Named("mock")
@@ -38,6 +37,12 @@ public class AutoRepositoryIT {
 
     @Inject
     Repository<Customer, CustomerId> customerRepo;
+
+    @Inject
+    Repository<TestAggregate, String> testRepo3;
+
+    @Inject
+    Repository<TestAggregate2, String> testRepo4;
 
     @Test
     public void test() {
@@ -49,5 +54,11 @@ public class AutoRepositoryIT {
 
         Assertions.assertThat(customerRepo).isNotNull();
         Assertions.assertThat(customerRepo).isInstanceOf(CustomerInMemoryRepository.class);
+
+        Assertions.assertThat(testRepo3).isNotNull();
+        Assertions.assertThat(testRepo3).isInstanceOf(DefaultRepoSample.class);
+
+        Assertions.assertThat(testRepo4).isNotNull();
+        Assertions.assertThat(testRepo4).isInstanceOf(DefaultRepoSample3.class);
     }
 }

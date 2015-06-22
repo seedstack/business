@@ -11,9 +11,10 @@ package org.seedstack.business.jpa.infrastructure.repository.internal;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.annotations.DomainRepositoryImpl;
 import org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository;
+import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
+import org.seedstack.seed.persistence.jpa.api.Jpa;
 
 import javax.inject.Inject;
 
@@ -33,7 +34,8 @@ import javax.inject.Inject;
  * @see org.seedstack.business.api.domain.Repository
  * @see org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository
  */
-@DomainRepositoryImpl
+@Jpa
+@GenericImplementation
 public class DefaultJpaRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> extends BaseJpaRepository<AGGREGATE, KEY> {
 
     /**

@@ -7,23 +7,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.audit.internal.logback;
+package org.seedstack.business.internal;
 
-
-import io.nuun.kernel.core.AbstractPlugin;
+import org.seedstack.seed.core.api.ErrorCode;
 
 /**
- * Audit logback plugin.
+ * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
-public class AuditLogbackPlugin extends AbstractPlugin {
-
-    @Override
-    public String name() {
-        return "business-audit-logback";
-    }
-
-    @Override
-    public Object nativeUnitModule() {
-        return new AuditLogbackModule();
-    }
+public enum BusinessCoreErrorCodes implements ErrorCode {
+    DUPLICATED_KEYS_FOUND, CLASS_IS_NOT_AN_ANNOTATION
 }

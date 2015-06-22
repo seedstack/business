@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.strategy.api;
+package org.seedstack.business.internal.strategy;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -28,7 +28,7 @@ import java.lang.reflect.Type;
  * @author pierre.thirouin@ext.mpsa.com
  * @param <T> Type to get from the generic provider.  
  */
-public class GenericImplementationProvider<T> implements Provider<T> {
+class GenericGuiceProvider<T> implements Provider<T> {
 
 	private final Class<?> defaultImplClass;
 
@@ -45,7 +45,7 @@ public class GenericImplementationProvider<T> implements Provider<T> {
 	 * @param genericClasses
 	 *            generic array classes
 	 */
-	public GenericImplementationProvider(Class<?> defaultImplClass, Type... genericClasses) {
+	public GenericGuiceProvider(Class<?> defaultImplClass, Type... genericClasses) {
 		this.defaultImplClass = defaultImplClass;
 		this.genericClasses = genericClasses;
 	}
@@ -53,10 +53,10 @@ public class GenericImplementationProvider<T> implements Provider<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T get() {
-		Key<?> factoryKey = Key.get(TypeLiteral.get(Types.newParameterizedType(GenericImplementationFactory.class,
-				defaultImplClass)));
-		GenericImplementationFactory<T> genericImplementationFactory = (GenericImplementationFactory<T>) injector
-				.getInstance(factoryKey);
-		return genericImplementationFactory.createResolvedInstance(genericClasses);
+		Key<GenericGuiceFactory<T>> factoryKey = (Key<GenericGuiceFactory<T>>) Key.get(
+                TypeLiteral.get(Types.newParameterizedType(GenericGuiceFactory.class, defaultImplClass)));
+
+		GenericGuiceFactory<T> genericGuiceFactory = injector.getInstance(factoryKey);
+		return genericGuiceFactory.createResolvedInstance(genericClasses);
 	}
 }
