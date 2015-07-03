@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.order;
 
-import org.seedstack.business.api.domain.base.BaseValueObject;
+import org.seedstack.business.api.domain.BaseValueObject;
 
 
 public class OrderId extends BaseValueObject {

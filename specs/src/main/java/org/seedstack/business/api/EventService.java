@@ -11,9 +11,9 @@ package org.seedstack.business.api;
 
 /**
  * EventService provides methods to fire events. These events will be caught by EventHandlers.
- * <p/>
+ * <p>
  * The implementation for EventService is provided by Seed. You don't have to implement it.
- * <p/>
+ * </p>
  * For instance to fire an event:
  * <pre>
  * {@literal @}Inject
@@ -23,8 +23,8 @@ package org.seedstack.business.api;
  * </pre>
  *
  * @author pierre.thirouin@ext.mpsa.com
- * @see Event
- * @see EventHandler
+ * @see org.seedstack.business.api.Event
+ * @see org.seedstack.business.api.EventHandler
  */
 public interface EventService {
 

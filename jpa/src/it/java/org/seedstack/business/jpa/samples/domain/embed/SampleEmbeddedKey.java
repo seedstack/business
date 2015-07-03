@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.domain.embed;
 
-import org.seedstack.business.api.domain.base.BaseValueObject;
+import org.seedstack.business.api.domain.BaseValueObject;
 
 import javax.persistence.Embeddable;
 

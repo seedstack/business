@@ -11,7 +11,7 @@ package org.seedstack.business.internal;
 
 import com.google.inject.Injector;
 import org.seedstack.business.api.Event;
-import org.seedstack.business.api.EventFixture;
+import org.seedstack.business.test.event.EventFixture;
 import org.seedstack.business.api.EventHandler;
 import org.seedstack.business.api.fixtures.MyEvent;
 import org.seedstack.business.api.fixtures.MyHandler;

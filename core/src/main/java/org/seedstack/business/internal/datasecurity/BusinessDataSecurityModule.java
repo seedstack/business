@@ -13,7 +13,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.matcher.AbstractMatcher;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
-import org.seedstack.business.api.interfaces.annotations.Secured;
+import org.seedstack.business.api.interfaces.Secured;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

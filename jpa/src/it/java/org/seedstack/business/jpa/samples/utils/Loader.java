@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.utils;
 
-import org.seedstack.business.api.application.annotations.ApplicationService;
+import org.seedstack.business.api.application.ApplicationService;
 
 /**
  *

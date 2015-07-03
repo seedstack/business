@@ -10,7 +10,7 @@
 package org.seedstack.business.fixtures.infrastructure.persistence.customer;
 
 import com.google.common.collect.Lists;
-import org.seedstack.business.core.domain.InMemoryRepository;
+import org.seedstack.business.internal.defaults.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 import org.seedstack.business.fixtures.domain.customer.CustomerRepository;

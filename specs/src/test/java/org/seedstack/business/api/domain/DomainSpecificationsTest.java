@@ -12,18 +12,14 @@ package org.seedstack.business.api.domain;
 import org.junit.Test;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.api.application.GenericApplicationService;
-import org.seedstack.business.api.application.annotations.ApplicationService;
-import org.seedstack.business.api.domain.annotations.*;
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
-import org.seedstack.business.api.domain.base.BaseEntity;
-import org.seedstack.business.api.domain.base.BaseValueObject;
+import org.seedstack.business.api.application.ApplicationService;
 import org.seedstack.business.api.interfaces.GenericInterfacesService;
-import org.seedstack.business.api.interfaces.annotations.InterfacesService;
+import org.seedstack.business.api.interfaces.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.api.interfaces.query.finder.Finder;
-import org.seedstack.business.api.interfaces.query.finder.GenericFinder;
-import org.seedstack.business.api.specifications.DomainSpecifications;
+import org.seedstack.business.api.interfaces.finder.Finder;
+import org.seedstack.business.api.interfaces.finder.GenericFinder;
+import org.seedstack.business.api.DomainSpecifications;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

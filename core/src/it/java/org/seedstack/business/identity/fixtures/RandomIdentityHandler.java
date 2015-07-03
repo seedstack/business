@@ -14,7 +14,7 @@ package org.seedstack.business.identity.fixtures;
 
 import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.api.domain.Entity;
-import org.seedstack.business.api.domain.base.BaseEntity;
+import org.seedstack.business.api.domain.BaseEntity;
 import org.seedstack.business.api.domain.identity.IdentityHandler;
 
 /**

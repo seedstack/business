@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Static utility methods to easily create tuples.
- * 
+ *
  * @author redouane.loulou@ext.mpsa.com
  */
 public final class Tuples {
@@ -40,12 +40,12 @@ public final class Tuples {
      * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
      */
     @SuppressWarnings("unchecked")
-    public static <TUPLE extends Tuple> TUPLE  create(List<?> objects) {
+    public static <TUPLE extends Tuple> TUPLE create(List<?> objects) {
         SeedCheckUtils.checkIf(objects.size() <= 10, "Can't create a Tuple of more than ten element.");
 
         Class<? extends Tuple> tupleClass = classOfTuple(objects.toArray(new Object[objects.size()]));
 
-        return  (TUPLE) Reflection
+        return (TUPLE) Reflection
                 .staticMethod("fromCollection")
                 .withReturnType(tupleClass)
                 .withParameterTypes(Collection.class)
@@ -60,8 +60,8 @@ public final class Tuples {
      * @return a tuple
      * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <TUPLE extends Tuple> TUPLE  create(Object firstObject, Object... objects) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static <TUPLE extends Tuple> TUPLE create(Object firstObject, Object... objects) {
         List list = Lists.newArrayList(firstObject);
         list.addAll(Arrays.asList(objects));
         return (TUPLE) create(list);
@@ -77,8 +77,8 @@ public final class Tuples {
      * @deprecated Use the shorter {@code create} method instead.
      */
     @Deprecated
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <TUPLE extends Tuple> TUPLE  createTupleFromList(Object... objects) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static <TUPLE extends Tuple> TUPLE createTupleFromList(Object... objects) {
         return (TUPLE) create(objects);
     }
 
@@ -93,8 +93,8 @@ public final class Tuples {
      */
     @Deprecated
     @SuppressWarnings("unchecked")
-    public static <TUPLE extends Tuple> TUPLE  createTupleFromList(List<Object> objects) {
-        return  create(objects);
+    public static <TUPLE extends Tuple> TUPLE createTupleFromList(List<Object> objects) {
+        return create(objects);
     }
 
     public static Class<? extends Tuple> classOfTuple(List<?> objects) {

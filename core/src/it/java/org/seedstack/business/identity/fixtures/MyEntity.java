@@ -12,8 +12,8 @@
  */
 package org.seedstack.business.identity.fixtures;
 
-import org.seedstack.business.api.domain.annotations.identity.Identity;
-import org.seedstack.business.api.domain.base.BaseEntity;
+import org.seedstack.business.api.domain.Identity;
+import org.seedstack.business.api.domain.BaseEntity;
 import org.seedstack.business.api.domain.identity.UUIDHandler;
 
 import java.util.UUID;

@@ -10,7 +10,7 @@
 package org.seedstack.business.fixtures.domain.product;
 
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 
 public class Product extends BaseAggregateRoot<ProductId> {

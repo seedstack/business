@@ -50,16 +50,6 @@
             </dependency>
             <dependency>
                 <groupId>org.seedstack.business</groupId>
-                <artifactId>business-audit</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack.business</groupId>
-                <artifactId>business-audit-logback</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seedstack.business</groupId>
                 <artifactId>business-doc</artifactId>
                 <version>${project.version}</version>
             </dependency>

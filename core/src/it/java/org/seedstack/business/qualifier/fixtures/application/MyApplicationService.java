@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.application;
 
-import org.seedstack.business.api.application.annotations.ApplicationService;
+import org.seedstack.business.api.application.ApplicationService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

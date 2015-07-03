@@ -25,7 +25,7 @@ unit.hsql-in-memory.property.sql.enforce_strict_size=true
 [org.seedstack.business.identity.fixtures.*]
 identity.handler-qualifier = simple-UUID
 
-[org.seedstack.business.internal.interfaces.assembler.dsl.fixture.*]
+[org.seedstack.business.internal.assembler.dsl.fixture.*]
 identity.handler-qualifier = simple-UUID
 
 [org.seedstack.business.repositories.fixtures.*]

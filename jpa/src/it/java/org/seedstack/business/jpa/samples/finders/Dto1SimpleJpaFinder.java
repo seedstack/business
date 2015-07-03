@@ -9,8 +9,8 @@
  */
 package org.seedstack.business.jpa.samples.finders;
 
-import org.seedstack.business.api.interfaces.query.range.Range;
-import org.seedstack.business.jpa.interfaces.query.finder.BaseSimpleJpaFinder;
+import org.seedstack.business.api.interfaces.finder.Range;
+import org.seedstack.business.jpa.BaseSimpleJpaFinder;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

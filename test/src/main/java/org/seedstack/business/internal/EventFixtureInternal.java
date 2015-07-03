@@ -11,6 +11,7 @@ package org.seedstack.business.internal;
 
 import com.google.inject.Injector;
 import org.seedstack.business.api.*;
+import org.seedstack.business.test.event.*;
 import org.seedstack.seed.core.api.SeedException;
 
 import javax.inject.Inject;

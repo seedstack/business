@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.assembler.fixtures.book;
 
-import org.seedstack.business.api.domain.base.BaseValueObject;
+import org.seedstack.business.api.domain.BaseValueObject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

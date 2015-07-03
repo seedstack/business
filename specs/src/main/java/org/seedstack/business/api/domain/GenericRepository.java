@@ -30,9 +30,9 @@ package org.seedstack.business.api.domain;
  * <p/>
  * Then this interface has to be implemented by the actual repository implementation.
  *
- * @param <AGGREGATE> the type of the aggregate root class.
- * @param <KEY>       the type of the aggregate root class.
+ * @param <A> the type of the aggregate root class.
+ * @param <K> the type of the aggregate root class.
  * @author epo.jemba@ext.mpsa.com
  */
-public interface GenericRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> extends Repository<AGGREGATE, KEY> {
+public interface GenericRepository<A extends AggregateRoot<K>, K> extends Repository<A, K> {
 }

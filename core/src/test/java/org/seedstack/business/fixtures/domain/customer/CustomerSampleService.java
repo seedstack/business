@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.annotations.DomainService;
+import org.seedstack.business.api.domain.DomainService;
 
 
 @DomainService

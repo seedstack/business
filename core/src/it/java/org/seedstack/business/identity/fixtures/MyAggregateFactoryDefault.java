@@ -12,7 +12,7 @@
  */
 package org.seedstack.business.identity.fixtures;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 
 import java.util.HashSet;
 import java.util.Set;

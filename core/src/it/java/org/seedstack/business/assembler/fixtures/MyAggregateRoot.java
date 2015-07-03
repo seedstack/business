@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.assembler.fixtures;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 public class MyAggregateRoot extends BaseAggregateRoot<String> {
 

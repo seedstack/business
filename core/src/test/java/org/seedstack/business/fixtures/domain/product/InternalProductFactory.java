@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.product;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 
 import javax.inject.Inject;
 

@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.infrastructure.persistence.product;
 
-import org.seedstack.business.core.domain.InMemoryRepository;
+import org.seedstack.business.internal.defaults.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 import org.seedstack.business.fixtures.domain.product.ProductRepository;

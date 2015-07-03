@@ -12,7 +12,7 @@
  */
 package org.seedstack.business.factories.fixtures;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 /**
  * 

@@ -11,7 +11,7 @@ package org.seedstack.business.repositories.fixtures;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.core.domain.base.BaseRepository;
+import org.seedstack.business.api.domain.BaseRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;

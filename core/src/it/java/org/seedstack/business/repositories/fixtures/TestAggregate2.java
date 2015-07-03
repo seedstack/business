@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.repositories.fixtures;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

@@ -12,8 +12,8 @@
  */
 package org.seedstack.business.jpa.samples.domain.identity;
 
-import org.seedstack.business.api.domain.annotations.identity.Identity;
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.Identity;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 import org.seedstack.business.api.domain.identity.SequenceHandler;
 
 import java.util.Set;

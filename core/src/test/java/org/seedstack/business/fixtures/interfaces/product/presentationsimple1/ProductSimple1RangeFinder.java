@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.product.presentationsimple1;
 
-import org.seedstack.business.api.interfaces.query.finder.GenericFinder;
+import org.seedstack.business.api.interfaces.finder.GenericFinder;
 
 public interface ProductSimple1RangeFinder extends GenericFinder<ProductSimple1Representation,String> {
 	

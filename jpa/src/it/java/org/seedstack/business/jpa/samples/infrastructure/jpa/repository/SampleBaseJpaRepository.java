@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.infrastructure.jpa.repository;
 
-import org.seedstack.business.jpa.infrastructure.repository.BaseJpaRepository;
+import org.seedstack.business.jpa.BaseJpaRepository;
 import org.seedstack.business.jpa.samples.domain.base.SampleBaseJpaAggregateRoot;
 import org.seedstack.business.jpa.samples.domain.base.SampleBaseRepository;
 

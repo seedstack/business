@@ -12,6 +12,7 @@ package org.seedstack.business.api.domain.base;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.seedstack.business.api.domain.BaseEntity;
 
 public class BaseEntityTest {
 

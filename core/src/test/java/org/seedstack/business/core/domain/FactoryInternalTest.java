@@ -17,6 +17,7 @@ import org.seedstack.business.api.domain.Factory;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.seedstack.business.internal.defaults.FactoryInternal;
 import org.seedstack.seed.core.api.SeedException;
 
 /**
@@ -36,7 +37,7 @@ public class FactoryInternalTest {
 
 	@Before
 	public void before() {
-		myFactory = new FactoryInternal<FactoryInternalTest.MyAggregateTest>(new Class<?>[]{MyAggregateTest.class});
+		myFactory = new FactoryInternal<MyAggregateTest>(new Class<?>[]{MyAggregateTest.class});
 	}
 
 	@Test

@@ -10,7 +10,6 @@
 package org.seedstack.business.api.domain;
 
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.annotations.DomainPolicy;
 
 /**
  * This interface can be used as base for any Domain Policy interface.

@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.discount;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 import java.util.Date;

@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;

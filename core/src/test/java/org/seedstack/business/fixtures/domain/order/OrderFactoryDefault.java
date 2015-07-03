@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.order;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 public class OrderFactoryDefault extends BaseFactory<Order> implements OrderFactory {

@@ -30,8 +30,6 @@
         <module>jpa</module>
         <module>specs</module>
         <module>web</module>
-        <module>audit</module>
-        <module>audit-logback</module>
         <module>test</module>
         <module>bom</module>
         <module>doc</module>
@@ -42,7 +40,7 @@
             <dependency>
                 <groupId>org.seedstack.seed</groupId>
                 <artifactId>seed-bom</artifactId>
-                <version>2.0.0-M3</version>
+                <version>2.0.0-M4-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

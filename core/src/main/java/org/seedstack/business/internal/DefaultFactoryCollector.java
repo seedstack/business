@@ -16,7 +16,7 @@ import org.kametic.specifications.Specification;
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.core.domain.FactoryInternal;
+import org.seedstack.business.internal.defaults.FactoryInternal;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.seedstack.business.api.specifications.BaseClassSpecifications.descendantOf;
+import static org.seedstack.business.api.BaseClassSpecifications.descendantOf;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

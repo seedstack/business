@@ -12,8 +12,6 @@
  */
 package org.seedstack.business.api.domain;
 
-import org.seedstack.business.api.domain.annotations.DomainElement;
-
 /**
  * DomainObject is an interface implemented by all domain object
  *

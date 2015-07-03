@@ -11,6 +11,7 @@ package org.seedstack.business.api.domain.base;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.seedstack.business.api.domain.BaseEntity;
 import org.seedstack.seed.core.api.SeedException;
 
 import java.util.Set;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseEntityTest {
 
-	static class BaseChild extends BaseEntity<Long> 
+	static class BaseChild extends BaseEntity<Long>
 	{
 
 		private String name;
