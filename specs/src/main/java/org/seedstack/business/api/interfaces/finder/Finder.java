@@ -17,17 +17,19 @@ import java.lang.annotation.Target;
 
 /**
  * This annotation is the interface marker for a Finder in SEED.
- * <p/>
+ * <p>
  * A Finder is a CQRS (Command Query Responsibility Segregation) concept that
  * focus on "Read" part of the architecture. It will return DTO or Representation of Entities.
- * <p/>
+ * </p>
  * Main reasons are scalability and coupling decrease. Be sure to follow CAST Training : "Business Framework".
+ *
  * <h2>How it works ? </h2>
+ *
  * 1) First, create an interface annotated.
  * <pre>
  * {@literal @}Finder
  * public interface FooFinder {
- *     List{@literal <FooDto>} findFoosWithName(String name);
+ *     List&lt;FooDto&gt; findFoosWithName(String name);
  * }
  * </pre>
  * 2) Then, create the implementation of this interface.
@@ -38,8 +40,8 @@ import java.lang.annotation.Target;
  *    {@literal @}Inject
  *    EntityManager entityManager;
  *
- *    List{@literal <FooDto>} findFoosWithName(String name) {
- *         entityManager.createQuery( ... ) ;
+ *    List&lt;FooDto&gt; findFoosWithName(String name) {
+ *         entityManager.createQuery(...);
  *         return query.getResultList();
  *    }
  * </pre>
@@ -48,12 +50,12 @@ import java.lang.annotation.Target;
  * {@literal @}Inject
  * private FooFinder fooFinder;
  *
- * - - - - 8< - - - -
+ * - - - -
  *
  * {@literal @}Inject
  * public void provideFinder (FooFinder fooFinder)
  *
- * - - - - 8< - - - -
+ * - - - -
  *
  * fooFinder.findFoosWithName(nameToFind);
  * </pre>

@@ -11,11 +11,11 @@ package org.seedstack.business.api.interfaces.view;
 
 /**
  * Abstraction of a page within a context page set context.
- * <p/>
- * <li> Page have a capacity in term of number of element
- * <li> Page have an actual number of element (needed for the last page of a set of page)
- * <li> Total number of elements of the page set.
- * <br><br>
+ * <ul>
+ * <li>Page have a capacity in term of number of element</li>
+ * <li>Page have an actual number of element (needed for the last page of a set of page)</li>
+ * <li>Total number of elements of the page set.</li>
+ * </ul>
  *
  * @author epo.jemba@ext.mpsa.com
  */
@@ -29,13 +29,12 @@ public class Page {
     /**
      * Create a new page at a certain index, with a certain capacity ,with a maximum number of element (=capacity) and a total
      * number of elements to -1 (infinite).
-     * <p/>
+     * <p>
      * with a number of element maximum.
+     * </p>
      *
-     * @param pageIndex
-     *         start with 0
-     * @param capacity
-     *         the number of element
+     * @param pageIndex the page index (start with 0)
+     * @param capacity  the number of element
      */
     public Page(int pageIndex, int capacity) {
         this.index = pageIndex;
@@ -48,12 +47,9 @@ public class Page {
      * Create a new page at a certain index, with a certain capacity ,with a certain number of element and a total
      * number of elements to -1 (infinite).
      *
-     * @param pageIndex
-     *         start with 0
-     * @param capacity
-     *         the page capacity size
-     * @param numberOfElements
-     *         the number of element
+     * @param pageIndex        the page index (start with 0)
+     * @param capacity         the page capacity size
+     * @param numberOfElements the number of element
      */
     public Page(int pageIndex, int capacity, int numberOfElements) {
         this.index = pageIndex;
@@ -66,12 +62,10 @@ public class Page {
      * Create a new page at a certain index, with a certain capacity ,with a certain number of element and fixed total
      * number of elements.
      *
-     * @param pageIndex
-     *         start with 0
-     * @param capacity
-     *         the page capacity size
-     * @param numberOfElements
-     *         actual number of element
+     * @param pageIndex             the page index (start with 0)
+     * @param capacity              the page capacity size
+     * @param numberOfElements      the actual number of element
+     * @param totalNumberOfElements the total number of element
      */
     public Page(int pageIndex, int capacity, int numberOfElements, long totalNumberOfElements) {
         this.index = pageIndex;

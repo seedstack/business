@@ -20,19 +20,18 @@ import java.lang.reflect.ParameterizedType;
  * To be a valid Domain Factory implementation, the implementation must respects the followings:
  * </p>
  * <ul>
- * <li>implements the Domain Factory interface see {@linkplain org.seedstack.business.api.domain.GenericFactory}</li>
- * <li>extends this class {@link BaseFactory}.</li>
+ *   <li>implements the Domain Factory interface see {@linkplain org.seedstack.business.api.domain.GenericFactory}</li>
+ *   <li>extends this class {@link BaseFactory}.</li>
  * </ul>
  * <pre>
- * public class ProductFactoryBase extends BaseFactory<Product> implements ProductFactory {
+ * public class ProductFactoryBase extends BaseFactory&lt;Product&gt; implements ProductFactory {
  *
- *    public Product createProduct(String productId , EAN13 ean13 )
- *    {
+ *    public Product createProduct(String productId, EAN13 ean13) {
  *        Product product = new Product()
  *        product.setEntityId(productId);
- *        ... 8< ...
+ *        ...
  *        product.setEAN13 (ean31)
- *        ... 8< ...
+ *        ...
  *        return product;
  *    }
  *
@@ -41,7 +40,6 @@ import java.lang.reflect.ParameterizedType;
  * And it is sufficient enough for the Domain Factory implementation will be available via its interface, the one
  * that extending {@link org.seedstack.business.api.domain.GenericFactory}.
  * In the GenericFactory javadoc example, productFactory base will be available like this:
- * <p/>
  * <pre>
  * // productFactory will contain an instance of ProductFactoryBase.
  * {@literal @}Inject

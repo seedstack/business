@@ -15,8 +15,8 @@ package org.seedstack.business.api.domain;
  * To be a valid repository interface, Type must respect the followings:
  * </p>
  * <ul>
- * <li>be an interface</li>
- * <li>extends {@link GenericRepository}</li>
+ *   <li>be an interface</li>
+ *   <li>extends {@link GenericRepository}</li>
  * </ul>
  * <p>
  * The following is a valid Domain repository interface.
@@ -27,8 +27,9 @@ package org.seedstack.business.api.domain;
  *     // then implements them
  *  }
  * </pre>
- * <p/>
+ * <p>
  * Then this interface has to be implemented by the actual repository implementation.
+ * </p>
  *
  * @param <A> the type of the aggregate root class.
  * @param <K> the type of the aggregate root class.

@@ -12,16 +12,13 @@ package org.seedstack.business.jpa.samples.utils;
 import org.seedstack.business.api.application.ApplicationService;
 
 /**
- *
- * 
  * @author epo.jemba@ext.mpsa.com
- *
  */
 @ApplicationService
 public interface Loader {
 	
 	public enum Scenario {
-		ONE , TWO;
+		ONE , TWO
 	}
 	
 	void init(Scenario scenario);

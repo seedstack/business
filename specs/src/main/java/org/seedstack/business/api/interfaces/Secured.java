@@ -13,15 +13,9 @@ import java.lang.annotation.*;
 
 /**
  * This annotation marks the annotated element as secured according to
- * the business framework :
- * <ul>
- *    <li> Obfuscation </li>
- *    <li> etc ...  </li>
- * </ul>
- *
+ * the business framework: Obfuscation, etc.
  * 
  * @author epo.jemba@ext.mpsa.com
- *
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -10,7 +10,7 @@
 package org.seedstack.business.api.interfaces.finder;
 
 /**
- * This class represents a Range : an offset + a size.
+ * This class represents a Range: an offset and a size.
  *
  * @author epo.jemba@ext.mpsa.com
  */

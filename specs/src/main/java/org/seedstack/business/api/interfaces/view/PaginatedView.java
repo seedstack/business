@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * A page oriented View, that brings page behaviour out of the box.
  *
- * @param <Item>
+ * @param <Item> the paginated item type
  * @author epo.jemba@ext.mpsa.com
  */
 public class PaginatedView<Item> extends AbstractView<Item> {

@@ -22,9 +22,6 @@ import org.seedstack.business.api.domain.GenericFactory;
  */
 public interface MultiFactory extends GenericFactory<Multi>  {
 
-	/** 
-	 * @return
-	 */
 	Multi create();
 
 }

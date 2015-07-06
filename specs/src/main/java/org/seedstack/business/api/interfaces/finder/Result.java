@@ -12,9 +12,7 @@ package org.seedstack.business.api.interfaces.finder;
 import java.util.List;
 
 /**
- * Symbolises a ranged result of representation retrieved from the persistence.
- * <p/>
- * It exposes:
+ * Symbolises a ranged result of representation retrieved from the persistence. It exposes:
  * <ul>
  * <li>The list: {@code getResult()},</li>
  * <li>The list size: {@code getResultSize()},</li>

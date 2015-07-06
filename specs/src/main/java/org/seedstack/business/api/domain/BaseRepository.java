@@ -32,8 +32,9 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
 
     /**
      * Constructs a base repository.
-     * <p/>
+     * <p>
      * The aggregate root class and the key class are found by reflection.
+     * </p>
      */
     protected BaseRepository() {
         this.aggregateRootClass = init(AGGREGATE_INDEX);
@@ -42,9 +43,10 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
 
     /**
      * Constructs a base repository settings explicitly the aggregate root class and the key class.
-     * <p/>
+     * <p>
      * This is use when the implementation class does not resolve the generics. Since the generic
      * types can't be resolve at runtime, they should be passed explicitly.
+     * </p>
      *
      * @param aggregateRootClass the aggregate root class
      * @param keyClass the key class
@@ -125,7 +127,6 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     @Delete
     protected abstract void doDelete(AGGREGATE aggregate);
 
-
     /**
      * Delegates the persist mechanism to the infrastructure.
      *
@@ -133,7 +134,6 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      */
     @Persist
     protected abstract void doPersist(AGGREGATE aggregate);
-
 
     /**
      * Delegates the save mechanism to the infrastructure.

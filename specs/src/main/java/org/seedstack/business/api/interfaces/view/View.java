@@ -17,13 +17,13 @@ import java.util.List;
  * providing a portion of the list.
  * <p>
  * Lists can come from anywhere.
- * <p>
+ * </p>
  * It won't handle external aspects like ordering or filtering, only a
  * viewpoint segmentation.
  * 
  * @author epo.jemba@ext.mpsa.com
  * 
- * @param <Item>
+ * @param <Item> the item type
  */
 public interface View<Item> extends Serializable {
 

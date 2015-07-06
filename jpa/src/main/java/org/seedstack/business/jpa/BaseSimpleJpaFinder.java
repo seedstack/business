@@ -18,14 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A Simple base Finder that handles simple JPA Query.
- * <p>
- * Asks the developers to overrides two methods:
- * <ul>
- * <li>computeFullRequestSize(Map<String, Object> criteria)</li>
- * <li>computeResultList(Range range, Map<String, Object> criteria)</li>
- * </ul>
- * </p>
+ * A base finder providing a simple pagination mechanism.
  *
  * @param <Item> the dto to paginate
  * @author epo.jemba@ext.mpsa.com
@@ -43,8 +36,21 @@ public abstract class BaseSimpleJpaFinder<Item> implements GenericFinder<Item, M
         return new Result<Item>(list, range.getOffset(), resultSize);
     }
 
+    /**
+     * Returns a sub list of items corresponding to the required range and criteria.
+     *
+     * @param range the range
+     * @param criteria the criteria
+     * @return the sub list of item
+     */
     protected abstract List<Item> computeResultList(Range range, Map<String, Object> criteria);
 
+    /**
+     * Returns the total number of items available.
+     *
+     * @param criteria the request criteria
+     * @return the total number of item
+     */
     protected abstract long computeFullRequestSize(Map<String, Object> criteria);
 
     protected void updateQuery(Query query, Map<String, Object> criteria) {

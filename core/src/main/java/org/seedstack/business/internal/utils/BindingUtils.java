@@ -159,7 +159,7 @@ public final class BindingUtils {
      */
     public static Key<?> resolveKey(Class<?> injecteeClass, Class<?> genericImplClass, Type... typeVariableClasses) {
         Annotation qualifier = SeedReflectionUtils.getAnnotationMetaAnnotated(genericImplClass, Qualifier.class);
-        Key<?> key = null;
+        Key<?> key;
         TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(injecteeClass, typeVariableClasses));
         if (qualifier != null) {
             key = Key.get(genericInterface, qualifier);

@@ -40,11 +40,7 @@ public class ProductWSFacade {
 	public Short getStoreId() {
 		return storeId;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	@MatchingEntityId (index=1)
 	@MatchingFactoryParameter(index=1)
 	public Short getProductCode() {

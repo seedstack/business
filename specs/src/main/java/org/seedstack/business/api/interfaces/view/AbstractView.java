@@ -31,8 +31,9 @@ public abstract class AbstractView<Item> implements View<Item> {
 
     /**
      * This constructor take a list of items that can potentially be huge.
-     * <p/>
+     * <p>
      * Usually it will be a VirtualList.
+     * </p>
      *
      * @param items            The big list to be viewed.
      * @param resultViewOffset offset inside the big list
@@ -90,9 +91,10 @@ public abstract class AbstractView<Item> implements View<Item> {
 
     /**
      * Return the number of element of the complete list, not the view result.
-     * <p/>
+     * <p>
      * The complete list can be uncountable in that case the result will be -1.
      * this can be useful for infinite list handling.
+     * </p>
      *
      * @return the size list or -1 if infinite or
      */

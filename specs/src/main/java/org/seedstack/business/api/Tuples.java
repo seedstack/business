@@ -55,8 +55,9 @@ public final class Tuples {
     /**
      * Transforms an array of object into a tuple. Does not work array of more than ten element.
      *
-     * @param objects the array of object
-     * @param <TUPLE> the tuple type
+     * @param firstObject the first item of the tuple
+     * @param objects     the array of object
+     * @param <TUPLE>     the tuple type
      * @return a tuple
      * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
      */
@@ -152,7 +153,7 @@ public final class Tuples {
     /**
      * Gets the final tuple type for a list of class.
      * <p>
-     * For instance, for a list with Customer.class and Order.class the method will return {@literal Pair<Customer, Order>}.
+     * For instance, for a list with Customer.class and Order.class the method will return Pair&lt;Customer, Order&gt;.
      * </p>
      *
      * @param classes the tuple's classes

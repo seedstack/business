@@ -41,10 +41,6 @@ public class ProductSimple1Representation {
 		return storeId;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	@MatchingEntityId (index=1)
 	@MatchingFactoryParameter(index=1)
 	public Short getProductCode() {
