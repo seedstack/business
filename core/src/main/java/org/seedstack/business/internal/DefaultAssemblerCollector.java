@@ -73,12 +73,13 @@ class DefaultAssemblerCollector {
         Collection<BindingStrategy> bs = new ArrayList<BindingStrategy>();
         // Each pairs of aggregateClass/dtoClass or aggregateTuple/dtoClass is bind to all the default assemblers
         for (Class<?> defaultAssemblersClass : defaultAssemblersClasses) {
-            Class<?> aggregateType = TypeToken.of(defaultAssemblersClass).resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
+            Class<?> aggregateType = TypeToken.of(defaultAssemblersClass)
+                    .resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
 
             if (aggregateType.isAssignableFrom(Tuple.class) && !autoTupleAssemblerGenerics.isEmpty()) {
                 bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoTupleAssemblerGenerics));
 
-            } else if (!autoAssemblerGenerics.isEmpty()){
+            } else if (!aggregateType.isAssignableFrom(Tuple.class) && !autoAssemblerGenerics.isEmpty()){
                 bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoAssemblerGenerics));
             }
         }
