@@ -12,7 +12,7 @@ package org.seedstack.business.core.domain;
 import org.seedstack.business.internal.BusinessCorePlugin;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.seedstack.business.internal.defaults.InMemoryRepository;
+import org.seedstack.business.fixtures.InMemoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

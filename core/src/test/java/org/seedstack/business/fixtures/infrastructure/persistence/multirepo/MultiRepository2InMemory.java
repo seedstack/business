@@ -12,7 +12,7 @@
  */
 package org.seedstack.business.fixtures.infrastructure.persistence.multirepo;
 
-import org.seedstack.business.internal.defaults.InMemoryRepository;
+import org.seedstack.business.fixtures.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.multi.Multi;
 import org.seedstack.business.fixtures.domain.multi.MultiRepository;
 import org.seedstack.seed.persistence.inmemory.api.Store;

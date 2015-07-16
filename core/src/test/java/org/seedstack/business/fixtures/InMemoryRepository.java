@@ -7,7 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.defaults;
+package org.seedstack.business.fixtures;
 
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.BaseRepository;

@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.infrastructure.persistence.activation;
 
-import org.seedstack.business.internal.defaults.InMemoryRepository;
+import org.seedstack.business.fixtures.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
 import org.seedstack.seed.persistence.inmemory.api.Store;

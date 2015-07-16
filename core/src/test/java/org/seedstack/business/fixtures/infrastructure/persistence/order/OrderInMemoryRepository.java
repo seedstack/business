@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.infrastructure.persistence.order;
 
-import org.seedstack.business.internal.defaults.InMemoryRepository;
+import org.seedstack.business.fixtures.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.order.Order;
 import org.seedstack.business.fixtures.domain.order.OrderId;
 import org.seedstack.business.fixtures.domain.order.OrderRepository;
