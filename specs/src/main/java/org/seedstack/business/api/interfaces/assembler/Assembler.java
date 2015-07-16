@@ -59,7 +59,7 @@ public interface Assembler<A, D> {
      * to determine the DTO type to instantiate.
      * </p>
      *
-     * @return Class<Dto>
+     * @return the dto class
      */
     Class<D> getDtoClass();
 }

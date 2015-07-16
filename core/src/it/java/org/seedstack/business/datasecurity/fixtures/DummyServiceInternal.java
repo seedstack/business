@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.datasecurity.fixtures;
 
-import org.seedstack.business.api.interfaces.annotations.Secured;
+import org.seedstack.business.api.interfaces.Secured;
 
 /**
  *

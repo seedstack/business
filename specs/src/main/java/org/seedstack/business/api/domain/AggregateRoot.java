@@ -10,7 +10,6 @@
 package org.seedstack.business.api.domain;
 
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.annotations.DomainAggregateRoot;
 
 /**
  * This interface is the parent type for all implementations of AggregateRoot in the Business Framework.

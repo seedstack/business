@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.product;
 
-import org.seedstack.business.api.domain.annotations.DomainPolicy;
+import org.seedstack.business.api.domain.DomainPolicy;
 
 
 @DomainPolicy

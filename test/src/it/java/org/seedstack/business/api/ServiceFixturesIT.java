@@ -14,6 +14,7 @@ import org.seedstack.business.api.fixtures.MyHandler;
 import org.seedstack.business.api.fixtures.MyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.test.event.EventFixture;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

@@ -10,7 +10,7 @@
 package org.seedstack.business.assembler.fixtures;
 
 
-import org.seedstack.business.api.interfaces.annotations.Secured;
+import org.seedstack.business.api.interfaces.Secured;
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
 
 /**

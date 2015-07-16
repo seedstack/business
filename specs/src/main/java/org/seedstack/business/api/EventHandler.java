@@ -14,9 +14,8 @@ package org.seedstack.business.api;
  *
  * @param <E> the type of event to handle
  * @author pierre.thirouin@ext.mpsa.com
-
- * @see Event
- * @see EventService
+ * @see org.seedstack.business.api.Event
+ * @see org.seedstack.business.api.EventService
  */
 public interface EventHandler<E extends Event> {
 

@@ -20,7 +20,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.jodah.typetools.TypeResolver;
 import org.seedstack.business.api.domain.Entity;
-import org.seedstack.business.api.domain.annotations.identity.Identity;
+import org.seedstack.business.api.domain.Identity;
 import org.seedstack.business.api.domain.identity.IdentityErrorCodes;
 import org.seedstack.business.api.domain.identity.IdentityHandler;
 import org.seedstack.business.api.domain.identity.IdentityService;

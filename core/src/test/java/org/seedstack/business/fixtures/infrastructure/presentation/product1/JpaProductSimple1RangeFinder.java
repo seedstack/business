@@ -9,8 +9,8 @@
  */
 package org.seedstack.business.fixtures.infrastructure.presentation.product1;
 
-import org.seedstack.business.api.interfaces.query.range.Range;
-import org.seedstack.business.api.interfaces.query.result.Result;
+import org.seedstack.business.api.interfaces.finder.Range;
+import org.seedstack.business.api.interfaces.finder.Result;
 import org.seedstack.business.fixtures.interfaces.product.presentationsimple1.ProductSimple1RangeFinder;
 import org.seedstack.business.fixtures.interfaces.product.presentationsimple1.ProductSimple1Representation;
 

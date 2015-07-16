@@ -12,7 +12,7 @@
  */
 package org.seedstack.business.fixtures.domain.multi;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 /**
  * Dummy aggregate for test

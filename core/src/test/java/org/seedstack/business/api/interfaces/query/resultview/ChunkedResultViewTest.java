@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.api.interfaces.query.resultview;
 
-import org.seedstack.business.api.interfaces.query.view.chunk.ChunkedView;
+import org.seedstack.business.api.interfaces.view.ChunkedView;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 

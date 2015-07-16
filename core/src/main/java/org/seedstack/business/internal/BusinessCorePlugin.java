@@ -19,7 +19,7 @@ import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import io.nuun.kernel.core.AbstractPlugin;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.specifications.DomainSpecifications;
+import org.seedstack.business.api.DomainSpecifications;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
 import org.seedstack.seed.core.api.Application;
@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static org.seedstack.business.api.specifications.BaseClassSpecifications.classIsAbstract;
-import static org.seedstack.business.api.specifications.BaseClassSpecifications.classIsInterface;
+import static org.seedstack.business.api.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.business.api.BaseClassSpecifications.classIsInterface;
 
 /**
  * This plugin is a multi round plugin.

@@ -9,8 +9,6 @@
  */
 package org.seedstack.business.api.interfaces;
 
-import org.seedstack.business.api.interfaces.annotations.InterfacesService;
-
 
 /**
  * This interface can be used as base for any Interfaces Service interface.

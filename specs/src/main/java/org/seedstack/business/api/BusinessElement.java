@@ -12,7 +12,7 @@ package org.seedstack.business.api;
 import java.lang.annotation.*;
 
 /**
- * BusinessElement marks all business annotations or types
+ * Marks all business annotations or types.
  *
  * @author redouane.loulou@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com

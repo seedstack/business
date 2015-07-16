@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.domain.base;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 
 public class SampleBaseJpaFactoryDefault extends BaseFactory<SampleBaseJpaAggregateRoot> implements SampleBaseJpaFactory{
     @Override

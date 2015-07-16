@@ -10,13 +10,12 @@
 package org.seedstack.business.api.domain;
 
 import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.annotations.DomainValueObject;
 
 
 /**
  * A value object, as described in the DDD book.
  * <p> 
- * See {@link org.seedstack.business.api.domain.base.BaseValueObject} for the base implementation.
+ * See {@link BaseValueObject} for the base implementation.
  */
 @DomainValueObject
 public interface ValueObject extends DomainObject, Producible {

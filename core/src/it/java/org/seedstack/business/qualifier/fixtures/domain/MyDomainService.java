@@ -10,7 +10,7 @@
 package org.seedstack.business.qualifier.fixtures.domain;
 
 import org.seedstack.business.api.domain.GenericDomainService;
-import org.seedstack.business.api.domain.annotations.DomainService;
+import org.seedstack.business.api.domain.DomainService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

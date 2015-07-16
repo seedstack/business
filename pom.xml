@@ -10,7 +10,8 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -30,8 +31,6 @@
         <module>jpa</module>
         <module>specs</module>
         <module>web</module>
-        <module>audit</module>
-        <module>audit-logback</module>
         <module>test</module>
         <module>bom</module>
         <module>doc</module>
@@ -42,7 +41,7 @@
             <dependency>
                 <groupId>org.seedstack.seed</groupId>
                 <artifactId>seed-bom</artifactId>
-                <version>2.0.0-M3</version>
+                <version>2.0.0-M4-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -114,16 +113,16 @@
                             <includedLicense>IGNORED_LICENSE</includedLicense>
                         </includedLicenses>
                         <licenseMerges>
-                                 <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
-                                 <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
-                                 <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
-                                 <licenseMerge>BSD|The New BSD License</licenseMerge>
-                                 <licenseMerge>BSD|BSD License</licenseMerge>
-                                 <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
-                                 <licenseMerge>MIT|MIT license</licenseMerge>
-                                 <licenseMerge>MIT|MIT License</licenseMerge>
-
-                                 <licenseMerge>IGNORED_LICENSE|Eclipse Public License - v 1.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
+                            <licenseMerge>BSD|The New BSD License</licenseMerge>
+                            <licenseMerge>BSD|BSD License</licenseMerge>
+                            <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
+                            <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
+                            <licenseMerge>MIT|MIT license</licenseMerge>
+                            <licenseMerge>MIT|MIT License</licenseMerge>
+                            <licenseMerge>IGNORED_LICENSE|Eclipse Public License - v 1.0</licenseMerge>
                         </licenseMerges>
                     </configuration>
                 </plugin>

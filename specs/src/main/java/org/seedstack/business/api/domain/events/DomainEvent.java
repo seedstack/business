@@ -10,7 +10,7 @@
 package org.seedstack.business.api.domain.events;
 
 import org.seedstack.business.api.Event;
-import org.seedstack.business.api.domain.base.BaseValueObject;
+import org.seedstack.business.api.domain.BaseValueObject;
 
 /**
  * BaseEvent is the abstract class to extend to create an event. It extends from {@code BaseValueObject} which provides
@@ -25,7 +25,7 @@ import org.seedstack.business.api.domain.base.BaseValueObject;
  *
  * @author pierre.thirouin@ext.mpsa.com
 
- * @see org.seedstack.business.api.domain.base.BaseValueObject
+ * @see org.seedstack.business.api.domain.BaseValueObject
  * @see org.seedstack.business.api.Event
  */
 public abstract class DomainEvent extends BaseValueObject implements Event {

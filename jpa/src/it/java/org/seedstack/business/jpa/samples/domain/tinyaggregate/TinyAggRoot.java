@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.domain.tinyaggregate;
 
-import org.seedstack.business.api.domain.base.BaseAggregateRoot;
+import org.seedstack.business.api.domain.BaseAggregateRoot;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

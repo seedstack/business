@@ -12,7 +12,7 @@ package org.seedstack.business.spi;
 import java.lang.annotation.*;
 
 /**
- * Marks an implementation as the default implementation.
+ * Marks an implementation as a default implementation.
  * <p>
  * It is used only defining default assemblers or repositories.
  * </p>

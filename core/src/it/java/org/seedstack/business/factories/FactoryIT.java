@@ -19,7 +19,7 @@ import org.seedstack.business.factories.fixtures.MyFactoryAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateFactory;
 import org.seedstack.business.identity.fixtures.MyAggregateFactoryDefault;
-import org.seedstack.business.core.domain.FactoryInternal;
+import org.seedstack.business.internal.defaults.FactoryInternal;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

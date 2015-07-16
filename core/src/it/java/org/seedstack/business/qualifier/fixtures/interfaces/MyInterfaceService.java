@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.interfaces;
 
-import org.seedstack.business.api.interfaces.annotations.InterfacesService;
+import org.seedstack.business.api.interfaces.InterfacesService;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

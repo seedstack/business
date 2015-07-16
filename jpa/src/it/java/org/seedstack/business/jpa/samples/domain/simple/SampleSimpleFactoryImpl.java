@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa.samples.domain.simple;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 
 import javax.validation.Valid;
 import java.util.Date;

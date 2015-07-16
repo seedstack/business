@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.api.interfaces.query.resultview;
 
-import org.seedstack.business.api.interfaces.query.view.page.PaginatedView;
+import org.seedstack.business.api.interfaces.view.PaginatedView;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.assertj.core.data.Index;

@@ -116,9 +116,10 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D>
 
     /**
      * This method is used by developers or by the DSL to actually merge the aggregate.
-     * <p/>
+     * <p>
      * It will call {@link #doMergeAggregateWithDto(org.seedstack.business.api.domain.AggregateRoot, Object)}, which
      * is overridden by developers.
+     * </p>
      *
      * @param targetAggregate the target aggregate
      * @param sourceDto       the source dto

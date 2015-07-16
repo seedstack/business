@@ -9,8 +9,6 @@
  */
 package org.seedstack.business.api.domain;
 
-import org.seedstack.business.api.domain.annotations.DomainEntity;
-
 /**
  * This interface is the parent type for all implementations of Entity in the Business Framework.
  * <p>

@@ -13,15 +13,8 @@ import org.seedstack.business.api.domain.GenericFactory;
 
 public interface OrderFactory extends GenericFactory<Order> {
 	
-	/**
-	 * Create an order with anonymous customerId
-	 * 
-	 * @param orderId
-	 * @return
-	 */
 	Order createOrder(String orderId);
-	
-	
+
 	Order createOrder(String orderId , String customerId);
 
 }

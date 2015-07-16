@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Specifies the target aggregate to merge.
  *
- * @param <D>
+ * @param <D> the DTO type
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface MergeAggregateOrTupleProvider<D> {

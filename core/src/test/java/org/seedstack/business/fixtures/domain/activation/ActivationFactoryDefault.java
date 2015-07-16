@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.domain.activation;
 
-import org.seedstack.business.core.domain.base.BaseFactory;
+import org.seedstack.business.api.domain.BaseFactory;
 
 import javax.validation.constraints.NotNull;
 

@@ -11,6 +11,7 @@ package org.seedstack.business.api.interfaces.query.range;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.seedstack.business.api.interfaces.finder.Range;
 
 public class RangeTest {
 

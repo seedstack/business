@@ -9,8 +9,6 @@
  */
 package org.seedstack.business.api.application;
 
-import org.seedstack.business.api.application.annotations.ApplicationService;
-
 /**
  * This interface can be used as base for any Application Service interface.
  *
