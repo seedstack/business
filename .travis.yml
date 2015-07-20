@@ -1,4 +1,3 @@
-#Use docker-based infrastructure
 sudo: false
 
 language: java
@@ -12,7 +11,7 @@ cache:
   directories:
     - "$HOME/.m2/repository"
 
-  install: /bin/true
+install: /bin/true
 
 script:
   - mvn -B -U -T 4 -Pjavadoc install jacoco:report
