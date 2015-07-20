@@ -17,14 +17,18 @@
     <parent>
         <groupId>org.seedstack</groupId>
         <artifactId>parent</artifactId>
-        <version>2.0.0-M3</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>2.0.0-M4-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
+
+    <properties>
+        <seed.version>2.0.0-SNAPSHOT</seed.version>
+    </properties>
 
     <modules>
         <module>core</module>
@@ -41,7 +45,7 @@
             <dependency>
                 <groupId>org.seedstack.seed</groupId>
                 <artifactId>seed-bom</artifactId>
-                <version>2.0.0-M4-SNAPSHOT</version>
+                <version>${seed.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
