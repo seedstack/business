@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.jpa;
 
-import org.seedstack.business.api.interfaces.finder.GenericFinder;
+import org.seedstack.business.api.interfaces.finder.RangeFinder;
 import org.seedstack.business.api.interfaces.finder.Range;
 import org.seedstack.business.api.interfaces.finder.Result;
 
@@ -23,7 +23,7 @@ import java.util.Map;
  * @param <Item> the dto to paginate
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseSimpleJpaFinder<Item> implements GenericFinder<Item, Map<String, Object>> {
+public abstract class BaseJpaRangeFinder<Item> implements RangeFinder<Item, Map<String, Object>> {
 
     @Override
     public Result<Item> find(Range range, Map<String, Object> criteria) {

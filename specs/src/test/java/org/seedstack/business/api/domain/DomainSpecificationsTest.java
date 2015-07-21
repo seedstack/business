@@ -18,7 +18,7 @@ import org.seedstack.business.api.interfaces.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
-import org.seedstack.business.api.interfaces.finder.GenericFinder;
+import org.seedstack.business.api.interfaces.finder.RangeFinder;
 import org.seedstack.business.api.DomainSpecifications;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -267,7 +267,7 @@ public class DomainSpecificationsTest {
     @Finder
     static interface MyFinder1 {}
 
-    static interface MyFinder2 extends GenericFinder {}
+    static interface MyFinder2 extends RangeFinder {}
 
     @Finder
     static class MyFinder3 {}

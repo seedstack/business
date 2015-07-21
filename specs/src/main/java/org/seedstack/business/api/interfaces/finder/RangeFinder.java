@@ -17,7 +17,7 @@ package org.seedstack.business.api.interfaces.finder;
  * @author epo.jemba@ext.mpsa.com
  */
 @Finder
-public interface GenericFinder<Item, Criteria> {
+public interface RangeFinder<Item, Criteria> {
 
     /**
      * Find items according a range and a criteria.

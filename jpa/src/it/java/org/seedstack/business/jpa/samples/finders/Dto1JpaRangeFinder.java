@@ -10,7 +10,7 @@
 package org.seedstack.business.jpa.samples.finders;
 
 import org.seedstack.business.api.interfaces.finder.Range;
-import org.seedstack.business.jpa.BaseSimpleJpaFinder;
+import org.seedstack.business.jpa.BaseJpaRangeFinder;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @author epo.jemba@ext.mpsa.com
  *
  */
-public class Dto1SimpleJpaFinder extends BaseSimpleJpaFinder<Dto1> {
+public class Dto1JpaRangeFinder extends BaseJpaRangeFinder<Dto1> {
 	
 	@Inject
 	EntityManager entityManager;
