@@ -31,7 +31,7 @@ public class ChunkedView<T> extends AbstractView<T> {
      * @param chunkOffset the chunk offset
      * @param chunkSize   the chunk size
      */
-    public ChunkedView(Result<T> items, long chunkOffset, int chunkSize) {
+    public ChunkedView(Result<T> items, long chunkOffset, long chunkSize) {
         super(items, chunkOffset, chunkSize);
     }
 
@@ -42,7 +42,7 @@ public class ChunkedView<T> extends AbstractView<T> {
      * @param chunkStart the chunk start
      * @param chunkSize  the chunk size
      */
-    public ChunkedView(List<T> items, int chunkStart, int chunkSize) {
+    public ChunkedView(List<T> items, long chunkStart, long chunkSize) {
         super(items, chunkStart, chunkSize);
     }
 
@@ -56,7 +56,7 @@ public class ChunkedView<T> extends AbstractView<T> {
     /**
      * @return the chunk size
      */
-    public int getChunkSize() {
+    public long getChunkSize() {
         return resultViewSize;
     }
 

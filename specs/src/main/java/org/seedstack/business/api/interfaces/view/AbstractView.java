@@ -27,7 +27,7 @@ public abstract class AbstractView<Item> implements View<Item> {
     protected final long resultSize;
     protected final long resultViewOffset;
 
-    protected final int resultViewSize;
+    protected final long resultViewSize;
 
     /**
      * This constructor take a list of items that can potentially be huge.
@@ -39,11 +39,11 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewOffset offset inside the big list
      * @param resultViewSize   size of the view inside the big list
      */
-    public AbstractView(VirtualList<Item> items, long resultViewOffset, int resultViewSize) {
+    public AbstractView(VirtualList<Item> items, long resultViewOffset, long resultViewSize) {
         this.resultList = items;
         this.resultSize = items.size();
         this.resultViewOffset = resultViewOffset;
-        this.resultViewSize = resultViewOffset + resultViewSize > this.resultSize ? (int) (this.resultSize - resultViewOffset) : resultViewSize;
+        this.resultViewSize = resultViewOffset + resultViewSize > this.resultSize ? (this.resultSize - resultViewOffset) : resultViewSize;
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewOffset the result view offset
      * @param resultViewSize   the result view size
      */
-    public AbstractView(Result<Item> result, long resultViewOffset, int resultViewSize) {
+    public AbstractView(Result<Item> result, long resultViewOffset, long resultViewSize) {
         this(new VirtualList<Item>(result.getResult(), result.getOffset(), result.getFullSize()), resultViewOffset, resultViewSize);
     }
 
@@ -64,7 +64,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewOffset the result view offset
      * @param resultViewSize   the result view size
      */
-    public AbstractView(List<Item> list, long resultViewOffset, int resultViewSize) {
+    public AbstractView(List<Item> list, long resultViewOffset, long resultViewSize) {
         this(new VirtualList<Item>(list, 0, list.size()), resultViewOffset, resultViewSize);
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewOffset the result view offset
      * @param resultViewSize   the result view size
      */
-    public AbstractView(List<Item> items, long subListStart, long subListSize, long resultViewOffset, int resultViewSize) {
+    public AbstractView(List<Item> items, long subListStart, long subListSize, long resultViewOffset, long resultViewSize) {
         this(new VirtualList<Item>(items, subListStart, subListSize), resultViewOffset, resultViewSize);
     }
 
