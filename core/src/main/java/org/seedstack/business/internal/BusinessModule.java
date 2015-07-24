@@ -12,7 +12,6 @@ package org.seedstack.business.internal;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.internal.datasecurity.BusinessDataSecurityModule;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistry;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistryInternal;
@@ -45,7 +44,7 @@ class BusinessModule extends AbstractModule {
 
     /**
 	 * Constructor.
-	 * 
+	 *
 	 * @param assemblersClasses
 	 *            the collection of assembler classes
 	 * @param bindings
@@ -80,8 +79,6 @@ class BusinessModule extends AbstractModule {
 		for (BindingStrategy bindingStrategy : bindingStrategies) {
 			bindingStrategy.resolve(binder());
 		}
-
-		install(new BusinessDataSecurityModule());
 	}
 
 }

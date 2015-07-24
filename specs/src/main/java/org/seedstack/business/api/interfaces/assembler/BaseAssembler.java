@@ -78,8 +78,6 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D>
      * <li>and {@link #doAssembleDtoFromAggregate(Object, org.seedstack.business.api.domain.AggregateRoot)}
      * for the assembly algorithm.
      * </ul>
-     * this Method adds data security. It intercepts and secures data according to the
-     * {@link org.seedstack.seed.security.api.data.DataSecurityService}.
      *
      * @param sourceAggregate The aggregate from which create the DTO.
      * @return the assembled DTO
