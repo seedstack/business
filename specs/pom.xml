@@ -26,10 +26,6 @@
             <artifactId>seed-transaction-support</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.seedstack.seed</groupId>
-            <artifactId>seed-security-support-specs</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.codemonkey.javareflection</groupId>
             <artifactId>java-reflection</artifactId>
             <version>1.1</version>

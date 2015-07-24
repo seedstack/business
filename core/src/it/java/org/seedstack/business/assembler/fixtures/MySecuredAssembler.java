@@ -10,8 +10,8 @@
 package org.seedstack.business.assembler.fixtures;
 
 
-import org.seedstack.business.api.interfaces.Secured;
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.seed.security.api.data.Secured;
 
 /**
  * @author epo.jemba@ext.mpsa.com
