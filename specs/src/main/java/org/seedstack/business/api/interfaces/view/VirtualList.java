@@ -54,10 +54,10 @@ class VirtualList<T> {
     }
 
     /**
-     * Gets the sub list of item.
+     * Returns a portion of this list between the specified from, inclusive, and to, exclusive.
      *
-     * @param from the beginning of the list
-     * @param to   the end of the list
+     * @param from low endpoint (inclusive) of the subList
+     * @param to   high endpoint (exclusive) of the subList
      * @return the sub list of item
      */
     public List<T> subList(long from, long to) {
@@ -66,10 +66,11 @@ class VirtualList<T> {
             // subList takes a [from;to[ range
             checkRange(to - 1);
 
-            if (checkSubRange(from) && checkSubRange(to - 1)) {
-                // cannot exceed Integer.MAX_VALUE (checked by checkSubRange)
-                return subList.subList((int) (from - subListOffset), (int) (to - subListOffset));
-            }
+            // check if the data of the required sub list are available
+            assertSubRange(from, to - 1);
+
+            // cannot exceed Integer.MAX_VALUE (checked by checkSubRange)
+            return subList.subList((int) (from - subListOffset), (int) (to - subListOffset));
         }
 
         return new ArrayList<T>();
@@ -95,12 +96,26 @@ class VirtualList<T> {
     }
 
     /**
-     * Checks if the index is greater than the sub list offset and lower than the sum of the sub list offset and
-     * the sub list size.
+     * Checks if the index is greater than the sub list offset and lower than the sum of the sub
+     * list offset and the sub list size.
+     *
      * @param index the index to check
      * @return true if the index is not out of range, false otherwise
      */
     private boolean checkSubRange(long index) {
         return this.subListOffset <= index && index < (this.subListOffset + this.subList.size());
+    }
+
+    /**
+     * Asserts that the requested sub list is available in the virtual list. Otherwise it throws
+     * an IndexOutOfBoundsException.
+     *
+     * @param from the from index (inclusive)
+     * @param to   the to index (inclusive)
+     */
+    private void assertSubRange(long from, long to) {
+        if (!checkSubRange(from) || !checkSubRange(to)) {
+            throw new IndexOutOfBoundsException("Required data for the sub list [" + from + "," + (to + 1) + "[ have not been loaded in the virtual list.");
+        }
     }
 }

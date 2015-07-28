@@ -21,33 +21,32 @@ import java.util.Map;
 /**
  * criteria needed :
  * <li> param1 : string </li>
- * 
- * @author epo.jemba@ext.mpsa.com
  *
+ * @author epo.jemba@ext.mpsa.com
  */
 public class Dto1JpaRangeFinder extends BaseJpaRangeFinder<Dto1> {
-	
-	@Inject
-	EntityManager entityManager;
-	
-	@Override
+
+    @Inject
+    EntityManager entityManager;
+
+    @Override
     @SuppressWarnings("unchecked")
-	protected List<Dto1> computeResultList(Range range , Map<String,Object> criteria) {
-		Query query = entityManager.createQuery("select new " + Dto1.class.getName() + "(  a.entityId, a.field1, a.field2 , a.field3 , a.field4  )  from SampleSimpleJpaAggregateRoot a where a.field2 = :param1");
+    protected List<Dto1> computeResultList(Range range, Map<String, Object> criteria) {
+        Query query = entityManager.createQuery("select new " + Dto1.class.getName() + "(  a.entityId, a.field1, a.field2 , a.field3 , a.field4  )  from SampleSimpleJpaAggregateRoot a where a.field2 = :param1");
 
-		query.setFirstResult( (int)range.getOffset() );
-		query.setMaxResults ( range.getSize() );
-		
-		updateQuery(query , criteria);
-		
-		return (List<Dto1>)query.getResultList();
-	}
+        query.setFirstResult((int) range.getOffset());
+        query.setMaxResults((int) range.getSize());
 
-	@Override
-	protected long computeFullRequestSize(Map<String,Object> criteria) {
-		
-		Query query = entityManager.createQuery("select count(*) from SampleSimpleJpaAggregateRoot a where a.field2 = :param1");
-		updateQuery(query , criteria);
-		return (Long) query.getSingleResult();
-	}
+        updateQuery(query, criteria);
+
+        return (List<Dto1>) query.getResultList();
+    }
+
+    @Override
+    protected long computeFullRequestSize(Map<String, Object> criteria) {
+
+        Query query = entityManager.createQuery("select count(*) from SampleSimpleJpaAggregateRoot a where a.field2 = :param1");
+        updateQuery(query, criteria);
+        return (Long) query.getSingleResult();
+    }
 }
