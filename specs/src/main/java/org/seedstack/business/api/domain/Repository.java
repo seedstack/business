@@ -52,17 +52,6 @@ public interface Repository<A extends AggregateRoot<K>, K> {
     /**
      * Deletes an aggregate from the persistence by its key.
      *
-     * @param id the aggregate key
-     * @deprecated This method will be removed in the next version. The {@link #delete(AggregateRoot)} method should be
-     * used instead.
-     */
-    @Delete
-    @Deprecated
-    void delete(K id);
-
-    /**
-     * Deletes an aggregate from the persistence by its key.
-     *
      * @param aggregate the aggregate to delete
      */
     @Delete

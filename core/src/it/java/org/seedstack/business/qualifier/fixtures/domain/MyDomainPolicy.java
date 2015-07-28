@@ -9,10 +9,13 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-import org.seedstack.business.api.domain.GenericDomainPolicy;
+import org.seedstack.business.api.Producible;
+import org.seedstack.business.api.domain.DomainObject;
+import org.seedstack.business.api.domain.DomainPolicy;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-public interface MyDomainPolicy<T> extends GenericDomainPolicy {
+@DomainPolicy
+public interface MyDomainPolicy<T> extends DomainObject, Producible {
 }

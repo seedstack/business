@@ -9,11 +9,11 @@
  */
 package org.seedstack.business.fixtures.domain.export;
 
-import org.seedstack.business.api.domain.DomainService;
+import org.seedstack.business.api.Service;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@DomainService
+@Service
 public interface ExportDomainService {
 }

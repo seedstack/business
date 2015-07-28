@@ -9,7 +9,7 @@
  */
 package org.seedstack.business.fixtures.application;
 
-import org.seedstack.business.api.application.ApplicationService;
+import org.seedstack.business.api.Service;
 
 /**
  *
@@ -18,7 +18,7 @@ import org.seedstack.business.api.application.ApplicationService;
  *
  */
 
-@ApplicationService
+@Service
 public interface SingletonService {
 
 	

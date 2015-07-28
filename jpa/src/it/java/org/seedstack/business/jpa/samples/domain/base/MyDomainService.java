@@ -9,11 +9,11 @@
  */
 package org.seedstack.business.jpa.samples.domain.base;
 
-import org.seedstack.business.api.domain.DomainService;
+import org.seedstack.business.api.Service;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@DomainService
+@Service
 public interface MyDomainService {
 }

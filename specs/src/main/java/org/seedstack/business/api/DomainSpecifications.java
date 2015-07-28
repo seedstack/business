@@ -11,15 +11,11 @@ package org.seedstack.business.api;
 
 import org.kametic.specifications.Specification;
 import org.seedstack.business.api.domain.*;
-import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.api.application.GenericApplicationService;
-import org.seedstack.business.api.application.ApplicationService;
 import org.seedstack.business.api.domain.identity.IdentityHandler;
-import org.seedstack.business.api.interfaces.GenericInterfacesService;
-import org.seedstack.business.api.interfaces.InterfacesService;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
+import org.seedstack.business.spi.GenericImplementation;
 
 import static org.seedstack.business.api.BaseClassSpecifications.*;
 
@@ -74,20 +70,10 @@ public final class DomainSpecifications {
     /**
      * The domain service specification.
      */
-    public static final Specification<Class<?>> DOMAIN_SERVICE = and(
-            ancestorMetaAnnotatedWith(DomainService.class),
+    public static final Specification<Class<?>> SERVICE = and(
+            ancestorMetaAnnotatedWith(Service.class),
             classIsInterface(),
-            not(classIsAnnotation()),
-            not(classIs(GenericDomainService.class)));
-
-    /**
-     * The application service specification.
-     */
-    public static final Specification<Class<?>> APPLICATION_SERVICE = and(
-            ancestorMetaAnnotatedWith(ApplicationService.class),
-            classIsInterface(),
-            not(classIsAnnotation()),
-            not(classIs(GenericApplicationService.class)));
+            not(classIsAnnotation()));
 
     /**
      * The finder service specification.
@@ -103,17 +89,7 @@ public final class DomainSpecifications {
     public static final Specification<Class<?>> POLICY = and(
             ancestorMetaAnnotatedWith(DomainPolicy.class),
             classIsInterface(),
-            not(classIsAnnotation()),
-            not(classIs(GenericDomainPolicy.class)));
-
-    /**
-     * The interface service specification.
-     */
-    public static final Specification<Class<?>> INTERFACE_SERVICE = and(
-            ancestorMetaAnnotatedWith(InterfacesService.class),
-            classIsInterface(),
-            not(classIsAnnotation()),
-            not(classIs(GenericInterfacesService.class)));
+            not(classIsAnnotation()));
 
     /**
      * The domain factory specification.

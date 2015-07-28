@@ -9,12 +9,12 @@
  */
 package org.seedstack.business.jpa.samples.utils;
 
-import org.seedstack.business.api.application.ApplicationService;
+import org.seedstack.business.api.Service;
 
 /**
  * @author epo.jemba@ext.mpsa.com
  */
-@ApplicationService
+@Service
 public interface Loader {
 	
 	public enum Scenario {

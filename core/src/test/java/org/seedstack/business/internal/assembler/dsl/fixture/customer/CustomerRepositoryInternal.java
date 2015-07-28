@@ -27,11 +27,6 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    protected void doDelete(String id) {
-        orderMap.remove(id);
-    }
-
-    @Override
     protected void doDelete(Customer order) {
         for (Customer order1 : orderMap.values()) {
             if (order1.equals(order)) {

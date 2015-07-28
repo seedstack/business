@@ -10,16 +10,13 @@
 package org.seedstack.business.api.domain;
 
 import org.junit.Test;
-import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.api.application.GenericApplicationService;
-import org.seedstack.business.api.application.ApplicationService;
-import org.seedstack.business.api.interfaces.GenericInterfacesService;
-import org.seedstack.business.api.interfaces.InterfacesService;
+import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.api.Service;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
 import org.seedstack.business.api.interfaces.finder.RangeFinder;
-import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.spi.GenericImplementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -74,25 +71,6 @@ public class DomainSpecificationsTest {
 
         assertThat(DomainSpecifications.ENTITY).describedAs("specification should be comparable")
                 .isEqualTo(DomainSpecifications.ENTITY);
-    }
-
-    static interface MyApplicationService1 extends GenericApplicationService { }
-
-    @ApplicationService
-    static interface MyApplicationService2 { }
-
-    @ApplicationService
-    static class MyApplicationService3 { }
-
-    @Test
-    public void testApplicationServiceSpecification() {
-        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService1.class)).isTrue();
-        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService2.class)).isTrue();
-
-        assertThat(DomainSpecifications.APPLICATION_SERVICE.isSatisfiedBy(MyApplicationService3.class)).isFalse();
-
-        assertThat(DomainSpecifications.APPLICATION_SERVICE).describedAs("specification should be comparable")
-                .isEqualTo(DomainSpecifications.APPLICATION_SERVICE);
     }
 
     static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
@@ -195,9 +173,6 @@ public class DomainSpecificationsTest {
         public A load(K id) { return null; }
 
         @Override
-        public void delete(K id) { }
-
-        @Override
         public void delete(A a) { }
 
         @Override
@@ -220,34 +195,12 @@ public class DomainSpecificationsTest {
         assertThat(DomainSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepository1.class)).isFalse();
     }
 
-    @DomainService
+    @Service
     static interface MyDomainServiceSpecification1 {}
-
-    static interface MyDomainServiceSpecification2 extends GenericDomainService {}
-
-    static class MyDomainServiceSpecification3 implements GenericDomainService {}
 
     @Test
     public void testDomainServiceSpecification() {
-        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification1.class)).isTrue();
-        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification2.class)).isTrue();
-
-        assertThat(DomainSpecifications.DOMAIN_SERVICE.isSatisfiedBy(MyDomainServiceSpecification3.class)).isFalse();
-    }
-
-    @InterfacesService
-    static interface MyInterfacesServiceSpecification1 {}
-
-    static interface MyInterfacesServiceSpecification2 extends GenericInterfacesService {}
-
-    static class MyInterfacesServiceSpecification3 implements GenericInterfacesService {}
-
-    @Test
-    public void testInterfacesServiceSpecification() {
-        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification1.class)).isTrue();
-        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification2.class)).isTrue();
-
-        assertThat(DomainSpecifications.INTERFACE_SERVICE.isSatisfiedBy(MyInterfacesServiceSpecification3.class)).isFalse();
+        assertThat(DomainSpecifications.SERVICE.isSatisfiedBy(MyDomainServiceSpecification1.class)).isTrue();
     }
 
     @DtoOf(MyAggregateRoot1.class)
@@ -283,15 +236,12 @@ public class DomainSpecificationsTest {
     @DomainPolicy
     static interface MyPolicy1 {}
 
-    static interface MyPolicy2 extends GenericDomainPolicy {}
-
     @DomainPolicy
     static class MyPolicy3 {}
 
     @Test
     public void testPolicyServiceSpecification() {
         assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy1.class)).isTrue();
-        assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy2.class)).isTrue();
 
         assertThat(DomainSpecifications.POLICY.isSatisfiedBy(MyPolicy3.class)).isFalse();
     }

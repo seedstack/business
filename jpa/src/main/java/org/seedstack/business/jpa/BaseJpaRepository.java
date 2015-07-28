@@ -46,12 +46,6 @@ public abstract class BaseJpaRepository<A extends AggregateRoot<K>, K> extends B
     }
 
     @Override
-    @Deprecated
-    protected void doDelete(K id) {
-    	entityManager.remove(load(id));
-    }
-
-    @Override
     protected void doDelete(A aggregate) {
         entityManager.remove(aggregate);
     }

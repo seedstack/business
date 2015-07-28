@@ -78,12 +78,6 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     }
 
     @Override
-    @Deprecated
-    public final void delete(KEY id) {
-        doDelete(id);
-    }
-
-    @Override
     public final void delete(AGGREGATE aggregate) {
         doDelete(aggregate);
     }
@@ -107,17 +101,6 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      */
     @Read
     protected abstract AGGREGATE doLoad(KEY id);
-
-    /**
-     * Delegates the delete mechanism to the infrastructure.
-     *
-     * @param id the identifier of the aggregate root to delete
-     * @deprecated This method will be removed in the next version. The {@link #delete(AggregateRoot)} method should be
-     * used instead.
-     */
-    @Delete
-    @Deprecated
-    protected abstract void doDelete(KEY id);
 
     /**
      * Delegates the delete mechanism to the infrastructure.

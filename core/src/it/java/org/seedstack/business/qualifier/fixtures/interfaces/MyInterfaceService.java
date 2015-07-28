@@ -9,11 +9,11 @@
  */
 package org.seedstack.business.qualifier.fixtures.interfaces;
 
-import org.seedstack.business.api.interfaces.InterfacesService;
+import org.seedstack.business.api.Service;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@InterfacesService
+@Service
 public interface MyInterfaceService {
 }

@@ -9,10 +9,10 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.DomainService;
+import org.seedstack.business.api.Service;
 
 
-@DomainService
+@Service
 public interface CustomerSampleService {
 	
 	String transfer (Customer source , Customer target);

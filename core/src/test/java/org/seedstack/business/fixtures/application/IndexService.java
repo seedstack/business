@@ -9,13 +9,13 @@
  */
 package org.seedstack.business.fixtures.application;
 
-import org.seedstack.business.api.application.ApplicationService;
+import org.seedstack.business.api.Service;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 
 /**
  *
  */
-@ApplicationService
+@Service
 public interface IndexService { 
 
 	public void index(Customer customer); 

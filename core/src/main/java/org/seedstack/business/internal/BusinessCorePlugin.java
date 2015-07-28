@@ -50,12 +50,10 @@ public class BusinessCorePlugin extends AbstractPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessCorePlugin.class);
 
     private Collection<Class<?>> aggregateClasses;
-    private Collection<Class<?>> applicationServiceInterfaces;
     private Collection<Class<?>> assemblersClasses;
     private Collection<Class<?>> domainFactoryInterfaces;
-    private Collection<Class<?>> domainServiceInterfaces;
+    private Collection<Class<?>> serviceInterfaces;
     private Collection<Class<?>> finderServiceInterfaces;
-    private Collection<Class<?>> interfacesServiceInterfaces;
     private Collection<Class<?>> policyInterfaces;
     private Collection<Class<?>> repositoriesInterfaces;
     private Collection<Class<?>> valueObjectClasses;
@@ -87,12 +85,10 @@ public class BusinessCorePlugin extends AbstractPlugin {
         if (roundEnvironment.firstRound()) {
             return classpathScanRequestBuilder()
                     .specification(DomainSpecifications.AGGREGATE_ROOT)
-                    .specification(DomainSpecifications.APPLICATION_SERVICE)
                     .specification(DomainSpecifications.CLASSIC_ASSEMBLER)
-                    .specification(DomainSpecifications.DOMAIN_SERVICE)
+                    .specification(DomainSpecifications.SERVICE)
                     .specification(DomainSpecifications.FACTORY)
                     .specification(DomainSpecifications.FINDER)
-                    .specification(DomainSpecifications.INTERFACE_SERVICE)
                     .specification(DomainSpecifications.POLICY)
                     .specification(DomainSpecifications.REPOSITORY)
                     .specification(DomainSpecifications.VALUE_OBJECT)
@@ -105,12 +101,10 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
             //noinspection unchecked
             return classpathRequestForDescendantTypesOf(
-                    applicationServiceInterfaces,
                     domainFactoryInterfaces,
-                    domainServiceInterfaces,
+                    serviceInterfaces,
                     finderServiceInterfaces,
                     finderServiceInterfaces,
-                    interfacesServiceInterfaces,
                     policyInterfaces,
                     repositoriesInterfaces).build();
         }
@@ -152,23 +146,17 @@ public class BusinessCorePlugin extends AbstractPlugin {
             aggregateClasses = spec.get(DomainSpecifications.AGGREGATE_ROOT);
             LOGGER.debug("Aggregate root(s) => {}", aggregateClasses);
 
-            applicationServiceInterfaces = spec.get(DomainSpecifications.APPLICATION_SERVICE);
-            LOGGER.debug("Application Service Interface(s) => {}", applicationServiceInterfaces);
-
             assemblersClasses = spec.get(DomainSpecifications.CLASSIC_ASSEMBLER);
             LOGGER.debug("Assembler class(es) => {}", assemblersClasses);
 
             domainFactoryInterfaces = spec.get(DomainSpecifications.FACTORY);
             LOGGER.debug("Factory Interface(s) => {}", domainFactoryInterfaces);
 
-            domainServiceInterfaces = spec.get(DomainSpecifications.DOMAIN_SERVICE);
-            LOGGER.debug("Domain Service Interface(s) => {}", domainServiceInterfaces);
+            serviceInterfaces = spec.get(DomainSpecifications.SERVICE);
+            LOGGER.debug("Domain Service Interface(s) => {}", serviceInterfaces);
 
             finderServiceInterfaces = spec.get(DomainSpecifications.FINDER);
             LOGGER.debug("Finder Interface(s) => {}", finderServiceInterfaces);
-
-            interfacesServiceInterfaces = spec.get(DomainSpecifications.INTERFACE_SERVICE);
-            LOGGER.debug("Interfaces Service Interface(s) => {}", interfacesServiceInterfaces);
 
             policyInterfaces = spec.get(DomainSpecifications.POLICY);
             LOGGER.debug("Policy Interface(s) => {}", policyInterfaces);
@@ -199,11 +187,9 @@ public class BusinessCorePlugin extends AbstractPlugin {
 
             //noinspection unchecked
             List<Collection<Class<?>>> collections = Lists.newArrayList(
-                    applicationServiceInterfaces,
                     domainFactoryInterfaces,
-                    domainServiceInterfaces,
+                    serviceInterfaces,
                     finderServiceInterfaces,
-                    interfacesServiceInterfaces,
                     policyInterfaces,
                     repositoriesInterfaces,
                     assemblerClass

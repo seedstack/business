@@ -9,12 +9,13 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-import org.seedstack.business.api.domain.GenericDomainService;
-import org.seedstack.business.api.domain.DomainService;
+import org.seedstack.business.api.Producible;
+import org.seedstack.business.api.Service;
+import org.seedstack.business.api.domain.DomainObject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-@DomainService
-public interface MyDomainService extends GenericDomainService {
+@Service
+public interface MyDomainService extends DomainObject, Producible{
 }

@@ -27,11 +27,6 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
     }
 
     @Override
-    protected void doDelete(String id) {
-        orderMap.remove(id);
-    }
-
-    @Override
     protected void doDelete(Order order) {
         for (Order order1 : orderMap.values()) {
             if (order1.equals(order)) {
