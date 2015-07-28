@@ -17,7 +17,7 @@ package org.seedstack.business.api.interfaces.finder;
 public final class Range {
 
     private long offset;
-    private int size;
+    private long size;
 
     /**
      * Constructor.
@@ -25,7 +25,7 @@ public final class Range {
      * @param offset the range offset
      * @param size   the range size
      */
-    public Range(long offset, int size) {
+    public Range(long offset, long size) {
         this.offset = offset;
         this.size = size;
     }
@@ -40,7 +40,7 @@ public final class Range {
     /**
      * @return the range size
      */
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
@@ -51,7 +51,7 @@ public final class Range {
      * @param chunkSize   the chunk size
      * @return the range
      */
-    public static Range rangeFromChunkInfo(long chunkOffset, int chunkSize) {
+    public static Range rangeFromChunkInfo(long chunkOffset, long chunkSize) {
         return new Range(chunkOffset, chunkSize);
     }
 
@@ -62,7 +62,7 @@ public final class Range {
      * @param pageSize  the page size
      * @return the range
      */
-    public static Range rangeFromPageInfo(long pageIndex, int pageSize) {
+    public static Range rangeFromPageInfo(long pageIndex, long pageSize) {
         return new Range(pageIndex * pageSize, pageSize);
     }
 
