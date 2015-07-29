@@ -48,7 +48,7 @@ public class DefaultRepositoryCollectorTest {
     @Test
     public void testGetDefaultWithQualifierString() {
         Configuration configuration = mock(Configuration.class);
-        when(configuration.getString("default.repository.qualifier")).thenReturn("my-qualifier");
+        when(configuration.getString("default-repository")).thenReturn("my-qualifier");
 
         when(application.getConfiguration(MyAgg.class)).thenReturn(configuration);
         Key<?> key = underTest.defaultRepositoryQualifier(MyAgg.class, genericInterface);
@@ -59,7 +59,7 @@ public class DefaultRepositoryCollectorTest {
     @Test
     public void testGetDefaultWithQualifierAnnotation() {
         Configuration configuration = mock(Configuration.class);
-        when(configuration.getString("default.repository.qualifier")).thenReturn("org.seedstack.business.repositories.fixtures.MyQualifier");
+        when(configuration.getString("default-repository")).thenReturn("org.seedstack.business.repositories.fixtures.MyQualifier");
 
         when(application.getConfiguration(MyAgg.class)).thenReturn(configuration);
         Key<?> key = underTest.defaultRepositoryQualifier(MyAgg.class, genericInterface);

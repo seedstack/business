@@ -80,7 +80,7 @@ class DefaultRepositoryCollector {
         Configuration configuration = this.application.getConfiguration(aggregateClass);
 
         if (configuration != null && !configuration.isEmpty()) {
-            String qualifierName = configuration.getString("default.repository.qualifier");
+            String qualifierName = configuration.getString("default-repository");
             if (qualifierName != null && !"".equals(qualifierName)) {
                 try {
                     classLoader = SeedReflectionUtils.findMostCompleteClassLoader();
