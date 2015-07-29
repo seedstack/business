@@ -14,6 +14,7 @@ import org.seedstack.business.api.domain.BaseRepository;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 
 /**
@@ -21,13 +22,12 @@ import javax.persistence.EntityManager;
  *
  * @param <A> JPA Entity Type (DDD: Aggregate)
  * @param <K> key type
- *            
  * @author epo.jemba@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com
  */
 public abstract class BaseJpaRepository<A extends AggregateRoot<K>, K> extends BaseRepository<A, K> {
 
-    @Inject 
+    @Inject
     protected EntityManager entityManager;
 
     /**
@@ -41,8 +41,17 @@ public abstract class BaseJpaRepository<A extends AggregateRoot<K>, K> extends B
     }
 
     @Override
-	protected A doLoad(K id) {
+    protected A doLoad(K id) {
         return entityManager.find(getAggregateRootClass(), id);
+    }
+
+    @Override
+    protected void doDelete(K id) {
+        A aggregate = load(id);
+        if (aggregate == null) {
+            throw new EntityNotFoundException("Attempt to delete non-existent aggregate with id " + id + " of class " + getAggregateRootClass().getCanonicalName());
+        }
+        entityManager.remove(aggregate);
     }
 
     @Override
@@ -52,13 +61,13 @@ public abstract class BaseJpaRepository<A extends AggregateRoot<K>, K> extends B
 
     @Override
     protected void doPersist(A aggregate) {
-    	entityManager.persist(aggregate);
+        entityManager.persist(aggregate);
     }
 
     @Override
     protected A doSave(A aggregate) {
         return entityManager.merge(aggregate);
     }
-    
-    
+
+
 }

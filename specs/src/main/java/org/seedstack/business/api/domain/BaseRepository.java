@@ -78,6 +78,11 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     }
 
     @Override
+    public final void delete(KEY id) {
+        doDelete(id);
+    }
+
+    @Override
     public final void delete(AGGREGATE aggregate) {
         doDelete(aggregate);
     }
@@ -101,6 +106,14 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      */
     @Read
     protected abstract AGGREGATE doLoad(KEY id);
+
+    /**
+     * Delegates the delete mechanism to the infrastructure.
+     *
+     * @param id the identifier of the aggregate root to delete
+     */
+    @Delete
+    protected abstract void doDelete(KEY id);
 
     /**
      * Delegates the delete mechanism to the infrastructure.

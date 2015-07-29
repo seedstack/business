@@ -52,6 +52,14 @@ public interface Repository<A extends AggregateRoot<K>, K> {
     /**
      * Deletes an aggregate from the persistence by its key.
      *
+     * @param id the aggregate key
+     */
+    @Delete
+    void delete(K id);
+
+    /**
+     * Deletes an aggregate instance from the persistence.
+     *
      * @param aggregate the aggregate to delete
      */
     @Delete

@@ -52,6 +52,12 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
     }
 
     @Override
+    @Deprecated
+    protected void doDelete(Key id) {
+        inMemorySortedMap.remove(id);
+    }
+
+    @Override
     protected void doDelete(Aggregate aggregate) {
         inMemorySortedMap.remove(aggregate.getEntityId());
     }

@@ -35,6 +35,11 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
+    protected void doDelete(K id) {
+
+    }
+
+    @Override
     protected void doDelete(A a) {
 
     }
