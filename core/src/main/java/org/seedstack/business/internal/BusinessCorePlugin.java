@@ -34,10 +34,10 @@ import static org.seedstack.business.api.BaseClassSpecifications.classIsInterfac
 
 /**
  * This plugin is a multi round plugin.
- * <p/>
+ * <p>
  * It uses two round because it needs to scan user interfaces, for instance those annotated with {@code @Finder}.
  * Then in the second round, it scan the implementations of the scanned interfaces.
- * <p/>
+ * </p>
  * This plugin also bind default implementation for repository, factory and assembler. For this, it uses the
  * {@link org.seedstack.business.internal.strategy.api.BindingStrategy}.
  *

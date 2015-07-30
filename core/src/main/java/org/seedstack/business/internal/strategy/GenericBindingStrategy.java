@@ -24,8 +24,9 @@ import java.util.Map;
 
 /**
  * GenericBindingStrategy resolves bindings for generic classes to implementations with unresolved type variables.
- * <p/>
+ * <p>
  * For instance it is possible to bind the following classes:
+ * </p>
  * <pre>
  * class MyClass&lt;I, J&gt; { }
  *

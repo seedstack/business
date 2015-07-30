@@ -31,11 +31,11 @@ import java.util.Arrays;
 
 /**
  * FactoryInternal allows the creations of {@link org.seedstack.business.api.domain.DomainObject} objects using their constructors.
- * <p/>
+ * <p>
  * The {@link #create(Object...)} method will look for a constructor matching the given parameters.
  * If a constructor is found the method will use it to create a new instance. If ambiguous constructors are
  * found, it throws an exception.
- * <p/>
+ * </p>
  * Ambiguous constructor could be found in the following cases:
  * 
  * 1. If a parameter is null and multiple constructors accept null.
@@ -54,7 +54,7 @@ import java.util.Arrays;
  * 
  * @author redouane.loulou@ext.mpsa.com
  * @author pierre.thirouin@ext.mpsa.com
- * @param <DO> 
+ * @param <DO> the domain object type
  */
 public class FactoryInternal<DO extends DomainObject & Producible> implements Factory<DO> {
 
