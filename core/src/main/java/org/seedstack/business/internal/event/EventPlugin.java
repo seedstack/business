@@ -13,6 +13,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimap;
+import net.jodah.typetools.TypeResolver;
 import org.seedstack.business.api.Event;
 import org.seedstack.business.api.EventHandler;
 import io.nuun.kernel.api.Plugin;
@@ -21,7 +22,6 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
 import org.apache.commons.configuration.Configuration;
-import org.jodah.typetools.TypeResolver;
 import org.kametic.specifications.Specification;
 import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 

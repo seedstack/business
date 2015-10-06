@@ -7,10 +7,27 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.events.fixtures;
+package org.seedstack.business.fixtures.event;
+
+import org.seedstack.business.api.EventService;
+import org.seedstack.seed.it.api.ITBind;
+
+import javax.inject.Inject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-public class MyEvent2 extends AbstractEvent {
+@ITBind
+public class MyService {
+
+    @Inject
+    private EventService eventService;
+
+    public void callBusinessStuff(String someParam) {
+        eventService.fire(new MyEvent(someParam));
+    }
+
+    public void doNothing() {
+        // do nothing
+    }
 }

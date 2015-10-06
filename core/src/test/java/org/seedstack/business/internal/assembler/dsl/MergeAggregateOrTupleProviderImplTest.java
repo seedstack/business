@@ -11,18 +11,23 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
+import org.fest.reflect.core.Reflection;
+import org.fest.reflect.reference.TypeRef;
 import org.javatuples.Pair;
 import org.javatuples.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.Tuples;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryProvider;
 import org.seedstack.business.internal.assembler.DefaultModelMapperTupleAssembler;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
+import org.seedstack.business.internal.assembler.dsl.fixture.customer.AutoAssembler;
+import org.seedstack.business.internal.assembler.dsl.fixture.customer.Customer;
+import org.seedstack.business.internal.assembler.dsl.fixture.customer.Order;
+import org.seedstack.business.internal.assembler.dsl.fixture.customer.OrderDto;
+import org.seedstack.business.internal.assembler.dsl.fixture.customer.Recipe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -112,9 +117,9 @@ public class MergeAggregateOrTupleProviderImplTest {
     }
 
     private void assertToMethod(MergeTupleWithRepositoryProvider<?> to, Object dto, Class<?>... classes) {
-        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Whitebox.getInternalState(to, "aggregateClasses");
+        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Reflection.field("aggregateClasses").ofType(new TypeRef<List<Class<? extends AggregateRoot<?>>>>() {}).in(to).get();
         Assertions.assertThat(aggregateClasses).isEqualTo(Arrays.asList(classes));
-        Object obj = Whitebox.getInternalState(to, "dto");
+        Object obj = Reflection.field("dto").ofType(Object.class).in(to).get();
         Assertions.assertThat(obj).isEqualTo(dto);
     }
 }

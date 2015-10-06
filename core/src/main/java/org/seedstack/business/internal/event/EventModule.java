@@ -11,7 +11,6 @@ package org.seedstack.business.internal.event;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.gag.annotation.remark.OhSnap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
@@ -109,7 +108,7 @@ class EventModule extends AbstractModule {
      * @return the annotation found or null if the annotation is not present
      */
     @SuppressWarnings("unchecked")
-    @OhSnap("This method does not work with ancestors that use generic parameters")
+    // FIXME: This method does not work with ancestors that use generic parameters
     public static <T extends Annotation> T getMethodAnnotationFromAncestors(AnnotatedElement annotatedElement, Class<T> annotationClassToFind) {
         Method annotatedMethod;
         if (Method.class.isAssignableFrom(annotatedElement.getClass())) {
