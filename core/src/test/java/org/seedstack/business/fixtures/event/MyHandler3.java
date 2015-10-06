@@ -7,12 +7,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.fixtures.domain.activation;
+package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.api.EventHandler;
 
-public interface ActivationFactory extends GenericFactory<Activation> {
-
-    public Activation createNewActivation(String id, String description) throws ActivationException;
-
+/**
+ * @author pierre.thirouin@ext.mpsa.com
+ */
+public class MyHandler3 implements EventHandler<DummyEvent> {
+    @Override
+    public void handle(DummyEvent event) {
+        // do nothing
+    }
 }

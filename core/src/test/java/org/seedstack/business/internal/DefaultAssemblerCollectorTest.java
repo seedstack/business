@@ -11,9 +11,10 @@ package org.seedstack.business.internal;
 
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
+import org.fest.reflect.core.Reflection;
+import org.fest.reflect.reference.TypeRef;
 import org.junit.Before;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.BaseAggregateRoot;
 import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
@@ -44,7 +45,7 @@ public class DefaultAssemblerCollectorTest {
     public void testCollect() {
         Collection<BindingStrategy> strategies = underTest.collect(Lists.<Class<?>>newArrayList(Dto1.class, Dto2.class, Dto3.class));
         Assertions.assertThat(strategies).hasSize(2); // 2 default assembler implementation
-        Collection<Type[]> typeVariables = Whitebox.getInternalState(strategies.iterator().next(), "constructorParams");
+        Collection<Type[]> typeVariables = Reflection.field("constructorParams").ofType(new TypeRef<Collection<Type[]>>() {}).in(strategies.iterator().next()).get();
         Assertions.assertThat(typeVariables).hasSize(3); // 3 dtos
     }
 
@@ -57,44 +58,60 @@ public class DefaultAssemblerCollectorTest {
 
     private static class Agg1 extends BaseAggregateRoot<Integer> {
         @Override
-        public Integer getEntityId() { return null; }
+        public Integer getEntityId() {
+            return null;
+        }
     }
 
     private static class Agg2 extends BaseAggregateRoot<Integer> {
         @Override
-        public Integer getEntityId() { return null; }
+        public Integer getEntityId() {
+            return null;
+        }
     }
 
     @DtoOf(Agg1.class)
-    private static class Dto1 { }
+    private static class Dto1 {
+    }
 
     @DtoOf(Agg1.class)
-    private static class Dto2 { }
+    private static class Dto2 {
+    }
 
     @DtoOf(Agg2.class)
-    private static class Dto3 { }
+    private static class Dto3 {
+    }
 
-    private static class Dto4 { }
+    private static class Dto4 {
+    }
 
     private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
         @Override
-        public D assembleDtoFromAggregate(A sourceAggregate) { return null; }
+        public D assembleDtoFromAggregate(A sourceAggregate) {
+            return null;
+        }
 
         @Override
-        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) { }
+        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        }
 
         @Override
-        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) { }
+        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+        }
     }
 
     private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
         @Override
-        public D assembleDtoFromAggregate(A sourceAggregate) { return null; }
+        public D assembleDtoFromAggregate(A sourceAggregate) {
+            return null;
+        }
 
         @Override
-        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) { }
+        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        }
 
         @Override
-        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) { }
+        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+        }
     }
 }

@@ -9,17 +9,16 @@
  */
 package org.seedstack.business.events.fixtures;
 
-import org.seedstack.business.api.Event;
 import org.seedstack.business.api.EventHandler;
 import org.seedstack.business.events.EventServiceIT;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-public class GenericEventHandler implements EventHandler<Event> {
+public class GenericEventHandler implements EventHandler<AbstractEvent> {
 
     @Override
-    public void handle(Event event) {
+    public void handle(AbstractEvent event) {
         EventServiceIT.countGenericEvent++;
     }
 }

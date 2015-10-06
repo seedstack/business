@@ -9,13 +9,13 @@
  */
 package org.seedstack.business.fixtures.domain.reporting;
 
+import org.fest.reflect.core.Reflection;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.objenesis.instantiator.ObjectInstantiator;
-import org.powermock.reflect.Whitebox;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,7 +51,7 @@ public class ReportTest {
         Objenesis objenesis = new ObjenesisStd();
         ObjectInstantiator aggregateInstantiator = objenesis.getInstantiatorOf(aggregateType);
         Object aggregateRoot = aggregateInstantiator.newInstance();
-        Whitebox.setInternalState(aggregateRoot, ENTITY_ID, entityId);
+        Reflection.field(ENTITY_ID).ofType(Object.class).in(aggregateRoot).set(entityId);
         return aggregateType.cast(aggregateRoot);
     }
 

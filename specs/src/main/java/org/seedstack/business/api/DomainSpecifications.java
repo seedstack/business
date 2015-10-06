@@ -17,7 +17,7 @@ import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
 
-import static org.seedstack.business.api.BaseClassSpecifications.*;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.*;
 
 
 /**

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.seedstack.business.api.BaseClassSpecifications.descendantOf;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.descendantOf;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

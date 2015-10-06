@@ -9,10 +9,8 @@
  */
 package org.seedstack.business.events.fixtures;
 
-import org.seedstack.business.api.Event;
-
 /**
  * @author pierre.thirouin@ext.mpsa.com
  */
-public class MyEvent implements Event {
+public class MyEvent extends AbstractEvent {
 }

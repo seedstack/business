@@ -11,8 +11,17 @@ package org.seedstack.business.api;
 
 import com.google.common.collect.Lists;
 import com.google.inject.util.Types;
-import org.fest.reflect.core.Reflection;
-import org.javatuples.*;
+import org.javatuples.Decade;
+import org.javatuples.Ennead;
+import org.javatuples.Octet;
+import org.javatuples.Pair;
+import org.javatuples.Quartet;
+import org.javatuples.Quintet;
+import org.javatuples.Septet;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
+import org.javatuples.Tuple;
+import org.javatuples.Unit;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import java.lang.reflect.ParameterizedType;
@@ -43,13 +52,15 @@ public final class Tuples {
     public static <TUPLE extends Tuple> TUPLE create(List<?> objects) {
         SeedCheckUtils.checkIf(objects.size() <= 10, "Can't create a Tuple of more than ten element.");
 
-        Class<? extends Tuple> tupleClass = classOfTuple(objects.toArray(new Object[objects.size()]));
+        Class<? extends Tuple> tupleClass = classOfTuple(objects.size());
 
-        return (TUPLE) Reflection
-                .staticMethod("fromCollection")
-                .withReturnType(tupleClass)
-                .withParameterTypes(Collection.class)
-                .in(tupleClass).invoke(objects);
+        SeedCheckUtils.checkIfNotNull(tupleClass, "No tuple class found");
+
+        try {
+            return (TUPLE) tupleClass.getMethod("fromCollection", Collection.class).invoke(null, objects);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to create tuple", e);
+        }
     }
 
     /**
@@ -103,17 +114,27 @@ public final class Tuples {
     }
 
     /**
-     * Finds for a list of object the associated tuple class, eg. a {@code Pair} for a list of two object and a {@code Triplet} for a list of three.
+     * Finds for a list of object the associated tuple class, eg. a {@code Pair} for a list of two objects,
+     * a {@code Triplet} for a list of three, etc...
      *
      * @param objects the list of objects
      * @return the tuple class
      */
     public static Class<? extends Tuple> classOfTuple(Object... objects) {
+        return classOfTuple(objects.length);
+    }
+
+
+    /**
+     * Finds for a cardinality the associated tuple class, eg. a {@code Pair} for 2, a {@code Triplet} for 3, etc...
+     *
+     * @param cardinality the cardinality of the tuple
+     * @return the tuple class
+     */
+    public static Class<? extends Tuple> classOfTuple(int cardinality) {
         Class<? extends Tuple> tupleClass = null;
 
-        int tupleSize = objects.length;
-
-        switch (tupleSize) {
+        switch (cardinality) {
             case 1:
                 tupleClass = Unit.class;
                 break;
