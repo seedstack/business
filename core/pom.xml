@@ -48,6 +48,12 @@
             <version>0.7.3</version>
         </dependency>
 
+		<dependency>
+			<groupId>org.jmockit</groupId>
+			<artifactId>jmockit</artifactId>
+			<version>1.19</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-reflect</artifactId>

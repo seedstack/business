@@ -11,10 +11,13 @@ package org.seedstack.business.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
+
+import org.seedstack.business.api.domain.DomainRegistry;
 import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistry;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistryInternal;
+import org.seedstack.business.internal.registry.DomainRegistryImpl;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,13 +62,13 @@ class BusinessModule extends AbstractModule {
 		this.bindingStrategies = bindingStrategies;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void configure() {
         bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
         bind(InternalRegistry.class).to(InternalRegistryInternal.class);
+        bind(DomainRegistry.class).to(DomainRegistryImpl.class);
 
-		for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
+        for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
 			logger.trace("Binding {} to {}.", binding.getKey(), binding.getValue().getSimpleName());
 			bind(binding.getKey()).to((Class) binding.getValue());
 		}
