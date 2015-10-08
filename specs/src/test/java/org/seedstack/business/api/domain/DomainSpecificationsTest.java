@@ -9,6 +9,8 @@
  */
 package org.seedstack.business.api.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.seedstack.business.api.DomainSpecifications;
 import org.seedstack.business.api.Service;
@@ -17,8 +19,6 @@ import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
 import org.seedstack.business.api.interfaces.finder.RangeFinder;
 import org.seedstack.business.spi.GenericImplementation;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Validates all the domain specifications.
@@ -140,12 +140,15 @@ public class DomainSpecificationsTest {
     @DomainFactory
     static class MyFactory3 {}
 
+    static interface MyFactory4 extends Factory<MyAggregateRoot1> {}
+
     @Test
     public void testDomainFactorySpecification() {
         assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory1.class)).isTrue();
         assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory2.class)).isTrue();
 
         assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory3.class)).isFalse();
+        assertThat(DomainSpecifications.FACTORY.isSatisfiedBy(MyFactory4.class)).isTrue();
 
         assertThat(DomainSpecifications.FACTORY).describedAs("specification should be comparable")
                 .isEqualTo(DomainSpecifications.FACTORY);

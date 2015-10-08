@@ -16,11 +16,14 @@ import java.lang.annotation.Target;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.seedstack.business.api.Service;
 import org.seedstack.business.api.domain.AggregateRoot;
 import org.seedstack.business.api.domain.DomainElement;
+import org.seedstack.business.api.domain.DomainPolicy;
 import org.seedstack.business.api.domain.DomainRegistry;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.seed.core.api.SeedException;
 import org.seedstack.seed.core.api.TypeOf;
 
 import com.google.inject.BindingAnnotation;
@@ -47,12 +50,20 @@ public class DomainRegistryImplTest {
 	private @interface MockedAnnotation {
 	}
 
+	@Service
 	private interface MockedService {};
+
+	private interface MockedBadService {};
 	
+	@Service
 	private interface MockedServiceParameterized<T> {};
 
+	private interface MockedBadPolicy {};
+
+	@DomainPolicy
 	private interface MockedPolicy {};
 
+	@DomainPolicy
 	private interface MockedPolicyParameterized<T> {};
 
 
@@ -281,6 +292,13 @@ public class DomainRegistryImplTest {
 		Assertions.assertThat(domainRegistry.getService(MockedService.class)).isEqualTo(service);
 	}
 
+	@Test(expected=SeedException.class)
+	public void testGetServiceBad() {
+		DomainRegistry domainRegistry = createDomainRegistry();
+		
+		domainRegistry.getService(MockedBadService.class);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetServiceClassOfTClassOfQextendsAnnotation(final @Mocked MockedService service) {
@@ -354,6 +372,13 @@ public class DomainRegistryImplTest {
 		};
 
 		Assertions.assertThat(domainRegistry.getPolicy(MockedPolicy.class,"dummyAnnotation")).isEqualTo(policy);
+	}
+
+	@Test(expected=SeedException.class)
+	public void testGetPolicyBad() {
+		DomainRegistry domainRegistry = createDomainRegistry();
+		
+		domainRegistry.getPolicy(MockedBadPolicy.class);
 	}
 
 	@SuppressWarnings({ "unchecked" })

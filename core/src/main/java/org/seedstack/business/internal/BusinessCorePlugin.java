@@ -9,23 +9,8 @@
  */
 package org.seedstack.business.internal;
 
-import com.google.common.collect.Lists;
-import com.google.inject.Key;
-import io.nuun.kernel.api.Plugin;
-import io.nuun.kernel.api.plugin.InitState;
-import io.nuun.kernel.api.plugin.context.InitContext;
-import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
-import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
-import io.nuun.kernel.core.AbstractPlugin;
-import org.kametic.specifications.Specification;
-import org.seedstack.business.api.DomainSpecifications;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.business.internal.utils.BindingUtils;
-import org.seedstack.seed.core.api.Application;
-import org.seedstack.seed.core.internal.application.ApplicationPlugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,8 +18,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
+import org.kametic.specifications.Specification;
+import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.internal.strategy.api.BindingStrategy;
+import org.seedstack.business.internal.utils.BindingUtils;
+import org.seedstack.seed.core.api.Application;
+import org.seedstack.seed.core.internal.application.ApplicationPlugin;
+import org.seedstack.seed.core.utils.BaseClassSpecifications;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
+import com.google.inject.Key;
+
+import io.nuun.kernel.api.Plugin;
+import io.nuun.kernel.api.plugin.InitState;
+import io.nuun.kernel.api.plugin.context.InitContext;
+import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
+import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
+import io.nuun.kernel.core.AbstractPlugin;
 
 /**
  * This plugin is a multi round plugin.
@@ -70,6 +74,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
     private Map<Key<?>, Class<?>> bindings = new HashMap<Key<?>, Class<?>>();
 
     private Application application = null;
+    
+    private static final Specification<Class<?>> FACTORY_SPEC = DomainSpecifications.FACTORY.and(BaseClassSpecifications.not(BaseClassSpecifications.classIs(Factory.class)));
 
     @Override
     public String name() {
@@ -91,7 +97,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
                     .specification(DomainSpecifications.AGGREGATE_ROOT)
                     .specification(DomainSpecifications.CLASSIC_ASSEMBLER)
                     .specification(DomainSpecifications.SERVICE)
-                    .specification(DomainSpecifications.FACTORY)
+                    .specification(FACTORY_SPEC)
                     .specification(DomainSpecifications.FINDER)
                     .specification(DomainSpecifications.POLICY)
                     .specification(DomainSpecifications.REPOSITORY)
@@ -153,7 +159,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
             assemblersClasses = spec.get(DomainSpecifications.CLASSIC_ASSEMBLER);
             LOGGER.debug("Assembler class(es) => {}", assemblersClasses);
 
-            domainFactoryInterfaces = spec.get(DomainSpecifications.FACTORY);
+            domainFactoryInterfaces = spec.get(FACTORY_SPEC);
             LOGGER.debug("Factory Interface(s) => {}", domainFactoryInterfaces);
 
             serviceInterfaces = spec.get(DomainSpecifications.SERVICE);
