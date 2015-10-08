@@ -9,15 +9,27 @@
  */
 package org.seedstack.business.api;
 
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.ancestorMetaAnnotatedWith;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.and;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classAnnotatedWith;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAnnotation;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.descendantOf;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.not;
+
 import org.kametic.specifications.Specification;
-import org.seedstack.business.api.domain.*;
+import org.seedstack.business.api.domain.DomainAggregateRoot;
+import org.seedstack.business.api.domain.DomainEntity;
+import org.seedstack.business.api.domain.DomainFactory;
+import org.seedstack.business.api.domain.DomainPolicy;
+import org.seedstack.business.api.domain.DomainRepository;
+import org.seedstack.business.api.domain.DomainValueObject;
 import org.seedstack.business.api.domain.identity.IdentityHandler;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.DtoOf;
 import org.seedstack.business.api.interfaces.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
-
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.*;
 
 
 /**
@@ -97,7 +109,6 @@ public final class DomainSpecifications {
     public static final Specification<Class<?>> FACTORY = and(
             ancestorMetaAnnotatedWith(DomainFactory.class),
             classIsInterface(),
-            not(classIs(Factory.class)),
             not(classIsAnnotation()));
 
     /**

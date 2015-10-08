@@ -15,12 +15,17 @@ import java.lang.reflect.Type;
 import javax.inject.Inject;
 import javax.inject.Qualifier;
 
+import org.kametic.specifications.Specification;
+import org.seedstack.business.api.DomainSpecifications;
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.api.domain.DomainErrorCodes;
 import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.DomainRegistry;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
+import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.core.api.SeedException;
 import org.seedstack.seed.core.api.TypeOf;
 
 import com.google.inject.Injector;
@@ -42,12 +47,14 @@ public class DomainRegistryImpl implements DomainRegistry {
 	@Override
 	public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf,
 			Class<? extends Annotation> qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.REPOSITORY, DomainErrorCodes.ILLEGAL_REPOSITORY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
 	@Override
 	public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf,
 			String qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.REPOSITORY, DomainErrorCodes.ILLEGAL_REPOSITORY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
@@ -65,17 +72,20 @@ public class DomainRegistryImpl implements DomainRegistry {
 
 	@Override
 	public <T extends Factory<A>,A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf) {
+		checkType(typeOf.getRawType(), DomainSpecifications.FACTORY, DomainErrorCodes.ILLEGAL_FACTORY);
 		return getInstance(getKey(typeOf.getType()));
 	}
 
 	@Override
 	public <T extends Factory<A>,A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf,
 			Class<? extends Annotation> qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.FACTORY, DomainErrorCodes.ILLEGAL_FACTORY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
 	@Override
 	public <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf, String qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.FACTORY, DomainErrorCodes.ILLEGAL_FACTORY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
@@ -97,62 +107,74 @@ public class DomainRegistryImpl implements DomainRegistry {
 
 	@Override
 	public <T> T getService(TypeOf<T> typeOf) {
+		checkType(typeOf.getRawType(), DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(typeOf.getType()));
 	}
 
 	@Override
 	public <T> T getService(TypeOf<T> typeOf, Class<? extends Annotation> qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
 	@Override
 	public <T> T getService(TypeOf<T> typeOf, String qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
 	@Override
 	public <T> T getService(Class<T> rawType) {
+		checkType(rawType, DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(getType(rawType)));
 	}
 
 	@Override
 	public <T> T getService(Class<T> rawType, Class<? extends Annotation> qualifier) {
+		checkType(rawType, DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(rawType,qualifier));
 	}
 
 
 	@Override
 	public <T> T getService(Class<T> rawType, String qualifier) {
+		checkType(rawType, DomainSpecifications.SERVICE, DomainErrorCodes.ILLEGAL_SERVICE);
 		return getInstance(getKey(getType(rawType),qualifier));
 	}
 
 	@Override
 	public <T> T getPolicy(Class<T> rawType) {
+		checkType(rawType, DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(getType(rawType)));
 	}
 
 	@Override
 	public <T> T getPolicy(Class<T> rawType, Class<? extends Annotation> qualifier) {
+		checkType(rawType, DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(rawType,qualifier));
 	}
 
 	@Override
 	public <T> T getPolicy(Class<T> rawType, String qualifier) {
+		checkType(rawType, DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(getType(rawType),qualifier));
 	}
 
 	@Override
 	public <T> T getPolicy(TypeOf<T> typeOf) {
+		checkType(typeOf.getRawType(), DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(typeOf.getType()));
 	}
 
 	@Override
 	public <T> T getPolicy(TypeOf<T> typeOf, Class<? extends Annotation> qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
 	@Override
 	public <T> T getPolicy(TypeOf<T> typeOf, String qualifier) {
+		checkType(typeOf.getRawType(), DomainSpecifications.POLICY, DomainErrorCodes.ILLEGAL_POLICY);
 		return getInstance(getKey(typeOf.getType(), qualifier));
 	}
 
@@ -206,5 +228,16 @@ public class DomainRegistryImpl implements DomainRegistry {
 			return rawType;
 		}
 		return Types.newParameterizedType(rawType, typeArguments);
+	}
+
+	/**
+	 * @param rawType raw type to check
+	 * @param spec {@link Specification} to check
+	 * @param errorCode {@link ErrorCode} to throw if the {@link Specification} is not satisfied.
+	 */
+	private <T> void checkType(Class<T> rawType, Specification<Class<?>> spec, DomainErrorCodes errorCode) {
+		if (! spec.isSatisfiedBy(rawType)) {
+			throw SeedException.createNew(errorCode).put("class", rawType);
+		}
 	}
 }

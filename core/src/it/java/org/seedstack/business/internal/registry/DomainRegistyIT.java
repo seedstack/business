@@ -35,6 +35,7 @@ import org.seedstack.business.internal.registry.fixtures.service.RebateServiceIn
 import org.seedstack.business.internal.registry.fixtures.service.ServiceQualifier;
 import org.seedstack.business.internal.registry.repository.ClientRepository;
 import org.seedstack.business.internal.registry.repository.JpaQualifier;
+import org.seedstack.seed.core.api.SeedException;
 import org.seedstack.seed.core.api.TypeOf;
 import org.seedstack.seed.it.SeedITRunner;
 
@@ -59,6 +60,15 @@ public class DomainRegistyIT {
 		Assertions.assertThat(service).isInstanceOf(MyServiceInternal.class);
 	}
 	
+	/**
+	 * Test a bad service from the {@link DomainRegistry}.
+	 */
+	@Test(expected=SeedException.class)
+	public void testBadService() {
+		this.domainRegistry.getService(String.class);
+	}
+	
+
 	/**
 	 * Test to get a {@link Service} from the {@link DomainRegistry}.
 	 */
@@ -109,6 +119,14 @@ public class DomainRegistyIT {
 		RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class);
 		final int rebateExpected = 10;
 		Assertions.assertThat(policy.calculateRebate(new Product(),10000)).isEqualTo(rebateExpected);
+	}
+
+	/**
+	 * Test a bad service from the {@link DomainRegistry}.
+	 */
+	@Test(expected=SeedException.class)
+	public void testBadPolicy() {
+		this.domainRegistry.getPolicy(String.class);
 	}
 
 	/**
