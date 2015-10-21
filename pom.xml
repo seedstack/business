@@ -39,7 +39,6 @@
         <module>core</module>
         <module>specs</module>
         <module>web</module>
-        <module>bom</module>
     </modules>
 
     <build>
