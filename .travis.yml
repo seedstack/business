@@ -11,12 +11,10 @@ cache:
   directories:
     - "$HOME/.m2/repository"
 
-install: /bin/true
+install:
+  - rm ~/.m2/settings.xml
+  - if [ $TRAVIS_PULL_REQUEST = false ] && [ $TRAVIS_BRANCH = master ]; then GOAL=deploy; else GOAL=install; fi
 
-script:
-  - mvn -q -B -U -T 2 -Pjavadoc,compatibility,staging install jacoco:report
-  - mvn -q -B coveralls:report -DrepoToken=$COVERALLS_TOKEN
+script: mvn -q -U -T 2 -Pcompatibility,snapshots,javadoc $GOAL jacoco:report
 
-after_success:
-  - echo "<settings><servers><server><id>sonatype-nexus-snapshots</id><username>\${env.SONATYPE_USER}</username><password>\${env.SONATYPE_PASS}</password></server></servers></settings>" > ~/settings.xml
-  - "[[ $TRAVIS_PULL_REQUEST == \"false\" && $TRAVIS_BRANCH == \"master\" ]] && mvn -q deploy --settings ~/settings.xml -DskipTests=true -Pjavadoc"
+after_success: mvn -q coveralls:report -DrepoToken=$COVERALLS_TOKEN
