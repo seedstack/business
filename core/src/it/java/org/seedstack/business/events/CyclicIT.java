@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.events;
 
-import org.seedstack.business.api.EventService;
+import org.seedstack.business.EventService;
 import org.seedstack.business.events.fixtures.cyclic.Event1;
 import org.junit.Test;
 import org.junit.runner.RunWith;

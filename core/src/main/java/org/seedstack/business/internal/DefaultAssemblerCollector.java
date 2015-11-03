@@ -9,10 +9,10 @@ package org.seedstack.business.internal;
 
 import com.google.common.reflect.TypeToken;
 import org.javatuples.Tuple;
-import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.Tuples;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.interfaces;
 
-import org.seedstack.business.api.interfaces.finder.Finder;
+import org.seedstack.business.finder.Finder;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
 import org.assertj.core.util.Maps;
-import org.seedstack.business.api.domain.BaseRepository;
+import org.seedstack.business.domain.BaseRepository;
 
 import java.util.Map;
 

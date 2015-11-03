@@ -14,13 +14,14 @@ import java.lang.annotation.Target;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.seedstack.business.api.Service;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.DomainElement;
-import org.seedstack.business.api.domain.DomainPolicy;
-import org.seedstack.business.api.domain.DomainRegistry;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.Service;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainElement;
+import org.seedstack.business.domain.DomainPolicy;
+import org.seedstack.business.domain.DomainRegistry;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.internal.DomainRegistryImpl;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.TypeOf;
 

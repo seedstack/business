@@ -9,9 +9,9 @@ package org.seedstack.business.internal.event;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.inject.Injector;
-import org.seedstack.business.api.Event;
-import org.seedstack.business.api.EventHandler;
-import org.seedstack.business.api.EventService;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.EventService;
 import org.seedstack.business.events.fixtures.MyEvent;
 import org.seedstack.business.events.fixtures.MyEventHandler;
 import org.junit.Test;

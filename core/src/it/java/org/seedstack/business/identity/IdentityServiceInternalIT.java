@@ -13,7 +13,7 @@ package org.seedstack.business.identity;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.identity.*;
+import org.seedstack.business.domain.identity.*;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.identity.fixtures.MyAggregateWithNoIdentityManagement;

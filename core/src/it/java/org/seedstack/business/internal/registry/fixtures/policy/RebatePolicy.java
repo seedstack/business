@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.registry.fixtures.policy;
 
-import org.seedstack.business.api.domain.DomainPolicy;
+import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.internal.registry.fixtures.domain.Product;
 
 /**

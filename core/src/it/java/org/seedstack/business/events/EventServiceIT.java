@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.events;
 
-import org.seedstack.business.api.EventService;
+import org.seedstack.business.EventService;
 import org.seedstack.business.events.fixtures.MyEvent;
 import org.seedstack.business.events.fixtures.MyEvent2;
 import org.assertj.core.api.Assertions;

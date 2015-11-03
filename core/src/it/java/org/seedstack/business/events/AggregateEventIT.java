@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.events;
 
-import org.seedstack.business.api.EventHandler;
-import org.seedstack.business.api.domain.events.AggregateReadEvent;
-import org.seedstack.business.api.domain.events.BaseAggregateEvent;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.domain.events.AggregateReadEvent;
+import org.seedstack.business.domain.events.BaseAggregateEvent;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductId;

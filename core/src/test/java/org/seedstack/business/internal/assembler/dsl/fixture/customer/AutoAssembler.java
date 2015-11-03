@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.api.interfaces.assembler.ModelMapperAssembler;
+import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
 
 /**
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

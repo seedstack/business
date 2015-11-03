@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.order;
 
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 import java.util.ArrayList;

@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.event.test;
 
-import org.seedstack.business.api.Event;
-import org.seedstack.business.api.EventHandler;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
 
 import java.util.HashMap;
 import java.util.Map;

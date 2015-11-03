@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.activation;
 
-import org.seedstack.business.api.domain.BaseFactory;
+import org.seedstack.business.domain.BaseFactory;
 
 import javax.validation.constraints.NotNull;
 

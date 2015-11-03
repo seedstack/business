@@ -9,10 +9,10 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import org.javatuples.Tuple;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssembleDtoProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.AssembleDtoWithQualifierProvider;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.AssemblerTypes;
+import org.seedstack.business.assembler.dsl.AssembleDtoProvider;
+import org.seedstack.business.assembler.dsl.AssembleDtoWithQualifierProvider;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;

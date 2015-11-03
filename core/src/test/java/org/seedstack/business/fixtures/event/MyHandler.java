@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.api.EventHandler;
+import org.seedstack.business.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

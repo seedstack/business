@@ -10,7 +10,7 @@ package org.seedstack.business.internal.assembler;
 import com.google.inject.assistedinject.Assisted;
 import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.api.interfaces.assembler.ModelMapperTupleAssembler;
+import org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
-@org.seedstack.business.api.interfaces.assembler.ModelMapper
+@org.seedstack.business.assembler.ModelMapper
 public class DefaultModelMapperTupleAssembler<T extends Tuple, D> extends ModelMapperTupleAssembler<T, D> {
 
     @SuppressWarnings("unchecked")

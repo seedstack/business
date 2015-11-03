@@ -8,7 +8,7 @@
 package org.seedstack.business.assembler.fixtures;
 
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 
 public class MyAssembler extends BaseAssembler<MyAggregateRoot, MyUnrestrictedDto> {
 

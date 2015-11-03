@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.assembler.auto.fixture;
 
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.assembler.DtoOf;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

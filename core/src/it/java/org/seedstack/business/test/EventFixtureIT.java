@@ -9,12 +9,10 @@ package org.seedstack.business.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.events.fixtures.GenericEventHandler;
 import org.seedstack.business.fixtures.event.MyEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyHandler2;
 import org.seedstack.business.fixtures.event.MyHandler3;
-import org.seedstack.business.test.event.EventFixture;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

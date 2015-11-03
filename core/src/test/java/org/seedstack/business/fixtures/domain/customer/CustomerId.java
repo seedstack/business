@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.BaseValueObject;
+import org.seedstack.business.domain.BaseValueObject;
  
 public class CustomerId extends BaseValueObject{
 	

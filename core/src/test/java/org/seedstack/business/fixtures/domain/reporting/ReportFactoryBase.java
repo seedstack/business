@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.reporting;
 
-import org.seedstack.business.api.domain.BaseFactory;
+import org.seedstack.business.domain.BaseFactory;
 
 /**
  *

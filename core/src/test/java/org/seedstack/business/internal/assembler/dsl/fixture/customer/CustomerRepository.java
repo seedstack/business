@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
-import org.seedstack.business.api.domain.GenericRepository;
+import org.seedstack.business.domain.GenericRepository;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

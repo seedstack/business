@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.order;
 
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.domain.Repository;
 
 
 public interface OrderRepository extends Repository<Order, OrderId> {

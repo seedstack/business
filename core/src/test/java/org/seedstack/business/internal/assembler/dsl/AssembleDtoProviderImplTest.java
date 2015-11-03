@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.Tuples;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.Tuples;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
 
 import java.util.ArrayList;

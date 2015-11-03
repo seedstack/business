@@ -13,10 +13,10 @@ import org.fest.reflect.core.Reflection;
 import org.fest.reflect.reference.TypeRef;
 import org.junit.Before;
 import org.junit.Test;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.BaseAggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 
 import java.lang.reflect.Type;

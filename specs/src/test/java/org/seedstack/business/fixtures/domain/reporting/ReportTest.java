@@ -8,7 +8,7 @@
 package org.seedstack.business.fixtures.domain.reporting;
 
 import org.fest.reflect.core.Reflection;
-import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.domain.AggregateRoot;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.objenesis.Objenesis;

@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.api.domain.*;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.domain.*;
+import org.seedstack.business.assembler.Assembler;
 
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
@@ -87,7 +87,7 @@ public interface InternalRegistry {
      * Returns a generic factory for the given aggregate root.
      * <p>
      * If no factory were created by the client developer, the method return a
-     * default factory, i.e. {@link org.seedstack.business.api.domain.Factory}.
+     * default factory, i.e. {@link org.seedstack.business.domain.Factory}.
      * </p>
      *
      * @param aggregateRoot the aggregate root
@@ -102,7 +102,7 @@ public interface InternalRegistry {
      * @param domainObject the domain object produced by the factory
      * @return the factory
      * @throws java.lang.IllegalArgumentException if the passed domainObject does not implement
-     *                                            {@link org.seedstack.business.api.domain.DomainObject}
+     *                                            {@link org.seedstack.business.domain.DomainObject}
      */
     Factory<?> defaultFactoryOf(Class<? extends DomainObject> domainObject);
 

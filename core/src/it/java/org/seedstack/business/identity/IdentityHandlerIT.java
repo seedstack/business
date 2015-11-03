@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.Factory;
+import org.seedstack.business.domain.Factory;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateFactory;
 import org.seedstack.business.identity.fixtures.MyEntity;

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.usecase1;
 
-import org.seedstack.business.api.interfaces.assembler.BaseTupleAssembler;
+import org.seedstack.business.assembler.BaseTupleAssembler;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.order.Order;

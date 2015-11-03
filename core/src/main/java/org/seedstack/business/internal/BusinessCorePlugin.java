@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.kametic.specifications.Specification;
-import org.seedstack.business.api.DomainSpecifications;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.DomainSpecifications;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
 import org.seedstack.seed.Application;

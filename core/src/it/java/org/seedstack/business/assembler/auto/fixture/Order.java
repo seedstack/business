@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.assembler.auto.fixture;
 
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 /**
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

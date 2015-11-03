@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.registry.fixtures.domain;
 
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 /**
  * Dummy class.

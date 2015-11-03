@@ -9,8 +9,8 @@ package org.seedstack.business.assembler.auto.fixture;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.AbstractBaseAssembler;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.AbstractBaseAssembler;
 
 import javax.inject.Inject;
 import javax.inject.Named;

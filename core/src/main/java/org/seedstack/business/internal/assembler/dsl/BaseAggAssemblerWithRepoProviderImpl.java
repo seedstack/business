@@ -8,13 +8,13 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.DomainObject;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.Tuples;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.DomainSpecifications;
 import org.seedstack.business.internal.assembler.dsl.resolver.DtoInfoResolver;
 import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 import org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver;

@@ -10,7 +10,7 @@ package org.seedstack.business.assembler.auto;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.auto.fixture.*;
 import org.seedstack.seed.it.SeedITRunner;
 

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.sample;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingEntityId;
 
 /**
  * Case 4: The first name and last name are mapped to a {@code Pair&lt;String, String&gt;} in the constructor.

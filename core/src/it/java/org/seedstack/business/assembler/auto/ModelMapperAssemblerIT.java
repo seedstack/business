@@ -12,10 +12,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.BaseAggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.api.interfaces.assembler.ModelMapper;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.DtoOf;
+import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

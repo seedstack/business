@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.GenericFactory;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

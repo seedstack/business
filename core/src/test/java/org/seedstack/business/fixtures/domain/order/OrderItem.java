@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.order;
 
-import org.seedstack.business.api.domain.BaseEntity;
+import org.seedstack.business.domain.BaseEntity;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 
 

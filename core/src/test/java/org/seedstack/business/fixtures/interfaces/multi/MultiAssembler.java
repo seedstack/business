@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.multi;
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.multi.Multi;
 
 public class MultiAssembler extends BaseAssembler<Multi,MultiRepresentation> {

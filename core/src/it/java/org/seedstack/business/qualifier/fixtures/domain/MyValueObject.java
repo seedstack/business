@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-import org.seedstack.business.api.domain.BaseValueObject;
+import org.seedstack.business.domain.BaseValueObject;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

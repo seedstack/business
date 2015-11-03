@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.registry.fixtures.service;
 
-import org.seedstack.business.api.Service;
+import org.seedstack.business.Service;
 
 /**
  * Dummy class.

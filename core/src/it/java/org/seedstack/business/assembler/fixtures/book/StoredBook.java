@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.assembler.fixtures.book;
 
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 import java.util.Date;
 

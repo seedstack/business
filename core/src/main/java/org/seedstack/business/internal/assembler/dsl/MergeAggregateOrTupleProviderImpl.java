@@ -9,14 +9,14 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import org.javatuples.*;
-import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateWithRepositoryProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateOrTupleProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateOrTupleWithQualifierProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryProvider;
+import org.seedstack.business.Tuples;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.AssemblerTypes;
+import org.seedstack.business.assembler.dsl.MergeAggregateWithRepositoryProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregateOrTupleProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregateOrTupleWithQualifierProvider;
+import org.seedstack.business.assembler.dsl.MergeTupleWithRepositoryProvider;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

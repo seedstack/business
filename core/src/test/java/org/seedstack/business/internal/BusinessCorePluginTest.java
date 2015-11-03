@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.DomainSpecifications;
 import org.seedstack.business.fixtures.domain.discount.Discount;
 
 import static org.mockito.Mockito.mock;
@@ -23,14 +23,14 @@ import static org.mockito.Mockito.mock;
  * @author epo.jemba@ext.mpsa.com
  */
 public class BusinessCorePluginTest {
-	
-	BusinessCorePlugin underTestBusinessCorePlugin;
-	
-	@Before
-	public void setUp () {
-		underTestBusinessCorePlugin = new BusinessCorePlugin();
+
+    BusinessCorePlugin underTestBusinessCorePlugin;
+
+    @Before
+    public void setUp() {
+        underTestBusinessCorePlugin = new BusinessCorePlugin();
         mockFirstRound();
-	}
+    }
 
     private void mockFirstRound() {
         RoundEnvironment environment = mock(RoundEnvironment.class);
@@ -43,10 +43,10 @@ public class BusinessCorePluginTest {
         underTestBusinessCorePlugin.classpathScanRequests();
         // TODO mock all the list to do the second round
     }
-	
-	@Test
-	public void aggregateSpecification_works_fine () {
-		Assertions.assertThat(DomainSpecifications.AGGREGATE_ROOT.isSatisfiedBy(Discount.class)).isTrue();
-	}
+
+    @Test
+    public void aggregateSpecification_works_fine() {
+        Assertions.assertThat(DomainSpecifications.AGGREGATE_ROOT.isSatisfiedBy(Discount.class)).isTrue();
+    }
 
 }

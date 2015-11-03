@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.DomainObject;
-import org.seedstack.business.api.domain.DomainPolicy;
+import org.seedstack.business.Producible;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.DomainPolicy;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

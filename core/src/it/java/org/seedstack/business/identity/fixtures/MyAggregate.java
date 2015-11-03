@@ -10,9 +10,9 @@
  */
 package org.seedstack.business.identity.fixtures;
 
-import org.seedstack.business.api.domain.Identity;
-import org.seedstack.business.api.domain.BaseAggregateRoot;
-import org.seedstack.business.api.domain.identity.UUIDHandler;
+import org.seedstack.business.domain.Identity;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.Set;
 import java.util.UUID;

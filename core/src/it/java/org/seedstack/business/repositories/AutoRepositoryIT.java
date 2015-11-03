@@ -10,7 +10,7 @@ package org.seedstack.business.repositories;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 import org.seedstack.business.fixtures.infrastructure.persistence.customer.CustomerInMemoryRepository;

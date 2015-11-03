@@ -9,13 +9,13 @@ package org.seedstack.business.internal.event.test;
 
 import com.google.inject.Injector;
 import org.mockito.internal.util.reflection.Whitebox;
-import org.seedstack.business.api.Event;
+import org.seedstack.business.Event;
 import org.seedstack.business.fixtures.event.MyEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyHandler2;
 import org.seedstack.business.fixtures.event.MyService;
-import org.seedstack.business.test.event.EventFixture;
-import org.seedstack.business.api.EventHandler;
+import org.seedstack.business.test.EventFixture;
+import org.seedstack.business.EventHandler;
 
 import org.junit.Before;
 import org.junit.Test;

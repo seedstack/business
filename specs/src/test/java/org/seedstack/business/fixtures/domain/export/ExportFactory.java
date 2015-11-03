@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.export;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.GenericFactory;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

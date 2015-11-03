@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.domain.Repository;
 
 import java.util.Collection;
 

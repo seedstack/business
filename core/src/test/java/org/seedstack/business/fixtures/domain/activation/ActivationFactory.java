@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.activation;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.GenericFactory;
 
 public interface ActivationFactory extends GenericFactory<Activation> {
 
