@@ -18,8 +18,8 @@ import org.seedstack.business.api.domain.*;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.api.interfaces.assembler.AssemblerErrorCodes;
 import org.seedstack.business.internal.utils.BusinessReflectUtils;
-import org.seedstack.seed.core.api.Logging;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.Logging;
+import org.seedstack.seed.SeedException;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;

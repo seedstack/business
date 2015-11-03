@@ -9,7 +9,7 @@ package org.seedstack.business.assembler.fixtures;
 
 
 import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
-import org.seedstack.seed.security.api.data.Secured;
+import org.seedstack.seed.security.data.Secured;
 
 /**
  * @author epo.jemba@ext.mpsa.com

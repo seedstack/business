@@ -19,7 +19,7 @@ import org.seedstack.business.api.domain.events.AggregateReadEvent;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.seedstack.business.api.domain.events.EventErrorCodes;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 import javax.inject.Inject;
 

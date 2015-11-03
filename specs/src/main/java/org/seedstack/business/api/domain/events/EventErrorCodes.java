@@ -8,7 +8,7 @@
 package org.seedstack.business.api.domain.events;
 
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.ErrorCode;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

@@ -17,7 +17,7 @@ import org.seedstack.business.api.domain.identity.*;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.identity.fixtures.MyAggregateWithNoIdentityManagement;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

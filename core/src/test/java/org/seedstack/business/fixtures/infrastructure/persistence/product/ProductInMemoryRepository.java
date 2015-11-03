@@ -11,7 +11,7 @@ import org.seedstack.business.fixtures.InMemoryRepository;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 import org.seedstack.business.fixtures.domain.product.ProductRepository;
-import org.seedstack.seed.core.api.Logging;
+import org.seedstack.seed.Logging;
 import org.seedstack.seed.persistence.inmemory.api.Store;
 import org.slf4j.Logger;
 

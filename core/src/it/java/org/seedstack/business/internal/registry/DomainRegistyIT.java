@@ -33,8 +33,8 @@ import org.seedstack.business.internal.registry.fixtures.service.RebateServiceIn
 import org.seedstack.business.internal.registry.fixtures.service.ServiceQualifier;
 import org.seedstack.business.internal.registry.repository.ClientRepository;
 import org.seedstack.business.internal.registry.repository.JpaQualifier;
-import org.seedstack.seed.core.api.SeedException;
-import org.seedstack.seed.core.api.TypeOf;
+import org.seedstack.seed.SeedException;
+import org.seedstack.seed.TypeOf;
 import org.seedstack.seed.it.SeedITRunner;
 
 

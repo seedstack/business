@@ -20,7 +20,7 @@ import org.seedstack.business.api.EventHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 import java.util.HashMap;
 

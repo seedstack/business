@@ -11,7 +11,7 @@ import java.lang.annotation.Annotation;
 
 import org.seedstack.business.api.Producible;
 import org.seedstack.business.api.Service;
-import org.seedstack.seed.core.api.TypeOf;
+import org.seedstack.seed.TypeOf;
 
 /**
  * Registry to access to all domain objects.

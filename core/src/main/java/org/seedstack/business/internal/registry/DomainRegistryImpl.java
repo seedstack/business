@@ -22,9 +22,9 @@ import org.seedstack.business.api.domain.DomainObject;
 import org.seedstack.business.api.domain.DomainRegistry;
 import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Repository;
-import org.seedstack.seed.core.api.ErrorCode;
-import org.seedstack.seed.core.api.SeedException;
-import org.seedstack.seed.core.api.TypeOf;
+import org.seedstack.seed.ErrorCode;
+import org.seedstack.seed.SeedException;
+import org.seedstack.seed.TypeOf;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;

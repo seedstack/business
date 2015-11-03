@@ -8,7 +8,7 @@
 package org.seedstack.business.assembler.fixtures;
 
 
-import org.seedstack.seed.security.api.data.Restriction;
+import org.seedstack.seed.security.data.Restriction;
 
 public class MyDto {
 	

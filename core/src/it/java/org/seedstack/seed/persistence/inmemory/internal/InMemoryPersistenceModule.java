@@ -9,7 +9,7 @@ package org.seedstack.seed.persistence.inmemory.internal;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
-import org.seedstack.seed.core.api.Install;
+import org.seedstack.seed.Install;
 
 /**
  * @author epo.jemba@ext.mpsa.com

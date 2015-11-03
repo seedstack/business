@@ -9,7 +9,7 @@ package org.seedstack.business.internal.utils;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Method;
 

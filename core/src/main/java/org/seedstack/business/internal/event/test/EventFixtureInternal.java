@@ -10,7 +10,7 @@ package org.seedstack.business.internal.event.test;
 import com.google.inject.Injector;
 import org.seedstack.business.api.*;
 import org.seedstack.business.test.event.*;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 import javax.inject.Inject;
 import java.lang.reflect.Method;

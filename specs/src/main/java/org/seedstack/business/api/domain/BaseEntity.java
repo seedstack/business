@@ -11,7 +11,7 @@ import org.seedstack.business.api.domain.DomainErrorCodes;
 import org.seedstack.business.api.domain.Entity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 
 /**

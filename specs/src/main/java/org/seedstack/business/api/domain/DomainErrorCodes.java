@@ -8,7 +8,7 @@
 package org.seedstack.business.api.domain;
 
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.ErrorCode;
 
 public enum DomainErrorCodes implements ErrorCode {
 	AGGREGATE_ROOT_CREATION_ISSUE,

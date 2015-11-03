@@ -11,7 +11,7 @@
 package org.seedstack.business.api.domain.identity;
 
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.ErrorCode;
 
 /**
  * IdentityErrorCodes

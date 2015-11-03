@@ -44,7 +44,7 @@ public final class Tuples {
      * @param objects the list of object
      * @param <TUPLE> the tuple type
      * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
      */
     @SuppressWarnings("unchecked")
     public static <TUPLE extends Tuple> TUPLE create(List<?> objects) {
@@ -68,7 +68,7 @@ public final class Tuples {
      * @param objects     the array of object
      * @param <TUPLE>     the tuple type
      * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static <TUPLE extends Tuple> TUPLE create(Object firstObject, Object... objects) {
@@ -83,7 +83,7 @@ public final class Tuples {
      * @param objects the array of object
      * @param <TUPLE> the tuple type
      * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
      * @deprecated Use the shorter {@code create} method instead.
      */
     @Deprecated
@@ -98,7 +98,7 @@ public final class Tuples {
      * @param objects the list of object
      * @param <TUPLE> the tuple type
      * @return a tuple
-     * @throws org.seedstack.seed.core.api.SeedException if the array length is greater than 10
+     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
      * @deprecated Use the shorter {@code create} method instead.
      */
     @Deprecated

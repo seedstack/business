@@ -23,7 +23,7 @@ public interface HandlerProvider {
      *
      * @param event   event which should be received
      * @param handler handler which should be called
-     * @throws org.seedstack.seed.core.api.SeedException if the expectation is not respected
+     * @throws org.seedstack.seed.SeedException if the expectation is not respected
      */
     void eventWasHandledBy(Event event, Class<? extends EventHandler> handler);
 
@@ -31,7 +31,7 @@ public interface HandlerProvider {
      * Checks if the given event was received by the handler when the specified method is called.
      *
      * @param handlerMap map of handler which should be called with the associate event
-     * @throws org.seedstack.seed.core.api.SeedException if the expectation is not respected
+     * @throws org.seedstack.seed.SeedException if the expectation is not respected
      */
     void eventWasHandledBy(Map<Class<? extends EventHandler>, Event> handlerMap);
 }

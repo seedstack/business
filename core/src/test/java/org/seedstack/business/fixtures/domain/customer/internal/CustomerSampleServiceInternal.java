@@ -9,8 +9,8 @@ package org.seedstack.business.fixtures.domain.customer.internal;
 
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerSampleService;
-import org.seedstack.seed.core.api.Configuration;
-import org.seedstack.seed.core.api.Logging;
+import org.seedstack.seed.Configuration;
+import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
 public class CustomerSampleServiceInternal implements CustomerSampleService {

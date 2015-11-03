@@ -10,7 +10,7 @@ package org.seedstack.business.api.domain.base;
 import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.seedstack.business.api.domain.BaseEntity;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 import java.util.Set;
 

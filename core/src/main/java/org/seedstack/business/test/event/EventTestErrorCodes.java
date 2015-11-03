@@ -8,7 +8,7 @@
 package org.seedstack.business.test.event;
 
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.ErrorCode;
 
 /**
  * Error codes for event fixtures.

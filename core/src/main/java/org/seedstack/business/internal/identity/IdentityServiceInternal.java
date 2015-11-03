@@ -22,8 +22,8 @@ import org.seedstack.business.api.domain.Identity;
 import org.seedstack.business.api.domain.identity.IdentityErrorCodes;
 import org.seedstack.business.api.domain.identity.IdentityHandler;
 import org.seedstack.business.api.domain.identity.IdentityService;
-import org.seedstack.seed.core.api.Application;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.Application;
+import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Field;
 

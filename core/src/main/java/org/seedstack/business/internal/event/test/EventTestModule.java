@@ -14,7 +14,7 @@ import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import org.seedstack.business.test.event.EventFixture;
 import org.seedstack.business.api.EventHandler;
-import org.seedstack.seed.core.api.Install;
+import org.seedstack.seed.Install;
 
 import java.lang.reflect.Method;
 

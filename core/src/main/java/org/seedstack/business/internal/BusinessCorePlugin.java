@@ -22,7 +22,7 @@ import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.interfaces.assembler.Assembler;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
-import org.seedstack.seed.core.api.Application;
+import org.seedstack.seed.Application;
 import org.seedstack.seed.core.internal.application.ApplicationPlugin;
 import org.seedstack.seed.core.utils.BaseClassSpecifications;
 import org.slf4j.Logger;

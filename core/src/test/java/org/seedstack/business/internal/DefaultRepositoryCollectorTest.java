@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.business.api.domain.Repository;
 import org.seedstack.business.repositories.fixtures.MyQualifier;
-import org.seedstack.seed.core.api.Application;
+import org.seedstack.seed.Application;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

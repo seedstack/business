@@ -13,7 +13,7 @@ package org.seedstack.business.internal.utils;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.junit.Test;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 import org.seedstack.business.internal.utils.sample.*;
 
 import static org.seedstack.business.internal.utils.BindingUtils.resolveBindingDefinitions;

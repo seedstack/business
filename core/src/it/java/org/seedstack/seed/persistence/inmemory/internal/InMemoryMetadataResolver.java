@@ -13,7 +13,7 @@ package org.seedstack.seed.persistence.inmemory.internal;
 import org.aopalliance.intercept.MethodInvocation;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 import org.seedstack.seed.persistence.inmemory.api.Store;
-import org.seedstack.seed.transaction.api.Propagation;
+import org.seedstack.seed.transaction.Propagation;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;
 

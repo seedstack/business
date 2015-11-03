@@ -19,7 +19,7 @@ import org.seedstack.business.api.domain.Factory;
 import org.seedstack.business.api.domain.Identity;
 import org.seedstack.business.api.domain.identity.IdentityService;
 import org.seedstack.business.internal.utils.MethodMatcher;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import javax.inject.Inject;

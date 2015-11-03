@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.api.interfaces.assembler;
 
-import org.seedstack.seed.core.api.ErrorCode;
+import org.seedstack.seed.ErrorCode;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

@@ -16,7 +16,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.business.internal.defaults.FactoryInternal;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 /**
  * FactoryInternalTest

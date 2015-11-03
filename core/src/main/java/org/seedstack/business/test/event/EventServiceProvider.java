@@ -18,7 +18,7 @@ public interface EventServiceProvider {
      * Checks if the given handlers was called.
      *
      * @param handlers handlers to test
-     * @throws org.seedstack.seed.core.api.SeedException if the expectation is not respected
+     * @throws org.seedstack.seed.SeedException if the expectation is not respected
      */
     void wasHandledBy(Class<? extends EventHandler>... handlers);
 
@@ -26,7 +26,7 @@ public interface EventServiceProvider {
      * Checks if the given list of handler exactly correspond to the called handlers.
      *
      * @param handlers list to test
-     * @throws org.seedstack.seed.core.api.SeedException if the expectation is not respected
+     * @throws org.seedstack.seed.SeedException if the expectation is not respected
      */
     void wasHandledExactlyBy(Class<? extends EventHandler>... handlers);
 
@@ -34,7 +34,7 @@ public interface EventServiceProvider {
      * Checks if the given handlers was not called.
      *
      * @param handlers list to test
-     * @throws org.seedstack.seed.core.api.SeedException if the expectation is not respected
+     * @throws org.seedstack.seed.SeedException if the expectation is not respected
      */
     void wasNotHandledBy(Class<? extends EventHandler>... handlers);
 }

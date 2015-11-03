@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.assembler.fixtures.*;
 import org.seedstack.seed.it.SeedITRunner;
-import org.seedstack.seed.security.api.WithUser;
+import org.seedstack.seed.security.WithUser;
 
 import javax.inject.Inject;
 
