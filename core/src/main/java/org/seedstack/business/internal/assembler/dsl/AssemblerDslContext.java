@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.api.domain.*;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
+import org.seedstack.business.domain.*;
+import org.seedstack.business.assembler.Assembler;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

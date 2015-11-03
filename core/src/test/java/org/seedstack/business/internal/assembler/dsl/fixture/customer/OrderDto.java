@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
-import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingFactoryParameter;
 
 /**
 * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

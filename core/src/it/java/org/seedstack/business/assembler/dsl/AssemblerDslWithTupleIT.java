@@ -11,10 +11,9 @@ import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.AssemblerTypes;
-import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.assembler.AssemblerTypes;
+import org.seedstack.business.assembler.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
 import org.seedstack.seed.it.SeedITRunner;
 

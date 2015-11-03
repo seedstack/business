@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.Service;
+import org.seedstack.business.Service;
 
 
 @Service

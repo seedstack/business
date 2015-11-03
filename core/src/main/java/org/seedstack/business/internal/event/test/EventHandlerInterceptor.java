@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.event.test;
 
-import org.seedstack.business.api.Event;
-import org.seedstack.business.api.EventHandler;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 

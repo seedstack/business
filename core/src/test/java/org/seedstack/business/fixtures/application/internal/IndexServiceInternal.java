@@ -9,7 +9,7 @@ package org.seedstack.business.fixtures.application.internal;
 
 import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.domain.customer.Customer;
-import org.seedstack.seed.core.api.Logging;
+import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
 public class IndexServiceInternal implements IndexService {

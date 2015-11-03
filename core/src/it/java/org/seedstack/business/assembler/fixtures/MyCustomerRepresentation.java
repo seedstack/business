@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.assembler.fixtures;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
-import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
-import org.seedstack.seed.security.api.data.Restriction;
+import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.seed.security.data.Restriction;
 
 public class MyCustomerRepresentation {
 

@@ -9,8 +9,8 @@ package org.seedstack.business.internal.assembler;
 
 import com.google.inject.assistedinject.Assisted;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.ModelMapperAssembler;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ import javax.inject.Inject;
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
-@org.seedstack.business.api.interfaces.assembler.ModelMapper
+@org.seedstack.business.assembler.ModelMapper
 public class DefaultModelMapperAssembler<A extends AggregateRoot<?>,D> extends ModelMapperAssembler<A, D> {
 
     @SuppressWarnings("unchecked")

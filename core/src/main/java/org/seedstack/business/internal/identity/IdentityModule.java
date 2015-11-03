@@ -15,10 +15,10 @@ import com.google.inject.matcher.AbstractMatcher;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
-import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.domain.stereotypes.Create;
-import org.seedstack.business.api.domain.identity.IdentityHandler;
-import org.seedstack.business.api.domain.identity.IdentityService;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Create;
+import org.seedstack.business.domain.identity.IdentityHandler;
+import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 import javax.inject.Named;

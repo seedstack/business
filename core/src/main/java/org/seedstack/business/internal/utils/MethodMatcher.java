@@ -8,8 +8,8 @@
 package org.seedstack.business.internal.utils;
 
 import com.google.common.primitives.Primitives;
-import org.seedstack.business.api.domain.DomainErrorCodes;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.business.domain.DomainErrorCodes;
+import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

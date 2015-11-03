@@ -11,11 +11,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
 
 import static org.junit.Assert.fail;

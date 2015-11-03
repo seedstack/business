@@ -10,8 +10,8 @@
  */
 package org.seedstack.business.identity.fixtures;
 
-import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.domain.stereotypes.Create;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Create;
 
 /**
  * 

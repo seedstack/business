@@ -8,9 +8,11 @@
 package org.seedstack.business.internal.event.test;
 
 import com.google.inject.Injector;
-import org.seedstack.business.api.*;
-import org.seedstack.business.test.event.*;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.EventService;
+import org.seedstack.business.test.*;
+import org.seedstack.seed.SeedException;
 
 import javax.inject.Inject;
 import java.lang.reflect.Method;

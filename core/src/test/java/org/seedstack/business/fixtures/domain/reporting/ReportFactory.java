@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.reporting;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.GenericFactory;
 
 import javax.validation.constraints.NotNull;
 

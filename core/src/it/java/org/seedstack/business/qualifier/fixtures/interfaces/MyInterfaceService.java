@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.interfaces;
 
-import org.seedstack.business.api.Service;
+import org.seedstack.business.Service;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

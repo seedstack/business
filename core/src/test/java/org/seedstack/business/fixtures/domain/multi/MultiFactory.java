@@ -10,7 +10,7 @@
  */
 package org.seedstack.business.fixtures.domain.multi;
 
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.GenericFactory;
 
 /**
  * Dummy factory for test

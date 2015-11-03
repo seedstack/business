@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.export;
 
-import org.seedstack.business.api.domain.BaseEntity;
+import org.seedstack.business.domain.BaseEntity;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

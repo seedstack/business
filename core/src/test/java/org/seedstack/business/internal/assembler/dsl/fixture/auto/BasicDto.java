@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.fixture.auto;
 
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
+import org.seedstack.business.assembler.DtoOf;
 
 import java.util.UUID;
 

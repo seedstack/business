@@ -7,7 +7,7 @@
  */
 package org.seedstack.seed.persistence.inmemory.api;
 
-import org.seedstack.seed.transaction.api.Transactional;
+import org.seedstack.seed.transaction.Transactional;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -16,7 +16,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static org.seedstack.seed.transaction.api.Propagation.REQUIRES_NEW;
+import static org.seedstack.seed.transaction.Propagation.REQUIRES_NEW;
 
 
 /**

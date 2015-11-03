@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.DomainErrorCodes;
-import org.seedstack.business.api.domain.BaseFactory;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.business.domain.DomainErrorCodes;
+import org.seedstack.business.domain.BaseFactory;
+import org.seedstack.seed.SeedException;
 
 public class CustomerFactoryDefault  extends BaseFactory<Customer> implements CustomerFactory {
 

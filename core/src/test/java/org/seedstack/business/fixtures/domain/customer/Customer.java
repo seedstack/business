@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 import javax.inject.Inject;
 import java.util.Collection;

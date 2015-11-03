@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.events.fixtures.cyclic;
 
-import org.seedstack.business.api.EventHandler;
-import org.seedstack.business.api.EventService;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.EventService;
 
 import javax.inject.Inject;
 

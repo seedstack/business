@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.registry.repository;
 
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.BaseRepository;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 /**

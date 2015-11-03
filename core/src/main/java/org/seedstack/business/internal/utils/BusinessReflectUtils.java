@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.utils;
 
 import net.jodah.typetools.TypeResolver;
-import org.seedstack.business.api.domain.AggregateRoot;
+import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 /**

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.api.Event;
+import org.seedstack.business.Event;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

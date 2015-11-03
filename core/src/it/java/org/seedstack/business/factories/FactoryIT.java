@@ -11,13 +11,13 @@
 package org.seedstack.business.factories;
 
 import com.google.inject.Inject;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.factories.fixtures.MyFactoryAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregate;
 import org.seedstack.business.identity.fixtures.MyAggregateFactory;
 import org.seedstack.business.identity.fixtures.MyAggregateFactoryDefault;
-import org.seedstack.business.internal.defaults.FactoryInternal;
+import org.seedstack.business.internal.FactoryInternal;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

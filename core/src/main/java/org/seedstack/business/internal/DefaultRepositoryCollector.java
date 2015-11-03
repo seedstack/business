@@ -13,12 +13,12 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import org.apache.commons.configuration.Configuration;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.seed.core.api.Application;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.Application;
+import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 import java.lang.annotation.Annotation;

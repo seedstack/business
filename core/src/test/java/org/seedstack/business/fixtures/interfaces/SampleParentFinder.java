@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces;
 
-import org.seedstack.business.api.interfaces.finder.Finder;
+import org.seedstack.business.finder.Finder;
 
 import java.util.List;
 

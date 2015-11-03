@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.api.EventService;
-import org.seedstack.seed.it.api.ITBind;
+import org.seedstack.business.EventService;
+import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
 

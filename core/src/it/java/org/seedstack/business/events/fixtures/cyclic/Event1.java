@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.events.fixtures.cyclic;
 
-import org.seedstack.business.api.domain.events.DomainEvent;
+import org.seedstack.business.domain.events.DomainEvent;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com

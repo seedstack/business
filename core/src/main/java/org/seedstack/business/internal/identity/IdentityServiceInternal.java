@@ -17,13 +17,13 @@ import com.google.inject.name.Names;
 import net.jodah.typetools.TypeResolver;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
-import org.seedstack.business.api.domain.Entity;
-import org.seedstack.business.api.domain.Identity;
-import org.seedstack.business.api.domain.identity.IdentityErrorCodes;
-import org.seedstack.business.api.domain.identity.IdentityHandler;
-import org.seedstack.business.api.domain.identity.IdentityService;
-import org.seedstack.seed.core.api.Application;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.business.domain.Entity;
+import org.seedstack.business.domain.Identity;
+import org.seedstack.business.domain.identity.IdentityErrorCodes;
+import org.seedstack.business.domain.identity.IdentityHandler;
+import org.seedstack.business.domain.identity.IdentityService;
+import org.seedstack.seed.Application;
+import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Field;
 

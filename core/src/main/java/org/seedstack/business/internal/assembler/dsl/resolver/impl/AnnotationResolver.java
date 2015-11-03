@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.impl;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
-import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingFactoryParameter;
 import org.seedstack.business.internal.assembler.dsl.resolver.DtoInfoResolver;
 import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 
@@ -22,8 +22,8 @@ import java.lang.reflect.Method;
  * See Their respective documentation to understand {@code AnnotationResolver} implementation.
  * </p>
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- * @see org.seedstack.business.api.interfaces.assembler.MatchingEntityId
- * @see org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter
+ * @see org.seedstack.business.assembler.MatchingEntityId
+ * @see org.seedstack.business.assembler.MatchingFactoryParameter
  */
 public class AnnotationResolver implements DtoInfoResolver {
 

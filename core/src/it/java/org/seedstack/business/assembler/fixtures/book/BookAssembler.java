@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.assembler.fixtures.book;
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 
 import javax.inject.Named;
 

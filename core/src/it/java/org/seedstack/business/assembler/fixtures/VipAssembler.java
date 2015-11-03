@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.assembler.fixtures;
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 
 public class VipAssembler extends BaseAssembler<Customer, VipRepresentation> {

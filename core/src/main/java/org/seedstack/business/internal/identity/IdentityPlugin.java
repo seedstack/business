@@ -14,7 +14,7 @@ import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
-import org.seedstack.business.api.DomainSpecifications;
+import org.seedstack.business.DomainSpecifications;
 
 import java.util.Collection;
 

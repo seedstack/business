@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures;
 
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.BaseRepository;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.seed.persistence.inmemory.api.InMemory;
 
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
  * Repository for in memory persistence.
  * <p>
  * When no specific repository exist for the aggregate, this repository will be injected for
- * {@link org.seedstack.business.api.domain.Repository} with the qualifier {@literal @}InMemory.
+ * {@link org.seedstack.business.domain.Repository} with the qualifier {@literal @}InMemory.
  * </p>
  *
  * @author epo.jemba@ext.mpsa.com

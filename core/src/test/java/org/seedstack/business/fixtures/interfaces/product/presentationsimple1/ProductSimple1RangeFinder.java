@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.product.presentationsimple1;
 
-import org.seedstack.business.api.interfaces.finder.RangeFinder;
+import org.seedstack.business.finder.RangeFinder;
 
 public interface ProductSimple1RangeFinder extends RangeFinder<ProductSimple1Representation,String> {
 	

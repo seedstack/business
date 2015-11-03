@@ -11,12 +11,12 @@
 package org.seedstack.business.internal.identity;
 
 import com.google.inject.Inject;
-import org.seedstack.business.api.domain.Entity;
-import org.seedstack.business.api.domain.identity.IdentityErrorCodes;
-import org.seedstack.business.api.domain.identity.IdentityService;
+import org.seedstack.business.domain.Entity;
+import org.seedstack.business.domain.identity.IdentityErrorCodes;
+import org.seedstack.business.domain.identity.IdentityService;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 
 /**
  * Interceptor used for identity management when creating a new entity using a factory 

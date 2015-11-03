@@ -7,19 +7,19 @@
  */
 package org.seedstack.business.internal.event;
 
-import org.seedstack.business.api.EventService;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.domain.stereotypes.Delete;
-import org.seedstack.business.api.domain.stereotypes.Persist;
-import org.seedstack.business.api.domain.stereotypes.Read;
-import org.seedstack.business.api.domain.events.AggregateDeletedEvent;
-import org.seedstack.business.api.domain.events.AggregatePersistedEvent;
-import org.seedstack.business.api.domain.events.AggregateReadEvent;
+import org.seedstack.business.EventService;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.domain.Delete;
+import org.seedstack.business.domain.Persist;
+import org.seedstack.business.domain.Read;
+import org.seedstack.business.domain.events.AggregateDeletedEvent;
+import org.seedstack.business.domain.events.AggregatePersistedEvent;
+import org.seedstack.business.domain.events.AggregateReadEvent;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.business.api.domain.events.EventErrorCodes;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.business.domain.events.EventErrorCodes;
+import org.seedstack.seed.SeedException;
 
 import javax.inject.Inject;
 

@@ -10,7 +10,7 @@
  */
 package org.seedstack.business.fixtures.domain.multi;
 
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.domain.Repository;
 
 /**
  * Dummy repository for test

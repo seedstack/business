@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.multi;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingEntityId;
 
 
 public class MultiRepresentation {

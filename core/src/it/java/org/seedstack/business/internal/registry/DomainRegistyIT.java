@@ -12,11 +12,11 @@ import javax.inject.Inject;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.Service;
-import org.seedstack.business.api.domain.DomainPolicy;
-import org.seedstack.business.api.domain.DomainRegistry;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.api.domain.Repository;
+import org.seedstack.business.Service;
+import org.seedstack.business.domain.DomainPolicy;
+import org.seedstack.business.domain.DomainRegistry;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.registry.fixtures.domain.Client;
 import org.seedstack.business.internal.registry.fixtures.domain.Composite;
 import org.seedstack.business.internal.registry.fixtures.domain.Product;
@@ -33,8 +33,8 @@ import org.seedstack.business.internal.registry.fixtures.service.RebateServiceIn
 import org.seedstack.business.internal.registry.fixtures.service.ServiceQualifier;
 import org.seedstack.business.internal.registry.repository.ClientRepository;
 import org.seedstack.business.internal.registry.repository.JpaQualifier;
-import org.seedstack.seed.core.api.SeedException;
-import org.seedstack.seed.core.api.TypeOf;
+import org.seedstack.seed.SeedException;
+import org.seedstack.seed.TypeOf;
 import org.seedstack.seed.it.SeedITRunner;
 
 

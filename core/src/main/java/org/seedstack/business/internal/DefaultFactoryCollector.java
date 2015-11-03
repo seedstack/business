@@ -11,10 +11,9 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Key;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.api.Producible;
-import org.seedstack.business.api.domain.DomainObject;
-import org.seedstack.business.api.domain.Factory;
-import org.seedstack.business.internal.defaults.FactoryInternal;
+import org.seedstack.business.Producible;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Factory;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
@@ -77,7 +76,7 @@ class DefaultFactoryCollector {
     }
 
     /**
-     * Prepares the binding strategy which binds default factories of {@link org.seedstack.business.api.Producible}
+     * Prepares the binding strategy which binds default factories of {@link Producible}
      * objects other than aggregate roots and value objects.
      * <p>
      * It binds for instance default factories of policies.

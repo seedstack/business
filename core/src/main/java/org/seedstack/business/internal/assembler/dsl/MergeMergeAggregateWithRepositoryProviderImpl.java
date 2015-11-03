@@ -7,11 +7,11 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateWithRepositoryThenFactoryProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeAggregateWithRepositoryProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.assembler.dsl.MergeAggregateWithRepositoryThenFactoryProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregateWithRepositoryProvider;
+import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)

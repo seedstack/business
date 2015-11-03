@@ -13,7 +13,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import javassist.Modifier;
 import org.seedstack.business.internal.BusinessCoreErrorCodes;
-import org.seedstack.seed.core.api.SeedException;
+import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +75,7 @@ public final class BindingUtils {
      * @param firstImplClass  the first class
      * @param restImplClasses the sub classes
      * @return a multimap with typeliterals for keys and a list of associated subclasses for values
-     * @throws org.seedstack.seed.core.api.SeedException when duplicates keys are found.
+     * @throws org.seedstack.seed.SeedException when duplicates keys are found.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Map<Key<?>, Class<?>> resolveBindingDefinitions(Class<?> injecteeClass, Class<?> firstImplClass, Class<?>... restImplClasses) {

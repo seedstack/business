@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.events;
 
-import org.seedstack.business.api.EventHandler;
-import org.seedstack.business.api.domain.events.AggregateReadEvent;
-import org.seedstack.business.api.domain.events.BaseAggregateEvent;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.domain.events.AggregateReadEvent;
+import org.seedstack.business.domain.events.BaseAggregateEvent;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductId;
@@ -18,7 +18,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.seed.core.api.Logging;
+import org.seedstack.seed.Logging;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.seed.persistence.inmemory.api.Store;
 import org.slf4j.Logger;

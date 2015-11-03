@@ -12,9 +12,9 @@ import org.javatuples.Pair;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.ModelMapper;
+import org.seedstack.business.Tuples;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.business.assembler.auto.fixture.*;
 import org.seedstack.seed.it.SeedITRunner;
 

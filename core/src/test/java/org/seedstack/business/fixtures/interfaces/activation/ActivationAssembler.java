@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.activation;
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 

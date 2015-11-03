@@ -9,14 +9,14 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
-import org.seedstack.business.api.Tuples;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.domain.GenericFactory;
-import org.seedstack.business.api.domain.Repository;
-import org.seedstack.business.api.interfaces.assembler.Assembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryThenFactoryProvider;
-import org.seedstack.business.api.interfaces.assembler.dsl.MergeTupleWithRepositoryProvider;
+import org.seedstack.business.Tuples;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.assembler.dsl.MergeTupleWithRepositoryThenFactoryProvider;
+import org.seedstack.business.assembler.dsl.MergeTupleWithRepositoryProvider;
 import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 
 import java.util.ArrayList;

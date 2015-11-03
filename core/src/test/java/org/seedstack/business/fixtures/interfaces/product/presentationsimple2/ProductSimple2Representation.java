@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.interfaces.product.presentationsimple2;
 
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
-import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingFactoryParameter;
 
 /**
  * Representation that will work with {@link org.seedstack.business.fixtures.domain.product.InternalProductFactory}

@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
-import org.seedstack.business.api.interfaces.assembler.DtoOf;
-import org.seedstack.business.api.interfaces.assembler.MatchingEntityId;
-import org.seedstack.business.api.interfaces.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.DtoOf;
+import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.MatchingFactoryParameter;
 
 /**
  * The recipe assembled based on an order and the customer who passed the order.

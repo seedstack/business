@@ -10,11 +10,11 @@ package org.seedstack.business.internal.assembler.dsl;
 import com.google.common.collect.Lists;
 import com.google.inject.name.Names;
 import org.javatuples.Pair;
-import org.seedstack.business.api.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
-import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.api.Tuples;
+import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.Tuples;
 
 import java.util.List;
 

@@ -8,15 +8,15 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.api.domain.AggregateRoot;
-import org.seedstack.business.api.interfaces.assembler.FluentAssembler;
-import org.seedstack.business.api.interfaces.assembler.dsl.*;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.*;
 
 import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Implementation of {@link org.seedstack.business.api.interfaces.assembler.FluentAssembler}.
+ * Implementation of {@link org.seedstack.business.assembler.FluentAssembler}.
  * <p>
  * It uses a Guice provider to get the DSL entry point. Each time you call the {@code assemble()}
  * method a new DSL instance is provided.

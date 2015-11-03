@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.interfaces.product.presentation2;
 
-import org.seedstack.business.api.interfaces.assembler.BaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.product.Product;
 
 public class ProductWSAssembler extends BaseAssembler<Product, ProductWSFacade> {

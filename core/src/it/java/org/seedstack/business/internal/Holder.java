@@ -19,8 +19,8 @@ import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductNamePolicy;
 import org.seedstack.business.fixtures.domain.product.ProductRepository;
 import org.seedstack.business.fixtures.interfaces.customer.presentation1.CustomerFinder;
-import org.seedstack.seed.core.api.Configuration;
-import org.seedstack.seed.it.api.ITBind;
+import org.seedstack.seed.Configuration;
+import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
 

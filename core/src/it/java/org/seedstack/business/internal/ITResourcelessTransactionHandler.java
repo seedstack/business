@@ -8,7 +8,7 @@
 package org.seedstack.business.internal;
 
 
-import org.seedstack.seed.it.api.ITBind;
+import org.seedstack.seed.it.ITBind;
 import org.seedstack.seed.transaction.spi.TransactionHandler;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 
