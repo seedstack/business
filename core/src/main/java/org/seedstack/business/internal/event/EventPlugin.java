@@ -7,21 +7,17 @@
  */
 package org.seedstack.business.internal.event;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.Multimap;
-import net.jodah.typetools.TypeResolver;
-import org.seedstack.business.Event;
-import org.seedstack.business.EventHandler;
-import io.nuun.kernel.api.Plugin;
+import com.google.common.collect.*;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
+import net.jodah.typetools.TypeResolver;
 import org.apache.commons.configuration.Configuration;
 import org.kametic.specifications.Specification;
-import org.seedstack.seed.core.internal.application.ApplicationPlugin;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
+import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,8 +53,8 @@ public class EventPlugin extends AbstractPlugin {
     @SuppressWarnings("unchecked")
     @Override
     public InitState init(InitContext initContext) {
-        ApplicationPlugin applicationPlugin = (ApplicationPlugin) initContext.pluginsRequired().iterator().next();
-        Configuration eventConfiguration = applicationPlugin.getApplication().getConfiguration().subset(PREFIX);
+        Configuration eventConfiguration = initContext.dependency(ConfigurationProvider.class)
+                .getConfiguration().subset(PREFIX);
 
         watchRepo = eventConfiguration.getBoolean("domain.watch", false);
         Collection<Class<?>> scannedEventHandlerClasses = initContext.scannedTypesBySpecification().get(eventHandlerSpecification);
@@ -75,10 +71,8 @@ public class EventPlugin extends AbstractPlugin {
     }
 
     @Override
-    public Collection<Class<? extends Plugin>> requiredPlugins() {
-        Collection<Class<? extends Plugin>> plugins = new ArrayList<Class<? extends Plugin>>();
-        plugins.add(ApplicationPlugin.class);
-        return plugins;
+    public Collection<Class<?>> requiredPlugins() {
+        return Lists.<Class<?>>newArrayList(ConfigurationProvider.class);
     }
 
     @Override
