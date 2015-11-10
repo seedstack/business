@@ -7,19 +7,17 @@
  */
 package org.seedstack.business.internal;
 
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Lists;
+import com.google.inject.Key;
+import io.nuun.kernel.api.plugin.InitState;
+import io.nuun.kernel.api.plugin.context.InitContext;
+import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
+import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
+import io.nuun.kernel.core.AbstractPlugin;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.DomainSpecifications;
-import org.seedstack.business.domain.Factory;
 import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.domain.Factory;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.internal.utils.BindingUtils;
 import org.seedstack.seed.Application;
@@ -28,15 +26,10 @@ import org.seedstack.seed.core.utils.BaseClassSpecifications;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
-import com.google.inject.Key;
+import java.util.*;
 
-import io.nuun.kernel.api.Plugin;
-import io.nuun.kernel.api.plugin.InitState;
-import io.nuun.kernel.api.plugin.context.InitContext;
-import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
-import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
-import io.nuun.kernel.core.AbstractPlugin;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
 
 /**
  * This plugin is a multi round plugin.
@@ -71,7 +64,7 @@ public class BusinessCorePlugin extends AbstractPlugin {
     private Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
     private Map<Key<?>, Class<?>> bindings = new HashMap<Key<?>, Class<?>>();
 
-    private Application application = null;
+    private Application application;
     
     private static final Specification<Class<?>> FACTORY_SPEC = DomainSpecifications.FACTORY.and(BaseClassSpecifications.not(BaseClassSpecifications.classIs(Factory.class)));
 
@@ -81,16 +74,14 @@ public class BusinessCorePlugin extends AbstractPlugin {
     }
 
     @Override
-    public Collection<Class<? extends Plugin>> requiredPlugins() {
-        Collection<Class<? extends Plugin>> plugins = new ArrayList<Class<? extends Plugin>>();
-        plugins.add(ApplicationPlugin.class);
-        return plugins;
+    public Collection<Class<?>> requiredPlugins() {
+        return Lists.<Class<?>>newArrayList(ApplicationPlugin.class);
     }
 
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
 
-        if (roundEnvironment.firstRound()) {
+        if (round.isFirst()) {
             return classpathScanRequestBuilder()
                     .specification(DomainSpecifications.AGGREGATE_ROOT)
                     .specification(DomainSpecifications.CLASSIC_ASSEMBLER)
@@ -143,13 +134,8 @@ public class BusinessCorePlugin extends AbstractPlugin {
         Map<Specification, Collection<Class<?>>> spec = initContext.scannedTypesBySpecification();
 
         // The first round is used to scan interfaces
-        if (roundEnvironment.firstRound()) {
-            application = null;
-            for (Plugin plugin : initContext.pluginsRequired()) {
-                if (plugin instanceof ApplicationPlugin) {
-                    application = ((ApplicationPlugin) plugin).getApplication();
-                }
-            }
+        if (round.isFirst()) {
+            application = initContext.dependency(ApplicationPlugin.class).getApplication();
 
             aggregateClasses = spec.get(DomainSpecifications.AGGREGATE_ROOT);
             LOGGER.debug("Aggregate root(s) => {}", aggregateClasses);

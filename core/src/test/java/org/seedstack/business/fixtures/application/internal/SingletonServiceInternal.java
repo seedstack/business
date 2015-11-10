@@ -12,20 +12,16 @@ import org.seedstack.business.fixtures.application.SingletonService;
 import javax.inject.Singleton;
 
 /**
- *
- * 
  * @author epo.jemba@ext.mpsa.com
- *
  */
 @Singleton
-public class SingletonServiceInternal implements SingletonService{
+public class SingletonServiceInternal implements SingletonService {
 
-	Object singletonObject = new Object();
-	
-	
-	@Override
-	public Object getStuff() {
-		return singletonObject;
-	}
+    private Object singletonObject = new Object();
+
+    @Override
+    public Object getStuff() {
+        return singletonObject;
+    }
 
 }

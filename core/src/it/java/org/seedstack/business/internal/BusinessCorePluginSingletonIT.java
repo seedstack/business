@@ -17,42 +17,31 @@ import org.seedstack.seed.it.AbstractSeedIT;
 import javax.inject.Inject;
 
 /**
- * This class check the validation feature of the business suport
- * 
- * @author epo.jemba@ext.mpsa.com
+ * This class checks the injection of new instances or singletons.
  *
+ * @author epo.jemba@ext.mpsa.com
  */
+public class BusinessCorePluginSingletonIT extends AbstractSeedIT {
 
-public class BusinessCorePluginSingletonIT extends AbstractSeedIT
-{
+    @Inject
+    private SingletonService singletonService;
 
-	
-	@Inject
-	SingletonService singletonService;
-	
-	@Inject
-	SingletonService singletonService2;
-	
-	
-	@Inject
-	IndexService indexService;
-	
-	@Inject
-	IndexService indexService2;
-	
-	
-	@Test
-	public void singleton_injection_should_work () throws ActivationException
-	{
-		Assertions.assertThat(singletonService).isEqualTo(singletonService2);
-	}
+    @Inject
+    private SingletonService singletonService2;
 
-	@Test
-	public void default_scope_injection_should_work () throws ActivationException
-	{
-		Assertions.assertThat(indexService).isNotEqualTo(indexService2);
-	}
-	
-	
+    @Inject
+    private IndexService indexService;
 
+    @Inject
+    private IndexService indexService2;
+
+    @Test
+    public void singleton_injection_should_work() throws ActivationException {
+        Assertions.assertThat(singletonService).isEqualTo(singletonService2);
+    }
+
+    @Test
+    public void default_scope_injection_should_work() throws ActivationException {
+        Assertions.assertThat(indexService).isNotEqualTo(indexService2);
+    }
 }
