@@ -1,6 +1,6 @@
 {
     "id": "seed-business",
-    "name": "SEED business fragment",
+    "name": "SeedStack business framework",
 
     "modules": {
         "seed-business": {

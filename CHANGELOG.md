@@ -1,3 +1,7 @@
+# Version 2.2.1 (?)
+
+* [chg] The `business-web` module has been merged into `business-core` module (the dependency can be safely removed from your poms).
+
 # Version 2.2.0 (2016-01-21)
 
 * [new] `BaseRangeFinder` is a persistence-agnostic base class for paginated finders. It notably replaces `BaseJpaRangeFinder` from the JPA add-on.
