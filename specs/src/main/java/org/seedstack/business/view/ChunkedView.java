@@ -19,9 +19,6 @@ import java.util.List;
  * @author epo.jemba@ext.mpsa.com
  */
 public class ChunkedView<T> extends AbstractView<T> {
-
-    private static final long serialVersionUID = -1243841856843942270L;
-
     /**
      * Constructor.
      *

@@ -40,6 +40,4 @@ public class ProductId extends BaseValueObject
 		return productCode;
 	}
 	
-	private static final long serialVersionUID = 3197639858625317175L;
-	
 }

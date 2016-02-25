@@ -25,10 +25,9 @@ import java.lang.reflect.Method;
  */
 public abstract class BaseAggregateEvent extends DomainEvent {
 
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 4247250155695647756L;
-
-	private final Class<? extends AggregateRoot<?>> aggregateRoot;
+    private final Class<? extends AggregateRoot<?>> aggregateRoot;
 
     private final Context context;
 

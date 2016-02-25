@@ -29,5 +29,5 @@ import org.seedstack.business.domain.BaseValueObject;
 public abstract class DomainEvent extends BaseValueObject implements Event {
 
 	/***/
-	private static final long serialVersionUID = 4411433793175516909L;
+	private static final long serialVersionUID = 1L;
 }

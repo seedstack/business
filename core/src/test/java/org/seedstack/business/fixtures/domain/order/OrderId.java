@@ -12,10 +12,6 @@ import org.seedstack.business.domain.BaseValueObject;
 
 public class OrderId extends BaseValueObject {
 
-	
-	private static final long serialVersionUID = 8814444144705792621L;
-	
-	
 	private String value;
     
      OrderId()

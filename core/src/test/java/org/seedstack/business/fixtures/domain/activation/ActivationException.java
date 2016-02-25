@@ -9,11 +9,4 @@ package org.seedstack.business.fixtures.domain.activation;
 
 public class ActivationException extends Exception {
 
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 }

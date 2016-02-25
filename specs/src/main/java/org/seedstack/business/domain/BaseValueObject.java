@@ -7,7 +7,10 @@
  */
 package org.seedstack.business.domain;
 
-import org.apache.commons.lang.builder.*;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import java.io.Serializable;
 
@@ -15,14 +18,12 @@ import java.io.Serializable;
  * This class is the inheritance base for ValueObject implementations. It offers specific {@code equals()} and
  * {@code hashCode()} methods.
  */
-public abstract class BaseValueObject implements ValueObject, Serializable, Comparable<BaseValueObject> {
+public abstract class BaseValueObject implements ValueObject, Serializable {
 
-    private static final long serialVersionUID = -6131435316889092990L;
+    private transient int cachedHashCode;
 
-	private transient int cachedHashCode;
-
-	protected BaseValueObject() {
-	}
+    protected BaseValueObject() {
+    }
 
     /**
      * @return Hash code built from all non-transient fields.
@@ -67,11 +68,5 @@ public abstract class BaseValueObject implements ValueObject, Serializable, Comp
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
     }
-
-
-    @Override
-	public int compareTo(BaseValueObject o) {
-		return CompareToBuilder.reflectionCompare(this, o);
-	}
 
 }

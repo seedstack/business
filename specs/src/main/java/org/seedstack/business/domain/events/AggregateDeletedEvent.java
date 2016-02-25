@@ -25,10 +25,6 @@ import java.lang.reflect.Method;
  * @author pierre.thirouin@ext.mpsa.com
  */
 public class AggregateDeletedEvent extends BaseAggregateEvent {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     /**
