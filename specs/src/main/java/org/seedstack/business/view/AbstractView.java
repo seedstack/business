@@ -18,9 +18,6 @@ import java.util.List;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class AbstractView<Item> implements View<Item> {
-
-    private static final long serialVersionUID = 5881361314603724860L;
-
     protected final VirtualList<Item> resultList;
     protected final long resultSize;
     protected final long resultViewOffset;

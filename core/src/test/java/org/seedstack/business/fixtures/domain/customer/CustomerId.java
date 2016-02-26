@@ -26,6 +26,4 @@ public class CustomerId extends BaseValueObject{
 		return customerId;
 	}
     
-	private static final long serialVersionUID = -1001839378447878324L;
-	
 }

@@ -52,7 +52,5 @@ public class OrderItem extends BaseEntity<Long>
 	public void setProductId(ProductId productId) {
 		this.productId = productId;
 	}
-	private static final long serialVersionUID = -7687748254687098576L;
-
 
 }

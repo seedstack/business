@@ -48,5 +48,4 @@ public class Address extends BaseValueObject {
 		return country;
 	}
 
-	private static final long serialVersionUID = -1001839378447878324L;
 }
