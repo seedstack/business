@@ -84,6 +84,7 @@
                             <excludes>
                                 <exclude>*.internal.*</exclude>
                                 <exclude>org.seedstack.business.domain.BaseValueObject</exclude>
+                                <exclude>org.seedstack.business.assembler.modelmapper.ModelMapperAssembler</exclude>
                             </excludes>
                         </parameter>
                     </configuration>

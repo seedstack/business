@@ -8,6 +8,11 @@
 package org.seedstack.business.assembler;
 
 
+import net.jodah.typetools.TypeResolver;
+import org.seedstack.seed.core.utils.SeedReflectionUtils;
+
+import java.lang.reflect.Type;
+
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
  *
@@ -17,10 +22,14 @@ package org.seedstack.business.assembler;
  * @see org.seedstack.business.assembler.BaseAssembler
  * @see org.seedstack.business.assembler.BaseTupleAssembler
  */
-public abstract class AbstractBaseAssembler<A, D>
-        implements Assembler<A, D> {
-
+public abstract class AbstractBaseAssembler<A, D> implements Assembler<A, D> {
     protected Class<D> dtoClass;
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public AbstractBaseAssembler() {
+        Class<? extends AbstractBaseAssembler> class1 = (Class<? extends AbstractBaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
+        dtoClass = (Class<D>) TypeResolver.resolveRawArguments(getGenericType(), class1)[1];
+    }
 
     @Override
     public Class<D> getDtoClass() {
@@ -48,4 +57,12 @@ public abstract class AbstractBaseAssembler<A, D>
         return newInstance;
     }
 
+    private Type getGenericType() {
+        Class<?> superclass = SeedReflectionUtils.cleanProxy(getClass());
+        while (!AbstractBaseAssembler.class.equals(superclass.getSuperclass())) {
+            superclass = superclass.getSuperclass();
+        }
+
+        return superclass.getGenericSuperclass();
+    }
 }

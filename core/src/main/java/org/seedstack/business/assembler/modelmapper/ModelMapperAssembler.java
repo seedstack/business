@@ -7,16 +7,9 @@
  */
 package org.seedstack.business.assembler.modelmapper;
 
-import net.jodah.typetools.TypeResolver;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.assembler.AbstractBaseAssembler;
-import org.seedstack.business.assembler.AssemblerErrorCodes;
-import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.seed.SeedException;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
-
-import java.lang.reflect.Type;
 
 /**
  * This assembler automatically assembles aggregates in DTO and vice versa.
@@ -26,16 +19,12 @@ import java.lang.reflect.Type;
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
-
-    protected Class<D> dtoClass;
     private ModelMapper assembleModelMapper;
     private ModelMapper mergeModelMapper;
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public ModelMapperAssembler() {
+        super();
         initModelMappers();
-        Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        dtoClass = (Class<D>) TypeResolver.resolveRawArguments(getGenericType(class1), class1)[1];
     }
 
     public ModelMapperAssembler(Class<D> dtoClass) {
@@ -64,19 +53,6 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
 
         this.mergeModelMapper = new ModelMapper();
         configureMerge(mergeModelMapper);
-    }
-
-    private Type getGenericType(Class<?> aClass) {
-        Class<?> superclass = aClass.getSuperclass();
-        while (!ModelMapperAssembler.class.equals(superclass) && superclass != null) {
-            superclass = superclass.getSuperclass();
-        }
-
-        if (superclass == null) {
-            throw SeedException.createNew(AssemblerErrorCodes.UNABLE_TO_RESOLVE_GENERIC_TYPE);
-        }
-
-        return superclass.getGenericSuperclass();
     }
 
     protected abstract void configureAssembly(ModelMapper modelMapper);

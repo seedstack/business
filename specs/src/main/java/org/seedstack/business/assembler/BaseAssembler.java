@@ -8,9 +8,6 @@
 package org.seedstack.business.assembler;
 
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
-
-import java.lang.reflect.ParameterizedType;
 
 /**
  * This class is the class to be extended by the users in order to create an Assembler.
@@ -57,17 +54,7 @@ import java.lang.reflect.ParameterizedType;
  * @param <D> the dto type
  * @author epo.jemba@ext.mpsa.com
  */
-public abstract class BaseAssembler<A extends AggregateRoot<?>, D>
-        extends AbstractBaseAssembler<A, D> {
-
-    /**
-     * Default needed constructor.
-     */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public BaseAssembler() {
-        Class<? extends BaseAssembler> class1 = (Class<? extends BaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        dtoClass = (Class<D>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
-    }
+public abstract class BaseAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 
     /**
      * This method is used by developers or by the DSL to assemble a new DTO from the given aggregate.
