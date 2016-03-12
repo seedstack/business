@@ -13,8 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
+import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.assembler.DefaultModelMapperAssembler;
 
 import java.util.HashMap;
@@ -46,10 +46,28 @@ public class ModelMapperAssemblerTest {
         }
     }
 
+    static abstract class AbstractAutoAssembler<T> extends ModelMapperAssembler<Order, T> {
+    }
+
+    static class InheritingAutoAssembler extends AbstractAutoAssembler<DummyDTO> {
+        @Override
+        protected void configureAssembly(ModelMapper modelMapper) {
+        }
+
+        @Override
+        protected void configureMerge(ModelMapper modelMapper) {
+        }
+    }
+
     @Before
     public void before() {
         modelMapperAssembler = new AutoAssembler();
         defaultModelMappedAssembler = new DefaultModelMapperAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
+    }
+
+    @Test
+    public void testInheritingAssembler() {
+        new InheritingAutoAssembler();
     }
 
     @Test
@@ -264,6 +282,10 @@ public class ModelMapperAssemblerTest {
         public void setCity(String city) {
             this.city = city;
         }
+    }
+
+    static class DummyDTO {
+
     }
 
     static class OrderDTO {
