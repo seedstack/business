@@ -7,17 +7,17 @@
  */
 package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
-import org.assertj.core.util.Maps;
 import org.seedstack.business.domain.BaseRepository;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements CustomerRepository {
 
-    private static Map<String, Customer> orderMap = Maps.newConcurrentHashMap();
+    private static Map<String, Customer> orderMap = new ConcurrentHashMap<String, Customer>();
 
     @Override
     protected Customer doLoad(String id) {
