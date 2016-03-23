@@ -174,6 +174,9 @@ public class DomainSpecificationsTest {
         public A load(K id) { return null; }
 
         @Override
+        public void clear() { }
+
+        @Override
         public void delete(K k) { }
 
         @Override

@@ -13,8 +13,8 @@ package org.seedstack.business.domain;
  * To be a valid repository interface, Type must respect the followings:
  * </p>
  * <ul>
- *   <li>be an interface</li>
- *   <li>extends {@link Repository}</li>
+ * <li>be an interface</li>
+ * <li>extends {@link Repository}</li>
  * </ul>
  * The following is a valid Domain repository interface.
  * <pre>
@@ -28,7 +28,7 @@ package org.seedstack.business.domain;
  * </p>
  *
  * @param <A> the type of the aggregate root class.
- * @param <K>       the type of the aggregate root class.
+ * @param <K> the type of the aggregate root class.
  * @author epo.jemba@ext.mpsa.com
  */
 @DomainRepository
@@ -42,6 +42,12 @@ public interface Repository<A extends AggregateRoot<K>, K> {
      */
     @Read
     A load(K id);
+
+    /**
+     * Deletes all aggregates from the persistence.
+     */
+    @Delete
+    void clear();
 
     /**
      * Deletes an aggregate from the persistence by its key.
@@ -75,6 +81,7 @@ public interface Repository<A extends AggregateRoot<K>, K> {
      */
     @Persist
     A save(A aggregate);
+
 
     /**
      * @return the aggregate root class.

@@ -20,16 +20,21 @@ import javax.inject.Named;
  */
 @GenericImplementation
 @Named("mock")
-public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
+public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A, K> {
 
     @Inject
     public DefaultRepoSample2(@Assisted Object[] genericClasses) {
-        super((Class)genericClasses[0], (Class)genericClasses[1]);
+        super((Class) genericClasses[0], (Class) genericClasses[1]);
     }
 
     @Override
     protected A doLoad(K id) {
         return null;
+    }
+
+    @Override
+    protected void doClear() {
+
     }
 
     @Override

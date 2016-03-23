@@ -47,7 +47,7 @@ public class AssemblerDslIT {
 
     @Before
     public void before() {
-        ((OrderRepositoryInternal)orderRepository).clear();
+        ((OrderRepositoryInternal)orderRepository).doClear();
     }
 
     @Test
