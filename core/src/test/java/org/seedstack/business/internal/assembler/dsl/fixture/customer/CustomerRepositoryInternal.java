@@ -48,7 +48,7 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
         return orderMap.put(order.getEntityId(), order);
     }
 
-    public void clear() {
+    public void doClear() {
         orderMap.clear();
     }
 }

@@ -50,7 +50,11 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
     }
 
     @Override
-    @Deprecated
+    protected void doClear() {
+        inMemorySortedMap.clear();
+    }
+
+    @Override
     protected void doDelete(Key id) {
         inMemorySortedMap.remove(id);
     }

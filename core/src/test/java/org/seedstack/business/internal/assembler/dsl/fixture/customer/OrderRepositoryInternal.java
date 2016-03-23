@@ -48,7 +48,7 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
         return orderMap.put(order.getEntityId(), order);
     }
 
-    public void clear() {
+    public void doClear() {
         orderMap.clear();
     }
 }

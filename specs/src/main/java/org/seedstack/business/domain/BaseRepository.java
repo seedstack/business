@@ -14,7 +14,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  * This class serves as inheritance base for all repositories.
  *
  * @param <AGGREGATE> the aggregate root type
- * @param <KEY> the key type
+ * @param <KEY>       the key type
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> implements Repository<AGGREGATE, KEY> {
@@ -44,7 +44,7 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      * </p>
      *
      * @param aggregateRootClass the aggregate root class
-     * @param keyClass the key class
+     * @param keyClass           the key class
      */
     protected BaseRepository(Class<AGGREGATE> aggregateRootClass, Class<KEY> keyClass) {
         this.aggregateRootClass = aggregateRootClass;
@@ -53,7 +53,7 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
 
     private <T> Class<T> init(int index) {
         Class<? extends BaseRepository> class1 = (Class<? extends BaseRepository>) SeedReflectionUtils.cleanProxy(getClass());
-    
+
         return (Class<T>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[index];
     }
 
@@ -70,6 +70,11 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     @Override
     public final AGGREGATE load(KEY id) {
         return doLoad(id);
+    }
+
+    @Override
+    public void clear() {
+        doClear();
     }
 
     @Override
@@ -101,6 +106,12 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      */
     @Read
     protected abstract AGGREGATE doLoad(KEY id);
+
+    /**
+     * Delegates the clear mechanism to the infrastructure.
+     */
+    @Delete
+    protected abstract void doClear();
 
     /**
      * Delegates the delete mechanism to the infrastructure.

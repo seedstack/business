@@ -26,6 +26,10 @@ public class ClientRepository<A extends AggregateRoot<K>, K> extends BaseReposit
 	}
 
 	@Override
+	protected void doClear() {
+	}
+
+	@Override
 	protected void doDelete(K id) {
 	}
 
