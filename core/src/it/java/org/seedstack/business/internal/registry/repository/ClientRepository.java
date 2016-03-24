@@ -21,28 +21,38 @@ import org.seedstack.business.spi.GenericImplementation;
 public class ClientRepository<A extends AggregateRoot<K>, K> extends BaseRepository<A, K>{
 
 	@Override
-	protected A doLoad(K id) {
+	public A load(K id) {
 		return null;
 	}
 
 	@Override
-	protected void doClear() {
+	public boolean exists(K id) {
+		return false;
 	}
 
 	@Override
-	protected void doDelete(K id) {
+	public long count() {
+		return 0L;
 	}
 
 	@Override
-	protected void doDelete(A aggregate) {
+	public void clear() {
 	}
 
 	@Override
-	protected void doPersist(A aggregate) {
+	public void delete(K id) {
 	}
 
 	@Override
-	protected A doSave(A aggregate) {
+	public void delete(A aggregate) {
+	}
+
+	@Override
+	public void persist(A aggregate) {
+	}
+
+	@Override
+	public A save(A aggregate) {
 		return null;
 	}
 

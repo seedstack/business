@@ -11,8 +11,6 @@ package org.seedstack.business.assembler;
 import net.jodah.typetools.TypeResolver;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
-import java.lang.reflect.Type;
-
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
  *
@@ -23,14 +21,29 @@ import java.lang.reflect.Type;
  * @see org.seedstack.business.assembler.BaseTupleAssembler
  */
 public abstract class AbstractBaseAssembler<A, D> implements Assembler<A, D> {
-    protected Class<D> dtoClass;
+    protected final Class<D> dtoClass;
 
+    /**
+     * Creates an assembler with automatic resolution of its DTO class.
+     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public AbstractBaseAssembler() {
-        Class<? extends AbstractBaseAssembler> class1 = (Class<? extends AbstractBaseAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-        dtoClass = (Class<D>) TypeResolver.resolveRawArguments(getGenericType(), class1)[1];
+        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        this.dtoClass = (Class<D>) TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(AbstractBaseAssembler.class, subType), subType)[1];
     }
 
+    /**
+     * Creates an assembler with the DTO class explicitly specified.
+     *
+     * @param dtoClass the DTO class.
+     */
+    protected AbstractBaseAssembler(Class<D> dtoClass) {
+        this.dtoClass = dtoClass;
+    }
+
+    /**
+     * @return the DTO class this assembler handles.
+     */
     @Override
     public Class<D> getDtoClass() {
         return this.dtoClass;
@@ -55,14 +68,5 @@ public abstract class AbstractBaseAssembler<A, D> implements Assembler<A, D> {
         }
 
         return newInstance;
-    }
-
-    private Type getGenericType() {
-        Class<?> superclass = SeedReflectionUtils.cleanProxy(getClass());
-        while (!AbstractBaseAssembler.class.equals(superclass.getSuperclass())) {
-            superclass = superclass.getSuperclass();
-        }
-
-        return superclass.getGenericSuperclass();
     }
 }

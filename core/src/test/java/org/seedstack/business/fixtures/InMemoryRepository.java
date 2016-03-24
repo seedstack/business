@@ -45,33 +45,43 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
 
     @Override
     @SuppressWarnings("unchecked")
-    protected Aggregate doLoad(Key id) {
+    public Aggregate load(Key id) {
         return (Aggregate) inMemorySortedMap.get(id);
     }
 
     @Override
-    protected void doClear() {
+    public boolean exists(Key id) {
+        return inMemorySortedMap.containsKey(id);
+    }
+
+    @Override
+    public long count() {
+        return inMemorySortedMap.size();
+    }
+
+    @Override
+    public void clear() {
         inMemorySortedMap.clear();
     }
 
     @Override
-    protected void doDelete(Key id) {
+    public void delete(Key id) {
         inMemorySortedMap.remove(id);
     }
 
     @Override
-    protected void doDelete(Aggregate aggregate) {
+    public void delete(Aggregate aggregate) {
         inMemorySortedMap.remove(aggregate.getEntityId());
     }
 
     @Override
-    protected void doPersist(Aggregate aggregate) {
+    public void persist(Aggregate aggregate) {
         this.inMemorySortedMap.put(aggregate.getEntityId(), aggregate);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    protected Aggregate doSave(Aggregate aggregate) {
+    public Aggregate save(Aggregate aggregate) {
         return (Aggregate) this.inMemorySortedMap.put(aggregate.getEntityId(), aggregate);
     }
 

@@ -8,9 +8,6 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
-
-import java.lang.reflect.ParameterizedType;
 
 /**
  * This class is used by developers as bases for Tuple based assemblers.
@@ -20,16 +17,6 @@ import java.lang.reflect.ParameterizedType;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
-
-    /**
-     * Default needed constructor. Initialize internal private fields {@code TupleType aggregateClasses}.
-     */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public BaseTupleAssembler() {
-        Class<? extends BaseTupleAssembler> class1 = (Class<? extends BaseTupleAssembler>) SeedReflectionUtils.cleanProxy(getClass());
-
-        dtoClass = (Class<D>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[1];
-    }
 
     /**
      * This method is used by developers or by {@link org.seedstack.business.assembler.FluentAssembler}

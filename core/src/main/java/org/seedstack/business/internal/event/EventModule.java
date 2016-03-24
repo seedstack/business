@@ -7,7 +7,6 @@
  */
 package org.seedstack.business.internal.event;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
@@ -18,10 +17,10 @@ import com.google.inject.matcher.Matchers;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
 import org.seedstack.business.EventService;
-import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.Delete;
 import org.seedstack.business.domain.Persist;
 import org.seedstack.business.domain.Read;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Event module. Bind EventHandlers, EventService and optionally add an interceptor on repositories.
@@ -93,7 +94,7 @@ class EventModule extends AbstractModule {
      * @param annotation the annotation class
      * @return true if the annotation is present, false otherwise
      */
-    public static Boolean checkAnnotation(Method candidate, Class<? extends Annotation> annotation) {
+    static Boolean checkAnnotation(Method candidate, Class<? extends Annotation> annotation) {
         return getMethodAnnotationFromAncestors(candidate, annotation) != null;
     }
 
@@ -106,8 +107,7 @@ class EventModule extends AbstractModule {
      * @return the annotation found or null if the annotation is not present
      */
     @SuppressWarnings("unchecked")
-    // FIXME: This method does not work with ancestors that use generic parameters
-    public static <T extends Annotation> T getMethodAnnotationFromAncestors(AnnotatedElement annotatedElement, Class<T> annotationClassToFind) {
+    private static <T extends Annotation> T getMethodAnnotationFromAncestors(AnnotatedElement annotatedElement, Class<T> annotationClassToFind) {
         Method annotatedMethod;
         if (Method.class.isAssignableFrom(annotatedElement.getClass())) {
             annotatedMethod = (Method) annotatedElement;
@@ -115,10 +115,8 @@ class EventModule extends AbstractModule {
             throw new IllegalArgumentException("annotated element should be a method.");
         }
 
-        List<AnnotatedElement> list = Lists.newArrayList();
-        list.addAll(Arrays.asList(SeedReflectionUtils.getAllInterfacesAndClasses(annotatedMethod.getDeclaringClass())));
-
-        for (AnnotatedElement element : list) {
+        Set<AnnotatedElement> annotatedElements = new LinkedHashSet<AnnotatedElement>(Arrays.asList(SeedReflectionUtils.getAllInterfacesAndClasses(annotatedMethod.getDeclaringClass())));
+        for (AnnotatedElement element : annotatedElements) {
             try {
                 AnnotatedElement methodElement = ((Class) element).getDeclaredMethod(annotatedMethod.getName(), annotatedMethod.getParameterTypes());
                 // element search
@@ -139,8 +137,6 @@ class EventModule extends AbstractModule {
                 if (LOGGER.isTraceEnabled()) {
                     LOGGER.trace(e.getMessage(), e);
                 }
-                // the method is not inherited from following parent classes.
-                break;
             }
         }
 

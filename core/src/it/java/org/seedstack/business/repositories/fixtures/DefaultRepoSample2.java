@@ -28,32 +28,38 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
-    protected A doLoad(K id) {
+    public A load(K id) {
         return null;
     }
 
     @Override
-    protected void doClear() {
-
+    public boolean exists(K id) {
+        return false;
     }
 
     @Override
-    protected void doDelete(K id) {
-
+    public long count() {
+        return 0L;
     }
 
     @Override
-    protected void doDelete(A a) {
-
+    public void clear() {
     }
 
     @Override
-    protected void doPersist(A a) {
-
+    public void delete(K id) {
     }
 
     @Override
-    protected A doSave(A a) {
+    public void delete(A a) {
+    }
+
+    @Override
+    public void persist(A a) {
+    }
+
+    @Override
+    public A save(A a) {
         return null;
     }
 }

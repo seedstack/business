@@ -19,7 +19,6 @@ import java.io.Serializable;
  * {@code hashCode()} methods.
  */
 public abstract class BaseValueObject implements ValueObject, Serializable {
-
     private transient int cachedHashCode;
 
     protected BaseValueObject() {

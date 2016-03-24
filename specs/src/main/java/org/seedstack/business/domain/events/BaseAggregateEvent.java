@@ -38,7 +38,7 @@ public abstract class BaseAggregateEvent extends DomainEvent {
      * @param args          arguments of the intercepted method
      * @param aggregateRoot aggregate root class concern by the event
      */
-    public BaseAggregateEvent(Method methodCalled, Object[] args, Class<? extends AggregateRoot<?>> aggregateRoot) {
+    protected BaseAggregateEvent(Method methodCalled, Object[] args, Class<? extends AggregateRoot<?>> aggregateRoot) {
         this.context = new Context(methodCalled, args.clone());
         this.aggregateRoot = aggregateRoot;
     }
