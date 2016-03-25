@@ -28,8 +28,8 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
     }
 
     public ModelMapperAssembler(Class<D> dtoClass) {
+        super(dtoClass);
         initModelMappers();
-        this.dtoClass = dtoClass;
     }
 
     @Override

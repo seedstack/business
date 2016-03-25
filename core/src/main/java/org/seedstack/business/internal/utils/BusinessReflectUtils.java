@@ -21,7 +21,7 @@ public final class BusinessReflectUtils {
 
     public static Class<?> getAggregateIdClass(Class<? extends AggregateRoot<?>> aggregateRootClass) {
         SeedCheckUtils.checkIfNotNull(aggregateRootClass, "aggregateRootClass should not be null");
-        return TypeResolver.resolveRawArguments(aggregateRootClass.getGenericSuperclass(), aggregateRootClass)[0];
+        return TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(AggregateRoot.class, aggregateRootClass), aggregateRootClass)[0];
     }
 
 }

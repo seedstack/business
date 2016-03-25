@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.domain;
 
+import net.jodah.typetools.TypeResolver;
 import org.seedstack.business.Producible;
-
-import java.lang.reflect.ParameterizedType;
+import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
 /**
  * This class has to be extended to create a domain factory implementation. It offers the plumbing necessary
@@ -18,8 +18,8 @@ import java.lang.reflect.ParameterizedType;
  * To be a valid Domain Factory implementation, the implementation must respects the followings:
  * </p>
  * <ul>
- *   <li>implements the Domain Factory interface see {@linkplain org.seedstack.business.domain.GenericFactory}</li>
- *   <li>extends this class {@link BaseFactory}.</li>
+ * <li>implements the Domain Factory interface see {@linkplain org.seedstack.business.domain.GenericFactory}</li>
+ * <li>extends this class {@link BaseFactory}.</li>
  * </ul>
  * <pre>
  * public class ProductFactoryBase extends BaseFactory&lt;Product&gt; implements ProductFactory {
@@ -48,21 +48,17 @@ import java.lang.reflect.ParameterizedType;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseFactory<DO extends DomainObject & Producible> implements GenericFactory<DO> {
+    private final Class<DO> producedClass;
 
-    private Class<DO> producedClass;
+    @SuppressWarnings("unchecked")
+    protected BaseFactory() {
+        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        producedClass = (Class<DO>) TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(BaseFactory.class, subType), subType)[0];
+    }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public Class<DO> getProducedClass() {
-        // TODO <pith> improve the way we get the parametrize type
-        if (this.producedClass == null) {
-            Class<? extends BaseFactory> class1 = getClass();
-            if (class1.getName().contains("EnhancerByGuice")) {
-                class1 = (Class<? extends BaseFactory>) class1.getSuperclass();
-            }
-            this.producedClass = ((Class<DO>) ((ParameterizedType) class1.getGenericSuperclass()).getActualTypeArguments()[0]);
-        }
-
         return producedClass;
     }
 

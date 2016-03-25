@@ -174,6 +174,16 @@ public class DomainSpecificationsTest {
         public A load(K id) { return null; }
 
         @Override
+        public boolean exists(K id) {
+            return false;
+        }
+
+        @Override
+        public long count() {
+            return 0L;
+        }
+
+        @Override
         public void clear() { }
 
         @Override

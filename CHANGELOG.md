@@ -1,8 +1,12 @@
 # Version 2.3.0 (?)
 
+* [new] Add methods `exists()`, `count()` and `clear()` on `Repository`
+* [brk] The `Comparable` interface have been removed from `BaseValueObject`
+* [brk] Methods `do*()` on `BaseRepository` have been removed. Directly implement their matching method on `Repository`.
+* [brk] Removed `dtoClass` protected field on `ModelMapperAssembler` and `ModelMapperTupleAssembler`. Use `getDtoClass()` accessor instead.
+* [brk] Made `dtoClass` field on `AbstractBaseAssembler` private. Use `getDtoClass()` accessor instead.
 * [chg] The `business-web` module has been merged into `business-core` module (the dependency can be safely removed from your poms).
 * [chg] `serialVersionUID` of event classes (`org.seedstack.business.domain.events` package) has been changed to 1L.
-* [brk] The `Comparable` interface have been removed from `BaseValueObject`
 
 # Version 2.2.0 (2016-01-21)
 

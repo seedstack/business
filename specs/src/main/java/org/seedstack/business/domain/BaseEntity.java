@@ -23,6 +23,9 @@ import org.seedstack.seed.SeedException;
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
 
+    protected BaseEntity() {
+    }
+
     @Override
     public abstract ID getEntityId();
 

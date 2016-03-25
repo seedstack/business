@@ -52,13 +52,13 @@ public class AggregateEventIT {
         @Override
         public void handle(BaseAggregateEvent event) {
             Assertions.assertThat(logger).isNotNull();
-            if (event.getContext().getMethodCalled().getName().equals("doLoad") || event.getContext().getMethodCalled().getName().equals("doDelete")) {
+            if (event.getContext().getMethodCalled().getName().equals("load") || event.getContext().getMethodCalled().getName().equals("delete")) {
                 Object o = event.getContext().getArgs()[0];
                 if (ProductId.class.isAssignableFrom(o.getClass())) {
                     receivedId = (ProductId) o;
                 }
             }
-            if (event.getContext().getMethodCalled().getName().equals("doSave") || event.getContext().getMethodCalled().getName().equals("doPersist")) {
+            if (event.getContext().getMethodCalled().getName().equals("save") || event.getContext().getMethodCalled().getName().equals("persist")) {
                 Object o = event.getContext().getArgs()[0];
                 if (Product.class.isAssignableFrom(o.getClass())) {
                     receivedAggregate = (Product) o;
@@ -84,7 +84,7 @@ public class AggregateEventIT {
     @Test
     public void base_repository_event_was_received() {
         productRepository.persist(product);
-        Assertions.assertThat(product).isEqualTo(receivedAggregate);
+        Assertions.assertThat(receivedAggregate).isEqualTo(product);
 
         ProductId id = new ProductId(Short.MIN_VALUE, "pok");
         productRepository.load(id);

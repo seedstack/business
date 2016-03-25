@@ -20,17 +20,31 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
     private static Map<String, Order> orderMap = new ConcurrentHashMap<String, Order>();
 
     @Override
-    protected Order doLoad(String id) {
+    public Order load(String id) {
         return orderMap.get(id);
     }
 
     @Override
-    protected void doDelete(String id) {
+    public boolean exists(String id) {
+        return orderMap.containsKey(id);
+    }
+
+    @Override
+    public long count() {
+        return orderMap.size();
+    }
+
+    public void clear() {
+        orderMap.clear();
+    }
+
+    @Override
+    public void delete(String id) {
         orderMap.remove(id);
     }
 
     @Override
-    protected void doDelete(Order order) {
+    public void delete(Order order) {
         for (Order order1 : orderMap.values()) {
             if (order1.equals(order)) {
                 orderMap.remove(order.getEntityId());
@@ -39,16 +53,12 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
     }
 
     @Override
-    protected void doPersist(Order order) {
+    public void persist(Order order) {
         orderMap.put(order.getEntityId(), order);
     }
 
     @Override
-    protected Order doSave(Order order) {
+    public Order save(Order order) {
         return orderMap.put(order.getEntityId(), order);
-    }
-
-    public void doClear() {
-        orderMap.clear();
     }
 }

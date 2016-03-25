@@ -11,19 +11,17 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.domain.Repository;
 import org.seedstack.business.assembler.AssemblerTypes;
 import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.assembler.dsl.fixture.auto.BasicAggregate;
 import org.seedstack.business.internal.assembler.dsl.fixture.auto.BasicDto;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.Order;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.OrderDto;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.OrderFactory;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.OrderRepositoryInternal;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
-
 import java.util.UUID;
 
 import static junit.framework.TestCase.fail;
@@ -47,7 +45,7 @@ public class AssemblerDslIT {
 
     @Before
     public void before() {
-        ((OrderRepositoryInternal)orderRepository).doClear();
+        orderRepository.clear();
     }
 
     @Test

@@ -8,9 +8,9 @@
 package org.seedstack.business.assembler.auto.fixture;
 
 import com.google.inject.assistedinject.Assisted;
-import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,13 +21,12 @@ import java.lang.reflect.Method;
  */
 @GenericImplementation
 @Named("Dummy")
-public class DummyDefaultAssembler<A extends AggregateRoot<?>,D> extends AbstractBaseAssembler<A, D> {
-
+public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 
     @SuppressWarnings("unchecked")
     @Inject
     public DummyDefaultAssembler(@Assisted Object[] genericClasses) {
-        dtoClass = (Class) genericClasses.clone()[1];
+        super((Class) genericClasses.clone()[1]);
     }
 
     @Override

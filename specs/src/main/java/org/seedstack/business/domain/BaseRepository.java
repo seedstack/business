@@ -18,12 +18,11 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> implements Repository<AGGREGATE, KEY> {
-
     private static final int AGGREGATE_INDEX = 0;
     private static final int KEY_INDEX = 1;
 
-    protected Class<AGGREGATE> aggregateRootClass;
-    protected Class<KEY> keyClass;
+    private final Class<AGGREGATE> aggregateRootClass;
+    private final Class<KEY> keyClass;
 
     /**
      * Constructs a base repository.
@@ -32,14 +31,16 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      * </p>
      */
     protected BaseRepository() {
-        this.aggregateRootClass = init(AGGREGATE_INDEX);
-        this.keyClass = init(KEY_INDEX);
+        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        Class<?>[] rawArguments = TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(BaseRepository.class, subType), subType);
+        this.aggregateRootClass = (Class<AGGREGATE>) rawArguments[AGGREGATE_INDEX];
+        this.keyClass = (Class<KEY>) rawArguments[KEY_INDEX];
     }
 
     /**
      * Constructs a base repository settings explicitly the aggregate root class and the key class.
      * <p>
-     * This is use when the implementation class does not resolve the generics. Since the generic
+     * This is used when the implementation class does not resolve the generics. Since the generic
      * types can't be resolve at runtime, they should be passed explicitly.
      * </p>
      *
@@ -51,12 +52,6 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
         this.keyClass = keyClass;
     }
 
-    private <T> Class<T> init(int index) {
-        Class<? extends BaseRepository> class1 = (Class<? extends BaseRepository>) SeedReflectionUtils.cleanProxy(getClass());
-
-        return (Class<T>) TypeResolver.resolveRawArguments(class1.getGenericSuperclass(), class1)[index];
-    }
-
     @Override
     public Class<AGGREGATE> getAggregateRootClass() {
         return aggregateRootClass;
@@ -66,84 +61,4 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     public Class<KEY> getKeyClass() {
         return keyClass;
     }
-
-    @Override
-    public final AGGREGATE load(KEY id) {
-        return doLoad(id);
-    }
-
-    @Override
-    public void clear() {
-        doClear();
-    }
-
-    @Override
-    public final void delete(KEY id) {
-        doDelete(id);
-    }
-
-    @Override
-    public final void delete(AGGREGATE aggregate) {
-        doDelete(aggregate);
-    }
-
-    @Override
-    public final void persist(AGGREGATE aggregate) {
-        doPersist(aggregate);
-    }
-
-    @Override
-    public final AGGREGATE save(AGGREGATE aggregate) {
-        return doSave(aggregate);
-    }
-
-
-    /**
-     * Delegates the load mechanism to the infrastructure.
-     *
-     * @param id the identifier of the aggregate root to load
-     * @return the loaded aggregate
-     */
-    @Read
-    protected abstract AGGREGATE doLoad(KEY id);
-
-    /**
-     * Delegates the clear mechanism to the infrastructure.
-     */
-    @Delete
-    protected abstract void doClear();
-
-    /**
-     * Delegates the delete mechanism to the infrastructure.
-     *
-     * @param id the identifier of the aggregate root to delete
-     */
-    @Delete
-    protected abstract void doDelete(KEY id);
-
-    /**
-     * Delegates the delete mechanism to the infrastructure.
-     *
-     * @param aggregate the aggregate to delete
-     */
-    @Delete
-    protected abstract void doDelete(AGGREGATE aggregate);
-
-    /**
-     * Delegates the persist mechanism to the infrastructure.
-     *
-     * @param aggregate the aggregate to persist
-     */
-    @Persist
-    protected abstract void doPersist(AGGREGATE aggregate);
-
-    /**
-     * Delegates the save mechanism to the infrastructure.
-     *
-     * @param aggregate the aggregate to save
-     * @return the saved aggregate
-     */
-    @Persist
-    protected abstract AGGREGATE doSave(AGGREGATE aggregate);
-
 }

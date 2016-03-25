@@ -44,6 +44,23 @@ public interface Repository<A extends AggregateRoot<K>, K> {
     A load(K id);
 
     /**
+     * Check that the aggregate identified by the specified key exists.
+     *
+     * @param id the aggregate key
+     * @return true if the aggregate exists, false otherwise.
+     */
+    @Read
+    boolean exists(K id);
+
+    /**
+     * Returns the number of aggregates managed by this repository.
+     *
+     * @return the number of aggregates managed by this repository.
+     */
+    @Read
+    long count();
+
+    /**
      * Deletes all aggregates from the persistence.
      */
     @Delete

@@ -20,17 +20,31 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     private static Map<String, Customer> orderMap = new ConcurrentHashMap<String, Customer>();
 
     @Override
-    protected Customer doLoad(String id) {
+    public Customer load(String id) {
         return orderMap.get(id);
     }
 
     @Override
-    protected void doDelete(String id) {
+    public boolean exists(String id) {
+        return orderMap.containsKey(id);
+    }
+
+    @Override
+    public long count() {
+        return orderMap.size();
+    }
+
+    public void clear() {
+        orderMap.clear();
+    }
+
+    @Override
+    public void delete(String id) {
         orderMap.remove(id);
     }
 
     @Override
-    protected void doDelete(Customer order) {
+    public void delete(Customer order) {
         for (Customer order1 : orderMap.values()) {
             if (order1.equals(order)) {
                 orderMap.remove(order.getEntityId());
@@ -39,16 +53,12 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    protected void doPersist(Customer order) {
+    public void persist(Customer order) {
         orderMap.put(order.getEntityId(), order);
     }
 
     @Override
-    protected Customer doSave(Customer order) {
+    public Customer save(Customer order) {
         return orderMap.put(order.getEntityId(), order);
-    }
-
-    public void doClear() {
-        orderMap.clear();
     }
 }
