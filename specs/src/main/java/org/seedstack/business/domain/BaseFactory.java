@@ -48,7 +48,7 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseFactory<DO extends DomainObject & Producible> implements GenericFactory<DO> {
-    private final Class<DO> producedClass;
+    protected final Class<DO> producedClass;
 
     @SuppressWarnings("unchecked")
     protected BaseFactory() {

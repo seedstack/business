@@ -21,8 +21,8 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     private static final int AGGREGATE_INDEX = 0;
     private static final int KEY_INDEX = 1;
 
-    private final Class<AGGREGATE> aggregateRootClass;
-    private final Class<KEY> keyClass;
+    protected final Class<AGGREGATE> aggregateRootClass;
+    protected final Class<KEY> keyClass;
 
     /**
      * Constructs a base repository.
