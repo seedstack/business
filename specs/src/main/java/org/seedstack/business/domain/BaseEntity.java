@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.domain;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.seedstack.seed.SeedException;
 
 
@@ -22,41 +20,49 @@ import org.seedstack.seed.SeedException;
  * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
-
-    protected BaseEntity() {
-    }
-
     @Override
     public abstract ID getEntityId();
 
+    /**
+     * Computes the hash code on the entity identity returned by {@link #getEntityId()}. This method can be overridden
+     * but be sure to respect the equality semantics for entities.
+     * when doing so.
+     *
+     * @return Hash code built from all non-transient fields.
+     */
     @Override
-    public final int hashCode() {
-        return checkIdentity().hashCode();
+    public int hashCode() {
+        return getIdentity().hashCode();
     }
 
+    /**
+     * Computes the equality on the entity identity returned by {@link #getEntityId()}. This method can be overridden
+     * but be sure to respect the equality semantics for entities.
+     *
+     * @param other other object
+     * @return true if the other object is of the same class and has the same identity a this entity, false otherwise.
+     */
     @Override
-    public final boolean equals(final Object o) {
-        ID entityId = checkIdentity();
-
-        if (this == o) {
+    public boolean equals(final Object other) {
+        ID entityId = getIdentity();
+        if (this == other) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        return entityId.equals(this.getClass().cast(o).getEntityId());
+        return entityId.equals(this.getClass().cast(other).getEntityId());
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return String.format("%s[%s]", getClass().getSimpleName(), getEntityId());
     }
 
-    private ID checkIdentity() {
+    private ID getIdentity() {
         ID entityId = getEntityId();
         if (entityId == null) {
-            throw SeedException.createNew(DomainErrorCodes.ENTITY_WITHOUT_IDENTITY_ISSUE)
-                    .put("className", getClass().getName());
+            throw SeedException.createNew(DomainErrorCodes.ENTITY_WITHOUT_IDENTITY_ISSUE).put("className", getClass().getName());
         }
         return entityId;
     }

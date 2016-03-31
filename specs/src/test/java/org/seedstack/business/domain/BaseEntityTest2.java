@@ -41,7 +41,7 @@ public class BaseEntityTest2 {
 	@Test
 	public void check_hashcode()
 	{
-		Long entityId = new Long(12);
+		Long entityId = 12L;
 		BaseChild child = new BaseChild(entityId);
 		
 		Set<BaseChild> children = Sets.newHashSet();
@@ -54,7 +54,7 @@ public class BaseEntityTest2 {
 	@Test
 	public void check_equals()
 	{
-		Long entityId = new Long(12);
+		Long entityId = 12L;
 		BaseChild child1 = new BaseChild(entityId);
 		BaseChild child2 = new BaseChild(entityId);
 		

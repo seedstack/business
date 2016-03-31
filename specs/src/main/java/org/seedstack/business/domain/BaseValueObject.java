@@ -16,56 +16,44 @@ import java.io.Serializable;
 
 /**
  * This class is the inheritance base for ValueObject implementations. It offers specific {@code equals()} and
- * {@code hashCode()} methods.
+ * {@code hashCode()} methods which are computed by reflection on all non-transient field values. If performance is critical,
+ * consider overriding those methods with optimized versions. Be sure to respect the equality semantics for value objects
+ * when doing so.
  */
 public abstract class BaseValueObject implements ValueObject, Serializable {
-    private transient int cachedHashCode;
-
-    protected BaseValueObject() {
-    }
-
     /**
+     * Computes the hash code by reflection on all non-transient fields. This method can is quite costly and may be
+     * overridden by an optimized version if performance is critical. Be sure to respect the equality semantics for value objects
+     * when doing so.
+     *
      * @return Hash code built from all non-transient fields.
      */
     @Override
-    public final int hashCode() {
-        // Using a local variable to ensure that we only do a single read
-        // of the cachedHashCode field, to avoid race conditions.
-        // It doesn't matter if several threads compute the hash code and overwrite
-        // each other, but it's important that we never return 0, which could happen
-        // with multiple reads of the cachedHashCode field.
-        //
-        // See java.lang.String.hashCode()
-        int h = cachedHashCode;
-        if (h == 0) {
-            // Lazy initialization of hash code.
-            // Value objects are immutable, so the hash code never changes.
-            h = HashCodeBuilder.reflectionHashCode(this, false);
-            cachedHashCode = h;
-        }
-
-        return h;
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this, false);
     }
 
     /**
+     * Computes the equality by reflection on all non-transient fields. This method can is quite costly and may be
+     * overridden by an optimized version if performance is critical. Be sure to respect the equality semantics for value objects
+     * when doing so.
+     *
      * @param other other object
-     * @return True if other object has the same value as this value object.
+     * @return true if the other object is a {@link ValueObject} and has the same value as this value object, false otherwise.
      */
     @Override
-    public final boolean equals(final Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-
         return EqualsBuilder.reflectionEquals(this, other, false);
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE, false);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false);
     }
-
 }

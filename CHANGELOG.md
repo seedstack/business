@@ -3,6 +3,8 @@
 * [new] Add methods `exists()`, `count()` and `clear()` on `Repository`
 * [brk] The `Comparable` interface have been removed from `BaseValueObject`
 * [brk] Methods `do*()` on `BaseRepository` have been removed. Directly implement their matching method on `Repository`.
+* [chg] Remove `final` qualifier on `equals()` and `hashCode()` methods of `BaseValueObject` and `BaseEntity`.
+* [chg] Changed the default `toString()` of `BaseValueObject` and `BaseEntity` with more concise output.
 * [chg] The `business-web` module has been merged into `business-core` module (the dependency can be safely removed from your poms).
 * [chg] `serialVersionUID` of event classes (`org.seedstack.business.domain.events` package) has been changed to 1L.
 
