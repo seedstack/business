@@ -14,6 +14,7 @@ import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
@@ -26,7 +27,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
@@ -55,7 +58,7 @@ class DefaultRepositoryCollector {
 
         // Extract the type variables which will be passed to the constructor
         Map<Type[], Key<?>> generics = new HashMap<Type[], Key<?>>();
-        for (Class<?> aggregateClass : aggregateClasses) {
+        for (Class<?> aggregateClass : includeSuperClasses(aggregateClasses)) {
             Class<?> aggregateKey = TypeToken.of(aggregateClass).resolveType(AggregateRoot.class.getTypeParameters()[0]).getRawType();
             Type[] params = {aggregateClass, aggregateKey};
 
@@ -70,6 +73,22 @@ class DefaultRepositoryCollector {
             bindingStrategies.add(new GenericBindingStrategy<Repository>(Repository.class, defaultRepoIml, generics));
         }
         return bindingStrategies;
+    }
+
+    Set<Class<?>> includeSuperClasses(Collection<Class<?>> aggregateClasses) {
+        Set<Class<?>> results = new HashSet<Class<?>>();
+        for (Class<?> aggregateClass : aggregateClasses) {
+            Class<?> classToAdd = aggregateClass;
+            while (classToAdd != null) {
+                results.add(classToAdd);
+
+                classToAdd = classToAdd.getSuperclass();
+                if (BaseAggregateRoot.class.equals(classToAdd) || !BaseAggregateRoot.class.isAssignableFrom(classToAdd)) {
+                    break;
+                }
+            }
+        }
+        return results;
     }
 
     Key<?> defaultRepositoryQualifier(Class<?> aggregateClass, TypeLiteral<?> genericInterface) {

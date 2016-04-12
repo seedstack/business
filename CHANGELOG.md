@@ -7,6 +7,7 @@
 * [chg] Changed the default `toString()` of `BaseValueObject` and `BaseEntity` with more concise output.
 * [chg] The `business-web` module has been merged into `business-core` module (the dependency can be safely removed from your poms).
 * [chg] `serialVersionUID` of event classes (`org.seedstack.business.domain.events` package) has been changed to 1L.
+* [chg] Default repositories are now also created for parent classes of aggregate roots
 
 # Version 2.2.0 (2016-01-21)
 
