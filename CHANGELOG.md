@@ -1,4 +1,4 @@
-# Version 2.3.0 (?)
+# Version 2.3.0 (2016-04-25)
 
 * [new] Add methods `exists()`, `count()` and `clear()` on `Repository`
 * [brk] The `Comparable` interface have been removed from `BaseValueObject`
