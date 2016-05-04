@@ -26,7 +26,7 @@ import java.util.UUID;
 public class SimpleUUIDHandler implements UUIDHandler<BaseEntity<UUID>,UUID>{
 
 	@Override
-	public UUID handle(Entity entity, Configuration entityConfiguration) {
+	public UUID handle(BaseEntity<UUID> entity, Configuration entityConfiguration) {
 		return UUID.randomUUID();		
 	}
 

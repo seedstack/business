@@ -94,6 +94,9 @@
                                 <exclude>org.seedstack.business.assembler.AbstractBaseAssembler</exclude>
                                 <exclude>org.seedstack.business.assembler.modelmapper.ModelMapperAssembler</exclude>
                                 <exclude>org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler</exclude>
+                                <exclude>org.seedstack.business.domain.identity.SimpleUUIDHandler</exclude>
+                                <exclude>org.seedstack.business.test.InMemorySequenceHandler</exclude>
+                                <exclude>org.seedstack.business.identity.fixtures.RandomIdentityHandler</exclude>
                             </excludes>
                         </parameter>
                     </configuration>
