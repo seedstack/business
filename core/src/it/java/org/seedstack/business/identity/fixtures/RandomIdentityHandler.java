@@ -24,7 +24,7 @@ import org.seedstack.business.domain.identity.IdentityHandler;
 public class RandomIdentityHandler implements IdentityHandler<BaseEntity<Double>, Double> {
 
 	@Override
-	public Double handle(Entity entity, Configuration entityConfiguration) {
+	public Double handle(BaseEntity<Double> entity, Configuration entityConfiguration) {
 		return Math.random();
 	}
 

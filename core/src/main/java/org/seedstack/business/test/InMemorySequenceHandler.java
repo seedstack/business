@@ -26,7 +26,7 @@ public class InMemorySequenceHandler implements SequenceHandler<BaseEntity<Long>
 	private static final AtomicLong sequence = new AtomicLong(1L);
 
 	@Override
-	public Long handle(Entity entity, Configuration entityConfiguration) {
+	public Long handle(BaseEntity<Long> entity, Configuration entityConfiguration) {
 		return sequence.incrementAndGet();
 	}
 

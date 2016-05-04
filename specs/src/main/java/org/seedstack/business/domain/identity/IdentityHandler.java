@@ -26,6 +26,6 @@ public interface IdentityHandler<E extends Entity<ID>, ID> {
      * @param entityConfiguration property coming from props configuration for entity
      * @return the entity id
      */
-    ID handle(final Entity entity, Configuration entityConfiguration);
+    ID handle(final E entity, Configuration entityConfiguration);
 
 }
