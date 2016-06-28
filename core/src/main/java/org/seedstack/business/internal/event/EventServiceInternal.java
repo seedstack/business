@@ -51,7 +51,7 @@ class EventServiceInternal implements EventService {
     @Override
     public <E extends Event> void fire(E event) {
         LOGGER.debug("Synchronously fired {}", event.getClass().getName());
-        for (Class<? extends Event> eventClass : eventHandlerClassesByEvent.keys()) {
+        for (Class<? extends Event> eventClass : eventHandlerClassesByEvent.keys().elementSet()) {
             if (eventClass.isAssignableFrom(event.getClass())) {
                 checkCyclicCall(eventClass, event);
                 Multimap<Class<? extends Event>, Event> currentEventClasses = context.get();
