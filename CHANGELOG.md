@@ -1,3 +1,8 @@
+# Version 2.3.1 (2016-07-29)
+
+* [chg] Updated the signature of the `handle()` method of `IdentityHandler`.
+* [fix] Avoid sending domain events multiple times when multiple handlers are registered.
+
 # Version 2.3.0 (2016-04-25)
 
 * [new] Add methods `exists()`, `count()` and `clear()` on `Repository`

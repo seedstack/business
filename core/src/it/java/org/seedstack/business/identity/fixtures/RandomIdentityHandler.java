@@ -6,26 +6,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.identity.fixtures;
 
 import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.BaseEntity;
 import org.seedstack.business.domain.identity.IdentityHandler;
 
 /**
  * MyIdentityHandler
- * 
- * @author redouane.loulou@ext.mpsa.com
  *
+ * @author redouane.loulou@ext.mpsa.com
  */
-public class RandomIdentityHandler implements IdentityHandler<BaseEntity<Double>, Double> {
-
-	@Override
-	public Double handle(BaseEntity<Double> entity, Configuration entityConfiguration) {
-		return Math.random();
-	}
-
+public class RandomIdentityHandler implements IdentityHandler<Entity<Double>, Double> {
+    @Override
+    public Double handle(Entity<Double> entity, Configuration entityConfiguration) {
+        return Math.random();
+    }
 }

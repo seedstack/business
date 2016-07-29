@@ -6,28 +6,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.domain.identity;
 
 import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.BaseEntity;
 
 import javax.inject.Named;
 import java.util.UUID;
 
 /**
  * Uuid handler
- * 
+ *
  * @author redouane.loulou@ext.mpsa.com
  */
 @Named("simple-UUID")
-public class SimpleUUIDHandler implements UUIDHandler<BaseEntity<UUID>,UUID>{
+public class SimpleUUIDHandler implements UUIDHandler<Entity<UUID>, UUID> {
 
-	@Override
-	public UUID handle(BaseEntity<UUID> entity, Configuration entityConfiguration) {
-		return UUID.randomUUID();		
-	}
-
+    @Override
+    public UUID handle(Entity<UUID> entity, Configuration entityConfiguration) {
+        return UUID.randomUUID();
+    }
 }
