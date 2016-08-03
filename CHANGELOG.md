@@ -1,3 +1,7 @@
+# Version 2.3.2 (2016-08-03)
+
+* [fix] Prevent binding of abstract classes and interfaces extending/implementing `EventHandler`
+
 # Version 2.3.1 (2016-07-29)
 
 * [chg] Updated the signature of the `handle()` method of `IdentityHandler`.
