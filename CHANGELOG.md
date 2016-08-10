@@ -1,3 +1,7 @@
+# Version 2.3.3 (2016-08-10)
+
+* [fix] Also bind event handler classes which ancestors implement the `EventHandler` interface
+
 # Version 2.3.2 (2016-08-03)
 
 * [fix] Prevent binding of abstract classes and interfaces extending/implementing `EventHandler`
