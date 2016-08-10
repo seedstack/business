@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.seedstack.seed.core.utils.BaseClassSpecifications.ancestorImplements;
 import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
 import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
 
@@ -35,7 +36,7 @@ import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInter
 public class EventPlugin extends AbstractPlugin {
 
     public static final String PREFIX = "org.seedstack.business.event";
-    private final Specification<Class<?>> eventHandlerSpecification = and(classImplements(EventHandler.class), not(classIsInterface()), not(classIsAbstract()));
+    private final Specification<Class<?>> eventHandlerSpecification = and(ancestorImplements(EventHandler.class),not(classIsInterface()), not(classIsAbstract()));
     private final Specification<Class<?>> eventSpecification = and(classImplements(Event.class));
 
     private Multimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlersByEvent = ArrayListMultimap.create();
