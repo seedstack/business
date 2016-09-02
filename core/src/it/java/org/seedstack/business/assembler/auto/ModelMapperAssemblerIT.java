@@ -8,20 +8,26 @@
 package org.seedstack.business.assembler.auto;
 
 import com.google.common.collect.Lists;
-import org.assertj.core.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.domain.BaseAggregateRoot;
+import org.modelmapper.PropertyMap;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.assembler.ModelMapper;
+import org.seedstack.business.assembler.fixtures.MyService;
+import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.seed.Logging;
 import org.seedstack.seed.it.SeedITRunner;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
@@ -33,9 +39,29 @@ public class ModelMapperAssemblerIT {
     @ModelMapper
     private Assembler<Order, OrderDTO> defaultAssembler;
 
+    @Inject
+    private CustomerAssembler customerAssembler;
+
     @Test
     public void testInjectee() {
-        Assertions.assertThat(defaultAssembler).isNotNull();
+        assertThat(defaultAssembler).isNotNull();
+        assertThat(customerAssembler).isNotNull();
+    }
+
+    @Test
+    public void testInjectionInConfigureMethods() throws Exception {
+        Name nameResult = customerAssembler.assembleDtoFromAggregate(new Customer(new Name("Hello", "Kitty")));
+        assertThat(nameResult.getFirstName()).isEqualTo("Hello");
+        assertThat(nameResult.getLastName()).isEqualTo("Kitty");
+
+        customerAssembler.assembleDtoFromAggregate(nameResult, new Customer(new Name("John", "Doe")));
+        assertThat(nameResult.getFirstName()).isEqualTo("John");
+        assertThat(nameResult.getLastName()).isEqualTo("Doe");
+
+        Customer customerResult = new Customer();
+        customerAssembler.mergeAggregateWithDto(customerResult, new Name("Jane", "Doe"));
+        assertThat(customerResult.getName().getFirstName()).isEqualTo("Jane");
+        assertThat(customerResult.getName().getLastName()).isEqualTo("Doe");
     }
 
     @Test
@@ -44,10 +70,10 @@ public class ModelMapperAssemblerIT {
 
         OrderDTO orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
 
-        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
-        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
-        Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
-        Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+        assertThat(orderDTO.customerFirstName).isEqualTo("John");
+        assertThat(orderDTO.customerLastName).isEqualTo("Doe");
+        assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
+        assertThat(orderDTO.billingStreet).isEqualTo("main street");
     }
 
     @Test
@@ -60,15 +86,15 @@ public class ModelMapperAssemblerIT {
 
         OrderDTO orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
 
-        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
-        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
-        Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
-        Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+        assertThat(orderDTO.customerFirstName).isEqualTo("John");
+        assertThat(orderDTO.customerLastName).isEqualTo("Doe");
+        assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
+        assertThat(orderDTO.billingStreet).isEqualTo("main street");
 
         orderDTO = defaultAssembler.assembleDtoFromAggregate(order);
 
-        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
-        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
+        assertThat(orderDTO.customerFirstName).isEqualTo("John");
+        assertThat(orderDTO.customerLastName).isEqualTo("Doe");
     }
 
     @Test
@@ -78,10 +104,10 @@ public class ModelMapperAssemblerIT {
 
         defaultAssembler.assembleDtoFromAggregate(orderDTO, order);
 
-        Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
-        Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
-        Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
-        Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+        assertThat(orderDTO.customerFirstName).isEqualTo("John");
+        assertThat(orderDTO.customerLastName).isEqualTo("Doe");
+        assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
+        assertThat(orderDTO.billingStreet).isEqualTo("main street");
     }
 
     @Test
@@ -96,11 +122,42 @@ public class ModelMapperAssemblerIT {
 
         defaultAssembler.mergeAggregateWithDto(order, orderDTO);
 
-        Assertions.assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("John");
-        Assertions.assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");
-        Assertions.assertThat(order.getBillingAddress().getCity()).isEqualTo("bevillecity");
-        Assertions.assertThat(order.getBillingAddress().getStreet()).isEqualTo("main street");
-        Assertions.assertThat(order.getIgnoredProp()).isEqualTo("this should not be deleted");
+        assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("John");
+        assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");
+        assertThat(order.getBillingAddress().getCity()).isEqualTo("bevillecity");
+        assertThat(order.getBillingAddress().getStreet()).isEqualTo("main street");
+        assertThat(order.getIgnoredProp()).isEqualTo("this should not be deleted");
+    }
+
+    static class CustomerAssembler extends ModelMapperAssembler<Customer, Name> {
+        @Inject
+        MyService myService;
+        @Logging
+        Logger logger;
+
+        @Override
+        protected void configureAssembly(org.modelmapper.ModelMapper modelMapper) {
+            assertThat(myService).isNotNull();
+            assertThat(logger).isNotNull();
+            modelMapper.addMappings(new PropertyMap<Customer, Name>() {
+                protected void configure() {
+                    map().setFirstName(source.getName().getFirstName());
+                    map().setLastName(source.getName().getLastName());
+                }
+            });
+        }
+
+        @Override
+        protected void configureMerge(org.modelmapper.ModelMapper modelMapper) {
+            assertThat(myService).isNotNull();
+            assertThat(logger).isNotNull();
+            modelMapper.addMappings(new PropertyMap<Name, Customer>() {
+                protected void configure() {
+                    map().getName().setFirstName(source.getFirstName());
+                    map().getName().setLastName(source.getLastName());
+                }
+            });
+        }
     }
 
     static class Order extends BaseAggregateRoot<String> {
@@ -168,7 +225,7 @@ public class ModelMapperAssemblerIT {
         }
     }
 
-    static class Customer {
+    static class Customer extends BaseAggregateRoot<Name> {
         Name name;
 
         public Customer() {
@@ -177,6 +234,11 @@ public class ModelMapperAssemblerIT {
         public Customer(Name name) {
 
             this.name = name;
+        }
+
+        @Override
+        public Name getEntityId() {
+            return name;
         }
 
         public Name getName() {
@@ -196,7 +258,6 @@ public class ModelMapperAssemblerIT {
         }
 
         public Name(String firstName, String lastName) {
-
             this.firstName = firstName;
             this.lastName = lastName;
         }

@@ -1,3 +1,7 @@
+# Version 2.3.4 (2016-09-02)
+
+* [fix] Delay call of `configure*()` methods in `ModelMapperAssembler` to allow field and method injection to occur before.  
+
 # Version 2.3.3 (2016-08-10)
 
 * [fix] Also bind event handler classes which ancestors implement the `EventHandler` interface

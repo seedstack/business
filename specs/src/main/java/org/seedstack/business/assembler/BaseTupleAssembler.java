@@ -39,8 +39,8 @@ public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBas
     }
 
     @Override
-    public void assembleDtoFromAggregate(D sourceDto, T sourceAggregate) {
-        doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
+    public void assembleDtoFromAggregate(D targetDto, T sourceAggregate) {
+        doAssembleDtoFromAggregate(targetDto, sourceAggregate);
     }
 
     /**

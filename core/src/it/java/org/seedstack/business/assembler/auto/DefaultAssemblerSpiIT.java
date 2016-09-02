@@ -11,7 +11,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.assembler.auto.fixture.*;
+import org.seedstack.business.assembler.auto.fixture.Address;
+import org.seedstack.business.assembler.auto.fixture.DummyDefaultAssembler;
+import org.seedstack.business.assembler.auto.fixture.Order;
+import org.seedstack.business.assembler.auto.fixture.OrderDto;
+import org.seedstack.business.assembler.auto.fixture.OrderDtoAssembler;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -42,5 +46,6 @@ public class DefaultAssemblerSpiIT {
     public void test_custom_assembler() {
         Assertions.assertThat(customAssembler).isNotNull();
         Assertions.assertThat(customAssembler).isInstanceOf(OrderDtoAssembler.class);
+        customAssembler.assembleDtoFromAggregate(new Order(new Address("street", "city")));
     }
 }
