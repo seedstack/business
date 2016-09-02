@@ -47,9 +47,9 @@ public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends Abst
     }
 
     @Override
-    public void assembleDtoFromAggregate(D sourceDto, T sourceAggregate) {
+    public void assembleDtoFromAggregate(D targetDto, T sourceAggregate) {
         for (Object o : sourceAggregate) {
-            assembleModelMapper.map(o, sourceDto);
+            assembleModelMapper.map(o, targetDto);
         }
     }
 

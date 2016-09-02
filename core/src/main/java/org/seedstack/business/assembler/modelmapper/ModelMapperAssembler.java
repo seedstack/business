@@ -24,35 +24,42 @@ public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extend
 
     public ModelMapperAssembler() {
         super();
-        initModelMappers();
     }
 
     public ModelMapperAssembler(Class<D> dtoClass) {
         super(dtoClass);
-        initModelMappers();
     }
 
     @Override
     public D assembleDtoFromAggregate(A sourceAggregate) {
+        initAssembleModelMapper();
         return assembleModelMapper.map(sourceAggregate, dtoClass);
     }
 
     @Override
-    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
-        assembleModelMapper.map(sourceAggregate, sourceDto);
+    public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        initAssembleModelMapper();
+        assembleModelMapper.map(sourceAggregate, targetDto);
     }
 
     @Override
     public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+        initMergeModelMapper();
         mergeModelMapper.map(sourceDto, targetAggregate);
     }
 
-    private void initModelMappers() {
-        this.assembleModelMapper = new ModelMapper();
-        configureAssembly(assembleModelMapper);
+    private void initAssembleModelMapper() {
+        if (assembleModelMapper == null) {
+            assembleModelMapper = new ModelMapper();
+            configureAssembly(assembleModelMapper);
+        }
+    }
 
-        this.mergeModelMapper = new ModelMapper();
-        configureMerge(mergeModelMapper);
+    private void initMergeModelMapper() {
+        if (mergeModelMapper == null) {
+            mergeModelMapper = new ModelMapper();
+            configureMerge(mergeModelMapper);
+        }
     }
 
     protected abstract void configureAssembly(ModelMapper modelMapper);

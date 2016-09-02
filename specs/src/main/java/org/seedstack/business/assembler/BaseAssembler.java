@@ -77,8 +77,8 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D> extends Abstr
     }
 
     @Override
-    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
-        doAssembleDtoFromAggregate(sourceDto, sourceAggregate);
+    public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        doAssembleDtoFromAggregate(targetDto, sourceAggregate);
     }
 
     /**

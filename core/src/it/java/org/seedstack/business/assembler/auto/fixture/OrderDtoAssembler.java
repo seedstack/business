@@ -8,20 +8,35 @@
 package org.seedstack.business.assembler.auto.fixture;
 
 import org.seedstack.business.assembler.BaseAssembler;
+import org.seedstack.business.assembler.fixtures.MyService;
+import org.seedstack.seed.Logging;
+import org.slf4j.Logger;
+
+import javax.inject.Inject;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
+    @Inject
+    private MyService myService;
+    @Logging
+    private Logger logger;
 
     @Override
     protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
+        assertThat(myService).isNotNull();
+        assertThat(logger).isNotNull();
         targetDto.setId(sourceAggregate.getEntityId());
         targetDto.setBillingAddress(sourceAggregate.getBillingAddress());
     }
 
     @Override
     protected void doMergeAggregateWithDto(Order targetAggregate, OrderDto sourceDto) {
+        assertThat(myService).isNotNull();
+        assertThat(logger).isNotNull();
         targetAggregate.setBillingAddress(sourceDto.getBillingAddress());
     }
 }
