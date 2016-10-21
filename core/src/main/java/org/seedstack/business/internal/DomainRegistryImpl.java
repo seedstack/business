@@ -24,17 +24,16 @@ import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.seed.ErrorCode;
 import org.seedstack.seed.SeedException;
-import org.seedstack.seed.TypeOf;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
+import org.seedstack.shed.reflect.TypeOf;
 
 /**
  * Registry to access to all domain objects (repository, factory, service, policy).
  * 
- * @author thierry.bouvet@mpsa.com
  */
 public class DomainRegistryImpl implements DomainRegistry {
 

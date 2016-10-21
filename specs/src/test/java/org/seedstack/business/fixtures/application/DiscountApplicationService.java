@@ -9,9 +9,7 @@ package org.seedstack.business.fixtures.application;
 
 import org.seedstack.business.Service;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Service
 public interface DiscountApplicationService {
 }

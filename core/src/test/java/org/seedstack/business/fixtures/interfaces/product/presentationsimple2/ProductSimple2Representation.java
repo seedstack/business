@@ -13,9 +13,6 @@ import org.seedstack.business.assembler.MatchingFactoryParameter;
 /**
  * Representation that will work with {@link org.seedstack.business.fixtures.domain.product.InternalProductFactory}
  * the {@link org.seedstack.business.fixtures.domain.product.ProductFactory} with the 2 argument constructor.
- * 
- * @author epo.jemba@ext.mpsa.com
- *
  */
 public class ProductSimple2Representation {
 

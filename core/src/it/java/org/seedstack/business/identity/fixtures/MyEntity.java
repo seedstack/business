@@ -16,11 +16,7 @@ import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.UUID;
 
-/**
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
- */
+
 public class MyEntity extends BaseEntity<UUID> {
 
 	@Identity(handler = UUIDHandler.class)

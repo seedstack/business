@@ -22,7 +22,7 @@ public class ChunkedResultViewTest {
 		// list from 0 to 39
 		List<Integer> list = subList(40);
 		
-		ChunkedView<Integer> cResult = new ChunkedView<Integer>(list, 10, 7);
+		ChunkedView<Integer> cResult = new ChunkedView<>(list, 10, 7);
 		
 		Assertions.assertThat(cResult.getView()).contains( 10 ,11, 12, 13, 14, 15, 16 );
 		
@@ -30,7 +30,7 @@ public class ChunkedResultViewTest {
 	}
 	
 	private List<Integer> subList(int subListSize) {
-		List<Integer> lit = new LinkedList<Integer>();
+		List<Integer> lit = new LinkedList<>();
 		
 		for(int i = 0 ; i < subListSize ; i ++)
 		{

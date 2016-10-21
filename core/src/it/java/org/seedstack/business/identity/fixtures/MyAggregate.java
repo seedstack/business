@@ -18,8 +18,6 @@ import java.util.Set;
 import java.util.UUID;
 
 /** 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class MyAggregate extends BaseAggregateRoot<UUID> {
 

@@ -21,9 +21,7 @@ import org.seedstack.seed.it.SeedITRunner;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @RunWith(SeedITRunner.class)
 public class DefaultAssemblerSpiIT {
 

@@ -9,9 +9,7 @@ package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
 import org.seedstack.business.domain.GenericFactory;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public interface OrderFactory extends GenericFactory<Order> {
 
     Order create(String id, String product);

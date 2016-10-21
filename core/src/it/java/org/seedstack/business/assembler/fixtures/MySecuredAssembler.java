@@ -11,11 +11,8 @@ package org.seedstack.business.assembler.fixtures;
 import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.seed.security.data.Secured;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- */
-public class MySecuredAssembler extends BaseAssembler<MyAggregateRoot, MyDto> {
 
+public class MySecuredAssembler extends BaseAssembler<MyAggregateRoot, MyDto> {
     @Override
     protected void doAssembleDtoFromAggregate(@Secured MyDto targetDto, MyAggregateRoot sourceEntity) {
         targetDto.setNom(sourceEntity.getLastName() + ", " + sourceEntity.getFirstName());

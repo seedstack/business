@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * Context used by the DSL to carry the internal registry and the qualifier it uses.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class AssemblerDslContext {
 

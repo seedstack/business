@@ -66,7 +66,7 @@ public class InjectCollection {
 			}
 		});
 		
-		Set<Item> items = new HashSet<Item>();
+		Set<Item> items = new HashSet<>();
 		items.add(new Item());
 		items.add(new Item());
 		items.add(new Item());

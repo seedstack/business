@@ -7,15 +7,14 @@
  */
 package org.seedstack.business.domain.identity;
 
-import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.domain.Entity;
+import org.seedstack.seed.ClassConfiguration;
 
 /**
  * Interface for handling identity generation.
  *
  * @param <E>  the entity
  * @param <ID> the entity id
- * @author redouane.loulou@ext.mpsa.com
  */
 public interface IdentityHandler<E extends Entity<ID>, ID> {
 
@@ -26,6 +25,6 @@ public interface IdentityHandler<E extends Entity<ID>, ID> {
      * @param entityConfiguration property coming from props configuration for entity
      * @return the entity id
      */
-    ID handle(final E entity, Configuration entityConfiguration);
+    ID handle(final E entity, ClassConfiguration<E> entityConfiguration);
 
 }

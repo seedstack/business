@@ -15,9 +15,6 @@ import java.util.Collection;
 
 /**
  * Dummy Type for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 @Named("collectionQualifiedTestType")
 public class CollectionQualifiedTestType extends TestType<Collection<String>, Collection<Collection<Long>>> {

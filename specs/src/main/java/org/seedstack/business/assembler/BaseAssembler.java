@@ -52,7 +52,6 @@ import org.seedstack.business.domain.AggregateRoot;
  *
  * @param <A> the aggregate root type
  * @param <D> the dto type
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
 

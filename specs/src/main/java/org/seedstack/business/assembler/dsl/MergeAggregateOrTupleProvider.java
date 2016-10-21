@@ -16,7 +16,6 @@ import java.util.List;
  * Specifies the target aggregate to merge.
  *
  * @param <D> the DTO type
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface MergeAggregateOrTupleProvider<D> {
 
@@ -114,18 +113,4 @@ public interface MergeAggregateOrTupleProvider<D> {
      * @return a tuple of aggregate roots
      */
     MergeTupleWithRepositoryProvider<Tuple> into(List<Class<? extends AggregateRoot<?>>> aggregateRootClasses);
-
-    /**
-     * Merge the dto into a tuple of aggregate roots. This method is not recommended.
-     * <p>
-     * If you can, use the method matching the number of aggregate roots you have in the tuple. For instance use
-     * {@link #into(org.seedstack.business.domain.AggregateRoot, org.seedstack.business.domain.AggregateRoot)}
-     * for a {@code Pair&lt;Customer, Order&gt;} it will return a more typed result.
-     * </p>
-     *
-     * @param aggregateRoots a list of aggregate root classes
-     */
-    @Deprecated
-    void into(Tuple aggregateRoots);
-
 }

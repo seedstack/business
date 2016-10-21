@@ -15,8 +15,6 @@ import java.lang.annotation.*;
  *
  * Verification will be done by the framework on either or not this service is in the right place.
  *
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement

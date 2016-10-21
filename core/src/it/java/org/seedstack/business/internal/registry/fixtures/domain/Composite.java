@@ -9,8 +9,6 @@ package org.seedstack.business.internal.registry.fixtures.domain;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */public class Composite<T> {
 
 }

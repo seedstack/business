@@ -21,13 +21,15 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Qualifier;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class with various utility methods for java types.
- *
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  */
 public final class BindingUtils {
 
@@ -79,8 +81,8 @@ public final class BindingUtils {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Map<Key<?>, Class<?>> resolveBindingDefinitions(Class<?> injecteeClass, Class<?> firstImplClass, Class<?>... restImplClasses) {
-        Map<Key<?>, Class<?>> typeLiterals = new HashMap<Key<?>, Class<?>>();
-        List<Class<?>> subClasses = new ArrayList<Class<?>>();
+        Map<Key<?>, Class<?>> typeLiterals = new HashMap<>();
+        List<Class<?>> subClasses = new ArrayList<>();
 
         if (firstImplClass != null) {
             subClasses.add(firstImplClass);
@@ -109,9 +111,8 @@ public final class BindingUtils {
                     key = Key.get(parentTypeLiteral);
                 }
                 if (typeLiterals.containsKey(key)) {
-                    SeedException.createNew(BusinessCoreErrorCodes.DUPLICATED_KEYS_FOUND).put("duplicatedKey", key)
-                            .put("firstClass", subClass.getName()).put("secondClass", typeLiterals.get(key).getName())
-                            .thenThrows();
+                    throw SeedException.createNew(BusinessCoreErrorCodes.DUPLICATED_KEYS_FOUND).put("duplicatedKey", key)
+                            .put("firstClass", subClass.getName()).put("secondClass", typeLiterals.get(key).getName());
                 }
                 typeLiterals.put(key, subClass);
             }
@@ -131,7 +132,7 @@ public final class BindingUtils {
         if (implClasses != null && !implClasses.isEmpty()) {
             return resolveBindingDefinitions(injecteeClass, null, implClasses.toArray(new Class<?>[implClasses.size()]));
         }
-        return new HashMap<Key<?>, Class<?>>();
+        return new HashMap<>();
     }
 
 

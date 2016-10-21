@@ -10,9 +10,7 @@ package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 import org.seedstack.business.assembler.MatchingEntityId;
 import org.seedstack.business.assembler.MatchingFactoryParameter;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 //@DtoOf(Order.class) // specify the link to the aggregate root
 public class OrderDto {
     String orderId;

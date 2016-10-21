@@ -26,7 +26,7 @@ public class Customer extends BaseAggregateRoot<CustomerId> {
 	private CustomerId entityId;
 
 	
-	private Map<String,Address> addresses = new HashMap<String, Address>();
+	private Map<String,Address> addresses = new HashMap<>();
 
 
 	protected Customer() {

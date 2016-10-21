@@ -18,9 +18,6 @@ import java.util.UUID;
 
 /**
  * MyAggregateWithBadEntityManagement
- * 
- * @author redouane.loulou@ext.mpsa.com
- * 
  */
 public class MyAggregateWithBadIdentityManagement extends
 		BaseAggregateRoot<UUID> {

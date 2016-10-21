@@ -12,9 +12,7 @@ import org.javatuples.Pair;
 
 import java.util.Date;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class PersonFactory {
 
     public PersonId createPersonId(Pair<String, String> name) {

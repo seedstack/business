@@ -12,10 +12,7 @@ package org.seedstack.business.assembler.fixtures;
 
 
 /**
- * Dummy unrestrict dto (without EL)
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
+ * Dummy unrestricted dto (without EL)
  */
 public class MyUnrestrictedDto {
 

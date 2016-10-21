@@ -9,9 +9,7 @@ package org.seedstack.business.assembler.auto.fixture;
 
 import org.seedstack.business.assembler.DtoOf;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 @DtoOf({Order.class, Customer.class})
 public class Recipe {
     String customerFirstName;

@@ -13,11 +13,7 @@ package org.seedstack.business.identity.fixtures;
 import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.domain.Create;
 
-/**
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
- */
+
 @Create
 public interface MyAggregateFactory  extends GenericFactory<MyAggregate> {
 

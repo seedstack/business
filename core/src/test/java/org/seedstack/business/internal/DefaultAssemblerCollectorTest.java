@@ -24,16 +24,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class DefaultAssemblerCollectorTest {
 
     private DefaultAssemblerCollector underTest;
 
     @Before
     public void before() {
-        List<Class<?>> defaultAssemblers = new ArrayList<Class<?>>();
+        List<Class<?>> defaultAssemblers = new ArrayList<>();
         defaultAssemblers.add(DefaultAssemblerFixture1.class);
         defaultAssemblers.add(DefaultAssemblerFixture2.class);
         underTest = new DefaultAssemblerCollector(defaultAssemblers);

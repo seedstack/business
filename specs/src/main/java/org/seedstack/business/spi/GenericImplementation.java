@@ -14,8 +14,6 @@ import java.lang.annotation.*;
  * <p>
  * It is used only defining default assemblers or repositories.
  * </p>
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

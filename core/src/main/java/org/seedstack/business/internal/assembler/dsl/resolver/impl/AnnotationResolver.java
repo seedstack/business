@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
  * <p>
  * See Their respective documentation to understand {@code AnnotationResolver} implementation.
  * </p>
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see org.seedstack.business.assembler.MatchingEntityId
  * @see org.seedstack.business.assembler.MatchingFactoryParameter
  */
@@ -92,9 +91,7 @@ public class AnnotationResolver implements DtoInfoResolver {
     private Object getAttributeFromMethod(Object dto, Method method) {
         try {
             return method.invoke(dto);
-        } catch (IllegalAccessException e) {
-            throw new IllegalArgumentException("Failed to call " + method.getName(), e);
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             throw new IllegalArgumentException("Failed to call " + method.getName(), e);
         }
     }

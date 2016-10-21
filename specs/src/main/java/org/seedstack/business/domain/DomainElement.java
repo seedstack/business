@@ -9,13 +9,14 @@ package org.seedstack.business.domain;
 
 import org.seedstack.business.BusinessElement;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * DomainElement marks all domain annotations or types
- *
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Documented
 @BusinessElement

@@ -7,9 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public interface DtoInfoResolver {
 
     ParameterHolder resolveId(Object dto);

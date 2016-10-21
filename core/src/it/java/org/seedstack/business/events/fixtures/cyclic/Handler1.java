@@ -12,9 +12,7 @@ import org.seedstack.business.EventService;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class Handler1 implements EventHandler<Event1> {
 
     @Inject

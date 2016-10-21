@@ -48,8 +48,6 @@ import java.util.Map;
  * <p>
  * Notice that if {@code MyPolicyImpl} where qualified, the factory injectee point should be also qualified.
  * </p>
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public class FactoryPatternBindingStrategy<T> implements BindingStrategy {
 

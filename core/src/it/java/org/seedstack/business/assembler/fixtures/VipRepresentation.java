@@ -7,12 +7,7 @@
  */
 package org.seedstack.business.assembler.fixtures;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public class VipRepresentation extends MyCustomerRepresentation {
 	
 	private String vipName;

@@ -22,7 +22,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
 	private String description;
 	
 	
-	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
+	private List<OrderItem> orderItems = new ArrayList<>();
 
 
 	private OrderId entityId;

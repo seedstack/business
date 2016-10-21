@@ -20,11 +20,7 @@ import org.seedstack.business.identity.fixtures.MyAggregateFactory;
 import org.seedstack.business.identity.fixtures.MyEntity;
 import org.seedstack.seed.it.SeedITRunner;
 
-/**
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
- */
+
 @RunWith(SeedITRunner.class)
 public class IdentityHandlerIT {
 

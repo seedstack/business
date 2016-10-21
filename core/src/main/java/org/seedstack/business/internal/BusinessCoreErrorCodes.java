@@ -9,9 +9,7 @@ package org.seedstack.business.internal;
 
 import org.seedstack.seed.ErrorCode;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public enum BusinessCoreErrorCodes implements ErrorCode {
     DUPLICATED_KEYS_FOUND, CLASS_IS_NOT_AN_ANNOTATION
 }

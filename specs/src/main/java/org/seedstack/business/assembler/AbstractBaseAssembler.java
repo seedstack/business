@@ -16,7 +16,6 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  *
  * @param <A> the aggregate root
  * @param <D> the dto type
- * @author epo.jemba@ext.mpsa.com
  * @see org.seedstack.business.assembler.BaseAssembler
  * @see org.seedstack.business.assembler.BaseTupleAssembler
  */

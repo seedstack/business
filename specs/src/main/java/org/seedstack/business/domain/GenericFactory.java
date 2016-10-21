@@ -28,7 +28,6 @@ import org.seedstack.business.Producible;
  * </pre>
  * Then this interface has to be implemented by the actual factory implementation .
  * 
- * @author epo.jemba@ext.mpsa.com
  *
  * @param <DO> Domain Object type to be produced.
  */

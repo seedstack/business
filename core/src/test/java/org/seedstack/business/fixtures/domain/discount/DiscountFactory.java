@@ -11,14 +11,9 @@ import org.seedstack.business.domain.GenericFactory;
 
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public interface DiscountFactory extends GenericFactory<Discount> {
 	
-	public Discount createNewActivation(@NotNull String id , String description);
+	Discount createNewActivation(@NotNull String id, String description);
 
 }

@@ -14,8 +14,6 @@ package org.seedstack.business.view;
  *   <li>an index,</li>
  *   <li>a capacity in term of number of element.</li>
  * </ul>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 public class Page {
 

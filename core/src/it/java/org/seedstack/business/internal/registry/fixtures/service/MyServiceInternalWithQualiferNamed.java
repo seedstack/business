@@ -11,8 +11,6 @@ import javax.inject.Named;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @Named("Dummy")
 public class MyServiceInternalWithQualiferNamed implements MyService {

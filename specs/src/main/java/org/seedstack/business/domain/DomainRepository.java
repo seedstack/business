@@ -14,8 +14,6 @@ import java.lang.annotation.*;
  * This annotation marks its annotated interface as a domain repository for the framework.
  *
  * Verification will be done by the framework on either or not this service is in the right place.
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement

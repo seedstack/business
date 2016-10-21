@@ -19,9 +19,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class AssembleDtosProviderImpl implements AssembleDtosWithQualifierProvider {
 
     private final AssemblerDslContext context;
@@ -39,7 +37,7 @@ public class AssembleDtosProviderImpl implements AssembleDtosWithQualifierProvid
     @Override
     public <D> List<D> to(Class<D> dtoClass) {
         Assembler assembler = getAssembler(dtoClass);
-        List<D> dtos = new ArrayList<D>();
+        List<D> dtos = new ArrayList<>();
 
         if (aggregates != null && !aggregates.isEmpty()) {
             for (AggregateRoot<?> aggregate : aggregates) {

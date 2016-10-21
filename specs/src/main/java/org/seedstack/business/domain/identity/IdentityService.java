@@ -12,7 +12,6 @@ import org.seedstack.business.domain.Entity;
 /**
  * IdentityService generate a unique appropriate ID for a given entity
  * 
- * @author redouane.loulou@ext.mpsa.com
  */
 public interface IdentityService {
 

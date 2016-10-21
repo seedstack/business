@@ -9,18 +9,13 @@ package org.seedstack.business.fixtures.application;
 
 import org.seedstack.business.Service;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 
 @Service
 public interface SingletonService {
 
 	
-	public Object getStuff();
+	Object getStuff();
 	
 	
 }

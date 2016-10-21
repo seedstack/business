@@ -14,9 +14,6 @@ import org.seedstack.business.domain.GenericFactory;
 
 /**
  * Dummy factory for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public interface MultiFactory extends GenericFactory<Multi>  {
 

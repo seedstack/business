@@ -21,8 +21,7 @@ import org.seedstack.business.domain.BaseValueObject;
  * NB: Event should be immutable.
  * </p>
  *
- * @author pierre.thirouin@ext.mpsa.com
-
+ *
  * @see org.seedstack.business.domain.BaseValueObject
  * @see Event
  */

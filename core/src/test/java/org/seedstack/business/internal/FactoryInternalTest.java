@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.business.internal;
 
 import org.seedstack.business.domain.AggregateRoot;
@@ -19,8 +17,6 @@ import org.seedstack.seed.SeedException;
 
 /**
  * FactoryInternalTest
- *
- * @author redouane.loulou@ext.mpsa.com
  */
 public class FactoryInternalTest {
 
@@ -33,7 +29,7 @@ public class FactoryInternalTest {
 
     @Before
     public void before() {
-        myFactory = new FactoryInternal<MyAggregateTest>(new Class<?>[]{MyAggregateTest.class});
+        myFactory = new FactoryInternal<>(new Class<?>[]{MyAggregateTest.class});
     }
 
     @Test

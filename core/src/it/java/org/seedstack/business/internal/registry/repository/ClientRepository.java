@@ -13,8 +13,6 @@ import org.seedstack.business.spi.GenericImplementation;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @GenericImplementation
 @JpaQualifier

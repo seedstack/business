@@ -22,8 +22,6 @@ import java.util.List;
  * advanced features like automatically retrieving an aggregate from its repository. Or automatically
  * creating it from its factory.
  * </p>
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface FluentAssembler {
 

@@ -14,8 +14,5 @@ import org.seedstack.business.domain.Repository;
 
 /**
  * Dummy repository for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public interface MultiRepository extends Repository<Multi,String> {}

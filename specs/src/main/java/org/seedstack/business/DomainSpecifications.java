@@ -32,8 +32,6 @@ import org.seedstack.business.spi.GenericImplementation;
 
 /**
  * This class provides all the specifications use by the business plugins.
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @SuppressWarnings("unchecked")
 public final class DomainSpecifications {

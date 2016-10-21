@@ -43,7 +43,7 @@ public class MergeAggregateWithRepositoryProviderImplTest {
         Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((GenericFactory) orderFactory);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        underTest = new MergeMergeAggregateWithRepositoryProviderImpl<Order>(context, Order.class, new OrderDto("1", "lightsaber"));
+        underTest = new MergeMergeAggregateWithRepositoryProviderImpl<>(context, Order.class, new OrderDto("1", "lightsaber"));
     }
 
     @Test

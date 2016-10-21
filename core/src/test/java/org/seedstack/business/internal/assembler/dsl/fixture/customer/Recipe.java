@@ -13,8 +13,6 @@ import org.seedstack.business.assembler.MatchingFactoryParameter;
 
 /**
  * The recipe assembled based on an order and the customer who passed the order.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 // As no assembler implementation is provided the following annotation is required
 @DtoOf({Order.class, Customer.class})

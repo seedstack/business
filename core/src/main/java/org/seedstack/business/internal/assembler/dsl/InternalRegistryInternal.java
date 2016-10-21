@@ -28,9 +28,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class InternalRegistryInternal implements InternalRegistry {
 
     private final Injector injector;

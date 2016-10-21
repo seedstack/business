@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.seed.persistence.inmemory.internal;
 
 import org.seedstack.seed.transaction.spi.TransactionalLink;
@@ -15,15 +13,12 @@ import org.seedstack.seed.transaction.spi.TransactionalLink;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- * @author adrien.lauer@mpsa.com
- */
+
 class InMemoryTransactionLink implements TransactionalLink<String> {
     private final ThreadLocal<Deque<String>> perThreadObjectContainer = new ThreadLocal<Deque<String>>() {
         @Override
         protected Deque<String> initialValue() {
-            return new ArrayDeque<String>();
+            return new ArrayDeque<>();
         }
     };
 

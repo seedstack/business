@@ -10,7 +10,6 @@ package org.seedstack.business.internal.assembler.dsl.resolver;
 /**
  * This class holds the parameter of a method. It is used to collect parameters and then match them to a method.
  *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see DtoInfoResolver
  */
 public interface ParameterHolder {

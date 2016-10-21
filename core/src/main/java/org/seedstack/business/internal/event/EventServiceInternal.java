@@ -24,8 +24,6 @@ import java.util.Collection;
 
 /**
  * Internal implementation of EventService.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 class EventServiceInternal implements EventService {
 

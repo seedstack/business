@@ -7,9 +7,7 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class FactImpl1 implements MyFactory {
     @Override
     public Class<MyDomainPolicy> getProducedClass() {

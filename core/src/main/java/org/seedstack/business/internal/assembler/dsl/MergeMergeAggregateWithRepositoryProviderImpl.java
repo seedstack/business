@@ -13,9 +13,7 @@ import org.seedstack.business.assembler.dsl.MergeAggregateWithRepositoryThenFact
 import org.seedstack.business.assembler.dsl.MergeAggregateWithRepositoryProvider;
 import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MergeMergeAggregateWithRepositoryProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements MergeAggregateWithRepositoryProvider<A>, MergeAggregateWithRepositoryThenFactoryProvider<A> {
 
     private final Class<A> aggregateClass;
@@ -35,7 +33,6 @@ public class MergeMergeAggregateWithRepositoryProviderImpl<A extends AggregateRo
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public A fromFactory() {
         return fromFactory(aggregateClass,dto);
@@ -47,9 +44,9 @@ public class MergeMergeAggregateWithRepositoryProviderImpl<A extends AggregateRo
      * @param key the aggregate roots identity
      * @return the loaded aggregate root
      */
+    @SuppressWarnings("unchecked")
     protected A loadFromRepo(Object key) {
         Repository repository = context.repositoryOf(aggregateClass);
-        //noinspection unchecked
         return (A) repository.load(key);
     }
 

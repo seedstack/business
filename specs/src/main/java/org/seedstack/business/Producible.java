@@ -9,8 +9,6 @@ package org.seedstack.business;
 
 /**
  * Marks objects as being able to be produced by a factory.
- *
- * @author epo.jemba@ext.mpsa.com
  */
 public interface Producible {
 }

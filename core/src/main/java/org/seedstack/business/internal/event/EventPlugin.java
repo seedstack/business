@@ -7,17 +7,19 @@
  */
 package org.seedstack.business.internal.event;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Multimap;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
-import io.nuun.kernel.core.AbstractPlugin;
 import net.jodah.typetools.TypeResolver;
-import org.apache.commons.configuration.Configuration;
 import org.kametic.specifications.Specification;
+import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
-import org.seedstack.seed.core.spi.configuration.ConfigurationProvider;
+import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,23 +32,19 @@ import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInter
 /**
  * This plugin scans all EventHandler, then passes them to the EventModule.
  * It also determines the strategy to adopt for event: will they be sync or async ?
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
-public class EventPlugin extends AbstractPlugin {
-
-    public static final String PREFIX = "org.seedstack.business.event";
-    private final Specification<Class<?>> eventHandlerSpecification = and(ancestorImplements(EventHandler.class),not(classIsInterface()), not(classIsAbstract()));
+public class EventPlugin extends AbstractSeedPlugin {
+    private final Specification<Class<?>> eventHandlerSpecification = and(ancestorImplements(EventHandler.class), not(classIsInterface()), not(classIsAbstract()));
     private final Specification<Class<?>> eventSpecification = and(classImplements(Event.class));
 
     private Multimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlersByEvent = ArrayListMultimap.create();
 
-    private List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<Class<? extends EventHandler>>();
+    private List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<>();
     private boolean watchRepo;
 
     @Override
     public String name() {
-        return "seed-business-event";
+        return "business-events";
     }
 
     @Override
@@ -56,11 +54,10 @@ public class EventPlugin extends AbstractPlugin {
 
     @SuppressWarnings("unchecked")
     @Override
-    public InitState init(InitContext initContext) {
-        Configuration eventConfiguration = initContext.dependency(ConfigurationProvider.class)
-                .getConfiguration().subset(PREFIX);
+    public InitState initialize(InitContext initContext) {
+        BusinessConfig.EventConfig eventConfiguration = getConfiguration(BusinessConfig.EventConfig.class);
 
-        watchRepo = eventConfiguration.getBoolean("domain.watch", false);
+        watchRepo = eventConfiguration.isPublishRepositoryEvents();
         Collection<Class<?>> scannedEventHandlerClasses = initContext.scannedTypesBySpecification().get(eventHandlerSpecification);
 
         for (Class<?> scannedEventHandlerClass : scannedEventHandlerClasses) {
@@ -72,11 +69,6 @@ public class EventPlugin extends AbstractPlugin {
         }
 
         return InitState.INITIALIZED;
-    }
-
-    @Override
-    public Collection<Class<?>> requiredPlugins() {
-        return Lists.<Class<?>>newArrayList(ConfigurationProvider.class);
     }
 
     @Override

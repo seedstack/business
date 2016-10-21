@@ -14,7 +14,6 @@ import java.lang.annotation.*;
  * This annotation tells the Framework that the current class is candidate to be
  * an aggregate root.
  * 
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement

@@ -15,8 +15,6 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Nuun concern for ordering event operations.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Concern(name="seed-event-concern", priority= Concern.Priority.NORMAL)

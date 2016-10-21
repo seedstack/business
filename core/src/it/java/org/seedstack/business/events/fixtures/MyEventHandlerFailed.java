@@ -9,9 +9,7 @@ package org.seedstack.business.events.fixtures;
 
 import org.seedstack.business.EventHandler;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class MyEventHandlerFailed implements EventHandler<MyEvent2> {
 
     @Override

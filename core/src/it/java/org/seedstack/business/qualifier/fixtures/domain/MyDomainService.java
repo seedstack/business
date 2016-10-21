@@ -11,9 +11,7 @@ import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.DomainObject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Service
 public interface MyDomainService extends DomainObject, Producible{
 }

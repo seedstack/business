@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.business.factories;
 
 import com.google.inject.Inject;
@@ -26,10 +24,7 @@ import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Named;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @RunWith(SeedITRunner.class)
 public class FactoryIT {
 

@@ -11,8 +11,6 @@ import org.javatuples.Tuple;
 
 /**
  * Specifies whether the aggregate root tuple should be retrieved from a repository or created from a factory.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface MergeTupleWithRepositoryProvider<T extends Tuple> {
 

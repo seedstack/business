@@ -21,8 +21,6 @@ import static org.seedstack.seed.transaction.Propagation.REQUIRES_NEW;
 
 /**
  * This annotation can be used on tests to specify manually which storage in memory SEED should load.
- *
- * @author redouane.loulou@ext.mpsa.com
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

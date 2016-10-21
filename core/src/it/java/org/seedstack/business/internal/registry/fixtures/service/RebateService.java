@@ -11,8 +11,6 @@ import org.seedstack.business.Service;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @Service
 public interface RebateService<T> {

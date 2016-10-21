@@ -11,8 +11,6 @@ import org.seedstack.business.internal.registry.fixtures.domain.Client;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 public class RebateServiceInternal implements RebateService<Client>{
 

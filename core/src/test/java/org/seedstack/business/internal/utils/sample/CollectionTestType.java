@@ -14,9 +14,6 @@ import java.util.Collection;
 
 /**
  * Dummy Type for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class CollectionTestType extends TestType<Collection<String>, Collection<Collection<Long>>> {
 

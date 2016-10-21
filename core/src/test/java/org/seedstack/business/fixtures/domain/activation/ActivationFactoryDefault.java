@@ -9,24 +9,15 @@ package org.seedstack.business.fixtures.domain.activation;
 
 import org.seedstack.business.domain.BaseFactory;
 
-import javax.validation.constraints.NotNull;
-
 public class ActivationFactoryDefault extends BaseFactory<Activation> implements ActivationFactory {
+    @Override
+    public Activation createNewActivation(String id, String description) throws ActivationException {
+        if (id.equals("42")) {
+            throw new ActivationException();
+        }
 
-
-	@Override
-	public Activation createNewActivation(@NotNull String id, String description) throws ActivationException
-	{
-
-		if (id.equals("42"))
-		{
-			throw new ActivationException();
-		}
-
-		Activation activation = new Activation(id);
-
-		activation.setDescription(description);
-
-		return activation;
-	}
+        Activation activation = new Activation(id);
+        activation.setDescription(description);
+        return activation;
+    }
 }

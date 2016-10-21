@@ -21,7 +21,6 @@ import org.seedstack.seed.SeedException;
 /**
  * Interceptor used for identity management when creating a new entity using a factory 
  * 
- * @author redouane.loulou@ext.mpsa.com
  */
 class IdentityInterceptor implements MethodInterceptor {
 

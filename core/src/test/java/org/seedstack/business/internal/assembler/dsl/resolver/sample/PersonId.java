@@ -9,9 +9,7 @@ package org.seedstack.business.internal.assembler.dsl.resolver.sample;
 
 import java.util.Date;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class PersonId {
 
     private String firstName;

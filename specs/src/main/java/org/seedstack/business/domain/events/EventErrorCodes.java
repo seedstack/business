@@ -10,9 +10,7 @@ package org.seedstack.business.domain.events;
 
 import org.seedstack.seed.ErrorCode;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public enum EventErrorCodes implements ErrorCode {
     CYCLE_WAS_DETECTED_IN_FIRED_EVENT,
     INTERCEPTED_CLASS_SHOULD_BE_A_REPOSITORY,

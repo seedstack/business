@@ -15,9 +15,6 @@ import org.seedstack.seed.ErrorCode;
 
 /**
  * IdentityErrorCodes
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public enum IdentityErrorCodes implements ErrorCode {
 	RESULT_OBJECT_SHOULD_NOT_BE_NULL,

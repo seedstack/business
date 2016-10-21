@@ -22,9 +22,7 @@ import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class AssembleDtoProviderImplTest {
 
     private AssembleDtoProviderImpl underTest;
@@ -38,7 +36,7 @@ public class AssembleDtoProviderImplTest {
         context.setRegistry(registry);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        List<Class<? extends AggregateRoot<?>>> aggregateRootClasses = new ArrayList<Class<? extends AggregateRoot<?>>>();
+        List<Class<? extends AggregateRoot<?>>> aggregateRootClasses = new ArrayList<>();
         aggregateRootClasses.add(Order.class);
         aggregateRootClasses.add(Customer.class);
         Mockito.when(registry.tupleAssemblerOf(aggregateRootClasses, OrderDto.class)).thenReturn((Assembler) new AutoTupleAssembler());
@@ -69,7 +67,7 @@ public class AssembleDtoProviderImplTest {
 
     @Test
     public void testToDtos() {
-        List<Order> aggregateRoots = new ArrayList<Order>();
+        List<Order> aggregateRoots = new ArrayList<>();
         aggregateRoots.add(new Order("lightsaber"));
         aggregateRoots.add(new Order("death star"));
 

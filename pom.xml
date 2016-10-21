@@ -15,30 +15,28 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>2.4.0</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>2.3.4-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>2.3.0</seed.version>
-        <logback.version>1.1.3</logback.version>
+        <seed.version>3.0.0-SNAPSHOT</seed.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
         <hsqldb.version>2.3.3</hsqldb.version>
-        <juel.version>2.2.7</juel.version>
 
-        <compatibility.version>2.1.0</compatibility.version>
+        <compatibility.skip>true</compatibility.skip>
 
         <bintray.package>business</bintray.package>
     </properties>
 
     <modules>
-        <module>core</module>
         <module>specs</module>
+        <module>core</module>
     </modules>
 
     <build>
@@ -68,6 +66,8 @@
                             <licenseMerge>Apache 2|Apache License, Version 2.0</licenseMerge>
                             <licenseMerge>Apache 2|The Apache Software License, Version 2.0</licenseMerge>
                             <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache License, version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache License Version 2.0</licenseMerge>
                             <licenseMerge>BSD|The New BSD License</licenseMerge>
                             <licenseMerge>BSD|BSD License</licenseMerge>
                             <licenseMerge>CDDL|CDDL + GPLv2 with classpath exception</licenseMerge>

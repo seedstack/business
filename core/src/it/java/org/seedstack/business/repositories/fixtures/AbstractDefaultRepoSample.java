@@ -13,9 +13,7 @@ import org.seedstack.business.domain.BaseRepository;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 
 public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
 

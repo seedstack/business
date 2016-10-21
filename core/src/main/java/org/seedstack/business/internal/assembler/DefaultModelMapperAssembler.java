@@ -21,7 +21,6 @@ import javax.inject.Inject;
  * If an injection point {@code ModelMapperAssembler&lt;A, D&gt;} is defined and any class extending {@code ModelMapperAssembler}
  * for A and D exists, this default assembler will be injected.
  * </p>
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
 @org.seedstack.business.assembler.ModelMapper

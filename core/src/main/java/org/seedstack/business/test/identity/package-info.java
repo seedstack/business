@@ -6,8 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Provides classes for testing business objects, e.g. event and identity generation.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
+ * Provides classes for testing identity generation.
  */
-package org.seedstack.business.test;
+package org.seedstack.business.test.identity;

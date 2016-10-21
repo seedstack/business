@@ -12,14 +12,12 @@ import org.assertj.core.api.Assertions;
 import org.fest.reflect.core.Reflection;
 import org.fest.reflect.reference.TypeRef;
 import org.javatuples.Pair;
-import org.javatuples.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.seedstack.business.Tuples;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.MergeTupleWithRepositoryProvider;
+import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.assembler.DefaultModelMapperTupleAssembler;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.AutoAssembler;
 import org.seedstack.business.internal.assembler.dsl.fixture.customer.Customer;
@@ -30,9 +28,7 @@ import org.seedstack.business.internal.assembler.dsl.fixture.customer.Recipe;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MergeAggregateOrTupleProviderImplTest {
 
     private AssemblerDslContext context = new AssemblerDslContext();
@@ -51,7 +47,7 @@ public class MergeAggregateOrTupleProviderImplTest {
 
     @Test
     public void testToAggregate() {
-        MergeAggregateOrTupleProviderImpl<OrderDto> underTest = new MergeAggregateOrTupleProviderImpl<OrderDto>(context, new OrderDto("1", "lightsaber"));
+        MergeAggregateOrTupleProviderImpl<OrderDto> underTest = new MergeAggregateOrTupleProviderImpl<>(context, new OrderDto("1", "lightsaber"));
 
         Order order = new Order();
         underTest.into(order);
@@ -63,7 +59,7 @@ public class MergeAggregateOrTupleProviderImplTest {
     public void testToAggregateTuple() {
 
         Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
-        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<Recipe>(context, recipe);
+        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<>(context, recipe);
         Order order = new Order();
         Customer customer = new Customer("customer1");
         underTest.into(order, customer);
@@ -75,25 +71,9 @@ public class MergeAggregateOrTupleProviderImplTest {
     }
 
     @Test
-    public void testToUnTypedTuple() {
-
-        Recipe recipe = new Recipe("customer1", "luke", "order1", "lightsaber");
-        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<Recipe>(context, recipe);
-
-        Tuple tuple = Tuples.create(new Order(), new Customer("customer1"));
-        underTest.into(tuple);
-
-        Assertions.assertThat((Iterable<?>) tuple).isNotNull();
-        Assertions.assertThat((Iterable<?>) tuple).isNotEmpty();
-        Assertions.assertThat(((Order) tuple.getValue(0)).getProduct()).isEqualTo("lightsaber");
-        Assertions.assertThat(((Customer) tuple.getValue(1)).getEntityId()).isEqualTo("customer1");
-        Assertions.assertThat(((Customer) tuple.getValue(1)).getName()).isEqualTo("luke");
-    }
-
-    @Test
     public void testToAggregateClass() {
         Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
-        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<Recipe>(context, dto);
+        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<>(context, dto);
 
         assertToMethod(underTest.into(Order.class, Customer.class), dto, Order.class, Customer.class);
         assertToMethod(underTest.into(Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class);
@@ -109,7 +89,7 @@ public class MergeAggregateOrTupleProviderImplTest {
     @Test
     public void testToAggregateClassWithNullValue() {
         Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
-        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<Recipe>(context, dto);
+        MergeAggregateOrTupleProviderImpl<Recipe> underTest = new MergeAggregateOrTupleProviderImpl<>(context, dto);
 
         assertToMethod(underTest.into(null, null, null, Customer.class), dto, null, null, null, Customer.class);
     }

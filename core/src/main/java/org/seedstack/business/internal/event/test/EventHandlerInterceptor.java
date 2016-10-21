@@ -16,8 +16,6 @@ import javax.inject.Inject;
 
 /**
  * This class intercepts the handle method of each EventHandlers and store the calls in a context.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 class EventHandlerInterceptor implements MethodInterceptor {
 

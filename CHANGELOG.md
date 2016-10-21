@@ -1,3 +1,9 @@
+# Version 3.0.0 (2016-11-?)
+
+* [brk] Moved to SeedStack 16.11 new configuration system.
+* [brk] The class configuration property `identity.handler-qualifier` becomes `identityHandler`.
+* [brk] The class configuration property `default-repository` becomes `defaultRepository`.
+
 # Version 2.3.4 (2016-09-02)
 
 * [fix] Delay call of `configure*()` methods in `ModelMapperAssembler` to allow field and method injection to occur before.  

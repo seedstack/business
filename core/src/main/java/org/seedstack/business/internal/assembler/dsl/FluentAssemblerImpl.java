@@ -21,7 +21,6 @@ import java.util.List;
  * It uses a Guice provider to get the DSL entry point. Each time you call the {@code assemble()}
  * method a new DSL instance is provided.
  * </p>
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 
@@ -55,11 +54,11 @@ public class FluentAssemblerImpl implements FluentAssembler {
 
     @Override
     public <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto) {
-        return new MergeAggregateOrTupleProviderImpl<D>(context, dto);
+        return new MergeAggregateOrTupleProviderImpl<>(context, dto);
     }
 
     @Override
     public <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos) {
-        return new MergeAggregatesOrTuplesProviderImpl<D>(context, dtos);
+        return new MergeAggregatesOrTuplesProviderImpl<>(context, dtos);
     }
 }

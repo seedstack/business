@@ -93,8 +93,6 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * @author epo.jemba@ext.mpsa.com
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD})

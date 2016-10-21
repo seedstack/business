@@ -14,9 +14,6 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 /**
  * Dummy aggregate for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class Multi extends BaseAggregateRoot<String> {
 

@@ -20,8 +20,6 @@ import java.util.List;
  * <p>
  * This class is required because of the DSL genericity, but it may not be useful for client users.
  * </p>
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface InternalRegistry {
 

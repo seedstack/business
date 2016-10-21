@@ -13,7 +13,6 @@ import org.seedstack.business.Producible;
  * This interface is the parent type for all implementations of AggregateRoot in the Business Framework.
  *
  * @param <ID> the type of the entityId
- * @author epo.jemba@ext.mpsa.com
  */
 @DomainAggregateRoot
 public interface AggregateRoot<ID> extends Entity<ID>, DomainObject, Producible {

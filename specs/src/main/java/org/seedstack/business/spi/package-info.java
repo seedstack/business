@@ -7,7 +7,5 @@
  */
 /**
  * Provides all the classes available to extend the API.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.business.spi;

@@ -9,19 +9,16 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import com.google.common.collect.Lists;
 import com.google.inject.name.Names;
-import org.javatuples.Pair;
-import org.seedstack.business.domain.BaseAggregateRoot;
-
+import org.javatuples.Tuple;
+import org.seedstack.business.Tuples;
 import org.seedstack.business.assembler.FluentAssembler;
 import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 import java.util.List;
 
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class AssembleTest {
 
     private OrderDto orderDto = new OrderDto();
@@ -37,7 +34,6 @@ public class AssembleTest {
     private FluentAssembler fluently;
 
     public void testMergeToAggregateInstance() {
-
         // dto to aggregate
         fluently.merge(orderDto).into(myOrder);
 
@@ -52,7 +48,7 @@ public class AssembleTest {
         order = fluently.merge(orderDto).into(Order.class).fromFactory();
 
         // list of dto to tuple of aggregates
-        Pair<Order, Customer> orderCustomerPair = fluently.merge(orderDto).into(Order.class, Customer.class).fromFactory();
+        fluently.merge(orderDto).into(Order.class, Customer.class).fromFactory();
 
         // from repo or fail
         try {
@@ -67,14 +63,13 @@ public class AssembleTest {
 
     public void testAssemble() {
         // aggregate to dto
-        OrderDto orderDto1 = fluently.assemble(myOrder).with(Names.named("MyQualifier")).to(OrderDto.class);
+        fluently.assemble(myOrder).with(Names.named("MyQualifier")).to(OrderDto.class);
 
         // tuple of aggregate to dto
-        orderDto1 = fluently.assembleTuple(Tuples.create(Order.class, Customer.class)).to(OrderDto.class);
+        fluently.assembleTuple((Tuple) Tuples.create(Order.class, Customer.class)).to(OrderDto.class);
 
-        List<OrderDto> orderDtos = fluently.assembleTuple(
-                Lists.newArrayList(Tuples.create(order, customer), Tuples.create(order2, customer2))
-        ).to(OrderDto.class);
+        fluently.assembleTuple(Lists.newArrayList(Tuples.create(order, customer), Tuples.create(order2, customer2)))
+                .to(OrderDto.class);
     }
 
     static class OrderDto {

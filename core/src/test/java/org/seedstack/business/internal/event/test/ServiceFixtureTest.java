@@ -14,7 +14,7 @@ import org.seedstack.business.fixtures.event.MyEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyHandler2;
 import org.seedstack.business.fixtures.event.MyService;
-import org.seedstack.business.test.EventFixture;
+import org.seedstack.business.test.events.EventFixture;
 import org.seedstack.business.EventHandler;
 
 import org.junit.Before;
@@ -26,9 +26,7 @@ import java.util.HashMap;
 
 import static org.mockito.Mockito.mock;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class ServiceFixtureTest {
 
     public static final String SOME_PARAM = "someParam";
@@ -48,7 +46,7 @@ public class ServiceFixtureTest {
         Whitebox.setInternalState(underTest, "contextLink", contextLink);
         Whitebox.setInternalState(underTest, "injector", injector);
 
-        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<Class<? extends EventHandler>, Event>();
+        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<>();
         value.put(MyHandler.class, event);
         value.put(MyHandler2.class, event);
         Mockito.when(contextLink.peek()).thenReturn(value);
@@ -84,7 +82,7 @@ public class ServiceFixtureTest {
 
     @Test(expected = SeedException.class)
     public void failed_event_was_not_fired() throws Exception {
-        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<Class<? extends EventHandler>, Event>();
+        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<>();
         Mockito.when(contextLink.peek()).thenReturn(value);
         underTest.given(MyService.class)
                 .whenCalled("doNothing")

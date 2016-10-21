@@ -12,7 +12,6 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
-import org.apache.commons.configuration.Configuration;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -23,6 +22,7 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.business.repositories.fixtures.MyQualifier;
 import org.seedstack.seed.Application;
+import org.seedstack.seed.ClassConfiguration;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -32,9 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class DefaultRepositoryCollectorTest {
 
     private DefaultRepositoryCollector underTest;
@@ -59,23 +57,15 @@ public class DefaultRepositoryCollectorTest {
 
     @Test
     public void testGetDefaultWithQualifierString() {
-        Configuration configuration = mock(Configuration.class);
-        when(configuration.getString("default-repository")).thenReturn("my-qualifier");
-
-        when(application.getConfiguration(MyAgg.class)).thenReturn(configuration);
+        when(application.getConfiguration(MyAgg.class)).thenReturn(ClassConfiguration.of(MyAgg.class, "defaultRepository", "my-qualifier"));
         Key<?> key = underTest.defaultRepositoryQualifier(MyAgg.class, genericInterface);
-
         assertThat(key.getAnnotation()).isEqualTo(Names.named("my-qualifier"));
     }
 
     @Test
     public void testGetDefaultWithQualifierAnnotation() {
-        Configuration configuration = mock(Configuration.class);
-        when(configuration.getString("default-repository")).thenReturn("org.seedstack.business.repositories.fixtures.MyQualifier");
-
-        when(application.getConfiguration(MyAgg.class)).thenReturn(configuration);
+        when(application.getConfiguration(MyAgg.class)).thenReturn(ClassConfiguration.of(MyAgg.class, "defaultRepository", "org.seedstack.business.repositories.fixtures.MyQualifier"));
         Key<?> key = underTest.defaultRepositoryQualifier(MyAgg.class, genericInterface);
-
         assertThat(key.getAnnotationType()).isEqualTo(MyQualifier.class);
     }
 

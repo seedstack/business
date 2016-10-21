@@ -21,9 +21,7 @@ import javax.inject.Inject;
 
 import static junit.framework.TestCase.fail;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @RunWith(SeedITRunner.class)
 public class AssemblerDslWithTupleIT {
 

@@ -11,8 +11,6 @@ import org.seedstack.business.internal.registry.fixtures.domain.Product;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @PolicyQualifier
 public class RebatePolicyInternalWithQualifier implements RebatePolicy{

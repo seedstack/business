@@ -13,9 +13,7 @@ import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Method;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MethodMatcherTest {
 
     static enum ProjectStatus {

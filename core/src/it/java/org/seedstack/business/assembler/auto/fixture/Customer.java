@@ -9,9 +9,7 @@ package org.seedstack.business.assembler.auto.fixture;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public class Customer extends BaseAggregateRoot<String> {
     String id;
 

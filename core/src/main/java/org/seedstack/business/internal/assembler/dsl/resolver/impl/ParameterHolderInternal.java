@@ -12,12 +12,10 @@ import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class ParameterHolderInternal implements ParameterHolder {
 
-    private final Map<Integer, Map<Integer, Object>> parametersByAggregate = new HashMap<Integer, Map<Integer, Object>>();
+    private final Map<Integer, Map<Integer, Object>> parametersByAggregate = new HashMap<>();
 
     @Override
     public void put(String source, int index, Object value) {
@@ -29,7 +27,7 @@ public class ParameterHolderInternal implements ParameterHolder {
         Map<Integer, Object> parameters = parametersByAggregate.get(aggregateIndex);
 
         if (parameters == null) {
-            parameters = new HashMap<Integer, Object>();
+            parameters = new HashMap<>();
         }
 
         if (parameters.get(index) != null) {

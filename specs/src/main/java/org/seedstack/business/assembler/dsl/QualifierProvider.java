@@ -11,9 +11,7 @@ import org.seedstack.business.assembler.AssemblerTypes;
 
 import java.lang.annotation.Annotation;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public interface QualifierProvider<T> {
 
     T with(Annotation qualifier);

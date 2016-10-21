@@ -14,7 +14,6 @@ import java.util.List;
  * A virtual list that can represents huge portion.
  *
  * @param <T> the item type
- * @author epo.jemba@ext.mpsa.com
  */
 class VirtualList<T> {
 
@@ -71,7 +70,7 @@ class VirtualList<T> {
             return subList.subList((int) (from - subListOffset), (int) (to - subListOffset));
         }
 
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**

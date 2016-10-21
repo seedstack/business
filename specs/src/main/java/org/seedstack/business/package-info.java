@@ -7,7 +7,5 @@
  */
 /**
  * Provides general APIs of the Business Framework.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.business;

@@ -14,9 +14,6 @@ import org.seedstack.business.domain.BaseFactory;
 
 /**
  * Dummy factory for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class MultiFactoryDefault extends BaseFactory<Multi> implements MultiFactory  {
 

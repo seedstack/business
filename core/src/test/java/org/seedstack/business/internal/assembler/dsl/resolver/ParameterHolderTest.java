@@ -13,8 +13,6 @@ import org.seedstack.business.internal.assembler.dsl.resolver.impl.ParameterHold
 
 /**
  * Test {@link ParameterHolder} implementation.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class ParameterHolderTest {
 

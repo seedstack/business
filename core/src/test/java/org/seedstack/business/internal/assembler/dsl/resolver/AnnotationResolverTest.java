@@ -20,7 +20,6 @@ import static org.junit.Assert.fail;
 /**
  * This class tests all the use cases for our old resolver algorithms.
  *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  * @see org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver
  */
 public class AnnotationResolverTest {

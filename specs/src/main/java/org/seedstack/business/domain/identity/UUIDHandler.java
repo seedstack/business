@@ -14,7 +14,6 @@ import org.seedstack.business.domain.Entity;
  *
  * @param <E>  the entity
  * @param <ID> the entity id
- * @author redouane.loulou@ext.mpsa.com
  */
 public interface UUIDHandler<E extends Entity<ID>, ID> extends IdentityHandler<E, ID> {
 }

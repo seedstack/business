@@ -11,8 +11,6 @@ import org.javatuples.Tuple;
 
 /**
  * Specifies the behavior in the case where the aggregate tuple cannot be loaded from the repository.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface MergeTupleWithRepositoryThenFactoryProvider<T extends Tuple> {
 

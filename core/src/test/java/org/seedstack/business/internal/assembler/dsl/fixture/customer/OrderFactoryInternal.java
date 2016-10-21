@@ -9,9 +9,7 @@ package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 
 import org.seedstack.business.domain.BaseFactory;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class OrderFactoryInternal extends BaseFactory<Order> implements OrderFactory {
 
     public Order create(String id, String product) {

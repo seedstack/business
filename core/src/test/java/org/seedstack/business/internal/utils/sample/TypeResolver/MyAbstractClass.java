@@ -9,9 +9,5 @@ package org.seedstack.business.internal.utils.sample.TypeResolver;
 
 import java.util.Collection;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- *         Date: 23/09/2014
- */
 public abstract class MyAbstractClass<H, I extends Collection<?>> implements MyInterface<I, Long, H> {
 }

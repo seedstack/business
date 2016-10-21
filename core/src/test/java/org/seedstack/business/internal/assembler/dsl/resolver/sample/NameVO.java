@@ -7,9 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.sample;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class NameVO {
 
     String firstName;

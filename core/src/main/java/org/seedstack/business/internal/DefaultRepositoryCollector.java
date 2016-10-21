@@ -12,13 +12,13 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
-import org.apache.commons.configuration.Configuration;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.strategy.GenericBindingStrategy;
 import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.seed.Application;
+import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.utils.SeedReflectionUtils;
 
@@ -31,19 +31,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 class DefaultRepositoryCollector {
-
+    private static final String DEFAULT_REPOSITORY_KEY = "defaultRepository";
     private final Collection<Class<?>> aggregateClasses;
-    private final Collection<Class<?>> defaultRepositoryImpls;
+    private final Collection<Class<?>> defaultRepositoryImplementations;
     private final Application application;
-    private ClassLoader classLoader;
 
-    public DefaultRepositoryCollector(Collection<Class<?>> aggregateClasses, Collection<Class<?>> defaultRepositoryImpls, Application application) {
+    DefaultRepositoryCollector(Collection<Class<?>> aggregateClasses, Collection<Class<?>> defaultRepositoryImplementations, Application application) {
         this.aggregateClasses = aggregateClasses;
-        this.defaultRepositoryImpls = defaultRepositoryImpls;
+        this.defaultRepositoryImplementations = defaultRepositoryImplementations;
         this.application = application;
     }
 
@@ -53,11 +50,11 @@ class DefaultRepositoryCollector {
      *
      * @return a binding strategy
      */
-    public Collection<BindingStrategy> collect() {
-        Collection<BindingStrategy> bindingStrategies = new ArrayList<BindingStrategy>();
+    Collection<BindingStrategy> collect() {
+        Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
         // Extract the type variables which will be passed to the constructor
-        Map<Type[], Key<?>> generics = new HashMap<Type[], Key<?>>();
+        Map<Type[], Key<?>> generics = new HashMap<>();
         for (Class<?> aggregateClass : includeSuperClasses(aggregateClasses)) {
             Class<?> aggregateKey = TypeToken.of(aggregateClass).resolveType(AggregateRoot.class.getTypeParameters()[0]).getRawType();
             Type[] params = {aggregateClass, aggregateKey};
@@ -69,14 +66,14 @@ class DefaultRepositoryCollector {
         }
 
         // Create a binding strategy for each default repository implementation
-        for (Class<?> defaultRepoIml : defaultRepositoryImpls) {
+        for (Class<?> defaultRepoIml : defaultRepositoryImplementations) {
             bindingStrategies.add(new GenericBindingStrategy<Repository>(Repository.class, defaultRepoIml, generics));
         }
         return bindingStrategies;
     }
 
     Set<Class<?>> includeSuperClasses(Collection<Class<?>> aggregateClasses) {
-        Set<Class<?>> results = new HashSet<Class<?>>();
+        Set<Class<?>> results = new HashSet<>();
         for (Class<?> aggregateClass : aggregateClasses) {
             Class<?> classToAdd = aggregateClass;
             while (classToAdd != null) {
@@ -91,16 +88,17 @@ class DefaultRepositoryCollector {
         return results;
     }
 
+    @SuppressWarnings("unchecked")
     Key<?> defaultRepositoryQualifier(Class<?> aggregateClass, TypeLiteral<?> genericInterface) {
         Key<?> defaultKey = null;
 
-        Configuration configuration = this.application.getConfiguration(aggregateClass);
+        ClassConfiguration<?> configuration = this.application.getConfiguration(aggregateClass);
 
         if (configuration != null && !configuration.isEmpty()) {
-            String qualifierName = configuration.getString("default-repository");
+            String qualifierName = configuration.get(DEFAULT_REPOSITORY_KEY);
             if (qualifierName != null && !"".equals(qualifierName)) {
                 try {
-                    classLoader = SeedReflectionUtils.findMostCompleteClassLoader();
+                    ClassLoader classLoader = SeedReflectionUtils.findMostCompleteClassLoader();
                     Class<?> qualifierClass = classLoader.loadClass(qualifierName);
                     if (Annotation.class.isAssignableFrom(qualifierClass)) {
                         defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);

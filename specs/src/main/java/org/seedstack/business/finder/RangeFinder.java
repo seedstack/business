@@ -12,7 +12,6 @@ package org.seedstack.business.finder;
  *
  * @param <Item> the representation type
  * @param <Criteria> the criteria
- * @author epo.jemba@ext.mpsa.com
  */
 @Finder
 public interface RangeFinder<Item, Criteria> {

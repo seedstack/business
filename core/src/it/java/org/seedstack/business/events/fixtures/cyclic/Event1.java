@@ -9,9 +9,7 @@ package org.seedstack.business.events.fixtures.cyclic;
 
 import org.seedstack.business.domain.events.DomainEvent;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class Event1 extends DomainEvent {
 
 }

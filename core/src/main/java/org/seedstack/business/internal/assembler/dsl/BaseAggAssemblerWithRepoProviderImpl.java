@@ -28,9 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
     protected final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
@@ -57,6 +55,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
         return paramsToIds(aggregateRootClass, parameterHolder, -1);
     }
 
+    @SuppressWarnings("unchecked")
     protected Tuple resolveIds(Object dto, List<Class<? extends AggregateRoot<?>>> aggregateRootClasses) {
         SeedCheckUtils.checkIfNotNull(dto);
         SeedCheckUtils.checkIfNotNull(aggregateRootClasses);
@@ -66,10 +65,9 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
             throw new IllegalArgumentException("No id found in the DTO. Please check the @MatchingEntityId annotation.");
         }
 
-        List<Object> ids = new ArrayList<Object>();
+        List<Object> ids = new ArrayList<>();
         int aggregateIndex = 0;
         for (Object aggregateRootClass : aggregateRootClasses) {
-            //noinspection unchecked
             ids.add(paramsToIds((Class<? extends AggregateRoot<?>>) aggregateRootClass, parameterHolder, aggregateIndex));
             aggregateIndex++;
         }
@@ -79,8 +77,7 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
     private Object paramsToIds(Class<? extends AggregateRoot<?>> aggregateRootClass, ParameterHolder parameterHolder, int aggregateIndex) {
         Object id;
-
-        //noinspection unchecked
+        @SuppressWarnings("unchecked")
         Class<? extends DomainObject> aggregateIdClass = (Class<? extends DomainObject>) BusinessReflectUtils.getAggregateIdClass(aggregateRootClass);
 
         Object element = parameterHolder.uniqueElementForAggregateRoot(aggregateIndex);
@@ -103,10 +100,11 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
         return id;
     }
 
+    @SuppressWarnings("unchecked")
     protected A fromFactory(Class<? extends AggregateRoot<?>> aggregateClass, Object dto) {
         GenericFactory<A> genericFactory = (GenericFactory<A>) context.genericFactoryOf(aggregateClass);
         ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
-        A aggregateRoot = (A) getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parameters());
+        A aggregateRoot = (A) getAggregateFromFactory(genericFactory, aggregateClass, parameterHolder.parameters());
         return assembleWithDto(aggregateRoot, dto);
     }
 
@@ -116,14 +114,14 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
      * @param aggregateRoots the aggregate root to assemble
      * @return the assembled aggregate root
      */
+    @SuppressWarnings("unchecked")
     protected A assembleWithDto(A aggregateRoots, Object dto) {
         Assembler assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.getClass(), dto.getClass());
-        //noinspection unchecked
         assembler.mergeAggregateWithDto(aggregateRoots, dto);
         return aggregateRoots;
     }
 
-    protected Object getAggregateFromFactory(GenericFactory<?> factory, Class<?> dtoClass, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
+    protected Object getAggregateFromFactory(GenericFactory<?> factory, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
         SeedCheckUtils.checkIfNotNull(factory);
         SeedCheckUtils.checkIfNotNull(aggregateClass);
         SeedCheckUtils.checkIfNotNull(parameters);
@@ -146,15 +144,12 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
             // Invoke the factory to create the aggregate root
             try {
-                //noinspection unchecked
                 if (parameters.length == 0) {
                     return factoryMethod.invoke(factory);
                 } else {
                     return factoryMethod.invoke(factory, parameters);
                 }
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e.getCause() != null ? e.getCause() : e);
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new IllegalStateException("Failed to call " + factoryMethod.getName(), e.getCause() != null ? e.getCause() : e);
             }
         }

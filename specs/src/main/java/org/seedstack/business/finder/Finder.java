@@ -57,8 +57,6 @@ import java.lang.annotation.Target;
  *
  * fooFinder.findFoosWithName(nameToFind);
  * </pre>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

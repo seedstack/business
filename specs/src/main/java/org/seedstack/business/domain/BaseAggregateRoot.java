@@ -11,7 +11,6 @@ package org.seedstack.business.domain;
  * This abstract class is the base class of all AggregateRoot in Seed Business Framework.
  *
  * @param <ID> the entityId Type of the aggregate root.
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseAggregateRoot<ID> extends BaseEntity<ID> implements AggregateRoot<ID> {
 

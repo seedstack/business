@@ -7,9 +7,7 @@
  */
 package org.seedstack.business.assembler.auto.fixture;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public class Address {
     String street;
     String city;

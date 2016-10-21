@@ -24,9 +24,7 @@ import java.util.HashMap;
 
 import static org.mockito.Mockito.mock;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class EventFixtureInternalTest {
 
     private ContextLink contextLink = mock(ContextLink.class);
@@ -41,7 +39,7 @@ public class EventFixtureInternalTest {
         Whitebox.setInternalState(underTest, "contextLink", contextLink);
 
         event = new MyEvent("");
-        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<Class<? extends EventHandler>, Event>();
+        HashMap<Class<? extends EventHandler>, Event> value = new HashMap<>();
         value.put(MyHandler.class, event);
         value.put(MyHandler2.class, event);
         Mockito.when(contextLink.peek()).thenReturn(value);

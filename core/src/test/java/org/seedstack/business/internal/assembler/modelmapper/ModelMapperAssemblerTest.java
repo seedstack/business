@@ -21,9 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class ModelMapperAssemblerTest {
 
     private ModelMapperAssembler<Order, OrderDTO> modelMapperAssembler;
@@ -62,7 +60,7 @@ public class ModelMapperAssemblerTest {
     @Before
     public void before() {
         modelMapperAssembler = new AutoAssembler();
-        defaultModelMappedAssembler = new DefaultModelMapperAssembler<Order, OrderDTO>(new Class[]{Order.class, OrderDTO.class});
+        defaultModelMappedAssembler = new DefaultModelMapperAssembler<>(new Class[]{Order.class, OrderDTO.class});
     }
 
     @Test
@@ -90,7 +88,7 @@ public class ModelMapperAssemblerTest {
     @Test
     public void testAssembleDtoFromAggregateWithMapAndList() {
         List<String> features = Lists.newArrayList("woow", "such meta");
-        Map<String, String> specs = new HashMap<String, String>();
+        Map<String, String> specs = new HashMap<>();
         specs.put("screen", "big but not too much");
         specs.put("price", "cheap");
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), features, specs);

@@ -9,9 +9,7 @@ package org.seedstack.business.assembler.dsl;
 
 import java.util.List;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public interface AssembleDtosProvider {
 
     /**

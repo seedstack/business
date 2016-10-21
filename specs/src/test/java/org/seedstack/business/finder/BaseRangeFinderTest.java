@@ -14,9 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class BaseRangeFinderTest {
 
     @Test
@@ -41,7 +39,7 @@ public class BaseRangeFinderTest {
 
         @Override
         protected List<String> computeResultList(Range range, String criteria) {
-            List<String> results = new ArrayList<String>();
+            List<String> results = new ArrayList<>();
             int count = 0;
             for (String name : names) {
                 if (count++ < range.getOffset())

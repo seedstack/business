@@ -14,6 +14,6 @@ import java.util.Collection;
 
 public interface CustomerRepository extends Repository<Customer,CustomerId> {
 	
-	public abstract Collection<Customer> findAll();
+	Collection<Customer> findAll();
 
 }

@@ -11,9 +11,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
 import org.seedstack.seed.Install;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- */
+
 @Install
 class InMemoryPersistenceModule extends AbstractModule {
 

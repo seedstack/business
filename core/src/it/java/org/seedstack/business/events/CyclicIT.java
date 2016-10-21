@@ -16,9 +16,7 @@ import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @RunWith(SeedITRunner.class)
 public class CyclicIT {
 

@@ -16,7 +16,6 @@ import org.seedstack.business.domain.AggregateRoot;
  *
  * @param <A> the aggregate root
  * @param <D> the dto
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public abstract class ModelMapperAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
     private ModelMapper assembleModelMapper;

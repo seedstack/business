@@ -11,7 +11,6 @@ package org.seedstack.business;
  * Interface for event handlers. It handles events fired by the {@code EventService}.
  *
  * @param <E> the type of event to handle
- * @author pierre.thirouin@ext.mpsa.com
  * @see Event
  * @see EventService
  */

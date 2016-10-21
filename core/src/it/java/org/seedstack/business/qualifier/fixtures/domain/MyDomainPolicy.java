@@ -11,9 +11,7 @@ import org.seedstack.business.Producible;
 import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.DomainPolicy;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @DomainPolicy
 public interface MyDomainPolicy<T> extends DomainObject, Producible {
 }

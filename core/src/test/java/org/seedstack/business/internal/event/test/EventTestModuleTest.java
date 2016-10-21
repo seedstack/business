@@ -14,9 +14,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import static org.mockito.Mockito.mock;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class EventTestModuleTest {
 
     @Test

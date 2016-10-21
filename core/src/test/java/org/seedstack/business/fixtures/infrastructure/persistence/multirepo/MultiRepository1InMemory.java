@@ -17,7 +17,6 @@ import javax.inject.Named;
 /**
  * Dummy repository for test
  * 
- * @author redouane.loulou@ext.mpsa.com
  */
 @Named("multi1")
 @Store("MultiRepository1InMemory")

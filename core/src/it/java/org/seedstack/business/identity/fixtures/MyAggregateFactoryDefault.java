@@ -15,10 +15,7 @@ import org.seedstack.business.domain.BaseFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- * 
- */
+
 public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate>
 		implements MyAggregateFactory {
 
@@ -28,7 +25,7 @@ public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate>
 		myAggregate.setName(name);
 		MyEntity mySubAggregate = createMySubAggregate();
 		myAggregate.setMySubEntity(mySubAggregate);
-		Set<MyEntity> mySubAggregates = new HashSet<MyEntity>();
+		Set<MyEntity> mySubAggregates = new HashSet<>();
 		mySubAggregates.add(createMySubAggregate());
 		mySubAggregates.add(mySubAggregate);
 		mySubAggregates.add(createMySubAggregate());

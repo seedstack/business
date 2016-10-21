@@ -16,15 +16,13 @@ import java.util.Map;
 /**
  * This class is a shared context between the fixtures and the interceptor.
  * It registers the handlers called with their corresponding event.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 class ContextLink {
 
     static final ThreadLocal<Map<Class<? extends EventHandler>, Event>> context = new ThreadLocal<Map<Class<? extends EventHandler>, Event>>() {
         @Override
         protected Map<Class<? extends EventHandler>, Event> initialValue() {
-            return new HashMap<Class<? extends EventHandler>, Event>();
+            return new HashMap<>();
         }
     };
 

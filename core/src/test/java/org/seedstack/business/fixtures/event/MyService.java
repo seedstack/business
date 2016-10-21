@@ -12,9 +12,7 @@ import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @ITBind
 public class MyService {
 

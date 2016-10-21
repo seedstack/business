@@ -11,9 +11,7 @@ import org.seedstack.business.assembler.DtoOf;
 
 import java.util.UUID;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @DtoOf(BasicAggregate.class)
 public class BasicDto {
 

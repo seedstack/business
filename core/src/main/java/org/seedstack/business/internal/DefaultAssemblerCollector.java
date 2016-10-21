@@ -24,8 +24,6 @@ import java.util.Set;
 
 /**
  * Collects the binding strategies for default assemblers.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 class DefaultAssemblerCollector {
 
@@ -49,9 +47,9 @@ class DefaultAssemblerCollector {
      */
     public Collection<BindingStrategy> collect(Collection<Class<?>> dtoClasses) {
         // Contains pairs of aggregateClass/dtoClass
-        Set<Type[]> autoAssemblerGenerics = new HashSet<Type[]>();
+        Set<Type[]> autoAssemblerGenerics = new HashSet<>();
         // Contains pairs of aggregateTuple/dtoClass
-        Set<Type[]> autoTupleAssemblerGenerics = new HashSet<Type[]>();
+        Set<Type[]> autoTupleAssemblerGenerics = new HashSet<>();
 
         // Extract pair of aggregateClass/dtoClass
         for (Class<?> dtoClass : dtoClasses) {
@@ -68,7 +66,7 @@ class DefaultAssemblerCollector {
             }
         }
 
-        Collection<BindingStrategy> bs = new ArrayList<BindingStrategy>();
+        Collection<BindingStrategy> bs = new ArrayList<>();
         // Each pairs of aggregateClass/dtoClass or aggregateTuple/dtoClass is bind to all the default assemblers
         for (Class<?> defaultAssemblersClass : defaultAssemblersClasses) {
             Class<?> aggregateType = TypeToken.of(defaultAssemblersClass)

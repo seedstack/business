@@ -9,12 +9,7 @@ package org.seedstack.business.fixtures.domain.export;
 
 import org.seedstack.business.domain.BaseFactory;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public class ExportFactoryBase  extends BaseFactory<Export>  implements ExportFactory {
 
 	@Override

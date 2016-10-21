@@ -16,9 +16,7 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.Tuples;
 import org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class ModelMapperTupleAssemblerTest {
 
     private ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> automaticAssembler;

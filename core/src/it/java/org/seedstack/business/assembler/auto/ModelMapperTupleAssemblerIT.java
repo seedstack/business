@@ -20,9 +20,7 @@ import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @RunWith(SeedITRunner.class)
 public class ModelMapperTupleAssemblerIT {
 

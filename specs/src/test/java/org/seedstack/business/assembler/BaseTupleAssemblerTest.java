@@ -11,9 +11,7 @@ import org.javatuples.Pair;
 import org.seedstack.business.fixtures.domain.discount.Discount;
 import org.seedstack.business.fixtures.domain.export.Export;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- */
+
 public class BaseTupleAssemblerTest {
 
 	static class Representation {

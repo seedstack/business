@@ -21,8 +21,6 @@ import java.lang.reflect.Method;
  * [org.seedstack.business.event]
  * domain.watch=true
  * </pre>
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public class AggregatePersistedEvent extends BaseAggregateEvent {
     private static final long serialVersionUID = 1L;

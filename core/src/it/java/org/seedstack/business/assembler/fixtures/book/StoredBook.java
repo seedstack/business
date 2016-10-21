@@ -11,9 +11,7 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 import java.util.Date;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class StoredBook extends BaseAggregateRoot<BookId> {
 
     private BookId bookId;

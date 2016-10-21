@@ -14,8 +14,6 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * This qualifier marks the use of an InMemory persistence.
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

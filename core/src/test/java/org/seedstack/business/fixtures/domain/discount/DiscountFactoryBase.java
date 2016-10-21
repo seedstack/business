@@ -9,12 +9,7 @@ package org.seedstack.business.fixtures.domain.discount;
 
 import org.seedstack.business.domain.BaseFactory;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public class DiscountFactoryBase  extends BaseFactory<Discount>  implements DiscountFactory {
 
 	@Override

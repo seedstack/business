@@ -18,9 +18,7 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MergeAggregatesOrTuplesProviderImpl<D> implements MergeAggregatesOrTuplesWithQualifierProvider<D> {
 
     private final AssemblerDslContext context;
@@ -33,68 +31,68 @@ public class MergeAggregatesOrTuplesProviderImpl<D> implements MergeAggregatesOr
 
     @Override
     public <A extends AggregateRoot<?>> MergeAggregatesWithRepoProvider<A> into(Class<A> aggregateRootClass) {
-        return new MergeAggregatesWithRepoProviderImpl<A>(context, aggregateRootClass, dtos);
+        return new MergeAggregatesWithRepoProviderImpl<>(context, aggregateRootClass, dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Pair<A1, A2>> into(Class<A1> first, Class<A2> second) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Pair<A1, A2>>(context, Lists.newArrayList(first, second), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Triplet<A1, A2, A3>> into(Class<A1> first, Class<A2> second, Class<A3> third) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Triplet<A1, A2, A3>>(context, Lists.newArrayList(first, second, third), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Quartet<A1, A2, A3, A4>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Quartet<A1, A2, A3, A4>>(context, Lists.newArrayList(first, second, third, fourth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Quintet<A1, A2, A3, A4, A5>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Quintet<A1, A2, A3, A4, A5>>(context, Lists.newArrayList(first, second, third, fourth, fifth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Sextet<A1, A2, A3, A4, A5, A6>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Sextet<A1, A2, A3, A4, A5, A6>>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Septet<A1, A2, A3, A4, A5, A6, A7>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Septet<A1, A2, A3, A4, A5, A6, A7>>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Octet<A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Octet<A1, A2, A3, A4, A5, A6, A7, A8>>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth), dtos);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
     MergeTuplesWithRepositoryProvider<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth, Class<A10> tenth) {
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth), dtos);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
 
     public MergeTuplesWithRepositoryProvider<Tuple> into(Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {
         // Still used by our legacy Assemblers but not part of the API
-        return new MergeMergeTuplesWithRepositoryProviderImpl<Tuple>(context, Arrays.asList(aggregateRootClasses), dtos);
+        return new MergeMergeTuplesWithRepositoryProviderImpl<>(context, Arrays.asList(aggregateRootClasses), dtos);
     }
 
     @Override

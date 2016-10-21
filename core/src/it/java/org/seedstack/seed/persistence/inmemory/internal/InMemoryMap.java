@@ -14,9 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- */
+
 class InMemoryMap<K, V> implements Map<K, V> {
     private static final Map<String, Map<?, ?>> MAP = Maps.newConcurrentMap();
 

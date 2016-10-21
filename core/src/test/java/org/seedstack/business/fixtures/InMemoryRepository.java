@@ -19,8 +19,6 @@ import java.util.Map;
  * When no specific repository exist for the aggregate, this repository will be injected for
  * {@link org.seedstack.business.domain.Repository} with the qualifier {@literal @}InMemory.
  * </p>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> extends BaseRepository<Aggregate, Key> {
 

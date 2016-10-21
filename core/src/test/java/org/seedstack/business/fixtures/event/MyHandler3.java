@@ -9,9 +9,7 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.EventHandler;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class MyHandler3 implements EventHandler<DummyEvent> {
     @Override
     public void handle(DummyEvent event) {

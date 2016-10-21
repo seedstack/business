@@ -9,9 +9,7 @@ package org.seedstack.business.qualifier.fixtures.domain;
 
 import org.seedstack.business.domain.events.DomainEvent;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MyDomainEvent extends DomainEvent {
 
     private String cause;

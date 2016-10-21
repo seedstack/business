@@ -10,7 +10,5 @@ package org.seedstack.business.fixtures.domain.activation;
 import org.seedstack.business.domain.GenericFactory;
 
 public interface ActivationFactory extends GenericFactory<Activation> {
-
-    public Activation createNewActivation(String id, String description) throws ActivationException;
-
+    Activation createNewActivation(String id, String description) throws ActivationException;
 }

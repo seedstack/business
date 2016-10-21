@@ -101,14 +101,14 @@ public class PaginatedResultViewTest {
 		int randomLastPageSize[] = new int[1];
 		return $(
 				// paginated result
-				new PaginatedView<String>(
-						// generated list
-						paginatedList (pagesCount, pageSize, totalItemsCount,randomLastPageSize) ,
-						// Page Size
-						pageSize ,
-						// Page Index we want last page from the PR
-						pagesCount - 1
-						) ,
+                new PaginatedView<>(
+                        // generated list
+                        paginatedList(pagesCount, pageSize, totalItemsCount, randomLastPageSize),
+                        // Page Size
+                        pageSize,
+                        // Page Index we want last page from the PR
+                        pagesCount - 1
+                ) ,
 				pagesCount,
 				pageSize ,
 				totalItemsCount[0] ,
@@ -140,18 +140,18 @@ public class PaginatedResultViewTest {
 		List<String> paginatedList = paginatedList (pagesCount, pageSize, totalItemsCount);
 		return $(
 				// paginated result
-				new PaginatedView<String>(
-							// generated sub list
-							paginatedList ,
-							// sub list start at the second "section"
-							pagesCount * pageSize * 1 ,
-							// realsize : a list 10 times larger
-							pagesCount * pageSize * 10 ,
-							// Page Size
-							pageSize ,
-							// Page Index we want last page from the PR
-							pagesCount
-						) ,
+                new PaginatedView<>(
+                        // generated sub list
+                        paginatedList,
+                        // sub list start at the second "section"
+                        pagesCount * pageSize * 1,
+                        // realsize : a list 10 times larger
+                        pagesCount * pageSize * 10,
+                        // Page Size
+                        pageSize,
+                        // Page Index we want last page from the PR
+                        pagesCount
+                ) ,
 						pagesCount,
 						pageSize ,
 						totalItemsCount[0]
@@ -166,7 +166,7 @@ public class PaginatedResultViewTest {
 	private List<String> paginatedList(int pagesCount , int pageSize ,int [] totalItemsCount, int [] randomLastPageSize)
 	{
 		int itemCount = 0;
-		List<String> out = new LinkedList<String>();
+		List<String> out = new LinkedList<>();
 		for (int i = 0 ; i < pagesCount ; i++)
 		{
 			int actualPageSize = pageSize;
@@ -194,7 +194,7 @@ public class PaginatedResultViewTest {
 	private List<String> paginatedList(int pagesCount , int pageSize ,int [] totalItemsCount)
 	{
 		int itemCount = 0;
-		List<String> out = new LinkedList<String>();
+		List<String> out = new LinkedList<>();
 		for (int i = 0 ; i < pagesCount ; i++)
 		{
 			int actualPageSize = pageSize;

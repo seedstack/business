@@ -12,7 +12,6 @@ package org.seedstack.business.domain;
  * <p>
  * This interface should not be used directly as we already provide a base implementation for equals and hashcode.
  * 
- * @author epo.jemba@ext.mpsa.com
  *
  * @param <ID> the type of the entityId 
  */

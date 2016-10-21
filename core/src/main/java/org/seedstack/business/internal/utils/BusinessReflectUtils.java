@@ -11,9 +11,7 @@ import net.jodah.typetools.TypeResolver;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.seed.core.utils.SeedCheckUtils;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public final class BusinessReflectUtils {
 
     BusinessReflectUtils() {

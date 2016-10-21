@@ -13,13 +13,11 @@ import org.seedstack.business.Producible;
  * Factory allows creation of {@link DomainObject} that are {@link Producible} object.
  *
  * @param <DO> Created {@link DomainObject} type.
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  */
 public interface Factory<DO extends DomainObject & Producible> extends GenericFactory<DO> {
 
     /**
-     * creates a domain object.
+     * Creates a domain object.
      *
      * @param args arguments
      * @return an instance of DomainObject

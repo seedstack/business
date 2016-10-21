@@ -12,7 +12,7 @@ import com.google.inject.Scopes;
 import com.google.inject.matcher.AbstractMatcher;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
-import org.seedstack.business.test.EventFixture;
+import org.seedstack.business.test.events.EventFixture;
 import org.seedstack.business.EventHandler;
 import org.seedstack.seed.Install;
 
@@ -20,8 +20,6 @@ import java.lang.reflect.Method;
 
 /**
  * Module for event fixtures.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Install
 class EventTestModule extends AbstractModule {

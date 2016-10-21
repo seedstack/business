@@ -40,8 +40,6 @@ import java.lang.annotation.Target;
  *     ...
  * }
  * </pre>
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE})

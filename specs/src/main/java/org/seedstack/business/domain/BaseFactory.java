@@ -45,7 +45,6 @@ import org.seedstack.seed.core.utils.SeedReflectionUtils;
  * </pre>
  *
  * @param <DO> Domain Object type to be produced.
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseFactory<DO extends DomainObject & Producible> implements GenericFactory<DO> {
     protected final Class<DO> producedClass;

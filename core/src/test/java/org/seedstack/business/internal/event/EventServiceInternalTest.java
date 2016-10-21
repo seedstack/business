@@ -22,8 +22,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Tests the event service.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @RunWith(MockitoJUnitRunner.class)
 public class EventServiceInternalTest {

@@ -25,10 +25,6 @@ import java.util.Map.Entry;
 
 /**
  * The business module.
- *
- * @author epo.jemba@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
- * @author redouane.loulou@ext.mpsa.com
  */
 @BusinessConcern
 @SuppressWarnings({ "unchecked", "rawtypes" })

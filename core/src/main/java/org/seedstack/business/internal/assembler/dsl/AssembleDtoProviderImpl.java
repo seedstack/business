@@ -18,9 +18,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class AssembleDtoProviderImpl implements AssembleDtoWithQualifierProvider {
 
     private final AssembleDtosProviderImpl dtosAssemblerProvider;
@@ -31,7 +29,7 @@ public class AssembleDtoProviderImpl implements AssembleDtoWithQualifierProvider
     }
 
     public AssembleDtoProviderImpl(AssemblerDslContext context, Tuple aggregateTuple) {
-        List<Tuple> aggregateTuples = new ArrayList<Tuple>();
+        List<Tuple> aggregateTuples = new ArrayList<>();
         aggregateTuples.add(aggregateTuple);
         this.dtosAssemblerProvider = new AssembleDtosProviderImpl(context, null, aggregateTuples);
     }

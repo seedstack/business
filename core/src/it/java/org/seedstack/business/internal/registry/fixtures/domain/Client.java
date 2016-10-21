@@ -11,8 +11,6 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 public class Client extends BaseAggregateRoot<Long>{
 

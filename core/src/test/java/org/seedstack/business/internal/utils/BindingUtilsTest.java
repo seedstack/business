@@ -19,9 +19,7 @@ import org.seedstack.business.internal.utils.sample.*;
 import static org.seedstack.business.internal.utils.BindingUtils.resolveBindingDefinitions;
 
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- */
+
 public class BindingUtilsTest {
 
 	@Test

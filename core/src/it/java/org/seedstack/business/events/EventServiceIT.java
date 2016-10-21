@@ -22,8 +22,6 @@ import static org.junit.Assert.fail;
 
 /**
  * Tests fire event whether the handler throws an exception or not.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @RunWith(SeedITRunner.class)
 public class EventServiceIT {

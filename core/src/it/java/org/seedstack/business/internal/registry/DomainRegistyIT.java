@@ -34,14 +34,12 @@ import org.seedstack.business.internal.registry.fixtures.service.ServiceQualifie
 import org.seedstack.business.internal.registry.repository.ClientRepository;
 import org.seedstack.business.internal.registry.repository.JpaQualifier;
 import org.seedstack.seed.SeedException;
-import org.seedstack.seed.TypeOf;
 import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.shed.reflect.TypeOf;
 
 
 /**
  * Integration test for {@link DomainRegistry}.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @RunWith(SeedITRunner.class)
 public class DomainRegistyIT {

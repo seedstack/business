@@ -11,8 +11,6 @@ import java.lang.annotation.*;
 
 /**
  * This annotation indicates a read operation. This could be used in finders or repositories.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Documented
 @Inherited

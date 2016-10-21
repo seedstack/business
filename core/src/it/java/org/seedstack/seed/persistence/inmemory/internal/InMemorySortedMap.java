@@ -16,9 +16,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-/**
- * @author epo.jemba@ext.mpsa.com
- */
+
 class InMemorySortedMap<K, V> implements SortedMap<K, V> {
     private static final Map<String, SortedMap<?, ?>> MAP = Maps.newConcurrentMap();
 

@@ -20,8 +20,6 @@ import org.seedstack.business.spi.GenericImplementation;
 
 /**
  * Validates all the domain specifications.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class DomainSpecificationsTest {
 
@@ -131,14 +129,14 @@ public class DomainSpecificationsTest {
     }
 
     @DomainFactory
-    static interface MyFactory1 {}
+    interface MyFactory1 {}
 
-    static interface MyFactory2 extends GenericFactory<MyAggregateRoot1> {}
+    interface MyFactory2 extends GenericFactory<MyAggregateRoot1> {}
 
     @DomainFactory
     static class MyFactory3 {}
 
-    static interface MyFactory4 extends Factory<MyAggregateRoot1> {}
+    interface MyFactory4 extends Factory<MyAggregateRoot1> {}
 
     @Test
     public void testDomainFactorySpecification() {
@@ -153,9 +151,9 @@ public class DomainSpecificationsTest {
     }
 
     @DomainRepository
-    static interface MyRepository1 {}
+    interface MyRepository1 {}
 
-    static interface MyRepository2 extends GenericRepository<MyAggregateRoot1, String> {}
+    interface MyRepository2 extends GenericRepository<MyAggregateRoot1, String> {}
 
     @DomainRepository
     static class MyRepository3 {}
@@ -213,7 +211,7 @@ public class DomainSpecificationsTest {
     }
 
     @Service
-    static interface MyDomainServiceSpecification1 {}
+    interface MyDomainServiceSpecification1 {}
 
     @Test
     public void testDomainServiceSpecification() {
@@ -235,9 +233,9 @@ public class DomainSpecificationsTest {
     }
 
     @Finder
-    static interface MyFinder1 {}
+    interface MyFinder1 {}
 
-    static interface MyFinder2 extends RangeFinder {}
+    interface MyFinder2 extends RangeFinder {}
 
     @Finder
     static class MyFinder3 {}
@@ -251,7 +249,7 @@ public class DomainSpecificationsTest {
     }
 
     @DomainPolicy
-    static interface MyPolicy1 {}
+    interface MyPolicy1 {}
 
     @DomainPolicy
     static class MyPolicy3 {}

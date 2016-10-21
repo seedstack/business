@@ -14,8 +14,6 @@ import org.seedstack.business.internal.registry.fixtures.domain.Client;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @Named("Dummy")
 public class RebateServiceInternalWithQualifierNamed implements RebateService<Client>{

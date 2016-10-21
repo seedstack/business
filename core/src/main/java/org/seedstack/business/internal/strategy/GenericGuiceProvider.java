@@ -23,8 +23,7 @@ import java.lang.reflect.Type;
  * the created object. It will balance the fact that we won't be able to use reflection to get the generic type
  * on the created object.
  * 
- * @author pierre.thirouin@ext.mpsa.com
- * @param <T> Type to get from the generic provider.  
+ * @param <T> Type to get from the generic provider.
  */
 class GenericGuiceProvider<T> implements Provider<T> {
 

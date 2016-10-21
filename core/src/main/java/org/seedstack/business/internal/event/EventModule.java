@@ -35,8 +35,6 @@ import java.util.Set;
 
 /**
  * Event module. Bind EventHandlers, EventService and optionally add an interceptor on repositories.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @EventConcern
 class EventModule extends AbstractModule {
@@ -115,7 +113,7 @@ class EventModule extends AbstractModule {
             throw new IllegalArgumentException("annotated element should be a method.");
         }
 
-        Set<AnnotatedElement> annotatedElements = new LinkedHashSet<AnnotatedElement>(Arrays.asList(SeedReflectionUtils.getAllInterfacesAndClasses(annotatedMethod.getDeclaringClass())));
+        Set<AnnotatedElement> annotatedElements = new LinkedHashSet<>(Arrays.asList(SeedReflectionUtils.getAllInterfacesAndClasses(annotatedMethod.getDeclaringClass())));
         for (AnnotatedElement element : annotatedElements) {
             try {
                 AnnotatedElement methodElement = ((Class) element).getDeclaredMethod(annotatedMethod.getName(), annotatedMethod.getParameterTypes());

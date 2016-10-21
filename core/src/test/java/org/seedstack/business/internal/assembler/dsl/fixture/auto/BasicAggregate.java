@@ -13,9 +13,7 @@ import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.UUID;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class BasicAggregate extends BaseAggregateRoot<UUID> {
 
     @Identity(handler = UUIDHandler.class)

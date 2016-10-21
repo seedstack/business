@@ -17,7 +17,6 @@ import java.util.List;
  * <li>The full size of the whole request: {@code getFullSizeRequest()}.</li>
  * </ul>
  * @param <Item> the representation type
- * @author epo.jemba@ext.mpsa.com
  */
 public final class Result<Item> {
     protected final List<Item> list;
@@ -75,6 +74,6 @@ public final class Result<Item> {
      * @return the result range
      */
     public static <Item> Result<Item> rangeResult(List<Item> result, long offset, long fullRequestSize) {
-        return new Result<Item>(result, offset, fullRequestSize);
+        return new Result<>(result, offset, fullRequestSize);
     }
 }

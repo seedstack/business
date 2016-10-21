@@ -30,8 +30,6 @@ import java.util.List;
 
 /**
  * Static utility methods to easily create tuples.
- *
- * @author redouane.loulou@ext.mpsa.com
  */
 public final class Tuples {
 
@@ -182,17 +180,17 @@ public final class Tuples {
         return Types.newParameterizedType(classOfTuple(classes), classes);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> List<T> toList(Tuple tuple) {
-        List<Object> objects = new ArrayList<Object>(tuple.getSize());
+        List<Object> objects = new ArrayList<>(tuple.getSize());
         for (Object o : tuple) {
             objects.add(o);
         }
-        //noinspection unchecked
         return (List<T>) objects;
     }
 
     public static List<?> toListOfClasses(Tuple tuple) {
-        List<Class<?>> objects = new ArrayList<Class<?>>(tuple.getSize());
+        List<Class<?>> objects = new ArrayList<>(tuple.getSize());
         for (Object o : tuple) {
             objects.add(o.getClass());
         }

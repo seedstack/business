@@ -9,9 +9,7 @@ package org.seedstack.business.repositories.fixtures;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class TestAggregate2 extends BaseAggregateRoot<String> {
     @Override
     public String getEntityId() {

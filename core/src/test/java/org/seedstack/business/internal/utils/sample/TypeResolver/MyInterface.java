@@ -7,9 +7,5 @@
  */
 package org.seedstack.business.internal.utils.sample.TypeResolver;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- *         Date: 23/09/2014
- */
 public interface MyInterface<I, J, H> {
 }

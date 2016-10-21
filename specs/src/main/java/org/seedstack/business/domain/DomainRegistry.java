@@ -11,7 +11,7 @@ import java.lang.annotation.Annotation;
 
 import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
-import org.seedstack.seed.TypeOf;
+import org.seedstack.shed.reflect.TypeOf;
 
 /**
  * Registry to access to all domain objects.
@@ -34,8 +34,6 @@ import org.seedstack.seed.TypeOf;
  * 	   AnotherPolicy&lt;MyClient&lt;Long&gt;&gt; policy = domainRegistry.getPolicy(new TypeOf&lt;AnotherPolicy&lt;MyClient&lt;Long&gt;&gt;&gt;(){},"qualifier");
  * </code>
  * </pre>
- * @author thierry.bouvet@mpsa.com
- *
  */
 public interface DomainRegistry {
 

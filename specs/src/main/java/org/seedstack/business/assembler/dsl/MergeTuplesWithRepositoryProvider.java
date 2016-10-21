@@ -13,8 +13,6 @@ import java.util.List;
 
 /**
  * Specifies whether the aggregate root tuples should be retrieved from a repository or created from a factory.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public interface MergeTuplesWithRepositoryProvider<T extends Tuple> {
 

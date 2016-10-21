@@ -11,7 +11,6 @@ package org.seedstack.business.internal.strategy;
 /**
  * This interface is used as a generic Guice assisted factory for create generic type.
  *
- * @author pierre.thirouin@ext.mpsa.com
  * @param <T> the produced type
  */
 interface GenericGuiceFactory<T> {

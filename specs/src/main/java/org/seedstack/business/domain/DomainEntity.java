@@ -16,8 +16,6 @@ import java.lang.annotation.*;
  * Usually projects will use {@link BaseEntity} as it already provides the right
  * implementation for {@code equals} and {@code hashCode()}.
  * </p>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement

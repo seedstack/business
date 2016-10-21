@@ -21,7 +21,6 @@ import java.util.Collection;
 /**
  * Plugin used for identity management, scan all classes that implements IdentityHandler
  * 
- * @author redouane.loulou@ext.mpsa.com
  */
 public class IdentityPlugin extends AbstractPlugin {
 

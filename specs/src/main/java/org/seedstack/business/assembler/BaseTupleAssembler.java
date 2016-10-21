@@ -14,7 +14,6 @@ import org.javatuples.Tuple;
  *
  * @param <T> the tuple type for this assembler.
  * @param <D> the actual dto type.
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 

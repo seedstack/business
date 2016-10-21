@@ -5,15 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.test;
+package org.seedstack.business.test.events;
 
 
 import org.seedstack.seed.ErrorCode;
 
 /**
  * Error codes for event fixtures.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public enum EventTestErrorCodes implements ErrorCode {
     EVENT_WAS_HANDLER_BY,

@@ -12,9 +12,7 @@ import org.seedstack.business.domain.AggregateRoot;
 
 import java.util.List;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public interface MergeAggregatesOrTuplesProvider<D> {
 
     <A extends AggregateRoot<?>> void into(List<A> aggregateRoots);

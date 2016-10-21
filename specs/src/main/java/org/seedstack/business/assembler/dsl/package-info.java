@@ -7,7 +7,5 @@
  */
 /**
  * Provides classes specific to the assembler DSL.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.business.assembler.dsl;

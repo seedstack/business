@@ -22,9 +22,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class EventModuleTest {
 
     @SuppressWarnings("unchecked")
@@ -32,7 +30,7 @@ public class EventModuleTest {
     public void test_configure_method() {
         ArrayListMultimap<Class<? extends Event>, Class<? extends EventHandler>> multimap = ArrayListMultimap.create();
         multimap.put(MyEvent2.class, MyEventHandlerFailed.class);
-        List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<Class<? extends EventHandler>>();
+        List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<>();
         eventHandlerClasses.add(MyEventHandlerFailed.class);
         EventModule underTest = new EventModule(multimap, eventHandlerClasses, false);
         Binder b = mock(Binder.class, Mockito.RETURNS_MOCKS);

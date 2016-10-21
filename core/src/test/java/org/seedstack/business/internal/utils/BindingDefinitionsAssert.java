@@ -17,8 +17,6 @@ import static org.seedstack.business.internal.utils.BindingUtils.resolveBindingD
 
 /**
  * This assertion class provides assertions around bindings.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public class BindingDefinitionsAssert {
 

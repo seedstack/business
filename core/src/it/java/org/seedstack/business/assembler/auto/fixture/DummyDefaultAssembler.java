@@ -16,9 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Method;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @GenericImplementation
 @Named("Dummy")
 public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {

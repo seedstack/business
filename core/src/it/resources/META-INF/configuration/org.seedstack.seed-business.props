@@ -10,16 +10,6 @@
 manager=org.seedstack.seed.transaction.internal.LocalTransactionManager
 default-handler = org.seedstack.seed.persistence.inmemory.internal.InMemoryTransactionHandler
 
-[org.seedstack.seed.persistence.jpa]
-units=hsql-in-memory
-unit.hsql-in-memory.property.javax.persistence.jdbc.driver=org.hsqldb.jdbcDriver
-unit.hsql-in-memory.property.javax.persistence.jdbc.url=jdbc:hsqldb:mem:testdb
-unit.hsql-in-memory.property.javax.persistence.jdbc.user=sa
-unit.hsql-in-memory.property.javax.persistence.jdbc.password=
-unit.hsql-in-memory.property.hibernate.dialect=org.hibernate.dialect.HSQLDialect
-unit.hsql-in-memory.property.hibernate.hbm2ddl.auto=create
-unit.hsql-in-memory.property.sql.enforce_strict_size=true
-
 [org.seedstack.business.identity.fixtures.*]
 identity.handler-qualifier = simple-UUID
 

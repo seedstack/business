@@ -9,8 +9,6 @@ package org.seedstack.business.fixtures.domain.export;
 
 import org.seedstack.business.domain.GenericFactory;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public interface ExportFactory extends GenericFactory<Export> {
 }

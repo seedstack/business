@@ -15,7 +15,6 @@ import java.util.List;
  * Abstract Class with base building blocs for concrete Views.
  *
  * @param <Item> the paginated item
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class AbstractView<Item> implements View<Item> {
     protected final VirtualList<Item> resultList;
@@ -49,7 +48,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewSize   the result view size
      */
     public AbstractView(Result<Item> result, long resultViewOffset, long resultViewSize) {
-        this(new VirtualList<Item>(result.getResult(), result.getOffset(), result.getFullSize()), resultViewOffset, resultViewSize);
+        this(new VirtualList<>(result.getResult(), result.getOffset(), result.getFullSize()), resultViewOffset, resultViewSize);
     }
 
     /**
@@ -60,7 +59,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewSize   the result view size
      */
     public AbstractView(List<Item> list, long resultViewOffset, long resultViewSize) {
-        this(new VirtualList<Item>(list, 0, list.size()), resultViewOffset, resultViewSize);
+        this(new VirtualList<>(list, 0, list.size()), resultViewOffset, resultViewSize);
     }
 
     /**
@@ -73,7 +72,7 @@ public abstract class AbstractView<Item> implements View<Item> {
      * @param resultViewSize   the result view size
      */
     public AbstractView(List<Item> items, long subListStart, long subListSize, long resultViewOffset, long resultViewSize) {
-        this(new VirtualList<Item>(items, subListStart, subListSize), resultViewOffset, resultViewSize);
+        this(new VirtualList<>(items, subListStart, subListSize), resultViewOffset, resultViewSize);
     }
 
     /**

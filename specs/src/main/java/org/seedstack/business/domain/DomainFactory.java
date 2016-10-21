@@ -14,8 +14,6 @@ import java.lang.annotation.*;
  * <p>
  * {@code GenericFactory} is the interface to extend to create a Domain Factory interface.
  * </p>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @DomainElement

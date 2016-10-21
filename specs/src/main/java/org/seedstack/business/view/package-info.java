@@ -8,6 +8,5 @@
 /**
  * Provides classes for representing view concepts like chunk or page.
  * 
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.business.view;

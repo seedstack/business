@@ -15,18 +15,16 @@ import org.seedstack.business.finder.Result;
 
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class PageTest {
 
     @Test
     public void test_paginated_view() {
         List<String> strings = Lists.newArrayList("one", "two", "three", "four", "five");
         Page page = new Page(0, 5);
-        Result<String> result = new Result<String>(strings, 0, 100);
+        Result<String> result = new Result<>(strings, 0, 100);
 
-        PaginatedView<String> paginatedView = new PaginatedView<String>(result, page);
+        PaginatedView<String> paginatedView = new PaginatedView<>(result, page);
         Assertions.assertThat(paginatedView.getPagesCount()).isEqualTo(20);
         Assertions.assertThat(paginatedView.getPageIndex()).isEqualTo(0);
         Assertions.assertThat(paginatedView.getPageSize()).isEqualTo(5);
@@ -36,10 +34,10 @@ public class PageTest {
     public void test_paginated_view_page_navigation() {
         List<String> strings = Lists.newArrayList("one", "two", "three", "four", "five");
         Page page = new Page(0, 5);
-        Result<String> result = new Result<String>(strings, 0, 100);
+        Result<String> result = new Result<>(strings, 0, 100);
 
         // Test the first page
-        PaginatedView<String> paginatedView = new PaginatedView<String>(result, page);
+        PaginatedView<String> paginatedView = new PaginatedView<>(result, page);
         Assertions.assertThat(paginatedView.hasPrev()).isFalse();
         Assertions.assertThat(paginatedView.hasNext()).isTrue();
         Assertions.assertThat(paginatedView.prev()).isNull();
@@ -47,14 +45,14 @@ public class PageTest {
         Assertions.assertThat(paginatedView.next().getIndex()).isEqualTo(1);
 
         // Navigate to the second page
-        paginatedView = new PaginatedView<String>(result, paginatedView.next());
+        paginatedView = new PaginatedView<>(result, paginatedView.next());
         Assertions.assertThat(paginatedView.hasPrev()).isTrue();
         Assertions.assertThat(paginatedView.hasNext()).isTrue();
         Assertions.assertThat(paginatedView.prev()).isNotNull();
         Assertions.assertThat(paginatedView.prev().getIndex()).isEqualTo(0);
 
         // test the last page
-        paginatedView = new PaginatedView<String>(result, new Page(19, 5));
+        paginatedView = new PaginatedView<>(result, new Page(19, 5));
         Assertions.assertThat(paginatedView.hasPrev()).isTrue();
         Assertions.assertThat(paginatedView.hasNext()).isFalse();
         Assertions.assertThat(paginatedView.prev()).isNotNull();
@@ -65,9 +63,9 @@ public class PageTest {
     public void test_paginated_view_edge_case() {
         List<String> strings = Lists.newArrayList("one", "two", "three", "four", "five");
         Page page = new Page(0, 10);
-        Result<String> result = new Result<String>(strings, 0, 92233720368547758L);
+        Result<String> result = new Result<>(strings, 0, 92233720368547758L);
 
-        PaginatedView<String> paginatedView = new PaginatedView<String>(result, page);
+        PaginatedView<String> paginatedView = new PaginatedView<>(result, page);
         Assertions.assertThat(paginatedView.getPagesCount()).isEqualTo(9223372036854776L);
         Assertions.assertThat(paginatedView.getPageIndex()).isEqualTo(0);
         Assertions.assertThat(paginatedView.getPageSize()).isEqualTo(10);
@@ -79,9 +77,9 @@ public class PageTest {
         List<String> strings = Lists.newArrayList("one", "two", "three", "four", "five");
         Page page = new Page(0, 10);
         // Long.MAX_VALUE = 9223372036854775807L
-        Result<String> result = new Result<String>(strings, 0, Long.MAX_VALUE);
+        Result<String> result = new Result<>(strings, 0, Long.MAX_VALUE);
 
-        PaginatedView<String> paginatedView = new PaginatedView<String>(result, page);
+        PaginatedView<String> paginatedView = new PaginatedView<>(result, page);
         Assertions.assertThat(paginatedView.getPagesCount()).isEqualTo(922337203685477581L);
         Assertions.assertThat(paginatedView.getPageIndex()).isEqualTo(0);
         Assertions.assertThat(paginatedView.getPageSize()).isEqualTo(10);
@@ -91,9 +89,9 @@ public class PageTest {
     public void test_paginated_view_edge_case_min() {
         List<String> strings = Lists.newArrayList();
         Page page = new Page(0, 10);
-        Result<String> result = new Result<String>(strings, 0, 0);
+        Result<String> result = new Result<>(strings, 0, 0);
 
-        PaginatedView<String> paginatedView = new PaginatedView<String>(result, page);
+        PaginatedView<String> paginatedView = new PaginatedView<>(result, page);
         Assertions.assertThat(paginatedView.getPagesCount()).isEqualTo(0);
         Assertions.assertThat(paginatedView.getPageIndex()).isEqualTo(0);
         Assertions.assertThat(paginatedView.getPageSize()).isEqualTo(0);

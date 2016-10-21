@@ -5,18 +5,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.seed.persistence.inmemory.internal;
 
 import com.google.inject.MembersInjector;
 
 import java.lang.reflect.Field;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- */
+
 class InMemoryMapMembersInjector<T> implements MembersInjector<T> {
 
     private final Field field;
@@ -31,7 +27,7 @@ class InMemoryMapMembersInjector<T> implements MembersInjector<T> {
     @Override
     public void injectMembers(T instance) {
         try {
-            field.set(instance, new InMemoryMap<Object, Object>(inMemoryTransactionLink));
+            field.set(instance, new InMemoryMap<>(inMemoryTransactionLink));
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

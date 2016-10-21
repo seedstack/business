@@ -17,9 +17,6 @@ import java.util.UUID;
 
 /**
  * MyAggregateWithNoIdentityManagement
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class MyAggregateWithNoIdentityManagement extends BaseAggregateRoot<UUID> {
 	

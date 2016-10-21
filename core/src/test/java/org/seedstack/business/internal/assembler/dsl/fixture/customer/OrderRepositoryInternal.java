@@ -12,12 +12,10 @@ import org.seedstack.business.domain.BaseRepository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class OrderRepositoryInternal extends BaseRepository<Order, String> implements OrderRepository {
 
-    private static Map<String, Order> orderMap = new ConcurrentHashMap<String, Order>();
+    private static Map<String, Order> orderMap = new ConcurrentHashMap<>();
 
     @Override
     public Order load(String id) {

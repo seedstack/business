@@ -11,9 +11,7 @@ import org.seedstack.business.assembler.BaseAssembler;
 
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @Named("Book") // just to test the DSL with qualifier
 public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
 

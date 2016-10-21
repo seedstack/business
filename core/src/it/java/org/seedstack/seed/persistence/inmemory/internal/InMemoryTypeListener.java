@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.seed.persistence.inmemory.internal;
 
 import com.google.inject.TypeLiteral;
@@ -18,9 +16,7 @@ import org.seedstack.seed.persistence.inmemory.api.InMemory;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- */
+
 class InMemoryTypeListener implements TypeListener {
     private final InMemoryTransactionLink inMemoryTransactionLink;
 
@@ -33,7 +29,7 @@ class InMemoryTypeListener implements TypeListener {
         for (Class<?> c = type.getRawType(); c != Object.class; c = c.getSuperclass()) {
             for (Field field : c.getDeclaredFields()) {
                 if (Map.class.isAssignableFrom(field.getType()) && (field.getAnnotation(InMemory.class)) != null) {
-                    encounter.register(new InMemoryMapMembersInjector<I>(field, inMemoryTransactionLink));
+                    encounter.register(new InMemoryMapMembersInjector<>(field, inMemoryTransactionLink));
                 }
             }
         }

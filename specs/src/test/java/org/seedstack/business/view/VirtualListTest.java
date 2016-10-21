@@ -24,7 +24,7 @@ public class VirtualListTest {
     public void test_virtual_list() {
         List<Integer> integers = Lists.newArrayList(3, 4, 5);
 
-        VirtualList<Integer> underTest = new VirtualList<Integer>(integers, 3, 10);
+        VirtualList<Integer> underTest = new VirtualList<>(integers, 3, 10);
         Assertions.assertThat(underTest.subList(3, 6)).hasSize(3);
         Assertions.assertThat(underTest.get(3)).isEqualTo(3);
     }
@@ -33,7 +33,7 @@ public class VirtualListTest {
     public void test_virtual_list_edge_cases() {
         List<Integer> integers = Lists.newArrayList(0);
 
-        VirtualList<Integer> underTest = new VirtualList<Integer>(integers, 0, 1);
+        VirtualList<Integer> underTest = new VirtualList<>(integers, 0, 1);
         Assertions.assertThat(underTest.subList(0, 1)).hasSize(1);
         Assertions.assertThat(underTest.get(0)).isEqualTo(0);
     }
@@ -56,11 +56,11 @@ public class VirtualListTest {
 
     private Object[] virtualist(int realSize, int subListSize, int subListOffset, Integer index, Integer expectedValue) {
 
-        return new Object[]{index, expectedValue, new VirtualList<Integer>(subList(subListSize), subListOffset, realSize)};
+        return new Object[]{index, expectedValue, new VirtualList<>(subList(subListSize), subListOffset, realSize)};
     }
 
     private List<Integer> subList(int subListSize) {
-        List<Integer> lit = new LinkedList<Integer>();
+        List<Integer> lit = new LinkedList<>();
 
         for (int i = 0; i < subListSize; i++) {
             lit.add(i);
@@ -75,7 +75,7 @@ public class VirtualListTest {
         List<Integer> subList = subList(30);
 
         // virtual list from 0 to 100 with sublist from 50 to 80
-        VirtualList<Integer> virtualList = new VirtualList<Integer>(subList, 50, 100);
+        VirtualList<Integer> virtualList = new VirtualList<>(subList, 50, 100);
 
         List<Integer> subList2 = virtualList.subList(50, 65);
         Assertions.assertThat(subList2).contains(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);

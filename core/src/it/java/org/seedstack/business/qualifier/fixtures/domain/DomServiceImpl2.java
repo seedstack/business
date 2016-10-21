@@ -9,9 +9,7 @@ package org.seedstack.business.qualifier.fixtures.domain;
 
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Named("2")
 public class DomServiceImpl2 extends MyAbstractDomainService implements MyDomainService {
 

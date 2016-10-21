@@ -18,8 +18,6 @@ import javax.inject.Inject;
 
 /**
  * This class checks the injection of new instances or singletons.
- *
- * @author epo.jemba@ext.mpsa.com
  */
 public class BusinessCorePluginSingletonIT extends AbstractSeedIT {
 

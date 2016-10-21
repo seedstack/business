@@ -19,9 +19,6 @@ import java.lang.annotation.Target;
 
 /**
  * Identity
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

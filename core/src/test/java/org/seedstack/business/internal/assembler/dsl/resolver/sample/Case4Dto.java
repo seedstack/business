@@ -11,8 +11,6 @@ import org.seedstack.business.assembler.MatchingEntityId;
 
 /**
  * Case 4: The first name and last name are mapped to a {@code Pair&lt;String, String&gt;} in the constructor.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public class Case4Dto {
 

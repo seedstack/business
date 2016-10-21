@@ -15,9 +15,7 @@ import org.seedstack.business.spi.GenericImplementation;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @GenericImplementation
 @Named("mock")
 public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A, K> {

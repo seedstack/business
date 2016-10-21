@@ -19,8 +19,7 @@ import java.util.List;
  * It won't handle external aspects like ordering or filtering, only a
  * viewpoint segmentation.
  * 
- * @author epo.jemba@ext.mpsa.com
- * 
+ *
  * @param <Item> the item type
  */
 public interface View<Item> extends Serializable {

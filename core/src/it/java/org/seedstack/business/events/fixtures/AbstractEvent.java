@@ -9,8 +9,6 @@ package org.seedstack.business.events.fixtures;
 
 import org.seedstack.business.Event;
 
-/**
- * @author adrien.lauer@mpsa.com
- */
+
 public class AbstractEvent implements Event {
 }

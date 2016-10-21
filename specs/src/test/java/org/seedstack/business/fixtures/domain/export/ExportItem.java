@@ -9,9 +9,7 @@ package org.seedstack.business.fixtures.domain.export;
 
 import org.seedstack.business.domain.BaseEntity;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class ExportItem extends BaseEntity<String> {
 
     private String entityId;

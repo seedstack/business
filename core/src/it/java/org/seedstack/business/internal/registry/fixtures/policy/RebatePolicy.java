@@ -12,11 +12,9 @@ import org.seedstack.business.internal.registry.fixtures.domain.Product;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @DomainPolicy
 public interface RebatePolicy {
 
-	public float calculateRebate(Product product, float quantity);
+	float calculateRebate(Product product, float quantity);
 }

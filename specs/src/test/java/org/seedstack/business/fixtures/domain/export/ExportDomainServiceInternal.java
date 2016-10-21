@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.fixtures.domain.export;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class ExportDomainServiceInternal implements ExportDomainService {
 }

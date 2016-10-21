@@ -9,9 +9,7 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.Event;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class MyEvent implements Event {
 
     public String businessInfo;

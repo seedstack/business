@@ -17,7 +17,6 @@ import org.seedstack.seed.SeedException;
  * the entity to valid, i.e. not null. Otherwise a SeedException will be thrown.
  *
  * @param <ID> The type of the entityId of the Entity.
- * @author epo.jemba@ext.mpsa.com
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
     @Override

@@ -11,9 +11,7 @@ import org.javatuples.Pair;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public class AutoTupleAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDto> {
     @Override
     protected void configureAssembly(ModelMapper modelMapper) {

@@ -20,8 +20,6 @@ import java.lang.reflect.Method;
  * <pre>
  * org.seedstack.business.event.domain.watch=true
  * </pre>
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 public abstract class BaseAggregateEvent extends DomainEvent {
 

@@ -43,9 +43,6 @@ import java.util.Map;
  * {@literal @}Inject
  * MyClass&lt;MyAggregate1, MyKey1&gt; mySuperClass; // inject instance of MyImplClass&lt;MyAggregate1, MyKey1&gt;
  * </pre>
- *
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  */
 public class GenericBindingStrategy<T> implements BindingStrategy {
 

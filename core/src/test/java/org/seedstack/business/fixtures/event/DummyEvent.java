@@ -9,8 +9,6 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.Event;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class DummyEvent implements Event {
 }

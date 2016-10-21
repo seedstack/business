@@ -27,9 +27,6 @@ import java.util.UUID;
 
 /**
  * IdentityServiceInternalIT
- * 
- * @author redouane.loulou@ext.mpsa.com
- * 
  */
 @RunWith(SeedITRunner.class)
 public class IdentityServiceInternalIT {

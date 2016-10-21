@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.events.fixtures;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class MyEvent extends AbstractEvent {
 }

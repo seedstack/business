@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.assembler.dsl;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public interface MergeAggregatesOrTuplesWithQualifierProvider<D> extends MergeAggregatesOrTuplesProvider<D>, QualifierProvider<MergeAggregatesOrTuplesProvider<D>> {
 }

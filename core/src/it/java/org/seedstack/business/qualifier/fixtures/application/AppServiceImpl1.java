@@ -9,9 +9,7 @@ package org.seedstack.business.qualifier.fixtures.application;
 
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Named("1")
 public class AppServiceImpl1 implements MyApplicationService {
 }

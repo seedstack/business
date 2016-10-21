@@ -26,9 +26,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.fail;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @RunWith(SeedITRunner.class)
 public class AssemblerDslIT {
 

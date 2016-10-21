@@ -29,7 +29,6 @@ package org.seedstack.business.domain;
  *
  * @param <A> the type of the aggregate root class.
  * @param <K> the type of the aggregate root class.
- * @author epo.jemba@ext.mpsa.com
  */
 @DomainRepository
 public interface Repository<A extends AggregateRoot<K>, K> {

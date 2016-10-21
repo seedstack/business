@@ -27,7 +27,6 @@ import java.util.Collection;
 
 /**
  * 
- * @author redouane.loulou@ext.mpsa.com
  */
 class IdentityModule extends AbstractModule {
 

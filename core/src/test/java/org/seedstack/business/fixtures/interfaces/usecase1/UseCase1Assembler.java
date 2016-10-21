@@ -14,12 +14,7 @@ import org.seedstack.business.fixtures.domain.order.Order;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.javatuples.Quartet;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public class UseCase1Assembler extends BaseTupleAssembler<Quartet<Activation, Customer, Order, Product>, UseCase1Representation> {
 
 	@Override

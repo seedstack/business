@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.qualifier.fixtures.domain;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class DomPolicyImpl1 implements MyDomainPolicy<String> {
 }

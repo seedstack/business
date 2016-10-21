@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.fixtures.application;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class DiscountApplicationServiceInternal implements DiscountApplicationService {
 }

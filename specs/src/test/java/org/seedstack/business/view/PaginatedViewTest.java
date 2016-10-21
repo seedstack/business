@@ -14,9 +14,7 @@ import org.seedstack.business.finder.Result;
 
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class PaginatedViewTest {
 
     private PaginatedView<Integer> underTest;
@@ -25,10 +23,10 @@ public class PaginatedViewTest {
     public void test_paginated_view() {
         // List of 5 items -- full size equals 10
         List<Integer> integers = Lists.newArrayList(0,1,2,3,4);
-        Result<Integer> result = new Result<Integer>(integers, 0, 10);
+        Result<Integer> result = new Result<>(integers, 0, 10);
 
         // Get the first page
-        underTest = new PaginatedView<Integer>(result, new Page(0, 5));
+        underTest = new PaginatedView<>(result, new Page(0, 5));
 
         Assertions.assertThat(underTest).isNotNull();
         Assertions.assertThat(underTest.getPageIndex()).isEqualTo(0);
@@ -40,10 +38,10 @@ public class PaginatedViewTest {
     public void test_paginated_view_incomplete_page() {
         // List of 3 items -- full size equals 5
         List<Integer> integers = Lists.newArrayList(0,1,2);
-        Result<Integer> result = new Result<Integer>(integers, 0, 3);
+        Result<Integer> result = new Result<>(integers, 0, 3);
 
         // Get a page with a capacity of 5 items
-        underTest = new PaginatedView<Integer>(result, new Page(0, 5));
+        underTest = new PaginatedView<>(result, new Page(0, 5));
 
         Assertions.assertThat(underTest).isNotNull();
         Assertions.assertThat(underTest.getPageIndex()).isEqualTo(0);
@@ -54,10 +52,10 @@ public class PaginatedViewTest {
     public void test_paginated_view_incomplete_page2() {
         // List of 3 items -- full size equals 5
         List<Integer> integers = Lists.newArrayList(0,1,2);
-        Result<Integer> result = new Result<Integer>(integers, 0, 10);
+        Result<Integer> result = new Result<>(integers, 0, 10);
 
         // Get a page with a capacity of 5 items
-        underTest = new PaginatedView<Integer>(result, new Page(0, 5));
+        underTest = new PaginatedView<>(result, new Page(0, 5));
         Assertions.assertThat(underTest.getView()).hasSize(3);
     }
 
@@ -65,10 +63,10 @@ public class PaginatedViewTest {
     public void test_paginated_view_sub_list() {
         // List of 10 items -- full size equals 10
         List<Integer> integers = Lists.newArrayList(0,1,2,3,4,5,6,7,8,9);
-        Result<Integer> result = new Result<Integer>(integers, 0, 10);
+        Result<Integer> result = new Result<>(integers, 0, 10);
 
         // Get a page with a capacity of 5 items
-        underTest = new PaginatedView<Integer>(result, new Page(0, 5));
+        underTest = new PaginatedView<>(result, new Page(0, 5));
 
         Assertions.assertThat(underTest).isNotNull();
         Assertions.assertThat(underTest.getPageIndex()).isEqualTo(0);
@@ -79,10 +77,10 @@ public class PaginatedViewTest {
     public void test_paginated_view_last_page() {
         // List of 3 items -- full size equals 13
         List<Integer> integers = Lists.newArrayList(10,11,12);
-        Result<Integer> result = new Result<Integer>(integers, 10, 13);
+        Result<Integer> result = new Result<>(integers, 10, 13);
 
         // Get the last page
-        underTest = new PaginatedView<Integer>(result, new Page(1, 10));
+        underTest = new PaginatedView<>(result, new Page(1, 10));
 
         Assertions.assertThat(underTest).isNotNull();
         Assertions.assertThat(underTest.getPageIndex()).isEqualTo(1);

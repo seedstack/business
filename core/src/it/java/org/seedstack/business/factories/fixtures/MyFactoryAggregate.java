@@ -12,12 +12,6 @@ package org.seedstack.business.factories.fixtures;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-/**
- * 
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
- * 
- */
 public class MyFactoryAggregate extends BaseAggregateRoot<String> {
 	private String id;
 	

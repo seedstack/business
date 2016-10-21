@@ -7,18 +7,16 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
+import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.assembler.dsl.MergeAggregatesWithRepoProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregatesWithRepoThenFactProvider;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.assembler.dsl.MergeAggregatesWithRepoThenFactProvider;
-import org.seedstack.business.assembler.dsl.MergeAggregatesWithRepoProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> extends BaseAggAssemblerWithRepoProviderImpl<A> implements MergeAggregatesWithRepoProvider<A>, MergeAggregatesWithRepoThenFactProvider<A> {
 
     private final Class<A> aggregateClass;
@@ -40,7 +38,7 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
 
     @Override
     public List<A> fromFactory() {
-        List<A> aggregateRoots = new ArrayList<A>(dtos.size());
+        List<A> aggregateRoots = new ArrayList<>(dtos.size());
         for (Object dto : dtos) {
             aggregateRoots.add(fromFactory(aggregateClass, dto));
         }
@@ -54,9 +52,9 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
      * @param key the aggregate roots identity
      * @return the loaded aggregate root
      */
+    @SuppressWarnings("unchecked")
     protected A loadFromRepo(Class<? extends AggregateRoot<?>> aggregateClass, Object key) {
         Repository repository = context.repositoryOf(aggregateClass);
-        //noinspection unchecked
         return (A) repository.load(key);
     }
 
@@ -64,7 +62,7 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
 
     @Override
     public List<A> orFail() throws AggregateNotFoundException {
-        List<A> aggregateRoots = new ArrayList<A>(dtos.size());
+        List<A> aggregateRoots = new ArrayList<>(dtos.size());
         for (Object dto : dtos) {
             Object id = resolveId(dto, aggregateClass);
             A a = loadFromRepo(aggregateClass, id);
@@ -82,7 +80,7 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
     public List<A> orFromFactory() {
         boolean atLeastOneAggregateNotFound = false;
         boolean atLeastOneAggregateFound = false;
-        List<A> aggregateRoots = new ArrayList<A>(dtos.size());
+        List<A> aggregateRoots = new ArrayList<>(dtos.size());
 
         // load from the repository
         for (Object dto : dtos) {

@@ -11,8 +11,6 @@ import java.lang.annotation.*;
 
 /**
  * This annotation indicates a delete operation. This could be used in repositories.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Documented
 @Inherited

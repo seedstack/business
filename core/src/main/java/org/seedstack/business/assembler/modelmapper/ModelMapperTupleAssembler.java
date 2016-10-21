@@ -16,7 +16,6 @@ import org.seedstack.business.assembler.AbstractBaseAssembler;
  *
  * @param <T> the tuple
  * @param <D> the dto
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
     private ModelMapper assembleModelMapper;

@@ -9,8 +9,6 @@ package org.seedstack.business.internal.registry.fixtures.service;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 public class MyServiceInternal implements MyService {
 

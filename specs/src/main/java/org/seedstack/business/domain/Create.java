@@ -12,8 +12,6 @@ import java.lang.annotation.*;
 /**
  * This annotation indicates a creation. Be careful, a creation is related to object instantiation not to persistence.
  * For instance, it could be used on a factory.
- *
- * @author pierre.thirouin@ext.mpsa.com
  */
 @Documented
 @Inherited

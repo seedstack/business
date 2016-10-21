@@ -9,9 +9,7 @@ package org.seedstack.business.fixtures.domain.discount;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public class Price extends BaseValueObject {
 
     String value;

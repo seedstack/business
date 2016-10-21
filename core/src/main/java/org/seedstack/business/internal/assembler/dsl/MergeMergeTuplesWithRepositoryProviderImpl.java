@@ -22,9 +22,7 @@ import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends BaseAggAssemblerWithRepoProviderImpl implements MergeTuplesWithRepositoryProvider<T>, MergeTuplesWithRepositoryThenFactoryProvider<T> {
 
     private final List<Class<? extends AggregateRoot<?>>> aggregateClasses;
@@ -46,17 +44,18 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<T> fromFactory() {
-        List<T> aggregateRootTuples = new ArrayList<T>(dtos.size());
+        List<T> aggregateRootTuples = new ArrayList<>(dtos.size());
         for (Object dto : dtos) {
-            List<Object> aggregateRoots = new ArrayList<Object>();
+            List<Object> aggregateRoots = new ArrayList<>();
             ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
             int aggregateIndex = 0;
             for (Object o : aggregateClasses) {
                 if (o instanceof Class<?>) {
                     Class<? extends AggregateRoot<?>> aggregateClass = (Class<? extends AggregateRoot<?>>) o;
                     GenericFactory<?> genericFactory = context.genericFactoryOf(aggregateClass);
-                    Object aggregate = getAggregateFromFactory(genericFactory, dto.getClass(), aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
+                    Object aggregate = getAggregateFromFactory(genericFactory, aggregateClass, parameterHolder.parametersOfAggregateRoot(aggregateIndex));
                     aggregateRoots.add(aggregate);
                 } else {
                     // TODO replace by a seed exception
@@ -74,14 +73,14 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
 
     @Override
     public List<T> orFail() throws AggregateNotFoundException {
-        List<T> aggregateRootTuples = new ArrayList<T>(dtos.size());
+        List<T> aggregateRootTuples = new ArrayList<>(dtos.size());
         for (Object dto : dtos) {
             // list of triplet - each triplet contains the aggregate root instance, its class and its id (useful if the AR is null).
             List<Triplet<Object, Class<?>, Object>> aggregateRootsMetadata = loadFromRepository(dto);
 
             boolean shouldThrow = false;
 
-            List<AggregateRoot<?>> aggregateRoots = new ArrayList<AggregateRoot<?>>();
+            List<AggregateRoot<?>> aggregateRoots = new ArrayList<>();
 
             StringBuilder stringBuilder = new StringBuilder().append("Unable to load ");
             for (Triplet<Object, Class<?>, Object> triplet : aggregateRootsMetadata) {
@@ -108,7 +107,7 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
     public List<T> orFromFactory() {
         boolean atLeastOneAggregateNotFound = false;
         boolean atLeastOneAggregateFound = false;
-        List<T> aggregateRootTuples = new ArrayList<T>(dtos.size());
+        List<T> aggregateRootTuples = new ArrayList<>(dtos.size());
 
         // load from the repository
         for (Object dto : dtos) {
@@ -116,7 +115,7 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
             // its class and its id (useful if the AR is null).
             List<Triplet<Object, Class<?>, Object>> aggregateRootsMetadata = loadFromRepository(dto);
 
-            List<AggregateRoot<?>> aggregateRoots = new ArrayList<AggregateRoot<?>>();
+            List<AggregateRoot<?>> aggregateRoots = new ArrayList<>();
 
             StringBuilder errorMessage = new StringBuilder().append("Unable to load ");
             for (Triplet<Object, Class<?>, Object> triplet : aggregateRootsMetadata) {
@@ -155,11 +154,11 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
         }
     }
 
-
+    @SuppressWarnings("unchecked")
     private List<Triplet<Object, Class<?>, Object>> loadFromRepository(Object dto) {
         Tuple ids = resolveIds(dto, aggregateClasses);
 
-        List<Triplet<Object, Class<?>, Object>> aggregateRoots = new ArrayList<Triplet<Object, Class<?>, Object>>();
+        List<Triplet<Object, Class<?>, Object>> aggregateRoots = new ArrayList<>();
         for (int i = 0; i < ids.getSize(); i++) {
             Class<? extends AggregateRoot<?>> aggregateClass = aggregateClasses.get(i);
             Object id = ids.getValue(i);
@@ -167,7 +166,7 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
             Repository repository = context.repositoryOf(aggregateClass);
             AggregateRoot<?> aggregateRoot = repository.load(id);
 
-            aggregateRoots.add(new Triplet<Object, Class<?>, Object>(aggregateRoot, aggregateClass, id));
+            aggregateRoots.add(new Triplet<>(aggregateRoot, aggregateClass, id));
         }
 
         return aggregateRoots;
@@ -179,10 +178,10 @@ public class MergeMergeTuplesWithRepositoryProviderImpl<T extends Tuple> extends
      * @param aggregateRoots the aggregate root(s) to assemble
      * @return the assembled aggregate root(s)
      */
+    @SuppressWarnings("unchecked")
     protected T assembleWithDto(Object dto, List<?> aggregateRoots) {
         T aggregateRootTuple = Tuples.create(aggregateRoots);
         Assembler assembler = context.tupleAssemblerOf(aggregateClasses, dto.getClass());
-        //noinspection unchecked
         assembler.mergeAggregateWithDto(aggregateRootTuple, dto);
         return aggregateRootTuple;
     }

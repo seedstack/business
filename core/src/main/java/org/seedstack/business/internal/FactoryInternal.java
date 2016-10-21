@@ -12,7 +12,12 @@ package org.seedstack.business.internal;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.Producible;
-import org.seedstack.business.domain.*;
+import org.seedstack.business.domain.Create;
+import org.seedstack.business.domain.DomainErrorCodes;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Entity;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.seed.SeedException;
@@ -46,8 +51,6 @@ import java.util.Arrays;
  * MyObject(Integer age)
  * </pre> 
  * 
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  * @param <DO> the domain object type
  */
 public class FactoryInternal<DO extends DomainObject & Producible> implements Factory<DO> {
@@ -85,9 +88,7 @@ public class FactoryInternal<DO extends DomainObject & Producible> implements Fa
         }
         try {
 			constructor.setAccessible(true);
-            //noinspection unchecked
             domainObject = (DO) constructor.newInstance(args);
-
 		} catch (Exception e) {
 			throw SeedException.wrap(e, DomainErrorCodes.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
 					.put("domainObject", getProducedClass()).put("parameters", Arrays.toString(args));

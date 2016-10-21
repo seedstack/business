@@ -25,9 +25,7 @@ import org.slf4j.Logger;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Store("ProductInMemoryRepository")
 @RunWith(SeedITRunner.class)
 public class AggregateEventIT {

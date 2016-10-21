@@ -16,7 +16,6 @@ import java.util.List;
  * arbitrary chunk.
  *
  * @param <T> the item type
- * @author epo.jemba@ext.mpsa.com
  */
 public class ChunkedView<T> extends AbstractView<T> {
     /**

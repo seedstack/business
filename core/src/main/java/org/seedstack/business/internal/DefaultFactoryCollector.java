@@ -25,9 +25,7 @@ import java.util.Map;
 
 import static org.seedstack.seed.core.utils.BaseClassSpecifications.descendantOf;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 class DefaultFactoryCollector {
 
     private static final Specification<Class<?>> PRODUCIBLE_SPEC = descendantOf(Producible.class).and(descendantOf(DomainObject.class));
@@ -41,7 +39,7 @@ class DefaultFactoryCollector {
     }
 
     public Collection<BindingStrategy> collect() {
-        Collection<BindingStrategy> strategies = new ArrayList<BindingStrategy>();
+        Collection<BindingStrategy> strategies = new ArrayList<>();
         BindingStrategy aggregateBindings = buildAggregateDefaultFactoryBindings();
         if (aggregateBindings != null) {
             strategies.add(aggregateBindings);
@@ -63,7 +61,7 @@ class DefaultFactoryCollector {
      * @return a binding strategy
      */
     private BindingStrategy buildAggregateDefaultFactoryBindings() {
-        Collection<Type[]> generics = new ArrayList<Type[]>();
+        Collection<Type[]> generics = new ArrayList<>();
         if (aggregateOrVOClasses != null && !aggregateOrVOClasses.isEmpty()) {
             for (Class<?> aggregateClass : aggregateOrVOClasses) {
                 generics.add(new Type[]{aggregateClass});

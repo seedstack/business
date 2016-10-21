@@ -12,9 +12,6 @@ package org.seedstack.business.internal.utils.sample;
 
 /**
  * Dummy Type for test
- * 
- * @author redouane.loulou@ext.mpsa.com
- *
  */
 public class ObjectIntegerTestType extends TestType<Object, Integer> {
 

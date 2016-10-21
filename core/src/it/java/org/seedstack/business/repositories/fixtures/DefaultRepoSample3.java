@@ -14,9 +14,7 @@ import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @GenericImplementation
 @MyQualifier
 public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {

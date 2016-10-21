@@ -36,8 +36,6 @@ import java.lang.annotation.*;
  * {@literal @}Inject
  * TransferService transferService;
  * </pre>
- *
- * @author epo.jemba@ext.mpsa.com
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

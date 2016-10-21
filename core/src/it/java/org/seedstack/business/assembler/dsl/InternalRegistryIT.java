@@ -32,8 +32,6 @@ import java.util.List;
 
 /**
  * Tests the DSL internal registry.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @RunWith(SeedITRunner.class)
 public class InternalRegistryIT {

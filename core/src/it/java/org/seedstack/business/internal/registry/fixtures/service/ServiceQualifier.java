@@ -15,8 +15,6 @@ import javax.inject.Qualifier;
 
 /**
  * Dummy class.
- * @author thierry.bouvet@mpsa.com
- *
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

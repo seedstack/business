@@ -14,10 +14,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- *
- * @author epo.jemba@ext.mpsa.com
- */
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Concern(name="seed-business-concern", priority= Concern.Priority.NORMAL,order=100)

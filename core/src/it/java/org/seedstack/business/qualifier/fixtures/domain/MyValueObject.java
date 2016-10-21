@@ -9,9 +9,7 @@ package org.seedstack.business.qualifier.fixtures.domain;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class MyValueObject extends BaseValueObject {
 
     private final String firstName;

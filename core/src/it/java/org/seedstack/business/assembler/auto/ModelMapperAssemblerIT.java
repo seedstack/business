@@ -29,9 +29,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 @RunWith(SeedITRunner.class)
 public class ModelMapperAssemblerIT {
 
@@ -79,7 +77,7 @@ public class ModelMapperAssemblerIT {
     @Test
     public void testAssembleDtoFromAggregateWithMapAndList() {
         List<String> features = Lists.newArrayList("woow", "such meta");
-        Map<String, String> specs = new HashMap<String, String>();
+        Map<String, String> specs = new HashMap<>();
         specs.put("screen", "big but not too much");
         specs.put("price", "cheap");
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), features, specs);

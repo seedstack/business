@@ -10,7 +10,6 @@ package org.seedstack.business;
 /**
  * Interface for business events.
  *
- * @author pierre.thirouin@ext.mpsa.com
  * @see EventHandler
  * @see EventService
  */

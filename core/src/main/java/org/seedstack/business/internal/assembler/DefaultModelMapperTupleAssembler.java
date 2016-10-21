@@ -22,7 +22,6 @@ import javax.inject.Inject;
  * </p>
  *
  * @see DefaultModelMapperAssembler
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 @GenericImplementation
 @org.seedstack.business.assembler.ModelMapper

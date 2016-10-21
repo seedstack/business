@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * Tests the helper class {@link Tuples}.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 public class TuplesTest {
 
@@ -28,7 +26,7 @@ public class TuplesTest {
     public void testCreateTupleFromVarArgs() {
 
         Pair<Integer, String> pair = Tuples.create(10, "foo");
-        Assertions.assertThat((Iterable<?>) pair).isEqualTo(new Pair<Integer, String>(10, "foo"));
+        Assertions.assertThat((Iterable<?>) pair).isEqualTo(new Pair<>(10, "foo"));
 
         Tuple tuple = Tuples.create(String.class, Long.class);
         Assertions.assertThat((Iterable<?>) tuple).isInstanceOf(Pair.class);
@@ -51,7 +49,7 @@ public class TuplesTest {
 
     @Test
     public void testClassOfTupleFromList() {
-        List<Class<?>> classes = new ArrayList<Class<?>>();
+        List<Class<?>> classes = new ArrayList<>();
         classes.add(String.class);
         classes.add(Long.class);
 

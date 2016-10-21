@@ -9,9 +9,7 @@ package org.seedstack.business.assembler.fixtures.book;
 
 import java.util.Date;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class BookDto {
 
     private String title;

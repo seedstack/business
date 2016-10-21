@@ -9,9 +9,7 @@ package org.seedstack.business.assembler.fixtures.book;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
- */
+
 public class BookId extends BaseValueObject {
 
     private String title;

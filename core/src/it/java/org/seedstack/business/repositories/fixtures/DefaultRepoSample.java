@@ -14,9 +14,7 @@ import org.seedstack.business.spi.GenericImplementation;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @Named("DefaultRepo")
 @GenericImplementation
 public class DefaultRepoSample<A extends AggregateRoot<K>, K> extends AbstractDefaultRepoSample<A, K> {

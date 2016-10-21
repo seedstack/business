@@ -11,16 +11,13 @@ import com.google.inject.Binder;
 
 /**
  * The BindingStrategy interface deports strategies to resolve bindings.
- * 
- * @author redouane.loulou@ext.mpsa.com
- * @author pierre.thirouin@ext.mpsa.com
  */
 public interface BindingStrategy {
 
-	/**
-	 * Resolves the bindings for the given strategy using the current module binder.
-	 * 
-	 * @param binder the current Binder
-	 */
-	void resolve(Binder binder);
+    /**
+     * Resolves the bindings for the given strategy using the current module binder.
+     *
+     * @param binder the current Binder
+     */
+    void resolve(Binder binder);
 }

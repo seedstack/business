@@ -10,12 +10,7 @@ package org.seedstack.business.fixtures.interfaces.usecase1;
 import org.seedstack.business.assembler.MatchingEntityId;
 import org.seedstack.business.assembler.MatchingFactoryParameter;
 
-/**
- *
- * 
- * @author epo.jemba@ext.mpsa.com
- *
- */
+
 public class UseCase1Representation {
 	
 	

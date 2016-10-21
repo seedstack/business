@@ -10,9 +10,7 @@ package org.seedstack.business.internal.assembler.dsl.fixture.customer;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
 
-/**
-* @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
-*/
+
 public class AutoAssembler extends ModelMapperAssembler<Order, OrderDto> {
     @Override
     protected void configureAssembly(ModelMapper modelMapper) {

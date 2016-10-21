@@ -20,7 +20,6 @@ package org.seedstack.business;
  * eventService.fire(new MyEvent());
  * </pre>
  *
- * @author pierre.thirouin@ext.mpsa.com
  * @see Event
  * @see EventHandler
  */

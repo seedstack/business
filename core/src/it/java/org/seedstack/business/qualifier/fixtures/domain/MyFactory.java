@@ -9,9 +9,7 @@ package org.seedstack.business.qualifier.fixtures.domain;
 
 import org.seedstack.business.domain.GenericFactory;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 public interface MyFactory extends GenericFactory<MyDomainPolicy>{
 
 

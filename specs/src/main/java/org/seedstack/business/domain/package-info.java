@@ -7,7 +7,5 @@
  */
 /**
  * Provides classes for the domain layer.
- *
- * @author pierre.thirouin@ext.mpsa.com (Pierre Thirouin)
  */
 package org.seedstack.business.domain;

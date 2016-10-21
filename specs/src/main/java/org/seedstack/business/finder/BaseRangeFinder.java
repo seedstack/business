@@ -21,7 +21,7 @@ public abstract class BaseRangeFinder<T, C> implements RangeFinder<T, C> {
     public Result<T> find(Range range, C criteria) {
         long resultSize = computeFullRequestSize(criteria);
         List<T> list = computeResultList(range, criteria);
-        return new Result<T>(list, range.getOffset(), resultSize);
+        return new Result<>(list, range.getOffset(), resultSize);
     }
 
     /**

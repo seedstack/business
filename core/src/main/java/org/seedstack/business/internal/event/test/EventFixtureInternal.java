@@ -11,7 +11,12 @@ import com.google.inject.Injector;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
 import org.seedstack.business.EventService;
-import org.seedstack.business.test.*;
+import org.seedstack.business.test.events.EventFixture;
+import org.seedstack.business.test.events.EventProvider;
+import org.seedstack.business.test.events.EventServiceProvider;
+import org.seedstack.business.test.events.EventTestErrorCodes;
+import org.seedstack.business.test.events.HandlerProvider;
+import org.seedstack.business.test.events.ServiceProvider;
 import org.seedstack.seed.SeedException;
 
 import javax.inject.Inject;
@@ -123,7 +128,7 @@ class EventFixtureInternal implements EventFixture {
         public HandlerProvider whenCalled(String method, Object... args) {
             this.method = method;
             this.args = args;
-            this.argClasses = new ArrayList<Class>(args.length);
+            this.argClasses = new ArrayList<>(args.length);
             for (Object arg : args) {
                 argClasses.add(arg.getClass());
             }
@@ -132,7 +137,7 @@ class EventFixtureInternal implements EventFixture {
 
         @Override
         public void eventWasHandledBy(Event event, Class<? extends EventHandler> handler) {
-            Map<Class<? extends EventHandler>, Event> handlerMap = new HashMap<Class<? extends EventHandler>, Event>();
+            Map<Class<? extends EventHandler>, Event> handlerMap = new HashMap<>();
             handlerMap.put(handler, event);
             eventWasHandledBy(handlerMap);
         }

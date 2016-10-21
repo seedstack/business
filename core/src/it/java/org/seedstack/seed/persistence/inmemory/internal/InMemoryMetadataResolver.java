@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- *
- */
+
 package org.seedstack.seed.persistence.inmemory.internal;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -19,9 +17,6 @@ import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;
 
 import java.lang.reflect.Method;
 
-/**
- * @author redouane.loulou@ext.mpsa.com
- */
 public class InMemoryMetadataResolver implements TransactionMetadataResolver {
 
     @Override

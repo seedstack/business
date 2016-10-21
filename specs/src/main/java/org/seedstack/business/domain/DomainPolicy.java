@@ -30,9 +30,6 @@ import java.lang.annotation.*;
  * 
  * 
  * and can ask injection via the inter
- * 
- * @author epo.jemba@ext.mpsa.com
- *
  */
 @Documented
 @DomainElement

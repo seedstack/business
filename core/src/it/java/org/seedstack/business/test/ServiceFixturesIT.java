@@ -12,13 +12,12 @@ import org.junit.runner.RunWith;
 import org.seedstack.business.fixtures.event.MyEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyService;
+import org.seedstack.business.test.events.EventFixture;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 
-/**
- * @author pierre.thirouin@ext.mpsa.com
- */
+
 @RunWith(SeedITRunner.class)
 public class ServiceFixturesIT {
 
