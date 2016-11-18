@@ -3,6 +3,8 @@
 * [brk] Moved to SeedStack 16.11 new configuration system.
 * [brk] The class configuration property `identity.handler-qualifier` becomes `identityHandler`.
 * [brk] The class configuration property `default-repository` becomes `defaultRepository`.
+* [brk] The qualifier for `SimpleUUIDHandler` identity handler is renamed from `simple-UUID` to `simpleUUID`.
+* [brk] The qualifier for `InMemorySequenceHandler` identity handler is renamed from `inmemory-sequence` to `inMemorySequence`.
 
 # Version 2.3.4 (2016-09-02)
 

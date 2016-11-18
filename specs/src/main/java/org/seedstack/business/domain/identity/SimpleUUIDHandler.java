@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * Uuid handler
  */
-@Named("simple-UUID")
+@Named("simpleUUID")
 public class SimpleUUIDHandler implements UUIDHandler<Entity<UUID>, UUID> {
 
     @Override

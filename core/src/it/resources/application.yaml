@@ -17,12 +17,12 @@ classes:
               defaultRepository: org.seedstack.business.repositories.fixtures.MyQualifier
         identity:
           fixtures:
-            identityHandler: simple-UUID
+            identityHandler: simpleUUID
         internal:
           assembler:
             dsl:
               fixture:
-                identityHandler: simple-UUID
+                identityHandler: simpleUUID
 
 org:
   seedstack:

@@ -16,7 +16,7 @@ import javax.inject.Named;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-@Named("inmemory-sequence")
+@Named("inMemorySequence")
 public class InMemorySequenceHandler implements SequenceHandler<Entity<Long>, Long> {
     private static final AtomicLong sequence = new AtomicLong(1L);
 
