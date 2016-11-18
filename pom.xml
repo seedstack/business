@@ -79,28 +79,6 @@
                         </licenseMerges>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>com.github.siom79.japicmp</groupId>
-                    <artifactId>japicmp-maven-plugin</artifactId>
-                    <configuration>
-                        <parameter>
-                            <excludes>
-                                <exclude>*.internal.*</exclude>
-                                <exclude>org.seedstack.business.domain.BaseFactory</exclude>
-                                <exclude>org.seedstack.business.domain.BaseRepository</exclude>
-                                <exclude>org.seedstack.business.domain.BaseEntity</exclude>
-                                <exclude>org.seedstack.business.domain.BaseValueObject</exclude>
-                                <exclude>org.seedstack.business.domain.events.BaseAggregateEvent</exclude>
-                                <exclude>org.seedstack.business.assembler.AbstractBaseAssembler</exclude>
-                                <exclude>org.seedstack.business.assembler.modelmapper.ModelMapperAssembler</exclude>
-                                <exclude>org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler</exclude>
-                                <exclude>org.seedstack.business.domain.identity.SimpleUUIDHandler</exclude>
-                                <exclude>org.seedstack.business.test.InMemorySequenceHandler</exclude>
-                                <exclude>org.seedstack.business.identity.fixtures.RandomIdentityHandler</exclude>
-                            </excludes>
-                        </parameter>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
