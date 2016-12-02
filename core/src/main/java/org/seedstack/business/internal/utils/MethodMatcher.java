@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.utils;
 
 import com.google.common.primitives.Primitives;
-import org.seedstack.business.domain.DomainErrorCodes;
+import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +33,7 @@ public final class MethodMatcher {
                 if (checkedMethod == null) {
                     checkedMethod = method;
                 } else {
-                    throw SeedException.createNew(DomainErrorCodes.AMBIGUOUS_METHOD_FOUND).put("method1", method).put("method2", checkedMethod)
+                    throw SeedException.createNew(BusinessErrorCode.AMBIGUOUS_METHOD_FOUND).put("method1", method).put("method2", checkedMethod)
                             .put("object", classToInspect.getSimpleName()).put("parameters", params);
                 }
             }
@@ -58,7 +58,7 @@ public final class MethodMatcher {
                 if (checkedConstructors == null) {
                     checkedConstructors = constructor;
                 } else {
-                    throw SeedException.createNew(DomainErrorCodes.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
+                    throw SeedException.createNew(BusinessErrorCode.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
                             .put("object", classToInspect.getSimpleName()).put("parameters", params);
                 }
             }

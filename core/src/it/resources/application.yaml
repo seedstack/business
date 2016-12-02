@@ -6,22 +6,20 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
+logs: WARN
 classes:
   org:
     seedstack:
       business:
-        repositories:
-          fixtures:
+        fixtures:
+          repositories:
             defaultRepository: DefaultRepo
             TestAggregate2:
-              defaultRepository: org.seedstack.business.repositories.fixtures.MyQualifier
-        identity:
-          fixtures:
-            identityHandler: simpleUUID
-        internal:
+              defaultRepository: org.seedstack.business.fixtures.repositories.MyQualifier
+          identity:
+              identityHandler: simpleUUID
           assembler:
-            dsl:
-              fixture:
+            auto:
                 identityHandler: simpleUUID
 
 org:

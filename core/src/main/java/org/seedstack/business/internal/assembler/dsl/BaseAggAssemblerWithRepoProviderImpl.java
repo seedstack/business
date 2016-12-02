@@ -8,25 +8,26 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.BusinessSpecifications;
 import org.seedstack.business.Tuples;
+import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.GenericFactory;
-import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.DomainSpecifications;
 import org.seedstack.business.internal.assembler.dsl.resolver.DtoInfoResolver;
 import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 import org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver;
-import org.seedstack.business.internal.utils.BusinessReflectUtils;
+import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.internal.utils.MethodMatcher;
-import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
 public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
@@ -44,8 +45,8 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
     }
 
     protected Object resolveId(Object dto, Class<? extends AggregateRoot<?>> aggregateRootClass) {
-        SeedCheckUtils.checkIfNotNull(dto);
-        SeedCheckUtils.checkIfNotNull(aggregateRootClass);
+        checkNotNull(dto);
+        checkNotNull(aggregateRootClass);
 
         ParameterHolder parameterHolder = dtoInfoResolver.resolveId(dto);
         if (parameterHolder.isEmpty()) {
@@ -57,8 +58,8 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
 
     @SuppressWarnings("unchecked")
     protected Tuple resolveIds(Object dto, List<Class<? extends AggregateRoot<?>>> aggregateRootClasses) {
-        SeedCheckUtils.checkIfNotNull(dto);
-        SeedCheckUtils.checkIfNotNull(aggregateRootClasses);
+        checkNotNull(dto);
+        checkNotNull(aggregateRootClasses);
 
         ParameterHolder parameterHolder = dtoInfoResolver.resolveId(dto);
         if (parameterHolder.isEmpty()) {
@@ -78,14 +79,14 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
     private Object paramsToIds(Class<? extends AggregateRoot<?>> aggregateRootClass, ParameterHolder parameterHolder, int aggregateIndex) {
         Object id;
         @SuppressWarnings("unchecked")
-        Class<? extends DomainObject> aggregateIdClass = (Class<? extends DomainObject>) BusinessReflectUtils.getAggregateIdClass(aggregateRootClass);
+        Class<? extends DomainObject> aggregateIdClass = (Class<? extends DomainObject>) BusinessUtils.getAggregateIdClass(aggregateRootClass);
 
         Object element = parameterHolder.uniqueElementForAggregateRoot(aggregateIndex);
         if (element != null && aggregateIdClass.isAssignableFrom(element.getClass())) {
             // The first parameter is already the id we are looking for
             id = element;
         } else {
-            if (!DomainSpecifications.VALUE_OBJECT.isSatisfiedBy(aggregateIdClass)) {
+            if (!BusinessSpecifications.VALUE_OBJECT.isSatisfiedBy(aggregateIdClass)) {
                 throw new IllegalStateException("The " + aggregateRootClass.getCanonicalName() + "'s id is not a value object, so you don't have to specify the index in @MatchingEntityId(index = 0)");
             }
             // Get the "magic" factory for the aggregate id class
@@ -122,9 +123,9 @@ public class BaseAggAssemblerWithRepoProviderImpl<A extends AggregateRoot<?>> {
     }
 
     protected Object getAggregateFromFactory(GenericFactory<?> factory, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
-        SeedCheckUtils.checkIfNotNull(factory);
-        SeedCheckUtils.checkIfNotNull(aggregateClass);
-        SeedCheckUtils.checkIfNotNull(parameters);
+        checkNotNull(factory);
+        checkNotNull(aggregateClass);
+        checkNotNull(parameters);
 
         if (Factory.class.isAssignableFrom(factory.getClass())) {
             Factory<?> defaultFactory = (Factory<?>) factory;

@@ -15,12 +15,7 @@ import java.util.Deque;
 
 
 class InMemoryTransactionLink implements TransactionalLink<String> {
-    private final ThreadLocal<Deque<String>> perThreadObjectContainer = new ThreadLocal<Deque<String>>() {
-        @Override
-        protected Deque<String> initialValue() {
-            return new ArrayDeque<>();
-        }
-    };
+    private final ThreadLocal<Deque<String>> perThreadObjectContainer = ThreadLocal.withInitial(ArrayDeque::new);
 
     @Override
     public String get() {

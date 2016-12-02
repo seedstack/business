@@ -16,7 +16,11 @@ import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
+import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
+import org.seedstack.business.fixtures.assembler.customer.Order;
+import org.seedstack.business.fixtures.assembler.customer.OrderDto;
+import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
+import org.seedstack.business.fixtures.assembler.customer.OrderFactoryInternal;
 
 import static org.junit.Assert.fail;
 

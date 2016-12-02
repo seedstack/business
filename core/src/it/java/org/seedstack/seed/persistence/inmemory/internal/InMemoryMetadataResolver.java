@@ -9,8 +9,8 @@
 package org.seedstack.seed.persistence.inmemory.internal;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
-import org.seedstack.seed.persistence.inmemory.api.Store;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
+import org.seedstack.seed.persistence.inmemory.Store;
 import org.seedstack.seed.transaction.Propagation;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;
@@ -32,7 +32,7 @@ public class InMemoryMetadataResolver implements TransactionMetadataResolver {
 
         // if null, getting information from class
         if (annotation == null) {
-            Class<?> methodClass = SeedReflectionUtils.cleanProxy(methodInvocation.getThis().getClass());
+            Class<?> methodClass = ProxyUtils.cleanProxy(methodInvocation.getThis().getClass());
             annotation = methodClass.getAnnotation(Store.class);
         }
 

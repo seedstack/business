@@ -10,10 +10,10 @@ package org.seedstack.business.internal.event.test;
 import com.google.inject.Injector;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.Event;
-import org.seedstack.business.fixtures.event.MyEvent;
+import org.seedstack.business.fixtures.event.SomeEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyHandler2;
-import org.seedstack.business.fixtures.event.MyService;
+import org.seedstack.business.fixtures.event.SomeService;
 import org.seedstack.business.test.events.EventFixture;
 import org.seedstack.business.EventHandler;
 
@@ -35,14 +35,14 @@ public class ServiceFixtureTest {
 
     private EventFixture underTest;
 
-    private MyEvent event = new MyEvent(SOME_PARAM);
+    private SomeEvent event = new SomeEvent(SOME_PARAM);
 
 
     @Before
     public void setUp() {
         underTest = new EventFixtureInternal();
         Injector injector = mock(Injector.class);
-        Mockito.when(injector.getInstance(MyService.class)).thenReturn(mock(MyService.class));
+        Mockito.when(injector.getInstance(SomeService.class)).thenReturn(mock(SomeService.class));
         Whitebox.setInternalState(underTest, "contextLink", contextLink);
         Whitebox.setInternalState(underTest, "injector", injector);
 
@@ -54,28 +54,28 @@ public class ServiceFixtureTest {
 
     @Test
     public void expect_handler_was_called_with_event() throws Exception {
-        underTest.given(MyService.class)
+        underTest.given(SomeService.class)
                 .whenCalled("callBusinessStuff", SOME_PARAM)
                 .eventWasHandledBy(event, MyHandler.class);
     }
 
     @Test(expected = SeedException.class)
     public void failed_method_was_not_equal() throws Exception {
-        underTest.given(MyService.class)
+        underTest.given(SomeService.class)
                 .whenCalled("unknownMethod", SOME_PARAM)
-                .eventWasHandledBy(new MyEvent("foobar"), MyHandler.class);
+                .eventWasHandledBy(new SomeEvent("foobar"), MyHandler.class);
     }
 
     @Test(expected = SeedException.class)
     public void failed_method_was_not_found() throws Exception {
-        underTest.given(MyService.class)
+        underTest.given(SomeService.class)
                 .whenCalled("unknownMethod", SOME_PARAM)
                 .eventWasHandledBy(event, MyHandler.class);
     }
 
     @Test(expected = SeedException.class)
     public void failed_event_was_null() throws Exception {
-        underTest.given(MyService.class)
+        underTest.given(SomeService.class)
                 .whenCalled("callBusinessStuff", SOME_PARAM)
                 .eventWasHandledBy(null, MyHandler.class);
     }
@@ -84,7 +84,7 @@ public class ServiceFixtureTest {
     public void failed_event_was_not_fired() throws Exception {
         HashMap<Class<? extends EventHandler>, Event> value = new HashMap<>();
         Mockito.when(contextLink.peek()).thenReturn(value);
-        underTest.given(MyService.class)
+        underTest.given(SomeService.class)
                 .whenCalled("doNothing")
                 .eventWasHandledBy(event, MyHandler.class);
     }

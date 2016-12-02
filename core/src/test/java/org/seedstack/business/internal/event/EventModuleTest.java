@@ -12,8 +12,8 @@ import com.google.inject.Binder;
 import org.fest.reflect.core.Reflection;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
-import org.seedstack.business.events.fixtures.MyEvent2;
-import org.seedstack.business.events.fixtures.MyEventHandlerFailed;
+import org.seedstack.business.fixtures.event.MyEvent2;
+import org.seedstack.business.fixtures.event.MyEventHandlerFailed;
 import org.junit.Test;
 import org.mockito.Mockito;
 

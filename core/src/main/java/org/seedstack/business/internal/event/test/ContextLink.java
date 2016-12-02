@@ -19,12 +19,7 @@ import java.util.Map;
  */
 class ContextLink {
 
-    static final ThreadLocal<Map<Class<? extends EventHandler>, Event>> context = new ThreadLocal<Map<Class<? extends EventHandler>, Event>>() {
-        @Override
-        protected Map<Class<? extends EventHandler>, Event> initialValue() {
-            return new HashMap<>();
-        }
-    };
+    static final ThreadLocal<Map<Class<? extends EventHandler>, Event>> context = ThreadLocal.withInitial(HashMap::new);
 
     /**
      * Adds an handler call to the context, ie. store the handler called and the given event.

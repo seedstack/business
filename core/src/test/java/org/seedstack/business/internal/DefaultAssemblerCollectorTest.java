@@ -13,11 +13,12 @@ import org.fest.reflect.core.Reflection;
 import org.fest.reflect.reference.TypeRef;
 import org.junit.Before;
 import org.junit.Test;
+import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
-import org.seedstack.business.assembler.AbstractBaseAssembler;
-import org.seedstack.business.assembler.DtoOf;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
+import org.seedstack.seed.core.internal.guice.BindingStrategy;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class DefaultAssemblerCollectorTest {
 
     @Before
     public void before() {
-        List<Class<?>> defaultAssemblers = new ArrayList<>();
+        List<Class<? extends Assembler>> defaultAssemblers = new ArrayList<>();
         defaultAssemblers.add(DefaultAssemblerFixture1.class);
         defaultAssemblers.add(DefaultAssemblerFixture2.class);
         underTest = new DefaultAssemblerCollector(defaultAssemblers);
@@ -39,15 +40,16 @@ public class DefaultAssemblerCollectorTest {
 
     @Test
     public void testCollect() {
-        Collection<BindingStrategy> strategies = underTest.collect(Lists.<Class<?>>newArrayList(Dto1.class, Dto2.class, Dto3.class));
+        Collection<BindingStrategy> strategies = underTest.collect(Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
         Assertions.assertThat(strategies).hasSize(2); // 2 default assembler implementation
-        Collection<Type[]> typeVariables = Reflection.field("constructorParams").ofType(new TypeRef<Collection<Type[]>>() {}).in(strategies.iterator().next()).get();
+        Collection<Type[]> typeVariables = Reflection.field("constructorParams").ofType(new TypeRef<Collection<Type[]>>() {
+        }).in(strategies.iterator().next()).get();
         Assertions.assertThat(typeVariables).hasSize(3); // 3 dtos
     }
 
     @Test
     public void testCollectIllegalArgument() {
-        Collection<BindingStrategy> strategies = underTest.collect(Lists.<Class<?>>newArrayList(Dto4.class));
+        Collection<BindingStrategy> strategies = underTest.collect(Lists.newArrayList(Dto4.class));
         Assertions.assertThat(strategies).isNotNull();
         Assertions.assertThat(strategies).isEmpty();
     }

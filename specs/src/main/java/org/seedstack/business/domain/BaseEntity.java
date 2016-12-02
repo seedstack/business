@@ -7,9 +7,6 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.seed.SeedException;
-
-
 /**
  * This abstract class is the base class for all Entities in Seed Business Framework.
  *
@@ -61,7 +58,7 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
     private ID getIdentity() {
         ID entityId = getEntityId();
         if (entityId == null) {
-            throw SeedException.createNew(DomainErrorCodes.ENTITY_WITHOUT_IDENTITY_ISSUE).put("className", getClass().getName());
+            throw new IllegalStateException("Entity without identity: " + getClass().getName());
         }
         return entityId;
     }

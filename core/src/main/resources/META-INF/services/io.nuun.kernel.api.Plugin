@@ -1,3 +1,3 @@
-org.seedstack.business.internal.BusinessCorePlugin
+org.seedstack.business.internal.BusinessPlugin
 org.seedstack.business.internal.identity.IdentityPlugin
 org.seedstack.business.internal.event.EventPlugin

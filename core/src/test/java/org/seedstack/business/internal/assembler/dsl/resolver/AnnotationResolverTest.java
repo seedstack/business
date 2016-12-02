@@ -10,8 +10,14 @@ package org.seedstack.business.internal.assembler.dsl.resolver;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.seedstack.business.fixtures.assembler.sample.Case1Dto;
+import org.seedstack.business.fixtures.assembler.sample.Case2Dto;
+import org.seedstack.business.fixtures.assembler.sample.Case3Dto;
+import org.seedstack.business.fixtures.assembler.sample.Case4Dto;
+import org.seedstack.business.fixtures.assembler.sample.CaseFail1Dto;
+import org.seedstack.business.fixtures.assembler.sample.CaseFail2Dto;
+import org.seedstack.business.fixtures.assembler.sample.CaseFail3Dto;
 import org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver;
-import org.seedstack.business.internal.assembler.dsl.resolver.sample.*;
 
 import java.util.Date;
 

@@ -19,10 +19,10 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
-import org.seedstack.business.repositories.fixtures.MyQualifier;
+import org.seedstack.business.fixtures.repositories.MyQualifier;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
+import org.seedstack.seed.core.internal.guice.BindingStrategy;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -43,8 +43,8 @@ public class DefaultRepositoryCollectorTest {
     public void before() {
         application = mock(Application.class);
         underTest = new DefaultRepositoryCollector(
-                Lists.<Class<?>>newArrayList(MySubAgg1.class, MySubAgg2.class),
-                Lists.<Class<?>>newArrayList(MyDefaultRepo.class),
+                Lists.newArrayList(MySubAgg1.class, MySubAgg2.class),
+                Lists.newArrayList(MyDefaultRepo.class),
                 application
         );
     }
@@ -64,7 +64,7 @@ public class DefaultRepositoryCollectorTest {
 
     @Test
     public void testGetDefaultWithQualifierAnnotation() {
-        when(application.getConfiguration(MyAgg.class)).thenReturn(ClassConfiguration.of(MyAgg.class, "defaultRepository", "org.seedstack.business.repositories.fixtures.MyQualifier"));
+        when(application.getConfiguration(MyAgg.class)).thenReturn(ClassConfiguration.of(MyAgg.class, "defaultRepository", "org.seedstack.business.fixtures.repositories.MyQualifier"));
         Key<?> key = underTest.defaultRepositoryQualifier(MyAgg.class, genericInterface);
         assertThat(key.getAnnotationType()).isEqualTo(MyQualifier.class);
     }

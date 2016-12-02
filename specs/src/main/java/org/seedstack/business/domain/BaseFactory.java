@@ -9,7 +9,7 @@ package org.seedstack.business.domain;
 
 import net.jodah.typetools.TypeResolver;
 import org.seedstack.business.Producible;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
 
 /**
  * This class has to be extended to create a domain factory implementation. It offers the plumbing necessary
@@ -51,7 +51,7 @@ public abstract class BaseFactory<DO extends DomainObject & Producible> implemen
 
     @SuppressWarnings("unchecked")
     protected BaseFactory() {
-        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        Class<?> subType = ProxyUtils.cleanProxy(getClass());
         producedClass = (Class<DO>) TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(BaseFactory.class, subType), subType)[0];
     }
 

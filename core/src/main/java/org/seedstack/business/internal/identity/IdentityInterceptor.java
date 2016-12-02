@@ -6,44 +6,37 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.internal.identity;
 
-import com.google.inject.Inject;
-import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.identity.IdentityErrorCodes;
-import org.seedstack.business.domain.identity.IdentityService;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.domain.Entity;
+import org.seedstack.business.domain.identity.IdentityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 
 /**
- * Interceptor used for identity management when creating a new entity using a factory 
- * 
+ * Interceptor used for identity management when creating a new entity using a factory.
  */
 class IdentityInterceptor implements MethodInterceptor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IdentityInterceptor.class);
+    @Inject
+    private IdentityService identityService;
 
-	@Inject
-	private IdentityService identityService;
-
-	public IdentityInterceptor() {
-	}
-
-	@Override
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		Object object = invocation.proceed();
-		if (object == null) {
-			throw SeedException.createNew(IdentityErrorCodes.RESULT_OBJECT_SHOULD_NOT_BE_NULL)
-                    .put("factoryClass", invocation.getMethod().getDeclaringClass().getName());
-		}
-		if (!Entity.class.isAssignableFrom(object.getClass())) {
-			throw SeedException.createNew(IdentityErrorCodes.RESULT_OBJECT_DOES_NOT_INHERIT_FROM_ENTITY)
-					.put("factoryClass", invocation.getMethod().getDeclaringClass().getName())
-					.put("objectClass", object.getClass().getName())
-					.put("entityClass", Entity.class.getName());
-		}
-		Entity<?> entity = (Entity<?>) object;
-		return identityService.identify(entity);
-	}
+    @Override
+    public Object invoke(MethodInvocation invocation) throws Throwable {
+        Object object = invocation.proceed();
+        if (object instanceof Entity) {
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("Invoking identity service to identify an entity of class {}", object.getClass());
+            }
+            return identityService.identify(((Entity<?>) object));
+        } else {
+            return object;
+        }
+    }
 }

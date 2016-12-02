@@ -12,24 +12,23 @@ import com.google.common.collect.Multimap;
 import com.google.inject.Key;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.Producible;
-import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.internal.strategy.FactoryPatternBindingStrategy;
-import org.seedstack.business.internal.strategy.GenericBindingStrategy;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
+import org.seedstack.seed.core.internal.guice.BindingStrategy;
+import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
+import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.descendantOf;
+import static org.seedstack.shed.reflect.ClassPredicates.classIsDescendantOf;
 
 
 class DefaultFactoryCollector {
-
-    private static final Specification<Class<?>> PRODUCIBLE_SPEC = descendantOf(Producible.class).and(descendantOf(DomainObject.class));
-
+    private static final Specification<Class<?>> PRODUCIBLE_SPEC = new SpecificationBuilder<>(classIsDescendantOf(Producible.class).and(classIsDescendantOf(DomainObject.class))).build();
     private final Collection<Class<?>> aggregateOrVOClasses;
     private final Multimap<Type, Class<?>> producibleClasses;
 
@@ -68,7 +67,7 @@ class DefaultFactoryCollector {
             }
         }
         if (!generics.isEmpty()) {
-            return new GenericBindingStrategy<Factory>(Factory.class, FactoryInternal.class, generics);
+            return new GenericBindingStrategy<>(Factory.class, FactoryInternal.class, generics);
         }
         return null;
     }
@@ -88,7 +87,7 @@ class DefaultFactoryCollector {
      */
     private BindingStrategy buildDefaultFactoryBindings() {
         // The guice assisted factory is already bound
-        return new FactoryPatternBindingStrategy<Factory>(Factory.class, FactoryInternal.class, producibleClasses, false);
+        return new FactoryPatternBindingStrategy<>(Factory.class, FactoryInternal.class, producibleClasses, false);
     }
 
     /**

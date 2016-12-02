@@ -9,7 +9,7 @@ package org.seedstack.business.fixtures;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
-import org.seedstack.seed.persistence.inmemory.api.InMemory;
+import org.seedstack.seed.persistence.inmemory.InMemory;
 
 import java.util.Map;
 

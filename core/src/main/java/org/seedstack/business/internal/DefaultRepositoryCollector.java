@@ -15,12 +15,12 @@ import com.google.inject.util.Types;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.internal.strategy.GenericBindingStrategy;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.SeedException;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
+import org.seedstack.seed.core.internal.guice.BindingStrategy;
+import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
+import org.seedstack.shed.ClassLoaders;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -35,10 +35,10 @@ import java.util.Set;
 class DefaultRepositoryCollector {
     private static final String DEFAULT_REPOSITORY_KEY = "defaultRepository";
     private final Collection<Class<?>> aggregateClasses;
-    private final Collection<Class<?>> defaultRepositoryImplementations;
+    private final Collection<Class<? extends Repository>> defaultRepositoryImplementations;
     private final Application application;
 
-    DefaultRepositoryCollector(Collection<Class<?>> aggregateClasses, Collection<Class<?>> defaultRepositoryImplementations, Application application) {
+    DefaultRepositoryCollector(Collection<Class<?>> aggregateClasses, Collection<Class<? extends Repository>> defaultRepositoryImplementations, Application application) {
         this.aggregateClasses = aggregateClasses;
         this.defaultRepositoryImplementations = defaultRepositoryImplementations;
         this.application = application;
@@ -66,8 +66,8 @@ class DefaultRepositoryCollector {
         }
 
         // Create a binding strategy for each default repository implementation
-        for (Class<?> defaultRepoIml : defaultRepositoryImplementations) {
-            bindingStrategies.add(new GenericBindingStrategy<Repository>(Repository.class, defaultRepoIml, generics));
+        for (Class<? extends Repository> defaultRepoIml : defaultRepositoryImplementations) {
+            bindingStrategies.add(new GenericBindingStrategy<>(Repository.class, defaultRepoIml, generics));
         }
         return bindingStrategies;
     }
@@ -98,12 +98,14 @@ class DefaultRepositoryCollector {
             String qualifierName = configuration.get(DEFAULT_REPOSITORY_KEY);
             if (qualifierName != null && !"".equals(qualifierName)) {
                 try {
-                    ClassLoader classLoader = SeedReflectionUtils.findMostCompleteClassLoader();
+                    ClassLoader classLoader = ClassLoaders.findMostCompleteClassLoader(DefaultRepositoryCollector.class);
                     Class<?> qualifierClass = classLoader.loadClass(qualifierName);
                     if (Annotation.class.isAssignableFrom(qualifierClass)) {
                         defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
                     } else {
-                        throw SeedException.createNew(BusinessCoreErrorCodes.CLASS_IS_NOT_AN_ANNOTATION).put("class", qualifierName);
+                        throw SeedException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
+                                .put("aggregateClass", aggregateClass.getName())
+                                .put("qualifierClass", qualifierName);
                     }
                 } catch (ClassNotFoundException e) {
                     defaultKey = Key.get(genericInterface, Names.named(qualifierName));

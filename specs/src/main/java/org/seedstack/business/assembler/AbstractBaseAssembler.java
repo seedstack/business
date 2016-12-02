@@ -9,7 +9,7 @@ package org.seedstack.business.assembler;
 
 
 import net.jodah.typetools.TypeResolver;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
 
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
@@ -27,7 +27,7 @@ public abstract class AbstractBaseAssembler<A, D> implements Assembler<A, D> {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public AbstractBaseAssembler() {
-        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        Class<?> subType = ProxyUtils.cleanProxy(getClass());
         this.dtoClass = (Class<D>) TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(AbstractBaseAssembler.class, subType), subType)[1];
     }
 

@@ -10,11 +10,11 @@ package org.seedstack.business.internal;
 import com.google.common.reflect.TypeToken;
 import org.javatuples.Tuple;
 import org.seedstack.business.Tuples;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
-import org.seedstack.business.internal.strategy.GenericBindingStrategy;
-import org.seedstack.business.internal.strategy.api.BindingStrategy;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.seed.core.internal.guice.BindingStrategy;
+import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -26,15 +26,14 @@ import java.util.Set;
  * Collects the binding strategies for default assemblers.
  */
 class DefaultAssemblerCollector {
-
-    private final Collection<Class<?>> defaultAssemblersClasses;
+    private final Collection<Class<? extends Assembler>> defaultAssemblersClasses;
 
     /**
      * Constructor.
      *
      * @param defaultAssemblersClasses the default assembler classes to bind
      */
-    public DefaultAssemblerCollector(Collection<Class<?>> defaultAssemblersClasses) {
+    public DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
         this.defaultAssemblersClasses = defaultAssemblersClasses;
     }
 
@@ -68,15 +67,15 @@ class DefaultAssemblerCollector {
 
         Collection<BindingStrategy> bs = new ArrayList<>();
         // Each pairs of aggregateClass/dtoClass or aggregateTuple/dtoClass is bind to all the default assemblers
-        for (Class<?> defaultAssemblersClass : defaultAssemblersClasses) {
+        for (Class<? extends Assembler> defaultAssemblersClass : defaultAssemblersClasses) {
             Class<?> aggregateType = TypeToken.of(defaultAssemblersClass)
                     .resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
 
             if (aggregateType.isAssignableFrom(Tuple.class) && !autoTupleAssemblerGenerics.isEmpty()) {
-                bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoTupleAssemblerGenerics));
+                bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass, autoTupleAssemblerGenerics));
 
-            } else if (!aggregateType.isAssignableFrom(Tuple.class) && !autoAssemblerGenerics.isEmpty()){
-                bs.add(new GenericBindingStrategy<Assembler>(Assembler.class, defaultAssemblersClass, autoAssemblerGenerics));
+            } else if (!aggregateType.isAssignableFrom(Tuple.class) && !autoAssemblerGenerics.isEmpty()) {
+                bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass, autoAssemblerGenerics));
             }
         }
         return bs;
