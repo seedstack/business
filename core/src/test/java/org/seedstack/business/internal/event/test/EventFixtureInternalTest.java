@@ -15,7 +15,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
 import org.seedstack.business.EventService;
-import org.seedstack.business.fixtures.event.MyEvent;
+import org.seedstack.business.fixtures.event.SomeEvent;
 import org.seedstack.business.fixtures.event.MyHandler;
 import org.seedstack.business.fixtures.event.MyHandler2;
 import org.seedstack.business.fixtures.event.MyHandler3;
@@ -38,7 +38,7 @@ public class EventFixtureInternalTest {
         Whitebox.setInternalState(underTest, "eventService", mock(EventService.class));
         Whitebox.setInternalState(underTest, "contextLink", contextLink);
 
-        event = new MyEvent("");
+        event = new SomeEvent("");
         HashMap<Class<? extends EventHandler>, Event> value = new HashMap<>();
         value.put(MyHandler.class, event);
         value.put(MyHandler2.class, event);

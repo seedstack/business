@@ -12,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class MyHandler implements EventHandler<MyEvent> {
+public class MyHandler implements EventHandler<SomeEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyHandler.class);
 
     @Override
-    public void handle(MyEvent event) {
+    public void handle(SomeEvent event) {
         LOGGER.info("MyHandler gets a MyEvent event.");
     }
 }

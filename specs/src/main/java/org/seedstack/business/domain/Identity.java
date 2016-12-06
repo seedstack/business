@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.domain;
 
@@ -22,17 +22,14 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@SuppressWarnings("rawtypes")
 public @interface Identity {
-
-
-	/**
+    /**
      * @return the identity handler
      */
-	Class<? extends IdentityHandler> handler();
+    Class<? extends IdentityHandler> handler();
 
     /**
      * @return a source possibly used by an identity handler
      */
-	String source() default "";
+    String source() default "";
 }

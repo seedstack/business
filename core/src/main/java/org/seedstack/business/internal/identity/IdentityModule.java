@@ -5,94 +5,72 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/**
- * 
- */
 package org.seedstack.business.internal.identity;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.matcher.AbstractMatcher;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 import org.seedstack.business.domain.GenericFactory;
-import org.seedstack.business.domain.Create;
 import org.seedstack.business.domain.identity.IdentityHandler;
 import org.seedstack.business.domain.identity.IdentityService;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.seed.SeedException;
+import org.seedstack.seed.core.internal.utils.MethodMatcherBuilder;
+import org.seedstack.shed.reflect.ClassPredicates;
+import org.seedstack.shed.reflect.Classes;
+import org.seedstack.shed.reflect.ExecutablePredicates;
 
 import javax.inject.Named;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Optional;
 
-/**
- * 
- */
 class IdentityModule extends AbstractModule {
+    private final Collection<Class<? extends IdentityHandler>> identityHandlerClasses;
 
-	private Collection<Class<?>> identityHandlerClasses;
+    IdentityModule(Collection<Class<? extends IdentityHandler>> identityHandlerClasses) {
+        this.identityHandlerClasses = identityHandlerClasses;
+    }
 
-	/**
-     * Constructor.
-     *
-	 * @param identityHandlerClasses the collection if identity handler classes
-	 */
-	IdentityModule(Collection<Class<?>> identityHandlerClasses) {
-		this.identityHandlerClasses = identityHandlerClasses;
-	}
+    @Override
+    protected void configure() {
+        bindIdentityHandler();
+        bind(IdentityService.class).to(IdentityServiceInternal.class);
+        IdentityInterceptor identityInterceptor = new IdentityInterceptor();
+        requestInjection(identityInterceptor);
+        bindInterceptor(Matchers.subclassesOf(GenericFactory.class), factoryMethods(), identityInterceptor);
+    }
 
-	@Override
-	protected void configure() {
-		bindIdentityHandler();
-		bind(IdentityService.class).to(IdentityServiceInternal.class);
-		IdentityInterceptor identityInterceptor = new IdentityInterceptor();
+    private void bindIdentityHandler() {
+        for (Class<? extends IdentityHandler> identityHandlerClass : identityHandlerClasses) {
+            bind(identityHandlerClass);
+            Named named = identityHandlerClass.getAnnotation(Named.class);
+            if (named != null) {
+                bind(findIdentityHandlerInterface(identityHandlerClass)).annotatedWith(Names.named(named.value())).to(identityHandlerClass);
+            }
+        }
+    }
 
-		requestInjection(identityInterceptor);
-		bindInterceptor(Matchers.subclassesOf(GenericFactory.class), factoryMethods(), identityInterceptor);
-	}
+    @SuppressWarnings("unchecked")
+    private Class<IdentityHandler> findIdentityHandlerInterface(Class<? extends IdentityHandler> identityHandlerClass) {
+        Optional<Class<?>> first = Classes.from(identityHandlerClass)
+                .traversingInterfaces()
+                .traversingSuperclasses()
+                .classes()
+                .filter(ClassPredicates.classIsInterface().and(ClassPredicates.classIsAssignableFrom(IdentityHandler.class)))
+                .findFirst();
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void bindIdentityHandler() {
-		for (Class identityHandlerClass : identityHandlerClasses) {
-			bind(identityHandlerClass);
-			if (identityHandlerClass.isAnnotationPresent(Named.class)) {
-				Named name = (Named) identityHandlerClass.getAnnotation(Named.class);
-				bind(getIdentityHandlerInterface(identityHandlerClass))
-                        .annotatedWith(Names.named(name.value())).to(identityHandlerClass);
-			}
-		}
-	}
+        if (first.isPresent()) {
+            return (Class<IdentityHandler>) first.get();
+        } else {
+            throw SeedException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_HANDLER).put("class", identityHandlerClass.getName());
+        }
+    }
 
-    /**
-     * Go through the given class and its superclass to find an interface assignable to IdentityHandler.
-     *
-     * @param identityHandlerClass the identityHandler class to check
-     * @return the interface found
-     */
-	private Class<?> getIdentityHandlerInterface(Class<?> identityHandlerClass) {
-		for (Class<?> inter : identityHandlerClass.getInterfaces()) {
-			if (IdentityHandler.class.isAssignableFrom(inter)) {
-				return inter;
-			}
-		}
-		if(identityHandlerClass.getSuperclass() !=null){
-			return getIdentityHandlerInterface(identityHandlerClass.getSuperclass());
-		}
-		throw new IllegalArgumentException("parameter should have a superClass");
-	}
-
-	Matcher<Method> factoryMethods() {
-
-		return new AbstractMatcher<Method>() {
-
-			@Override
-			public boolean matches(Method candidate) {
-
-                return GenericFactory.class.isAssignableFrom(candidate.getDeclaringClass())
-                        && (SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate, Create.class) != null
-                        || SeedReflectionUtils.getMetaAnnotationFromAncestors(candidate.getDeclaringClass(), Create.class) != null);
-			}
-
-		};
-	}
+    private Matcher<Method> factoryMethods() {
+        return new MethodMatcherBuilder(ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(GenericFactory.class)
+                .and(CreateResolver.INSTANCE)
+        ).build();
+    }
 }

@@ -20,26 +20,32 @@ import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
+import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.ancestorImplements;
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsAbstract;
-import static org.seedstack.seed.core.utils.BaseClassSpecifications.classIsInterface;
+import static org.seedstack.shed.reflect.ClassPredicates.classIsAssignableFrom;
+import static org.seedstack.shed.reflect.ClassPredicates.classIsInterface;
+import static org.seedstack.shed.reflect.ClassPredicates.classModifierIs;
 
 /**
  * This plugin scans all EventHandler, then passes them to the EventModule.
  * It also determines the strategy to adopt for event: will they be sync or async ?
  */
 public class EventPlugin extends AbstractSeedPlugin {
-    private final Specification<Class<?>> eventHandlerSpecification = and(ancestorImplements(EventHandler.class), not(classIsInterface()), not(classIsAbstract()));
-    private final Specification<Class<?>> eventSpecification = and(classImplements(Event.class));
-
-    private Multimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlersByEvent = ArrayListMultimap.create();
-
-    private List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<>();
+    private static final Specification<Class<?>> eventHandlerSpecification = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsAssignableFrom(EventHandler.class)))
+            .build();
+    private static final Specification<Class<?>> eventSpecification = new SpecificationBuilder<>(
+            classIsAssignableFrom(Event.class))
+            .build();
+    private final Multimap<Class<? extends Event>, Class<? extends EventHandler>> eventHandlersByEvent = ArrayListMultimap.create();
+    private final List<Class<? extends EventHandler>> eventHandlerClasses = new ArrayList<>();
     private boolean watchRepo;
 
     @Override

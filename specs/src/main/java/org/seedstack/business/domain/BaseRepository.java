@@ -8,7 +8,7 @@
 package org.seedstack.business.domain;
 
 import net.jodah.typetools.TypeResolver;
-import org.seedstack.seed.core.utils.SeedReflectionUtils;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
 
 /**
  * This class serves as inheritance base for all repositories.
@@ -31,7 +31,7 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      * </p>
      */
     protected BaseRepository() {
-        Class<?> subType = SeedReflectionUtils.cleanProxy(getClass());
+        Class<?> subType = ProxyUtils.cleanProxy(getClass());
         Class<?>[] rawArguments = TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(BaseRepository.class, subType), subType);
         this.aggregateRootClass = (Class<AGGREGATE>) rawArguments[AGGREGATE_INDEX];
         this.keyClass = (Class<KEY>) rawArguments[KEY_INDEX];

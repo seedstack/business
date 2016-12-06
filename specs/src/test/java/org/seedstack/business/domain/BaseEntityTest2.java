@@ -9,72 +9,63 @@ package org.seedstack.business.domain;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
-import org.seedstack.seed.SeedException;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseEntityTest2 {
+    static class BaseChild extends BaseEntity<Long> {
+        private String name;
+        private Long entityId;
 
-	static class BaseChild extends BaseEntity<Long>
-	{
+        public BaseChild() {
+            entityId = null;
+        }
 
-		private String name;
-		private Long entityId;
-		
-		public BaseChild() {
-			entityId = null;
-		}
-		
-		public BaseChild(Long entityId) {
-			this.entityId = entityId;
-		}
-		
-		@Override
-		public Long getEntityId() {
-			return entityId;
-		}
-		
-	}
-	
-	@Test
-	public void check_hashcode()
-	{
-		Long entityId = 12L;
-		BaseChild child = new BaseChild(entityId);
-		
-		Set<BaseChild> children = Sets.newHashSet();
-		children.add(child);
-		
-		assertThat(child.hashCode()).isEqualTo( entityId.hashCode());
-		
-	}
+        public BaseChild(Long entityId) {
+            this.entityId = entityId;
+        }
 
-	@Test
-	public void check_equals()
-	{
-		Long entityId = 12L;
-		BaseChild child1 = new BaseChild(entityId);
-		BaseChild child2 = new BaseChild(entityId);
-		
-		Set<BaseChild> children = Sets.newHashSet();
-		children.add(child1);
-		children.add(child2);
-		
-		assertThat(children).hasSize(1);// 
-		
-		assertThat(child1).isEqualTo( child2);
-		
-	}
-	
-	
-	@Test(expected=SeedException.class)
-	public void empty_entity_cannot_be_include_inside_a_collection() {
-		BaseChild child = new BaseChild();
-		
-		Set<BaseChild> children = Sets.newHashSet();
-		children.add(child);
-	}
+        @Override
+        public Long getEntityId() {
+            return entityId;
+        }
+    }
 
+    @Test
+    public void check_hashcode() {
+        Long entityId = 12L;
+        BaseChild child = new BaseChild(entityId);
+
+        Set<BaseChild> children = Sets.newHashSet();
+        children.add(child);
+
+        assertThat(child.hashCode()).isEqualTo(entityId.hashCode());
+
+    }
+
+    @Test
+    public void check_equals() {
+        Long entityId = 12L;
+        BaseChild child1 = new BaseChild(entityId);
+        BaseChild child2 = new BaseChild(entityId);
+
+        Set<BaseChild> children = Sets.newHashSet();
+        children.add(child1);
+        children.add(child2);
+
+        assertThat(children).hasSize(1);//
+
+        assertThat(child1).isEqualTo(child2);
+
+    }
+
+
+    @Test(expected = IllegalStateException.class)
+    public void empty_entity_cannot_be_include_inside_a_collection() {
+        BaseChild child = new BaseChild();
+        Set<BaseChild> children = Sets.newHashSet();
+        children.add(child);
+    }
 }

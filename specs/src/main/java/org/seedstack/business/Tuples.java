@@ -7,7 +7,6 @@
  */
 package org.seedstack.business;
 
-import com.google.common.collect.Lists;
 import com.google.inject.util.Types;
 import org.javatuples.Decade;
 import org.javatuples.Ennead;
@@ -20,38 +19,32 @@ import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.javatuples.Unit;
-import org.seedstack.seed.core.utils.SeedCheckUtils;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Static utility methods to easily create tuples.
  */
 public final class Tuples {
-
     private Tuples() {
     }
 
     /**
-     * Transforms a list of object into a tuple. Does not work array of more than ten element.
+     * Builds a tuple from a collection of objects.
      *
-     * @param objects the list of object
-     * @param <TUPLE> the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
+     * @param objects the collection of objects (size must be less or equal than 10).
+     * @param <TUPLE> the tuple type.
+     * @return the constructed tuple.
      */
     @SuppressWarnings("unchecked")
-    public static <TUPLE extends Tuple> TUPLE create(List<?> objects) {
-        SeedCheckUtils.checkIf(objects.size() <= 10, "Can't create a Tuple of more than ten element.");
-
+    public static <TUPLE extends Tuple> TUPLE create(Collection<?> objects) {
         Class<? extends Tuple> tupleClass = classOfTuple(objects.size());
-
-        SeedCheckUtils.checkIfNotNull(tupleClass, "No tuple class found");
-
         try {
             return (TUPLE) tupleClass.getMethod("fromCollection", Collection.class).invoke(null, objects);
         } catch (Exception e) {
@@ -60,140 +53,139 @@ public final class Tuples {
     }
 
     /**
-     * Transforms an array of object into a tuple. Does not work array of more than ten element.
+     * Builds a tuple from an array of objects.
      *
-     * @param firstObject the first item of the tuple
-     * @param objects     the array of object
-     * @param <TUPLE>     the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
+     * @param objects the collection of objects (size must be less or equal than 10).
+     * @param <TUPLE> the tuple type.
+     * @return the constructed tuple.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <TUPLE extends Tuple> TUPLE create(Object firstObject, Object... objects) {
-        List list = Lists.newArrayList(firstObject);
-        list.addAll(Arrays.asList(objects));
-        return (TUPLE) create(list);
-    }
-
-    /**
-     * Transforms an array of object into a tuple. Does not work array of more than ten element.
-     *
-     * @param objects the array of object
-     * @param <TUPLE> the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
-     * @deprecated Use the shorter {@code create} method instead.
-     */
-    @Deprecated
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <TUPLE extends Tuple> TUPLE createTupleFromList(Object... objects) {
-        return (TUPLE) create(objects);
-    }
-
-    /**
-     * Transforms a list of object into a tuple. Does not work array of more than ten element.
-     *
-     * @param objects the list of object
-     * @param <TUPLE> the tuple type
-     * @return a tuple
-     * @throws org.seedstack.seed.SeedException if the array length is greater than 10
-     * @deprecated Use the shorter {@code create} method instead.
-     */
-    @Deprecated
     @SuppressWarnings("unchecked")
-    public static <TUPLE extends Tuple> TUPLE createTupleFromList(List<Object> objects) {
-        return create(objects);
-    }
-
-    public static Class<? extends Tuple> classOfTuple(List<?> objects) {
-        return classOfTuple(objects.toArray());
+    public static <TUPLE extends Tuple> TUPLE create(Object... objects) {
+        Class<? extends Tuple> tupleClass = classOfTuple(objects.length);
+        try {
+            return (TUPLE) tupleClass.getMethod("fromArray", Object[].class).invoke(null, new Object[]{objects});
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to create tuple", e);
+        }
     }
 
     /**
-     * Finds for a list of object the associated tuple class, eg. a {@code Pair} for a list of two objects,
-     * a {@code Triplet} for a list of three, etc...
+     * Builds a tuple from an {@link Iterable}, optionally limiting the number of items.
      *
-     * @param objects the list of objects
-     * @return the tuple class
+     * @param objects the iterable of objects (size must be less or equal than 10).
+     * @param limit   the item number limit (-1 means no limit).
+     * @param <TUPLE> the tuple type.
+     * @return the constructed tuple.
+     */
+    @SuppressWarnings("unchecked")
+    public static <TUPLE extends Tuple> TUPLE create(Iterable<?> objects, int limit) {
+        List<Object> list = new ArrayList<>();
+        int index = 0;
+        for (Object object : objects) {
+            if (limit != -1 && ++index > limit) {
+                break;
+            }
+            list.add(object);
+        }
+        return create(list);
+    }
+
+    /**
+     * Builds a tuple from an {@link Iterable}.
+     *
+     * @param objects the iterable of objects (size must be less or equal than 10).
+     * @param <TUPLE> the tuple type.
+     * @return the constructed tuple.
+     */
+    public static <TUPLE extends Tuple> TUPLE create(Iterable<?> objects) {
+        return create(objects, -1);
+    }
+
+    /**
+     * Returns the tuple class corresponding to the collection size.
+     *
+     * @param objects the collection of objects (size must be less or equal than 10).
+     * @return the corresponding tuple class.
+     */
+    public static Class<? extends Tuple> classOfTuple(Collection<?> objects) {
+        return classOfTuple(objects.size());
+    }
+
+    /**
+     * Returns the tuple class corresponding to the array size.
+     *
+     * @param objects the array of objects (size must be less or equal than 10).
+     * @return the corresponding tuple class.
      */
     public static Class<? extends Tuple> classOfTuple(Object... objects) {
         return classOfTuple(objects.length);
     }
 
-
     /**
-     * Finds for a cardinality the associated tuple class, eg. a {@code Pair} for 2, a {@code Triplet} for 3, etc...
+     * Returns the tuple class corresponding to the specified cardinality.
      *
-     * @param cardinality the cardinality of the tuple
-     * @return the tuple class
+     * @param cardinality the cardinality (must be less or equal than 10).
+     * @return the corresponding tuple class.
      */
     public static Class<? extends Tuple> classOfTuple(int cardinality) {
-        Class<? extends Tuple> tupleClass = null;
-
         switch (cardinality) {
             case 1:
-                tupleClass = Unit.class;
-                break;
+                return Unit.class;
             case 2:
-                tupleClass = Pair.class;
-                break;
+                return Pair.class;
             case 3:
-                tupleClass = Triplet.class;
-                break;
+                return Triplet.class;
             case 4:
-                tupleClass = Quartet.class;
-                break;
+                return Quartet.class;
             case 5:
-                tupleClass = Quintet.class;
-                break;
+                return Quintet.class;
             case 6:
-                tupleClass = Sextet.class;
-                break;
+                return Sextet.class;
             case 7:
-                tupleClass = Septet.class;
-                break;
+                return Septet.class;
             case 8:
-                tupleClass = Octet.class;
-                break;
+                return Octet.class;
             case 9:
-                tupleClass = Ennead.class;
-                break;
+                return Ennead.class;
             case 10:
-                tupleClass = Decade.class;
-                break;
+                return Decade.class;
             default:
-                break;
+                throw new IllegalArgumentException("Cannot create a tuple with " + cardinality + " element(s)");
         }
-        return tupleClass;
     }
 
     /**
-     * Gets the final tuple type for a list of class.
+     * Returns the {@link ParameterizedType} of the Tuple class corresponding to the specified classes.
      * <p>
      * For instance, for a list with Customer.class and Order.class the method will return Pair&lt;Customer, Order&gt;.
      * </p>
      *
-     * @param classes the tuple's classes
-     * @return the tuple type
+     * @param classes the tuple classes.
+     * @return the tuple type.
      */
-    public static ParameterizedType typeOfTuple(Class<?>... classes) {
-        return Types.newParameterizedType(classOfTuple(classes), classes);
+    public static ParameterizedType typeOfTuple(final Class<?>... classes) {
+        return Types.newParameterizedType(classOfTuple((Object[]) classes), (Type[]) classes);
     }
 
+    /**
+     * Returns a list containing the elements of the tuple.
+     *
+     * @param tuple the tuple to convert.
+     * @param <T>   the type of the list item.
+     * @return the list.
+     */
     @SuppressWarnings("unchecked")
     public static <T> List<T> toList(Tuple tuple) {
-        List<Object> objects = new ArrayList<>(tuple.getSize());
-        for (Object o : tuple) {
-            objects.add(o);
-        }
-        return (List<T>) objects;
+        return (List<T>) tuple.toList();
     }
 
-    public static List<?> toListOfClasses(Tuple tuple) {
-        List<Class<?>> objects = new ArrayList<>(tuple.getSize());
-        for (Object o : tuple) {
-            objects.add(o.getClass());
-        }
-        return objects;
+    /**
+     * Returns a list containing the classes of the elements of the tuple.
+     *
+     * @param tuple the tuple to convert.
+     * @return the list of classes.
+     */
+    public static List<Class<?>> toListOfClasses(Tuple tuple) {
+        return Stream.of(tuple).map(Tuple::getClass).collect(Collectors.toList());
     }
 }

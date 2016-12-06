@@ -11,7 +11,7 @@ package org.seedstack.seed.persistence.inmemory.internal;
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
-import org.seedstack.seed.persistence.inmemory.api.InMemory;
+import org.seedstack.seed.persistence.inmemory.InMemory;
 
 import java.lang.reflect.Field;
 import java.util.Map;

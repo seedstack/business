@@ -9,16 +9,17 @@ package org.seedstack.business.internal.event;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.inject.Injector;
-import org.seedstack.business.Event;
-import org.seedstack.business.EventHandler;
-import org.seedstack.business.EventService;
-import org.seedstack.business.events.fixtures.MyEvent;
-import org.seedstack.business.events.fixtures.MyEventHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.seedstack.business.Event;
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.EventService;
+import org.seedstack.business.fixtures.event.MyEvent;
+import org.seedstack.business.fixtures.event.MyEventHandler;
+import org.seedstack.business.fixtures.event.SomeEvent;
 
 /**
  * Tests the event service.
@@ -35,7 +36,7 @@ public class EventServiceInternalTest {
     @Test
     public void fire_event() {
         ArrayListMultimap<Class<? extends Event>, Class<? extends EventHandler>> multiMap = ArrayListMultimap.create();
-        multiMap.put(MyEvent.class, MyEventHandler.class);
+        multiMap.put(SomeEvent.class, MyEventHandler.class);
 
         // provide an handler of MyEvent
         Mockito.when(injector.getInstance(MyEventHandler.class)).thenReturn(myEventHandler);

@@ -17,7 +17,11 @@ import org.mockito.Mockito;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.Tuples;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.*;
+import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
+import org.seedstack.business.fixtures.assembler.customer.AutoTupleAssembler;
+import org.seedstack.business.fixtures.assembler.customer.Customer;
+import org.seedstack.business.fixtures.assembler.customer.Order;
+import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 
 import java.util.ArrayList;
 import java.util.List;

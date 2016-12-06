@@ -7,41 +7,29 @@
  */
 package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.domain.DomainErrorCodes;
 import org.seedstack.business.domain.BaseFactory;
-import org.seedstack.seed.SeedException;
 
-public class CustomerFactoryDefault  extends BaseFactory<Customer> implements CustomerFactory {
+public class CustomerFactoryDefault extends BaseFactory<Customer> implements CustomerFactory {
+    @Override
+    public Customer createNewCustomer(String entityId, String firstName, String lastName) {
+        Customer customer = new Customer();
 
-	@Override
-	public Customer createNewCustomer(String entityId, String firstName,String lastName) {
-		
-		CustomerId id = new CustomerId(entityId);
-		
-		Customer customer = new Customer();
-		customer.setEntityId(id);
-		customer.setFirstName( firstName );
-		customer.setLastName(  lastName);
-	    
-		return customer;
-	}
-	
-	@Override
-	public Customer createNewCustomer(String entityId, String firstName, String lastName, String addressType, String line1, String line2,String zipCode,String country) {
-		Customer customer = createNewCustomer(entityId, firstName, lastName);
-		
-		Address address = new Address(line1, line2, zipCode,country);
-		Address.AddressType addressTypeType = Address.AddressType.valueOf(addressType.toLowerCase());
+        customer.setEntityId(new CustomerId(entityId));
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
 
-        if (null == addressTypeType) {
-            throw SeedException.createNew(DomainErrorCodes.AGGREGATE_ROOT_CREATION_ISSUE)
-                    .put("aggregateRoot", Customer.class.getSimpleName());
-        }
+        return customer;
+    }
 
-		customer.addAddress(addressTypeType, address);
-		
-		return customer;
-	}
-	
+    @Override
+    public Customer createNewCustomer(String entityId, String firstName, String lastName, String addressType, String line1, String line2, String zipCode, String country) {
+        Customer customer = createNewCustomer(entityId, firstName, lastName);
+
+        Address address = new Address(line1, line2, zipCode, country);
+        Address.AddressType addressTypeType = Address.AddressType.valueOf(addressType.toLowerCase());
+        customer.addAddress(addressTypeType, address);
+
+        return customer;
+    }
 }
 

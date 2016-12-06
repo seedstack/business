@@ -85,7 +85,7 @@ public interface InternalRegistry {
      * Returns a generic factory for the given aggregate root.
      * <p>
      * If no factory were created by the client developer, the method return a
-     * default factory, i.e. {@link org.seedstack.business.domain.Factory}.
+     * default factory, i.e. {@link Factory}.
      * </p>
      *
      * @param aggregateRoot the aggregate root

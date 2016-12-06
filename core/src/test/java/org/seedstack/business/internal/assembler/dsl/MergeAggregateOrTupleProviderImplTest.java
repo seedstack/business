@@ -19,11 +19,11 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.MergeTupleWithRepositoryProvider;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.assembler.DefaultModelMapperTupleAssembler;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.AutoAssembler;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.Customer;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.Order;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.OrderDto;
-import org.seedstack.business.internal.assembler.dsl.fixture.customer.Recipe;
+import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
+import org.seedstack.business.fixtures.assembler.customer.Customer;
+import org.seedstack.business.fixtures.assembler.customer.Order;
+import org.seedstack.business.fixtures.assembler.customer.OrderDto;
+import org.seedstack.business.fixtures.assembler.customer.Recipe;
 
 import java.util.Arrays;
 import java.util.List;

@@ -16,8 +16,8 @@ import org.javatuples.Tuple;
 import org.seedstack.business.Tuples;
 import org.seedstack.business.domain.*;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.assembler.AssemblerErrorCodes;
-import org.seedstack.business.internal.utils.BusinessReflectUtils;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Logging;
 import org.seedstack.seed.SeedException;
 import org.slf4j.Logger;
@@ -93,7 +93,7 @@ public class InternalRegistryInternal implements InternalRegistry {
                 o = (Assembler<?, ?>) getInstance(Assembler.class, aggregateRoot, dto);
             }
         } catch (ConfigurationException e) {
-            SeedException seedException = SeedException.createNew(AssemblerErrorCodes.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
+            SeedException seedException = SeedException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
                     .put("aggregateRoot", aggregateRoot)
                     .put("dto", dto);
             if (qualifier != null) {
@@ -103,7 +103,7 @@ public class InternalRegistryInternal implements InternalRegistry {
                 seedException.put("qualifier", qualifierClass.getSimpleName());
                 throw seedException;
             } else {
-                throw SeedException.createNew(AssemblerErrorCodes.UNABLE_TO_FIND_ASSEMBLER)
+                throw SeedException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER)
                         .put("aggregateRoot", aggregateRoot)
                         .put("dto", dto);
             }
@@ -130,7 +130,7 @@ public class InternalRegistryInternal implements InternalRegistry {
 
     @Override
     public Repository<?, ?> repositoryOf(Class<? extends AggregateRoot<?>> aggregateRootClass) {
-        Class<?> keyClass = BusinessReflectUtils.getAggregateIdClass(aggregateRootClass);
+        Class<?> keyClass = BusinessUtils.getAggregateIdClass(aggregateRootClass);
         // contrarily to others the repository already handle the fallback on default repositories
         return (Repository<?, ?>) getInstance(Repository.class, aggregateRootClass, keyClass);
     }
