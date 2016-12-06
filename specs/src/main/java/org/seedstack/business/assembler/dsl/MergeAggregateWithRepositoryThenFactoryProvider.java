@@ -11,8 +11,7 @@ import org.seedstack.business.domain.AggregateRoot;
 
 /**
  * Specifies the behavior in the case where the aggregate cannot be loaded from the repository.
- *
-**/
+ **/
 public interface MergeAggregateWithRepositoryThenFactoryProvider<A extends AggregateRoot<?>> {
 
     /**

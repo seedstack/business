@@ -13,8 +13,7 @@ import java.util.List;
 
 /**
  * Specifies the behavior in the case where the aggregates cannot be loaded from the repository.
- *
-**/
+ **/
 public interface MergeAggregatesWithRepoThenFactProvider<A extends AggregateRoot<?>> {
 
     /**

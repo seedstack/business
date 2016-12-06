@@ -7,19 +7,22 @@
  */
 package org.seedstack.business.domain;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 
 /**
  * This annotation marks its annotated interface as a domain value object for the framework.
  *
  * Verification will be done by the framework on either or not this service is in the right place.
- *
  */
 @Documented
 @DomainElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE})
+@Target({ElementType.TYPE})
 public @interface DomainValueObject {
 
 }

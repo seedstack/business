@@ -11,7 +11,6 @@ import org.seedstack.business.domain.Entity;
 
 /**
  * IdentityService generate a unique appropriate ID for a given entity
- * 
  */
 public interface IdentityService {
 
@@ -19,9 +18,9 @@ public interface IdentityService {
      * Identifies the given entity
      *
      * @param entity the entity to identify
-     * @param <E> the entity type
-     * @param <ID> the entity key type
+     * @param <E>    the entity type
+     * @param <ID>   the entity key type
      * @return the identified entity
      */
-	<E extends Entity<ID>, ID> E identify(E entity);
+    <E extends Entity<ID>, ID> E identify(E entity);
 }

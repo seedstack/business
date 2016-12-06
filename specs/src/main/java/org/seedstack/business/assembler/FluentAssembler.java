@@ -8,8 +8,11 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.assembler.dsl.AssembleDtoWithQualifierProvider;
+import org.seedstack.business.assembler.dsl.AssembleDtosWithQualifierProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregateOrTupleWithQualifierProvider;
+import org.seedstack.business.assembler.dsl.MergeAggregatesOrTuplesWithQualifierProvider;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.assembler.dsl.*;
 
 import java.util.List;
 
@@ -70,7 +73,7 @@ public interface FluentAssembler {
      * Merges a list of DTOs.
      *
      * @param dtos the list of DTOs
-     * @param <D> the DTO type
+     * @param <D>  the DTO type
      * @return a MergeAggregatesOrTuplesWithQualifierProvider
      */
     <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos);

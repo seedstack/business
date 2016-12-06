@@ -11,15 +11,15 @@ import org.seedstack.business.Producible;
 
 
 /**
- * This interface has to be extended in order to create a Domain Factory interface. 
+ * This interface has to be extended in order to create a Domain Factory interface.
  * <p>
  * To be a valid factory interface, Type must respect the followings:
  * </p>
  * <ul>
- *   <li>be an interface</li>
- *   <li>extends {@link org.seedstack.business.domain.GenericFactory}</li>
- *   <li>have at least one method that return an Aggregate Root type or another Domain Concept.</li>
- * </ul> 
+ * <li>be an interface</li>
+ * <li>extends {@link org.seedstack.business.domain.GenericFactory}</li>
+ * <li>have at least one method that return an Aggregate Root type or another Domain Concept.</li>
+ * </ul>
  * The following is a valid Domain factory interface.
  * <pre>
  *  public interface ProductFactory extends GenericFactory&lt;Product&gt; {
@@ -27,7 +27,6 @@ import org.seedstack.business.Producible;
  *  }
  * </pre>
  * Then this interface has to be implemented by the actual factory implementation .
- * 
  *
  * @param <DO> Domain Object type to be produced.
  */
@@ -37,7 +36,7 @@ public interface GenericFactory<DO extends DomainObject & Producible> extends Do
     /**
      * @return the produced class
      */
-	Class<DO> getProducedClass();
-	
+    Class<DO> getProducedClass();
+
 }
 

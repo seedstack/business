@@ -11,8 +11,7 @@ import org.seedstack.business.domain.AggregateRoot;
 
 /**
  * Specifies whether the aggregate root should be retrieved from a repository or created from a factory.
- *
-**/
+ **/
 public interface MergeAggregateWithRepositoryProvider<A extends AggregateRoot<?>> {
 
     /**

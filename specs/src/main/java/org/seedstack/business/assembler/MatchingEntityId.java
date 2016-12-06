@@ -92,10 +92,9 @@ import java.lang.annotation.Target;
  *     }
  * }
  * </pre>
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD})
+@Target({ElementType.METHOD})
 public @interface MatchingEntityId {
 
     /**
@@ -104,15 +103,13 @@ public @interface MatchingEntityId {
      *
      * @return the parameter index in the id constructor.
      */
-	int index() default -1;
+    int index() default -1;
 
     /**
      * When using a tuple assembler, i.e. when assembling a DTO to tuple of aggregate roots.
      * This index indicates to which aggregate root this id belongs.
      *
      * @return the aggregate index
-     *
-     * @see BaseTupleAssembler
      */
     int typeIndex() default -1;
 

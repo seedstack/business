@@ -7,7 +7,16 @@
  */
 package org.seedstack.business.assembler.dsl;
 
-import org.javatuples.*;
+import org.javatuples.Decade;
+import org.javatuples.Ennead;
+import org.javatuples.Octet;
+import org.javatuples.Pair;
+import org.javatuples.Quartet;
+import org.javatuples.Quintet;
+import org.javatuples.Septet;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
+import org.javatuples.Tuple;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.util.List;

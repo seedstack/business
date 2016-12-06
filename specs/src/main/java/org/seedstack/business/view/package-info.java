@@ -7,6 +7,6 @@
  */
 /**
  * Provides classes for representing view concepts like chunk or page.
- * 
+ *
  */
 package org.seedstack.business.view;

@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * </pre>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE})
+@Target({ElementType.TYPE})
 public @interface DtoOf {
 
     /**

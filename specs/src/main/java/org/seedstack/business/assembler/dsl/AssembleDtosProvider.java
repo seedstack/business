@@ -16,7 +16,7 @@ public interface AssembleDtosProvider {
      * Returns a list of dtos.
      *
      * @param dtoClass the dto class to assemble
-     * @param <D> the dto type
+     * @param <D>      the dto type
      * @return the list of dtos
      */
     <D> List<D> to(Class<D> dtoClass);

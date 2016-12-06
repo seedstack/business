@@ -12,8 +12,6 @@ import org.seedstack.business.Producible;
 
 /**
  * A value object, as described in the DDD book.
- * <p> 
- * See {@link BaseValueObject} for the base implementation.
  */
 @DomainValueObject
 public interface ValueObject extends DomainObject, Producible {
@@ -24,6 +22,7 @@ public interface ValueObject extends DomainObject, Producible {
      * @param other The other value object.
      * @return <code>true</code> if the given value object's and this value object's attributes are the same.
      */
+    @Override
     boolean equals(Object other);
 
     @Override

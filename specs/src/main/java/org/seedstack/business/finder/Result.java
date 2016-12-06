@@ -16,6 +16,7 @@ import java.util.List;
  * <li>The list size: {@code getResultSize()},</li>
  * <li>The full size of the whole request: {@code getFullSizeRequest()}.</li>
  * </ul>
+ *
  * @param <Item> the representation type
  */
 public final class Result<Item> {
@@ -34,6 +35,19 @@ public final class Result<Item> {
         this.list = list;
         this.offset = offset;
         this.fullSize = fullSize;
+    }
+
+    /**
+     * Creates a new Result.
+     *
+     * @param result          the list of item
+     * @param offset          the offset
+     * @param fullRequestSize the number of item available
+     * @param <Item>          the item type
+     * @return the result range
+     */
+    public static <Item> Result<Item> rangeResult(List<Item> result, long offset, long fullRequestSize) {
+        return new Result<>(result, offset, fullRequestSize);
     }
 
     /**
@@ -62,18 +76,5 @@ public final class Result<Item> {
      */
     public long getOffset() {
         return this.offset;
-    }
-
-    /**
-     * Creates a new Result.
-     *
-     * @param result          the list of item
-     * @param offset          the offset
-     * @param fullRequestSize the number of item available
-     * @param <Item>          the item type
-     * @return the result range
-     */
-    public static <Item> Result<Item> rangeResult(List<Item> result, long offset, long fullRequestSize) {
-        return new Result<>(result, offset, fullRequestSize);
     }
 }

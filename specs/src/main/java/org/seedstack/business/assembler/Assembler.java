@@ -13,8 +13,8 @@ package org.seedstack.business.assembler;
  * It provides two types of transformations:
  * </p>
  * <ul>
- *     <li>assembling data from one or multiple aggregates into a representation of the model or a part of the model.</li>
- *     <li>merging data from a DTO into one or multiple aggregates</li>
+ * <li>assembling data from one or multiple aggregates into a representation of the model or a part of the model.</li>
+ * <li>merging data from a DTO into one or multiple aggregates</li>
  * </ul>
  *
  * @param <A> the aggregate root

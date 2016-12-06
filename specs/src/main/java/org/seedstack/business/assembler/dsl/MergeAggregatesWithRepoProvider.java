@@ -13,8 +13,7 @@ import java.util.List;
 
 /**
  * Specifies whether the aggregate roots should be retrieved from a repository or created from a factory.
- *
-**/
+ **/
 public interface MergeAggregatesWithRepoProvider<A extends AggregateRoot<?>> {
 
     /**

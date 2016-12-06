@@ -11,12 +11,11 @@ package org.seedstack.business.domain;
  * This interface is the parent type for all implementations of Entity in the Business Framework.
  * <p>
  * This interface should not be used directly as we already provide a base implementation for equals and hashcode.
- * 
  *
- * @param <ID> the type of the entityId 
+ * @param <ID> the type of the entityId
  */
 @DomainEntity
-public interface Entity <ID> extends DomainObject {
+public interface Entity<ID> extends DomainObject {
 
     /**
      * Gets the entity id.

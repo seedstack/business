@@ -27,20 +27,6 @@ public final class Range {
     }
 
     /**
-     * @return the range offset
-     */
-    public long getOffset() {
-        return offset;
-    }
-
-    /**
-     * @return the range size
-     */
-    public long getSize() {
-        return size;
-    }
-
-    /**
      * The range from the chunk info.
      *
      * @param chunkOffset the chunk offset
@@ -60,6 +46,20 @@ public final class Range {
      */
     public static Range rangeFromPageInfo(long pageIndex, long pageSize) {
         return new Range(pageIndex * pageSize, pageSize);
+    }
+
+    /**
+     * @return the range offset
+     */
+    public long getOffset() {
+        return offset;
+    }
+
+    /**
+     * @return the range size
+     */
+    public long getSize() {
+        return size;
     }
 
     @Override

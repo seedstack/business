@@ -7,15 +7,15 @@
  */
 package org.seedstack.business.domain;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 
 /**
  * This annotation tells the Business Framework that the current class is candidate to be an entity from DDD approach.
- * <p>
- * Usually projects will use {@link BaseEntity} as it already provides the right
- * implementation for {@code equals} and {@code hashCode()}.
- * </p>
  */
 @Documented
 @DomainElement

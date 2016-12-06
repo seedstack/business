@@ -18,17 +18,16 @@ import java.util.List;
  * </p>
  * It won't handle external aspects like ordering or filtering, only a
  * viewpoint segmentation.
- * 
  *
  * @param <Item> the item type
  */
 public interface View<Item> extends Serializable {
 
-	/**
-	 * return the view of a result. 
-	 * 
-	 * @return the list of items
-	 */
-	List<Item> getView();
+    /**
+     * return the view of a result.
+     *
+     * @return the list of items
+     */
+    List<Item> getView();
 
 }

@@ -7,17 +7,20 @@
  */
 package org.seedstack.business.domain;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 
 /**
  * This annotation tells the Framework that the current class is candidate to be
  * an aggregate root.
- * 
  */
 @Documented
 @DomainElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface DomainAggregateRoot {
 }

@@ -13,8 +13,8 @@ package org.seedstack.business.domain;
  * To be a valid repository interface, Type must respect the followings:
  * </p>
  * <ul>
- *   <li>be an interface</li>
- *   <li>extends {@link GenericRepository}</li>
+ * <li>be an interface</li>
+ * <li>extends {@link GenericRepository}</li>
  * </ul>
  * <p>
  * The following is a valid Domain repository interface.
