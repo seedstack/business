@@ -9,7 +9,7 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.domain.Repository;

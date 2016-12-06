@@ -5,26 +5,38 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.domain;
-
-import static org.assertj.core.api.Assertions.assertThat;
+package org.seedstack.business.internal;
 
 import org.junit.Test;
-import org.seedstack.business.BusinessSpecifications;
 import org.seedstack.business.Service;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.BaseEntity;
+import org.seedstack.business.domain.BaseValueObject;
+import org.seedstack.business.domain.DomainAggregateRoot;
+import org.seedstack.business.domain.DomainEntity;
+import org.seedstack.business.domain.DomainFactory;
+import org.seedstack.business.domain.DomainPolicy;
+import org.seedstack.business.domain.DomainRepository;
+import org.seedstack.business.domain.DomainValueObject;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.GenericRepository;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.finder.RangeFinder;
 import org.seedstack.business.spi.GenericImplementation;
+import org.seedstack.seed.Ignore;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Validates all the domain specifications.
  */
 public class BusinessSpecificationsTest {
-
-    static class MyAggregateRoot1 extends BaseAggregateRoot<String> {
-
+    @Ignore
+    private static class MyAggregateRoot1 extends BaseAggregateRoot<String> {
         @Override
         public String getEntityId() {
             return "id";
@@ -32,9 +44,13 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainAggregateRoot
-    static class MyAggregateRoot2 { }
+    @Ignore
+    private static class MyAggregateRoot2 {
+    }
 
-    static class MySimplePojo { }
+    @Ignore
+    private static class MySimplePojo {
+    }
 
     @Test
     public void testAggregateRootSpecification() {
@@ -47,7 +63,8 @@ public class BusinessSpecificationsTest {
                 .isEqualTo(BusinessSpecifications.AGGREGATE_ROOT);
     }
 
-    static class MyEntity1 extends BaseEntity<String> {
+    @Ignore
+    private static class MyEntity1 extends BaseEntity<String> {
 
         @Override
         public String getEntityId() {
@@ -56,7 +73,9 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainEntity
-    static class MyEntity2 { }
+    @Ignore
+    private static class MyEntity2 {
+    }
 
     @Test
     public void testEntitySpecification() {
@@ -69,33 +88,47 @@ public class BusinessSpecificationsTest {
                 .isEqualTo(BusinessSpecifications.ENTITY);
     }
 
-    static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
+    @Ignore
+    private static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
-        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
+        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
+            return null;
+        }
 
         @Override
-        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
+        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) {
+        }
 
         @Override
-        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }
+        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) {
+        }
 
         @Override
-        public Class<MySimplePojo> getDtoClass() { return null; }
+        public Class<MySimplePojo> getDtoClass() {
+            return null;
+        }
     }
 
     @GenericImplementation
-    static class DefaultMyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
+    @Ignore
+    private static class DefaultMyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
-        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) { return null; }
+        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
+            return null;
+        }
 
         @Override
-        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) { }
+        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) {
+        }
 
         @Override
-        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) { }
+        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) {
+        }
 
         @Override
-        public Class<MySimplePojo> getDtoClass() { return null; }
+        public Class<MySimplePojo> getDtoClass() {
+            return null;
+        }
     }
 
     @Test
@@ -129,14 +162,18 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainFactory
-    interface MyFactory1 {}
+    interface MyFactory1 {
+    }
 
-    interface MyFactory2 extends GenericFactory<MyAggregateRoot1> {}
+    interface MyFactory2 extends GenericFactory<MyAggregateRoot1> {
+    }
 
     @DomainFactory
-    static class MyFactory3 {}
+    static class MyFactory3 {
+    }
 
-    interface MyFactory4 extends Factory<MyAggregateRoot1> {}
+    interface MyFactory4 extends Factory<MyAggregateRoot1> {
+    }
 
     @Test
     public void testDomainFactorySpecification() {
@@ -151,12 +188,18 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainRepository
-    interface MyRepository1 {}
+    @Ignore
+    private interface MyRepository1 {
+    }
 
-    interface MyRepository2 extends GenericRepository<MyAggregateRoot1, String> {}
+    @Ignore
+    private interface MyRepository2 extends GenericRepository<MyAggregateRoot1, String> {
+    }
 
     @DomainRepository
-    static class MyRepository3 {}
+    @Ignore
+    private static class MyRepository3 {
+    }
 
     @Test
     public void testDomainRepoSpecification() {
@@ -167,9 +210,12 @@ public class BusinessSpecificationsTest {
     }
 
     @GenericImplementation
-    static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements GenericRepository<A,K> {
+    @Ignore
+    private static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements GenericRepository<A, K> {
         @Override
-        public A load(K id) { return null; }
+        public A load(K id) {
+            return null;
+        }
 
         @Override
         public boolean exists(K id) {
@@ -182,25 +228,35 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public void clear() { }
+        public void clear() {
+        }
 
         @Override
-        public void delete(K k) { }
+        public void delete(K k) {
+        }
 
         @Override
-        public void delete(A a) { }
+        public void delete(A a) {
+        }
 
         @Override
-        public void persist(A a) { }
+        public void persist(A a) {
+        }
 
         @Override
-        public A save(A a) { return null; }
+        public A save(A a) {
+            return null;
+        }
 
         @Override
-        public Class<A> getAggregateRootClass() { return null; }
+        public Class<A> getAggregateRootClass() {
+            return null;
+        }
 
         @Override
-        public Class<K> getKeyClass() { return null; }
+        public Class<K> getKeyClass() {
+            return null;
+        }
     }
 
     @Test
@@ -211,7 +267,9 @@ public class BusinessSpecificationsTest {
     }
 
     @Service
-    interface MyDomainServiceSpecification1 {}
+    @Ignore
+    private interface MyDomainServiceSpecification1 {
+    }
 
     @Test
     public void testDomainServiceSpecification() {
@@ -219,10 +277,14 @@ public class BusinessSpecificationsTest {
     }
 
     @DtoOf(MyAggregateRoot1.class)
-    static class MyPojo1 {}
+    @Ignore
+    private static class MyPojo1 {
+    }
 
     @DtoOf({MyAggregateRoot1.class, MyAggregateRoot1.class})
-    static class MyPojo2 {}
+    @Ignore
+    private static class MyPojo2 {
+    }
 
     @Test
     public void testDtoWithDefaultAssemblerSpecification() {
@@ -233,12 +295,18 @@ public class BusinessSpecificationsTest {
     }
 
     @Finder
-    interface MyFinder1 {}
+    @Ignore
+    private interface MyFinder1 {
+    }
 
-    interface MyFinder2 extends RangeFinder {}
+    @Ignore
+    private interface MyFinder2 extends RangeFinder {
+    }
 
     @Finder
-    static class MyFinder3 {}
+    @Ignore
+    private static class MyFinder3 {
+    }
 
     @Test
     public void testFinderServiceSpecification() {
@@ -249,10 +317,14 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainPolicy
-    interface MyPolicy1 {}
+    @Ignore
+    private interface MyPolicy1 {
+    }
 
     @DomainPolicy
-    static class MyPolicy3 {}
+    @Ignore
+    private static class MyPolicy3 {
+    }
 
     @Test
     public void testPolicyServiceSpecification() {
@@ -262,9 +334,13 @@ public class BusinessSpecificationsTest {
     }
 
     @DomainValueObject
-    static class MyValueObject1 {}
+    @Ignore
+    private static class MyValueObject1 {
+    }
 
-    static class MyValueObject2 extends BaseValueObject {}
+    @Ignore
+    private static class MyValueObject2 extends BaseValueObject {
+    }
 
 
     @Test

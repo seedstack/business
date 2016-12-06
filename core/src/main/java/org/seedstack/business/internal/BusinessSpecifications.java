@@ -5,9 +5,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business;
+package org.seedstack.business.internal;
 
 import org.kametic.specifications.Specification;
+import org.seedstack.business.Service;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.DomainAggregateRoot;
@@ -37,9 +38,6 @@ import static org.seedstack.shed.reflect.ClassPredicates.classModifierIs;
  */
 @SuppressWarnings("unchecked")
 public final class BusinessSpecifications {
-    private BusinessSpecifications() {
-    }
-
     /**
      * The aggregate root specification.
      */
@@ -164,4 +162,8 @@ public final class BusinessSpecifications {
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
                     .and(classIsDescendantOf(IdentityHandler.class))
     ).build();
+
+    private BusinessSpecifications() {
+        // no instantiation allowed
+    }
 }

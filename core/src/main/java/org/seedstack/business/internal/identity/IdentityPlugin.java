@@ -15,7 +15,7 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.core.AbstractPlugin;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.BusinessSpecifications;
+import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.domain.identity.IdentityHandler;
 
 import java.util.Collection;

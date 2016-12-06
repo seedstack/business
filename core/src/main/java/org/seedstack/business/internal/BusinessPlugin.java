@@ -14,7 +14,6 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.BusinessSpecifications;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;

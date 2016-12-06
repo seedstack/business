@@ -19,6 +19,7 @@ import org.seedstack.business.fixtures.assembler.auto.Customer;
 import org.seedstack.business.fixtures.assembler.auto.Name;
 import org.seedstack.business.fixtures.assembler.auto.Order;
 import org.seedstack.business.fixtures.assembler.auto.Recipe;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

@@ -7,7 +7,6 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.javatuples.Decade;
 import org.javatuples.Ennead;
@@ -19,7 +18,7 @@ import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerTypes;
 import org.seedstack.business.assembler.dsl.MergeAggregateOrTupleProvider;

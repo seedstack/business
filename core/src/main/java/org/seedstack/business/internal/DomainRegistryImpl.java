@@ -12,7 +12,6 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.BusinessSpecifications;
 import org.seedstack.business.Producible;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainObject;
@@ -31,8 +30,7 @@ import java.lang.reflect.Type;
 /**
  * Registry to access to all domain objects (repository, factory, service, policy).
  */
-public class DomainRegistryImpl implements DomainRegistry {
-
+class DomainRegistryImpl implements DomainRegistry {
     @Inject
     private Injector injector;
 

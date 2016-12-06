@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.AutoTupleAssembler;
 import org.seedstack.business.fixtures.assembler.customer.Customer;

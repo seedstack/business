@@ -9,7 +9,6 @@ package org.seedstack.business.internal;
 
 import com.google.common.reflect.TypeToken;
 import org.javatuples.Tuple;
-import org.seedstack.business.Tuples;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.AggregateRoot;

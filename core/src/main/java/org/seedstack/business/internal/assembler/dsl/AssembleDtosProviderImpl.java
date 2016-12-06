@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerTypes;

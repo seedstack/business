@@ -10,17 +10,17 @@ package org.seedstack.business.finder;
 import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.seedstack.seed.Ignore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BaseRangeFinderTest {
-
     @Test
     public void testFind() throws Exception {
         MyRangeFinder myRangeFinder = new MyRangeFinder();
-        Result<String> result = myRangeFinder.find(new Range(0,2), "o");
+        Result<String> result = myRangeFinder.find(new Range(0, 2), "o");
         Assertions.assertThat(result.getResult()).hasSize(2);
         Assertions.assertThat(result.getResult()).containsOnly("john", "doe");
     }
@@ -28,13 +28,13 @@ public class BaseRangeFinderTest {
     @Test
     public void testFindWithOffset() throws Exception {
         MyRangeFinder myRangeFinder = new MyRangeFinder();
-        Result<String> result = myRangeFinder.find(new Range(1,2), "o");
+        Result<String> result = myRangeFinder.find(new Range(1, 2), "o");
         Assertions.assertThat(result.getResult()).hasSize(2);
         Assertions.assertThat(result.getResult()).containsOnly("doe", "bob");
     }
 
-    private class MyRangeFinder extends BaseRangeFinder<String, String> {
-
+    @Ignore
+    private static class MyRangeFinder extends BaseRangeFinder<String, String> {
         private List<String> names = Lists.newArrayList("john", "doe", "jane", "bob", "martin");
 
         @Override

@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.seedstack.business.domain.BaseAggregateRoot;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.assembler.modelmapper.ModelMapperTupleAssembler;
 
 

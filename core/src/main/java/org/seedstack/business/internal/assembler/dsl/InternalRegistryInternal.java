@@ -13,7 +13,7 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.javatuples.Tuple;
-import org.seedstack.business.Tuples;
+import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.domain.*;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessErrorCode;
