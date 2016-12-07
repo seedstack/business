@@ -22,7 +22,6 @@ import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
-import org.seedstack.seed.spi.config.ApplicationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,7 +131,7 @@ public class BusinessPlugin extends AbstractSeedPlugin {
 
         // The first round is used to scan interfaces
         if (round.isFirst()) {
-            application = initContext.dependency(ApplicationProvider.class).getApplication();
+            application = getApplication();
 
             aggregateClasses = spec.get(BusinessSpecifications.AGGREGATE_ROOT);
             LOGGER.debug("Aggregate root(s) => {}", aggregateClasses);
