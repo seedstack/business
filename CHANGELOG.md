@@ -1,3 +1,7 @@
+# Version 3.0.1 (2016-12-14)
+
+* [brk] `DomainEvent` class is renamed `BaseDomainEvent` and implements a new interface named `DomainEvent`.
+
 # Version 3.0.0 (2016-12-13)
 
 * [brk] Update to SeedStack 16.11 new configuration system.

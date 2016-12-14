@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  * org.seedstack.business.event.domain.watch=true
  * </pre>
  */
-public abstract class BaseAggregateEvent extends DomainEvent {
+public abstract class BaseAggregateEvent extends BaseDomainEvent {
 
     private static final long serialVersionUID = 1L;
 

@@ -7,10 +7,10 @@
  */
 package org.seedstack.business.fixtures.qualifier.domain;
 
-import org.seedstack.business.domain.events.DomainEvent;
+import org.seedstack.business.domain.events.BaseDomainEvent;
 
 
-public class MyDomainEvent extends DomainEvent {
+public class MyDomainEvent extends BaseDomainEvent {
 
     private String cause;
 

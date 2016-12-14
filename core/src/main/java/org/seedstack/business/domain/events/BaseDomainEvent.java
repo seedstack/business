@@ -9,6 +9,7 @@ package org.seedstack.business.domain.events;
 
 import org.seedstack.business.Event;
 import org.seedstack.business.domain.BaseValueObject;
+import org.seedstack.business.domain.DomainEvent;
 
 /**
  * BaseEvent is the abstract class to extend to create an event. It extends from {@code BaseValueObject} which provides
@@ -25,7 +26,7 @@ import org.seedstack.business.domain.BaseValueObject;
  * @see org.seedstack.business.domain.BaseValueObject
  * @see Event
  */
-public abstract class DomainEvent extends BaseValueObject implements Event {
+public abstract class BaseDomainEvent extends BaseValueObject implements DomainEvent {
 
 	/***/
 	private static final long serialVersionUID = 1L;
