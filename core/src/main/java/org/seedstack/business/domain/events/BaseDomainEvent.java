@@ -12,7 +12,7 @@ import org.seedstack.business.domain.BaseValueObject;
 import org.seedstack.business.domain.DomainEvent;
 
 /**
- * BaseEvent is the abstract class to extend to create an event. It extends from {@code BaseValueObject} which provides
+ * BaseDomainEvent is the abstract class to extend to create a domain event. It extends from {@code BaseValueObject} which provides
  * {@code equals} and {@code hashCode}. This allows to check cyclic call detection and to test events with EventFixture.
  * <p>
  * It is possible to directly implements {@code Event} instead of extends BaseEvent. But you will have to implements
