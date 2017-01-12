@@ -1,4 +1,4 @@
-# Version 3.0.1 (2016-12-14)
+# Version 3.0.1 (2017-01-12)
 
 * [brk] `DomainEvent` class is renamed `BaseDomainEvent` and implements a new interface named `DomainEvent`.
 

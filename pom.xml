@@ -25,9 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.0.0</seed.version>
-        <hibernate.version>4.3.11.Final</hibernate.version>
-        <hsqldb.version>2.3.3</hsqldb.version>
+        <seed.version>3.0.1</seed.version>
 
         <compatibility.skip>true</compatibility.skip>
 
