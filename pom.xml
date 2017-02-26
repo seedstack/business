@@ -20,14 +20,14 @@
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.0.1</seed.version>
+        <seed.version>3.1.0</seed.version>
 
-        <compatibility.skip>true</compatibility.skip>
+        <compatibility.version>3.0.1</compatibility.version>
 
         <bintray.package>business</bintray.package>
     </properties>

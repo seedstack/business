@@ -1,3 +1,7 @@
+# Version 3.0.2 (2017-02-26)
+
+* [fix] Fix transitive dependency to poms SNAPSHOT.
+
 # Version 3.0.1 (2017-01-12)
 
 * [brk] `DomainEvent` class is renamed `BaseDomainEvent` and implements a new interface named `DomainEvent`.
