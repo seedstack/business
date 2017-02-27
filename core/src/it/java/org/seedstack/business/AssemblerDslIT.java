@@ -7,6 +7,7 @@
  */
 package org.seedstack.business;
 
+import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.TestCase.fail;
@@ -99,6 +101,26 @@ public class AssemblerDslIT {
         Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, but so it should be set by the assembler
         Assertions.assertThat(aggregateRoot.getPrice()).isEqualTo(PRICE);
+    }
+
+    @Test
+    public void testAssembleFromRepositoryOrFactoryMixed() {
+        Order order = orderFactory.create("1", "death star");
+        order.setOtherDetails("some details");
+        orderRepository.persist(order);
+
+        OrderDto dto1 = new OrderDto("1", "death star", PRICE);
+        OrderDto dto2 = new OrderDto("2", "light saber", PRICE);
+
+        List<Order> aggregateRoots = fluently.merge(Lists.newArrayList(dto1, dto2)).into(Order.class).fromRepository().orFromFactory();
+
+        Assertions.assertThat(aggregateRoots).hasSize(2);
+        Assertions.assertThat(aggregateRoots.get(0).getEntityId()).isEqualTo("1");
+        Assertions.assertThat(aggregateRoots.get(0).getProduct()).isEqualTo("death star");
+        Assertions.assertThat(aggregateRoots.get(0).getOtherDetails()).isEqualTo("some details");
+        Assertions.assertThat(aggregateRoots.get(1).getEntityId()).isEqualTo("2");
+        Assertions.assertThat(aggregateRoots.get(1).getProduct()).isEqualTo("light saber");
+        Assertions.assertThat(aggregateRoots.get(1).getOtherDetails()).isNull();
     }
 
     @Test

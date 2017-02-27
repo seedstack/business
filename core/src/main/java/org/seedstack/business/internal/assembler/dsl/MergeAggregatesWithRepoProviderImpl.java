@@ -78,6 +78,11 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
 
     @Override
     public List<A> orFromFactory() {
+        return orFromFactory(true);
+    }
+
+    @Override
+    public List<A> orFromFactory(boolean allowMixed) {
         boolean atLeastOneAggregateNotFound = false;
         boolean atLeastOneAggregateFound = false;
         List<A> aggregateRoots = new ArrayList<>(dtos.size());
@@ -88,21 +93,16 @@ public class MergeAggregatesWithRepoProviderImpl<A extends AggregateRoot<?>> ext
             A a = loadFromRepo(aggregateClass, id);
             if (a == null) {
                 atLeastOneAggregateNotFound = true;
+                aggregateRoots.add(fromFactory(aggregateClass, dto));
             } else {
                 atLeastOneAggregateFound = true;
                 aggregateRoots.add(a);
             }
-            if (atLeastOneAggregateFound && atLeastOneAggregateNotFound) {
+            if (!allowMixed && atLeastOneAggregateFound && atLeastOneAggregateNotFound) {
                 throw new IllegalStateException("State non consistent some aggregate are persisted but not all.");
             }
         }
 
-        if (atLeastOneAggregateNotFound) {
-            // Then if none aggregate were persisted, fallback on factory
-            return fromFactory();
-        } else {
-            return aggregateRoots;
-        }
+        return aggregateRoots;
     }
-
 }
