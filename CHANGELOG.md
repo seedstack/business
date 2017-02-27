@@ -1,3 +1,8 @@
+# Version 3.1.0 (2016-03-??)
+
+* [new] It is now possible to assemble a list of DTOs to aggregates coming both from repository and factory.
+* [chg] When assembling a DTO list, aggregates coming both from repository and factory and allowed by default.
+
 # Version 3.0.2 (2017-02-26)
 
 * [fix] Fix transitive dependency to poms SNAPSHOT.

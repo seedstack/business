@@ -26,17 +26,29 @@ public interface MergeAggregatesWithRepoThenFactProvider<A extends AggregateRoot
     List<A> orFail() throws AggregateNotFoundException;
 
     /**
-     * Returns the aggregate roots. If the all the aggregate roots cannot be loaded from their repository,
-     * they are created from their factory. If some of the aggregate roots can be loaded but not all an
-     * IllegalStateException is thrown.
+     * Returns the aggregate roots, allowing them to come both from repository and factory. See {@link #orFromFactory(boolean)}
      * <p>
      * It uses the {@link org.seedstack.business.assembler.MatchingFactoryParameter} annotation on
      * the DTO to find the factory method parameters.
      * </p>
      *
      * @return the assembled aggregate roots
-     * @throws IllegalStateException if some but not all aggregate roots are loaded
      */
     List<A> orFromFactory();
+
+    /**
+     * Returns the aggregate roots. If the allowMixed parameter is true, aggregates are allowed to come both from repository
+     * or factory. If the allowMixed parameter is false and not all aggregates can be either loaded from repository or created
+     * from factory, an IllegalStateException is thrown.
+     * <p>
+     * It uses the {@link org.seedstack.business.assembler.MatchingFactoryParameter} annotation on
+     * the DTO to find the factory method parameters.
+     * </p>
+     *
+     * @param allowMixed If true, aggregates coming from repository and factory can be mixed in the result.
+     * @return the assembled aggregate roots
+     * @throws IllegalStateException if some but not all aggregate roots are loaded
+     */
+    List<A> orFromFactory(boolean allowMixed);
 
 }
