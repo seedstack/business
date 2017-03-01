@@ -10,12 +10,12 @@
  */
 package org.seedstack.business.fixtures.domain.multi;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
 /**
  * Dummy factory for test
  */
-public interface MultiFactory extends GenericFactory<Multi>  {
+public interface MultiFactory extends Factory<Multi> {
 
 	Multi create();
 

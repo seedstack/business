@@ -30,8 +30,7 @@ public class DefaultModelMapperTupleAssembler<T extends Tuple, D> extends ModelM
     @SuppressWarnings("unchecked")
     @Inject
     public DefaultModelMapperTupleAssembler(@Assisted Object[] genericClasses) {
-        // TODO the first parameter is useless remove it
-        super((Class) genericClasses.clone()[1]);
+        super((Class) genericClasses[1]);
     }
 
     @Override

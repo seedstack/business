@@ -8,7 +8,7 @@
 package org.seedstack.business.fixtures.registry;
 
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.fixtures.DummyRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 /**
@@ -16,42 +16,5 @@ import org.seedstack.business.spi.GenericImplementation;
  */
 @GenericImplementation
 @TestJpaQualifier
-public class TestDefaultRepository<A extends AggregateRoot<K>, K> extends BaseRepository<A, K>{
-
-	@Override
-	public A load(K id) {
-		return null;
-	}
-
-	@Override
-	public boolean exists(K id) {
-		return false;
-	}
-
-	@Override
-	public long count() {
-		return 0L;
-	}
-
-	@Override
-	public void clear() {
-	}
-
-	@Override
-	public void delete(K id) {
-	}
-
-	@Override
-	public void delete(A aggregate) {
-	}
-
-	@Override
-	public void persist(A aggregate) {
-	}
-
-	@Override
-	public A save(A aggregate) {
-		return null;
-	}
-
+public class TestDefaultRepository<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
 }

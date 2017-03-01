@@ -9,7 +9,7 @@ package org.seedstack.business.fixtures.repositories;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.fixtures.DummyRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
@@ -17,46 +17,9 @@ import javax.inject.Inject;
 
 @GenericImplementation
 @MyQualifier
-public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
-
+public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
     @Inject
     public DefaultRepoSample3(@Assisted Object[] genericClasses) {
-        super((Class)genericClasses[0], (Class)genericClasses[1]);
-    }
-
-    @Override
-    public A load(K id) {
-        return null;
-    }
-
-    @Override
-    public boolean exists(K id) {
-        return false;
-    }
-
-    @Override
-    public long count() {
-        return 0L;
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    @Override
-    public void delete(K id) {
-    }
-
-    @Override
-    public void delete(A a) {
-    }
-
-    @Override
-    public void persist(A a) {
-    }
-
-    @Override
-    public A save(A a) {
-        return null;
+        super((Class) genericClasses[0], (Class) genericClasses[1]);
     }
 }

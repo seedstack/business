@@ -7,10 +7,11 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.Event;
-
 /**
- * This interface represent domain events.
+ * Interface for business events.
+ *
+ * @see DomainEventHandler
+ * @see DomainEventPublisher
  */
-public interface DomainEvent extends Event, ValueObject {
+public interface DomainEvent extends ValueObject {
 }

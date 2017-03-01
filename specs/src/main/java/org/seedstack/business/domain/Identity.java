@@ -18,18 +18,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Identity
+ * This annotation marks the field of an entity as a candidate for identity generation. The annotation value specifies
+ * the identity generation strategy class.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Identity {
     /**
-     * @return the identity handler
+     * @return the identity handler to use to generate identity.
      */
-    Class<? extends IdentityHandler> handler();
-
-    /**
-     * @return a source possibly used by an identity handler
-     */
-    String source() default "";
+    Class<? extends IdentityHandler> value();
 }

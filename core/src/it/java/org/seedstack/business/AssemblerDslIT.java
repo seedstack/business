@@ -12,8 +12,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.assembler.AssemblerTypes;
 import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.assembler.auto.BasicAggregate;
@@ -65,7 +65,7 @@ public class AssemblerDslIT {
     public void testAssembleFromRepository() {
         Order order = orderFactory.create("1", "death star");
         order.setOtherDetails("some details");
-        orderRepository.persist(order);
+        orderRepository.add(order);
 
         Order aggregateRoot = null;
         try {
@@ -107,7 +107,7 @@ public class AssemblerDslIT {
     public void testAssembleFromRepositoryOrFactoryMixed() {
         Order order = orderFactory.create("1", "death star");
         order.setOtherDetails("some details");
-        orderRepository.persist(order);
+        orderRepository.add(order);
 
         OrderDto dto1 = new OrderDto("1", "death star", PRICE);
         OrderDto dto2 = new OrderDto("2", "light saber", PRICE);
@@ -145,7 +145,7 @@ public class AssemblerDslIT {
         // - identity creation strategy
         // - default factory without params
         // - default assembler
-        BasicAggregate aggregate = fluently.merge(new BasicDto(id, "aaa", "bbb")).with(AssemblerTypes.MODEL_MAPPER)
+        BasicAggregate aggregate = fluently.merge(new BasicDto(id, "aaa", "bbb")).with(ModelMapper.class)
                 .into(BasicAggregate.class).fromFactory();
         Assertions.assertThat(aggregate.getEntityId()).isNotNull();
         Assertions.assertThat(aggregate.getEntityId()).isNotEqualTo(id);

@@ -8,8 +8,7 @@
 package org.seedstack.business.assembler;
 
 
-import net.jodah.typetools.TypeResolver;
-import org.seedstack.seed.core.internal.guice.ProxyUtils;
+import org.seedstack.business.internal.utils.BusinessUtils;
 
 /**
  * This assembler is intended to be extended by the base assemblers not directly by the users.
@@ -25,10 +24,9 @@ public abstract class AbstractBaseAssembler<A, D> implements Assembler<A, D> {
     /**
      * Creates an assembler with automatic resolution of its DTO class.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     public AbstractBaseAssembler() {
-        Class<?> subType = ProxyUtils.cleanProxy(getClass());
-        this.dtoClass = (Class<D>) TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(AbstractBaseAssembler.class, subType), subType)[1];
+        this.dtoClass = (Class<D>) BusinessUtils.resolveGenerics(AbstractBaseAssembler.class, getClass())[1];
     }
 
     /**

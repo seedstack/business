@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.assembler.dsl;
 
-import org.seedstack.business.assembler.AssemblerTypes;
-
 import java.lang.annotation.Annotation;
 
 
@@ -18,5 +16,4 @@ public interface QualifierProvider<T> {
 
     T with(Class<? extends Annotation> qualifier);
 
-    T with(AssemblerTypes qualifier);
 }

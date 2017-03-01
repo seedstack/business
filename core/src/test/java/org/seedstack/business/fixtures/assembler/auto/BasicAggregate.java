@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class BasicAggregate extends BaseAggregateRoot<UUID> {
 
-    @Identity(handler = UUIDHandler.class)
+    @Identity(UUIDHandler.class)
     private UUID id;
 
     private String field1;

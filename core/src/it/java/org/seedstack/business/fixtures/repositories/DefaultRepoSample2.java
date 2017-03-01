@@ -10,28 +10,36 @@ package org.seedstack.business.fixtures.repositories;
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.domain.RepositoryOptions;
+import org.seedstack.business.domain.specification.Specification;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 
 @GenericImplementation
 @Named("mock")
 public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A, K> {
-
     @Inject
     public DefaultRepoSample2(@Assisted Object[] genericClasses) {
         super((Class) genericClasses[0], (Class) genericClasses[1]);
     }
 
     @Override
-    public A load(K id) {
-        return null;
+    public Optional<A> get(K id) {
+        return Optional.empty();
     }
 
     @Override
-    public boolean exists(K id) {
+    public Stream<A> get(Specification<A> specification, RepositoryOptions... options) {
+        return Stream.empty();
+    }
+
+    @Override
+    public boolean contains(K id) {
         return false;
     }
 
@@ -45,19 +53,29 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
-    public void delete(K id) {
+    public long count(Specification<A> specification) {
+        return 0;
     }
 
     @Override
-    public void delete(A a) {
+    public void remove(K id) {
     }
 
     @Override
-    public void persist(A a) {
+    public long remove(Specification<A> specification) {
+        return 0;
     }
 
     @Override
-    public A save(A a) {
+    public void remove(A a) {
+    }
+
+    @Override
+    public void add(A a) {
+    }
+
+    @Override
+    public A update(A a) {
         return null;
     }
 }

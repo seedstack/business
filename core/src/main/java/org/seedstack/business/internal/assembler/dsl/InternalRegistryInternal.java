@@ -112,13 +112,13 @@ public class InternalRegistryInternal implements InternalRegistry {
     }
 
     @Override
-    public GenericFactory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot) {
-        GenericFactory<?> o;
+    public Factory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot) {
+        Factory<?> o;
         try {
-            o = (GenericFactory<?>) getInstance(GenericFactory.class, aggregateRoot);
+            o = (Factory<?>) getInstance(Factory.class, aggregateRoot);
         } catch (ConfigurationException e) {
             logger.trace("Unable to find a factory for " + aggregateRoot + ", fallback on default factory.");
-            o = (GenericFactory<?>) getInstance(Factory.class, aggregateRoot);
+            o = (Factory<?>) getInstance(Factory.class, aggregateRoot);
         }
         return o;
     }

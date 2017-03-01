@@ -7,8 +7,7 @@
  */
 package org.seedstack.business.domain;
 
-import net.jodah.typetools.TypeResolver;
-import org.seedstack.seed.core.internal.guice.ProxyUtils;
+import org.seedstack.business.internal.utils.BusinessUtils;
 
 /**
  * This class serves as inheritance base for all repositories.
@@ -16,7 +15,6 @@ import org.seedstack.seed.core.internal.guice.ProxyUtils;
  * @param <AGGREGATE> the aggregate root type
  * @param <KEY>       the key type
  */
-@SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> implements Repository<AGGREGATE, KEY> {
     private static final int AGGREGATE_INDEX = 0;
     private static final int KEY_INDEX = 1;
@@ -30,9 +28,9 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      * The aggregate root class and the key class are found by reflection.
      * </p>
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     protected BaseRepository() {
-        Class<?> subType = ProxyUtils.cleanProxy(getClass());
-        Class<?>[] rawArguments = TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(BaseRepository.class, subType), subType);
+        Class<?>[] rawArguments = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
         this.aggregateRootClass = (Class<AGGREGATE>) rawArguments[AGGREGATE_INDEX];
         this.keyClass = (Class<KEY>) rawArguments[KEY_INDEX];
     }
@@ -58,7 +56,7 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
     }
 
     @Override
-    public Class<KEY> getKeyClass() {
+    public Class<KEY> getIdentifierClass() {
         return keyClass;
     }
 }

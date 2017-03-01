@@ -10,14 +10,13 @@
  */
 package org.seedstack.business.fixtures.identity;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Create;
 
 
 @Create
-public interface MyAggregateFactory  extends GenericFactory<MyAggregate> {
+public interface MyAggregateFactory  extends Factory<MyAggregate> {
 
-	
 	MyAggregate createMyAggregate(String name);
 
 }

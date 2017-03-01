@@ -1,7 +1,21 @@
+# Version 4.0.0 (2016-07-??)
+
+* [new] DDD specifications have been added.
+* [new] A specification builder allow to create DDD specifications with a fluent DSL. 
+* [new] Add SPI and base infrastructure for specification translation.
+* [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
+* [new] Business framework now takes advantage of Java 8 features (notably streams and optional).  
+* [brk] The `Repository` interface has been refactored as a collection-like interface.
+* [brk] The `Factory` and `GenericFactory` interfaces are merged into a unique `Factory` interface.
+* [brk] Intermediate interfaces of `FluentAssembler` have been renamed.
+* [brk] Generic events have been replaced by domain-only events.
+* [brk] Remove the `source` parameter from `@Identity` annotation. This is better done in class configuration.
+* [brk] Rename the `handler` parameter from `@Identity` annotation to `value`.
+
 # Version 3.1.0 (2017-04-30)
 
 * [new] It is now possible to assemble a list of DTOs to aggregates coming both from repository and factory.
-* [chg] When assembling a DTO list, aggregates coming both from repository and factory and allowed by default.
+* [chg] When assembling a DTO list, aggregates coming both from repository and factory are allowed by default.
 
 # Version 3.0.2 (2017-02-26)
 

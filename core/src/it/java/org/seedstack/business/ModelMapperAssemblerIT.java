@@ -38,7 +38,7 @@ public class ModelMapperAssemblerIT {
     private Assembler<Order, OrderDTO> defaultAssembler;
 
     @Inject
-    private CustomerAssembler customerAssembler;
+    private Assembler<Customer, Name> customerAssembler;
 
     @Test
     public void testInjectee() {

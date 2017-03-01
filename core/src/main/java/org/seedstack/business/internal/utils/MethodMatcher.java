@@ -49,14 +49,14 @@ public final class MethodMatcher {
         return findMatchingMethod(classToInspect, null, params);
     }
 
-    public static Constructor<?> findMatchingConstructor(Class<?> classToInspect, Object... params) {
-        Constructor<?>[] constructors = classToInspect.getDeclaredConstructors();
-        Constructor<?> checkedConstructors = null;
-        for (Constructor<?> constructor : constructors) {
+    @SuppressWarnings("unchecked")
+    public static <T> Constructor<T> findMatchingConstructor(Class<T> classToInspect, Object... params) {
+        Constructor<T> checkedConstructors = null;
+        for (Constructor<?> constructor : classToInspect.getDeclaredConstructors()) {
             Type[] parameterTypes = constructor.getParameterTypes();
             if (parameterTypes.length == params.length && checkParameterTypes(parameterTypes, params)) {
                 if (checkedConstructors == null) {
-                    checkedConstructors = constructor;
+                    checkedConstructors = (Constructor<T>) constructor;
                 } else {
                     throw SeedException.createNew(BusinessErrorCode.AMBIGUOUS_CONSTRUCTOR_FOUND).put("constructor1", constructor).put("constructor2", checkedConstructors)
                             .put("object", classToInspect.getSimpleName()).put("parameters", params);

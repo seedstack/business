@@ -7,27 +7,98 @@
  */
 package org.seedstack.business.internal.utils;
 
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.name.Names;
+import io.nuun.kernel.api.plugin.context.InitContext;
 import net.jodah.typetools.TypeResolver;
+import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.seed.Application;
+import org.seedstack.seed.ClassConfiguration;
+import org.seedstack.seed.SeedException;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
+import org.seedstack.shed.ClassLoaders;
 
+import java.lang.annotation.Annotation;
 import java.util.Collection;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
 
 public final class BusinessUtils {
     private BusinessUtils() {
         // no instantiation allowed
     }
 
-    public static Class<?> getAggregateIdClass(Class<? extends AggregateRoot<?>> aggregateRootClass) {
-        checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
-        return TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(AggregateRoot.class, aggregateRootClass), aggregateRootClass)[0];
+    public static <T> Class<?>[] resolveGenerics(Class<T> superType, Class<? extends T> subType) {
+        checkNotNull(superType, "superType should not be null");
+        checkNotNull(subType, "subType should not be null");
+        Class<?> subTypeWithoutProxy = ProxyUtils.cleanProxy(subType);
+        return TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(superType, subTypeWithoutProxy), subTypeWithoutProxy);
     }
 
-    public static <T> Collection<Class<? extends T>> convertClassCollection(Class<T> target, Collection<Class<?>> collection) {
-        return collection.stream().map((Function<Class<?>, Class<? extends T>>) x -> x.asSubclass(target)).collect(Collectors.toList());
+    public static Class<?> getAggregateIdClass(Class<? extends AggregateRoot<?>> aggregateRootClass) {
+        checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
+        return resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Stream<Class<? extends T>> streamClasses(InitContext initContext, Specification<Class<?>> spec, Class<T> baseClass) {
+        Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext.scannedTypesBySpecification();
+        return scannedTypesBySpecification
+                .get(spec)
+                .stream()
+                .filter(baseClass::isAssignableFrom)
+                .map(c -> (Class<T>) c);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Key<?> defaultQualifier(Application application, String key, Class<?> aggregateClass, TypeLiteral<?> genericInterface) {
+        Key<?> defaultKey = null;
+
+        ClassConfiguration<?> configuration = application.getConfiguration(aggregateClass);
+
+        if (configuration != null && !configuration.isEmpty()) {
+            String qualifierName = configuration.get(key);
+            if (qualifierName != null && !"".equals(qualifierName)) {
+                try {
+                    ClassLoader classLoader = ClassLoaders.findMostCompleteClassLoader(BusinessUtils.class);
+                    Class<?> qualifierClass = classLoader.loadClass(qualifierName);
+                    if (Annotation.class.isAssignableFrom(qualifierClass)) {
+                        defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
+                    } else {
+                        throw SeedException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
+                                .put("aggregateClass", aggregateClass.getName())
+                                .put("qualifierClass", qualifierName);
+                    }
+                } catch (ClassNotFoundException e) {
+                    defaultKey = Key.get(genericInterface, Names.named(qualifierName));
+                }
+            }
+        }
+        return defaultKey;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Set<Class<? extends AggregateRoot<?>>> includeSuperClasses(Collection<Class<? extends AggregateRoot<?>>> aggregateClasses) {
+        Set<Class<? extends AggregateRoot<?>>> results = new HashSet<>();
+        for (Class<?> aggregateClass : aggregateClasses) {
+            Class<?> classToAdd = aggregateClass;
+            while (classToAdd != null) {
+                if (AggregateRoot.class.isAssignableFrom(classToAdd) && !classToAdd.equals(BaseAggregateRoot.class) && !classToAdd.equals(AggregateRoot.class)) {
+                    results.add((Class<? extends AggregateRoot<?>>) classToAdd);
+                    classToAdd = classToAdd.getSuperclass();
+                } else {
+                    break;
+                }
+            }
+        }
+        return results;
     }
 }

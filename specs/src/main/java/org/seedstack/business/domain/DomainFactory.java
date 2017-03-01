@@ -14,10 +14,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is a marker for {@link org.seedstack.business.domain.GenericFactory}.
- * <p>
- * {@code GenericFactory} is the interface to extend to create a Domain Factory interface.
- * </p>
+ * This annotation is a marker for {@link Factory}.
  */
 @Documented
 @DomainElement

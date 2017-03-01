@@ -9,16 +9,15 @@ package org.seedstack.business.fixtures.repositories;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.fixtures.DummyRepository;
 
 import javax.inject.Inject;
 
 
-
-public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends BaseRepository<A,K> {
-
+public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
     @Inject
+    @SuppressWarnings("unchecked")
     public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass, @Assisted("keyClass") Object keyClass) {
-        super((Class)aggregateRootClass, (Class)keyClass);
+        super((Class) aggregateRootClass, (Class) keyClass);
     }
 }

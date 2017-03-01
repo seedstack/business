@@ -7,10 +7,10 @@
  */
 package org.seedstack.business.fixtures.assembler.customer;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
 
-public interface OrderFactory extends GenericFactory<Order> {
+public interface OrderFactory extends Factory<Order> {
 
     Order create(String id, String product);
 }

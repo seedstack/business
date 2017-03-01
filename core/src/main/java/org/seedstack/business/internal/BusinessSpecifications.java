@@ -8,18 +8,22 @@
 package org.seedstack.business.internal;
 
 import org.kametic.specifications.Specification;
+import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.DomainAggregateRoot;
 import org.seedstack.business.domain.DomainEntity;
 import org.seedstack.business.domain.DomainFactory;
+import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.identity.IdentityHandler;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
+import org.seedstack.business.spi.domain.specification.SpecificationConverter;
+import org.seedstack.business.spi.domain.specification.SpecificationTranslator;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.AnnotationPredicates;
 
@@ -28,6 +32,7 @@ import java.lang.reflect.Modifier;
 import static org.seedstack.shed.reflect.AnnotationPredicates.classOrAncestorAnnotatedWith;
 import static org.seedstack.shed.reflect.AnnotationPredicates.elementAnnotatedWith;
 import static org.seedstack.shed.reflect.ClassPredicates.classIsAnnotation;
+import static org.seedstack.shed.reflect.ClassPredicates.classIsAssignableFrom;
 import static org.seedstack.shed.reflect.ClassPredicates.classIsDescendantOf;
 import static org.seedstack.shed.reflect.ClassPredicates.classIsInterface;
 import static org.seedstack.shed.reflect.ClassPredicates.classModifierIs;
@@ -94,11 +99,21 @@ public final class BusinessSpecifications {
 
     /**
      * The domain factory specification.
+     *
+     * @see #PRODUCIBLE
      */
     public static final Specification<Class<?>> FACTORY = new SpecificationBuilder<>(
             classOrAncestorAnnotatedWith(DomainFactory.class, true)
                     .and(classIsInterface())
                     .and(classIsAnnotation().negate()))
+            .build();
+
+    /**
+     * The specification for the classes producible by factories.
+     */
+    public static final Specification<Class<?>> PRODUCIBLE = new SpecificationBuilder<>(
+            classIsAssignableFrom(Producible.class)
+                    .and(classIsAssignableFrom(DomainObject.class)))
             .build();
 
     /**
@@ -142,6 +157,25 @@ public final class BusinessSpecifications {
                     .and(classIsInterface().negate())
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
                     .and(classOrAncestorAnnotatedWith(DomainRepository.class, true)))
+            .build();
+
+    /**
+     * The specification for default specification translators.
+     */
+    public static final Specification<Class<?>> DEFAULT_SPECIFICATION_TRANSLATOR = new SpecificationBuilder<>(
+            classIsDescendantOf(SpecificationTranslator.class)
+                    .and(elementAnnotatedWith(GenericImplementation.class, false))
+                    .and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate()))
+            .build();
+
+    /**
+     * The specification for default specification translators.
+     */
+    public static final Specification<Class<?>> SPECIFICATION_CONVERTER = new SpecificationBuilder<>(
+            classIsDescendantOf(SpecificationConverter.class)
+                    .and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate()))
             .build();
 
     /**

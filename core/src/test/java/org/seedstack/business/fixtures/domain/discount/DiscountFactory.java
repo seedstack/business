@@ -7,12 +7,12 @@
  */
 package org.seedstack.business.fixtures.domain.discount;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
 import javax.validation.constraints.NotNull;
 
 
-public interface DiscountFactory extends GenericFactory<Discount> {
+public interface DiscountFactory extends Factory<Discount> {
 	
 	Discount createNewActivation(@NotNull String id, String description);
 

@@ -8,9 +8,14 @@
 package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.domain.RepositoryOptions;
+import org.seedstack.business.domain.specification.Specification;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 
 public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements CustomerRepository {
@@ -18,13 +23,23 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     private static Map<String, Customer> orderMap = new ConcurrentHashMap<>();
 
     @Override
-    public Customer load(String id) {
-        return orderMap.get(id);
+    public Optional<Customer> get(String id) {
+        return Optional.ofNullable(orderMap.get(id));
     }
 
     @Override
-    public boolean exists(String id) {
+    public Stream<Customer> get(Specification<Customer> specification, RepositoryOptions... options) {
+        return orderMap.values().stream().filter(specification.asPredicate());
+    }
+
+    @Override
+    public boolean contains(String id) {
         return orderMap.containsKey(id);
+    }
+
+    @Override
+    public long count(Specification<Customer> specification) {
+        return get(specification).count();
     }
 
     @Override
@@ -37,12 +52,26 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    public void delete(String id) {
+    public void remove(String id) {
         orderMap.remove(id);
     }
 
     @Override
-    public void delete(Customer order) {
+    public long remove(Specification<Customer> specification) {
+        Iterator<Map.Entry<String, Customer>> iterator = orderMap.entrySet().iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            Map.Entry<String, Customer> next = iterator.next();
+            if (specification.isSatisfiedBy(next.getValue())) {
+                iterator.remove();
+                count++;
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public void remove(Customer order) {
         for (Customer order1 : orderMap.values()) {
             if (order1.equals(order)) {
                 orderMap.remove(order.getEntityId());
@@ -51,12 +80,12 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    public void persist(Customer order) {
+    public void add(Customer order) {
         orderMap.put(order.getEntityId(), order);
     }
 
     @Override
-    public Customer save(Customer order) {
+    public Customer update(Customer order) {
         return orderMap.put(order.getEntityId(), order);
     }
 }

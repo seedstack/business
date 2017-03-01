@@ -7,6 +7,11 @@
  */
 package org.seedstack.business.domain;
 
+import org.seedstack.business.domain.specification.Specification;
+
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * This interface has to be extended in order to create a Domain Repository <em>interface</em>.
  * <p>
@@ -27,77 +32,102 @@ package org.seedstack.business.domain;
  * Then this interface has to be implemented by the actual repository implementation.
  * </p>
  *
- * @param <A> the type of the aggregate root class.
- * @param <K> the type of the aggregate root class.
+ * @param <A>  the type of the aggregate root class.
+ * @param <ID> the type of the aggregate root class.
  */
 @DomainRepository
-public interface Repository<A extends AggregateRoot<K>, K> {
+public interface Repository<A extends AggregateRoot<ID>, ID> {
 
     /**
-     * Loads an aggregate from the persistence by its key.
+     * Gets an aggregate identified by its identifier.
      *
-     * @param id the aggregate key
-     * @return the loaded aggregate
+     * @param id the aggregate identifier.
+     * @return an optional of the corresponding aggregate.
      */
     @Read
-    A load(K id);
+    Optional<A> get(ID id);
 
     /**
-     * Check that the aggregate identified by the specified key exists.
+     * Finds all aggregates in the repository satisfying the given specification. Options can be specified to
+     * alter the returned stream (order, limits, ...).
      *
-     * @param id the aggregate key
+     * @param specification the specification aggregates must satisfy.
+     * @param options       result options.
+     * @return a stream of aggregates.
+     */
+    @Read
+    Stream<A> get(Specification<A> specification, RepositoryOptions... options);
+
+    /**
+     * Checks that the aggregate identified by the specified identifier exists in the repository.
+     *
+     * @param id the aggregate identifier.
      * @return true if the aggregate exists, false otherwise.
      */
-    @Read
-    boolean exists(K id);
+    boolean contains(ID id);
+
 
     /**
-     * Returns the number of aggregates managed by this repository.
+     * Count the number of aggregates in the repository satisfying the given specification.
      *
-     * @return the number of aggregates managed by this repository.
+     * @param specification the specification aggregates must satisfy.
      */
-    @Read
+    long count(Specification<A> specification);
+
+    /**
+     * Returns the number of aggregates in the repository.
+     *
+     * @return the number of aggregates in the repository.
+     */
     long count();
 
     /**
-     * Deletes all aggregates from the persistence.
+     * Adds an aggregate to the repository.
+     *
+     * @param aggregate the aggregate to add.
+     */
+    @Persist
+    void add(A aggregate);
+
+    /**
+     * Replaces an existing aggregate with the specified aggregate. Identifiers for both aggregates must match.
+     *
+     * @param aggregate the updated aggregate.
+     * @return the updated aggregate.
+     */
+    @Persist
+    A update(A aggregate);
+
+    /**
+     * Removes the specified aggregate from the repository.
+     *
+     * @param aggregate the aggregate to remove.
+     */
+    @Delete
+    void remove(A aggregate);
+
+    /**
+     * Removes the existing aggregate identified with the specified identifier.
+     *
+     * @param id the identifier of the aggregate to remove.
+     */
+    @Delete
+    void remove(ID id);
+
+    /**
+     * Removes all aggregates in the repository satisfying the given specification.
+     *
+     * @param specification the specification aggregates must satisfy.
+     */
+    @Delete
+    long remove(Specification<A> specification);
+
+
+    /**
+     * Removes all aggregates from the repository.
      */
     @Delete
     void clear();
-
-    /**
-     * Deletes an aggregate from the persistence by its key.
-     *
-     * @param id the aggregate key
-     */
-    @Delete
-    void delete(K id);
-
-    /**
-     * Deletes an aggregate instance from the persistence.
-     *
-     * @param aggregate the aggregate to delete
-     */
-    @Delete
-    void delete(A aggregate);
-
-    /**
-     * Creates an aggregate in the persistence.
-     *
-     * @param aggregate the aggregate to persist
-     */
-    @Persist
-    void persist(A aggregate);
-
-    /**
-     * Updates an aggregate in the persistence
-     *
-     * @param aggregate the aggregate to save
-     * @return the updated aggregate
-     */
-    @Persist
-    A save(A aggregate);
-
 
     /**
      * @return the aggregate root class.
@@ -107,6 +137,5 @@ public interface Repository<A extends AggregateRoot<K>, K> {
     /**
      * @return the aggregate key.
      */
-    Class<K> getKeyClass();
-
+    Class<ID> getIdentifierClass();
 }

@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.domain.activation;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
-public interface ActivationFactory extends GenericFactory<Activation> {
+public interface ActivationFactory extends Factory<Activation> {
     Activation createNewActivation(String id, String description) throws ActivationException;
 }

@@ -19,6 +19,8 @@ import org.seedstack.business.fixtures.repositories.DefaultRepoSample2;
 import org.seedstack.business.fixtures.repositories.DefaultRepoSample3;
 import org.seedstack.business.fixtures.repositories.TestAggregate;
 import org.seedstack.business.fixtures.repositories.TestAggregate2;
+import org.seedstack.business.fixtures.repositories.TestAggregate3Repository;
+import org.seedstack.business.fixtures.repositories.TestAggregate3RepositoryImpl;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -32,7 +34,8 @@ public class DefaultRepositoryIT {
     @Named("DefaultRepo")
     Repository<TestAggregate, String> testRepo;
 
-    @Inject @Named("mock")
+    @Inject
+    @Named("mock")
     Repository<TestAggregate, String> testRepo2;
 
     @Inject
@@ -43,6 +46,9 @@ public class DefaultRepositoryIT {
 
     @Inject
     Repository<TestAggregate2, String> testRepo4;
+
+    @Inject
+    TestAggregate3Repository testRepo5;
 
     @Test
     public void test() {
@@ -60,5 +66,8 @@ public class DefaultRepositoryIT {
 
         Assertions.assertThat(testRepo4).isNotNull();
         Assertions.assertThat(testRepo4).isInstanceOf(DefaultRepoSample3.class);
+
+        Assertions.assertThat(testRepo5).isNotNull();
+        Assertions.assertThat(testRepo5).isInstanceOf(TestAggregate3RepositoryImpl.class);
     }
 }

@@ -24,7 +24,7 @@ public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends Abstra
     @SuppressWarnings("unchecked")
     @Inject
     public DummyDefaultAssembler(@Assisted Object[] genericClasses) {
-        super((Class) genericClasses.clone()[1]);
+        super((Class) genericClasses[1]);
     }
 
     @Override

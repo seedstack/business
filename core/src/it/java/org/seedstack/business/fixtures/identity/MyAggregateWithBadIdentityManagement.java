@@ -22,7 +22,7 @@ import java.util.UUID;
 public class MyAggregateWithBadIdentityManagement extends
 		BaseAggregateRoot<UUID> {
 
-	@Identity(handler = RandomIdentityHandler.class)
+	@Identity(RandomIdentityHandler.class)
 	private UUID id;
 
 	private String name;

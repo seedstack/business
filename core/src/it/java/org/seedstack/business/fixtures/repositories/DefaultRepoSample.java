@@ -18,45 +18,8 @@ import javax.inject.Named;
 @Named("DefaultRepo")
 @GenericImplementation
 public class DefaultRepoSample<A extends AggregateRoot<K>, K> extends AbstractDefaultRepoSample<A, K> {
-
     @Inject
     public DefaultRepoSample(@Assisted Object[] genericClasses) {
         super(genericClasses[0], genericClasses[1]);
-    }
-
-    @Override
-    public A load(K id) {
-        return null;
-    }
-
-    @Override
-    public boolean exists(K id) {
-        return false;
-    }
-
-    @Override
-    public long count() {
-        return 0L;
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    @Override
-    public void delete(K id) {
-    }
-
-    @Override
-    public void delete(A a) {
-    }
-
-    @Override
-    public void persist(A a) {
-    }
-
-    @Override
-    public A save(A a) {
-        return null;
     }
 }

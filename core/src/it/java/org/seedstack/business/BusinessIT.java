@@ -97,11 +97,11 @@ public class BusinessIT extends AbstractSeedIT {
         product2.setName("Tea mandarin tetley");
         product2.setDescription("White tea for digestion.");
 
-        holder.productRepo.persist(product1);
-        holder.productRepo.persist(product2);
+        holder.productRepo.add(product1);
+        holder.productRepo.add(product2);
 
-        Product loadedProduct1 = holder.productRepo.load(new ProductId((short) 1, "ean13-1"));
-        Product loadedProduct2 = holder.productRepo.load(new ProductId((short) 2, (short) 5));
+        Product loadedProduct1 = holder.productRepo.get(new ProductId((short) 1, "ean13-1")).get();
+        Product loadedProduct2 = holder.productRepo.get(new ProductId((short) 2, (short) 5)).get();
 
         assertThat(loadedProduct1.getEntityId().getStoreId()).isEqualTo((short) 1);
         assertThat(loadedProduct1.getEntityId().getProductCode()).isEqualTo("ean13-1");
@@ -126,8 +126,8 @@ public class BusinessIT extends AbstractSeedIT {
         order1.setCustomerId(c2.getEntityId());
 
         // persist
-        holder.customerRepo.persist(testCusto);
-        holder.orderRepo.persist(order1);
+        holder.customerRepo.add(testCusto);
+        holder.orderRepo.add(order1);
 
         // find
         List<CustomerRepresentation> findAll = holder.customerFinder.findAll();
@@ -135,12 +135,12 @@ public class BusinessIT extends AbstractSeedIT {
         assertThat(findAll).hasSize(1);
 
         // persist
-        holder.customerRepo.persist(c2);
+        holder.customerRepo.add(c2);
 
-        Order load2_ = holder.orderRepo.load(new OrderId("commande01"));
+        Order load2_ = holder.orderRepo.get(new OrderId("commande01")).get();
         assertThat(load2_).isNotNull();
 
-        Customer custLoadedKey1 = holder.customerRepo.load(new CustomerId("key1"));
+        Customer custLoadedKey1 = holder.customerRepo.get(new CustomerId("key1")).get();
         assertThat(custLoadedKey1).isNotNull();
 
         assertThat(load2_.getEntityId().getValue()).isEqualTo(new OrderId("commande01").getValue());
@@ -154,11 +154,11 @@ public class BusinessIT extends AbstractSeedIT {
 //		assertThat(findAll).onProperty("name").contains("f1 l1" , "test1 "); // TODO : to re set when fest-util 1.2.4 and 1.1.6 is resolved
 
         CustomerId entityId = new CustomerId("key1");
-        Customer load = holder.customerRepo.load(entityId);
+        Customer load = holder.customerRepo.get(entityId).get();
         assertThat(load).isNotNull();
 
         entityId = new CustomerId("2");
-        load = holder.customerRepo.load(entityId);
+        load = holder.customerRepo.get(entityId).get();
         assertThat(load).isNotNull();
 
         String uuid;
@@ -166,6 +166,6 @@ public class BusinessIT extends AbstractSeedIT {
         Activation activation = holder.activationFactory.createNewActivation(uuid, "new activation");
         activation.setActivationDate(new Date());
         activation.setCreationDate(new Date());
-        holder.activationRepository.persist(activation);
+        holder.activationRepository.add(activation);
     }
 }

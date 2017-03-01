@@ -29,7 +29,7 @@ public class DefaultModelMapperAssembler<A extends AggregateRoot<?>,D> extends M
     @SuppressWarnings("unchecked")
     @Inject
     public DefaultModelMapperAssembler(@Assisted Object[] genericClasses) {
-        super((Class) genericClasses.clone()[1]);
+        super((Class) genericClasses[1]);
     }
 
     @Override

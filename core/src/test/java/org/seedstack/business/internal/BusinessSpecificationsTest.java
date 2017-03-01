@@ -22,12 +22,16 @@ import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.Factory;
-import org.seedstack.business.domain.GenericFactory;
-import org.seedstack.business.domain.GenericRepository;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.domain.RepositoryOptions;
+import org.seedstack.business.domain.specification.Specification;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.finder.RangeFinder;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.Ignore;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -165,7 +169,7 @@ public class BusinessSpecificationsTest {
     interface MyFactory1 {
     }
 
-    interface MyFactory2 extends GenericFactory<MyAggregateRoot1> {
+    interface MyFactory2 extends Factory<MyAggregateRoot1> {
     }
 
     @DomainFactory
@@ -193,7 +197,7 @@ public class BusinessSpecificationsTest {
     }
 
     @Ignore
-    private interface MyRepository2 extends GenericRepository<MyAggregateRoot1, String> {
+    private interface MyRepository2 extends Repository<MyAggregateRoot1, String> {
     }
 
     @DomainRepository
@@ -211,15 +215,25 @@ public class BusinessSpecificationsTest {
 
     @GenericImplementation
     @Ignore
-    private static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements GenericRepository<A, K> {
+    private static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements Repository<A, K> {
         @Override
-        public A load(K id) {
+        public Optional<A> get(K id) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Stream<A> get(Specification<A> specification, RepositoryOptions... options) {
             return null;
         }
 
         @Override
-        public boolean exists(K id) {
+        public boolean contains(K id) {
             return false;
+        }
+
+        @Override
+        public long count(Specification<A> specification) {
+            return 0;
         }
 
         @Override
@@ -232,19 +246,24 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public void delete(K k) {
+        public void remove(K k) {
         }
 
         @Override
-        public void delete(A a) {
+        public long remove(Specification<A> specification) {
+            return 0;
         }
 
         @Override
-        public void persist(A a) {
+        public void remove(A a) {
         }
 
         @Override
-        public A save(A a) {
+        public void add(A a) {
+        }
+
+        @Override
+        public A update(A a) {
             return null;
         }
 
@@ -254,7 +273,7 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public Class<K> getKeyClass() {
+        public Class<K> getIdentifierClass() {
             return null;
         }
     }

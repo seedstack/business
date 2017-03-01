@@ -91,7 +91,7 @@ public interface InternalRegistry {
      * @param aggregateRoot the aggregate root
      * @return the factory
      */
-    GenericFactory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot);
+    Factory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot);
 
     /**
      * Returns a default factory for the given domain object. It can be used for instance

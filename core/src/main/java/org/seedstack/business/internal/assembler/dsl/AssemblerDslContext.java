@@ -7,8 +7,11 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.domain.*;
 import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Repository;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -16,7 +19,7 @@ import java.util.List;
 /**
  * Context used by the DSL to carry the internal registry and the qualifier it uses.
  */
-public class AssemblerDslContext {
+class AssemblerDslContext {
 
     private InternalRegistry registry;
 
@@ -66,7 +69,7 @@ public class AssemblerDslContext {
         return registry.tupleAssemblerOf(aggregateRootTuple, dto);
     }
 
-    public GenericFactory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot) {
+    public Factory<?> genericFactoryOf(Class<? extends AggregateRoot<?>> aggregateRoot) {
         return registry.genericFactoryOf(aggregateRoot);
     }
 

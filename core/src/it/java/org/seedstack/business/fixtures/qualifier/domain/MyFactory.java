@@ -7,10 +7,10 @@
  */
 package org.seedstack.business.fixtures.qualifier.domain;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
 
-public interface MyFactory extends GenericFactory<MyDomainPolicy>{
+public interface MyFactory extends Factory<MyDomainPolicy> {
 
 
 }

@@ -12,7 +12,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.domain.Factory;
-import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.fixtures.factory.MyFactoryAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregateFactory;
@@ -24,7 +23,7 @@ import org.seedstack.business.fixtures.qualifier.domain.MyDomainEvent;
 import org.seedstack.business.fixtures.qualifier.domain.MyDomainPolicy;
 import org.seedstack.business.fixtures.qualifier.domain.MyDomainService;
 import org.seedstack.business.fixtures.qualifier.domain.MyValueObject;
-import org.seedstack.business.internal.FactoryInternal;
+import org.seedstack.business.internal.domain.DefaultFactory;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -32,49 +31,43 @@ import javax.inject.Named;
 
 @RunWith(SeedITRunner.class)
 public class FactoryIT {
-
     @Inject
-    Factory<MyValueObject> myValueObjectFactory;
-
+    private Factory<MyValueObject> myValueObjectFactory;
     @Inject
-    Factory<MyDomainEvent> myDomainEventFactory;
-
+    private Factory<MyDomainEvent> myDomainEventFactory;
     @Inject
-    Factory<MyDomainService> myDomainServiceFactory;
-
+    private Factory<MyDomainService> myDomainServiceFactory;
     @Inject
     @Named("2")
-    Factory<MyDomainService> myQualifiedDomainServiceFactory;
-
+    private Factory<MyDomainService> myQualifiedDomainServiceFactory;
     @Inject
-    Factory<MyDomainPolicy<String>> myDomainPolicyFactory;
-
+    private Factory<MyDomainPolicy<String>> myDomainPolicyFactory;
     @Inject
-    Factory<MyFactoryAggregate> myAggregateAutoFactory;
-
+    private Factory<MyFactoryAggregate> myAggregateAutoFactory;
     @Inject
-    GenericFactory<MyAggregate> myAggregateGenericFactory;
-
+    private Factory<MyAggregate> myAggregateGenericFactory;
     @Inject
-    MyAggregateFactory myAggregateFactory;
+    private MyAggregateFactory myAggregateFactory;
 
+    public FactoryIT() throws ClassNotFoundException {
+    }
 
     @Test
     public void factory_injection_test() {
         Assertions.assertThat(myValueObjectFactory).isNotNull();
-        Assertions.assertThat(myValueObjectFactory).isInstanceOf(FactoryInternal.class);
+        Assertions.assertThat(myValueObjectFactory).isInstanceOf(DefaultFactory.class);
 
         Assertions.assertThat(myDomainEventFactory).isNotNull();
-        Assertions.assertThat(myDomainEventFactory).isInstanceOf(FactoryInternal.class);
+        Assertions.assertThat(myDomainEventFactory).isInstanceOf(DefaultFactory.class);
 
         Assertions.assertThat(myDomainServiceFactory).isNotNull();
-        Assertions.assertThat(myDomainServiceFactory).isInstanceOf(FactoryInternal.class);
+        Assertions.assertThat(myDomainServiceFactory).isInstanceOf(DefaultFactory.class);
 
-        Assertions.assertThat(myDomainPolicyFactory).isNotNull();//DomPolicyImpl1
-        Assertions.assertThat(myDomainPolicyFactory).isInstanceOf(FactoryInternal.class);
+        Assertions.assertThat(myDomainPolicyFactory).isNotNull();
+        Assertions.assertThat(myDomainPolicyFactory).isInstanceOf(DefaultFactory.class);
 
         Assertions.assertThat(myAggregateAutoFactory).isNotNull();
-        Assertions.assertThat(myAggregateAutoFactory).isInstanceOf(FactoryInternal.class);
+        Assertions.assertThat(myAggregateAutoFactory).isInstanceOf(DefaultFactory.class);
 
         Assertions.assertThat(myAggregateGenericFactory).isNotNull();
         Assertions.assertThat(myAggregateGenericFactory).isInstanceOf(MyAggregateFactoryDefault.class);

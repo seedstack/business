@@ -7,12 +7,12 @@
  */
 package org.seedstack.business.fixtures.domain.export;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
 import javax.validation.constraints.NotNull;
 
 
-public interface ExportFactory extends GenericFactory<Export> {
+public interface ExportFactory extends Factory<Export> {
 	
 	Export createNewActivation(@NotNull String id, String description);
 

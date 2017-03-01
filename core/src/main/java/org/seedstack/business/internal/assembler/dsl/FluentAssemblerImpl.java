@@ -33,32 +33,32 @@ public class FluentAssemblerImpl implements FluentAssembler {
     }
 
     @Override
-    public AssembleDtoWithQualifierProvider assemble(AggregateRoot<?> aggregateRoot) {
-        return new AssembleDtoProviderImpl(context, aggregateRoot);
+    public AssembleSingleWithQualifier assemble(AggregateRoot<?> aggregateRoot) {
+        return new AssembleSingleImpl(context, aggregateRoot);
     }
 
     @Override
-    public AssembleDtosWithQualifierProvider assemble(List<? extends AggregateRoot<?>> aggregateRoots) {
-        return new AssembleDtosProviderImpl(context, aggregateRoots, null);
+    public AssembleMultipleWithQualifier assemble(List<? extends AggregateRoot<?>> aggregateRoots) {
+        return new AssembleMultipleImpl(context, aggregateRoots, null);
     }
 
     @Override
-    public AssembleDtoWithQualifierProvider assembleTuple(Tuple aggregateRoots) {
-        return new AssembleDtoProviderImpl(context, aggregateRoots);
+    public AssembleSingleWithQualifier assembleTuple(Tuple aggregateRoots) {
+        return new AssembleSingleImpl(context, aggregateRoots);
     }
 
     @Override
-    public AssembleDtosWithQualifierProvider assembleTuple(List<? extends Tuple> aggregateRoots) {
-        return new AssembleDtosProviderImpl(context, null, aggregateRoots);
+    public AssembleMultipleWithQualifier assembleTuple(List<? extends Tuple> aggregateRoots) {
+        return new AssembleMultipleImpl(context, null, aggregateRoots);
     }
 
     @Override
-    public <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto) {
-        return new MergeAggregateOrTupleProviderImpl<>(context, dto);
+    public <D> MergeSingleWithQualifier<D> merge(D dto) {
+        return new MergeSingleImpl<>(context, dto);
     }
 
     @Override
-    public <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos) {
-        return new MergeAggregatesOrTuplesProviderImpl<>(context, dtos);
+    public <D> MergeMultipleWithQualifier<D> merge(List<D> dtos) {
+        return new MergeMultipleImpl<>(context, dtos);
     }
 }

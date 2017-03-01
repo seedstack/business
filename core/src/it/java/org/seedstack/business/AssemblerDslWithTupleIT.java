@@ -11,8 +11,8 @@ import org.assertj.core.api.Assertions;
 import org.javatuples.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.assembler.AssemblerTypes;
 import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.assembler.customer.Customer;
@@ -46,7 +46,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -62,14 +62,14 @@ public class AssemblerDslWithTupleIT {
 
         Order order = orderFactory.create("order1", "death star");
         order.setOtherDetails("some details");
-        orderRepository.persist(order);
+        orderRepository.add(order);
 
         Customer customer = new Customer("customer1");
-        customerRepository.persist(customer);
+        customerRepository.add(customer);
 
         Pair<Order, Customer> orderCustomerPair = null;
         try {
-            orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFail();
+            orderCustomerPair = fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromRepository().orFail();
         } catch (AggregateNotFoundException e) {
             fail();
         }
@@ -80,15 +80,15 @@ public class AssemblerDslWithTupleIT {
         Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
         Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
 
-        orderRepository.delete(order);
-        customerRepository.delete(customer);
+        orderRepository.remove(order);
+        customerRepository.remove(customer);
     }
 
     @Test
     public void testAssembleFromRepositoryOrFail() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
         try {
-            fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFail();
+            fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromRepository().orFail();
             fail();
         } catch (AggregateNotFoundException e) {
             Assertions.assertThat(e).isNotNull();
@@ -99,7 +99,7 @@ public class AssemblerDslWithTupleIT {
     public void testAssembleFromRepositoryOrFactory() {
         Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
-        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(AssemblerTypes.MODEL_MAPPER).into(Order.class, Customer.class).fromRepository().orFromFactory();
+        Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
         Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
@@ -116,7 +116,7 @@ public class AssemblerDslWithTupleIT {
         Customer customer = new Customer("customer1");
         customer.setName("lucky");
 
-        fluently.merge(new Recipe("customer1", "luke", "order1", "light saber")).with(AssemblerTypes.MODEL_MAPPER).into(order, customer);
+        fluently.merge(new Recipe("customer1", "luke", "order1", "light saber")).with(ModelMapper.class).into(order, customer);
 
         Assertions.assertThat(order).isNotNull();
         Assertions.assertThat(customer).isNotNull();

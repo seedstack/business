@@ -9,12 +9,33 @@ package org.seedstack.business.domain;
 
 import org.seedstack.business.Producible;
 
+
 /**
- * Factory allows creation of {@link DomainObject} that are {@link Producible} object.
+ * This interface has to be extended in order to create a Domain Factory interface.
+ * <p>
+ * To be a valid factory interface, Type must respect the followings:
+ * </p>
+ * <ul>
+ * <li>be an interface</li>
+ * <li>extends {@link Factory}</li>
+ * <li>have at least one method that return an Aggregate Root type or another Domain Concept.</li>
+ * </ul>
+ * The following is a valid Domain factory interface.
+ * <pre>
+ *  public interface ProductFactory extends GenericFactory&lt;Product&gt; {
+ *      Product createProduct(String productId, EAN13 ean13);
+ *  }
+ * </pre>
+ * Then this interface has to be implemented by the actual factory implementation .
  *
- * @param <DO> Created {@link DomainObject} type.
+ * @param <DO> Domain Object type to be produced.
  */
-public interface Factory<DO extends DomainObject & Producible> extends GenericFactory<DO> {
+@DomainFactory
+public interface Factory<DO extends DomainObject & Producible> extends DomainObject {
+    /**
+     * @return the produced class
+     */
+    Class<DO> getProducedClass();
 
     /**
      * Creates a domain object.
@@ -22,6 +43,8 @@ public interface Factory<DO extends DomainObject & Producible> extends GenericFa
      * @param args arguments
      * @return an instance of DomainObject
      */
-    DO create(Object... args);
-
+    default DO create(Object... args) {
+        throw new UnsupportedOperationException("Generic creation is not supported by this factory");
+    }
 }
+

@@ -8,10 +8,10 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.dsl.AssembleDtoWithQualifierProvider;
-import org.seedstack.business.assembler.dsl.AssembleDtosWithQualifierProvider;
-import org.seedstack.business.assembler.dsl.MergeAggregateOrTupleWithQualifierProvider;
-import org.seedstack.business.assembler.dsl.MergeAggregatesOrTuplesWithQualifierProvider;
+import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public interface FluentAssembler {
      * @param aggregateRoot the aggregate root
      * @return a DtoAssemblerProvider
      */
-    AssembleDtoWithQualifierProvider assemble(AggregateRoot<?> aggregateRoot);
+    AssembleSingleWithQualifier assemble(AggregateRoot<?> aggregateRoot);
 
     /**
      * Assembles a list of aggregates.
@@ -42,7 +42,7 @@ public interface FluentAssembler {
      * @param aggregateRoots the list of aggregate roots
      * @return a DtosAssemblerProvider
      */
-    AssembleDtosWithQualifierProvider assemble(List<? extends AggregateRoot<?>> aggregateRoots);
+    AssembleMultipleWithQualifier assemble(List<? extends AggregateRoot<?>> aggregateRoots);
 
     /**
      * Assembles a tuple of aggregates.
@@ -50,7 +50,7 @@ public interface FluentAssembler {
      * @param aggregateRoots the tuple of aggregate roots
      * @return a DtoAssemblerProvider
      */
-    AssembleDtoWithQualifierProvider assembleTuple(Tuple aggregateRoots);
+    AssembleSingleWithQualifier assembleTuple(Tuple aggregateRoots);
 
     /**
      * Assembles a list of tuple of aggregates.
@@ -58,7 +58,7 @@ public interface FluentAssembler {
      * @param aggregateRoots the list of tuple of aggregate roots
      * @return a DtosAssemblerProvider
      */
-    AssembleDtosWithQualifierProvider assembleTuple(List<? extends Tuple> aggregateRoots);
+    AssembleMultipleWithQualifier assembleTuple(List<? extends Tuple> aggregateRoots);
 
     /**
      * Merges a DTO.
@@ -67,7 +67,7 @@ public interface FluentAssembler {
      * @param <D> the DTO type
      * @return a MergeAggregateOrTupleWithQualifierProvider
      */
-    <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto);
+    <D> MergeSingleWithQualifier<D> merge(D dto);
 
     /**
      * Merges a list of DTOs.
@@ -76,6 +76,6 @@ public interface FluentAssembler {
      * @param <D>  the DTO type
      * @return a MergeAggregatesOrTuplesWithQualifierProvider
      */
-    <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos);
+    <D> MergeMultipleWithQualifier<D> merge(List<D> dtos);
 
 }

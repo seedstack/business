@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.assembler.customer;
 
-import org.seedstack.business.domain.GenericRepository;
+import org.seedstack.business.domain.Repository;
 
 
-public interface CustomerRepository extends GenericRepository<Customer, String> {
+public interface CustomerRepository extends Repository<Customer, String> {
 }

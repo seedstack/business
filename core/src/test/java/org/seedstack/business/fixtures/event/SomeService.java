@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.EventService;
+import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
@@ -17,10 +17,10 @@ import javax.inject.Inject;
 public class SomeService {
 
     @Inject
-    private EventService eventService;
+    private DomainEventPublisher domainEventPublisher;
 
     public void callBusinessStuff(String someParam) {
-        eventService.fire(new SomeEvent(someParam));
+        domainEventPublisher.publish(new SomeDomainEvent(someParam));
     }
 
     public void doNothing() {

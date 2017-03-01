@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.fixtures.domain.product;
 
-import org.seedstack.business.domain.GenericFactory;
+import org.seedstack.business.domain.Factory;
 
-public interface ProductFactory extends GenericFactory<Product> {
+public interface ProductFactory extends Factory<Product> {
 	
     Product createProduct ( Short storeId , Short productCode );
     

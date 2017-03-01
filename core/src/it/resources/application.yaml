@@ -16,6 +16,9 @@ classes:
             defaultRepository: DefaultRepo
             TestAggregate2:
               defaultRepository: org.seedstack.business.fixtures.repositories.MyQualifier
+            # TODO: improve bindings to bind default repositories only if no custom one exists
+            TestAggregate3:
+              defaultRepository:
           identity:
               identityHandler: simpleUUID
           assembler:

@@ -10,8 +10,8 @@ package org.seedstack.business;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.fixtures.assembler.MyAggregateRoot;
-import org.seedstack.business.fixtures.assembler.MyAssembler;
 import org.seedstack.business.fixtures.assembler.MyUnrestrictedDto;
 import org.seedstack.seed.it.SeedITRunner;
 
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SeedITRunner.class)
 public class BaseAssemblerIT {
     @Inject
-    private MyAssembler normalAssembler;
+    private Assembler<MyAggregateRoot, MyUnrestrictedDto> normalAssembler;
 
     @Test
     public void class_returned_by_dto_should_work_fine() {
