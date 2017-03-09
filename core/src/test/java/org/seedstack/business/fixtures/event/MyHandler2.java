@@ -10,10 +10,14 @@ package org.seedstack.business.fixtures.event;
 import org.seedstack.business.Event;
 import org.seedstack.business.EventHandler;
 
-
 public class MyHandler2 implements EventHandler<Event> {
     @Override
     public void handle(Event event) {
         // do nothing
+    }
+
+    @Override
+    public Class<Event> getEventClass() {
+        return Event.class;
     }
 }

@@ -7,11 +7,10 @@
  */
 package org.seedstack.business.fixtures.event.cyclic;
 
-import org.seedstack.business.EventHandler;
-import org.seedstack.business.EventService;
-
 import javax.inject.Inject;
 
+import org.seedstack.business.EventHandler;
+import org.seedstack.business.EventService;
 
 public class Handler1 implements EventHandler<Event1> {
 
@@ -21,5 +20,10 @@ public class Handler1 implements EventHandler<Event1> {
     @Override
     public void handle(Event1 event) {
         eventService.fire(new Event2());
+    }
+
+    @Override
+    public Class<Event1> getEventClass() {
+        return Event1.class;
     }
 }

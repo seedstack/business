@@ -7,22 +7,23 @@
  */
 package org.seedstack.business;
 
-import org.seedstack.business.domain.events.AggregateReadEvent;
-import org.seedstack.business.domain.events.BaseAggregateEvent;
-import org.seedstack.business.fixtures.domain.product.Product;
-import org.seedstack.business.fixtures.domain.product.ProductFactory;
-import org.seedstack.business.fixtures.domain.product.ProductId;
-import org.seedstack.business.fixtures.domain.product.ProductRepository;
+import javax.inject.Inject;
+
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.domain.events.AggregateReadEvent;
+import org.seedstack.business.domain.events.BaseAggregateEvent;
+import org.seedstack.business.event.BaseEventHandler;
+import org.seedstack.business.fixtures.domain.product.Product;
+import org.seedstack.business.fixtures.domain.product.ProductFactory;
+import org.seedstack.business.fixtures.domain.product.ProductId;
+import org.seedstack.business.fixtures.domain.product.ProductRepository;
 import org.seedstack.seed.Logging;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.seed.persistence.inmemory.Store;
 import org.slf4j.Logger;
-
-import javax.inject.Inject;
 
 
 @Store("ProductInMemoryRepository")
@@ -41,7 +42,7 @@ public class AggregateEventIT {
 
     private Product product;
 
-    static class Handler implements EventHandler<BaseAggregateEvent> {
+    static class Handler extends BaseEventHandler<BaseAggregateEvent> {
 
         @Logging
         private Logger logger;
@@ -62,9 +63,10 @@ public class AggregateEventIT {
                 }
             }
         }
+    
     }
 
-    static class AggregateReadEventHandler implements EventHandler<AggregateReadEvent> {
+    static class AggregateReadEventHandler extends BaseEventHandler<AggregateReadEvent> {
         @Override
         public void handle(AggregateReadEvent event) {
             if (event.getContext().getMethodCalled().getName().equals("dummyMethod")) {

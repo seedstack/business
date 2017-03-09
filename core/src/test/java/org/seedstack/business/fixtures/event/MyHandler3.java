@@ -9,10 +9,14 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.EventHandler;
 
-
 public class MyHandler3 implements EventHandler<DummyEvent> {
     @Override
     public void handle(DummyEvent event) {
         // do nothing
+    }
+
+    @Override
+    public Class<DummyEvent> getEventClass() {
+        return DummyEvent.class;
     }
 }

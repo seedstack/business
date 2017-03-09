@@ -22,4 +22,9 @@ public class Handler2 implements EventHandler<Event2> {
     public void handle(Event2 event) {
         eventService.fire(new Event1());
     }
+
+    @Override
+    public Class<Event2> getEventClass() {
+        return Event2.class;
+    }
 }

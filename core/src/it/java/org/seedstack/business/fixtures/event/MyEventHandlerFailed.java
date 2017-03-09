@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.EventHandler;
+import org.seedstack.business.event.BaseEventHandler;
 
-public class MyEventHandlerFailed implements EventHandler<MyEvent2> {
+public class MyEventHandlerFailed extends BaseEventHandler<MyEvent2> {
     @Override
     public void handle(MyEvent2 event) {
         throw new RuntimeException();
