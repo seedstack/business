@@ -22,4 +22,6 @@ public interface EventHandler<E extends Event> {
      * @param event the handled event
      */
     void handle(E event);
+
+    Class<E> getEventClass();
 }

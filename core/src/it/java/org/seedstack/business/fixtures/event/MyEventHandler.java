@@ -7,11 +7,10 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.EventHandler;
 import org.seedstack.business.EventServiceIT;
+import org.seedstack.business.event.BaseEventHandler;
 
-
-public class MyEventHandler implements EventHandler<MyEvent> {
+public class MyEventHandler extends BaseEventHandler<MyEvent> {
 
     @Override
     public void handle(MyEvent event) {

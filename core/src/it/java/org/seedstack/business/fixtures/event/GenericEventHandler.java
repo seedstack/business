@@ -7,11 +7,10 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.EventHandler;
 import org.seedstack.business.EventServiceIT;
+import org.seedstack.business.event.BaseEventHandler;
 
-
-public class GenericEventHandler implements EventHandler<AbstractEvent> {
+public class GenericEventHandler extends BaseEventHandler<AbstractEvent> {
 
     @Override
     public void handle(AbstractEvent event) {
