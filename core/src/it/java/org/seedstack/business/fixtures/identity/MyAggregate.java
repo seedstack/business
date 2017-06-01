@@ -31,7 +31,7 @@ public class MyAggregate extends BaseAggregateRoot<UUID> {
 	private Set<MyEntity> mySubEntities;
 	
 	@Override
-	public UUID getEntityId() {
+	public UUID getId() {
 		return id;
 	}
 

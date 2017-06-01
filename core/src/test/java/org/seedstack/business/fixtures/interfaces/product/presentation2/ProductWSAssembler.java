@@ -15,8 +15,8 @@ public class ProductWSAssembler extends BaseAssembler<Product, ProductWSFacade> 
 	@Override
 	protected void doAssembleDtoFromAggregate(ProductWSFacade targetDto , Product sourceEntity)
 	{
-		String productCode = sourceEntity.getEntityId().getProductCode().split("-")[1].trim();
-		targetDto.fillProductId(sourceEntity.getEntityId().getStoreId(), Short.valueOf(productCode));
+		String productCode = sourceEntity.getId().getProductCode().split("-")[1].trim();
+		targetDto.fillProductId(sourceEntity.getId().getStoreId(), Short.valueOf(productCode));
 		targetDto.setName(sourceEntity.getName());
 		targetDto.setDescription(sourceEntity.getDescription());
 	}

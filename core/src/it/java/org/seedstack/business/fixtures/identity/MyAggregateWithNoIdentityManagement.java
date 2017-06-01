@@ -29,7 +29,7 @@ public class MyAggregateWithNoIdentityManagement extends BaseAggregateRoot<UUID>
 	private Set<MyEntity> mySubAggregates;
 	
 	@Override
-	public UUID getEntityId() {
+	public UUID getId() {
 		return id;
 	}
 

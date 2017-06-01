@@ -7,48 +7,31 @@
  */
 package org.seedstack.business.domain.specification;
 
-import com.google.common.base.CharMatcher;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.util.regex.Pattern;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-public class StringMatchingSpecification<A extends AggregateRoot<?>> extends AbstractValueSpecification<A> {
+public class StringMatchingSpecification<A extends AggregateRoot<?>> extends AbstractStringSpecification<A> {
     private volatile Pattern ignoringCasePattern;
     private volatile Pattern pattern;
-    private final StringValueOptions stringValueOptions;
 
     public StringMatchingSpecification(String path, String expectedPattern, StringValueOptions stringValueOptions) {
-        super(path, expectedPattern);
-        this.stringValueOptions = stringValueOptions;
+        super(path, expectedPattern, stringValueOptions);
     }
 
     @Override
-    protected boolean isSatisfiedByValue(Object candidateValue) {
-        checkArgument(candidateValue instanceof String, "Candidate value is not a string");
-        String candidateString = (String) candidateValue;
-        if (stringValueOptions.isTrimmed()) {
-            candidateString = CharMatcher.WHITESPACE.trimFrom(candidateString);
-        } else {
-            if (stringValueOptions.isLeftTrimmed()) {
-                candidateString = CharMatcher.WHITESPACE.trimLeadingFrom(candidateString);
-            }
-            if (stringValueOptions.isRightTrimmed()) {
-                candidateString = CharMatcher.WHITESPACE.trimTrailingFrom(candidateString);
-            }
-        }
-        if (stringValueOptions.isIgnoringCase()) {
+    protected boolean isSatisfiedByString(String candidateString) {
+        if (options.isIgnoringCase()) {
             if (ignoringCasePattern == null) {
                 ignoringCasePattern = Pattern.compile(
-                        ((String) expectedValue).replace("*", ".*").replace("?", "."),
+                        expectedValue.replace("*", ".*").replace("?", "."),
                         Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
                 );
             }
             return ignoringCasePattern.matcher(candidateString).matches();
         } else {
             if (pattern == null) {
-                pattern = Pattern.compile(((String) expectedValue).replace("*", ".*").replace("?", "."));
+                pattern = Pattern.compile(expectedValue.replace("*", ".*").replace("?", "."));
             }
             return pattern.matcher(candidateString).matches();
         }
@@ -56,6 +39,6 @@ public class StringMatchingSpecification<A extends AggregateRoot<?>> extends Abs
 
     @Override
     public String toString() {
-        return String.format("%s =~ %s", path, expectedValue.toString());
+        return String.format("%s =~ %s", path, expectedValue);
     }
 }

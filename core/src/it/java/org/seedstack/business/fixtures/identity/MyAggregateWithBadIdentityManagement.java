@@ -32,7 +32,7 @@ public class MyAggregateWithBadIdentityManagement extends
 	private Set<MyEntity> mySubAggregates;
 
 	@Override
-	public UUID getEntityId() {
+	public UUID getId() {
 		return id;
 	}
 

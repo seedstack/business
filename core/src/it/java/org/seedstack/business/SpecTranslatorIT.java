@@ -45,7 +45,7 @@ public class SpecTranslatorIT {
 
     static class SomeAggregateRoot extends BaseAggregateRoot<String> {
         @Override
-        public String getEntityId() {
+        public String getId() {
             return "one";
         }
     }

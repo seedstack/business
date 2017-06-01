@@ -35,7 +35,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
 	}
 	
 	@Override
-	public OrderId getEntityId() {
+	public OrderId getId() {
 		
 		return this.entityId;
 	}

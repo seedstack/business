@@ -13,47 +13,21 @@ import org.seedstack.business.domain.specification.Specification;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 
 public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements CustomerRepository {
-
     private static Map<String, Customer> orderMap = new ConcurrentHashMap<>();
 
     @Override
-    public Optional<Customer> get(String id) {
-        return Optional.ofNullable(orderMap.get(id));
+    public void add(Customer order) {
+        orderMap.put(order.getId(), order);
     }
 
     @Override
     public Stream<Customer> get(Specification<Customer> specification, RepositoryOptions... options) {
         return orderMap.values().stream().filter(specification.asPredicate());
-    }
-
-    @Override
-    public boolean contains(String id) {
-        return orderMap.containsKey(id);
-    }
-
-    @Override
-    public long count(Specification<Customer> specification) {
-        return get(specification).count();
-    }
-
-    @Override
-    public long count() {
-        return orderMap.size();
-    }
-
-    public void clear() {
-        orderMap.clear();
-    }
-
-    @Override
-    public void remove(String id) {
-        orderMap.remove(id);
     }
 
     @Override
@@ -68,24 +42,5 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
             }
         }
         return count;
-    }
-
-    @Override
-    public void remove(Customer order) {
-        for (Customer order1 : orderMap.values()) {
-            if (order1.equals(order)) {
-                orderMap.remove(order.getEntityId());
-            }
-        }
-    }
-
-    @Override
-    public void add(Customer order) {
-        orderMap.put(order.getEntityId(), order);
-    }
-
-    @Override
-    public Customer update(Customer order) {
-        return orderMap.put(order.getEntityId(), order);
     }
 }

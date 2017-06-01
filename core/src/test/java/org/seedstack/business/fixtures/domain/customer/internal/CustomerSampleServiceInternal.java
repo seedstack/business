@@ -32,7 +32,7 @@ public class CustomerSampleServiceInternal implements CustomerSampleService {
 
 	@Override
 	public String transfer(Customer source, Customer target) {
-		logger.info("Transfering customer " + source.getEntityId() + " to customer " + target.getEntityId());
+		logger.info("Transfering customer " + source.getId() + " to customer " + target.getId());
 		return property;
 	}
 

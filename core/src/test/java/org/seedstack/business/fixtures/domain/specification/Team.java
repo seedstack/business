@@ -13,9 +13,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class Team extends BaseAggregateRoot<String> {
     private final String name;
     private Set<Person> members = new HashSet<>();
+    private Person[] vips = new Person[3];
 
     public Team(String name) {
         this.name = name;
@@ -29,8 +32,17 @@ public class Team extends BaseAggregateRoot<String> {
         return Collections.unmodifiableSet(members);
     }
 
+    public void addVip(int position, String name, int age, Address address) {
+        checkArgument(position >= 0 && position < 3, "position must be in interval [0,3[");
+        vips[position] = new Person(name, age, address);
+    }
+
+    public Person[] getVips() {
+        return vips.clone();
+    }
+
     @Override
-    public String getEntityId() {
+    public String getId() {
         return name;
     }
 }

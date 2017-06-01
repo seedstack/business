@@ -28,7 +28,7 @@ public class Product extends BaseAggregateRoot<ProductId> {
 	}
 
 	@Override
-	public ProductId getEntityId() {
+	public ProductId getId() {
 		return this.entityId;
 	}
 	

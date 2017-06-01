@@ -55,7 +55,7 @@ public class AssemblerDslIT {
         Order aggregateRoot = fluently.merge(orderDto).into(Order.class).fromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(aggregateRoot.getId()).isEqualTo("1");
         Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, so it is set by the assembler
         Assertions.assertThat(aggregateRoot.getPrice()).isEqualTo(PRICE);
@@ -74,7 +74,7 @@ public class AssemblerDslIT {
             fail();
         }
         Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(aggregateRoot.getId()).isEqualTo("1");
         Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber");
         // other details come from the aggregate loaded from the repository
         Assertions.assertThat(aggregateRoot.getOtherDetails()).isEqualTo("some details");
@@ -97,7 +97,7 @@ public class AssemblerDslIT {
         Order aggregateRoot = fluently.merge(dto).into(Order.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoot).isNotNull();
-        Assertions.assertThat(aggregateRoot.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(aggregateRoot.getId()).isEqualTo("1");
         Assertions.assertThat(aggregateRoot.getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, but so it should be set by the assembler
         Assertions.assertThat(aggregateRoot.getPrice()).isEqualTo(PRICE);
@@ -115,10 +115,10 @@ public class AssemblerDslIT {
         List<Order> aggregateRoots = fluently.merge(Lists.newArrayList(dto1, dto2)).into(Order.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(aggregateRoots).hasSize(2);
-        Assertions.assertThat(aggregateRoots.get(0).getEntityId()).isEqualTo("1");
+        Assertions.assertThat(aggregateRoots.get(0).getId()).isEqualTo("1");
         Assertions.assertThat(aggregateRoots.get(0).getProduct()).isEqualTo("death star");
         Assertions.assertThat(aggregateRoots.get(0).getOtherDetails()).isEqualTo("some details");
-        Assertions.assertThat(aggregateRoots.get(1).getEntityId()).isEqualTo("2");
+        Assertions.assertThat(aggregateRoots.get(1).getId()).isEqualTo("2");
         Assertions.assertThat(aggregateRoots.get(1).getProduct()).isEqualTo("light saber");
         Assertions.assertThat(aggregateRoots.get(1).getOtherDetails()).isNull();
     }
@@ -131,7 +131,7 @@ public class AssemblerDslIT {
         fluently.merge(new OrderDto("1", "light saber", PRICE)).into(order);
 
         Assertions.assertThat(order).isNotNull();
-        Assertions.assertThat(order.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(order.getId()).isEqualTo("1");
         Assertions.assertThat(order.getProduct()).isEqualTo("light saber"); // updated info
         Assertions.assertThat(order.getPrice()).isEqualTo(PRICE);
 
@@ -147,8 +147,8 @@ public class AssemblerDslIT {
         // - default assembler
         BasicAggregate aggregate = fluently.merge(new BasicDto(id, "aaa", "bbb")).with(ModelMapper.class)
                 .into(BasicAggregate.class).fromFactory();
-        Assertions.assertThat(aggregate.getEntityId()).isNotNull();
-        Assertions.assertThat(aggregate.getEntityId()).isNotEqualTo(id);
+        Assertions.assertThat(aggregate.getId()).isNotNull();
+        Assertions.assertThat(aggregate.getId()).isNotEqualTo(id);
         Assertions.assertThat(aggregate.getField1()).isEqualTo("aaa");
         Assertions.assertThat(aggregate.getField2()).isEqualTo("bbb");
     }

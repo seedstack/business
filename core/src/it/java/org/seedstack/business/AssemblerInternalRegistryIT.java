@@ -59,7 +59,7 @@ public class AssemblerInternalRegistryIT {
 
     static class Order implements AggregateRoot<String> {
         @Override
-        public String getEntityId() { return null; }
+        public String getId() { return null; }
     }
 
     @DtoOf(Order.class)

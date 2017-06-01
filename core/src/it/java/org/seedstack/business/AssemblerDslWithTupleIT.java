@@ -49,10 +49,10 @@ public class AssemblerDslWithTupleIT {
         Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
-        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
+        Assertions.assertThat(orderCustomerPair.getValue0().getId()).isEqualTo("order1");
         Assertions.assertThat(orderCustomerPair.getValue0().getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, so it is set by the assembler
-        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(orderCustomerPair.getValue1().getId()).isEqualTo("customer1");
         Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
     }
 
@@ -74,10 +74,10 @@ public class AssemblerDslWithTupleIT {
             fail();
         }
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
-        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
+        Assertions.assertThat(orderCustomerPair.getValue0().getId()).isEqualTo("order1");
         Assertions.assertThat(orderCustomerPair.getValue0().getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, so it is set by the assembler
-        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(orderCustomerPair.getValue1().getId()).isEqualTo("customer1");
         Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
 
         orderRepository.remove(order);
@@ -102,10 +102,10 @@ public class AssemblerDslWithTupleIT {
         Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe).with(ModelMapper.class).into(Order.class, Customer.class).fromRepository().orFromFactory();
 
         Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
-        Assertions.assertThat(orderCustomerPair.getValue0().getEntityId()).isEqualTo("order1");
+        Assertions.assertThat(orderCustomerPair.getValue0().getId()).isEqualTo("order1");
         Assertions.assertThat(orderCustomerPair.getValue0().getProduct()).isEqualTo("light saber");
         // the customer name is not part of the factory parameters, so it is set by the assembler
-        Assertions.assertThat(orderCustomerPair.getValue1().getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(orderCustomerPair.getValue1().getId()).isEqualTo("customer1");
         Assertions.assertThat(orderCustomerPair.getValue1().getName()).isEqualTo("luke");
     }
 
@@ -121,7 +121,7 @@ public class AssemblerDslWithTupleIT {
         Assertions.assertThat(order).isNotNull();
         Assertions.assertThat(customer).isNotNull();
 
-        Assertions.assertThat(order.getEntityId()).isEqualTo("1");
+        Assertions.assertThat(order.getId()).isEqualTo("1");
         Assertions.assertThat(order.getOtherDetails()).isEqualTo("some details"); // kept info
         Assertions.assertThat(order.getProduct()).isEqualTo("light saber"); // new info
         Assertions.assertThat(customer.getName()).isEqualTo("luke"); // updated info

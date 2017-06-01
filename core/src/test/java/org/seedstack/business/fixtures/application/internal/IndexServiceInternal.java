@@ -22,7 +22,7 @@ public class IndexServiceInternal implements IndexService {
 
 	@Override
 	public void index(Customer customer) {
-		logger.info("Indexing " + customer.getEntityId());
+		logger.info("Indexing " + customer.getId());
 //		logger.info("Indexing " + customer.getEntityId().getValue());
 	}
 

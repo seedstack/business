@@ -33,7 +33,7 @@ public class Customer extends BaseAggregateRoot<CustomerId> {
 	}
 
 	@Override
-	public CustomerId getEntityId() {
+	public CustomerId getId() {
 		return entityId;
 	}
 	

@@ -23,7 +23,7 @@ public class MyEntity extends BaseEntity<UUID> {
 	private UUID id;
 
 	@Override
-	public UUID getEntityId() {
+	public UUID getId() {
 		return id;
 	}
 

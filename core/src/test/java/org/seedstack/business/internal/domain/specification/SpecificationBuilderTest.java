@@ -19,8 +19,7 @@ import org.seedstack.business.domain.specification.builder.SpecificationBuilder;
 import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
-import org.seedstack.business.internal.domain.specification.AggregateSpecification;
-import org.seedstack.business.internal.domain.specification.SpecificationBuilderImpl;
+import org.seedstack.business.domain.specification.AggregateClassSpecification;
 
 import java.util.stream.Stream;
 
@@ -60,8 +59,8 @@ public class SpecificationBuilderTest {
 
         System.out.println(spec);
 
-        assertThat(spec).isInstanceOf(AggregateSpecification.class);
-        spec = ((AggregateSpecification<Team>) spec).getSpecification();
+        assertThat(spec).isInstanceOf(AggregateClassSpecification.class);
+        spec = ((AggregateClassSpecification<Team>) spec).getSpecification();
         assertThat(((OrSpecification<Team>) spec).getLhs()).isInstanceOf(OrSpecification.class);
         assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).isInstanceOf(StringEqualSpecification.class);
         assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).isInstanceOf(GreaterThanSpecification.class);

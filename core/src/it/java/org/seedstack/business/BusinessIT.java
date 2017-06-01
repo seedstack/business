@@ -103,27 +103,27 @@ public class BusinessIT extends AbstractSeedIT {
         Product loadedProduct1 = holder.productRepo.get(new ProductId((short) 1, "ean13-1")).get();
         Product loadedProduct2 = holder.productRepo.get(new ProductId((short) 2, (short) 5)).get();
 
-        assertThat(loadedProduct1.getEntityId().getStoreId()).isEqualTo((short) 1);
-        assertThat(loadedProduct1.getEntityId().getProductCode()).isEqualTo("ean13-1");
-        assertThat(loadedProduct1.getEntityId()).isEqualTo(new ProductId((short) 1, "ean13-1"));
+        assertThat(loadedProduct1.getId().getStoreId()).isEqualTo((short) 1);
+        assertThat(loadedProduct1.getId().getProductCode()).isEqualTo("ean13-1");
+        assertThat(loadedProduct1.getId()).isEqualTo(new ProductId((short) 1, "ean13-1"));
         assertThat(loadedProduct1.getName()).isEqualTo("Basket Air Jordan");
         assertThat(loadedProduct1.getDescription()).isEqualTo("Da Pair of basket evaa!");
 
-        assertThat(loadedProduct2.getEntityId().getStoreId()).isEqualTo((short) 2);
-        assertThat(loadedProduct2.getEntityId().getProductCode()).isEqualTo("ean13-5");
-        assertThat(loadedProduct2.getEntityId()).isEqualTo(new ProductId((short) 2, "ean13-5"));
+        assertThat(loadedProduct2.getId().getStoreId()).isEqualTo((short) 2);
+        assertThat(loadedProduct2.getId().getProductCode()).isEqualTo("ean13-5");
+        assertThat(loadedProduct2.getId()).isEqualTo(new ProductId((short) 2, "ean13-5"));
         assertThat(loadedProduct2.getName()).isEqualTo("Tea mandarin tetley");
         assertThat(loadedProduct2.getDescription()).isEqualTo("White tea for digestion.");
 
         assertThat(loadedProduct1).isNotNull();
-        assertThat(loadedProduct1.getEntityId().getStoreId()).isEqualTo((short) 1);
-        assertThat(loadedProduct1.getEntityId().getProductCode()).isEqualTo("ean13-1");
+        assertThat(loadedProduct1.getId().getStoreId()).isEqualTo((short) 1);
+        assertThat(loadedProduct1.getId().getProductCode()).isEqualTo("ean13-1");
 
 
         Order order1 = holder.orderFactory.createOrder("commande01");
-        OrderId oi1 = order1.getEntityId();
+        OrderId oi1 = order1.getId();
         assertThat(oi1).isEqualTo(new OrderId("commande01"));
-        order1.setCustomerId(c2.getEntityId());
+        order1.setCustomerId(c2.getId());
 
         // persist
         holder.customerRepo.add(testCusto);
@@ -143,7 +143,7 @@ public class BusinessIT extends AbstractSeedIT {
         Customer custLoadedKey1 = holder.customerRepo.get(new CustomerId("key1")).get();
         assertThat(custLoadedKey1).isNotNull();
 
-        assertThat(load2_.getEntityId().getValue()).isEqualTo(new OrderId("commande01").getValue());
+        assertThat(load2_.getId().getValue()).isEqualTo(new OrderId("commande01").getValue());
         assertThat(load2_.getCustomerId()).isEqualTo(new CustomerId("2"));
 
         // find

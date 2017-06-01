@@ -145,7 +145,7 @@ public class ModelMapperAssemblerTest {
         String ignoredProp;
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return id;
         }
 

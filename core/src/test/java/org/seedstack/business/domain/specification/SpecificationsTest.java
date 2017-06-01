@@ -30,6 +30,8 @@ public class SpecificationsTest {
 
         blueTeam = new TeamWithLeader("BLUE", "Bob", 44, new Address(12, "Dandelion street", "Metropolis"));
         blueTeam.addMember("Marguerite", 61, new Address(55, "Other street", "OtherCity"));
+        blueTeam.addVip(0, "Robert", 60, new Address(58, "Other street", "OtherCity"));
+        blueTeam.addVip(1, "Marcia", 62, new Address(60, "Other street", "OtherCity"));
     }
 
     @Test
@@ -40,10 +42,23 @@ public class SpecificationsTest {
     }
 
     @Test
+    public void testNullCandidate() throws Exception {
+        Specification<Team> equalSpecification = new EqualSpecification<>("name", "RED");
+        assertThat(equalSpecification.isSatisfiedBy(null)).isFalse();
+    }
+
+    @Test
     public void testNestedEquality() throws Exception {
         Specification<Team> equalSpecification = new EqualSpecification<>("leader.name", "Alice");
         assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
         assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isFalse();
+    }
+
+    @Test
+    public void testNestedArrayEquality() throws Exception {
+        Specification<Team> equalSpecification = new EqualSpecification<>("vips.address.city", "OtherCity");
+        assertThat(equalSpecification.isSatisfiedBy(redTeam)).isFalse();
+        assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isTrue();
     }
 
     @Test

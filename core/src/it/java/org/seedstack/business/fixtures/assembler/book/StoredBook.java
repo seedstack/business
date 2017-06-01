@@ -22,7 +22,7 @@ public class StoredBook extends BaseAggregateRoot<BookId> {
     }
 
     @Override
-    public BookId getEntityId() {
+    public BookId getId() {
         return bookId;
     }
 

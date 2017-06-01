@@ -9,6 +9,7 @@ package org.seedstack.business.internal.domain.specification;
 
 import com.google.common.base.Preconditions;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.specification.AggregateClassSpecification;
 import org.seedstack.business.domain.specification.Specification;
 import org.seedstack.business.domain.specification.TrueSpecification;
 
@@ -78,9 +79,9 @@ class SpecificationBuilderContext<A extends AggregateRoot<?>> {
     Specification<A> build() {
         processNegativeDisjunction(false);
         if (disjunctions.isEmpty()) {
-            return new AggregateSpecification<>(aggregateClass, new TrueSpecification<>());
+            return new AggregateClassSpecification<>(aggregateClass, new TrueSpecification<>());
         } else {
-            return new AggregateSpecification<>(aggregateClass, disjunctions.stream().skip(1).reduce(disjunctions.get(0), Specification::or));
+            return new AggregateClassSpecification<>(aggregateClass, disjunctions.stream().skip(1).reduce(disjunctions.get(0), Specification::or));
         }
     }
 

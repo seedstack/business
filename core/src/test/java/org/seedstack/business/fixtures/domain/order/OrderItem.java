@@ -37,7 +37,7 @@ public class OrderItem extends BaseEntity<Long>
 	}
 	
 	@Override
-	public Long getEntityId() {		
+	public Long getId() {
 		return this.entityId;
 	}
 

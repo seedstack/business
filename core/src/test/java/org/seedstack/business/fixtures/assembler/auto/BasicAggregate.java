@@ -24,10 +24,6 @@ public class BasicAggregate extends BaseAggregateRoot<UUID> {
     private String field2;
 
     @Override
-    public UUID getEntityId() {
-        return id;
-    }
-
     public UUID getId() {
         return id;
     }

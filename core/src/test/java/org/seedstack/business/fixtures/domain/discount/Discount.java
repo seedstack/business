@@ -34,7 +34,7 @@ public class Discount extends BaseAggregateRoot<String>
 	}
 	
 	@Override
-	public String getEntityId() {
+	public String getId() {
 		return this.entityId;
 	}
 	 

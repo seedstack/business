@@ -36,25 +36,25 @@ public class DefaultFactoryTest {
     public void create_aggregate_using_unique_parameter_constructor() {
         MyAggregateTest myAggregateTest = myFactory.create(ID);
         Assertions.assertThat(myAggregateTest).isNotNull();
-        Assertions.assertThat(myAggregateTest.getEntityId()).isEqualTo(ID);
+        Assertions.assertThat(myAggregateTest.getId()).isEqualTo(ID);
     }
 
     @Test
     public void create_aggregate_using_unique_primitive_parameter_constructor() {
         MyAggregateTest myAggregateTest = myFactory.create(ID_PRIMITIVE);
         Assertions.assertThat(myAggregateTest).isNotNull();
-        Assertions.assertThat(myAggregateTest.getEntityId()).isEqualTo(ID);
+        Assertions.assertThat(myAggregateTest.getId()).isEqualTo(ID);
     }
 
     @Test
     public void create_aggregate_using_two_paramater_constructor() {
         MyAggregateTest myAggregateTest = myFactory.create(NOM, ID);
         Assertions.assertThat(myAggregateTest).isNotNull();
-        Assertions.assertThat(myAggregateTest.getEntityId()).isEqualTo(ID);
+        Assertions.assertThat(myAggregateTest.getId()).isEqualTo(ID);
         Assertions.assertThat(myAggregateTest.getName()).isEqualTo(NOM);
         myAggregateTest = myFactory.create(NOM, ID_PRIMITIVE);
         Assertions.assertThat(myAggregateTest).isNotNull();
-        Assertions.assertThat(myAggregateTest.getEntityId()).isEqualTo(ID);
+        Assertions.assertThat(myAggregateTest.getId()).isEqualTo(ID);
         Assertions.assertThat(myAggregateTest.getName()).isEqualTo(NOM);
     }
 
@@ -82,7 +82,7 @@ public class DefaultFactoryTest {
     public void create_aggregate_using_null_parameters_constructor() {
         MyAggregateTest myAggregateTest = myFactory.create(NOM, null);
         Assertions.assertThat(myAggregateTest).isNotNull();
-        Assertions.assertThat(myAggregateTest.getEntityId()).isEqualTo(null);
+        Assertions.assertThat(myAggregateTest.getId()).isEqualTo(null);
         Assertions.assertThat(myAggregateTest.getName()).isEqualTo(NOM);
     }
 
@@ -146,7 +146,7 @@ public class DefaultFactoryTest {
         }
 
         @Override
-        public Integer getEntityId() {
+        public Integer getId() {
             return id;
         }
     }

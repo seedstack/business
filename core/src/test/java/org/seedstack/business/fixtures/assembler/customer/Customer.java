@@ -21,7 +21,7 @@ public class Customer extends BaseAggregateRoot<String> {
     }
 
     @Override
-    public String getEntityId() {
+    public String getId() {
         return id;
     }
 

@@ -14,6 +14,18 @@ import java.util.function.Predicate;
 
 @FunctionalInterface
 public interface Specification<A extends AggregateRoot<?>> {
+    static <T extends AggregateRoot<?>, ID> Specification<T> identity(ID id) {
+        return new IdentitySpecification<>(id);
+    }
+
+    static <T extends AggregateRoot<?>> Specification<T> any() {
+        return new TrueSpecification<>();
+    }
+
+    static <T extends AggregateRoot<?>> Specification<T> none() {
+        return new FalseSpecification<>();
+    }
+
     default Specification<A> and(Specification<A> other) {
         Objects.requireNonNull(other);
         return new AndSpecification<>(this, other);

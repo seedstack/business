@@ -22,7 +22,7 @@ public interface Entity<ID> extends DomainObject {
      *
      * @return the entity id
      */
-    ID getEntityId();
+    ID getId();
 
     /**
      * Entities compare by identity, not by attributes.

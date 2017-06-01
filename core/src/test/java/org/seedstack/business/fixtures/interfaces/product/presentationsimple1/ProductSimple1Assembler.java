@@ -22,7 +22,7 @@ public class ProductSimple1Assembler extends BaseAssembler<Product, ProductSimpl
 	@Override
 	protected void doAssembleDtoFromAggregate(ProductSimple1Representation targetDto , Product sourceEntity)
 	{
-		targetDto.fillProductId(sourceEntity.getEntityId().getStoreId() ,   productNamePolicy.extractNumber( sourceEntity.getEntityId().getProductCode())  );
+		targetDto.fillProductId(sourceEntity.getId().getStoreId() ,   productNamePolicy.extractNumber( sourceEntity.getId().getProductCode())  );
 		targetDto.setName(sourceEntity.getName());
 		targetDto.setDescription(sourceEntity.getDescription());
 	}

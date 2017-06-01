@@ -25,7 +25,7 @@ public class Order extends BaseAggregateRoot<String> {
     }
 
     @Override
-    public String getEntityId() {
+    public String getId() {
         return orderId;
     }
 

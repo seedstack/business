@@ -166,7 +166,7 @@ public class ModelMapperAssemblerIT {
         String ignoredProp;
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return id;
         }
 
@@ -235,7 +235,7 @@ public class ModelMapperAssemblerIT {
         }
 
         @Override
-        public Name getEntityId() {
+        public Name getId() {
             return name;
         }
 

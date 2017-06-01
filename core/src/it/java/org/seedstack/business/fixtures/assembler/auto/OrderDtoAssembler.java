@@ -27,7 +27,7 @@ public class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
     protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
         assertThat(myService).isNotNull();
         assertThat(logger).isNotNull();
-        targetDto.setId(sourceAggregate.getEntityId());
+        targetDto.setId(sourceAggregate.getId());
         targetDto.setBillingAddress(sourceAggregate.getBillingAddress());
     }
 

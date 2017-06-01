@@ -13,7 +13,6 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.domain.specification.AggregateSpecification;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.spi.domain.specification.SpecificationConverter;
 import org.seedstack.business.spi.domain.specification.SpecificationTranslator;
@@ -53,8 +52,8 @@ public abstract class BaseSpecificationTranslator<A extends AggregateRoot<?>, B,
     protected C convert(Specification<A> specification, B builder) {
         SpecificationConverter<A, Specification<A>, B, C> converter;
         Class<? extends Specification> specificationClass = specification.getClass();
-        if (specification instanceof AggregateSpecification) {
-            return convert(((AggregateSpecification<A>) specification).getSpecification(), builder);
+        if (specification instanceof AggregateClassSpecification) {
+            return convert(((AggregateClassSpecification<A>) specification).getSpecification(), builder);
         } else {
             try {
                 converter = injector.getInstance(Key.get(

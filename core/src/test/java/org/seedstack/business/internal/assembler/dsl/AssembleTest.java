@@ -79,7 +79,7 @@ public class AssembleTest {
         String entityId;
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return entityId;
         }
     }
@@ -88,7 +88,7 @@ public class AssembleTest {
         String entityId;
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return entityId;
         }
     }

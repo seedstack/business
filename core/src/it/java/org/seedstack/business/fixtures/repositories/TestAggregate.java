@@ -12,7 +12,7 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class TestAggregate extends BaseAggregateRoot<String> {
     @Override
-    public String getEntityId() {
+    public String getId() {
         return "test";
     }
 }

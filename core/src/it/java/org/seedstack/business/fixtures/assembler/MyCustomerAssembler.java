@@ -15,7 +15,7 @@ public class MyCustomerAssembler extends BaseAssembler<Customer, MyCustomerRepre
 	@Override
 	protected void doAssembleDtoFromAggregate(MyCustomerRepresentation targetDto , Customer sourceEntity) {
 		targetDto.setName( sourceEntity.getFullName());
-		targetDto.setId(sourceEntity.getEntityId().getCustomerId());
+		targetDto.setId(sourceEntity.getId().getCustomerId());
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.domain.RepositoryOptions;
 import org.seedstack.business.domain.specification.Specification;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseRepository<A, ID> {
@@ -24,8 +23,7 @@ public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseReposi
     }
 
     @Override
-    public Optional<A> get(ID id) {
-        return Optional.empty();
+    public void add(A aggregate) {
     }
 
     @Override
@@ -34,47 +32,7 @@ public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseReposi
     }
 
     @Override
-    public boolean contains(ID id) {
-        return false;
-    }
-
-    @Override
-    public void add(A aggregate) {
-
-    }
-
-    @Override
-    public A update(A aggregate) {
-        return null;
-    }
-
-    @Override
-    public void remove(A aggregate) {
-
-    }
-
-    @Override
-    public void remove(ID id) {
-
-    }
-
-    @Override
     public long remove(Specification<A> specification) {
-        return 0;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public long count(Specification<A> specification) {
-        return 0;
-    }
-
-    @Override
-    public long count() {
         return 0;
     }
 }

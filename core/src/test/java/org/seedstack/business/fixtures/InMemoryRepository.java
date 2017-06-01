@@ -15,7 +15,6 @@ import org.seedstack.seed.persistence.inmemory.InMemory;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -30,39 +29,14 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
     protected Map<Key, Aggregate> inMemorySortedMap;
 
     @Override
-    public Optional<Aggregate> get(Key id) {
-        return Optional.ofNullable(inMemorySortedMap.get(id));
+    public void add(Aggregate aggregate) {
+        inMemorySortedMap.put(aggregate.getId(), aggregate);
     }
 
     @Override
     public Stream<Aggregate> get(Specification<Aggregate> specification, RepositoryOptions... options) {
         // TODO: implement options
         return inMemorySortedMap.values().stream().filter(specification.asPredicate());
-    }
-
-    @Override
-    public boolean contains(Key id) {
-        return inMemorySortedMap.containsKey(id);
-    }
-
-    @Override
-    public long count() {
-        return inMemorySortedMap.size();
-    }
-
-    @Override
-    public void clear() {
-        inMemorySortedMap.clear();
-    }
-
-    @Override
-    public long count(Specification<Aggregate> specification) {
-        return get(specification).count();
-    }
-
-    @Override
-    public void remove(Key id) {
-        inMemorySortedMap.remove(id);
     }
 
     @Override
@@ -77,20 +51,5 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
             }
         }
         return count;
-    }
-
-    @Override
-    public void remove(Aggregate aggregate) {
-        inMemorySortedMap.remove(aggregate.getEntityId());
-    }
-
-    @Override
-    public void add(Aggregate aggregate) {
-        inMemorySortedMap.put(aggregate.getEntityId(), aggregate);
-    }
-
-    @Override
-    public Aggregate update(Aggregate aggregate) {
-        return inMemorySortedMap.put(aggregate.getEntityId(), aggregate);
     }
 }

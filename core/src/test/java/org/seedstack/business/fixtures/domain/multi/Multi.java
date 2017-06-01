@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.domain.multi;
 
@@ -16,31 +16,19 @@ import org.seedstack.business.domain.BaseAggregateRoot;
  * Dummy aggregate for test
  */
 public class Multi extends BaseAggregateRoot<String> {
+    String id;
 
-	String id; 
+    @Override
+    public String getId() {
+        return "";
+    }
 
-	@Override
-	public String getEntityId() {
-		return "";
-	}
-
-	/**
-	 * Getter id
-	 * 
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * Setter id
-	 * 
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	
+    /**
+     * Setter id
+     *
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 }

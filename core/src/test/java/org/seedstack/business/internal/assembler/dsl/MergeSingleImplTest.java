@@ -66,7 +66,7 @@ public class MergeSingleImplTest {
 
         Assertions.assertThat(order).isNotNull();
         Assertions.assertThat(order.getProduct()).isEqualTo("lightsaber");
-        Assertions.assertThat(customer.getEntityId()).isEqualTo("customer1");
+        Assertions.assertThat(customer.getId()).isEqualTo("customer1");
         Assertions.assertThat(customer.getName()).isEqualTo("luke");
     }
 

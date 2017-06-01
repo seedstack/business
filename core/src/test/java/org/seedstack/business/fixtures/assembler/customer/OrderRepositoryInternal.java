@@ -12,8 +12,8 @@ import org.seedstack.business.domain.RepositoryOptions;
 import org.seedstack.business.domain.specification.Specification;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 
@@ -21,8 +21,8 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
     private static Map<String, Order> orderMap = new ConcurrentHashMap<>();
 
     @Override
-    public Optional<Order> get(String id) {
-        return Optional.ofNullable(orderMap.get(id));
+    public void add(Order order) {
+        orderMap.put(order.getId(), order);
     }
 
     @Override
@@ -30,51 +30,17 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
         return orderMap.values().stream().filter(specification.asPredicate());
     }
 
-    @Override
-    public boolean contains(String id) {
-        return orderMap.containsKey(id);
-    }
-
-    @Override
-    public long count(Specification<Order> specification) {
-        return get(specification).count();
-    }
-
-    @Override
-    public long count() {
-        return orderMap.size();
-    }
-
-    public void clear() {
-        orderMap.clear();
-    }
-
-    @Override
-    public void remove(String id) {
-        orderMap.remove(id);
-    }
 
     @Override
     public long remove(Specification<Order> specification) {
-        return 0;
-    }
-
-    @Override
-    public void remove(Order order) {
+        AtomicInteger atomicInteger = new AtomicInteger(0);
         for (Order order1 : orderMap.values()) {
-            if (order1.equals(order)) {
-                orderMap.remove(order.getEntityId());
+            if (specification.isSatisfiedBy(order1)) {
+                if (orderMap.remove(order1.getId()) != null) {
+                    atomicInteger.incrementAndGet();
+                }
             }
         }
-    }
-
-    @Override
-    public void add(Order order) {
-        orderMap.put(order.getEntityId(), order);
-    }
-
-    @Override
-    public Order update(Order order) {
-        return orderMap.put(order.getEntityId(), order);
+        return atomicInteger.get();
     }
 }

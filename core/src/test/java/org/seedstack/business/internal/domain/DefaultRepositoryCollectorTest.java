@@ -70,7 +70,7 @@ public class DefaultRepositoryCollectorTest {
 
     private static class MyAgg extends BaseAggregateRoot<Long> {
         @Override
-        public Long getEntityId() {
+        public Long getId() {
             return null;
         }
     }

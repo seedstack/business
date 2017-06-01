@@ -17,10 +17,10 @@ package org.seedstack.business.domain;
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
     @Override
-    public abstract ID getEntityId();
+    public abstract ID getId();
 
     /**
-     * Computes the hash code on the entity identity returned by {@link #getEntityId()}. This method can be overridden
+     * Computes the hash code on the entity identity returned by {@link #getId()}. This method can be overridden
      * but be sure to respect the equality semantics for entities.
      * when doing so.
      *
@@ -32,7 +32,7 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
     }
 
     /**
-     * Computes the equality on the entity identity returned by {@link #getEntityId()}. This method can be overridden
+     * Computes the equality on the entity identity returned by {@link #getId()}. This method can be overridden
      * but be sure to respect the equality semantics for entities.
      *
      * @param other other object
@@ -47,16 +47,16 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        return entityId.equals(this.getClass().cast(other).getEntityId());
+        return entityId.equals(this.getClass().cast(other).getId());
     }
 
     @Override
     public String toString() {
-        return String.format("%s[%s]", getClass().getSimpleName(), getEntityId());
+        return String.format("%s[%s]", getClass().getSimpleName(), getId());
     }
 
     private ID getIdentity() {
-        ID entityId = getEntityId();
+        ID entityId = getId();
         if (entityId == null) {
             throw new IllegalStateException("Entity without identity: " + getClass().getName());
         }

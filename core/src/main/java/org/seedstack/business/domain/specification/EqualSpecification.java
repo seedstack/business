@@ -9,7 +9,7 @@ package org.seedstack.business.domain.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
 
-public class EqualSpecification<A extends AggregateRoot<?>> extends AbstractValueSpecification<A> {
+public class EqualSpecification<A extends AggregateRoot<?>> extends AbstractValueSpecification<A, Object> {
     public EqualSpecification(String path, Object expectedValue) {
         super(path, expectedValue);
     }

@@ -34,17 +34,17 @@ public class IdentityHandlerIT {
 	@Test
 	public void testCustomFactory(){
 		MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
-        Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
-        Assertions.assertThat(myAggregate.getMySubEntity().getEntityId()).isNotNull();
+        Assertions.assertThat(myAggregate.getId()).isNotNull();
+        Assertions.assertThat(myAggregate.getMySubEntity().getId()).isNotNull();
         for (MyEntity entity : myAggregate.getMySubEntities()) {
-            Assertions.assertThat(entity.getEntityId()).isNotNull();
+            Assertions.assertThat(entity.getId()).isNotNull();
         }
 	}
 
     @Test
     public void testDefaultFactory() {
         MyAggregate myAggregate = factory.create();
-        Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
+        Assertions.assertThat(myAggregate.getId()).isNotNull();
     }
 
 }

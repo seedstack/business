@@ -34,7 +34,7 @@ public class IdentityServiceInternalIT {
     public void identify_entity() {
         MyAggregate myAggregate = new MyAggregate();
         identityService.identify(myAggregate);
-        Assertions.assertThat(myAggregate.getEntityId()).isNotNull();
+        Assertions.assertThat(myAggregate.getId()).isNotNull();
     }
 
     @Test

@@ -17,8 +17,8 @@ public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
 
     @Override
     protected void doAssembleDtoFromAggregate(BookDto targetDto, StoredBook sourceAggregate) {
-        targetDto.setTitle(sourceAggregate.getEntityId().getTitle());
-        targetDto.setAuthor(sourceAggregate.getEntityId().getAuthor());
+        targetDto.setTitle(sourceAggregate.getId().getTitle());
+        targetDto.setAuthor(sourceAggregate.getId().getAuthor());
         targetDto.setPublishDate(sourceAggregate.getPublishDate());
         targetDto.setEditor(sourceAggregate.getEditor());
     }

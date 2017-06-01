@@ -10,7 +10,7 @@ package org.seedstack.business.domain.specification;
 import org.seedstack.business.domain.AggregateRoot;
 
 public class GreaterThanSpecification<A extends AggregateRoot<?>> extends ComparableSpecification<A> {
-    public GreaterThanSpecification(String path, Object expectedValue) {
+    public GreaterThanSpecification(String path, Comparable<?> expectedValue) {
         super(path, expectedValue, 1);
     }
 

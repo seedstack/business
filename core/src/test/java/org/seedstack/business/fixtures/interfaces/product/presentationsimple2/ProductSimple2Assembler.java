@@ -15,7 +15,7 @@ public class ProductSimple2Assembler extends BaseAssembler<Product, ProductSimpl
 	@Override
 	protected void doAssembleDtoFromAggregate(ProductSimple2Representation targetDto , Product sourceEntity)
 	{
-		targetDto.fillProductId(sourceEntity.getEntityId().getStoreId(), sourceEntity.getEntityId().getProductCode());
+		targetDto.fillProductId(sourceEntity.getId().getStoreId(), sourceEntity.getId().getProductCode());
 		targetDto.setName(sourceEntity.getName());
 		targetDto.setDescription(sourceEntity.getDescription());
 	}

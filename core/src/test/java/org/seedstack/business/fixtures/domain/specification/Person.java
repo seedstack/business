@@ -21,7 +21,7 @@ public class Person extends BaseEntity<String> {
     }
 
     @Override
-    public String getEntityId() {
+    public String getId() {
         return name;
     }
 }

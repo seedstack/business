@@ -30,7 +30,6 @@ import org.seedstack.business.finder.RangeFinder;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.Ignore;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +41,7 @@ public class BusinessSpecificationsTest {
     @Ignore
     private static class MyAggregateRoot1 extends BaseAggregateRoot<String> {
         @Override
-        public String getEntityId() {
+        public String getId() {
             return "id";
         }
     }
@@ -71,7 +70,7 @@ public class BusinessSpecificationsTest {
     private static class MyEntity1 extends BaseEntity<String> {
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return "id";
         }
     }
@@ -217,8 +216,7 @@ public class BusinessSpecificationsTest {
     @Ignore
     private static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements Repository<A, K> {
         @Override
-        public Optional<A> get(K id) {
-            return Optional.empty();
+        public void add(A a) {
         }
 
         @Override
@@ -227,44 +225,8 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public boolean contains(K id) {
-            return false;
-        }
-
-        @Override
-        public long count(Specification<A> specification) {
-            return 0;
-        }
-
-        @Override
-        public long count() {
-            return 0L;
-        }
-
-        @Override
-        public void clear() {
-        }
-
-        @Override
-        public void remove(K k) {
-        }
-
-        @Override
         public long remove(Specification<A> specification) {
             return 0;
-        }
-
-        @Override
-        public void remove(A a) {
-        }
-
-        @Override
-        public void add(A a) {
-        }
-
-        @Override
-        public A update(A a) {
-            return null;
         }
 
         @Override

@@ -52,7 +52,7 @@ public class MyAggregateRoot extends BaseAggregateRoot<String> {
 	}
 
 	@Override
-	public String getEntityId() {
+	public String getId() {
 		return firstName+"-"+lastName;
 	}
 

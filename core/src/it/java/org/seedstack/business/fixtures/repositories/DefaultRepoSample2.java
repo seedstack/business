@@ -16,7 +16,6 @@ import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 
@@ -29,8 +28,7 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
-    public Optional<A> get(K id) {
-        return Optional.empty();
+    public void add(A a) {
     }
 
     @Override
@@ -39,43 +37,7 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
-    public boolean contains(K id) {
-        return false;
-    }
-
-    @Override
-    public long count() {
-        return 0L;
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    @Override
-    public long count(Specification<A> specification) {
-        return 0;
-    }
-
-    @Override
-    public void remove(K id) {
-    }
-
-    @Override
     public long remove(Specification<A> specification) {
         return 0;
-    }
-
-    @Override
-    public void remove(A a) {
-    }
-
-    @Override
-    public void add(A a) {
-    }
-
-    @Override
-    public A update(A a) {
-        return null;
     }
 }

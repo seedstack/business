@@ -31,7 +31,7 @@ public class BaseEntityTest {
 		}
 		
 		@Override
-		public Long getEntityId() {
+		public Long getId() {
 			return entityId;
 		}
 

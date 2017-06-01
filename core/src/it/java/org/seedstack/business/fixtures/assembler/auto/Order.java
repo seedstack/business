@@ -17,7 +17,7 @@ public class Order extends BaseAggregateRoot<String> {
     private Address billingAddress;
 
     @Override
-    public String getEntityId() {
+    public String getId() {
         return id;
     }
 

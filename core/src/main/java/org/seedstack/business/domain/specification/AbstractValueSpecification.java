@@ -14,23 +14,35 @@ import org.seedstack.seed.SeedException;
 import org.seedstack.shed.reflect.Classes;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public abstract class AbstractValueSpecification<A extends AggregateRoot<?>> implements Specification<A> {
+/**
+ * Base class for value-bound specifications which are checking that the value of an aggregate attribute is satisfying
+ * an expected value. This supports nested attributes with a dot notation. For instance
+ *
+ * @param <A>
+ * @param <V>
+ */
+public abstract class AbstractValueSpecification<A extends AggregateRoot<?>, V> implements Specification<A> {
     private static final int AGGREGATE_INDEX = 0;
+    private static final int VALUE_INDEX = 1;
     private static final String PROPERTY_PATTERN = "\\.";
     private static final ConcurrentMap<FieldReference, Optional<Field>> fieldCache = new ConcurrentHashMap<>();
     private final Class<A> aggregateRootClass;
+    private final Class<V> valueClass;
     private final String[] properties;
     protected final String path;
-    protected final Object expectedValue;
+    protected final V expectedValue;
 
     @SuppressWarnings("unchecked")
-    public AbstractValueSpecification(String path, Object expectedValue) {
-        this.aggregateRootClass = (Class<A>) BusinessUtils.resolveGenerics(Specification.class, getClass())[AGGREGATE_INDEX];
+    public AbstractValueSpecification(String path, V expectedValue) {
+        Class<?>[] generics = BusinessUtils.resolveGenerics(AbstractValueSpecification.class, getClass());
+        this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
+        this.valueClass = (Class<V>) generics[VALUE_INDEX];
         this.properties = path.split(PROPERTY_PATTERN);
         this.path = path;
         this.expectedValue = expectedValue;
@@ -40,9 +52,19 @@ public abstract class AbstractValueSpecification<A extends AggregateRoot<?>> imp
         return path;
     }
 
-    public Object getExpectedValue() {
+    public V getExpectedValue() {
         return expectedValue;
     }
+
+    public Class<A> getAggregateRootClass() {
+        return aggregateRootClass;
+    }
+
+    public Class<V> getValueClass() {
+        return valueClass;
+    }
+
+    protected abstract boolean isSatisfiedByValue(V candidateValue);
 
     @Override
     public boolean isSatisfiedBy(A candidate) {
@@ -50,22 +72,25 @@ public abstract class AbstractValueSpecification<A extends AggregateRoot<?>> imp
     }
 
     private boolean isSatisfiedBy(Object candidate, int propertyIndex) {
-        Optional<Field> fieldOptional = findField(candidate.getClass(), properties[propertyIndex]);
-        if (fieldOptional.isPresent()) {
-            Object result = getFieldValue(candidate, fieldOptional.get());
-            if (propertyIndex < properties.length - 1) {
-                // TODO: support arrays
-                if (result instanceof Collection) {
-                    return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+        if (candidate != null) {
+            Optional<Field> fieldOptional = findField(candidate.getClass(), properties[propertyIndex]);
+            if (fieldOptional.isPresent()) {
+                Object result = getFieldValue(candidate, fieldOptional.get());
+                if (propertyIndex < properties.length - 1) {
+                    // TODO: support arrays
+                    if (result instanceof Collection) {
+                        return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                    } else if (result.getClass().isArray()) {
+                        return Arrays.stream((Object[]) result).anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                    } else {
+                        return isSatisfiedBy(result, propertyIndex + 1);
+                    }
                 } else {
-                    return isSatisfiedBy(result, propertyIndex + 1);
+                    return isSatisfiedByObject(result);
                 }
-            } else {
-                return isSatisfiedByValue(result);
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     private Optional<Field> findField(Class<?> someClass, String fieldName) {
@@ -92,7 +117,10 @@ public abstract class AbstractValueSpecification<A extends AggregateRoot<?>> imp
         }
     }
 
-    protected abstract boolean isSatisfiedByValue(Object candidateValue);
+    @SuppressWarnings("unchecked")
+    private boolean isSatisfiedByObject(Object result) {
+        return valueClass.isAssignableFrom(result.getClass()) && isSatisfiedByValue((V) result);
+    }
 
     private static class FieldReference {
         final Class<?> someClass;

@@ -92,7 +92,7 @@ public class ModelMapperTupleAssemblerTest {
         String id;
 
         @Override
-        public String getEntityId() {
+        public String getId() {
             return id;
         }
 

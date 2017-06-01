@@ -9,23 +9,21 @@ package org.seedstack.business.domain.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
 
-public class ComparableSpecification<A extends AggregateRoot<?>> extends AbstractValueSpecification<A> {
+public class ComparableSpecification<A extends AggregateRoot<?>> extends AbstractValueSpecification<A, Comparable<?>> {
     private final int expectedResult;
 
-    public ComparableSpecification(String path, Object expectedValue, int expectedResult) {
+    public ComparableSpecification(String path, Comparable<?> expectedValue, int expectedResult) {
         super(path, expectedValue);
         this.expectedResult = expectedResult;
-        if (!(this.expectedValue instanceof Comparable)) {
-            throw new IllegalArgumentException("The expected value is not comparable");
-        }
     }
 
     @Override
+    protected boolean isSatisfiedByValue(Comparable<?> candidateValue) {
+        return candidateValue.compareTo(uncheckedCast(expectedValue)) == expectedResult;
+    }
+
     @SuppressWarnings("unchecked")
-    protected boolean isSatisfiedByValue(Object candidateValue) {
-        if (!(candidateValue instanceof Comparable)) {
-            throw new IllegalArgumentException("The candidate value is not comparable");
-        }
-        return ((Comparable) candidateValue).compareTo(expectedValue) == expectedResult;
+    private static <T> T uncheckedCast(Comparable<?> pThingy) {
+        return (T) pThingy;
     }
 }

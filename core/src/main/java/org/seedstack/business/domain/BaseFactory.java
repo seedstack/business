@@ -64,7 +64,6 @@ public abstract class BaseFactory<T extends DomainObject & Producible> implement
         this.producedClass = (Class<T>) BusinessUtils.resolveGenerics(Factory.class, getClass())[0];
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public Class<T> getProducedClass() {
         return producedClass;
