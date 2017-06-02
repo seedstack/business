@@ -9,8 +9,8 @@ package org.seedstack.business.internal.domain.event;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.event.AggregateDeletedEvent;
 import org.seedstack.business.domain.event.AggregatePersistedEvent;

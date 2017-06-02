@@ -10,8 +10,8 @@
  */
 package org.seedstack.business.fixtures.identity;
 
-import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Create;
+import org.seedstack.business.domain.Factory;
 
 
 @Create

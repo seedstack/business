@@ -15,9 +15,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.fixtures.identity.MyAggregate;
+import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.fixtures.identity.MyAggregateWithNoIdentityManagement;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.it.SeedITRunner;
 

@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.domain.product;
 
-import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.Read;
+import org.seedstack.business.domain.Repository;
 
 public interface ProductRepository extends Repository<Product, ProductId> {
 

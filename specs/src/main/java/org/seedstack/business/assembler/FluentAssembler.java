@@ -8,10 +8,10 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
-import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.util.List;

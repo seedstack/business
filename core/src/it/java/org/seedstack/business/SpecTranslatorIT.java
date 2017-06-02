@@ -10,21 +10,20 @@ package org.seedstack.business;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.domain.BaseAggregateRoot;
-import org.seedstack.business.domain.specification.AndSpecification;
-import org.seedstack.business.domain.specification.EqualSpecification;
-import org.seedstack.business.spi.domain.specification.SpecificationTranslator;
+import org.seedstack.business.specification.builder.SpecificationBuilder;
+import org.seedstack.business.spi.specification.SpecificationTranslator;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SeedITRunner.class)
 public class SpecTranslatorIT {
     @Inject
-    @Named("dummy")
-    private SpecificationTranslator<SomeAggregateRoot, StringBuilder, String> dummySpecificationTranslator;
+    private SpecificationTranslator<StringBuilder, String> dummySpecificationTranslator;
+    @Inject
+    private SpecificationBuilder specificationBuilder;
 
     @Test
     public void translatorIsInjectable() throws Exception {
@@ -34,10 +33,10 @@ public class SpecTranslatorIT {
     @Test
     public void translatorIsWorking() throws Exception {
         String result = dummySpecificationTranslator.translate(
-                new AndSpecification<>(
-                        new EqualSpecification<>("path1", "value1"),
-                        new EqualSpecification<>("path2", "value2")
-                ),
+                specificationBuilder.of(SomeAggregateRoot.class)
+                        .property("path1").equalTo("value1").and()
+                        .property("path2").equalTo("value2")
+                        .build(),
                 new StringBuilder()
         );
         assertThat(result).isEqualTo("path1 == value1 && path2 == value2");

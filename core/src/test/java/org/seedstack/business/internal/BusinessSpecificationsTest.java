@@ -23,8 +23,7 @@ import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.domain.RepositoryOptions;
-import org.seedstack.business.domain.specification.Specification;
+import org.seedstack.business.specification.Specification;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.finder.RangeFinder;
 import org.seedstack.business.spi.GenericImplementation;
@@ -220,7 +219,7 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public Stream<A> get(Specification<A> specification, RepositoryOptions... options) {
+        public Stream<A> get(Specification<A> specification, Repository.Options... options) {
             return null;
         }
 

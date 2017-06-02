@@ -7,12 +7,12 @@
  */
 package org.seedstack.business.fixtures.interfaces.usecase1;
 
+import org.javatuples.Quartet;
 import org.seedstack.business.assembler.BaseTupleAssembler;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.order.Order;
 import org.seedstack.business.fixtures.domain.product.Product;
-import org.javatuples.Quartet;
 
 
 public class UseCase1Assembler extends BaseTupleAssembler<Quartet<Activation, Customer, Order, Product>, UseCase1Representation> {

@@ -21,11 +21,16 @@ import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.shed.ClassLoaders;
+import org.seedstack.shed.reflect.AnnotationPredicates;
+import org.seedstack.shed.reflect.Annotations;
 
+import javax.inject.Qualifier;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -36,7 +41,7 @@ public final class BusinessUtils {
         // no instantiation allowed
     }
 
-    public static <T> Class<?>[] resolveGenerics(Class<T> superType, Class<? extends T> subType) {
+    public static <T> Type[] resolveGenerics(Class<T> superType, Class<? extends T> subType) {
         checkNotNull(superType, "superType should not be null");
         checkNotNull(subType, "subType should not be null");
         Class<?> subTypeWithoutProxy = ProxyUtils.cleanProxy(subType);
@@ -45,7 +50,7 @@ public final class BusinessUtils {
 
     public static Class<?> getAggregateIdClass(Class<? extends AggregateRoot<?>> aggregateRootClass) {
         checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
-        return resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
+        return (Class<?>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
     }
 
     @SuppressWarnings("unchecked")
@@ -58,12 +63,18 @@ public final class BusinessUtils {
                 .map(c -> (Class<T>) c);
     }
 
+    public static Optional<Annotation> getQualifier(Class<?> someClass) {
+        return Annotations.on(ProxyUtils.cleanProxy(someClass))
+                .findAll()
+                .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false))
+                .findFirst();
+    }
+
+
     @SuppressWarnings("unchecked")
     public static Key<?> defaultQualifier(Application application, String key, Class<?> aggregateClass, TypeLiteral<?> genericInterface) {
         Key<?> defaultKey = null;
-
         ClassConfiguration<?> configuration = application.getConfiguration(aggregateClass);
-
         if (configuration != null && !configuration.isEmpty()) {
             String qualifierName = configuration.get(key);
             if (qualifierName != null && !"".equals(qualifierName)) {

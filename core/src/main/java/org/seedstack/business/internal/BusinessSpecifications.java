@@ -22,8 +22,8 @@ import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.identity.IdentityHandler;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.spi.domain.specification.SpecificationConverter;
-import org.seedstack.business.spi.domain.specification.SpecificationTranslator;
+import org.seedstack.business.spi.specification.SpecificationConverter;
+import org.seedstack.business.spi.specification.SpecificationTranslator;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.AnnotationPredicates;
 
@@ -160,32 +160,13 @@ public final class BusinessSpecifications {
             .build();
 
     /**
-     * The specification for default specification translators.
-     */
-    public static final Specification<Class<?>> DEFAULT_SPECIFICATION_TRANSLATOR = new SpecificationBuilder<>(
-            classIsDescendantOf(SpecificationTranslator.class)
-                    .and(elementAnnotatedWith(GenericImplementation.class, false))
-                    .and(classIsInterface().negate())
-                    .and(classModifierIs(Modifier.ABSTRACT).negate()))
-            .build();
-
-    /**
-     * The specification for default specification translators.
-     */
-    public static final Specification<Class<?>> SPECIFICATION_CONVERTER = new SpecificationBuilder<>(
-            classIsDescendantOf(SpecificationConverter.class)
-                    .and(classIsInterface().negate())
-                    .and(classModifierIs(Modifier.ABSTRACT).negate()))
-            .build();
-
-    /**
      * The specification for the dtos which require an default assembler to be bound.
      *
      * @see #DEFAULT_ASSEMBLER
      */
     public static final Specification<Class<?>> DTO_OF = new SpecificationBuilder<Class<?>>(
-            elementAnnotatedWith(DtoOf.class, false)
-    ).build();
+            elementAnnotatedWith(DtoOf.class, false))
+            .build();
 
     /**
      * The identity handler specification. It matches all the classes implementing
@@ -194,8 +175,26 @@ public final class BusinessSpecifications {
     public static final Specification<Class<?>> IDENTITY_HANDLER = new SpecificationBuilder<>(
             classIsInterface().negate()
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
-                    .and(classIsDescendantOf(IdentityHandler.class))
-    ).build();
+                    .and(classIsDescendantOf(IdentityHandler.class)))
+            .build();
+
+    /**
+     * The specification for specification translators.
+     */
+    public static final Specification<Class<?>> SPECIFICATION_TRANSLATOR = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(SpecificationTranslator.class)))
+            .build();
+
+    /**
+     * The specification for specification converters.
+     */
+    public static final Specification<Class<?>> SPECIFICATION_CONVERTER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(SpecificationConverter.class)))
+            .build();
 
     private BusinessSpecifications() {
         // no instantiation allowed

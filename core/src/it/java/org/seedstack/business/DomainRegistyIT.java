@@ -7,8 +7,6 @@
  */
 package org.seedstack.business;
 
-import javax.inject.Inject;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +14,8 @@ import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
+import org.seedstack.business.fixtures.registry.TestDefaultRepository;
+import org.seedstack.business.fixtures.registry.TestJpaQualifier;
 import org.seedstack.business.fixtures.registry.domain.Client;
 import org.seedstack.business.fixtures.registry.domain.Composite;
 import org.seedstack.business.fixtures.registry.domain.Product;
@@ -30,11 +30,11 @@ import org.seedstack.business.fixtures.registry.service.RebateServiceInternal;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierComposite;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierNamed;
 import org.seedstack.business.fixtures.registry.service.ServiceQualifier;
-import org.seedstack.business.fixtures.registry.TestDefaultRepository;
-import org.seedstack.business.fixtures.registry.TestJpaQualifier;
 import org.seedstack.seed.SeedException;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.shed.reflect.TypeOf;
+
+import javax.inject.Inject;
 
 
 /**

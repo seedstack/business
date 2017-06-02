@@ -9,8 +9,8 @@ package org.seedstack.business.fixtures;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
-import org.seedstack.business.domain.RepositoryOptions;
-import org.seedstack.business.domain.specification.Specification;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.specification.Specification;
 import org.seedstack.seed.persistence.inmemory.InMemory;
 
 import java.util.Iterator;
@@ -34,7 +34,7 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
     }
 
     @Override
-    public Stream<Aggregate> get(Specification<Aggregate> specification, RepositoryOptions... options) {
+    public Stream<Aggregate> get(Specification<Aggregate> specification, Repository.Options... options) {
         // TODO: implement options
         return inMemorySortedMap.values().stream().filter(specification.asPredicate());
     }

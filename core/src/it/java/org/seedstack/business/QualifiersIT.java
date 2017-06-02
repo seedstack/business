@@ -7,12 +7,20 @@
  */
 package org.seedstack.business;
 
-import org.seedstack.business.fixtures.qualifier.application.MyApplicationService;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.fixtures.qualifier.domain.*;
-import org.seedstack.business.fixtures.qualifier.interfaces.*;
+import org.seedstack.business.fixtures.qualifier.application.MyApplicationService;
+import org.seedstack.business.fixtures.qualifier.domain.FactImpl1;
+import org.seedstack.business.fixtures.qualifier.domain.FactImpl2;
+import org.seedstack.business.fixtures.qualifier.domain.MyDomainPolicy;
+import org.seedstack.business.fixtures.qualifier.domain.MyDomainService;
+import org.seedstack.business.fixtures.qualifier.domain.MyFactory;
+import org.seedstack.business.fixtures.qualifier.interfaces.FinderImpl1;
+import org.seedstack.business.fixtures.qualifier.interfaces.FinderImpl2;
+import org.seedstack.business.fixtures.qualifier.interfaces.MyFinder;
+import org.seedstack.business.fixtures.qualifier.interfaces.MyInterfaceService;
+import org.seedstack.business.fixtures.qualifier.interfaces.Q1;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

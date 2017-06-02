@@ -8,8 +8,8 @@
 package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseRepository;
-import org.seedstack.business.domain.RepositoryOptions;
-import org.seedstack.business.domain.specification.Specification;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.specification.Specification;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    public Stream<Customer> get(Specification<Customer> specification, RepositoryOptions... options) {
+    public Stream<Customer> get(Specification<Customer> specification, Repository.Options... options) {
         return orderMap.values().stream().filter(specification.asPredicate());
     }
 

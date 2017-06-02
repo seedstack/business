@@ -7,11 +7,10 @@
  */
 package org.seedstack.business.fixtures.registry.service;
 
+import javax.inject.Qualifier;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import javax.inject.Qualifier;
 
 /**
  * Dummy class.

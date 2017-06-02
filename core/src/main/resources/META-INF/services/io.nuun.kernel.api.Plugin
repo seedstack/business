@@ -3,4 +3,4 @@ org.seedstack.business.internal.domain.identity.IdentityPlugin
 org.seedstack.business.internal.domain.event.EventPlugin
 org.seedstack.business.internal.assembler.AssemblerPlugin
 org.seedstack.business.internal.finder.FinderPlugin
-org.seedstack.business.internal.domain.specification.SpecificationPlugin
+org.seedstack.business.internal.specification.SpecificationPlugin

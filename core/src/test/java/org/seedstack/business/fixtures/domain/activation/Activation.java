@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.fixtures.domain.activation;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
 

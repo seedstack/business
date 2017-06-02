@@ -20,9 +20,9 @@ import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.MergeMultiple;
-import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.assembler.dsl.MergeMultipleAggregatesFromRepository;
 import org.seedstack.business.assembler.dsl.MergeMultipleTuplesWithRepository;
+import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.lang.annotation.Annotation;

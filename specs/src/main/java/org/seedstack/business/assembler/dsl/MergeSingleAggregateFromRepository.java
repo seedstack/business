@@ -9,8 +9,6 @@ package org.seedstack.business.assembler.dsl;
 
 import org.seedstack.business.domain.AggregateRoot;
 
-import java.lang.annotation.Annotation;
-
 /**
  * Specifies whether the aggregate should be retrieved from its repository or created from its factory.
  * <p>

@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.assembler.auto;
 
-import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.BaseAggregateRoot;
+import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.UUID;

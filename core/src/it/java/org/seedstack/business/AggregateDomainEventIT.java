@@ -7,15 +7,13 @@
  */
 package org.seedstack.business;
 
-import javax.inject.Inject;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.domain.BaseDomainEventHandler;
 import org.seedstack.business.domain.event.AggregateReadEvent;
 import org.seedstack.business.domain.event.BaseAggregateEvent;
-import org.seedstack.business.domain.BaseDomainEventHandler;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductId;
@@ -24,6 +22,8 @@ import org.seedstack.seed.Logging;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.seed.persistence.inmemory.Store;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
 
 
 @Store("ProductInMemoryRepository")

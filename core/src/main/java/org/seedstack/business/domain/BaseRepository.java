@@ -9,6 +9,8 @@ package org.seedstack.business.domain;
 
 import org.seedstack.business.internal.utils.BusinessUtils;
 
+import java.lang.reflect.Type;
+
 /**
  * This class serves as inheritance base for all repositories.
  *
@@ -30,9 +32,9 @@ public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> 
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected BaseRepository() {
-        Class<?>[] rawArguments = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
-        this.aggregateRootClass = (Class<AGGREGATE>) rawArguments[AGGREGATE_INDEX];
-        this.keyClass = (Class<KEY>) rawArguments[KEY_INDEX];
+        Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
+        this.aggregateRootClass = (Class<AGGREGATE>) generics[AGGREGATE_INDEX];
+        this.keyClass = (Class<KEY>) generics[KEY_INDEX];
     }
 
     /**

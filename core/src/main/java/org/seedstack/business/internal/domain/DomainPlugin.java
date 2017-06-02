@@ -18,7 +18,6 @@ import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.ValueObject;
 import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.business.spi.DomainProvider;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.slf4j.Logger;
@@ -38,7 +37,7 @@ import static org.seedstack.business.internal.utils.PluginUtils.classpathRequest
  * This plugins detects base building blocks of the business framework: aggregates, value objects, repositories, factories,
  * services, policies and finders. It also handles default repositories and default factories.
  */
-public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
+public class DomainPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlugin.class);
     private final Collection<Class<? extends AggregateRoot<?>>> aggregateClasses = new HashSet<>();
     private final Collection<Class<? extends ValueObject>> valueObjectClasses = new HashSet<>();
@@ -133,15 +132,5 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     @Override
     public Object nativeUnitModule() {
         return new DomainModule(bindings, bindingStrategies);
-    }
-
-    @Override
-    public Collection<Class<? extends AggregateRoot<?>>> aggregateRoots() {
-        return aggregateClasses;
-    }
-
-    @Override
-    public Collection<Class<? extends ValueObject>> valueObjects() {
-        return valueObjectClasses;
     }
 }

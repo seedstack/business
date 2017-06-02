@@ -9,8 +9,8 @@ package org.seedstack.business.internal.assembler;
 
 import com.google.inject.assistedinject.Assisted;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.assembler.modelmapper.ModelMapperAssembler;
+import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;

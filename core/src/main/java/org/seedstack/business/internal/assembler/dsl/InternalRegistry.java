@@ -7,8 +7,11 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.domain.*;
 import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Repository;
 
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;

@@ -7,7 +7,6 @@
  */
 package org.seedstack.business.view;
 
-import org.seedstack.business.view.ChunkedView;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 

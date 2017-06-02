@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.domain.specification.Specification;
+import org.seedstack.business.specification.Specification;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -54,7 +54,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @return a stream of aggregates.
      */
     @Read
-    Stream<A> get(Specification<A> specification, RepositoryOptions... options);
+    Stream<A> get(Specification<A> specification, Options... options);
 
     /**
      * Gets an aggregate identified by its identifier.
@@ -190,4 +190,8 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @return the aggregate key.
      */
     Class<ID> getIdentifierClass();
+
+    interface Options {
+
+    }
 }

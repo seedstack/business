@@ -29,7 +29,7 @@ import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
  */
 public class IdentityPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(IdentityPlugin.class);
-    private Collection<Class<? extends IdentityHandler>> identityHandlerClasses = new HashSet<>();
+    private final Collection<Class<? extends IdentityHandler>> identityHandlerClasses = new HashSet<>();
 
     @Override
     public String name() {

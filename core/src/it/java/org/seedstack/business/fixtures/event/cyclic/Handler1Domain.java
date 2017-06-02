@@ -7,10 +7,10 @@
  */
 package org.seedstack.business.fixtures.event.cyclic;
 
-import javax.inject.Inject;
-
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
+
+import javax.inject.Inject;
 
 public class Handler1Domain implements DomainEventHandler<Event1> {
 

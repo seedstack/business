@@ -7,11 +7,11 @@
  */
 package org.seedstack.business;
 
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
 import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.application.SingletonService;
 import org.seedstack.business.fixtures.domain.activation.ActivationException;
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 import org.seedstack.seed.it.AbstractSeedIT;
 
 import javax.inject.Inject;

@@ -9,8 +9,8 @@ package org.seedstack.business.fixtures;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
-import org.seedstack.business.domain.RepositoryOptions;
-import org.seedstack.business.domain.specification.Specification;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.specification.Specification;
 
 import java.util.stream.Stream;
 
@@ -27,7 +27,7 @@ public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseReposi
     }
 
     @Override
-    public Stream<A> get(Specification<A> specification, RepositoryOptions... options) {
+    public Stream<A> get(Specification<A> specification, Repository.Options... options) {
         return Stream.empty();
     }
 

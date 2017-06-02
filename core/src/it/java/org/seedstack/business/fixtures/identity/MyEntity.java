@@ -10,8 +10,8 @@
  */
 package org.seedstack.business.fixtures.identity;
 
-import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.BaseEntity;
+import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.UUID;

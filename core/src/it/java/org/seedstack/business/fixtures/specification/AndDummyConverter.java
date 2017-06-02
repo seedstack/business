@@ -7,17 +7,13 @@
  */
 package org.seedstack.business.fixtures.specification;
 
-import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.specification.AndSpecification;
-import org.seedstack.business.spi.domain.specification.SpecificationConverter;
-import org.seedstack.business.spi.domain.specification.SpecificationTranslator;
+import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.spi.specification.SpecificationConverter;
+import org.seedstack.business.spi.specification.SpecificationTranslator;
 
-import javax.inject.Named;
-
-@Named("dummy")
-public class AndDummyConverter<A extends AggregateRoot<?>> implements SpecificationConverter<A, AndSpecification<A>, StringBuilder, String> {
+public class AndDummyConverter implements SpecificationConverter<AndSpecification<?>, StringBuilder, String> {
     @Override
-    public String convert(AndSpecification<A> specification, StringBuilder builder, SpecificationTranslator<A, StringBuilder, String> translator) {
+    public String convert(AndSpecification<?> specification, StringBuilder builder, SpecificationTranslator<StringBuilder, String> translator) {
         return builder
                 .append(translator.translate(specification.getLhs(), builder))
                 .append(" && ")
