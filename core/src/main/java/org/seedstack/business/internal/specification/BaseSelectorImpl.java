@@ -7,18 +7,20 @@
  */
 package org.seedstack.business.internal.specification;
 
+import org.seedstack.business.specification.builder.BaseSelector;
 import org.seedstack.business.specification.builder.SpecificationPicker;
-import org.seedstack.business.specification.builder.SpecificationPropertyPicker;
 
-class SpecificationPropertyPickerImpl<T> implements SpecificationPropertyPicker<T> {
-    private final SpecificationBuilderContext<T> context;
+class BaseSelectorImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements BaseSelector<T, SELECTOR> {
+    protected final SpecificationBuilderContext<T, SELECTOR> context;
 
-    SpecificationPropertyPickerImpl(SpecificationBuilderContext<T> context) {
+    @SuppressWarnings("unchecked")
+    BaseSelectorImpl(SpecificationBuilderContext<T, SELECTOR> context) {
         this.context = context;
+        this.context.setSelector((SELECTOR) this);
     }
 
     @Override
-    public SpecificationPicker<T> property(String path) {
+    public SpecificationPicker<T, SELECTOR> property(String path) {
         context.setProperty(path);
         return new SpecificationPickerImpl<>(context);
     }

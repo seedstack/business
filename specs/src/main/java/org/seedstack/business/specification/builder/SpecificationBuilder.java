@@ -7,6 +7,10 @@
  */
 package org.seedstack.business.specification.builder;
 
+import org.seedstack.business.domain.AggregateRoot;
+
 public interface SpecificationBuilder {
-    <T> SpecificationPropertyPicker<T> of(Class<T> aggregateClass);
+    <T, SELECTOR extends BaseSelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass);
+
+    <A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> SELECTOR ofAggregate(Class<A> aggregateClass);
 }

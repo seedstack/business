@@ -7,6 +7,8 @@
  */
 package org.seedstack.business.specification.builder;
 
-public interface SpecificationPropertyPicker<T> {
-    SpecificationPicker<T> property(String path);
+import org.seedstack.business.domain.AggregateRoot;
+
+public interface AggregateSelector<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> extends BaseSelector<A, SELECTOR> {
+    IdentityPicker<A, ID, SELECTOR> identity();
 }

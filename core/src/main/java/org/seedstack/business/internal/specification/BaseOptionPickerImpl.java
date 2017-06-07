@@ -9,31 +9,31 @@ package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.builder.BaseOptionPicker;
-import org.seedstack.business.specification.builder.SpecificationPropertyPicker;
+import org.seedstack.business.specification.builder.BaseSelector;
 
-class BaseOptionPickerImpl<T> implements BaseOptionPicker<T> {
-    private final SpecificationBuilderContext<T> context;
+class BaseOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements BaseOptionPicker<T, SELECTOR> {
+    private final SpecificationBuilderContext<T, SELECTOR> context;
 
-    BaseOptionPickerImpl(SpecificationBuilderContext<T> context) {
+    BaseOptionPickerImpl(SpecificationBuilderContext<T, SELECTOR> context) {
         this.context = context;
     }
 
     @Override
-    public SpecificationPropertyPicker<T> and() {
+    public SELECTOR and() {
         context.setMode(SpecificationBuilderContext.Mode.CONJUNCTION);
-        return new SpecificationPropertyPickerImpl<>(context);
+        return context.getSelector();
     }
 
     @Override
-    public SpecificationPropertyPicker<T> or() {
+    public SELECTOR or() {
         context.setMode(SpecificationBuilderContext.Mode.DISJUNCTION);
-        return new SpecificationPropertyPickerImpl<>(context);
+        return context.getSelector();
     }
 
     @Override
-    public SpecificationPropertyPicker<T> orNot() {
+    public SELECTOR orNot() {
         context.setMode(SpecificationBuilderContext.Mode.NEGATIVE_DISJUNCTION);
-        return new SpecificationPropertyPickerImpl<>(context);
+        return context.getSelector();
     }
 
     @Override

@@ -7,11 +7,21 @@
  */
 package org.seedstack.business.internal.specification;
 
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.specification.builder.AggregateSelector;
+import org.seedstack.business.specification.builder.BaseSelector;
 import org.seedstack.business.specification.builder.SpecificationBuilder;
-import org.seedstack.business.specification.builder.SpecificationPropertyPicker;
 
 class SpecificationBuilderImpl implements SpecificationBuilder {
-    public <T> SpecificationPropertyPicker<T> of(Class<T> someClass) {
-        return new SpecificationPropertyPickerImpl<>(new SpecificationBuilderContext<>(someClass));
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T, SELECTOR extends BaseSelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass) {
+        return (SELECTOR) new BaseSelectorImpl<T, SELECTOR>(new SpecificationBuilderContext<>(anyClass));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> SELECTOR ofAggregate(Class<A> aggregateClass) {
+        return (SELECTOR) new AggregateSelectorImpl<A, ID, SELECTOR>(new SpecificationBuilderContext<>(aggregateClass));
     }
 }

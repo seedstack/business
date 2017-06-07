@@ -11,13 +11,15 @@ import com.google.common.base.Preconditions;
 import org.seedstack.business.specification.DelegatingSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.TrueSpecification;
+import org.seedstack.business.specification.builder.BaseSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class SpecificationBuilderContext<T> {
+class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>> {
     private final Class<T> targetClass;
     private final List<Specification<T>> disjunctions = new ArrayList<>();
+    private SELECTOR selector;
     private Mode mode = Mode.DISJUNCTION;
     private String path;
     private boolean not;
@@ -77,6 +79,14 @@ class SpecificationBuilderContext<T> {
 
     void setMode(Mode mode) {
         this.mode = mode;
+    }
+
+    public SELECTOR getSelector() {
+        return selector;
+    }
+
+    public void setSelector(SELECTOR selector) {
+        this.selector = selector;
     }
 
     Specification<T> build() {

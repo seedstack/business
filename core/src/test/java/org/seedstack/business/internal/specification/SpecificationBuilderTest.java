@@ -95,4 +95,14 @@ public class SpecificationBuilderTest {
                 .build();
         assertThat(spec.toString()).isEqualTo("Team[(¬(leader.name = Alice)) ∨ (leader.age > 25)]");
     }
+
+    @Test
+    public void testIdentity() throws Exception {
+        Specification<Team> spec = specificationBuilder.ofAggregate(Team.class)
+                .identity().is("BLUE")
+                .or()
+                .identity().is("GREEN")
+                .build();
+        assertThat(Stream.of(redTeam, blueTeam, greenTeam).filter(spec.asPredicate()).collect(toList())).containsExactly(blueTeam, greenTeam);
+    }
 }

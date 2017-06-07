@@ -7,12 +7,6 @@
  */
 package org.seedstack.business.specification.builder;
 
-public interface StringOptionPicker<T, SELECTOR extends BaseSelector> extends BaseOptionPicker<T, SELECTOR> {
-    StringOptionPicker<T, SELECTOR> trimmed();
-
-    StringOptionPicker<T, SELECTOR> leftTrimmed();
-
-    StringOptionPicker<T, SELECTOR> rightTrimmed();
-
-    StringOptionPicker<T, SELECTOR> ignoringCase();
+public interface BaseSelector<T, SELECTOR extends BaseSelector<T, SELECTOR>> {
+    SpecificationPicker<T, SELECTOR> property(String path);
 }

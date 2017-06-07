@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.domain;
 
+import org.seedstack.business.specification.IdentitySpecification;
 import org.seedstack.business.specification.Specification;
 
 import java.util.Optional;
@@ -64,7 +65,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      */
     @Read
     default Optional<A> get(ID id) {
-        return get(Specification.identity(id)).findFirst();
+        return get(new IdentitySpecification<>(id)).findFirst();
     }
 
     /**
@@ -84,7 +85,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @return true if the aggregate is present, false otherwise.
      */
     default boolean contains(ID id) {
-        return contains(Specification.identity(id));
+        return contains(new IdentitySpecification<>(id));
     }
 
     /**
@@ -141,7 +142,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      */
     @Delete
     default boolean remove(ID id) {
-        long removedCount = remove(Specification.identity(id));
+        long removedCount = remove(new IdentitySpecification<>(id));
         if (removedCount > 1L) {
             throw new IllegalStateException("More than one aggregate has been removed");
         }

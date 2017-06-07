@@ -9,12 +9,12 @@ package org.seedstack.business.specification.builder;
 
 import org.seedstack.business.specification.Specification;
 
-public interface BaseOptionPicker<T> {
-    SpecificationPropertyPicker<T> and();
+public interface BaseOptionPicker<T, SELECTOR extends BaseSelector> {
+    SELECTOR and();
 
-    SpecificationPropertyPicker<T> or();
+    SELECTOR or();
 
-    SpecificationPropertyPicker<T> orNot();
+    SELECTOR orNot();
 
     Specification<T> build();
 }

@@ -7,36 +7,37 @@
  */
 package org.seedstack.business.internal.specification;
 
+import org.seedstack.business.specification.builder.BaseSelector;
 import org.seedstack.business.specification.builder.StringOptionPicker;
 
-class StringOptionPickerImpl<T> extends BaseOptionPickerImpl<T> implements StringOptionPicker<T> {
+class StringOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> extends BaseOptionPickerImpl<T, SELECTOR> implements StringOptionPicker<T, SELECTOR> {
     private final StringValueOptionsImpl stringValueOptions;
 
-    StringOptionPickerImpl(SpecificationBuilderContext<T> context, StringValueOptionsImpl stringValueOptions) {
+    StringOptionPickerImpl(SpecificationBuilderContext<T, SELECTOR> context, StringValueOptionsImpl stringValueOptions) {
         super(context);
         this.stringValueOptions = stringValueOptions;
     }
 
     @Override
-    public StringOptionPicker<T> trimmed() {
+    public StringOptionPicker<T, SELECTOR> trimmed() {
         stringValueOptions.setTrimmed(true);
         return this;
     }
 
     @Override
-    public StringOptionPicker<T> leftTrimmed() {
+    public StringOptionPicker<T, SELECTOR> leftTrimmed() {
         stringValueOptions.setLeftTrimmed(true);
         return this;
     }
 
     @Override
-    public StringOptionPicker<T> rightTrimmed() {
+    public StringOptionPicker<T, SELECTOR> rightTrimmed() {
         stringValueOptions.setRightTrimmed(true);
         return this;
     }
 
     @Override
-    public StringOptionPicker<T> ignoringCase() {
+    public StringOptionPicker<T, SELECTOR> ignoringCase() {
         stringValueOptions.setIgnoringCase(true);
         return this;
     }

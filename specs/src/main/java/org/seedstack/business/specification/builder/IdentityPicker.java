@@ -7,12 +7,10 @@
  */
 package org.seedstack.business.specification.builder;
 
-public interface StringOptionPicker<T, SELECTOR extends BaseSelector> extends BaseOptionPicker<T, SELECTOR> {
-    StringOptionPicker<T, SELECTOR> trimmed();
+import org.seedstack.business.domain.AggregateRoot;
 
-    StringOptionPicker<T, SELECTOR> leftTrimmed();
+public interface IdentityPicker<A extends AggregateRoot<ID>, ID, SELECTOR extends BaseSelector> {
+    BaseOptionPicker<A, SELECTOR> is(ID id);
 
-    StringOptionPicker<T, SELECTOR> rightTrimmed();
-
-    StringOptionPicker<T, SELECTOR> ignoringCase();
+    BaseOptionPicker<A, SELECTOR> isNot(ID id);
 }

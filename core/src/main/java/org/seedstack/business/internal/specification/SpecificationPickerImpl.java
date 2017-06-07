@@ -15,75 +15,76 @@ import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
 import org.seedstack.business.specification.builder.BaseOptionPicker;
+import org.seedstack.business.specification.builder.BaseSelector;
 import org.seedstack.business.specification.builder.SpecificationPicker;
 import org.seedstack.business.specification.builder.StringOptionPicker;
 
 
-class SpecificationPickerImpl<T> implements SpecificationPicker<T> {
-    private final SpecificationBuilderContext<T> context;
+class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements SpecificationPicker<T, SELECTOR> {
+    private final SpecificationBuilderContext<T, SELECTOR> context;
     private boolean not;
 
-    SpecificationPickerImpl(SpecificationBuilderContext<T> context) {
+    SpecificationPickerImpl(SpecificationBuilderContext<T, SELECTOR> context) {
         this.context = context;
     }
 
     @Override
-    public SpecificationPicker<T> not() {
+    public SpecificationPicker<T, SELECTOR> not() {
         not = true;
         return this;
     }
 
     @Override
-    public StringOptionPicker<T> matching(String pattern) {
+    public StringOptionPicker<T, SELECTOR> matching(String pattern) {
         StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
         context.addSpecification(processSpecification(new StringMatchingSpecification(pattern, stringValueOptions)));
         return new StringOptionPickerImpl<>(context, stringValueOptions);
     }
 
     @Override
-    public StringOptionPicker<T> equalTo(String value) {
+    public StringOptionPicker<T, SELECTOR> equalTo(String value) {
         StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
         context.addSpecification(processSpecification(new StringEqualSpecification(value, stringValueOptions)));
         return new StringOptionPickerImpl<>(context, stringValueOptions);
     }
 
     @Override
-    public <V> BaseOptionPicker<T> equalTo(V value) {
+    public <V> BaseOptionPicker<T, SELECTOR> equalTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value)));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> greaterThan(V value) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThan(V value) {
         context.addSpecification(processSpecification(new GreaterThanSpecification<>(value)));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> greaterThanOrEqualTo(V value) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new GreaterThanSpecification<>(value))));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> lessThan(V value) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThan(V value) {
         context.addSpecification(processSpecification(new LessThanSpecification<>(value)));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> lessThanOrEqualTo(V value) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new LessThanSpecification<>(value))));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> between(V leftValue, V rightValue) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue) {
         return between(leftValue, rightValue, true, true);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
+    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
         Specification<V> gt = new GreaterThanSpecification<>(leftValue);
         if (leftInclusive) {
             gt = gt.or(new EqualSpecification<>(leftValue));
@@ -94,14 +95,6 @@ class SpecificationPickerImpl<T> implements SpecificationPicker<T> {
         }
         context.addSpecification(processSpecification(gt.and(lt)));
         return new BaseOptionPickerImpl<>(context);
-    }
-
-    private Specification<T> buildSpecification(Specification<T> specification) {
-        if (context.hasProperty()) {
-            return new PropertySpecification<>(context.pickProperty(), specification);
-        } else {
-            return specification;
-        }
     }
 
     @SuppressWarnings("unchecked")
