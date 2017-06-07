@@ -9,7 +9,6 @@ package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.IdentitySpecification;
-import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.builder.AggregateSelector;
 import org.seedstack.business.specification.builder.BaseOptionPicker;
 import org.seedstack.business.specification.builder.IdentityPicker;
@@ -29,7 +28,7 @@ class IdentityPickerImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends Aggre
 
     @Override
     public BaseOptionPicker<A, SELECTOR> isNot(ID id) {
-        context.addSpecification((Specification<A>) new IdentitySpecification<>(id).not());
+        context.addSpecification(new IdentitySpecification<A, ID>(id).not());
         return new BaseOptionPickerImpl<>(context);
     }
 }
