@@ -1,7 +1,7 @@
 # Version 4.0.0 (2016-07-??)
 
 * [new] DDD specifications have been added.
-* [new] A specification builder allow to create DDD specifications with a fluent DSL. 
+* [new] A specification builder allows to create DDD specifications with a fluent DSL. 
 * [new] Add SPI and base infrastructure for specification translation.
 * [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
 * [new] Business framework now takes advantage of Java 8 features (notably streams and optional).  
