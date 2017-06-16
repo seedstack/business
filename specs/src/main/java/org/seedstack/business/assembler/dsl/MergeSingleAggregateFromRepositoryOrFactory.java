@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 
 /**

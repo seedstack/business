@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;

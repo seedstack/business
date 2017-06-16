@@ -8,6 +8,7 @@
 package org.seedstack.business.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.domain.AggregateNotFoundException;
 
 /**
  * Specifies the behavior in the case where the aggregate tuple cannot be loaded from the repository.

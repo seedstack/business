@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
 import org.seedstack.business.assembler.dsl.MergeMultipleAggregatesFromRepository;
 import org.seedstack.business.assembler.dsl.MergeMultipleAggregatesFromRepositoryOrFactory;
+import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 

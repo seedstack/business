@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.assembler.FluentAssembler;
 import org.seedstack.business.assembler.ModelMapper;
-import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.assembler.auto.BasicAggregate;
 import org.seedstack.business.fixtures.assembler.auto.BasicDto;

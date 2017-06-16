@@ -7,13 +7,13 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.DomainDomainEventPublisherIT;
+import org.seedstack.business.DomainEventPublisherIT;
 import org.seedstack.business.domain.BaseDomainEventHandler;
 
 public class GenericDomainEventHandler extends BaseDomainEventHandler<AbstractDomainEvent> {
 
     @Override
     public void handle(AbstractDomainEvent event) {
-        DomainDomainEventPublisherIT.countGenericEvent++;
+        DomainEventPublisherIT.countGenericEvent++;
     }
 }

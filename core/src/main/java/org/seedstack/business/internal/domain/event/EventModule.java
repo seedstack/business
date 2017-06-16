@@ -11,17 +11,12 @@ import com.google.common.collect.Multimap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.matcher.Matcher;
-import com.google.inject.matcher.Matchers;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
-import org.seedstack.business.domain.Repository;
-import org.seedstack.seed.core.internal.utils.MethodMatcherBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -33,12 +28,10 @@ class EventModule extends AbstractModule {
     };
     private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent;
     private final List<Class<? extends DomainEventHandler>> eventHandlerClasses;
-    private final boolean watchRepo;
 
-    EventModule(Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent, List<Class<? extends DomainEventHandler>> eventHandlerClasses, boolean watchRepo) {
+    EventModule(Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent, List<Class<? extends DomainEventHandler>> eventHandlerClasses) {
         this.eventHandlersByEvent = eventHandlersByEvent;
         this.eventHandlerClasses = eventHandlerClasses;
-        this.watchRepo = watchRepo;
     }
 
     @Override
@@ -49,17 +42,5 @@ class EventModule extends AbstractModule {
         }
         bind(EVENT_HANDLER_MAP_TYPE_LITERAL).toInstance(eventHandlersByEvent);
         bind(DomainEventPublisher.class).to(DomainEventPublisherInternal.class).in(Scopes.SINGLETON);
-        if (watchRepo) {
-            RepositoryMethodInterceptor interceptor = new RepositoryMethodInterceptor();
-            requestInjection(interceptor);
-            bindInterceptor(Matchers.subclassesOf(Repository.class), handlerMethod(), interceptor);
-        }
-    }
-
-    private Matcher<Method> handlerMethod() {
-        return new MethodMatcherBuilder(ReadResolver.INSTANCE
-                .or(DeleteResolver.INSTANCE)
-                .or(PersistResolver.INSTANCE)
-        ).build();
     }
 }

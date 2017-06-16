@@ -11,19 +11,4 @@ import org.seedstack.coffig.Config;
 
 @Config("business")
 public class BusinessConfig {
-    private EventConfig events = new EventConfig();
-
-    @Config("events")
-    public static class EventConfig {
-        private boolean publishRepositoryEvents = false;
-
-        public boolean isPublishRepositoryEvents() {
-            return publishRepositoryEvents;
-        }
-
-        public EventConfig setPublishRepositoryEvents(boolean publishRepositoryEvents) {
-            this.publishRepositoryEvents = publishRepositoryEvents;
-            return this;
-        }
-    }
 }

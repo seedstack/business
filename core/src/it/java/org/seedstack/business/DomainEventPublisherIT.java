@@ -26,7 +26,7 @@ import static org.junit.Assert.fail;
  * Tests fire event whether the handler throws an exception or not.
  */
 @RunWith(SeedITRunner.class)
-public class DomainDomainEventPublisherIT {
+public class DomainEventPublisherIT {
     public static int countMyEvent = 0;
     public static int countGenericEvent = 0;
 

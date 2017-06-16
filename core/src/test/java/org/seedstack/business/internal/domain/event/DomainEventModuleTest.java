@@ -32,7 +32,7 @@ public class DomainEventModuleTest {
         multimap.put(MyDomainEvent2.class, MyDomainEventHandlerFailed.class);
         List<Class<? extends DomainEventHandler>> eventHandlerClasses = new ArrayList<>();
         eventHandlerClasses.add(MyDomainEventHandlerFailed.class);
-        EventModule underTest = new EventModule(multimap, eventHandlerClasses, false);
+        EventModule underTest = new EventModule(multimap, eventHandlerClasses);
         Binder b = mock(Binder.class, Mockito.RETURNS_MOCKS);
         Reflection.field("binder").ofType(Binder.class).in(underTest).set(b);
         underTest.configure();

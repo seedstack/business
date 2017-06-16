@@ -8,6 +8,7 @@
 package org.seedstack.business.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.domain.AggregateNotFoundException;
 
 import java.util.List;
 

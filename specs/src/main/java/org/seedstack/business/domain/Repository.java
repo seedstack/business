@@ -42,9 +42,9 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * Adds an aggregate to the repository.
      *
      * @param aggregate the aggregate to add.
+     * @throws AggregateExistsException if the repository already contains the aggregate.
      */
-    @Persist
-    void add(A aggregate);
+    void add(A aggregate) throws AggregateExistsException;
 
     /**
      * Finds all aggregates in the repository satisfying the given specification. Options can be specified to
@@ -54,7 +54,6 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @param options       result options.
      * @return a stream of aggregates.
      */
-    @Read
     Stream<A> get(Specification<A> specification, Options... options);
 
     /**
@@ -63,7 +62,6 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @param id the aggregate identifier.
      * @return an optional of the corresponding aggregate.
      */
-    @Read
     default Optional<A> get(ID id) {
         return get(new IdentitySpecification<>(id)).findFirst();
     }
@@ -131,53 +129,54 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * Removes all aggregates in the repository satisfying the given specification.
      *
      * @param specification the specification aggregates must satisfy.
+     * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    @Delete
-    long remove(Specification<A> specification);
+    long remove(Specification<A> specification) throws AggregateNotFoundException;
 
     /**
      * Removes the existing aggregate identified with the specified identifier.
      *
      * @param id the identifier of the aggregate to remove.
+     * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    @Delete
-    default boolean remove(ID id) {
+    default void remove(ID id) throws AggregateNotFoundException, IllegalStateException {
         long removedCount = remove(new IdentitySpecification<>(id));
-        if (removedCount > 1L) {
+        if (removedCount == 0L) {
+            throw new AggregateNotFoundException("Aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " cannot be removed");
+        } else if (removedCount > 1L) {
             throw new IllegalStateException("More than one aggregate has been removed");
         }
-        return removedCount == 1L;
     }
 
     /**
      * Removes the specified aggregate from the repository.
      *
      * @param aggregate the aggregate to remove.
+     * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    @Delete
-    default boolean remove(A aggregate) {
-        return remove(aggregate.getId());
+    default void remove(A aggregate) throws AggregateNotFoundException {
+        remove(aggregate.getId());
     }
 
     /**
-     * Replaces an existing aggregate with the specified aggregate.
+     * Updates an existing aggregate with the specified aggregate.
      *
      * @param aggregate the updated aggregate.
+     * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    @Persist
-    default void update(A aggregate) {
-        Optional<A> found = get(aggregate.getId());
+    default void update(A aggregate) throws AggregateNotFoundException {
+        ID id = aggregate.getId();
+        Optional<A> found = get(id);
         if (found.isPresent()) {
-            if (remove(found.get())) {
-                add(aggregate);
-            }
+            remove(found.get());
+        } else {
+            throw new AggregateNotFoundException("Aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " cannot be updated");
         }
     }
 
     /**
      * Removes all aggregates from the repository.
      */
-    @Delete
     default void clear() {
         remove(Specification.any());
     }

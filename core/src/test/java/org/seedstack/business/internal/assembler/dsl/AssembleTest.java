@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.name.Names;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.FluentAssembler;
-import org.seedstack.business.assembler.dsl.AggregateNotFoundException;
+import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.Tuples;
 

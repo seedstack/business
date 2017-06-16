@@ -16,7 +16,6 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import net.jodah.typetools.TypeResolver;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
@@ -48,7 +47,6 @@ public class EventPlugin extends AbstractSeedPlugin {
 
     private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent = ArrayListMultimap.create();
     private final List<Class<? extends DomainEventHandler>> eventHandlerClasses = new ArrayList<>();
-    private boolean watchRepo;
 
     @Override
     public String name() {
@@ -63,9 +61,6 @@ public class EventPlugin extends AbstractSeedPlugin {
     @SuppressWarnings("unchecked")
     @Override
     public InitState initialize(InitContext initContext) {
-        BusinessConfig.EventConfig eventConfiguration = getConfiguration(BusinessConfig.EventConfig.class);
-
-        watchRepo = eventConfiguration.isPublishRepositoryEvents();
         Collection<Class<?>> scannedEventHandlerClasses = initContext.scannedTypesBySpecification().get(eventHandlerSpecification);
 
         for (Class<?> scannedEventHandlerClass : scannedEventHandlerClasses) {
@@ -81,7 +76,7 @@ public class EventPlugin extends AbstractSeedPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return new EventModule(ImmutableListMultimap.copyOf(eventHandlersByEvent), ImmutableList.copyOf(eventHandlerClasses), watchRepo);
+        return new EventModule(ImmutableListMultimap.copyOf(eventHandlersByEvent), ImmutableList.copyOf(eventHandlerClasses));
     }
 
 }

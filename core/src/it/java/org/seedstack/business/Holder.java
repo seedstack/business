@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 @ITBind
 public class Holder {
-	
+
     @Inject
     public ActivationRepository activationRepository;
 
