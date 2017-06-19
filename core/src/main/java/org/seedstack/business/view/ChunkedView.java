@@ -18,6 +18,8 @@ import java.util.List;
  * @param <T> the item type
  */
 public class ChunkedView<T> extends AbstractView<T> {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructor.
      *

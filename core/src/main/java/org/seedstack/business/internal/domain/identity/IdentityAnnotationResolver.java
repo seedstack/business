@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.seedstack.shed.reflect.AnnotationPredicates.elementAnnotatedWith;
 
 public class IdentityAnnotationResolver implements AnnotationResolver<Class<?>, Identity> {
-    public static IdentityAnnotationResolver INSTANCE = new IdentityAnnotationResolver();
+    public static final IdentityAnnotationResolver INSTANCE = new IdentityAnnotationResolver();
 
     private IdentityAnnotationResolver() {
         // no external instantiation allowed

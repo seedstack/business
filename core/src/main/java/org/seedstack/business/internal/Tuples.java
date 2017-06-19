@@ -20,6 +20,7 @@ import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.javatuples.Unit;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public final class Tuples {
         Class<? extends Tuple> tupleClass = classOfTuple(objects.size());
         try {
             return (TUPLE) tupleClass.getMethod("fromCollection", Collection.class).invoke(null, objects);
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Unable to create tuple", e);
         }
     }
@@ -64,7 +65,7 @@ public final class Tuples {
         Class<? extends Tuple> tupleClass = classOfTuple(objects.length);
         try {
             return (TUPLE) tupleClass.getMethod("fromArray", Object[].class).invoke(null, new Object[]{objects});
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Unable to create tuple", e);
         }
     }

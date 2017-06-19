@@ -17,9 +17,8 @@ import java.util.List;
  * @param <Item> the paginated item type
  */
 public class PaginatedView<Item> extends AbstractView<Item> {
-
+    private static final long serialVersionUID = 1L;
     private final long pageIndex;
-
     private final long pagesCount;
 
     /**

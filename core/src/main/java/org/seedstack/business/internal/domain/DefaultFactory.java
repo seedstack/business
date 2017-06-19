@@ -14,7 +14,6 @@ import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.Producible;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.DomainObject;
-import org.seedstack.business.domain.Factory;
 
 import javax.inject.Inject;
 
@@ -46,7 +45,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @param <DO> the domain object type
  */
-public class DefaultFactory<DO extends DomainObject & Producible> extends BaseFactory<DO> implements Factory<DO> {
+public class DefaultFactory<DO extends DomainObject & Producible> extends BaseFactory<DO> {
     private final Class<DO> domainObjectClass;
 
     @SuppressWarnings("unchecked")

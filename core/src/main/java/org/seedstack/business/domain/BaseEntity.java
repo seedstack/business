@@ -16,9 +16,6 @@ package org.seedstack.business.domain;
  * @param <ID> The type of the entityId of the Entity.
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
-    @Override
-    public abstract ID getId();
-
     /**
      * Computes the hash code on the entity identity returned by {@link #getId()}. This method can be overridden
      * but be sure to respect the equality semantics for entities.

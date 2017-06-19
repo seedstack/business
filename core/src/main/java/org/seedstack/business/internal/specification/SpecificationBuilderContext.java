@@ -92,21 +92,23 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     Specification<T> build() {
         processNegativeDisjunction(false);
         if (disjunctions.isEmpty()) {
-            return new ClassSpecification(new TrueSpecification<>());
+            return new ClassSpecification<>(targetClass, new TrueSpecification<>());
         } else {
-            return new ClassSpecification(disjunctions.stream().skip(1).reduce(disjunctions.get(0), Specification::or));
+            return new ClassSpecification<>(targetClass, disjunctions.stream().skip(1).reduce(disjunctions.get(0), Specification::or));
         }
     }
 
-    private class ClassSpecification implements DelegatingSpecification<T> {
-        private final Specification<T> delegate;
+    private static class ClassSpecification<C> implements DelegatingSpecification<C> {
+        private final Class<C> targetClass;
+        private final Specification<C> delegate;
 
-        private ClassSpecification(Specification<T> delegate) {
+        private ClassSpecification(Class<C> targetClass, Specification<C> delegate) {
+            this.targetClass = targetClass;
             this.delegate = delegate;
         }
 
         @Override
-        public Specification<T> getDelegate() {
+        public Specification<C> getDelegate() {
             return delegate;
         }
 

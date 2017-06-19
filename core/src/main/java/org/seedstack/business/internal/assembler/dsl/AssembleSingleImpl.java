@@ -35,7 +35,7 @@ public class AssembleSingleImpl implements AssembleSingleWithQualifier {
     @Override
     public <D> D to(Class<D> dtoClass) {
         List<D> ds = dtosAssemblerProvider.to(dtoClass);
-        if (ds != null && !ds.isEmpty()) {
+        if (!ds.isEmpty()) {
             return ds.get(0);
         } else {
             return null;

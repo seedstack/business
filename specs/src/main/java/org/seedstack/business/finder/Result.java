@@ -19,8 +19,8 @@ import java.util.List;
  *
  * @param <Item> the representation type
  */
-public final class Result<Item> {
-    protected final List<Item> list;
+public class Result<Item> {
+    private final List<Item> list;
     private final long fullSize;
     private final long offset;
 

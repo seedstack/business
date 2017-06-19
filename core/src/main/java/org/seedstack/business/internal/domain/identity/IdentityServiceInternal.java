@@ -26,6 +26,8 @@ import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.Optional;
 
+import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
+
 /**
  * IdentityServiceInternal identify the handler and the configuration used to
  * generate a unique appropriate ID for the current entity
@@ -48,7 +50,7 @@ class IdentityServiceInternal implements IdentityService {
         ClassConfiguration entityConfiguration = application.getConfiguration(entity.getClass());
         IdentityHandler identityHandler = getIdentityHandler(identity, entityConfiguration, entity.getClass());
         compareIDType(identityHandler, entity);
-        entityIdField.setAccessible(true);
+        makeAccessible(entityIdField);
         try {
             Object id = entityIdField.get(entity);
             if (id == null) {

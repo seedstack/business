@@ -82,7 +82,7 @@ public class PropertySpecification<T, V> implements Specification<T> {
         FieldReference fieldReference = new FieldReference(someClass, fieldName);
         Optional<Field> field;
         if ((field = fieldCache.get(fieldReference)) == null) {
-            fieldCache.putIfAbsent(fieldReference, field = Classes.from(someClass)
+            fieldCache.put(fieldReference, field = Classes.from(someClass)
                     .traversingSuperclasses()
                     .fields()
                     .filter(f -> f.getName().equals(fieldName))
