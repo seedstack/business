@@ -7,6 +7,7 @@
  */
 package org.seedstack.business;
 
+import org.seedstack.business.fixtures.application.GenericService;
 import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.domain.activation.ActivationFactory;
 import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
@@ -33,40 +34,43 @@ public class Holder {
     @Inject
     public ActivationFactory activationFactory;
 
-	@Inject
-	CustomerRepository customerRepo;
+    @Inject
+    CustomerRepository customerRepo;
 
-	@Inject
-	IndexService indexService;
+    @Inject
+    IndexService indexService;
 
-	@Inject
-	CustomerSampleService customerService;
+    @Inject
+    CustomerSampleService customerService;
 
-	@Inject
-	CustomerFactory customerFactory;
+    @Inject
+    CustomerFactory customerFactory;
 
-	@Inject
-	CustomerFinder customerFinder;
+    @Inject
+    CustomerFinder customerFinder;
 
-	@Inject
-	OrderRepository orderRepo;
+    @Inject
+    OrderRepository orderRepo;
 
-	@Inject
-	OrderFactory orderFactory;
+    @Inject
+    OrderFactory orderFactory;
 
-	@Inject
-	ProductRepository productRepo;
+    @Inject
+    ProductRepository productRepo;
 
-	@Inject
-	ProductFactory productFactory;
+    @Inject
+    ProductFactory productFactory;
 
-	@Inject
-	ProductNamePolicy productNamePolicy;
+    @Inject
+    ProductNamePolicy productNamePolicy;
+
+    @Inject
+    GenericService<String> genericService;
 
     @Configuration("org.seedstack.toto")
     private String property;
 
-    public String property () {
+    public String property() {
         return property;
     }
 }

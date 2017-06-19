@@ -8,6 +8,7 @@
 package org.seedstack.business;
 
 import org.junit.Test;
+import org.seedstack.business.fixtures.application.internal.GenericServiceInternal;
 import org.seedstack.business.fixtures.application.internal.IndexServiceInternal;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.activation.ActivationException;
@@ -66,6 +67,8 @@ public class BusinessIT extends AbstractSeedIT {
         // Application Service
         assertThat(holder.indexService).isNotNull();
         assertThat(IndexServiceInternal.class.isAssignableFrom(holder.indexService.getClass())).isTrue();
+        assertThat(holder.genericService).isNotNull();
+        assertThat(GenericServiceInternal.class.isAssignableFrom(holder.genericService.getClass())).isTrue();
 
         // Domain Service
         assertThat(holder.customerService).isNotNull();
