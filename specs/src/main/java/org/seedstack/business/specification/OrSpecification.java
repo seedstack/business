@@ -9,9 +9,9 @@ package org.seedstack.business.specification;
 
 public class OrSpecification<T> implements Specification<T> {
     private final Specification<T> lhs;
-    private final Specification<T> rhs;
+    private final Specification<? super T> rhs;
 
-    public OrSpecification(Specification<T> lhs, Specification<T> rhs) {
+    public OrSpecification(Specification<T> lhs, Specification<? super T> rhs) {
         this.lhs = lhs;
         this.rhs = rhs;
     }
@@ -25,7 +25,7 @@ public class OrSpecification<T> implements Specification<T> {
         return lhs;
     }
 
-    public Specification<T> getRhs() {
+    public Specification<? super T> getRhs() {
         return rhs;
     }
 

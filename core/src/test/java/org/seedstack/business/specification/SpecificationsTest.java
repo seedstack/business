@@ -71,7 +71,7 @@ public class SpecificationsTest {
     @Test
     public void testEqualityAsPredicate() throws Exception {
         Specification<Team> equalSpecification = new PropertySpecification<Team, String>("leader.name", new EqualSpecification<>("Alice"))
-                .and(new PropertySpecification<Team, String>("members.address.street", new EqualSpecification<>("Other street")).not());
+                .and(new PropertySpecification<Team, String>("members.address.street", new EqualSpecification<>("Other street")).negate());
         assertThat(Stream.of(redTeam, blueTeam).filter(equalSpecification.asPredicate()).collect(Collectors.toList())).containsExactly(redTeam);
     }
 

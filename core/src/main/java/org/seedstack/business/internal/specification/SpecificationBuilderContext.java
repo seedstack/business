@@ -51,7 +51,7 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     private void processNegativeDisjunction(boolean newStatus) {
         if (not) {
             int index = disjunctions.size() - 1;
-            disjunctions.set(index, disjunctions.get(index).not());
+            disjunctions.set(index, disjunctions.get(index).negate());
         }
         not = newStatus;
     }

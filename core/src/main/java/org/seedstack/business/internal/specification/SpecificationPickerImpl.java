@@ -55,36 +55,36 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThan(V value) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThan(V value) {
         context.addSpecification(processSpecification(new GreaterThanSpecification<>(value)));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new GreaterThanSpecification<>(value))));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThan(V value) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThan(V value) {
         context.addSpecification(processSpecification(new LessThanSpecification<>(value)));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new LessThanSpecification<>(value))));
         return new BaseOptionPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue) {
         return between(leftValue, rightValue, true, true);
     }
 
     @Override
-    public <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
+    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
         Specification<V> gt = new GreaterThanSpecification<>(leftValue);
         if (leftInclusive) {
             gt = gt.or(new EqualSpecification<>(leftValue));
@@ -105,6 +105,6 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
         } else {
             result = (Specification<T>) specification;
         }
-        return not ? result.not() : result;
+        return not ? result.negate() : result;
     }
 }

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.specification;
 
-public abstract class ComparableSpecification<T extends Comparable<?>> implements Specification<T> {
+public abstract class ComparableSpecification<T extends Comparable<? super T>> implements Specification<T> {
     protected final T expectedValue;
     private final int expectedResult;
 
@@ -18,11 +18,10 @@ public abstract class ComparableSpecification<T extends Comparable<?>> implement
 
     @Override
     public boolean isSatisfiedBy(T candidate) {
-        return candidate.compareTo(uncheckedCast(expectedValue)) == expectedResult;
+        return candidate.compareTo(expectedValue) == expectedResult;
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T> T uncheckedCast(Comparable<?> pThingy) {
-        return (T) pThingy;
+    public T getExpectedValue() {
+        return expectedValue;
     }
 }

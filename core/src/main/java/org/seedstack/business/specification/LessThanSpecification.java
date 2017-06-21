@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.specification;
 
-public class LessThanSpecification<T extends Comparable<?>> extends ComparableSpecification<T> {
+public class LessThanSpecification<T extends Comparable<? super T>> extends ComparableSpecification<T> {
     public LessThanSpecification(T expectedValue) {
         super(expectedValue, -1);
     }

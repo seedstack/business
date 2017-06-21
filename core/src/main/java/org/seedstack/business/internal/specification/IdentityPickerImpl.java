@@ -28,7 +28,7 @@ class IdentityPickerImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends Aggre
 
     @Override
     public BaseOptionPicker<A, SELECTOR> isNot(ID id) {
-        context.addSpecification(new IdentitySpecification<A, ID>(id).not());
+        context.addSpecification(new IdentitySpecification<A, ID>(id).negate());
         return new BaseOptionPickerImpl<>(context);
     }
 }

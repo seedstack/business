@@ -16,15 +16,15 @@ public interface SpecificationPicker<T, SELECTOR extends BaseSelector> {
 
     <V> BaseOptionPicker<T, SELECTOR> equalTo(V value);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThan(V value);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThan(V value);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThan(V value);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThan(V value);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue);
 
-    <V extends Comparable<?>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive);
+    <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive);
 }

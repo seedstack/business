@@ -7,31 +7,29 @@
  */
 package org.seedstack.business.specification;
 
-import org.seedstack.business.domain.AggregateRoot;
-
 import java.util.Objects;
 import java.util.function.Predicate;
 
 @FunctionalInterface
 public interface Specification<T> {
-    static <T extends AggregateRoot<?>> Specification<T> any() {
+    static <T> Specification<T> any() {
         return new TrueSpecification<>();
     }
 
-    static <T extends AggregateRoot<?>> Specification<T> none() {
+    static <T> Specification<T> none() {
         return new FalseSpecification<>();
     }
 
-    default Specification<T> and(Specification<T> other) {
+    default Specification<T> and(Specification<? super T> other) {
         Objects.requireNonNull(other);
         return new AndSpecification<>(this, other);
     }
 
-    default Specification<T> not() {
+    default Specification<T> negate() {
         return new NotSpecification<>(this);
     }
 
-    default Specification<T> or(Specification<T> other) {
+    default Specification<T> or(Specification<? super T> other) {
         Objects.requireNonNull(other);
         return new OrSpecification<>(this, other);
     }
