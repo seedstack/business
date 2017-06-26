@@ -9,6 +9,8 @@ package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
+import java.util.Date;
+
 
 public class Order extends BaseAggregateRoot<String> {
 
@@ -17,6 +19,8 @@ public class Order extends BaseAggregateRoot<String> {
     private String product;
 
     private int price;
+
+    private Date orderDate;
 
     private String otherDetails;
 
@@ -35,6 +39,12 @@ public class Order extends BaseAggregateRoot<String> {
     public Order(String id, String product) {
         this.orderId = id;
         this.product = product;
+    }
+
+    public Order(String id, String product, Date orderDate) {
+        this.orderId = id;
+        this.product = product;
+        this.orderDate = orderDate;
     }
 
     public Order(String product) {
@@ -63,5 +73,13 @@ public class Order extends BaseAggregateRoot<String> {
 
     public void setOtherDetails(String otherDetails) {
         this.otherDetails = otherDetails;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }

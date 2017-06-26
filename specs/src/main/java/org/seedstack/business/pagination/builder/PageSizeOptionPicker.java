@@ -5,10 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.fixtures.domain.order;
+package org.seedstack.business.pagination.builder;
 
-import org.seedstack.business.domain.Repository;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.pagination.Page;
 
-public interface OrderRepository extends Repository<Order, OrderId> {
-
+public interface PageSizeOptionPicker<A extends AggregateRoot<ID>, ID> {
+    PaginatorSpecificationPicker<Page<A>, A, ID> size(int size);
 }

@@ -9,10 +9,17 @@ package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseFactory;
 
+import java.util.Date;
+
 
 public class OrderFactoryInternal extends BaseFactory<Order> implements OrderFactory {
 
     public Order create(String id, String product) {
         return new Order(id, product);
+    }
+
+    @Override
+    public Order create(String id, String product, Date orderDate) {
+        return new Order(id, product, orderDate);
     }
 }

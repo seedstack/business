@@ -8,11 +8,10 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
-import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
-import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
-import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.*;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.pagination.Chunk;
+import org.seedstack.business.pagination.Page;
 
 import java.util.List;
 
@@ -61,6 +60,22 @@ public interface FluentAssembler {
     AssembleMultipleWithQualifier assembleTuple(List<? extends Tuple> aggregateRoots);
 
     /**
+     * Assembles a list of aggregates inside a Page.
+     *
+     * @param pagination the Page to assemble
+     * @return a PageWithDtosAssemblerProvider
+     */
+    AssemblePageWithQualifier assemble(Page<?> pagination);
+
+    /**
+     * Assembles a list of aggregates inside a Chunk.
+     *
+     * @param pagination the Chunk to assemble
+     * @return a ChunkWithDtosAssemblerProvider
+     */
+    AssembleChunkWithQualifier assemble(Chunk<?> pagination);
+
+    /**
      * Merges a DTO.
      *
      * @param dto the dto to merge
@@ -77,5 +92,4 @@ public interface FluentAssembler {
      * @return a MergeAggregatesOrTuplesWithQualifierProvider
      */
     <D> MergeMultipleWithQualifier<D> merge(List<D> dtos);
-
 }

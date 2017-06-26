@@ -30,7 +30,6 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
         return orderMap.values().stream().filter(specification.asPredicate());
     }
 
-
     @Override
     public long remove(Specification<Order> specification) {
         AtomicInteger atomicInteger = new AtomicInteger(0);

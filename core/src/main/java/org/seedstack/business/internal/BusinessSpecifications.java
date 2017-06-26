@@ -196,6 +196,7 @@ public final class BusinessSpecifications {
                     .and(classIsDescendantOf(SpecificationConverter.class)))
             .build();
 
+
     private BusinessSpecifications() {
         // no instantiation allowed
     }

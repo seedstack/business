@@ -10,6 +10,8 @@ package org.seedstack.business.fixtures.assembler.customer;
 import org.seedstack.business.assembler.MatchingEntityId;
 import org.seedstack.business.assembler.MatchingFactoryParameter;
 
+import java.util.Date;
+
 
 //@DtoOf(Order.class) // specify the link to the aggregate root
 public class OrderDto {
@@ -17,6 +19,8 @@ public class OrderDto {
     String product;
     String customerName;
     int price;
+    Date orderDate;
+    String otherDetails;
 
     public OrderDto() {
     }
@@ -61,5 +65,25 @@ public class OrderDto {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getOtherDetails() {
+        return otherDetails;
+    }
+
+    public void setOtherDetails(String otherDetails) {
+        this.otherDetails = otherDetails;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

@@ -20,7 +20,6 @@ public abstract class AbstractView<Item> implements View<Item> {
     protected final VirtualList<Item> resultList;
     protected final long resultSize;
     protected final long resultViewOffset;
-
     protected final long resultViewSize;
 
     /**
