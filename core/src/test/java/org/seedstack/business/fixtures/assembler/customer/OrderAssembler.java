@@ -30,6 +30,7 @@ public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
         targetAggregate.setOtherDetails(sourceDto.getOtherDetails());
         targetAggregate.setOrderDate(sourceDto.getOrderDate());
         targetAggregate.setPrice(sourceDto.getPrice());
+        targetAggregate.setOrderDate(sourceDto.getOrderDate());
         // identity never change
     }
 }

@@ -9,6 +9,7 @@ package org.seedstack.business;
 
 import com.google.inject.name.Names;
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -193,5 +194,10 @@ public class PaginationIT {
         assertThat(page.getCapacity()).isEqualTo(3);
         assertThat(page.getView().size()).isEqualTo(1);
         assertThat(page.getView().get(0).getId()).isEqualTo("7");
+    }
+
+    @After
+    public void cleanUp() {
+
     }
 }
