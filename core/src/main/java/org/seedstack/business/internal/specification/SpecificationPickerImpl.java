@@ -14,10 +14,10 @@ import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
-import org.seedstack.business.specification.builder.BaseOptionPicker;
-import org.seedstack.business.specification.builder.BaseSelector;
-import org.seedstack.business.specification.builder.SpecificationPicker;
-import org.seedstack.business.specification.builder.StringOptionPicker;
+import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.BaseSelector;
+import org.seedstack.business.specification.dsl.SpecificationPicker;
+import org.seedstack.business.specification.dsl.StringOptionPicker;
 
 
 class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements SpecificationPicker<T, SELECTOR> {

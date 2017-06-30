@@ -8,6 +8,7 @@
 package org.seedstack.business.domain;
 
 import org.seedstack.business.Producible;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.domain.identity.IdentityAnnotationResolver;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 
 /**
  * This class has to be extended to create a domain factory implementation. It offers the plumbing necessary
- * to be fully compliant with {@link org.seedstack.business.assembler.FluentAssembler}
+ * to be fully compliant with {@link FluentAssembler}
  * <p>
  * To be a valid Domain Factory implementation, the implementation must respects the followings:
  * </p>

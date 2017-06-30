@@ -9,32 +9,31 @@ package org.seedstack.business;
 
 import com.google.inject.name.Names;
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
-import org.seedstack.business.pagination.Chunk;
 import org.seedstack.business.pagination.Page;
-import org.seedstack.business.pagination.builder.PaginatorBuilder;
+import org.seedstack.business.pagination.Slice;
+import org.seedstack.business.pagination.dsl.Paginator;
 import org.seedstack.business.specification.Specification;
-import org.seedstack.business.specification.builder.SpecificationBuilder;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 import org.seedstack.seed.it.SeedITRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SeedITRunner.class)
 public class PaginationIT {
     @Inject
-    private PaginatorBuilder paginator;
+    private Paginator paginator;
 
     @Inject
     private FluentAssembler fluentAssembler;
@@ -82,105 +81,123 @@ public class PaginationIT {
 
     @Test
     public void testPageAssembler() throws Exception {
-        Page<OrderDto> dtoPage = fluentAssembler.assemble(paginator.repository(orderRepository)
-                .options()
-                .page(2)
-                .size(2)
-                .paginate())
+        Page<OrderDto> dtoPage = fluentAssembler.assemble(paginator.paginate(orderRepository)
+                .byPage(2)
+                .ofSize(2)
+                .all())
                 .with(Names.named("Order"))
                 .to(OrderDto.class);
         assertThat(dtoPage.getCapacity()).isEqualTo(2);
-        assertThat(dtoPage.getView().get(0).getClass().isInstance(OrderDto.class));
+        assertThat(dtoPage.getItems().get(0).getClass().isInstance(OrderDto.class));
         assertThat(dtoPage.getIndex()).isEqualTo(2);
         assertThat(dtoPage.getCapacity()).isEqualTo(2);
-        assertThat(dtoPage.getView().size()).isEqualTo(2);
-        assertThat(dtoPage.getView().get(0).getOrderId()).isEqualTo("5");
-        assertThat(dtoPage.getView().get(1).getOrderId()).isEqualTo("6");
+        assertThat(dtoPage.getItems().size()).isEqualTo(2);
+        assertThat(dtoPage.getItems().get(0).getOrderId()).isEqualTo("3");
+        assertThat(dtoPage.getItems().get(1).getOrderId()).isEqualTo("4");
     }
 
     @Test
-    public void testChunkAssembler() throws Exception {
-        Chunk<OrderDto> dtoChunk = fluentAssembler.assemble(paginator.repository(orderRepository)
-                .offset(2)
-                .paginate())
+    public void testSliceAssembler() throws Exception {
+        Slice<OrderDto> dtoSlice = fluentAssembler.assemble(
+                paginator.paginate(orderRepository)
+                        .byOffset(2)
+                        .all())
                 .with(Names.named("Order"))
                 .to(OrderDto.class);
-        assertThat(dtoChunk.getResultSize()).isEqualTo(5);
-        assertThat(dtoChunk.getView().get(0).getClass().isInstance(OrderDto.class));
-        assertThat(dtoChunk.getChunkOffset()).isEqualTo(2);
-        assertThat(dtoChunk.getResultViewSize()).isEqualTo(7);
-        assertThat(dtoChunk.getView().size()).isEqualTo(5);
-        assertThat(dtoChunk.getView().get(0).getOrderId()).isEqualTo("3");
-        assertThat(dtoChunk.getView().get(1).getOrderId()).isEqualTo("4");
-        assertThat(dtoChunk.getView().get(2).getOrderId()).isEqualTo("5");
-        assertThat(dtoChunk.getView().get(3).getOrderId()).isEqualTo("6");
-        assertThat(dtoChunk.getView().get(4).getOrderId()).isEqualTo("7");
+        assertThat(dtoSlice.getSize()).isEqualTo(5);
+        assertThat(dtoSlice.getItems().get(0).getClass().isInstance(OrderDto.class));
+        //assertThat(dtoSlice.getOffset()).isEqualTo(2);
+        //assertThat(dtoSlice.getTotalSize()).isEqualTo(7);
+        assertThat(dtoSlice.getItems().size()).isEqualTo(5);
+        assertThat(dtoSlice.getItems().get(0).getOrderId()).isEqualTo("3");
+        assertThat(dtoSlice.getItems().get(1).getOrderId()).isEqualTo("4");
+        assertThat(dtoSlice.getItems().get(2).getOrderId()).isEqualTo("5");
+        assertThat(dtoSlice.getItems().get(3).getOrderId()).isEqualTo("6");
+        assertThat(dtoSlice.getItems().get(4).getOrderId()).isEqualTo("7");
     }
 
     @Test
     public void testPageWithoutSpec() throws Exception {
-        Page<Order> page = paginator.repository(orderRepository).page(2).size(2).paginate();
+        Page<Order> page = paginator.paginate(orderRepository)
+                .byPage(2)
+                .ofSize(2)
+                .all();
         assertThat(page.getIndex()).isEqualTo(2);
-        assertThat(page.getResultSize()).isEqualTo(2);
+        assertThat(page.getSize()).isEqualTo(2);
         assertThat(page.getCapacity()).isEqualTo(2);
-        assertThat(page.getView().size()).isEqualTo(2);
-        assertThat(page.getView().get(0).getId()).isEqualTo("5");
-        assertThat(page.getView().get(1).getId()).isEqualTo("6");
+        assertThat(page.getItems().size()).isEqualTo(2);
+        assertThat(page.getItems().get(0).getId()).isEqualTo("3");
+        assertThat(page.getItems().get(1).getId()).isEqualTo("4");
     }
 
     @Test
     public void testOffsetWithSpec() throws Exception {
-        Chunk<Order> chunk = paginator.repository(orderRepository).offset(2).paginate(specFilterProduct);
-        assertThat(chunk.getResultSize()).isEqualTo(4);
-        assertThat(chunk.getChunkOffset()).isEqualTo(2);
-        assertThat(chunk.getResultViewSize()).isEqualTo(6);
-        assertThat(chunk.getView().size()).isEqualTo(4);
-        assertThat(chunk.getView().get(0).getId()).isEqualTo("3");
-        assertThat(chunk.getView().get(1).getId()).isEqualTo("4");
-        assertThat(chunk.getView().get(2).getId()).isEqualTo("5");
-        assertThat(chunk.getView().get(3).getId()).isEqualTo("6");
+        Slice<Order> slice = paginator.paginate(orderRepository)
+                .byOffset(2)
+                .matching(specFilterProduct);
+        assertThat(slice.getSize()).isEqualTo(4);
+        //assertThat(slice.getOffset()).isEqualTo(2);
+        //assertThat(slice.getTotalSize()).isEqualTo(6);
+        assertThat(slice.getItems().size()).isEqualTo(4);
+        assertThat(slice.getItems().get(0).getId()).isEqualTo("3");
+        assertThat(slice.getItems().get(1).getId()).isEqualTo("4");
+        assertThat(slice.getItems().get(2).getId()).isEqualTo("5");
+        assertThat(slice.getItems().get(3).getId()).isEqualTo("6");
     }
 
     @Test
     public void testOffsetWithoutSpec() throws Exception {
-        Chunk<Order> chunk = paginator.repository(orderRepository).offset(2).limit(2).paginate();
-        assertThat(chunk.getResultSize()).isEqualTo(2);
-        assertThat(chunk.getChunkOffset()).isEqualTo(2);
-        assertThat(chunk.getResultViewSize()).isEqualTo(7);
-        assertThat(chunk.getView().size()).isEqualTo(2);
-        assertThat(chunk.getView().get(0).getId()).isEqualTo("3");
-        assertThat(chunk.getView().get(1).getId()).isEqualTo("4");
+        Slice<Order> slice = paginator.paginate(orderRepository)
+                .byOffset(2)
+                .limit(2)
+                .all();
+        assertThat(slice.getSize()).isEqualTo(2);
+        //assertThat(slice.getOffset()).isEqualTo(2);
+        //assertThat(slice.getTotalSize()).isEqualTo(7);
+        assertThat(slice.getItems().size()).isEqualTo(2);
+        assertThat(slice.getItems().get(0).getId()).isEqualTo("3");
+        assertThat(slice.getItems().get(1).getId()).isEqualTo("4");
     }
 
     @Test
     public void testAfterDateWithoutSpec() throws Exception {
         Date date = formatter.parse("01-01-2017");
-        Chunk<Order> chunk = paginator.repository(orderRepository).key("orderDate").after(date).paginate();
-        assertThat(chunk.getResultSize()).isEqualTo(5);
-        assertThat(chunk.getResultViewSize()).isEqualTo(5);
-        assertThat(chunk.getView().size()).isEqualTo(5);
-        assertThat(chunk.getView().get(0).getId()).isEqualTo("3");
-        assertThat(chunk.getView().get(1).getId()).isEqualTo("4");
-        assertThat(chunk.getView().get(2).getId()).isEqualTo("5");
-        assertThat(chunk.getView().get(3).getId()).isEqualTo("6");
-        assertThat(chunk.getView().get(4).getId()).isEqualTo("7");
+        Slice<Order> slice = paginator.paginate(orderRepository)
+                .byAttribute("orderDate")
+                .after(date)
+                .all();
+        assertThat(slice.getSize()).isEqualTo(5);
+        //assertThat(slice.getTotalSize()).isEqualTo(5);
+        assertThat(slice.getItems().size()).isEqualTo(5);
+        assertThat(slice.getItems().get(0).getId()).isEqualTo("3");
+        assertThat(slice.getItems().get(1).getId()).isEqualTo("4");
+        assertThat(slice.getItems().get(2).getId()).isEqualTo("5");
+        assertThat(slice.getItems().get(3).getId()).isEqualTo("6");
+        assertThat(slice.getItems().get(4).getId()).isEqualTo("7");
     }
 
     @Test
     public void testAfterDateWithSpec() throws Exception {
         Date date = formatter.parse("01-01-2017");
-        Chunk<Order> chunk = paginator.repository(orderRepository).key("orderDate").after(date).limit(2).paginate(specFilterProduct);
-        assertThat(chunk.getResultSize()).isEqualTo(2);
-        assertThat(chunk.getResultViewSize()).isEqualTo(4);
-        assertThat(chunk.getView().size()).isEqualTo(2);
-        assertThat(chunk.getView().get(0).getId()).isEqualTo("3");
-        assertThat(chunk.getView().get(1).getId()).isEqualTo("4");
+        Slice<Order> slice = paginator.paginate(orderRepository)
+                .byAttribute("orderDate")
+                .after(date)
+                .limit(2)
+                .matching(specFilterProduct);
+        assertThat(slice.getSize()).isEqualTo(2);
+        //assertThat(slice.getTotalSize()).isEqualTo(4);
+        assertThat(slice.getItems().size()).isEqualTo(2);
+        assertThat(slice.getItems().get(0).getId()).isEqualTo("3");
+        assertThat(slice.getItems().get(1).getId()).isEqualTo("4");
     }
 
     @Test
     public void testAfterCastNotMatch() {
         try {
-            paginator.repository(orderRepository).key("orderDate").after("3").paginate();
+            paginator.paginate(orderRepository)
+                    .byAttribute("orderDate")
+                    .after("3")
+                    .all();
         } catch (Exception e) {
             Assertions.assertThat(e).hasMessageContaining("java.lang.String cannot be cast to java.util.Date");
         }
@@ -188,16 +205,14 @@ public class PaginationIT {
 
     @Test
     public void testLastPageNotFull() {
-        Page<Order> page = paginator.repository(orderRepository).page(2).size(3).paginate();
-        assertThat(page.getIndex()).isEqualTo(2);
-        assertThat(page.getResultSize()).isEqualTo(1);
+        Page<Order> page = paginator.paginate(orderRepository)
+                .byPage(3)
+                .ofSize(3)
+                .all();
+        assertThat(page.getIndex()).isEqualTo(3);
+        assertThat(page.getSize()).isEqualTo(1);
         assertThat(page.getCapacity()).isEqualTo(3);
-        assertThat(page.getView().size()).isEqualTo(1);
-        assertThat(page.getView().get(0).getId()).isEqualTo("7");
-    }
-
-    @After
-    public void cleanUp() {
-
+        assertThat(page.getItems().size()).isEqualTo(1);
+        assertThat(page.getItems().get(0).getId()).isEqualTo("7");
     }
 }

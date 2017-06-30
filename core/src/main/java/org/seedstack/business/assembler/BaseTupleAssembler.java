@@ -8,6 +8,7 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 
 /**
  * This class is used by developers as bases for Tuple based assemblers.
@@ -18,7 +19,7 @@ import org.javatuples.Tuple;
 public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
 
     /**
-     * This method is used by developers or by {@link org.seedstack.business.assembler.FluentAssembler}
+     * This method is used by developers or by {@link FluentAssembler}
      * to assemble a new DTO from the given aggregate.
      * <ul>
      * <li>It calls {@link #newDto()} for the DTO creation;</li>
@@ -43,7 +44,7 @@ public abstract class BaseTupleAssembler<T extends Tuple, D> extends AbstractBas
     }
 
     /**
-     * This method is used by developers or by {@link org.seedstack.business.assembler.FluentAssembler}
+     * This method is used by developers or by {@link FluentAssembler}
      * to actually merge the aggregate.
      * <p>
      * It will call {@link #doMergeAggregateWithDto(org.javatuples.Tuple, Object)}, which is overridden by developers.

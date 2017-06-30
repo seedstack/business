@@ -41,66 +41,66 @@ public class MergeSingleImpl<D> implements MergeSingleWithQualifier<D> {
 
     @Override
     public <A extends AggregateRoot<?>> MergeSingleAggregateFromRepository<A> into(Class<A> aggregateRootClass) {
-        return new MergeSingleSingleAggregateFromRepositoryImpl<>(context, aggregateRootClass, dto);
+        return new MergeSingleAggregateFromRepositoryImpl<>(context, aggregateRootClass, dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Pair<A1, A2>> into(Class<A1> first, Class<A2> second) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Triplet<A1, A2, A3>> into(Class<A1> first, Class<A2> second, Class<A3> third) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Quartet<A1, A2, A3, A4>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Quintet<A1, A2, A3, A4, A5>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Sextet<A1, A2, A3, A4, A5, A6>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Septet<A1, A2, A3, A4, A5, A6, A7>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Octet<A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth), dto);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
     MergeSingleTupleWithRepository<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth, Class<A10> tenth) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth), dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, Lists.newArrayList(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth), dto);
     }
 
     @Override
     public MergeSingleTupleWithRepository<Tuple> into(List<Class<? extends AggregateRoot<?>>> aggregateRootClasses) {
-        return new MergeSingleSingleTupleFromRepositoryImpl<>(context, aggregateRootClasses, dto);
+        return new MergeSingleTupleFromRepositoryImpl<>(context, aggregateRootClasses, dto);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

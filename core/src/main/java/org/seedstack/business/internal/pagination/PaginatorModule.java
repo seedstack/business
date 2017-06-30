@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.pagination;
 
 import com.google.inject.AbstractModule;
-import org.seedstack.business.pagination.builder.PaginatorBuilder;
+import org.seedstack.business.pagination.dsl.Paginator;
 
 class PaginatorModule extends AbstractModule {
 
@@ -16,6 +16,6 @@ class PaginatorModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(PaginatorBuilder.class).to(PaginatorBuilderImpl.class);
+        bind(Paginator.class).to(PaginatorImpl.class);
     }
 }

@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.Repository;

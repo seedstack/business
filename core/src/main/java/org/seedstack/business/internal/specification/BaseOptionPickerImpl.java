@@ -8,8 +8,8 @@
 package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.specification.Specification;
-import org.seedstack.business.specification.builder.BaseOptionPicker;
-import org.seedstack.business.specification.builder.BaseSelector;
+import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.BaseSelector;
 
 class BaseOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements BaseOptionPicker<T, SELECTOR> {
     private final SpecificationBuilderContext<T, SELECTOR> context;

@@ -11,46 +11,38 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AssemblePage;
 import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.internal.pagination.PageImpl;
 import org.seedstack.business.pagination.Page;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AssemblePageImpl implements AssemblePageWithQualifier {
     private final AssemblerDslContext context;
-    private Page pagination;
-    private final List<? extends AggregateRoot<?>> aggregates;
+    private final Page<? extends AggregateRoot<?>> page;
 
-    AssemblePageImpl(AssemblerDslContext context, Page pagination) {
+    AssemblePageImpl(AssemblerDslContext context, Page<? extends AggregateRoot<?>> page) {
         this.context = context;
-        this.pagination = pagination;
-        this.aggregates = pagination.getView();
+        this.page = page;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <D> Page<D> to(Class<D> dtoClass) {
-        Assembler assembler = getAssembler(dtoClass);
         List<D> dtos = new ArrayList<>();
-
-        if (aggregates != null && !aggregates.isEmpty()) {
-            for (AggregateRoot<?> aggregate : aggregates) {
+        if (!page.getItems().isEmpty()) {
+            Assembler assembler = getAssembler(dtoClass);
+            for (AggregateRoot<?> aggregate : page.getItems()) {
                 dtos.add((D) assembler.assembleDtoFromAggregate(aggregate));
             }
         }
-        return new Page<>(dtos, this.pagination.getResultSize(), this.pagination.getIndex(), this.pagination.getCapacity(), this.pagination.getResultViewSize());
+        return new PageImpl<>(dtos, page.getIndex(), page.getCapacity(), page.getTotalSize());
     }
 
     @SuppressWarnings("unchecked")
     private Assembler getAssembler(Class<?> dtoClass) {
-        Assembler assembler = null;
-
-        if (aggregates != null && !aggregates.isEmpty()) {
-            assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregates.get(0).getClass(), dtoClass);
-        }
-        return assembler;
+        return context.assemblerOf((Class<? extends AggregateRoot<?>>) page.getItems().get(0).getClass(), dtoClass);
     }
 
     AssemblerDslContext getContext() {

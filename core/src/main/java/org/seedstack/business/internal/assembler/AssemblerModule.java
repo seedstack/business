@@ -10,7 +10,7 @@ package org.seedstack.business.internal.assembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistry;
 import org.seedstack.business.internal.assembler.dsl.InternalRegistryInternal;

@@ -11,7 +11,7 @@ import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
-import org.seedstack.business.specification.builder.SpecificationBuilder;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 import org.seedstack.business.spi.specification.SpecificationConverter;
 import org.seedstack.business.spi.specification.SpecificationTranslator;
 

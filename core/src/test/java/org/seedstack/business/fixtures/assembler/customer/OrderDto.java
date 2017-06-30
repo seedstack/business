@@ -20,7 +20,6 @@ public class OrderDto {
     String customerName;
     int price;
     Date orderDate;
-    String otherDetails;
 
     public OrderDto() {
     }
@@ -73,14 +72,6 @@ public class OrderDto {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public String getOtherDetails() {
-        return otherDetails;
-    }
-
-    public void setOtherDetails(String otherDetails) {
-        this.otherDetails = otherDetails;
     }
 
     public void setOrderId(String orderId) {

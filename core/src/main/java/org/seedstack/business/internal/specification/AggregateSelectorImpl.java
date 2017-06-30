@@ -8,8 +8,8 @@
 package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.specification.builder.AggregateSelector;
-import org.seedstack.business.specification.builder.IdentityPicker;
+import org.seedstack.business.specification.dsl.AggregateSelector;
+import org.seedstack.business.specification.dsl.IdentityPicker;
 
 class AggregateSelectorImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> extends BaseSelectorImpl<A, SELECTOR> implements AggregateSelector<A, ID, SELECTOR> {
     AggregateSelectorImpl(SpecificationBuilderContext<A, SELECTOR> context) {

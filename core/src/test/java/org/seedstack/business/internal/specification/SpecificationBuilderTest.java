@@ -13,7 +13,7 @@ import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
 import org.seedstack.business.specification.Specification;
-import org.seedstack.business.specification.builder.SpecificationBuilder;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 import java.util.stream.Stream;
 

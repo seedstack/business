@@ -8,9 +8,9 @@
 package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.specification.builder.AggregateSelector;
-import org.seedstack.business.specification.builder.BaseSelector;
-import org.seedstack.business.specification.builder.SpecificationBuilder;
+import org.seedstack.business.specification.dsl.AggregateSelector;
+import org.seedstack.business.specification.dsl.BaseSelector;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 class SpecificationBuilderImpl implements SpecificationBuilder {
     @Override

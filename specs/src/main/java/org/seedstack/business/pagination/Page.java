@@ -7,60 +7,24 @@
  */
 package org.seedstack.business.pagination;
 
-import java.util.List;
-
 /**
- * Abstraction of a page within a context page set context.
- * Pages have:
- * <ul>
- *   <li>an index,</li>
- *   <li>a capacity in term of number of element.</li>
- * </ul>
+ * An indexed page of contiguous items taken from a bigger list.
+ *
+ * @param <T> the item type
  */
-public class Page<Item> extends AbstractPage<Item> {
-
-    private long index;
-    private long capacity;
+public interface Page<T> extends Slice<T> {
+    /**
+     * @return the page index.
+     */
+    long getIndex();
 
     /**
-     * Constructor.
-     *
-     * @param subList           the sub list of item
-     * @param resultOffset      offset inside the big list
-     * @param capacity          the initial capacity of a page
-     * @param pageIndex         the page index
+     * @return the maximum capacity of the page.
      */
-    public Page(List<Item> subList, long resultOffset, long pageIndex, long capacity, long resultViewSize) {
-        super(subList, resultOffset, resultViewSize);
-        this.index = pageIndex;
-        this.capacity = capacity;
-    }
+    long getCapacity();
 
     /**
-     * @return the page index
+     * @return the total size of the bigger list.
      */
-    public long getIndex() {
-        return index;
-    }
-
-    /**
-     * @return the capacity of the page
-     */
-    public long getCapacity() {
-        return capacity;
-    }
-
-    public long getResultViewSize() {
-        return resultViewSize;
-    }
-
-    @Override
-    public String toString() {
-        return "Page{" +
-                "index=" + index +
-                ", capacity=" + capacity +
-                ", resultSize=" + resultSize +
-                ", resultOffset=" + resultViewOffset +
-                '}';
-    }
+    long getTotalSize();
 }

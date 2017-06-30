@@ -18,7 +18,6 @@ public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
     @Override
     protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
         targetDto.setOrderId(sourceAggregate.getOrderId());
-        targetDto.setOtherDetails(sourceAggregate.getOtherDetails());
         targetDto.setPrice(sourceAggregate.getPrice());
         targetDto.setProduct(sourceAggregate.getProduct());
         targetDto.setOrderDate(sourceAggregate.getOrderDate());
@@ -27,7 +26,6 @@ public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
     @Override
     protected void doMergeAggregateWithDto(Order targetAggregate, OrderDto sourceDto) {
         targetAggregate.setProduct(sourceDto.getProduct());
-        targetAggregate.setOtherDetails(sourceDto.getOtherDetails());
         targetAggregate.setOrderDate(sourceDto.getOrderDate());
         targetAggregate.setPrice(sourceDto.getPrice());
         targetAggregate.setOrderDate(sourceDto.getOrderDate());

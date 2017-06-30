@@ -26,6 +26,7 @@
 
     <properties>
         <seed.version>3.3.0-SNAPSHOT</seed.version>
+        <modelmapper.version>1.0.0</modelmapper.version>
 
         <compatibility.skip>true</compatibility.skip>
 
