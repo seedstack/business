@@ -15,26 +15,25 @@ import org.slf4j.Logger;
 
 public class CustomerSampleServiceInternal implements CustomerSampleService {
 
-	@Logging
-	Logger logger;
-	
-	@Configuration("org.seedstack.toto")
-	String property;
-	
-	@Override
-	public String property ()
-	{
-		return property;
-	}
-	
-	public CustomerSampleServiceInternal() {
-	}
+    @Logging
+    Logger logger;
 
-	@Override
-	public String transfer(Customer source, Customer target) {
-		logger.info("Transfering customer " + source.getId() + " to customer " + target.getId());
-		return property;
-	}
+    @Configuration("org.seedstack.toto")
+    String property;
+
+    public CustomerSampleServiceInternal() {
+    }
+
+    @Override
+    public String property() {
+        return property;
+    }
+
+    @Override
+    public String transfer(Customer source, Customer target) {
+        logger.info("Transfering customer " + source.getId() + " to customer " + target.getId());
+        return property;
+    }
 
 }
 

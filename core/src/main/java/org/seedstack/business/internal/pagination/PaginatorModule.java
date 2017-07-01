@@ -12,7 +12,8 @@ import org.seedstack.business.pagination.dsl.Paginator;
 
 class PaginatorModule extends AbstractModule {
 
-    PaginatorModule() {}
+    PaginatorModule() {
+    }
 
     @Override
     protected void configure() {

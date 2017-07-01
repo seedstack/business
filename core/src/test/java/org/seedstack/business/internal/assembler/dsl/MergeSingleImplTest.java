@@ -95,7 +95,8 @@ public class MergeSingleImplTest {
     }
 
     private void assertToMethod(MergeSingleTupleWithRepository<?> to, Object dto, Class<?>... classes) {
-        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Reflection.field("aggregateClasses").ofType(new TypeRef<List<Class<? extends AggregateRoot<?>>>>() {}).in(to).get();
+        List<Class<? extends AggregateRoot<?>>> aggregateClasses = Reflection.field("aggregateClasses").ofType(new TypeRef<List<Class<? extends AggregateRoot<?>>>>() {
+        }).in(to).get();
         Assertions.assertThat(aggregateClasses).isEqualTo(Arrays.asList(classes));
         Object obj = Reflection.field("dto").ofType(Object.class).in(to).get();
         Assertions.assertThat(obj).isEqualTo(dto);

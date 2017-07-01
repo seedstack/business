@@ -22,16 +22,6 @@ public class ModelMapperTupleAssemblerTest {
     private ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> automaticAssembler;
 //    private DefaultAssembler<Order, OrderDTO> defaultAssembler;
 
-    static class AutoAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> {
-        @Override
-        protected void configureAssembly(ModelMapper modelMapper) {
-        }
-
-        @Override
-        protected void configureMerge(ModelMapper modelMapper) {
-        }
-    }
-
     @Before
     public void before() {
         automaticAssembler = new AutoAssembler();
@@ -86,6 +76,16 @@ public class ModelMapperTupleAssemblerTest {
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
+    }
+
+    static class AutoAssembler extends ModelMapperTupleAssembler<Pair<Order, Customer>, OrderDTO> {
+        @Override
+        protected void configureAssembly(ModelMapper modelMapper) {
+        }
+
+        @Override
+        protected void configureMerge(ModelMapper modelMapper) {
+        }
     }
 
     static class Order extends BaseAggregateRoot<String> {

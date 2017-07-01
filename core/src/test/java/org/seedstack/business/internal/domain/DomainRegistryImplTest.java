@@ -37,36 +37,6 @@ public class DomainRegistryImplTest {
     @Mocked
     private Injector injector;
 
-    @DomainElement
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target({ElementType.TYPE})
-    @BindingAnnotation
-    private @interface MockedAnnotation {
-    }
-
-    @Service
-    private interface MockedService {
-    }
-
-    private interface MockedBadService {
-    }
-
-    @Service
-    private interface MockedServiceParameterized<T> {
-    }
-
-    private interface MockedBadPolicy {
-    }
-
-    @DomainPolicy
-    private interface MockedPolicy {
-    }
-
-    @DomainPolicy
-    private interface MockedPolicyParameterized<T> {
-    }
-
-
     /**
      * Create a {@link DomainRegistry} with a mocker {@link Injector}.
      *
@@ -431,6 +401,35 @@ public class DomainRegistryImplTest {
 
         Assertions.assertThat(domainRegistry.getPolicy(new TypeOf<MockedPolicyParameterized<Long>>() {
         }, "dummyAnnotation")).isEqualTo(policy);
+    }
+
+    @DomainElement
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE})
+    @BindingAnnotation
+    private @interface MockedAnnotation {
+    }
+
+    @Service
+    private interface MockedService {
+    }
+
+    private interface MockedBadService {
+    }
+
+    @Service
+    private interface MockedServiceParameterized<T> {
+    }
+
+    private interface MockedBadPolicy {
+    }
+
+    @DomainPolicy
+    private interface MockedPolicy {
+    }
+
+    @DomainPolicy
+    private interface MockedPolicyParameterized<T> {
     }
 
 }

@@ -10,16 +10,16 @@ package org.seedstack.business.fixtures.domain.export;
 import org.seedstack.business.domain.BaseFactory;
 
 
-public class ExportFactoryBase  extends BaseFactory<Export>  implements ExportFactory {
+public class ExportFactoryBase extends BaseFactory<Export> implements ExportFactory {
 
-	@Override
-	public Export createNewActivation(String id, String description) {
-		
-		Export export = new Export(id);
-		
-		export.setDescription(description);
-		
-		return export;
-	}
+    @Override
+    public Export createNewActivation(String id, String description) {
+
+        Export export = new Export(id);
+
+        export.setDescription(description);
+
+        return export;
+    }
 
 }

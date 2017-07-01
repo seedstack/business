@@ -17,22 +17,22 @@ import org.seedstack.business.fixtures.domain.product.Product;
 
 public class UseCase1Assembler extends BaseTupleAssembler<Quartet<Activation, Customer, Order, Product>, UseCase1Representation> {
 
-	@Override
-	protected void doAssembleDtoFromAggregate(UseCase1Representation targetDto, Quartet<Activation, Customer, Order, Product> sourceEntity) {
-		targetDto.setActivationDescription(sourceEntity.getValue0().getDescription());
-		targetDto.setCustomerFirstName(sourceEntity.getValue1().getFirstName());
-		targetDto.setCustomerLastName(sourceEntity.getValue1().getLastName());
-		targetDto.setOrder(sourceEntity.getValue2().getDescription());
-		targetDto.setProductDescription(sourceEntity.getValue3().getDescription());
-	}
+    @Override
+    protected void doAssembleDtoFromAggregate(UseCase1Representation targetDto, Quartet<Activation, Customer, Order, Product> sourceEntity) {
+        targetDto.setActivationDescription(sourceEntity.getValue0().getDescription());
+        targetDto.setCustomerFirstName(sourceEntity.getValue1().getFirstName());
+        targetDto.setCustomerLastName(sourceEntity.getValue1().getLastName());
+        targetDto.setOrder(sourceEntity.getValue2().getDescription());
+        targetDto.setProductDescription(sourceEntity.getValue3().getDescription());
+    }
 
-	@Override
-	protected void doMergeAggregateWithDto( Quartet<Activation, Customer, Order, Product> targetEntity,UseCase1Representation sourceDto) {
-		targetEntity.getValue0().setDescription(sourceDto.getActivationDescription());
-		targetEntity.getValue1().setFirstName(sourceDto.getCustomerFirstName());
-		targetEntity.getValue1().setLastName(sourceDto.getCustomerLastName());
-		targetEntity.getValue2().setDescription(sourceDto.getOrderDescription());
-		targetEntity.getValue3().setDescription(sourceDto.getProductDescription());
-	}
+    @Override
+    protected void doMergeAggregateWithDto(Quartet<Activation, Customer, Order, Product> targetEntity, UseCase1Representation sourceDto) {
+        targetEntity.getValue0().setDescription(sourceDto.getActivationDescription());
+        targetEntity.getValue1().setFirstName(sourceDto.getCustomerFirstName());
+        targetEntity.getValue1().setLastName(sourceDto.getCustomerLastName());
+        targetEntity.getValue2().setDescription(sourceDto.getOrderDescription());
+        targetEntity.getValue3().setDescription(sourceDto.getProductDescription());
+    }
 
 }

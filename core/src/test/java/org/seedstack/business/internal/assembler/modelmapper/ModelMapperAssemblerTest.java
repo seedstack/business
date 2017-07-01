@@ -27,36 +27,6 @@ public class ModelMapperAssemblerTest {
     private ModelMapperAssembler<Order, OrderDTO> modelMapperAssembler;
     private DefaultModelMapperAssembler<Order, OrderDTO> defaultModelMappedAssembler;
 
-    static class AutoAssembler extends ModelMapperAssembler<Order, OrderDTO> {
-        @Override
-        protected void configureAssembly(ModelMapper modelMapper) {
-        }
-
-        @Override
-        protected void configureMerge(ModelMapper modelMapper) {
-            PropertyMap<OrderDTO, Order> orderMap = new PropertyMap<OrderDTO, Order>() {
-                protected void configure() {
-                    map().getBillingAddress().setStreet(source.billingStreet);
-                    map(source.billingCity, destination.billingAddress.getCity());
-                }
-            };
-            modelMapper.addMappings(orderMap);
-        }
-    }
-
-    static abstract class AbstractAutoAssembler<T> extends ModelMapperAssembler<Order, T> {
-    }
-
-    static class InheritingAutoAssembler extends AbstractAutoAssembler<DummyDTO> {
-        @Override
-        protected void configureAssembly(ModelMapper modelMapper) {
-        }
-
-        @Override
-        protected void configureMerge(ModelMapper modelMapper) {
-        }
-    }
-
     @Before
     public void before() {
         modelMapperAssembler = new AutoAssembler();
@@ -135,6 +105,36 @@ public class ModelMapperAssemblerTest {
         Assertions.assertThat(order.getBillingAddress().getCity()).isEqualTo("bevillecity");
         Assertions.assertThat(order.getBillingAddress().getStreet()).isEqualTo("main street");
         Assertions.assertThat(order.getIgnoredProp()).isEqualTo("this should not be deleted");
+    }
+
+    static class AutoAssembler extends ModelMapperAssembler<Order, OrderDTO> {
+        @Override
+        protected void configureAssembly(ModelMapper modelMapper) {
+        }
+
+        @Override
+        protected void configureMerge(ModelMapper modelMapper) {
+            PropertyMap<OrderDTO, Order> orderMap = new PropertyMap<OrderDTO, Order>() {
+                protected void configure() {
+                    map().getBillingAddress().setStreet(source.billingStreet);
+                    map(source.billingCity, destination.billingAddress.getCity());
+                }
+            };
+            modelMapper.addMappings(orderMap);
+        }
+    }
+
+    static abstract class AbstractAutoAssembler<T> extends ModelMapperAssembler<Order, T> {
+    }
+
+    static class InheritingAutoAssembler extends AbstractAutoAssembler<DummyDTO> {
+        @Override
+        protected void configureAssembly(ModelMapper modelMapper) {
+        }
+
+        @Override
+        protected void configureMerge(ModelMapper modelMapper) {
+        }
     }
 
     static class Order extends BaseAggregateRoot<String> {

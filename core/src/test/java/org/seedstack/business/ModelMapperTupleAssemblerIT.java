@@ -49,7 +49,7 @@ public class ModelMapperTupleAssemblerIT {
     @Test
     public void testUpdateDtoFromAggregate() {
         Customer customer = new Customer(new Name("John", "Doe"));
-        Order order = new Order( new Address("main street", "bevillecity"));
+        Order order = new Order(new Address("main street", "bevillecity"));
         Recipe recipe = new Recipe("Jane", "Doe", "", "");
 
 

@@ -14,6 +14,6 @@ import java.util.List;
 @Finder
 public interface SampleParentFinder<ITEM> {
 
-	List<ITEM> findAll();
-	
+    List<ITEM> findAll();
+
 }

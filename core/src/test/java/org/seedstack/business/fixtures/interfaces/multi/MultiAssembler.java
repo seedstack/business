@@ -10,13 +10,13 @@ package org.seedstack.business.fixtures.interfaces.multi;
 import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.multi.Multi;
 
-public class MultiAssembler extends BaseAssembler<Multi,MultiRepresentation> {
+public class MultiAssembler extends BaseAssembler<Multi, MultiRepresentation> {
 
-	@Override
-	protected void doAssembleDtoFromAggregate(MultiRepresentation targetDto, Multi sourceAggregate) {
-	}
+    @Override
+    protected void doAssembleDtoFromAggregate(MultiRepresentation targetDto, Multi sourceAggregate) {
+    }
 
-	@Override
-	protected void doMergeAggregateWithDto(Multi targetAggregate, MultiRepresentation sourceDto) {
-	}
+    @Override
+    protected void doMergeAggregateWithDto(Multi targetAggregate, MultiRepresentation sourceDto) {
+    }
 }

@@ -20,12 +20,11 @@ import org.seedstack.seed.SeedException;
  */
 public class DefaultFactoryTest {
 
-    Factory<MyAggregateTest> myFactory;
-
     private static final Integer ID = 2;
     private static final int ID_PRIMITIVE = 2;
     private static final String NOM = "test";
     private static final Long AGE = 1L;
+    Factory<MyAggregateTest> myFactory;
 
     @Before
     public void before() {

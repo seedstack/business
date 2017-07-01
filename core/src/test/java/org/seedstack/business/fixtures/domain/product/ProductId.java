@@ -10,34 +10,32 @@ package org.seedstack.business.fixtures.domain.product;
 import org.seedstack.business.domain.BaseValueObject;
 
 
-public class ProductId extends BaseValueObject
-{
-	/**
-	 * between 0 and 1000
-	 */
-	private Short storeId;
-	private String productCode;
-	
-	ProductId() 
-	{
-	}
-	
-	public ProductId(Short storeId , String productCode) {
-		this.storeId = storeId;
-		this.productCode = productCode;
-	}
-	
-	public ProductId(Short storeId , Short productCode) {
-		this.storeId = storeId;
-		this.productCode = "ean13-"+ productCode;
-	}
+public class ProductId extends BaseValueObject {
+    /**
+     * between 0 and 1000
+     */
+    private Short storeId;
+    private String productCode;
 
-	public Short getStoreId () {
-		return storeId;
-	}
-	
-	public String getProductCode() {
-		return productCode;
-	}
-	
+    ProductId() {
+    }
+
+    public ProductId(Short storeId, String productCode) {
+        this.storeId = storeId;
+        this.productCode = productCode;
+    }
+
+    public ProductId(Short storeId, Short productCode) {
+        this.storeId = storeId;
+        this.productCode = "ean13-" + productCode;
+    }
+
+    public Short getStoreId() {
+        return storeId;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
 }

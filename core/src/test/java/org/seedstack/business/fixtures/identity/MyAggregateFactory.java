@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.identity;
 
@@ -15,8 +15,8 @@ import org.seedstack.business.domain.Factory;
 
 
 @Create
-public interface MyAggregateFactory  extends Factory<MyAggregate> {
+public interface MyAggregateFactory extends Factory<MyAggregate> {
 
-	MyAggregate createMyAggregate(String name);
+    MyAggregate createMyAggregate(String name);
 
 }

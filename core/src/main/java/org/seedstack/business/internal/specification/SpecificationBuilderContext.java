@@ -98,6 +98,13 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
         }
     }
 
+    enum Mode {
+        DISJUNCTION,
+        NEGATIVE_DISJUNCTION,
+        CONJUNCTION,
+        NONE
+    }
+
     private static class ClassSpecification<C> implements DelegatingSpecification<C> {
         private final Class<C> targetClass;
         private final Specification<C> delegate;
@@ -116,12 +123,5 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
         public String toString() {
             return targetClass.getSimpleName() + "[" + String.valueOf(delegate) + "]";
         }
-    }
-
-    enum Mode {
-        DISJUNCTION,
-        NEGATIVE_DISJUNCTION,
-        CONJUNCTION,
-        NONE
     }
 }

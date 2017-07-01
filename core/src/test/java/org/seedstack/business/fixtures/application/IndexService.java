@@ -12,8 +12,8 @@ import org.seedstack.business.fixtures.domain.customer.Customer;
 
 
 @Service
-public interface IndexService { 
+public interface IndexService {
 
-	void index(Customer customer);
-	
+    void index(Customer customer);
+
 }

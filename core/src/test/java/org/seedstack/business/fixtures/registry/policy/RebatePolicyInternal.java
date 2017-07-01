@@ -12,11 +12,11 @@ import org.seedstack.business.fixtures.registry.domain.Product;
 /**
  * Dummy class.
  */
-public class RebatePolicyInternal implements RebatePolicy{
+public class RebatePolicyInternal implements RebatePolicy {
 
-	@Override
-	public float calculateRebate(Product product, float quantity) {
-		return quantity / 1000;
-	}
+    @Override
+    public float calculateRebate(Product product, float quantity) {
+        return quantity / 1000;
+    }
 
 }

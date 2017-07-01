@@ -5,8 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-define([ '{lodash}/lodash', '{angular}/angular' ], function (_, angular) {
-    var seedBusiness = angular.module('seedBusiness', [ ]);
+define(['{lodash}/lodash', '{angular}/angular'], function (_, angular) {
+    var seedBusiness = angular.module('seedBusiness', []);
 
     seedBusiness.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.transformResponse.push(function (data) {
@@ -24,6 +24,6 @@ define([ '{lodash}/lodash', '{angular}/angular' ], function (_, angular) {
     }]);
 
     return {
-        angularModules: [ 'seedBusiness' ]
+        angularModules: ['seedBusiness']
     };
 });

@@ -12,8 +12,8 @@ import org.seedstack.business.domain.Repository;
 import java.util.Collection;
 
 
-public interface CustomerRepository extends Repository<Customer,CustomerId> {
-	
-	Collection<Customer> findAll();
+public interface CustomerRepository extends Repository<Customer, CustomerId> {
+
+    Collection<Customer> findAll();
 
 }

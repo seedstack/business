@@ -11,16 +11,16 @@ import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
-public class ActivationAssembler extends BaseAssembler<Activation,ActivationRepresentation> {
+public class ActivationAssembler extends BaseAssembler<Activation, ActivationRepresentation> {
 
-	@Override
-	protected void doAssembleDtoFromAggregate(ActivationRepresentation targetDto, Activation sourceEntity) {
-		
-	}
+    @Override
+    protected void doAssembleDtoFromAggregate(ActivationRepresentation targetDto, Activation sourceEntity) {
 
-	@Override
-	protected void doMergeAggregateWithDto(Activation targetEntity,ActivationRepresentation sourceDto) {
-		String customerId = sourceDto.getCustomerId();
-		targetEntity.setCustomerId(new CustomerId(customerId));
-	}
+    }
+
+    @Override
+    protected void doMergeAggregateWithDto(Activation targetEntity, ActivationRepresentation sourceDto) {
+        String customerId = sourceDto.getCustomerId();
+        targetEntity.setCustomerId(new CustomerId(customerId));
+    }
 }

@@ -9,4 +9,5 @@ package org.seedstack.business.fixtures.domain.activation;
 
 import org.seedstack.business.domain.Repository;
 
-public interface ActivationRepository extends Repository<Activation,String> {}
+public interface ActivationRepository extends Repository<Activation, String> {
+}

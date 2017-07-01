@@ -19,66 +19,57 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InjectCollection {
-	
-	
-	static class Item 
-	{
-		@Inject 
-		Service service ;
-	}
-	
-	static class Service
-	{
-		void service ()
-		{
-			
-		}
-	}
-	
-	static class GuiceSet extends ForwardingSet<Item>
-	{
 
-		private Set<Item> items;
 
-		public GuiceSet(Set<Item> items) {
-			this.items = items;
-		}
-		
-		@Override
-		protected Set<Item> delegate() {
-			return items;
-		}
-		
-		
-	}
-	
-	
-//	@Test
-	public void checkInject ()
-	{
-		
-		Injector injector = Guice.createInjector(new AbstractModule()
-		{
-			@Override
-			protected void configure() {
-				binder().requireExplicitBindings();
-				bind(Service.class);
-			}
-		});
-		
-		Set<Item> items = new HashSet<>();
-		items.add(new Item());
-		items.add(new Item());
-		items.add(new Item());
-		
-		injector.injectMembers(items);
-		
-		assertThat(items.iterator().next().service).isNotNull();
-		
-		
-		
-		
-	}
-	
+    //	@Test
+    public void checkInject() {
+
+        Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                binder().requireExplicitBindings();
+                bind(Service.class);
+            }
+        });
+
+        Set<Item> items = new HashSet<>();
+        items.add(new Item());
+        items.add(new Item());
+        items.add(new Item());
+
+        injector.injectMembers(items);
+
+        assertThat(items.iterator().next().service).isNotNull();
+
+
+    }
+
+    static class Item {
+        @Inject
+        Service service;
+    }
+
+    static class Service {
+        void service() {
+
+        }
+    }
+
+    static class GuiceSet extends ForwardingSet<Item> {
+
+        private Set<Item> items;
+
+        public GuiceSet(Set<Item> items) {
+            this.items = items;
+        }
+
+        @Override
+        protected Set<Item> delegate() {
+            return items;
+        }
+
+
+    }
+
 
 }

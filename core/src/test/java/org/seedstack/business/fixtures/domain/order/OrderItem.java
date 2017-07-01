@@ -28,11 +28,11 @@ public class OrderItem extends BaseEntity<Long> {
         return productId;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public void setProductId(ProductId productId) {
         this.productId = productId;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

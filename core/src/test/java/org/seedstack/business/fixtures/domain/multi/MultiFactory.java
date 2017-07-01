@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.domain.multi;
 
@@ -17,6 +17,6 @@ import org.seedstack.business.domain.Factory;
  */
 public interface MultiFactory extends Factory<Multi> {
 
-	Multi create();
+    Multi create();
 
 }

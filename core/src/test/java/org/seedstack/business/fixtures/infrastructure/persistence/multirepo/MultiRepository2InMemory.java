@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.infrastructure.persistence.multirepo;
 
@@ -22,6 +22,6 @@ import javax.inject.Named;
  */
 @Named("multi2")
 @Store("MultiRepository2InMemory")
-public class MultiRepository2InMemory extends InMemoryRepository <Multi,String> implements MultiRepository {
+public class MultiRepository2InMemory extends InMemoryRepository<Multi, String> implements MultiRepository {
 
 }

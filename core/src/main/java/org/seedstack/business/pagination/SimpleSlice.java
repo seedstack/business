@@ -15,8 +15,8 @@ import java.util.List;
  * @param <T> the item type
  */
 public class SimpleSlice<T> implements Slice<T> {
-    private List<T> items;
     private final long size;
+    private List<T> items;
 
     /**
      * This constructor take a list of items that can potentially be huge.

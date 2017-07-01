@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 
 public interface ExportFactory extends Factory<Export> {
-	
-	Export createNewActivation(@NotNull String id, String description);
+
+    Export createNewActivation(@NotNull String id, String description);
 
 }

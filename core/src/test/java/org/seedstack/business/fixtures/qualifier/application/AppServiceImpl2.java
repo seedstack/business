@@ -11,5 +11,5 @@ import javax.inject.Named;
 
 
 @Named("2")
-public class AppServiceImpl2 implements MyApplicationService{
+public class AppServiceImpl2 implements MyApplicationService {
 }

@@ -16,7 +16,7 @@ import org.seedstack.seed.persistence.inmemory.Store;
 import org.slf4j.Logger;
 
 @Store("ProductInMemoryRepository")
-public class ProductInMemoryRepository extends InMemoryRepository<Product, ProductId> implements ProductRepository{
+public class ProductInMemoryRepository extends InMemoryRepository<Product, ProductId> implements ProductRepository {
 
 
     @Logging

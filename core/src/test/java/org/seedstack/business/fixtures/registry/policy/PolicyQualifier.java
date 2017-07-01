@@ -14,7 +14,8 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Dummy class.
- */@Documented
+ */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
 public @interface PolicyQualifier {

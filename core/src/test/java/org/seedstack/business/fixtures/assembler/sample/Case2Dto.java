@@ -28,7 +28,7 @@ public class Case2Dto {
         return name;
     }
 
-    @MatchingEntityId(index  = 1)
+    @MatchingEntityId(index = 1)
     public Date getBirthDate() {
         return birthDate;
     }

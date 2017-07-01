@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
  * <p>
  * See Their respective documentation to understand {@code AnnotationResolver} implementation.
  * </p>
+ *
  * @see org.seedstack.business.assembler.MatchingEntityId
  * @see org.seedstack.business.assembler.MatchingFactoryParameter
  */

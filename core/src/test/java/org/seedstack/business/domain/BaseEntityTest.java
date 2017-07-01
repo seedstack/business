@@ -16,27 +16,6 @@ public class BaseEntityTest {
     private Entity1 two;
     private Entity1 three;
 
-    static class Entity1 extends BaseEntity<Long> {
-        private Long id;
-        private String name;
-
-        public Entity1() {
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setId(long l) {
-            this.id = l;
-        }
-    }
-
-
     @Before
     public void init() {
         one = new Entity1();
@@ -62,5 +41,25 @@ public class BaseEntityTest {
     public void testEqualsObject() {
         Assertions.assertThat(one).isEqualTo(two);
         Assertions.assertThat(one).isNotEqualTo(three);
+    }
+
+    static class Entity1 extends BaseEntity<Long> {
+        private Long id;
+        private String name;
+
+        public Entity1() {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setId(long l) {
+            this.id = l;
+        }
     }
 }

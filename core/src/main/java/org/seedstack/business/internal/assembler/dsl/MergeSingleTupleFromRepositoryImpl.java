@@ -151,11 +151,11 @@ public class MergeSingleTupleFromRepositoryImpl<T extends Tuple> extends Abstrac
      * Assemble one or a tuple of aggregate root from a dto.
      *
      * @param aggregateRoots the aggregate root(s) to assemble
-     * @param <T> type of aggregate root(s). It could be a {@code Tuple} or an {@code AggregateRoot}
+     * @param <T>            type of aggregate root(s). It could be a {@code Tuple} or an {@code AggregateRoot}
      * @return the assembled aggregate root(s)
      */
     @SuppressWarnings("unchecked")
-    protected  <T> T assembleWithDto(T aggregateRoots) {
+    protected <T> T assembleWithDto(T aggregateRoots) {
         Assembler assembler = context.tupleAssemblerOf(aggregateClasses, dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRoots, dto);
         return aggregateRoots;

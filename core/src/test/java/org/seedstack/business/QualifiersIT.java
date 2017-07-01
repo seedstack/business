@@ -30,27 +30,34 @@ import javax.inject.Named;
 @RunWith(SeedITRunner.class)
 public class QualifiersIT {
 
-    @Inject @Named("1")
+    @Inject
+    @Named("1")
     MyApplicationService myApplicationService1;
-    @Inject @Named("1")
+    @Inject
+    @Named("1")
     MyApplicationService myApplicationService2;
     @Inject
     MyDomainPolicy<String> myDomainPolicy1; // check with user's generic interface
-    @Inject @Named("2")
+    @Inject
+    @Named("2")
     MyDomainPolicy<Integer> myDomainPolicy2;
     @Inject
     MyDomainService myDomainService1;  // case with user's abstract class
-    @Inject @Named("2")
+    @Inject
+    @Named("2")
     MyDomainService myDomainService2;
-    @Inject @Q1
+    @Inject
+    @Q1
     MyInterfaceService myInterfaceService1;
     @Inject
     MyInterfaceService myInterfaceService2;
     @Inject
     MyFactory myFactory1;
-    @Inject @Named("2")
+    @Inject
+    @Named("2")
     MyFactory myFactory2;
-    @Inject @Q1
+    @Inject
+    @Q1
     MyFinder myFinder1;
     @Inject
     MyFinder myFinder2;

@@ -13,6 +13,6 @@ import org.seedstack.business.fixtures.registry.domain.Client;
  * Dummy class.
  */
 @ServiceQualifier
-public class RebateServiceInternalWithQualifier implements RebateService<Client>{
+public class RebateServiceInternalWithQualifier implements RebateService<Client> {
 
 }

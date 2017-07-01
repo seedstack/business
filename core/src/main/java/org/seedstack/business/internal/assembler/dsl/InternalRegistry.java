@@ -80,7 +80,7 @@ public interface InternalRegistry {
      * @param aggregateRootTuple a list of aggregate root classes
      * @param dto                the dto class
      * @param qualifier          the assembler qualifier
-     * @return  the assembler
+     * @return the assembler
      */
     Assembler<?, ?> tupleAssemblerOf(List<Class<? extends AggregateRoot<?>>> aggregateRootTuple, Class<?> dto, @Nullable Class<? extends Annotation> qualifier);
 

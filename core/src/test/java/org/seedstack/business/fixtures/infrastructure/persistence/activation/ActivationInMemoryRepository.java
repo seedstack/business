@@ -14,7 +14,7 @@ import org.seedstack.seed.persistence.inmemory.Store;
 
 
 @Store("ActivationInMemoryRepository")
-public class ActivationInMemoryRepository extends InMemoryRepository<Activation,String> implements ActivationRepository {
+public class ActivationInMemoryRepository extends InMemoryRepository<Activation, String> implements ActivationRepository {
 
 
 }

@@ -8,24 +8,24 @@
 package org.seedstack.business.fixtures.interfaces.customer.presentation1;
 
 public class CustomerRepresentation {
-	
-	private String name;
-	
-	public CustomerRepresentation(String name) {
-		this.setName(name); 
-		
-	}
 
-	public String getName() {
-		return name;
-	}
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public CustomerRepresentation(String name) {
+        this.setName(name);
 
-	@Override
-	public String toString() {
-		return String.format("CustomerRepresentation [name=%s]", name);
-	}
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("CustomerRepresentation [name=%s]", name);
+    }
 }

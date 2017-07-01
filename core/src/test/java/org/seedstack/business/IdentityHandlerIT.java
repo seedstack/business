@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business;
 
@@ -25,21 +25,21 @@ import javax.inject.Inject;
 @RunWith(SeedITRunner.class)
 public class IdentityHandlerIT {
 
-	@Inject
-	private MyAggregateFactory myAggregateFactory;
+    @Inject
+    private MyAggregateFactory myAggregateFactory;
 
     @Inject
     private Factory<MyAggregate> factory;
-	
-	@Test
-	public void testCustomFactory(){
-		MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
+
+    @Test
+    public void testCustomFactory() {
+        MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
         Assertions.assertThat(myAggregate.getId()).isNotNull();
         Assertions.assertThat(myAggregate.getMySubEntity().getId()).isNotNull();
         for (MyEntity entity : myAggregate.getMySubEntities()) {
             Assertions.assertThat(entity.getId()).isNotNull();
         }
-	}
+    }
 
     @Test
     public void testDefaultFactory() {

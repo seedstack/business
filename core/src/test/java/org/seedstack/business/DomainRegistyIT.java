@@ -43,133 +43,138 @@ import javax.inject.Inject;
 @RunWith(SeedITRunner.class)
 public class DomainRegistyIT {
 
-	@Inject
-	DomainRegistry domainRegistry;
-	
-	/**
-	 * Test to get a {@link Service} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testServiceBase() {
-		MyService service = this.domainRegistry.getService(MyService.class);
-		Assertions.assertThat(service).isInstanceOf(MyServiceInternal.class);
-	}
-	
-	/**
-	 * Test a bad service from the {@link DomainRegistry}.
-	 */
-	@Test(expected=SeedException.class)
-	public void testBadService() {
-		this.domainRegistry.getService(String.class);
-	}
-	
+    @Inject
+    DomainRegistry domainRegistry;
 
-	/**
-	 * Test to get a {@link Service} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testService() {
-		TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>(){};
+    /**
+     * Test to get a {@link Service} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testServiceBase() {
+        MyService service = this.domainRegistry.getService(MyService.class);
+        Assertions.assertThat(service).isInstanceOf(MyServiceInternal.class);
+    }
 
-		RebateService<Client> service = this.domainRegistry.getService(type);
-		Assertions.assertThat(service).isInstanceOf(RebateServiceInternal.class);
-	}
+    /**
+     * Test a bad service from the {@link DomainRegistry}.
+     */
+    @Test(expected = SeedException.class)
+    public void testBadService() {
+        this.domainRegistry.getService(String.class);
+    }
 
-	/**
-	 * Test to get a {@link Service} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testServiceWithStringQualifierFromTypeOf() {
-		TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>(){};
 
-		RebateService<Client> service = this.domainRegistry.getService(type,"Dummy");
-		Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierNamed.class);
-	}
+    /**
+     * Test to get a {@link Service} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testService() {
+        TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>() {
+        };
 
-	/**
-	 * Test to get a {@link Service} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testServiceWithStringQualifier() {
-		MyService service = this.domainRegistry.getService(MyService.class,"Dummy");
-		Assertions.assertThat(service).isInstanceOf(MyServiceInternalWithQualiferNamed.class);
-	}
+        RebateService<Client> service = this.domainRegistry.getService(type);
+        Assertions.assertThat(service).isInstanceOf(RebateServiceInternal.class);
+    }
 
-	/**
-	 * Test to get a {@link Service} with a qualifier from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testServiceWithQualifierAndComposite() {
-		TypeOf<RebateService<Composite<Long>>> type = new TypeOf<RebateService<Composite<Long>>>(){};
-		RebateService<Composite<Long>> service = this.domainRegistry.getService(type,ServiceQualifier.class);
-		Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierComposite.class);
+    /**
+     * Test to get a {@link Service} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testServiceWithStringQualifierFromTypeOf() {
+        TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>() {
+        };
 
-	}
+        RebateService<Client> service = this.domainRegistry.getService(type, "Dummy");
+        Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierNamed.class);
+    }
 
-	/**
-	 * Test to get a {@link DomainPolicy} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testPolicy() {
-		RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class);
-		final int rebateExpected = 10;
-		Assertions.assertThat(policy.calculateRebate(new Product(),10000)).isEqualTo(rebateExpected);
-	}
+    /**
+     * Test to get a {@link Service} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testServiceWithStringQualifier() {
+        MyService service = this.domainRegistry.getService(MyService.class, "Dummy");
+        Assertions.assertThat(service).isInstanceOf(MyServiceInternalWithQualiferNamed.class);
+    }
 
-	/**
-	 * Test a bad service from the {@link DomainRegistry}.
-	 */
-	@Test(expected=SeedException.class)
-	public void testBadPolicy() {
-		this.domainRegistry.getPolicy(String.class);
-	}
+    /**
+     * Test to get a {@link Service} with a qualifier from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testServiceWithQualifierAndComposite() {
+        TypeOf<RebateService<Composite<Long>>> type = new TypeOf<RebateService<Composite<Long>>>() {
+        };
+        RebateService<Composite<Long>> service = this.domainRegistry.getService(type, ServiceQualifier.class);
+        Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierComposite.class);
 
-	/**
-	 * Test to get a {@link DomainPolicy} with a qualifier from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testPolicyWithQualifier() {
-		RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class,PolicyQualifier.class);
-		Assertions.assertThat(policy).isInstanceOf(RebatePolicyInternalWithQualifier.class);
-	}
+    }
 
-	/**
-	 * Test to get a {@link Repository} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testRepository() {
-		Repository<Client, Long> repository = this.domainRegistry.getRepository(Client.class, Long.class, TestJpaQualifier.class);
-		Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
-	}
+    /**
+     * Test to get a {@link DomainPolicy} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testPolicy() {
+        RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class);
+        final int rebateExpected = 10;
+        Assertions.assertThat(policy.calculateRebate(new Product(), 10000)).isEqualTo(rebateExpected);
+    }
 
-	/**
-	 * Test to get a {@link Repository} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testRepositoryFromTypeOf() {
-		TypeOf<Repository<Client, Long>> typeOf = new TypeOf<Repository<Client, Long>>(){};
-		Repository<Client, Long> repository = this.domainRegistry.getRepository(typeOf, TestJpaQualifier.class);
-		Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
-	}
+    /**
+     * Test a bad service from the {@link DomainRegistry}.
+     */
+    @Test(expected = SeedException.class)
+    public void testBadPolicy() {
+        this.domainRegistry.getPolicy(String.class);
+    }
 
-	/**
-	 * Test to get a {@link Factory} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testFactory() {
-		Factory<Client> factory = domainRegistry.getFactory(Client.class);
-		Assertions.assertThat(factory).isInstanceOf(Factory.class);
-	}
+    /**
+     * Test to get a {@link DomainPolicy} with a qualifier from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testPolicyWithQualifier() {
+        RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class, PolicyQualifier.class);
+        Assertions.assertThat(policy).isInstanceOf(RebatePolicyInternalWithQualifier.class);
+    }
 
-	/**
-	 * Test to get a {@link Factory} from the {@link DomainRegistry}.
-	 */
-	@Test
-	public void testFactoryFromTypeOf() {
-		TypeOf<Factory<Client>> typeOf = new TypeOf<Factory<Client>>(){};
+    /**
+     * Test to get a {@link Repository} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testRepository() {
+        Repository<Client, Long> repository = this.domainRegistry.getRepository(Client.class, Long.class, TestJpaQualifier.class);
+        Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
+    }
 
-		Factory<Client> factory = domainRegistry.getFactory(typeOf);
-		Assertions.assertThat(factory).isInstanceOf(Factory.class);
-	}
+    /**
+     * Test to get a {@link Repository} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testRepositoryFromTypeOf() {
+        TypeOf<Repository<Client, Long>> typeOf = new TypeOf<Repository<Client, Long>>() {
+        };
+        Repository<Client, Long> repository = this.domainRegistry.getRepository(typeOf, TestJpaQualifier.class);
+        Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
+    }
+
+    /**
+     * Test to get a {@link Factory} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testFactory() {
+        Factory<Client> factory = domainRegistry.getFactory(Client.class);
+        Assertions.assertThat(factory).isInstanceOf(Factory.class);
+    }
+
+    /**
+     * Test to get a {@link Factory} from the {@link DomainRegistry}.
+     */
+    @Test
+    public void testFactoryFromTypeOf() {
+        TypeOf<Factory<Client>> typeOf = new TypeOf<Factory<Client>>() {
+        };
+
+        Factory<Client> factory = domainRegistry.getFactory(typeOf);
+        Assertions.assertThat(factory).isInstanceOf(Factory.class);
+    }
 
 }

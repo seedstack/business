@@ -15,19 +15,6 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseEntityTest2 {
-    static class BaseChild extends BaseEntity<Long> {
-        private Long id;
-        private String name;
-
-        BaseChild() {
-            id = null;
-        }
-
-        BaseChild(Long id) {
-            this.id = id;
-        }
-    }
-
     @Test
     public void check_hashcode() {
         Long entityId = 12L;
@@ -54,5 +41,18 @@ public class BaseEntityTest2 {
         BaseChild child = new BaseChild();
         Set<BaseChild> children = Sets.newHashSet();
         children.add(child);
+    }
+
+    static class BaseChild extends BaseEntity<Long> {
+        private Long id;
+        private String name;
+
+        BaseChild() {
+            id = null;
+        }
+
+        BaseChild(Long id) {
+            this.id = id;
+        }
     }
 }

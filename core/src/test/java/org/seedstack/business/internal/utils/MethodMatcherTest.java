@@ -16,46 +16,6 @@ import java.lang.reflect.Method;
 
 public class MethodMatcherTest {
 
-    static enum ProjectStatus {
-        FIRST(0);
-
-        int status;
-
-        ProjectStatus(int status) {
-            this.status = status;
-        }
-
-        public int getCode() {
-            return status;
-        }
-    }
-
-    static class TestedClass {
-
-        public Integer test(String str, ProjectStatus i){
-            return 1;
-        }
-
-        public Integer test2(String str, ProjectStatus i, String str2){
-            return 0;
-        }
-
-
-        public void test3(String str, int i){
-        }
-    }
-
-    static class TestedClass2 {
-
-        public Integer test(String str, ProjectStatus i){
-            return 1;
-        }
-
-        public Integer test2(String str, ProjectStatus i){
-            return 1;
-        }
-    }
-
     @Test
     public void test_method_matcher() {
         Method testMethod = MethodMatcher.findMatchingMethod(TestedClass.class, Integer.class, "aa", ProjectStatus.FIRST);
@@ -74,5 +34,45 @@ public class MethodMatcherTest {
     @Test(expected = SeedException.class)
     public void test_method_matcher_fail() {
         MethodMatcher.findMatchingMethod(TestedClass2.class, Integer.class, "aa", ProjectStatus.FIRST);
+    }
+
+    static enum ProjectStatus {
+        FIRST(0);
+
+        int status;
+
+        ProjectStatus(int status) {
+            this.status = status;
+        }
+
+        public int getCode() {
+            return status;
+        }
+    }
+
+    static class TestedClass {
+
+        public Integer test(String str, ProjectStatus i) {
+            return 1;
+        }
+
+        public Integer test2(String str, ProjectStatus i, String str2) {
+            return 0;
+        }
+
+
+        public void test3(String str, int i) {
+        }
+    }
+
+    static class TestedClass2 {
+
+        public Integer test(String str, ProjectStatus i) {
+            return 1;
+        }
+
+        public Integer test2(String str, ProjectStatus i) {
+            return 1;
+        }
     }
 }

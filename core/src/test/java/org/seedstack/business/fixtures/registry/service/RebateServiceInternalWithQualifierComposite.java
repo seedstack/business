@@ -13,5 +13,5 @@ import org.seedstack.business.fixtures.registry.domain.Composite;
  * Dummy class.
  */
 @ServiceQualifier
-public class RebateServiceInternalWithQualifierComposite implements RebateService<Composite<Long>>{
+public class RebateServiceInternalWithQualifierComposite implements RebateService<Composite<Long>> {
 }

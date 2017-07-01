@@ -16,9 +16,8 @@ import javax.inject.Named;
 
 /**
  * Dummy repository for test
- * 
  */
 @Named("multi1")
 @Store("MultiRepository1InMemory")
-public class MultiRepository1InMemory extends InMemoryRepository<Multi,String> implements MultiRepository {
+public class MultiRepository1InMemory extends InMemoryRepository<Multi, String> implements MultiRepository {
 }

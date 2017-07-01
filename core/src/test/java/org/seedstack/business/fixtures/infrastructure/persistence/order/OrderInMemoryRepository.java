@@ -12,7 +12,7 @@ import org.seedstack.business.fixtures.domain.order.Order;
 import org.seedstack.business.fixtures.domain.order.OrderId;
 import org.seedstack.business.fixtures.domain.order.OrderRepository;
 
-public class OrderInMemoryRepository extends InMemoryRepository<Order,OrderId> implements OrderRepository {
+public class OrderInMemoryRepository extends InMemoryRepository<Order, OrderId> implements OrderRepository {
 
 }
 

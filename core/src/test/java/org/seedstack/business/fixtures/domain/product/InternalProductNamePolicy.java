@@ -12,19 +12,19 @@ import java.text.MessageFormat;
 
 public class InternalProductNamePolicy implements ProductNamePolicy {
 
-	private static final String EAN13 = "ean13-";
+    private static final String EAN13 = "ean13-";
 
-	public InternalProductNamePolicy() {
-	}
+    public InternalProductNamePolicy() {
+    }
 
-	@Override
-	public String transform(Short productCode) {
-		return MessageFormat.format("{0}{1}", EAN13, productCode);
-	}
-	
-	@Override
-	public Short extractNumber(String productCode) {
-		return   Short.valueOf( productCode.split("-")[1] );
-	}
+    @Override
+    public String transform(Short productCode) {
+        return MessageFormat.format("{0}{1}", EAN13, productCode);
+    }
+
+    @Override
+    public Short extractNumber(String productCode) {
+        return Short.valueOf(productCode.split("-")[1]);
+    }
 
 }

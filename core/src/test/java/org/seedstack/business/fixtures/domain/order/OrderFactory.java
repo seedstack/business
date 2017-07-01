@@ -10,9 +10,9 @@ package org.seedstack.business.fixtures.domain.order;
 import org.seedstack.business.domain.Factory;
 
 public interface OrderFactory extends Factory<Order> {
-	
-	Order createOrder(String orderId);
 
-	Order createOrder(String orderId , String customerId);
+    Order createOrder(String orderId);
+
+    Order createOrder(String orderId, String customerId);
 
 }

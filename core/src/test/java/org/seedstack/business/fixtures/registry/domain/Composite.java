@@ -9,6 +9,7 @@ package org.seedstack.business.fixtures.registry.domain;
 
 /**
  * Dummy class.
- */public class Composite<T> {
+ */
+public class Composite<T> {
 
 }

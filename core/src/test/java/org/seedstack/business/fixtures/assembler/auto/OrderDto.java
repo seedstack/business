@@ -20,19 +20,19 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getId() {
         return id;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Address getBillingAddress() {
         return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 }

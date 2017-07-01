@@ -15,39 +15,39 @@ import org.seedstack.seed.transaction.spi.TransactionMetadata;
 @ITBind
 public class ITResourcelessTransactionHandler implements TransactionHandler<Object> {
 
-	@Override
-	public void doInitialize(TransactionMetadata transactionMetadata) {
-	}
+    @Override
+    public void doInitialize(TransactionMetadata transactionMetadata) {
+    }
 
-	@Override
-	public Object doCreateTransaction() {
-		return new Object();
-	}
+    @Override
+    public Object doCreateTransaction() {
+        return new Object();
+    }
 
-	@Override
-	public void doBeginTransaction(Object currentTransaction) {
-	}
+    @Override
+    public void doBeginTransaction(Object currentTransaction) {
+    }
 
-	@Override
-	public void doCommitTransaction(Object currentTransaction) {
-	}
+    @Override
+    public void doCommitTransaction(Object currentTransaction) {
+    }
 
-	@Override
-	public void doRollbackTransaction(Object currentTransaction) {
-	}
+    @Override
+    public void doRollbackTransaction(Object currentTransaction) {
+    }
 
-	@Override
-	public void doReleaseTransaction(Object currentTransaction) {
-	}
+    @Override
+    public void doReleaseTransaction(Object currentTransaction) {
+    }
 
-	@Override
-	public void doCleanup() {
-	}
+    @Override
+    public void doCleanup() {
+    }
 
-	@Override
-	public Object getCurrentTransaction() {
-		return new Object();
-	}
+    @Override
+    public Object getCurrentTransaction() {
+        return new Object();
+    }
 
     @Override
     public void doJoinGlobalTransaction() {

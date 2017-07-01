@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 
 public interface DiscountFactory extends Factory<Discount> {
-	
-	Discount createNewActivation(@NotNull String id, String description);
+
+    Discount createNewActivation(@NotNull String id, String description);
 
 }

@@ -10,10 +10,11 @@ package org.seedstack.business.fixtures.domain.customer;
 import org.seedstack.business.domain.Factory;
 
 
-public interface CustomerFactory  extends Factory<Customer> {
-	
-	Customer createNewCustomer(String entityId , String firstName , String lastName); 
-	Customer createNewCustomer(String entityId , String firstName , String lastName , String addressType , String line1 , String line2 , String zipCode, String country); 
+public interface CustomerFactory extends Factory<Customer> {
+
+    Customer createNewCustomer(String entityId, String firstName, String lastName);
+
+    Customer createNewCustomer(String entityId, String firstName, String lastName, String addressType, String line1, String line2, String zipCode, String country);
 
 }
 

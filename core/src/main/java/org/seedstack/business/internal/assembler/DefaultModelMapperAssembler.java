@@ -24,7 +24,7 @@ import javax.inject.Inject;
  */
 @GenericImplementation
 @org.seedstack.business.assembler.ModelMapper
-public class DefaultModelMapperAssembler<A extends AggregateRoot<?>,D> extends ModelMapperAssembler<A, D> {
+public class DefaultModelMapperAssembler<A extends AggregateRoot<?>, D> extends ModelMapperAssembler<A, D> {
 
     @SuppressWarnings("unchecked")
     @Inject

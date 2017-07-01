@@ -12,10 +12,10 @@ import org.seedstack.business.Service;
 
 @Service
 public interface CustomerSampleService {
-	
-	String transfer (Customer source , Customer target);
 
-	String property();
-	
+    String transfer(Customer source, Customer target);
+
+    String property();
+
 }
 

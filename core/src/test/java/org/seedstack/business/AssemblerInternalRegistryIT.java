@@ -57,14 +57,6 @@ public class AssemblerInternalRegistryIT {
         Assertions.assertThat(assembler.getClass()).isEqualTo(expectedAssembler.getClass());
     }
 
-    static class Order implements AggregateRoot<String> {
-        @Override
-        public String getId() { return null; }
-    }
-
-    @DtoOf(Order.class)
-    static class OrderDto  { }
-
     @Test
     public void testAssemblerOfWithDefaultAssembler() {
         Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class, ModelMapper.class);
@@ -92,5 +84,16 @@ public class AssemblerInternalRegistryIT {
         Assertions.assertThat(assembler).isNotInstanceOf(DefaultModelMapperAssembler.class);
 
         Assertions.assertThat(assembler).isInstanceOf(AutoAssembler.class);
+    }
+
+    static class Order implements AggregateRoot<String> {
+        @Override
+        public String getId() {
+            return null;
+        }
+    }
+
+    @DtoOf(Order.class)
+    static class OrderDto {
     }
 }

@@ -8,10 +8,9 @@
 package org.seedstack.business.fixtures.assembler;
 
 public class MyDto {
+    int age;
     private String nom;
     private String addresse;
-
-    int age;
 
     public String getNom() {
         return nom;

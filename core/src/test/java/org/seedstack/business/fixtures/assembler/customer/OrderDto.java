@@ -41,6 +41,10 @@ public class OrderDto {
         return orderId;
     }
 
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     @MatchingFactoryParameter(index = 1)
     public String getProduct() {
         return product;
@@ -72,9 +76,5 @@ public class OrderDto {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
     }
 }

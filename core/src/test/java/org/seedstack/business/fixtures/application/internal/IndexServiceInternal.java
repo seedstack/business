@@ -14,16 +14,16 @@ import org.slf4j.Logger;
 
 public class IndexServiceInternal implements IndexService {
 
-	@Logging
-	Logger logger;
-	
-	public IndexServiceInternal() {
-	}
+    @Logging
+    Logger logger;
 
-	@Override
-	public void index(Customer customer) {
-		logger.info("Indexing " + customer.getId());
+    public IndexServiceInternal() {
+    }
+
+    @Override
+    public void index(Customer customer) {
+        logger.info("Indexing " + customer.getId());
 //		logger.info("Indexing " + customer.getEntityId().getValue());
-	}
+    }
 
 }

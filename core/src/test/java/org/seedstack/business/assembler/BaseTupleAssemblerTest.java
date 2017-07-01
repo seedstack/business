@@ -14,45 +14,45 @@ import org.seedstack.business.fixtures.domain.export.Export;
 
 public class BaseTupleAssemblerTest {
 
-	static class Representation {
-		String discount;
-		String export;
-		
-		public Representation() {
-		}
+    static class Representation {
+        String discount;
+        String export;
 
-		public String getDiscount() {
-			return discount;
-		}
+        public Representation() {
+        }
 
-		public void setDiscount(String discount) {
-			this.discount = discount;
-		}
+        public String getDiscount() {
+            return discount;
+        }
 
-		public String getExport() {
-			return export;
-		}
+        public void setDiscount(String discount) {
+            this.discount = discount;
+        }
 
-		public void setExport(String export) {
-			this.export = export;
-		}
-	}
-	
-	
-	static class TestAssembler extends BaseTupleAssembler<Pair<Discount,Export>, Representation> {
+        public String getExport() {
+            return export;
+        }
 
-		@Override
-		protected void doAssembleDtoFromAggregate(Representation targetDto, Pair<Discount, Export> sourceEntity) {
-			targetDto.setDiscount(sourceEntity.getValue0().getDescription());
-			targetDto.setExport(sourceEntity.getValue1().getDescription());
-		}
+        public void setExport(String export) {
+            this.export = export;
+        }
+    }
 
-		@Override
-		protected void doMergeAggregateWithDto(Pair<Discount, Export> targetEntity, Representation sourceDto) {
-			targetEntity.getValue0().setDescription(sourceDto.getDiscount());
-			targetEntity.getValue1().setDescription(sourceDto.getExport());
-		}
-		
-	}
+
+    static class TestAssembler extends BaseTupleAssembler<Pair<Discount, Export>, Representation> {
+
+        @Override
+        protected void doAssembleDtoFromAggregate(Representation targetDto, Pair<Discount, Export> sourceEntity) {
+            targetDto.setDiscount(sourceEntity.getValue0().getDescription());
+            targetDto.setExport(sourceEntity.getValue1().getDescription());
+        }
+
+        @Override
+        protected void doMergeAggregateWithDto(Pair<Discount, Export> targetEntity, Representation sourceDto) {
+            targetEntity.getValue0().setDescription(sourceDto.getDiscount());
+            targetEntity.getValue1().setDescription(sourceDto.getExport());
+        }
+
+    }
 
 }

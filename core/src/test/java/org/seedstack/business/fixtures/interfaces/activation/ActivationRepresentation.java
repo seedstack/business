@@ -11,36 +11,33 @@ import org.seedstack.business.assembler.MatchingEntityId;
 import org.seedstack.business.assembler.MatchingFactoryParameter;
 
 public class ActivationRepresentation {
-	
-	String uuid;
-	String customerId;
-	
-	public ActivationRepresentation(String uuid, String customerId) {  
-		this.uuid = uuid;
-		this.customerId = customerId;
-	}
-	
-	@MatchingEntityId
-	@MatchingFactoryParameter(index=0)
-	public String getUuid() {
-		return uuid;
-	}
-	
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
-	@MatchingFactoryParameter(index=1)
-	public String getCustomerId() {
-		return customerId;
-	}
-	
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-	
-	
-	
-	
+
+    String uuid;
+    String customerId;
+
+    public ActivationRepresentation(String uuid, String customerId) {
+        this.uuid = uuid;
+        this.customerId = customerId;
+    }
+
+    @MatchingEntityId
+    @MatchingFactoryParameter(index = 0)
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @MatchingFactoryParameter(index = 1)
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
 
 }

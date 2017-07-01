@@ -32,8 +32,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 
 public abstract class AbstractMergeWithRepository<A extends AggregateRoot<?>> {
-    final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
     protected final AssemblerDslContext context;
+    final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
 
     /**
      * Constructor.

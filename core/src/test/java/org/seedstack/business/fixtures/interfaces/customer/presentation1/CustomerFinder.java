@@ -12,8 +12,8 @@ import org.seedstack.business.fixtures.interfaces.SampleParentFinder;
 import java.util.List;
 
 
-public interface CustomerFinder extends SampleParentFinder<CustomerRepresentation>{
+public interface CustomerFinder extends SampleParentFinder<CustomerRepresentation> {
 
-	List<CustomerRepresentation> findAll();
-	
+    List<CustomerRepresentation> findAll();
+
 }

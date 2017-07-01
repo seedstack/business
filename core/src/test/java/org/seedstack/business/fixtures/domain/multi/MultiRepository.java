@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.domain.multi;
 
@@ -15,4 +15,5 @@ import org.seedstack.business.domain.Repository;
 /**
  * Dummy repository for test
  */
-public interface MultiRepository extends Repository<Multi,String> {}
+public interface MultiRepository extends Repository<Multi, String> {
+}

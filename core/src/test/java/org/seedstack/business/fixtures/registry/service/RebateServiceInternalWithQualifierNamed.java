@@ -16,6 +16,6 @@ import javax.inject.Named;
  * Dummy class.
  */
 @Named("Dummy")
-public class RebateServiceInternalWithQualifierNamed implements RebateService<Client>{
+public class RebateServiceInternalWithQualifierNamed implements RebateService<Client> {
 
 }

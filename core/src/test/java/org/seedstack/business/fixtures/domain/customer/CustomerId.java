@@ -8,22 +8,21 @@
 package org.seedstack.business.fixtures.domain.customer;
 
 import org.seedstack.business.domain.BaseValueObject;
- 
-public class CustomerId extends BaseValueObject{
-	
-	
-	private String customerId;
-    
-	CustomerId ()  
-    {
+
+public class CustomerId extends BaseValueObject {
+
+
+    private String customerId;
+
+    CustomerId() {
     }
-	
-	public CustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-	
-	public String getCustomerId() {
-		return customerId;
-	}
-    
+
+    public CustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
 }

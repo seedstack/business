@@ -15,21 +15,19 @@ import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
 
 import java.util.Collection;
 
-public class CustomerInMemoryRepository extends InMemoryRepository <Customer,CustomerId> implements CustomerRepository {
+public class CustomerInMemoryRepository extends InMemoryRepository<Customer, CustomerId> implements CustomerRepository {
 
-	@Override
-	public Collection<Customer> findAll() {
-		
-		Collection<Customer > customers = Lists.newArrayList();
-		
-        for (Object object : inMemorySortedMap.values())
-        {
-        	if (Customer.class.isAssignableFrom(object.getClass()))
-        	{
-        		customers.add((Customer) object);
-        	}
+    @Override
+    public Collection<Customer> findAll() {
+
+        Collection<Customer> customers = Lists.newArrayList();
+
+        for (Object object : inMemorySortedMap.values()) {
+            if (Customer.class.isAssignableFrom(object.getClass())) {
+                customers.add((Customer) object);
+            }
         }
-		return customers;
-	}
+        return customers;
+    }
 }
 

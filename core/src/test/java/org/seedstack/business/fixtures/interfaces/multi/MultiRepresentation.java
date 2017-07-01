@@ -11,40 +11,36 @@ import org.seedstack.business.assembler.MatchingEntityId;
 
 
 public class MultiRepresentation {
-	
-	private String id;
 
-	/**
-	 * Getter id
-	 * 
-	 * @return the id
-	 */
-	@MatchingEntityId
-	public String getId() {
-		return id;
-	}
+    private String id;
 
-	/**
-	 * Setter id
-	 * 
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    public MultiRepresentation(String id) {
+        super();
+        this.id = id;
+    }
 
-	public MultiRepresentation(String id) {
-		super();
-		this.id = id;
-	}
+    public MultiRepresentation() {
+        super();
+    }
 
-	public MultiRepresentation() {
-		super();
-	}
-	
-	
-	
-	
-	
+    /**
+     * Getter id
+     *
+     * @return the id
+     */
+    @MatchingEntityId
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Setter id
+     *
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
 }

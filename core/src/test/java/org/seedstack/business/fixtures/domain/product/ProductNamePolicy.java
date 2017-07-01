@@ -12,9 +12,10 @@ import org.seedstack.business.domain.DomainPolicy;
 
 @DomainPolicy
 public interface ProductNamePolicy {
-	
-	String transform(Short productCode);
-	Short extractNumber (String productCode);
-	
-	
+
+    String transform(Short productCode);
+
+    Short extractNumber(String productCode);
+
+
 }

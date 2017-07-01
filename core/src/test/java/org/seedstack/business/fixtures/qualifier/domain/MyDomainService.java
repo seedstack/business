@@ -13,5 +13,5 @@ import org.seedstack.business.domain.DomainObject;
 
 
 @Service
-public interface MyDomainService extends DomainObject, Producible{
+public interface MyDomainService extends DomainObject, Producible {
 }

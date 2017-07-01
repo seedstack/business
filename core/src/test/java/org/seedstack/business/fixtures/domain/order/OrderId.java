@@ -12,17 +12,16 @@ import org.seedstack.business.domain.BaseValueObject;
 
 public class OrderId extends BaseValueObject {
 
-	private String value;
-    
-     OrderId()
-    {
-    }
-	
-	public OrderId(String value) {
-		this.value = value;
-	}
+    private String value;
 
-	public String getValue() {
-		return value;
-	}
+    OrderId() {
+    }
+
+    public OrderId(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

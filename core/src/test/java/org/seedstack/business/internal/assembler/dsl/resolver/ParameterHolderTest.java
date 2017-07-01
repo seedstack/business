@@ -34,9 +34,10 @@ public class ParameterHolderTest {
         Assertions.assertThat(parameterHolder.uniqueElement()).isNull();
 
         Assertions.assertThat(parameterHolder.parameters()).isNotEmpty();
-        Assertions.assertThat(parameterHolder.parameters()).isEqualTo(new Object[]{1,2,3});
+        Assertions.assertThat(parameterHolder.parameters()).isEqualTo(new Object[]{1, 2, 3});
         Assertions.assertThat(parameterHolder.parameters()).isEqualTo(parameterHolder.parametersOfAggregateRoot(-1));
     }
+
     @Test
     public void testUniqueElement() {
         ParameterHolder parameterHolder = new ParameterHolderInternal();

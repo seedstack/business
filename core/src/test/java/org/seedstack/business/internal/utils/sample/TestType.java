@@ -6,13 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.internal.utils.sample;
 
 /**
  * Dummy Type for test
  */
-public class TestType<A,B> {
+public class TestType<A, B> {
 
 }

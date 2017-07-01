@@ -10,22 +10,20 @@ package org.seedstack.business.fixtures.assembler;
 import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 
-public class MyCustomerAssembler extends BaseAssembler<Customer, MyCustomerRepresentation>
-{
-	@Override
-	protected void doAssembleDtoFromAggregate(MyCustomerRepresentation targetDto , Customer sourceEntity) {
-		targetDto.setName( sourceEntity.getFullName());
-		targetDto.setId(sourceEntity.getId().getCustomerId());
-	}
+public class MyCustomerAssembler extends BaseAssembler<Customer, MyCustomerRepresentation> {
+    @Override
+    protected void doAssembleDtoFromAggregate(MyCustomerRepresentation targetDto, Customer sourceEntity) {
+        targetDto.setName(sourceEntity.getFullName());
+        targetDto.setId(sourceEntity.getId().getCustomerId());
+    }
 
-	@Override
-	public void doMergeAggregateWithDto(Customer targetEntity , MyCustomerRepresentation sourceDto)
-	{
-		String name = sourceDto.getName();
-		if ( name != null ) {
-			String[] split = name.split(" ");
-			targetEntity.setFirstName(split[1].trim());
-			targetEntity.setLastName(split[0].trim());
-		}
-	}
+    @Override
+    public void doMergeAggregateWithDto(Customer targetEntity, MyCustomerRepresentation sourceDto) {
+        String name = sourceDto.getName();
+        if (name != null) {
+            String[] split = name.split(" ");
+            targetEntity.setFirstName(split[1].trim());
+            targetEntity.setLastName(split[0].trim());
+        }
+    }
 }

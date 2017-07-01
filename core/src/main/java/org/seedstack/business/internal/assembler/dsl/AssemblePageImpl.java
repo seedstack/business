@@ -11,8 +11,8 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AssemblePage;
 import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.pagination.SimplePage;
 import org.seedstack.business.pagination.Page;
+import org.seedstack.business.pagination.SimplePage;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
