@@ -12,7 +12,7 @@ import com.google.inject.name.Names;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.assembler.FluentAssembler;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.fixtures.assembler.book.BookDto;
 import org.seedstack.business.fixtures.assembler.book.BookId;

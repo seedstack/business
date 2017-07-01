@@ -43,13 +43,7 @@ public abstract class BaseValueObject implements ValueObject, Serializable {
      */
     @Override
     public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        return EqualsBuilder.reflectionEquals(this, other, false);
+        return this == other || !(other == null || getClass() != other.getClass()) && EqualsBuilder.reflectionEquals(this, other, false);
     }
 
     @Override

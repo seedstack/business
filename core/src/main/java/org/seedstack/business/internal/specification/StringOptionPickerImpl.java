@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.internal.specification;
 
-import org.seedstack.business.specification.builder.BaseSelector;
-import org.seedstack.business.specification.builder.StringOptionPicker;
+import org.seedstack.business.specification.dsl.BaseSelector;
+import org.seedstack.business.specification.dsl.StringOptionPicker;
 
 class StringOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> extends BaseOptionPickerImpl<T, SELECTOR> implements StringOptionPicker<T, SELECTOR> {
     private final StringValueOptionsImpl stringValueOptions;

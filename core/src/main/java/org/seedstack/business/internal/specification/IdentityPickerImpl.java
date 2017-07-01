@@ -9,9 +9,9 @@ package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.IdentitySpecification;
-import org.seedstack.business.specification.builder.AggregateSelector;
-import org.seedstack.business.specification.builder.BaseOptionPicker;
-import org.seedstack.business.specification.builder.IdentityPicker;
+import org.seedstack.business.specification.dsl.AggregateSelector;
+import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.IdentityPicker;
 
 class IdentityPickerImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> implements IdentityPicker<A, ID, SELECTOR> {
     private final SpecificationBuilderContext<A, SELECTOR> context;

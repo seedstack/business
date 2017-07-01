@@ -28,7 +28,7 @@ import static org.junit.Assert.fail;
 
 public class MergeSingleAggregateFromRepositoryImplTest {
 
-    private MergeSingleSingleAggregateFromRepositoryImpl underTest;
+    private MergeSingleAggregateFromRepositoryImpl underTest;
 
     private InternalRegistry registry;
     private Order order;
@@ -49,7 +49,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
         Mockito.when(registry.genericFactoryOf(Order.class)).thenReturn((Factory) orderFactory);
         Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
 
-        underTest = new MergeSingleSingleAggregateFromRepositoryImpl<>(context, Order.class, new OrderDto("1", "lightsaber"));
+        underTest = new MergeSingleAggregateFromRepositoryImpl<>(context, Order.class, new OrderDto("1", "lightsaber"));
     }
 
     @Test

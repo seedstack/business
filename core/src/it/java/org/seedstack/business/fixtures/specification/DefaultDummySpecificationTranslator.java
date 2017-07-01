@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.fixtures.specification;
 
-import org.seedstack.business.specification.BaseSpecificationTranslator;
+import org.seedstack.business.spi.specification.BaseSpecificationTranslator;
 import org.seedstack.business.specification.Specification;
 
 public class DefaultDummySpecificationTranslator extends BaseSpecificationTranslator<StringBuilder, String> {

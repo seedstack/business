@@ -61,9 +61,8 @@ public class BaseEntityTest2 {
 
     }
 
-
-    @Test(expected = IllegalStateException.class)
-    public void empty_entity_cannot_be_include_inside_a_collection() {
+    @Test
+    public void empty_entity_can_be_added_to_collection() {
         BaseChild child = new BaseChild();
         Set<BaseChild> children = Sets.newHashSet();
         children.add(child);

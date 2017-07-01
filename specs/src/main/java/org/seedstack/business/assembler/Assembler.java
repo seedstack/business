@@ -7,6 +7,8 @@
  */
 package org.seedstack.business.assembler;
 
+import org.seedstack.business.assembler.dsl.FluentAssembler;
+
 /**
  * This interface represents the Assembler pattern.
  * <p>
@@ -19,7 +21,7 @@ package org.seedstack.business.assembler;
  *
  * @param <A> the aggregate root
  * @param <D> the dto type
- * @see org.seedstack.business.assembler.FluentAssembler
+ * @see FluentAssembler
  */
 public interface Assembler<A, D> {
 

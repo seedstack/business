@@ -11,7 +11,7 @@ import com.google.common.base.Preconditions;
 import org.seedstack.business.specification.DelegatingSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.TrueSpecification;
-import org.seedstack.business.specification.builder.BaseSelector;
+import org.seedstack.business.specification.dsl.BaseSelector;
 
 import java.util.ArrayList;
 import java.util.List;

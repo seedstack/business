@@ -19,22 +19,22 @@ import java.util.List;
 
 
 public class AssembleSingleImpl implements AssembleSingleWithQualifier {
-    private final AssembleMultipleImpl dtosAssemblerProvider;
+    private final AssembleMultipleImpl assembleMultiple;
 
     AssembleSingleImpl(AssemblerDslContext context, AggregateRoot<?> aggregate) {
         List<? extends AggregateRoot<?>> aggregates = Lists.newArrayList(aggregate);
-        this.dtosAssemblerProvider = new AssembleMultipleImpl(context, aggregates, null);
+        this.assembleMultiple = new AssembleMultipleImpl(context, aggregates, null);
     }
 
     AssembleSingleImpl(AssemblerDslContext context, Tuple aggregateTuple) {
         List<Tuple> aggregateTuples = new ArrayList<>();
         aggregateTuples.add(aggregateTuple);
-        this.dtosAssemblerProvider = new AssembleMultipleImpl(context, null, aggregateTuples);
+        this.assembleMultiple = new AssembleMultipleImpl(context, null, aggregateTuples);
     }
 
     @Override
     public <D> D to(Class<D> dtoClass) {
-        List<D> ds = dtosAssemblerProvider.to(dtoClass);
+        List<D> ds = assembleMultiple.to(dtoClass);
         if (!ds.isEmpty()) {
             return ds.get(0);
         } else {
@@ -44,13 +44,13 @@ public class AssembleSingleImpl implements AssembleSingleWithQualifier {
 
     @Override
     public AssembleSingle with(Annotation qualifier) {
-        this.dtosAssemblerProvider.getContext().setAssemblerQualifier(qualifier);
+        this.assembleMultiple.getContext().setAssemblerQualifier(qualifier);
         return this;
     }
 
     @Override
     public AssembleSingle with(Class<? extends Annotation> qualifier) {
-        this.dtosAssemblerProvider.getContext().setAssemblerQualifierClass(qualifier);
+        this.assembleMultiple.getContext().setAssemblerQualifierClass(qualifier);
         return this;
     }
 }

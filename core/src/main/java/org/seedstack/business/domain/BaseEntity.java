@@ -7,56 +7,42 @@
  */
 package org.seedstack.business.domain;
 
+import java.util.Objects;
+
 /**
  * This abstract class is the base class for all Entities in Seed Business Framework.
  *
  * It provides an {@code equals()} method based on the entity identity. This also enforce
  * the entity to valid, i.e. not null. Otherwise a SeedException will be thrown.
  *
- * @param <ID> The type of the entityId of the Entity.
+ * @param <ID> The identifier type.
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
     /**
      * Computes the hash code on the entity identity returned by {@link #getId()}. This method can be overridden
-     * but be sure to respect the equality semantics for entities.
-     * when doing so.
+     * but be sure to respect the equality semantics for entities when doing so.
      *
      * @return Hash code built from all non-transient fields.
      */
     @Override
     public int hashCode() {
-        return getIdentity().hashCode();
+        return Objects.hashCode(getId());
     }
 
     /**
      * Computes the equality on the entity identity returned by {@link #getId()}. This method can be overridden
-     * but be sure to respect the equality semantics for entities.
+     * but be sure to respect the equality semantics for entities when doing so.
      *
      * @param other other object
      * @return true if the other object is of the same class and has the same identity a this entity, false otherwise.
      */
     @Override
-    public boolean equals(final Object other) {
-        ID entityId = getIdentity();
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        return entityId.equals(this.getClass().cast(other).getId());
+    public boolean equals(Object other) {
+        return this == other || !(other == null || getClass() != other.getClass()) && Objects.equals(getId(), ((BaseEntity<?>) other).getId());
     }
 
     @Override
     public String toString() {
         return String.format("%s[%s]", getClass().getSimpleName(), getId());
-    }
-
-    private ID getIdentity() {
-        ID entityId = getId();
-        if (entityId == null) {
-            throw new IllegalStateException("Entity without identity: " + getClass().getName());
-        }
-        return entityId;
     }
 }

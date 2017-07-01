@@ -9,8 +9,12 @@ package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.Factory;
 
+import java.util.Date;
+
 
 public interface OrderFactory extends Factory<Order> {
 
     Order create(String id, String product);
+
+    Order create(String id, String product, Date orderDate);
 }

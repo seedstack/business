@@ -8,18 +8,22 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.FluentAssembler;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleSliceWithQualifier;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.pagination.Page;
+import org.seedstack.business.pagination.Slice;
 
 import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Implementation of {@link org.seedstack.business.assembler.FluentAssembler}.
+ * Implementation of {@link FluentAssembler}.
  * <p>
  * It uses a Guice provider to get the DSL entry point. Each time you call the {@code assemble()}
  * method a new DSL instance is provided.
@@ -53,6 +57,16 @@ public class FluentAssemblerImpl implements FluentAssembler {
     @Override
     public AssembleMultipleWithQualifier assembleTuple(List<? extends Tuple> aggregateRoots) {
         return new AssembleMultipleImpl(context, null, aggregateRoots);
+    }
+
+    @Override
+    public AssemblePageWithQualifier assemble(Page<? extends AggregateRoot<?>> page) {
+        return new AssemblePageImpl(context, page);
+    }
+
+    @Override
+    public AssembleSliceWithQualifier assemble(Slice<? extends AggregateRoot<?>> slice) {
+        return new AssembleSliceImpl(context, slice);
     }
 
     @Override
