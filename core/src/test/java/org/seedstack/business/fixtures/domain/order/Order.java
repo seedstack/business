@@ -14,46 +14,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class Order extends BaseAggregateRoot<OrderId> {
-	
+    private OrderId id;
+    private CustomerId customerId;
+    private String description;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-	private CustomerId customerId;
-	private String description;
-	
-	
-	private List<OrderItem> orderItems = new ArrayList<>();
+    public Order() {
+    }
 
+    Order(OrderId id) {
+        this.id = id;
+    }
 
-	private OrderId entityId;
-	
-	public Order() {		
-	}
-	
-	Order(OrderId entityId) {
-		this.entityId = entityId;
-	}
-	
-	@Override
-	public OrderId getId() {
-		
-		return this.entityId;
-	}
-	
-	public CustomerId getCustomerId() {
-		return customerId;
-	}
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
 
-	public void setCustomerId(CustomerId customerId) {
-		this.customerId = customerId;
-	}
+    public void setCustomerId(CustomerId customerId) {
+        this.customerId = customerId;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

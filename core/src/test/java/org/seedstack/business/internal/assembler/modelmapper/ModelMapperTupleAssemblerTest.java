@@ -60,7 +60,7 @@ public class ModelMapperTupleAssemblerTest {
     @Test
     public void testUpdateDtoFromAggregate() {
         Customer customer = new Customer(new Name("John", "Doe"));
-        Order order = new Order( new Address("main street", "bevillecity"));
+        Order order = new Order(new Address("main street", "bevillecity"));
         OrderDTO orderDTO = new OrderDTO("Jane", "Doe", "", "");
 
 
@@ -90,12 +90,6 @@ public class ModelMapperTupleAssemblerTest {
 
     static class Order extends BaseAggregateRoot<String> {
         String id;
-
-        @Override
-        public String getId() {
-            return id;
-        }
-
         Address billingAddress;
 
         public Order() {

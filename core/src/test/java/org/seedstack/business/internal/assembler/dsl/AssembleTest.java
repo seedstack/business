@@ -18,7 +18,6 @@ import org.seedstack.business.internal.Tuples;
 import java.util.List;
 
 
-
 public class AssembleTest {
 
     private OrderDto orderDto = new OrderDto();
@@ -76,20 +75,10 @@ public class AssembleTest {
     }
 
     static class Order extends BaseAggregateRoot<String> {
-        String entityId;
-
-        @Override
-        public String getId() {
-            return entityId;
-        }
+        private String id;
     }
 
     static class Customer extends BaseAggregateRoot<String> {
-        String entityId;
-
-        @Override
-        public String getId() {
-            return entityId;
-        }
+        private String id;
     }
 }

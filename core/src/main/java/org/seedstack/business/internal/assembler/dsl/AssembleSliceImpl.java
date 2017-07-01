@@ -11,7 +11,7 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AssembleSlice;
 import org.seedstack.business.assembler.dsl.AssembleSliceWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.pagination.SliceImpl;
+import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 
 import java.lang.annotation.Annotation;
@@ -41,7 +41,7 @@ public class AssembleSliceImpl implements AssembleSliceWithQualifier {
                 dtos.add((D) assembler.assembleDtoFromAggregate(aggregate));
             }
         }
-        return new SliceImpl<>(dtos);
+        return new SimpleSlice<>(dtos);
     }
 
     @Override

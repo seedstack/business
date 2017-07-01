@@ -13,66 +13,47 @@ import org.seedstack.business.fixtures.domain.customer.CustomerId;
 import java.util.Date;
 
 
-public class Discount extends BaseAggregateRoot<String>
-{
-	
-	Date creationDate;
-	Date activationDate;
+public class Discount extends BaseAggregateRoot<String> {
+    private String id;
+    private Date creationDate;
+    private Date activationDate;
+    private String description;
+    private CustomerId customerId;
 
-	private String description;
-	
-	private String entityId;
-	
-	CustomerId customerId;
-	
-	Discount() {	
-	}
-	
-	Discount(String entityId)
-	{
-		this.entityId = entityId;
-	}
-	
-	@Override
-	public String getId() {
-		return this.entityId;
-	}
-	 
-	void setEntityId(String entityId)
-	{
-		this.entityId = entityId;
-	}
+    Discount(String id) {
+        this.id = id;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public Date getActivationDate() {
-		return activationDate;
-	}
+    public Date getActivationDate() {
+        return activationDate;
+    }
 
-	public void setActivationDate(Date activationDate) {
-		this.activationDate = activationDate;
-	}
+    public void setActivationDate(Date activationDate) {
+        this.activationDate = activationDate;
+    }
 
-	public CustomerId getCustomerId() {
-		return customerId;
-	}
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
 
-	public void setCustomerId(CustomerId customerId) {
-		this.customerId = customerId;
-	}
+    public void setCustomerId(CustomerId customerId) {
+        this.customerId = customerId;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

@@ -23,9 +23,8 @@ import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.specification.Specification;
 import org.seedstack.business.finder.Finder;
-import org.seedstack.business.finder.RangeFinder;
+import org.seedstack.business.specification.Specification;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.Ignore;
 
@@ -33,9 +32,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Validates all the domain specifications.
- */
 public class BusinessSpecificationsTest {
     @Ignore
     private static class MyAggregateRoot1 extends BaseAggregateRoot<String> {
@@ -58,16 +54,14 @@ public class BusinessSpecificationsTest {
     public void testAggregateRootSpecification() {
         assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot1.class)).isTrue();
         assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot2.class)).isTrue();
-
         assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MySimplePojo.class)).isFalse();
-
-        assertThat(BusinessSpecifications.AGGREGATE_ROOT).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.AGGREGATE_ROOT)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.AGGREGATE_ROOT);
     }
 
     @Ignore
     private static class MyEntity1 extends BaseEntity<String> {
-
         @Override
         public String getId() {
             return "id";
@@ -83,10 +77,9 @@ public class BusinessSpecificationsTest {
     public void testEntitySpecification() {
         assertThat(BusinessSpecifications.ENTITY.isSatisfiedBy(MyEntity1.class)).isTrue();
         assertThat(BusinessSpecifications.ENTITY.isSatisfiedBy(MyEntity2.class)).isTrue();
-
         assertThat(BusinessSpecifications.ENTITY.isSatisfiedBy(MySimplePojo.class)).isFalse();
-
-        assertThat(BusinessSpecifications.ENTITY).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.ENTITY)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.ENTITY);
     }
 
@@ -136,30 +129,27 @@ public class BusinessSpecificationsTest {
     @Test
     public void testAssemblerSpecification() {
         assertThat(BusinessSpecifications.ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
-
         assertThat(BusinessSpecifications.ASSEMBLER.isSatisfiedBy(MySimplePojo.class)).isFalse();
-
-        assertThat(BusinessSpecifications.ASSEMBLER).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.ASSEMBLER)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.ASSEMBLER);
     }
 
     @Test
     public void testClassicAssemblerSpecification() {
         assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
-
         assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
-
-        assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.CLASSIC_ASSEMBLER);
     }
 
     @Test
     public void testDefaultAssemblerSpecification() {
         assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isTrue();
-
         assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isFalse();
-
-        assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.DEFAULT_ASSEMBLER);
     }
 
@@ -181,11 +171,10 @@ public class BusinessSpecificationsTest {
     public void testDomainFactorySpecification() {
         assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory1.class)).isTrue();
         assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory2.class)).isTrue();
-
         assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory3.class)).isFalse();
         assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory4.class)).isTrue();
-
-        assertThat(BusinessSpecifications.FACTORY).describedAs("specification should be comparable")
+        assertThat(BusinessSpecifications.FACTORY)
+                .describedAs("specification should be comparable")
                 .isEqualTo(BusinessSpecifications.FACTORY);
     }
 
@@ -207,7 +196,6 @@ public class BusinessSpecificationsTest {
     public void testDomainRepoSpecification() {
         assertThat(BusinessSpecifications.REPOSITORY.isSatisfiedBy(MyRepository1.class)).isTrue();
         assertThat(BusinessSpecifications.REPOSITORY.isSatisfiedBy(MyRepository2.class)).isTrue();
-
         assertThat(BusinessSpecifications.REPOSITORY.isSatisfiedBy(MyRepository3.class)).isFalse();
     }
 
@@ -242,7 +230,6 @@ public class BusinessSpecificationsTest {
     @Test
     public void testDomainRepoImplSpecification() {
         assertThat(BusinessSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepositoryImpl1.class)).isTrue();
-
         assertThat(BusinessSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepository1.class)).isFalse();
     }
 
@@ -270,7 +257,6 @@ public class BusinessSpecificationsTest {
     public void testDtoWithDefaultAssemblerSpecification() {
         assertThat(BusinessSpecifications.DTO_OF.isSatisfiedBy(MyPojo1.class)).isTrue();
         assertThat(BusinessSpecifications.DTO_OF.isSatisfiedBy(MyPojo2.class)).isTrue();
-
         assertThat(BusinessSpecifications.DTO_OF.isSatisfiedBy(MySimplePojo.class)).isFalse();
     }
 
@@ -279,21 +265,15 @@ public class BusinessSpecificationsTest {
     private interface MyFinder1 {
     }
 
-    @Ignore
-    private interface MyFinder2 extends RangeFinder {
-    }
-
     @Finder
     @Ignore
-    private static class MyFinder3 {
+    private static class MyFinder2 {
     }
 
     @Test
     public void testFinderServiceSpecification() {
         assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder1.class)).isTrue();
-        assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder2.class)).isTrue();
-
-        assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder3.class)).isFalse();
+        assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder2.class)).isFalse();
     }
 
     @DomainPolicy
@@ -303,14 +283,13 @@ public class BusinessSpecificationsTest {
 
     @DomainPolicy
     @Ignore
-    private static class MyPolicy3 {
+    private static class MyPolicy2 {
     }
 
     @Test
     public void testPolicyServiceSpecification() {
         assertThat(BusinessSpecifications.POLICY.isSatisfiedBy(MyPolicy1.class)).isTrue();
-
-        assertThat(BusinessSpecifications.POLICY.isSatisfiedBy(MyPolicy3.class)).isFalse();
+        assertThat(BusinessSpecifications.POLICY.isSatisfiedBy(MyPolicy2.class)).isFalse();
     }
 
     @DomainValueObject
@@ -327,7 +306,6 @@ public class BusinessSpecificationsTest {
     public void testValueObjectServiceSpecification() {
         assertThat(BusinessSpecifications.VALUE_OBJECT.isSatisfiedBy(MyValueObject1.class)).isTrue();
         assertThat(BusinessSpecifications.VALUE_OBJECT.isSatisfiedBy(MyValueObject2.class)).isTrue();
-
         assertThat(BusinessSpecifications.VALUE_OBJECT.isSatisfiedBy(MySimplePojo.class)).isFalse();
     }
 }

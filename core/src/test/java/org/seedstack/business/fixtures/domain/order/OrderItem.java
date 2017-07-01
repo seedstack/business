@@ -11,46 +11,28 @@ import org.seedstack.business.domain.BaseEntity;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 
 
-public class OrderItem extends BaseEntity<Long>
-{
+public class OrderItem extends BaseEntity<Long> {
+    private Long id;
+    private int quantity;
+    private ProductId productId;
 
-	private int quantity;
-	
-	private ProductId productId;
+    public OrderItem() {
+    }
 
-	private Long entityId;
+    public OrderItem(int quantity, ProductId productId) {
+        this.quantity = quantity;
+        this.productId = productId;
+    }
 
-	public OrderItem()
-	{
-	}
-	
+    public ProductId getProductId() {
+        return productId;
+    }
 
-	public OrderItem(int quantity , ProductId productId)
-	{
-		this.quantity = quantity;
-		this.productId = productId;
-	}
-	
-	void setEntityId (Long entityId)
-	{
-		this.entityId = entityId;
-	}
-	
-	@Override
-	public Long getId() {
-		return this.entityId;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public ProductId getProductId() {
-		return productId;
-	}	
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public void setProductId(ProductId productId) {
-		this.productId = productId;
-	}
-
+    public void setProductId(ProductId productId) {
+        this.productId = productId;
+    }
 }

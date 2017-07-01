@@ -8,17 +8,17 @@
 /**
  *
  */
-package org.seedstack.business.fixtures.domain.multi;
+package org.seedstack.business.fixtures.factory;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-/**
- * Dummy aggregate for test
- */
-public class Multi extends BaseAggregateRoot<String> {
+public class MyFactoryAggregate extends BaseAggregateRoot<String> {
     private String id;
 
-    public Multi(String id) {
+    public MyFactoryAggregate() {
+    }
+
+    public MyFactoryAggregate(String id) {
         this.id = id;
     }
 }

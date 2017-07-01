@@ -11,7 +11,7 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AssemblePage;
 import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.pagination.PageImpl;
+import org.seedstack.business.pagination.SimplePage;
 import org.seedstack.business.pagination.Page;
 
 import java.lang.annotation.Annotation;
@@ -37,7 +37,7 @@ public class AssemblePageImpl implements AssemblePageWithQualifier {
                 dtos.add((D) assembler.assembleDtoFromAggregate(aggregate));
             }
         }
-        return new PageImpl<>(dtos, page.getIndex(), page.getCapacity(), page.getTotalSize());
+        return new SimplePage<>(dtos, page.getIndex(), page.getCapacity(), page.getTotalSize());
     }
 
     @SuppressWarnings("unchecked")

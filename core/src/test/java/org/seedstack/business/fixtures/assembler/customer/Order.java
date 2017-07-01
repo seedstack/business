@@ -13,36 +13,22 @@ import java.util.Date;
 
 
 public class Order extends BaseAggregateRoot<String> {
-
-    private String orderId;
-
+    private String id;
     private String product;
-
     private int price;
-
     private Date orderDate;
-
     private String otherDetails;
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    @Override
-    public String getId() {
-        return orderId;
-    }
 
     public Order() {
     }
 
     public Order(String id, String product) {
-        this.orderId = id;
+        this.id = id;
         this.product = product;
     }
 
     public Order(String id, String product, Date orderDate) {
-        this.orderId = id;
+        this.id = id;
         this.product = product;
         this.orderDate = orderDate;
     }

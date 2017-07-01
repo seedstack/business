@@ -7,44 +7,30 @@
  */
 package org.seedstack.business.fixtures.domain.product;
 
-
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-
 public class Product extends BaseAggregateRoot<ProductId> {
-	
+    private ProductId id;
+    private String name;
+    private String description;
 
-	private String name;
-	private String description;
-	private ProductId entityId;
-	
-	
-	Product() {
-	}
-	
-	Product(ProductId productId)
-	{
-		this.entityId = productId;
-	}
+    Product(ProductId id) {
+        this.id = id;
+    }
 
-	@Override
-	public ProductId getId() {
-		return this.entityId;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

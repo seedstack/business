@@ -11,18 +11,11 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 
 public class Customer extends BaseAggregateRoot<String> {
-
-    String id;
-
-    String name;
+    private String id;
+    private String name;
 
     public Customer(String id) {
         this.id = id;
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 
     public String getName() {

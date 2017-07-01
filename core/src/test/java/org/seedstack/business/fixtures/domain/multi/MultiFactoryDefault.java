@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.seedstack.business.fixtures.domain.multi;
 
@@ -15,14 +15,9 @@ import org.seedstack.business.domain.BaseFactory;
 /**
  * Dummy factory for test
  */
-public class MultiFactoryDefault extends BaseFactory<Multi> implements MultiFactory  {
-
-	@Override
-	public Multi create()
-	{
-		Multi multi = new Multi();
-		multi.setId("test");
-		return multi;
-	}
-
+public class MultiFactoryDefault extends BaseFactory<Multi> implements MultiFactory {
+    @Override
+    public Multi create() {
+        return new Multi("test");
+    }
 }

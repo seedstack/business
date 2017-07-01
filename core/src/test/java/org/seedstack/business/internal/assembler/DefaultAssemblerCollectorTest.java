@@ -55,17 +55,9 @@ public class DefaultAssemblerCollectorTest {
     }
 
     private static class Agg1 extends BaseAggregateRoot<Integer> {
-        @Override
-        public Integer getId() {
-            return null;
-        }
     }
 
     private static class Agg2 extends BaseAggregateRoot<Integer> {
-        @Override
-        public Integer getId() {
-            return null;
-        }
     }
 
     @DtoOf(Agg1.class)

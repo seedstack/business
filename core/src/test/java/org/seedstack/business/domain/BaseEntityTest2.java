@@ -16,20 +16,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseEntityTest2 {
     static class BaseChild extends BaseEntity<Long> {
+        private Long id;
         private String name;
-        private Long entityId;
 
-        public BaseChild() {
-            entityId = null;
+        BaseChild() {
+            id = null;
         }
 
-        public BaseChild(Long entityId) {
-            this.entityId = entityId;
-        }
-
-        @Override
-        public Long getId() {
-            return entityId;
+        BaseChild(Long id) {
+            this.id = id;
         }
     }
 
@@ -37,12 +32,7 @@ public class BaseEntityTest2 {
     public void check_hashcode() {
         Long entityId = 12L;
         BaseChild child = new BaseChild(entityId);
-
-        Set<BaseChild> children = Sets.newHashSet();
-        children.add(child);
-
         assertThat(child.hashCode()).isEqualTo(entityId.hashCode());
-
     }
 
     @Test
@@ -55,10 +45,8 @@ public class BaseEntityTest2 {
         children.add(child1);
         children.add(child2);
 
-        assertThat(children).hasSize(1);//
-
+        assertThat(children).hasSize(1);
         assertThat(child1).isEqualTo(child2);
-
     }
 
     @Test

@@ -11,7 +11,9 @@ import com.google.common.base.Preconditions;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.Page;
+import org.seedstack.business.pagination.SimplePage;
 import org.seedstack.business.pagination.Slice;
+import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.specification.GreaterThanSpecification;
 import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
@@ -78,11 +80,11 @@ class PaginatorContext<A extends AggregateRoot<ID>, ID> {
     Page<A> buildPage(Specification<A> specification) {
         checkState(mode == PaginationMode.PAGE, "A page can only be built in PAGE pagination mode");
         Stream<A> stream = buildStream(specification);
-        return new PageImpl<>(stream.collect(Collectors.toList()), pageIndex, limit, repository.count(specification));
+        return new SimplePage<>(stream.collect(Collectors.toList()), pageIndex, limit, repository.count(specification));
     }
 
     Slice<A> buildSlice(Specification<A> specification) {
-        return new SliceImpl<>(buildStream(specification).collect(Collectors.toList()));
+        return new SimpleSlice<>(buildStream(specification).collect(Collectors.toList()));
     }
 
     private Stream<A> buildStream(Specification<A> specification) {

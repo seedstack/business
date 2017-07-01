@@ -12,66 +12,55 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BaseEntityTest {
+    private Entity1 one;
+    private Entity1 two;
+    private Entity1 three;
 
-	private Entity1 one;
-	private Entity1 two;
-	private Entity1 three;
+    static class Entity1 extends BaseEntity<Long> {
+        private Long id;
+        private String name;
 
-	static class Entity1 extends BaseEntity<Long>
-	{
-		private String name;
-		
-		private Long entityId;
-		
-		public Entity1() {			
-		}
+        public Entity1() {
+        }
 
-		public String getName() {
-			return name;
-		}
-		
-		@Override
-		public Long getId() {
-			return entityId;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setEntityId(long l) {
-			this.entityId = l;
-		}
-	}
-	
-	
-	@Before
-	public void init()
-	{
-		one = new Entity1();
-		one.setEntityId(1l);
-		one.setName("one");
-		
-		two = new Entity1();
-		two.setEntityId(1l);
-		two.setName("two");
-		
-		three = new Entity1();
-		three.setEntityId(2l);
-		three.setName("one");
-		
-	}
-	
-	@Test
-	public void testHashCode() {
-		Assertions.assertThat(one.hashCode()).isEqualTo(two.hashCode());
-		Assertions.assertThat(one.hashCode()).isNotEqualTo(three.hashCode());
-	}
+        public void setId(long l) {
+            this.id = l;
+        }
+    }
 
-	@Test
-	public void testEqualsObject() {
-		Assertions.assertThat(one).isEqualTo(two);
-		Assertions.assertThat(one).isNotEqualTo(three);
-	}
 
+    @Before
+    public void init() {
+        one = new Entity1();
+        one.setId(1l);
+        one.setName("one");
+
+        two = new Entity1();
+        two.setId(1l);
+        two.setName("two");
+
+        three = new Entity1();
+        three.setId(2l);
+        three.setName("one");
+    }
+
+    @Test
+    public void testHashCode() {
+        Assertions.assertThat(one.hashCode()).isEqualTo(two.hashCode());
+        Assertions.assertThat(one.hashCode()).isNotEqualTo(three.hashCode());
+    }
+
+    @Test
+    public void testEqualsObject() {
+        Assertions.assertThat(one).isEqualTo(two);
+        Assertions.assertThat(one).isNotEqualTo(three);
+    }
 }

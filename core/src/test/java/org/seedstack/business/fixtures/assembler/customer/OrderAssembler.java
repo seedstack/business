@@ -17,7 +17,7 @@ public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
 
     @Override
     protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
-        targetDto.setOrderId(sourceAggregate.getOrderId());
+        targetDto.setOrderId(sourceAggregate.getId());
         targetDto.setPrice(sourceAggregate.getPrice());
         targetDto.setProduct(sourceAggregate.getProduct());
         targetDto.setOrderDate(sourceAggregate.getOrderDate());

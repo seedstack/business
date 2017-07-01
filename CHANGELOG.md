@@ -1,10 +1,14 @@
 # Version 4.0.0 (2016-07-??)
 
+* [new] A default implementation of `getId()` has been added in `BaseEntity` which searches for a field named "id" or annotated with `@Identity`. 
 * [new] DDD specifications have been added.
 * [new] A specification builder allows to create DDD specifications with a fluent DSL. 
 * [new] Add SPI and base infrastructure for specification translation.
 * [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
 * [new] Business framework now takes advantage of Java 8 features (notably streams and optional).  
+* [new] A pagination DSL has been added.
+* [brk] The pagination API has been refactored.
+* [brk] The `getEntityId()` method of `Entity` has been renamed to `getId()`.
 * [brk] The `Repository` interface has been refactored as a collection-like interface.
 * [brk] The `Factory` and `GenericFactory` interfaces are merged into a unique `Factory` interface.
 * [brk] Intermediate interfaces of `FluentAssembler` have been renamed.

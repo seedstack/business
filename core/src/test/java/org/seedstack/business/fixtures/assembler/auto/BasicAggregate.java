@@ -15,18 +15,12 @@ import java.util.UUID;
 
 
 public class BasicAggregate extends BaseAggregateRoot<UUID> {
-
     @Identity(UUIDHandler.class)
     private UUID id;
 
     private String field1;
 
     private String field2;
-
-    @Override
-    public UUID getId() {
-        return id;
-    }
 
     public String getField1() {
         return field1;

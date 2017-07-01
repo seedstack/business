@@ -143,12 +143,6 @@ public class ModelMapperAssemblerTest {
         List<String> features;
         Map<String, String> specs;
         String ignoredProp;
-
-        @Override
-        public String getId() {
-            return id;
-        }
-
         Address billingAddress;
 
         public Order() {
