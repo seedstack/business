@@ -54,7 +54,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @param options       result options.
      * @return a stream of aggregates.
      */
-    Stream<A> get(Specification<A> specification, Options... options);
+    Stream<A> get(Specification<A> specification, Option... options);
 
     /**
      * Gets an aggregate identified by its identifier.
@@ -191,7 +191,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      */
     Class<ID> getIdentifierClass();
 
-    interface Options {
+    interface Option {
 
     }
 }

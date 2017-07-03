@@ -34,7 +34,7 @@ public class InMemoryRepository<Aggregate extends AggregateRoot<Key>, Key> exten
     }
 
     @Override
-    public Stream<Aggregate> get(Specification<Aggregate> specification, Repository.Options... options) {
+    public Stream<Aggregate> get(Specification<Aggregate> specification, Repository.Option... options) {
         // TODO: implement options
         return inMemorySortedMap.values().stream().filter(specification.asPredicate());
     }

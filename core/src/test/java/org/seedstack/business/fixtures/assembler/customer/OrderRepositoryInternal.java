@@ -8,6 +8,8 @@
 package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.domain.LimitOption;
+import org.seedstack.business.domain.OffsetOption;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.specification.Specification;
 
@@ -26,8 +28,18 @@ public class OrderRepositoryInternal extends BaseRepository<Order, String> imple
     }
 
     @Override
-    public Stream<Order> get(Specification<Order> specification, Repository.Options... options) {
-        return orderMap.values().stream().filter(specification.asPredicate());
+    public Stream<Order> get(Specification<Order> specification, Repository.Option... options) {
+        Stream<Order> orderStream = orderMap.values().stream().filter(specification.asPredicate());
+        if (options != null) {
+            for (Option option : options) {
+                if (option instanceof OffsetOption) {
+                    orderStream = orderStream.skip(((OffsetOption) option).getOffset());
+                } else if (option instanceof LimitOption) {
+                    orderStream = orderStream.limit(((LimitOption) option).getLimit());
+                }
+            }
+        }
+        return orderStream;
     }
 
     @Override

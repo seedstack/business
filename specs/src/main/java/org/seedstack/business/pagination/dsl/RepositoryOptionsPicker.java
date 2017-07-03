@@ -12,5 +12,5 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 
 public interface RepositoryOptionsPicker<A extends AggregateRoot<ID>, ID> extends PaginationTypePicker<A, ID> {
-    PaginationTypePicker<A, ID> withOptions(Repository.Options... options);
+    PaginationTypePicker<A, ID> withOptions(Repository.Option... options);
 }

@@ -32,7 +32,7 @@ public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepos
     }
 
     @Override
-    public Stream<A> get(Specification<A> specification, Repository.Options... options) {
+    public Stream<A> get(Specification<A> specification, Repository.Option... options) {
         return Stream.empty();
     }
 

@@ -12,14 +12,17 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 class RepositoryOptionsTypePickerImpl<A extends AggregateRoot<ID>, ID> extends PaginationTypePickerImpl<A, ID> implements RepositoryOptionsPicker<A, ID> {
     RepositoryOptionsTypePickerImpl(Repository<A, ID> repository) {
         super(repository);
     }
 
     @Override
-    public PaginationTypePicker<A, ID> withOptions(Repository.Options... options) {
-        this.setOptions(options);
+    public PaginationTypePicker<A, ID> withOptions(Repository.Option... options) {
+        checkNotNull(options, "Options cannot be null");
+        this.options = options;
         return this;
     }
 }

@@ -26,7 +26,7 @@ public class CustomerRepositoryInternal extends BaseRepository<Customer, String>
     }
 
     @Override
-    public Stream<Customer> get(Specification<Customer> specification, Repository.Options... options) {
+    public Stream<Customer> get(Specification<Customer> specification, Repository.Option... options) {
         return orderMap.values().stream().filter(specification.asPredicate());
     }
 

@@ -259,7 +259,7 @@ public class BusinessSpecificationsTest {
         }
 
         @Override
-        public Stream<A> get(Specification<A> specification, Repository.Options... options) {
+        public Stream<A> get(Specification<A> specification, Repository.Option... options) {
             return null;
         }
 

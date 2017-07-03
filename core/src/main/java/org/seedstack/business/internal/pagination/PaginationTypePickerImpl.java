@@ -15,16 +15,15 @@ import org.seedstack.business.pagination.dsl.LimitPicker;
 import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.SizePicker;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 class PaginationTypePickerImpl<A extends AggregateRoot<ID>, ID> implements PaginationTypePicker<A, ID> {
-    private Repository<A, ID> repository;
-    private Repository.Options[] options;
+    private final Repository<A, ID> repository;
+    protected Repository.Option[] options = new Repository.Option[0];
 
     PaginationTypePickerImpl(Repository<A, ID> repository) {
+        checkNotNull(repository, "Repository cannot be null");
         this.repository = repository;
-    }
-
-    public void setOptions(Repository.Options... options) {
-        this.options = options;
     }
 
     @Override

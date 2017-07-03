@@ -7,8 +7,10 @@
  */
 package org.seedstack.business.internal.pagination;
 
-import com.google.common.base.Preconditions;
+import com.google.common.collect.ObjectArrays;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.LimitOption;
+import org.seedstack.business.domain.OffsetOption;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.SimplePage;
@@ -22,11 +24,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 class PaginatorContext<A extends AggregateRoot<ID>, ID> {
     private final Repository<A, ID> repository;
-    private final Repository.Options[] options;
+    private final Repository.Option[] options;
     private PaginationMode mode = PaginationMode.NONE;
     private long limit = 10;
 
@@ -40,9 +43,17 @@ class PaginatorContext<A extends AggregateRoot<ID>, ID> {
     private String attribute;
     private Specification<A> attributeSpecification;
 
-    PaginatorContext(Repository<A, ID> repository, Repository.Options... options) {
-        Preconditions.checkNotNull(repository, "Repository cannot be null");
+    PaginatorContext(Repository<A, ID> repository, Repository.Option... options) {
+        checkNotNull(repository, "Repository cannot be null");
+        checkNotNull(options, "Options cannot be null");
         this.repository = repository;
+        for (Repository.Option option : options) {
+            if (option instanceof OffsetOption) {
+                throw new IllegalArgumentException("Cannot specify an offset when using pagination");
+            } else if (option instanceof LimitOption) {
+                throw new IllegalArgumentException("Cannot specify a limit when using pagination");
+            }
+        }
         this.options = options;
     }
 
@@ -90,15 +101,22 @@ class PaginatorContext<A extends AggregateRoot<ID>, ID> {
     private Stream<A> buildStream(Specification<A> specification) {
         Stream<A> streamRepo;
         if (mode.equals(PaginationMode.ATTRIBUTE)) {
-            streamRepo = repository.get(specification.and(attributeSpecification), options);
+            streamRepo = repository.get(specification.and(attributeSpecification), applyLimit(options, limit));
         } else if (mode.equals(PaginationMode.OFFSET)) {
-            streamRepo = repository.get(specification, options).skip(offset); // TODO change from skip() to repository option
+            streamRepo = repository.get(specification, applyLimit(applyOffset(options, offset), limit));
         } else if (mode.equals(PaginationMode.PAGE)) {
-            streamRepo = repository.get(specification, options).skip((pageIndex - 1) * limit); // TODO change from skip() to repository option
+            streamRepo = repository.get(specification, applyLimit(applyOffset(options, (pageIndex - 1) * limit), limit));
         } else {
             throw new IllegalStateException("Unknown pagination mode " + mode);
         }
-        streamRepo = streamRepo.limit(limit);
         return streamRepo;
+    }
+
+    private Repository.Option[] applyOffset(Repository.Option[] options, long offset) {
+        return ObjectArrays.concat(options, new OffsetOption(offset));
+    }
+
+    private Repository.Option[] applyLimit(Repository.Option[] options, long limit) {
+        return ObjectArrays.concat(options, new LimitOption(limit));
     }
 }

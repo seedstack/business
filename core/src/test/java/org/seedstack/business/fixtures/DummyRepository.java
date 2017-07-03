@@ -27,7 +27,7 @@ public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseReposi
     }
 
     @Override
-    public Stream<A> get(Specification<A> specification, Repository.Options... options) {
+    public Stream<A> get(Specification<A> specification, Repository.Option... options) {
         return Stream.empty();
     }
 
