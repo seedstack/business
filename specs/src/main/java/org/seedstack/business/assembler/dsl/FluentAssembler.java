@@ -76,10 +76,10 @@ public interface FluentAssembler {
     AssemblePageWithQualifier assemble(Page<? extends AggregateRoot<?>> page);
 
     /**
-     * Assembles a list of aggregates inside a Chunk.
+     * Assembles a stream of aggregates.
      *
      * @param stream the Stream to assemble
-     * @return a dtosAssemblerProvider
+     * @return the next type for FluentAssembler DSL
      */
     AssembleStreamWithQualifier assemble(Stream<?> stream);
 

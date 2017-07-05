@@ -31,7 +31,10 @@ public class SomeDomainEvent implements DomainEvent {
 
         SomeDomainEvent someEvent = (SomeDomainEvent) o;
 
-        return businessInfo != null ? businessInfo.equals(someEvent.businessInfo) : someEvent.businessInfo == null;
+        if (businessInfo != null ? !businessInfo.equals(someEvent.businessInfo) : someEvent.businessInfo != null)
+            return false;
+
+        return true;
     }
 
     @Override

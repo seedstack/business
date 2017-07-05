@@ -8,7 +8,14 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.dsl.*;
+import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleSliceWithQualifier;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
+import org.seedstack.business.assembler.dsl.AssembleStreamWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.Slice;
