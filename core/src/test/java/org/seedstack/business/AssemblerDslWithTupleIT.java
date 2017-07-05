@@ -15,11 +15,7 @@ import org.seedstack.business.assembler.ModelMapper;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.fixtures.assembler.customer.Customer;
-import org.seedstack.business.fixtures.assembler.customer.CustomerRepository;
-import org.seedstack.business.fixtures.assembler.customer.Order;
-import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
-import org.seedstack.business.fixtures.assembler.customer.Recipe;
+import org.seedstack.business.fixtures.assembler.customer.*;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

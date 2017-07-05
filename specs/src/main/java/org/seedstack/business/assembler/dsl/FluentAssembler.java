@@ -13,6 +13,7 @@ import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.Slice;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * FluentAssembler provides the entry point for the assembler DSL.
@@ -73,6 +74,14 @@ public interface FluentAssembler {
      * @return the next type for FluentAssembler DSL.
      */
     AssemblePageWithQualifier assemble(Page<? extends AggregateRoot<?>> page);
+
+    /**
+     * Assembles a list of aggregates inside a Chunk.
+     *
+     * @param stream the Stream to assemble
+     * @return a dtosAssemblerProvider
+     */
+    AssembleStreamWithQualifier assemble(Stream<?> stream);
 
     /**
      * Merges a DTO.

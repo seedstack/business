@@ -8,19 +8,14 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
-import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
-import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
-import org.seedstack.business.assembler.dsl.AssembleSliceWithQualifier;
-import org.seedstack.business.assembler.dsl.FluentAssembler;
-import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
-import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.*;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.Slice;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Implementation of {@link FluentAssembler}.
@@ -67,6 +62,11 @@ public class FluentAssemblerImpl implements FluentAssembler {
     @Override
     public AssembleSliceWithQualifier assemble(Slice<? extends AggregateRoot<?>> slice) {
         return new AssembleSliceImpl(context, slice);
+    }
+
+    @Override
+    public AssembleStreamWithQualifier assemble(Stream stream) {
+        return new AssembleStreamImpl(context, stream);
     }
 
     @Override

@@ -60,9 +60,7 @@ public class PersonId {
         if (birthDate != null ? !birthDate.equals(personId.birthDate) : personId.birthDate != null) return false;
         if (firstName != null ? !firstName.equals(personId.firstName) : personId.firstName != null) return false;
         if (lastName != null ? !lastName.equals(personId.lastName) : personId.lastName != null) return false;
-        if (name != null ? !name.equals(personId.name) : personId.name != null) return false;
-
-        return true;
+        return name != null ? name.equals(personId.name) : personId.name == null;
     }
 
     @Override
