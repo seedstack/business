@@ -14,7 +14,6 @@ import java.util.Map;
 
 
 public class ParameterHolderInternal implements ParameterHolder {
-
     private final Map<Integer, Map<Integer, Object>> parametersByAggregate = new HashMap<>();
 
     @Override
@@ -48,8 +47,9 @@ public class ParameterHolderInternal implements ParameterHolder {
 
     @Override
     public Object[] parametersOfAggregateRoot(int aggregateIndex) {
-        if (parametersByAggregate.get(aggregateIndex) != null) {
-            return parametersByAggregate.get(aggregateIndex).values().toArray();
+        Map<Integer, Object> map = parametersByAggregate.get(aggregateIndex);
+        if (map != null) {
+            return map.values().toArray();
         } else {
             return new Object[0];
         }
@@ -57,16 +57,18 @@ public class ParameterHolderInternal implements ParameterHolder {
 
     @Override
     public Object uniqueElement() {
-        if (parametersByAggregate.get(-1) != null) {
-            return parametersByAggregate.get(-1).get(-1);
+        Map<Integer, Object> map = parametersByAggregate.get(-1);
+        if (map != null) {
+            return map.get(-1);
         }
         return null;
     }
 
     @Override
     public Object uniqueElementForAggregateRoot(int aggregateIndex) {
-        if (parametersByAggregate.get(aggregateIndex) != null) {
-            return parametersByAggregate.get(aggregateIndex).get(-1);
+        Map<Integer, Object> map = parametersByAggregate.get(aggregateIndex);
+        if (map != null) {
+            return map.get(-1);
         }
         return null;
     }

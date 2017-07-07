@@ -29,7 +29,6 @@ import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
 
 public class AssemblerPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
-    private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
     private final Map<Key<Assembler>, Class<? extends Assembler>> assemblerBindings = new HashMap<>();
     private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
@@ -43,7 +42,7 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
         return classpathScanRequestBuilder()
-                .specification(BusinessSpecifications.CLASSIC_ASSEMBLER)
+                .specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
                 .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
                 .specification(BusinessSpecifications.DTO_OF)
                 .build();
@@ -52,16 +51,13 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        streamClasses(initContext, BusinessSpecifications.CLASSIC_ASSEMBLER, Assembler.class).forEach(assemblerClasses::add);
-        LOGGER.debug("Assembler classes => {}", assemblerClasses);
-
         streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
         LOGGER.debug("DtoOf classes => {}", dtoOfClasses);
 
         streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class).forEach(defaultAssemblerClasses::add);
         LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
-        Collection subTypes = initContext.scannedTypesBySpecification().get(BusinessSpecifications.CLASSIC_ASSEMBLER);
+        Collection subTypes = initContext.scannedTypesBySpecification().get(BusinessSpecifications.EXPLICIT_ASSEMBLER);
         assemblerBindings.putAll(BindingUtils.resolveBindingDefinitions(Assembler.class, (Collection<Class<? extends Assembler>>) subTypes));
 
         bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
@@ -71,6 +67,6 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return new AssemblerModule(assemblerClasses, assemblerBindings, bindingStrategies);
+        return new AssemblerModule(assemblerBindings, bindingStrategies);
     }
 }

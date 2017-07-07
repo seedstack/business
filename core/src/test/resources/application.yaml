@@ -36,3 +36,11 @@ business:
 security:
   users:
     Anakin: imsodark
+
+jmh:
+  mode: Throughput
+  timeUnit: SECONDS
+  warmup:
+    iterations: 3
+  measurement:
+    iterations: 5

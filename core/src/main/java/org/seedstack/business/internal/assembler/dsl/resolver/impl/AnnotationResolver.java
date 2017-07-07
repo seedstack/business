@@ -26,9 +26,8 @@ import java.lang.reflect.Method;
  * @see org.seedstack.business.assembler.MatchingFactoryParameter
  */
 public class AnnotationResolver implements DtoInfoResolver {
-
-    public static final String MATCHING_FACT_PARAM = MatchingFactoryParameter.class.getSimpleName();
-    public static final String MATCHING_ENTITY_ID = MatchingEntityId.class.getSimpleName();
+    private static final String MATCHING_FACT_PARAM = MatchingFactoryParameter.class.getSimpleName();
+    private static final String MATCHING_ENTITY_ID = MatchingEntityId.class.getSimpleName();
 
     @Override
     public ParameterHolder resolveId(Object dto) {

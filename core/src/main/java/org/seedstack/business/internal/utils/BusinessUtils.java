@@ -48,9 +48,16 @@ public final class BusinessUtils {
         return TypeResolver.resolveRawArguments(TypeResolver.resolveGenericType(superType, subTypeWithoutProxy), subTypeWithoutProxy);
     }
 
-    public static Class<?> getAggregateIdClass(Class<? extends AggregateRoot<?>> aggregateRootClass) {
+    @SuppressWarnings("unchecked")
+    public static <A extends AggregateRoot<ID>, ID> Class<ID> getAggregateIdClass(Class<A> aggregateRootClass) {
         checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
-        return (Class<?>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
+        return (Class<ID>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
+    }
+
+    @SuppressWarnings("unchecked")
+    @SafeVarargs
+    public static <A extends AggregateRoot<?>> Class<A>[] createAggregateClasses(Class<? extends AggregateRoot<?>>... aggregateRootClasses) {
+        return (Class<A>[]) aggregateRootClasses;
     }
 
     @SuppressWarnings("unchecked")

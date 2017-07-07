@@ -37,6 +37,12 @@ class DomainRegistryImpl implements DomainRegistry {
     private Injector injector;
 
     @Override
+    public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf) {
+        checkType(typeOf.getRawType(), BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
+        return getInstance(getKey(typeOf.getType()));
+    }
+
+    @Override
     public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf,
                                                                                        Class<? extends Annotation> qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
@@ -48,6 +54,11 @@ class DomainRegistryImpl implements DomainRegistry {
                                                                                        String qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
         return getInstance(getKey(typeOf.getType(), qualifier));
+    }
+
+    @Override
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key) {
+        return getInstance(getKey(getType(Repository.class, aggregateRoot, key)));
     }
 
     @Override

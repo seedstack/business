@@ -7,10 +7,12 @@
  */
 package org.seedstack.business.domain;
 
+import org.seedstack.shed.reflect.Classes;
 import org.seedstack.shed.reflect.ReflectUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This abstract class is the base class for all Entities in Seed Business Framework.
@@ -22,20 +24,25 @@ import java.util.Objects;
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
     /**
-     * This method tries to find a field named "id" starting from the current class, going up in the hierarchy.
-     * If the entity identity field is not named "id", this method must be overridden to return the entity identity value.
+     * Starting from the current class and going up in the hierarchy, this method tries to find:
+     * <ul>
+     * <li>A field annotated with {@link Identity},</li>
+     * <li>Then if not found, a field named "id".</li>
+     * </ul>
+     * If the entity the identity field does not satisfy any of the conditions above, this method must be overridden to return
+     * the entity identity value.
      *
      * @return the value of the identity field if found, null otherwise.
      */
     @Override
     @SuppressWarnings("unchecked")
     public ID getId() {
-        Field identityField = findIdentityField();
-        if (identityField != null) {
-            return (ID) ReflectUtils.getValue(identityField, this);
-        } else {
-            return null;
-        }
+        return findIdentityByAnnotation()
+                .map(Optional::of)
+                .orElseGet(this::findIdentityByName)
+                .map(ReflectUtils::makeAccessible)
+                .map(field -> (ID) ReflectUtils.getValue(field, this))
+                .orElse(null);
     }
 
     /**
@@ -66,19 +73,19 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
         return String.format("%s[%s]", getClass().getSimpleName(), getId());
     }
 
-    private Field findIdentityField() {
-        Class<?> currentClass = getClass();
-        Field identityField;
-        do {
-            try {
-                identityField = getClass().getDeclaredField("id");
-                if (identityField != null) {
-                    return ReflectUtils.makeAccessible(identityField);
-                }
-            } catch (NoSuchFieldException e) {
-                // ignore
-            }
-        } while (BaseEntity.class.isAssignableFrom(currentClass = currentClass.getSuperclass()));
-        return null;
+    private Optional<Field> findIdentityByAnnotation() {
+        return Classes.from(getClass())
+                .traversingSuperclasses()
+                .fields()
+                .filter(field -> field.isAnnotationPresent(Identity.class))
+                .findFirst();
+    }
+
+    private Optional<Field> findIdentityByName() {
+        return Classes.from(getClass())
+                .traversingSuperclasses()
+                .fields()
+                .filter(field -> field.getName().equals("id"))
+                .findFirst();
     }
 }

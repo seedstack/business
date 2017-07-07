@@ -7,6 +7,11 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import java.lang.annotation.Annotation;
 
-public interface AssembleMultipleWithQualifier extends AssembleMultiple, QualifierProvider<AssembleMultiple> {
+
+public interface AssembleMultipleWithQualifier extends AssembleMultiple {
+    AssembleMultiple with(Annotation qualifier);
+
+    AssembleMultiple with(Class<? extends Annotation> qualifier);
 }

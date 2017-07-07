@@ -26,8 +26,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Static utility methods to easily create tuples.
@@ -169,24 +167,18 @@ public final class Tuples {
     }
 
     /**
-     * Returns a list containing the elements of the tuple.
-     *
-     * @param tuple the tuple to convert.
-     * @param <T>   the type of the list item.
-     * @return the list.
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> List<T> toList(Tuple tuple) {
-        return (List<T>) tuple.toList();
-    }
-
-    /**
      * Returns a list containing the classes of the elements of the tuple.
      *
      * @param tuple the tuple to convert.
      * @return the list of classes.
      */
-    public static List<Class<?>> toListOfClasses(Tuple tuple) {
-        return Stream.of(tuple).map(Tuple::getClass).collect(Collectors.toList());
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T>[] itemClasses(Tuple tuple) {
+        Class<?> itemClasses[] = new Class[tuple.getSize()];
+        int index = 0;
+        for (Object o : tuple) {
+            itemClasses[index++] = o.getClass();
+        }
+        return (Class<T>[]) itemClasses;
     }
 }

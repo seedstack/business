@@ -7,6 +7,10 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import java.lang.annotation.Annotation;
 
-public interface AssemblePageWithQualifier extends AssemblePage, QualifierProvider<AssemblePage> {
+public interface AssemblePageWithQualifier extends AssemblePage {
+    AssemblePage with(Annotation qualifier);
+
+    AssemblePage with(Class<? extends Annotation> qualifier);
 }

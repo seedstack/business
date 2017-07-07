@@ -7,17 +7,68 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import org.seedstack.business.pagination.Slice;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 
 public interface AssembleMultiple {
-
     /**
-     * Returns a list of dtos.
+     * Assembles to a {@link Stream} of DTO.
      *
-     * @param dtoClass the dto class to assemble
-     * @param <D>      the dto type
+     * @param dtoClass the DTO class to assemble
+     * @param <D>      the type of the DTO.
      * @return the list of dtos
      */
-    <D> List<D> to(Class<D> dtoClass);
+    <D> Stream<D> toStreamOf(Class<D> dtoClass);
+
+    /**
+     * Assembles to the supplied {@link Collection}.
+     *
+     * @param dtoClass the DTO class to assemble
+     * @param <D>      the type of the DTO.
+     * @param <C>      the type of the collection.
+     * @return the list of dtos
+     */
+    <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass, Supplier<C> collectionSupplier);
+
+    /**
+     * Assembles to a {@link List} of DTO.
+     *
+     * @param dtoClass the DTO class to assemble.
+     * @param <D>      the type of the DTO.
+     * @return the list of DTO.
+     */
+    <D> List<D> toListOf(Class<D> dtoClass);
+
+    /**
+     * Assembles to a {@link Set} of DTO.
+     *
+     * @param dtoClass the DTO class to assemble.
+     * @param <D>      the type of the DTO.
+     * @return the set of DTO.
+     */
+    <D> Set<D> toSetOf(Class<D> dtoClass);
+
+    /**
+     * Assembles to a {@link Slice} of DTO.
+     *
+     * @param dtoClass the DTO class to assemble
+     * @param <D>      the type of the DTO.
+     * @return the list of dtos
+     */
+    <D> Slice<D> toSliceOf(Class<D> dtoClass);
+
+    /**
+     * Assembles to an array of DTO.
+     *
+     * @param dtoClass the DTO class to assemble.
+     * @param <D>      the type of the DTO.
+     * @return the array of DTO.
+     */
+    <D> D[] toArrayOf(Class<D> dtoClass);
 }

@@ -7,6 +7,10 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import java.lang.annotation.Annotation;
 
-public interface MergeSingleWithQualifier<D> extends MergeSingle<D>, QualifierProvider<MergeSingle<D>> {
+public interface MergeSingleWithQualifier extends MergeSingle {
+    MergeSingle with(Annotation qualifier);
+
+    MergeSingle with(Class<? extends Annotation> qualifier);
 }

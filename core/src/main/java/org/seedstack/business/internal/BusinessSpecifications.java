@@ -79,6 +79,13 @@ public final class BusinessSpecifications {
                     .and(classIsAnnotation().negate()))
             .build();
 
+    public static final Specification<Class<?>> DEFAULT_REPOSITORY = new SpecificationBuilder<>(
+            AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, false)
+                    .and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classOrAncestorAnnotatedWith(DomainRepository.class, true)))
+            .build();
+
     /**
      * The domain service specification.
      */
@@ -137,7 +144,7 @@ public final class BusinessSpecifications {
     /**
      * The assembler specification matching only the classic assembler, i.e. non-default assemblers.
      */
-    public static final Specification<Class<?>> CLASSIC_ASSEMBLER = ASSEMBLER.and(new SpecificationBuilder<>(
+    public static final Specification<Class<?>> EXPLICIT_ASSEMBLER = ASSEMBLER.and(new SpecificationBuilder<>(
             elementAnnotatedWith(GenericImplementation.class, false).negate()
     ).build());
 
@@ -151,13 +158,6 @@ public final class BusinessSpecifications {
     public static final Specification<Class<?>> DEFAULT_ASSEMBLER = ASSEMBLER.and(new SpecificationBuilder<>(
             elementAnnotatedWith(GenericImplementation.class, false)
     ).build());
-
-    public static final Specification<Class<?>> DEFAULT_REPOSITORY = new SpecificationBuilder<>(
-            AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, false)
-                    .and(classIsInterface().negate())
-                    .and(classModifierIs(Modifier.ABSTRACT).negate())
-                    .and(classOrAncestorAnnotatedWith(DomainRepository.class, true)))
-            .build();
 
     /**
      * The specification for the dtos which require an default assembler to be bound.

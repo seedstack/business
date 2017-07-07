@@ -8,21 +8,20 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
 import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
-import org.seedstack.business.assembler.dsl.AssembleSliceWithQualifier;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
-import org.seedstack.business.assembler.dsl.AssembleStreamWithQualifier;
 import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.pagination.Page;
-import org.seedstack.business.pagination.Slice;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Implementation of {@link FluentAssembler}.
@@ -32,57 +31,65 @@ import java.util.stream.Stream;
  * </p>
  */
 public class FluentAssemblerImpl implements FluentAssembler {
-
-    private AssemblerDslContext context;
+    private Context context;
 
     @Inject
-    public FluentAssemblerImpl(InternalRegistry registry) {
-        context = new AssemblerDslContext();
-        context.setRegistry(registry);
+    public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry) {
+        context = new Context(domainRegistry, registry);
     }
 
     @Override
-    public AssembleSingleWithQualifier assemble(AggregateRoot<?> aggregateRoot) {
-        return new AssembleSingleImpl(context, aggregateRoot);
+    public <A extends AggregateRoot<ID>, ID> AssembleSingleWithQualifier assemble(A aggregateRoot) {
+        return new AssembleSingleImpl<>(context, aggregateRoot, null);
     }
 
     @Override
-    public AssembleMultipleWithQualifier assemble(List<? extends AggregateRoot<?>> aggregateRoots) {
-        return new AssembleMultipleImpl(context, aggregateRoots, null);
+    public <A extends AggregateRoot<ID>, ID> AssembleMultipleWithQualifier assemble(Iterable<A> iterable) {
+        return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false), null);
     }
 
     @Override
-    public AssembleSingleWithQualifier assembleTuple(Tuple aggregateRoots) {
-        return new AssembleSingleImpl(context, aggregateRoots);
+    public <A extends AggregateRoot<ID>, ID> AssembleMultipleWithQualifier assemble(Stream<A> stream) {
+        return new AssembleMultipleImpl<>(context, stream, null);
     }
 
     @Override
-    public AssembleMultipleWithQualifier assembleTuple(List<? extends Tuple> aggregateRoots) {
-        return new AssembleMultipleImpl(context, null, aggregateRoots);
+    public <A extends AggregateRoot<ID>, ID> AssemblePageWithQualifier assemble(Page<A> page) {
+        return new AssemblePageImpl<>(context, page, null);
     }
 
     @Override
-    public AssemblePageWithQualifier assemble(Page<? extends AggregateRoot<?>> page) {
-        return new AssemblePageImpl(context, page);
+    public <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple) {
+        return new AssembleSingleImpl<>(context, null, tuple);
     }
 
     @Override
-    public AssembleSliceWithQualifier assemble(Slice<? extends AggregateRoot<?>> slice) {
-        return new AssembleSliceImpl(context, slice);
+    public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream) {
+        return new AssembleMultipleImpl<>(context, null, stream);
     }
 
     @Override
-    public AssembleStreamWithQualifier assemble(Stream stream) {
-        return new AssembleStreamImpl(context, stream);
+    public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable) {
+        return new AssembleMultipleImpl<>(context, null, StreamSupport.stream(iterable.spliterator(), false));
     }
 
     @Override
-    public <D> MergeSingleWithQualifier<D> merge(D dto) {
+    public <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page) {
+        return new AssemblePageImpl<>(context, null, page);
+    }
+
+    @Override
+    public <D> MergeSingleWithQualifier merge(D dto) {
         return new MergeSingleImpl<>(context, dto);
     }
 
     @Override
-    public <D> MergeMultipleWithQualifier<D> merge(List<D> dtos) {
-        return new MergeMultipleImpl<>(context, dtos);
+    public <D> MergeMultipleWithQualifier merge(Stream<D> stream) {
+        return new MergeMultipleImpl<>(context, stream);
+    }
+
+    @Override
+    public <D> MergeMultipleWithQualifier merge(Iterable<D> iterable) {
+        return new MergeMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false));
     }
 }

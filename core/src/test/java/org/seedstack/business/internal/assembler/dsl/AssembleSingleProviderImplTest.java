@@ -7,15 +7,14 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
 import org.javatuples.Tuple;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.seedstack.business.assembler.Assembler;
-import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.assembler.AssemblerRegistry;
+import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.AutoTupleAssembler;
 import org.seedstack.business.fixtures.assembler.customer.Customer;
@@ -23,32 +22,34 @@ import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.internal.Tuples;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+
+import static org.seedstack.business.internal.utils.BusinessUtils.createAggregateClasses;
 
 
 public class AssembleSingleProviderImplTest {
-
-    private AssembleSingleImpl underTest;
-    private AssembleMultipleImpl underTest2;
-    private AssemblerDslContext context = new AssemblerDslContext();
+    private AssembleSingleImpl<Order, String, Tuple> underTest;
+    private AssembleMultipleImpl<Order, String, Tuple> underTest2;
+    private Context context;
 
     @Before
-    @SuppressWarnings("unchecked")
     public void before() {
-        InternalRegistry registry = Mockito.mock(InternalRegistryInternal.class);
-        context.setRegistry(registry);
-        Mockito.when(registry.assemblerOf(Order.class, OrderDto.class)).thenReturn((Assembler) new AutoAssembler());
+        AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
+        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());
+        DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
+        context = new Context(domainRegistry, assemblerRegistry);
 
-        List<Class<? extends AggregateRoot<?>>> aggregateRootClasses = new ArrayList<>();
-        aggregateRootClasses.add(Order.class);
-        aggregateRootClasses.add(Customer.class);
-        Mockito.when(registry.tupleAssemblerOf(aggregateRootClasses, OrderDto.class)).thenReturn((Assembler) new AutoTupleAssembler());
+        Mockito.when(
+                assemblerRegistry.tupleAssemblerOf(
+                        createAggregateClasses(Order.class, Customer.class),
+                        OrderDto.class)
+        ).thenReturn((Assembler) new AutoTupleAssembler());
     }
 
     @Test
     public void testToDto() {
-        underTest = new AssembleSingleImpl(context, new Order("lightsaber"));
+        underTest = new AssembleSingleImpl<>(context, new Order("lightsaber"), null);
 
         OrderDto orderDto = underTest.to(OrderDto.class);
 
@@ -57,11 +58,10 @@ public class AssembleSingleProviderImplTest {
     }
 
     @Test
-    @Ignore
     public void testToDtoWithTuple() {
         Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
 
-        underTest = new AssembleSingleImpl(context, tuple);
+        underTest = new AssembleSingleImpl<>(context, null, tuple);
         OrderDto orderDto = underTest.to(OrderDto.class);
 
         Assertions.assertThat(orderDto).isNotNull();
@@ -71,13 +71,12 @@ public class AssembleSingleProviderImplTest {
 
     @Test
     public void testToDtos() {
-        List<Order> aggregateRoots = new ArrayList<>();
-        aggregateRoots.add(new Order("lightsaber"));
-        aggregateRoots.add(new Order("death star"));
+        underTest2 = new AssembleMultipleImpl<>(context, Stream.of(
+                new Order("lightsaber"),
+                new Order("death star")
+        ), null);
 
-        underTest2 = new AssembleMultipleImpl(context, aggregateRoots, null);
-        List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
-
+        List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
         Assertions.assertThat(orderDtos).isNotNull();
         Assertions.assertThat(orderDtos).isNotEmpty();
         Assertions.assertThat(orderDtos.get(0).getProduct()).isEqualTo("lightsaber");
@@ -85,14 +84,13 @@ public class AssembleSingleProviderImplTest {
     }
 
     @Test
-    @Ignore
     public void testToDtosWithTuple() {
-        Tuple tuple1 = Tuples.create(new Order("lightsaber"), new Customer("luke")); // used to get the class of the tuple
-        Tuple tuple2 = Tuples.create(new Order("death star"), new Customer("dark vador"));
+        underTest2 = new AssembleMultipleImpl<>(context, null, Stream.of(
+                Tuples.create(new Order("lightsaber"), new Customer("luke")),
+                Tuples.create(new Order("death star"), new Customer("dark vador"))
+        ));
 
-        underTest2 = new AssembleMultipleImpl(context, null, Lists.newArrayList(tuple1, tuple2));
-        List<OrderDto> orderDtos = underTest2.to(OrderDto.class);
-
+        List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
         Assertions.assertThat(orderDtos).isNotNull();
         Assertions.assertThat(orderDtos).isNotEmpty();
         Assertions.assertThat(orderDtos.get(0).getProduct()).isEqualTo("lightsaber");

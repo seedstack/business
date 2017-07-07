@@ -7,50 +7,41 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import com.google.common.collect.Lists;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleSingle;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
+class AssembleSingleImpl<A extends AggregateRoot<ID>, ID, T extends Tuple> implements AssembleSingleWithQualifier {
+    private final Context context;
+    private final AssembleMultipleImpl<A, ID, T> multipleAssembler;
 
-public class AssembleSingleImpl implements AssembleSingleWithQualifier {
-    private final AssembleMultipleImpl assembleMultiple;
-
-    AssembleSingleImpl(AssemblerDslContext context, AggregateRoot<?> aggregate) {
-        List<? extends AggregateRoot<?>> aggregates = Lists.newArrayList(aggregate);
-        this.assembleMultiple = new AssembleMultipleImpl(context, aggregates, null);
-    }
-
-    AssembleSingleImpl(AssemblerDslContext context, Tuple aggregateTuple) {
-        List<Tuple> aggregateTuples = new ArrayList<>();
-        aggregateTuples.add(aggregateTuple);
-        this.assembleMultiple = new AssembleMultipleImpl(context, null, aggregateTuples);
+    AssembleSingleImpl(Context context, A aggregateRoot, T tuple) {
+        this.context = context;
+        this.multipleAssembler = new AssembleMultipleImpl<>(
+                context,
+                aggregateRoot == null ? null : Stream.of(aggregateRoot),
+                tuple == null ? null : Stream.of(tuple)
+        );
     }
 
     @Override
     public <D> D to(Class<D> dtoClass) {
-        List<D> ds = assembleMultiple.to(dtoClass);
-        if (!ds.isEmpty()) {
-            return ds.get(0);
-        } else {
-            return null;
-        }
+        return multipleAssembler.toStreamOf(dtoClass).findFirst().orElseThrow(() -> new IllegalStateException("Nothing to assemble"));
     }
 
     @Override
     public AssembleSingle with(Annotation qualifier) {
-        this.assembleMultiple.getContext().setAssemblerQualifier(qualifier);
+        context.setAssemblerQualifier(qualifier);
         return this;
     }
 
     @Override
     public AssembleSingle with(Class<? extends Annotation> qualifier) {
-        this.assembleMultiple.getContext().setAssemblerQualifierClass(qualifier);
+        context.setAssemblerQualifierClass(qualifier);
         return this;
     }
 }

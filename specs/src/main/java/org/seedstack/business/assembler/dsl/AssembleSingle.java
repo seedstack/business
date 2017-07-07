@@ -9,13 +9,12 @@ package org.seedstack.business.assembler.dsl;
 
 
 public interface AssembleSingle {
-
     /**
-     * Returns a dto.
+     * Assembles to a DTO.
      *
-     * @param dtoClass the dto class to assemble
-     * @param <D>      the dto type
-     * @return the dto
+     * @param dtoClass the DTO class to assemble.
+     * @param <D>      the type of the DTO.
+     * @return the DTO.
      */
     <D> D to(Class<D> dtoClass);
 }

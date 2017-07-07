@@ -27,6 +27,7 @@
     <properties>
         <seed.version>3.3.0-SNAPSHOT</seed.version>
         <modelmapper.version>1.0.0</modelmapper.version>
+        <jmh-addon.version>1.0.1</jmh-addon.version>
 
         <compatibility.skip>true</compatibility.skip>
 

@@ -83,5 +83,11 @@
             <version>${logback.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.seedstack.addons.jmh</groupId>
+            <artifactId>jmh-launcher</artifactId>
+            <version>${jmh-addon.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

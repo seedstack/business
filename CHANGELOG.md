@@ -5,7 +5,8 @@
 * [new] A specification builder allows to create DDD specifications with a fluent DSL. 
 * [new] Add SPI and base infrastructure for specification translation.
 * [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
-* [new] Business framework now takes advantage of Java 8 features (notably streams and optional).  
+* [new] Business framework now takes advantage of Java 8 features (notably streams and optional).
+* [new] `FluentAssembler` can now assemble and merge streams of objects among other useful types (arrays, lists, sets, slices, pages and arbitrary collections).
 * [new] A pagination DSL has been added.
 * [brk] The pagination API has been refactored.
 * [brk] The `getEntityId()` method of `Entity` has been renamed to `getId()`.

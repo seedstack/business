@@ -15,9 +15,9 @@ import java.util.List;
  * @param <T> the item type
  */
 public class SimplePage<T> extends SimpleSlice<T> implements Page<T> {
-    private long index;
-    private long capacity;
-    private long totalSize;
+    private final long index;
+    private final long capacity;
+    private final long totalSize;
 
     /**
      * Constructor.

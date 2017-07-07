@@ -8,5 +8,10 @@
 package org.seedstack.business.assembler.dsl;
 
 
-public interface AssembleSingleWithQualifier extends AssembleSingle, QualifierProvider<AssembleSingle> {
+import java.lang.annotation.Annotation;
+
+public interface AssembleSingleWithQualifier extends AssembleSingle {
+    AssembleSingle with(Annotation qualifier);
+
+    AssembleSingle with(Class<? extends Annotation> qualifier);
 }
