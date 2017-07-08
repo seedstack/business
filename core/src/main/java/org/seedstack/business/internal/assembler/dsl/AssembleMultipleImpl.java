@@ -8,63 +8,78 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
-import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.dsl.AssembleMultiple;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.pagination.SimpleSlice;
+import org.seedstack.business.pagination.Slice;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
-public class AssembleMultipleImpl implements AssembleMultipleWithQualifier {
-    private final AssemblerDslContext context;
-    private final List<? extends AggregateRoot<?>> aggregates;
-    private final List<? extends Tuple> aggregateTuples;
+class AssembleMultipleImpl<A extends AggregateRoot<ID>, ID, T extends Tuple> implements AssembleMultipleWithQualifier {
+    private final Context context;
+    private final Stream<A> aggregates;
+    private final Stream<T> aggregateTuples;
 
-    AssembleMultipleImpl(AssemblerDslContext context, List<? extends AggregateRoot<?>> aggregates, List<? extends Tuple> aggregateTuples) {
-        this.context = context;
+    AssembleMultipleImpl(Context context, Stream<A> aggregates, Stream<T> aggregateTuples) {
+        this.context = checkNotNull(context, "Context must not be null");
+        if (aggregates == null && aggregateTuples == null) {
+            throw new NullPointerException("Cannot assemble null");
+        }
+        if (aggregates != null && aggregateTuples != null) {
+            throw new IllegalArgumentException("Cannot specify both aggregates and tuples to assemble");
+        }
         this.aggregates = aggregates;
         this.aggregateTuples = aggregateTuples;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <D> List<D> to(Class<D> dtoClass) {
-        Assembler assembler = getAssembler(dtoClass);
-        List<D> dtos = new ArrayList<>();
-
-        if (aggregates != null && !aggregates.isEmpty()) {
-            for (AggregateRoot<?> aggregate : aggregates) {
-                dtos.add((D) assembler.assembleDtoFromAggregate(aggregate));
-            }
-        } else if (aggregateTuples != null && !aggregateTuples.isEmpty()) {
-            for (Tuple aggregateTuple : aggregateTuples) {
-                dtos.add((D) assembler.assembleDtoFromAggregate(aggregateTuple));
-            }
+    public <D> Stream<D> toStreamOf(Class<D> dtoClass) {
+        if (aggregates != null) {
+            return aggregates.map(aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass).assembleDtoFromAggregate(aggregate));
+        } else if (aggregateTuples != null) {
+            return aggregateTuples.map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass).assembleDtoFromAggregate(tuple));
         }
-        return dtos;
+        throw new IllegalStateException("Nothing to assemble");
     }
 
+    @Override
+    public <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass, Supplier<C> collectionSupplier) {
+        C collection = collectionSupplier.get();
+        toStreamOf(dtoClass).forEach(collection::add);
+        return collection;
+    }
+
+    @Override
+    public <D> List<D> toListOf(Class<D> dtoClass) {
+        return toCollectionOf(dtoClass, ArrayList::new);
+    }
+
+    @Override
+    public <D> Set<D> toSetOf(Class<D> dtoClass) {
+        return toCollectionOf(dtoClass, HashSet::new);
+    }
+
+    @Override
+    public <D> Slice<D> toSliceOf(Class<D> dtoClass) {
+        return new SimpleSlice<>(toListOf(dtoClass));
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
-    private Assembler getAssembler(Class<?> dtoClass) {
-
-        Assembler assembler = null;
-
-        if (aggregates != null && !aggregates.isEmpty()) {
-            assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregates.get(0).getClass(), dtoClass);
-        } else if (aggregateTuples != null && !aggregateTuples.isEmpty()) {
-            Tuple firstTuple = aggregateTuples.get(0);
-            List<?> aggregateRootClasses = Tuples.toListOfClasses(firstTuple);
-            assembler = context.tupleAssemblerOf((List<Class<? extends AggregateRoot<?>>>) aggregateRootClasses, dtoClass);
-        }
-        return assembler;
-    }
-
-    AssemblerDslContext getContext() {
-        return context;
+    public <D> D[] toArrayOf(Class<D> dtoClass) {
+        return toStreamOf(dtoClass).toArray(size -> (D[]) new Object[size]);
     }
 
     @Override
@@ -77,5 +92,14 @@ public class AssembleMultipleImpl implements AssembleMultipleWithQualifier {
     public AssembleMultiple with(Class<? extends Annotation> qualifier) {
         context.setAssemblerQualifierClass(qualifier);
         return this;
+    }
+
+    Context getContext() {
+        return context;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<A> getAggregateClass(A aggregate) {
+        return (Class<A>) aggregate.getClass();
     }
 }

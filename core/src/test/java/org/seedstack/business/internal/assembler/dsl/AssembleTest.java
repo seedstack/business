@@ -19,7 +19,6 @@ import java.util.List;
 
 
 public class AssembleTest {
-
     private OrderDto orderDto = new OrderDto();
     private Order myOrder = new Order();
     private Order myOrder2 = new Order();
@@ -31,16 +30,6 @@ public class AssembleTest {
     private List<Order> orders = Lists.newArrayList(myOrder, myOrder);
 
     private FluentAssembler fluently;
-
-    public void testMergeToAggregateInstance() {
-        // dto to aggregate
-        fluently.merge(orderDto).into(myOrder);
-
-        fluently.merge(orderDto).into(myOrder, myOrder2);
-
-        // list of dtos to list of aggregates
-        fluently.merge(dtos).into(orders);
-    }
 
     public void testMergeToAggregateClass() {
         // from factory
@@ -67,8 +56,8 @@ public class AssembleTest {
         // tuple of aggregate to dto
         fluently.assembleTuple((Tuple) Tuples.create(Order.class, Customer.class)).to(OrderDto.class);
 
-        fluently.assembleTuple(Lists.newArrayList(Tuples.create(order, customer), Tuples.create(order2, customer2)))
-                .to(OrderDto.class);
+        fluently.assembleTuples(Lists.newArrayList(Tuples.create(order, customer), Tuples.create(order2, customer2)))
+                .toListOf(OrderDto.class);
     }
 
     static class OrderDto {

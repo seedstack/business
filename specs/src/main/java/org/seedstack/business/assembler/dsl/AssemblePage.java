@@ -9,14 +9,13 @@ package org.seedstack.business.assembler.dsl;
 
 import org.seedstack.business.pagination.Page;
 
-public interface AssemblePage {
-
+public interface AssemblePage extends AssembleMultiple {
     /**
-     * Returns a Page with a list of dtos.
+     * Assembles to a {@link Page} of DTO.
      *
-     * @param dtoClass the dto class to assemble
-     * @param <D>      the dto type
-     * @return the Page containing the list of dtos
+     * @param dtoClass the DTO class to assemble.
+     * @param <D>      the type of the DTO.
+     * @return the page of DTO.
      */
-    <D> Page<D> to(Class<D> dtoClass);
+    <D> Page<D> toPageOf(Class<D> dtoClass);
 }

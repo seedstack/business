@@ -7,65 +7,37 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.assembler.dsl.MergeSingleAggregateFromRepository;
-import org.seedstack.business.assembler.dsl.MergeSingleAggregateFromRepositoryOrFactory;
+import org.seedstack.business.assembler.dsl.MergeFromRepository;
+import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.Repository;
 
-import java.util.Optional;
+import java.util.stream.Stream;
 
+class MergeSingleAggregateFromRepositoryImpl<A extends AggregateRoot<ID>, ID, D> implements MergeFromRepository<A>, MergeFromRepositoryOrFactory<A> {
+    private final MergeMultipleAggregatesFromRepositoryImpl<A, ID, D> multipleMerger;
 
-public class MergeSingleAggregateFromRepositoryImpl<A extends AggregateRoot<?>> extends AbstractMergeWithRepository<A> implements MergeSingleAggregateFromRepository<A>, MergeSingleAggregateFromRepositoryOrFactory<A> {
-
-    private final Class<A> aggregateClass;
-    private final Object dto;
-
-    public MergeSingleAggregateFromRepositoryImpl(AssemblerDslContext context, Class<A> aggregateClass, Object dto) {
-        super(context);
-        this.aggregateClass = aggregateClass;
-        this.dto = dto;
+    MergeSingleAggregateFromRepositoryImpl(Context context, D dto, Class<A> aggregateRootClass) {
+        multipleMerger = new MergeMultipleAggregatesFromRepositoryImpl<>(context, Stream.of(dto), aggregateRootClass);
     }
 
-    // --------------------------- AggAssemblerWithRepoProvider
-
     @Override
-    public MergeSingleAggregateFromRepositoryOrFactory<A> fromRepository() {
-        // Just redirect to the expected DSL path
+    public MergeFromRepositoryOrFactory<A> fromRepository() {
         return this;
     }
 
     @Override
     public A fromFactory() {
-        return fromFactory(aggregateClass, dto);
+        return multipleMerger.fromFactory().asStream().findFirst().orElseThrow(() -> new IllegalStateException("Nothing to merge"));
     }
-
-    /**
-     * Loads an aggregate roots from a repository.
-     *
-     * @param key the aggregate roots identity
-     * @return the loaded aggregate root
-     */
-    @SuppressWarnings("unchecked")
-    protected Optional<A> loadFromRepo(Object key) {
-        Repository repository = context.repositoryOf(aggregateClass);
-        return repository.get(key);
-    }
-
-    // --------------------------- AggAssemblerWithRepoAndFactProvider methods
 
     @Override
     public A orFail() throws AggregateNotFoundException {
-        Object id = resolveId(dto, aggregateClass);
-        return loadFromRepo(id)
-                .map(aggregate -> assembleWithDto(aggregate, dto))
-                .orElseThrow(() -> new AggregateNotFoundException(String.format("Unable to load aggregate %s for id: %s", aggregateClass, id)));
+        return multipleMerger.orFail().asStream().findFirst().orElseThrow(() -> new IllegalStateException("Nothing to merge"));
     }
 
     @Override
     public A orFromFactory() {
-        return loadFromRepo(resolveId(dto, aggregateClass))
-                .map(aggregate -> assembleWithDto(aggregate, dto))
-                .orElseGet(this::fromFactory);
+        return multipleMerger.orFromFactory().asStream().findFirst().orElseThrow(() -> new IllegalStateException("Nothing to merge"));
     }
 }

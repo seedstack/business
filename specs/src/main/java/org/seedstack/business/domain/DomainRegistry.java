@@ -14,28 +14,32 @@ import org.seedstack.shed.reflect.TypeOf;
 import java.lang.annotation.Annotation;
 
 /**
- * Registry to access to all domain objects.
+ * This registry allows to access domain objects programmatically.
  *
+ * Usage for a class without generic parameter:
  * <pre>
- * To use it, just inject it :
- *
- * {@code @Inject}
- * DomainRegistry domainRegistry
+ * <code>MyPolicy policy = domainRegistry.getPolicy(MyPolicy.class,"qualifier");
+ * </code>
  * </pre>
  *
+ * Usage for a class with generic parameter(s):
  * <pre>
- * Example for a class without generic parameter:
- * <code>
- * 	   MyPolicy policy = domainRegistry.getPolicy(MyPolicy.class,"qualifier");
- * </code>
- *
- * Example for a class with generic parameter:
- * <code>
- * 	   AnotherPolicy&lt;MyClient&lt;Long&gt;&gt; policy = domainRegistry.getPolicy(new TypeOf&lt;AnotherPolicy&lt;MyClient&lt;Long&gt;&gt;&gt;(){},"qualifier");
+ * <code>AnotherPolicy&lt;MyClient&lt;Long&gt;&gt; policy = domainRegistry.getPolicy(
+ *     new TypeOf&lt;AnotherPolicy&lt;MyClient&lt;Long&gt;&gt;&gt;(){},
+ *     "qualifier"
+ * );
  * </code>
  * </pre>
  */
 public interface DomainRegistry {
+
+    /**
+     * Get a {@link Repository} from the domain.
+     *
+     * @param typeOf the {@link TypeOf} to define all generic pattern.
+     * @return a {@link Repository} found in the domain.
+     */
+    <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf);
 
     /**
      * Get a {@link Repository} from the domain.
@@ -54,6 +58,15 @@ public interface DomainRegistry {
      * @return a {@link Repository} found in the domain.
      */
     <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf, String qualifier);
+
+    /**
+     * Get the {@link Repository} for an aggregate root.
+     *
+     * @param aggregateRoot the aggregate root linked to the repository.
+     * @param key           the aggregate root's key.
+     * @return an instance of the {@link Repository}
+     */
+    <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key);
 
     /**
      * Get the {@link Repository} for an aggregate root and a qualifier.

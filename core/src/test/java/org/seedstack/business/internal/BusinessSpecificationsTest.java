@@ -64,11 +64,11 @@ public class BusinessSpecificationsTest {
 
     @Test
     public void testClassicAssemblerSpecification() {
-        assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
-        assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
-        assertThat(BusinessSpecifications.CLASSIC_ASSEMBLER)
+        assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
+        assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class)).isFalse();
+        assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER)
                 .describedAs("specification should be comparable")
-                .isEqualTo(BusinessSpecifications.CLASSIC_ASSEMBLER);
+                .isEqualTo(BusinessSpecifications.EXPLICIT_ASSEMBLER);
     }
 
     @Test

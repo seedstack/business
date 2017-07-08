@@ -68,4 +68,9 @@ public class Order extends BaseAggregateRoot<String> {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }

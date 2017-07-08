@@ -10,10 +10,9 @@ package org.seedstack.business.internal.assembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import org.seedstack.business.assembler.Assembler;
+import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
-import org.seedstack.business.internal.assembler.dsl.InternalRegistry;
-import org.seedstack.business.internal.assembler.dsl.InternalRegistryInternal;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +22,17 @@ import java.util.Map;
 
 class AssemblerModule extends AbstractModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerModule.class);
-    private final Collection<Class<? extends Assembler>> assemblerClasses;
     private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
     private final Collection<BindingStrategy> bindingStrategies;
 
-    AssemblerModule(Collection<Class<? extends Assembler>> assemblerClasses, Map<Key<Assembler>, Class<? extends Assembler>> bindings, Collection<BindingStrategy> bindingStrategies) {
-        this.assemblerClasses = assemblerClasses;
+    AssemblerModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings, Collection<BindingStrategy> bindingStrategies) {
         this.bindings = bindings;
         this.bindingStrategies = bindingStrategies;
     }
 
     @Override
     protected void configure() {
-        bind(InternalRegistry.class).to(InternalRegistryInternal.class);
+        bind(AssemblerRegistry.class).to(AssemblerRegistryImpl.class);
         bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
 
         for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {

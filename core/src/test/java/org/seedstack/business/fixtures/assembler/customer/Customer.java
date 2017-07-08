@@ -16,6 +16,7 @@ public class Customer extends BaseAggregateRoot<String> {
 
     public Customer(String id) {
         this.id = id;
+        this.name = id;
     }
 
     public String getName() {

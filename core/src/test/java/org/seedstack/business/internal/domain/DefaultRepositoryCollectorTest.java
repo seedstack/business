@@ -25,7 +25,6 @@ import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ import static org.mockito.Mockito.when;
 public class DefaultRepositoryCollectorTest {
     private DefaultRepositoryCollector underTest;
     private Application application;
-    private TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(Repository.class, new Type[]{MyAgg.class}));
+    private TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(Repository.class, MyAgg.class));
 
     @Before
     public void before() {

@@ -7,103 +7,77 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.seedstack.business.assembler.dsl.MergeMultipleAggregatesFromRepository;
-import org.seedstack.business.assembler.dsl.MergeMultipleAggregatesFromRepositoryOrFactory;
+import org.seedstack.business.assembler.dsl.MergeAs;
+import org.seedstack.business.assembler.dsl.MergeFromRepository;
+import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
-public class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<?>> extends AbstractMergeWithRepository<A> implements MergeMultipleAggregatesFromRepository<A>, MergeMultipleAggregatesFromRepositoryOrFactory<A> {
-
+class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<ID>, ID, D> extends AbstractMergeWithRepository implements MergeFromRepository<MergeAs<A>>, MergeFromRepositoryOrFactory<MergeAs<A>> {
     private final Class<A> aggregateClass;
-    private final List<?> dtos;
+    private final Stream<D> dtoStream;
 
-    public MergeMultipleAggregatesFromRepositoryImpl(AssemblerDslContext context, Class<A> aggregateClass, List<?> dtos) {
+    MergeMultipleAggregatesFromRepositoryImpl(Context context, Stream<D> dtoStream, Class<A> aggregateClass) {
         super(context);
         this.aggregateClass = aggregateClass;
-        this.dtos = dtos;
+        this.dtoStream = dtoStream;
     }
 
-    // --------------------------- AggAssemblerWithRepoProvider
-
     @Override
-    public MergeMultipleAggregatesFromRepositoryOrFactory<A> fromRepository() {
-        // Just redirect to the expected DSL path
+    public MergeFromRepositoryOrFactory<MergeAs<A>> fromRepository() {
         return this;
     }
 
     @Override
-    public List<A> fromFactory() {
-        List<A> aggregateRoots = new ArrayList<>(dtos.size());
-        for (Object dto : dtos) {
-            aggregateRoots.add(fromFactory(aggregateClass, dto));
-        }
-
-        return aggregateRoots;
-    }
-
-    /**
-     * Loads an aggregate roots from a repository.
-     *
-     * @param key the aggregate roots identity
-     * @return the loaded aggregate root
-     */
-    @SuppressWarnings("unchecked")
-    protected Optional<A> loadFromRepo(Class<? extends AggregateRoot<?>> aggregateClass, Object key) {
-        Repository repository = context.repositoryOf(aggregateClass);
-        return repository.get(key);
-    }
-
-    // --------------------------- AggAssemblerWithRepoAndFactProvider methods
-
-    @Override
-    public List<A> orFail() throws AggregateNotFoundException {
-        List<A> aggregateRoots = new ArrayList<>(dtos.size());
-        for (Object dto : dtos) {
-            Object id = resolveId(dto, aggregateClass);
-            Optional<A> a = loadFromRepo(aggregateClass, id);
-
-            if (!a.isPresent()) {
-                throw new AggregateNotFoundException(String.format("Unable to load aggregate %s for id: %s", aggregateClass.getName(), id));
-            }
-
-            aggregateRoots.add(assembleWithDto(a.get(), dto));
-        }
-        return aggregateRoots;
+    public MergeAs<A> fromFactory() {
+        return new MergeAsImpl<>(dtoStream.map(dto -> {
+            A aggregateFromFactory = createFromFactory(
+                    aggregateClass,
+                    getDtoInfoResolver().resolveAggregate(dto).parameters()
+            );
+            mergeAggregateFromDto(aggregateFromFactory, dto);
+            return aggregateFromFactory;
+        }));
     }
 
     @Override
-    public List<A> orFromFactory() {
-        return orFromFactory(true);
+    public MergeAs<A> orFail() throws AggregateNotFoundException {
+        return new MergeAsImpl<>(
+                dtoStream.map(dto -> {
+                    ID identifier = createIdentifier(getDtoInfoResolver().resolveId(dto), aggregateClass);
+                    A aggregateRootFromRepository = loadFromRepository(identifier)
+                            .orElseThrow(() -> new AggregateNotFoundException(String.format(
+                                    "Unable to load aggregate %s for id: %s",
+                                    aggregateClass.getName(),
+                                    identifier)
+                            ));
+                    mergeAggregateFromDto(aggregateRootFromRepository, dto);
+                    return aggregateRootFromRepository;
+                })
+        );
     }
 
     @Override
-    public List<A> orFromFactory(boolean allowMixed) {
-        boolean atLeastOneAggregateNotFound = false;
-        boolean atLeastOneAggregateFound = false;
-        List<A> aggregateRoots = new ArrayList<>(dtos.size());
+    public MergeAs<A> orFromFactory() {
+        return new MergeAsImpl<>(
+                dtoStream.map(dto -> {
+                    ID identifier = createIdentifier(getDtoInfoResolver().resolveId(dto), aggregateClass);
+                    A aggregateRootFromRepositoryOrFactory = loadFromRepository(identifier)
+                            .orElseGet(() -> createFromFactory(
+                                    aggregateClass,
+                                    getDtoInfoResolver().resolveAggregate(dto).parameters())
+                            );
+                    mergeAggregateFromDto(aggregateRootFromRepositoryOrFactory, dto);
+                    return aggregateRootFromRepositoryOrFactory;
+                })
+        );
+    }
 
-        // load from the repository
-        for (Object dto : dtos) {
-            Object id = resolveId(dto, aggregateClass);
-            Optional<A> a = loadFromRepo(aggregateClass, id);
-            if (!a.isPresent()) {
-                atLeastOneAggregateNotFound = true;
-                aggregateRoots.add(fromFactory(aggregateClass, dto));
-            } else {
-                atLeastOneAggregateFound = true;
-                aggregateRoots.add(a.get());
-            }
-            if (!allowMixed && atLeastOneAggregateFound && atLeastOneAggregateNotFound) {
-                throw new IllegalStateException("State non consistent some aggregate are persisted but not all.");
-            }
-        }
-
-        return aggregateRoots;
+    private Optional<A> loadFromRepository(ID identifier) {
+        return getContext().repositoryOf(aggregateClass).get(identifier);
     }
 }

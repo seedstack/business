@@ -7,14 +7,11 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.javatuples.Tuple;
+import org.seedstack.business.Producible;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.business.internal.Tuples;
 import org.seedstack.business.internal.assembler.dsl.resolver.DtoInfoResolver;
 import org.seedstack.business.internal.assembler.dsl.resolver.ParameterHolder;
 import org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver;
@@ -23,106 +20,82 @@ import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.seed.SeedException;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-public abstract class AbstractMergeWithRepository<A extends AggregateRoot<?>> {
-    protected final AssemblerDslContext context;
-    final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
+abstract class AbstractMergeWithRepository {
+    private final Context context;
+    private final DtoInfoResolver dtoInfoResolver = new AnnotationResolver();
 
-    /**
-     * Constructor.
-     *
-     * @param context contains the internal registry used to get domain objects
-     */
-    AbstractMergeWithRepository(AssemblerDslContext context) {
+    AbstractMergeWithRepository(Context context) {
         this.context = context;
     }
 
-    Object resolveId(Object dto, Class<? extends AggregateRoot<?>> aggregateRootClass) {
-        checkNotNull(dto);
+    @SuppressWarnings("unchecked")
+    <A extends AggregateRoot<ID>, ID> ID createIdentifier(ParameterHolder parameterHolder, Class<A> aggregateRootClass) {
+        checkNotNull(parameterHolder);
         checkNotNull(aggregateRootClass);
-
-        ParameterHolder parameterHolder = dtoInfoResolver.resolveId(dto);
         if (parameterHolder.isEmpty()) {
             throw new IllegalArgumentException("No id found in the DTO. Please check the @MatchingEntityId annotation.");
         }
-
-        return paramsToIds(aggregateRootClass, parameterHolder, -1);
+        return (ID) paramsToIds((Class<? extends AggregateRoot<Object>>) aggregateRootClass, parameterHolder, -1);
     }
 
     @SuppressWarnings("unchecked")
-    Tuple resolveIds(Object dto, List<Class<? extends AggregateRoot<?>>> aggregateRootClasses) {
-        checkNotNull(dto);
+    Object[] createIdentifiers(ParameterHolder parameterHolder, Class<? extends AggregateRoot<?>>... aggregateRootClasses) {
+        checkNotNull(parameterHolder);
         checkNotNull(aggregateRootClasses);
-
-        ParameterHolder parameterHolder = dtoInfoResolver.resolveId(dto);
         if (parameterHolder.isEmpty()) {
             throw new IllegalArgumentException("No id found in the DTO. Please check the @MatchingEntityId annotation.");
         }
-
-        List<Object> ids = new ArrayList<>();
-        int aggregateIndex = 0;
-        for (Object aggregateRootClass : aggregateRootClasses) {
-            ids.add(paramsToIds((Class<? extends AggregateRoot<?>>) aggregateRootClass, parameterHolder, aggregateIndex));
-            aggregateIndex++;
+        Object[] identifiers = new Object[aggregateRootClasses.length];
+        for (int i = 0; i < aggregateRootClasses.length; i++) {
+            identifiers[i] = paramsToIds((Class<? extends AggregateRoot<Object>>) aggregateRootClasses[i], parameterHolder, i);
         }
-
-        return Tuples.create(ids);
+        return identifiers;
     }
 
-    private Object paramsToIds(Class<? extends AggregateRoot<?>> aggregateRootClass, ParameterHolder parameterHolder, int aggregateIndex) {
+    private Object paramsToIds(Class<? extends AggregateRoot<Object>> aggregateRootClass, ParameterHolder parameterHolder, int aggregateIndex) {
+        Class<?> aggregateIdClass = BusinessUtils.getAggregateIdClass(aggregateRootClass);
         Object id;
-        @SuppressWarnings("unchecked")
-        Class<? extends DomainObject> aggregateIdClass = (Class<? extends DomainObject>) BusinessUtils.getAggregateIdClass(aggregateRootClass);
 
         Object element = parameterHolder.uniqueElementForAggregateRoot(aggregateIndex);
         if (element != null && aggregateIdClass.isAssignableFrom(element.getClass())) {
             // The first parameter is already the id we are looking for
             id = element;
         } else {
-            if (!BusinessSpecifications.VALUE_OBJECT.isSatisfiedBy(aggregateIdClass)) {
-                throw new IllegalStateException("The " + aggregateRootClass.getCanonicalName() + "'s id is not a value object, so you don't have to specify the index in @MatchingEntityId(index = 0)");
+            // Otherwise we create a value object through a factory from all parameters
+            if (!Producible.class.isAssignableFrom(aggregateIdClass)) {
+                // TODO seedstack exception
+                throw new IllegalStateException("Aggregate " + aggregateRootClass.getName() + " identifier is not producible by a factory. Don't specify any index in @MatchingEntityId annotation.");
             }
-            // Get the "magic" factory for the aggregate id class
-            Factory<?> factory = context.defaultFactoryOf(aggregateIdClass);
-            // Create the id based on the id constructor matching the given parameters
-            // TODO <pith> : check the case when one of the parameters is null
+            Factory<?> factory = context.factoryOf(Producible.class.asSubclass(aggregateIdClass));
             id = factory.create(parameterHolder.parametersOfAggregateRoot(aggregateIndex));
+            // TODO <pith> : check the case when one of the parameters is null
         }
         if (id == null) {
-            throw new IllegalArgumentException("No id found in the DTO. Please check the @MatchingEntityId annotation.");
+            throw new IllegalArgumentException("No identifier could be resolved from the DTO. Please check the @MatchingEntityId annotation.");
         }
         return id;
     }
 
-    @SuppressWarnings("unchecked")
-    A fromFactory(Class<? extends AggregateRoot<?>> aggregateClass, Object dto) {
-        Factory<A> factory = (Factory<A>) context.genericFactoryOf(aggregateClass);
-        ParameterHolder parameterHolder = dtoInfoResolver.resolveAggregate(dto);
-        A aggregateRoot = (A) getAggregateFromFactory(factory, aggregateClass, parameterHolder.parameters());
-        return assembleWithDto(aggregateRoot, dto);
+    <A extends AggregateRoot<?>> A createFromFactory(Class<A> aggregateClass, Object[] parameters) {
+        // TODO: cache
+        return getAggregateFromFactory(context.factoryOf(aggregateClass), aggregateClass, parameters);
     }
 
-    /**
-     * Assemble one aggregate root from a dto.
-     *
-     * @param aggregateRoots the aggregate root to assemble
-     * @return the assembled aggregate root
-     */
     @SuppressWarnings("unchecked")
-    A assembleWithDto(A aggregateRoots, Object dto) {
-        Assembler assembler = context.assemblerOf((Class<? extends AggregateRoot<?>>) aggregateRoots.getClass(), dto.getClass());
-        assembler.mergeAggregateWithDto(aggregateRoots, dto);
-        return aggregateRoots;
+    <A extends AggregateRoot<ID>, ID, D> void mergeAggregateFromDto(A aggregateRoot, D dto) {
+        // TODO: cache
+        Assembler<A, D> assembler = context.assemblerOf((Class<A>) aggregateRoot.getClass(), (Class<D>) dto.getClass());
+        assembler.mergeAggregateWithDto(aggregateRoot, dto);
     }
 
-    Object getAggregateFromFactory(Factory<?> factory, Class<? extends AggregateRoot<?>> aggregateClass, Object[] parameters) {
+    @SuppressWarnings("unchecked")
+    <A extends AggregateRoot<?>> A getAggregateFromFactory(Factory<A> factory, Class<A> aggregateClass, Object[] parameters) {
         checkNotNull(factory);
         checkNotNull(aggregateClass);
         checkNotNull(parameters);
@@ -147,9 +120,9 @@ public abstract class AbstractMergeWithRepository<A extends AggregateRoot<?>> {
                 return factory.create(parameters);
             } else {
                 if (parameters.length == 0) {
-                    return factoryMethod.invoke(factory);
+                    return (A) factoryMethod.invoke(factory);
                 } else {
-                    return factoryMethod.invoke(factory, parameters);
+                    return (A) factoryMethod.invoke(factory, parameters);
                 }
             }
         } catch (Exception e) {
@@ -159,5 +132,13 @@ public abstract class AbstractMergeWithRepository<A extends AggregateRoot<?>> {
                     .put("factoryMethod", Optional.ofNullable(factoryMethod).map(Method::getName).orElse("create"))
                     .put("parameters", Arrays.toString(parameters));
         }
+    }
+
+    Context getContext() {
+        return context;
+    }
+
+    DtoInfoResolver getDtoInfoResolver() {
+        return dtoInfoResolver;
     }
 }

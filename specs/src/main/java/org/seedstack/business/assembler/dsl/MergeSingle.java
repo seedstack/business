@@ -16,45 +16,46 @@ import org.javatuples.Quintet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
-import org.javatuples.Tuple;
+import org.javatuples.Unit;
 import org.seedstack.business.domain.AggregateRoot;
-
-import java.util.List;
 
 /**
  * Specifies the target aggregate to merge.
- *
- * @param <D> the DTO type
  */
-public interface MergeSingle<D> {
+public interface MergeSingle {
+    <A extends AggregateRoot<ID>, ID>
+    MergeFromRepository<A> into(Class<A> aggregateRootClass);
 
-    /**
-     * Merges the dto to an aggregate root.
-     *
-     * @param aggregateRoot the aggregate root instance
-     * @param <A>           the aggregate root type
-     */
-    <A extends AggregateRoot<?>> void into(A aggregateRoot);
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
+    MergeFromRepository<Pair<A1, A2>> into(Class<A1> first, Class<A2> second);
 
-    /**
-     * Merges the dto to an aggregate root.
-     *
-     * @param aggregateRootClass the aggregate root class
-     * @param <A>                the type of aggregate root
-     * @return the assembler DSL to assemble an aggregate root
-     */
-    <A extends AggregateRoot<?>> MergeSingleAggregateFromRepository<A> into(Class<A> aggregateRootClass);
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
+    MergeFromRepository<Triplet<A1, A2, A3>> into(Class<A1> first, Class<A2> second, Class<A3> third);
 
-    // --- The above methods are for tuples of instances ---
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
+    MergeFromRepository<Quartet<A1, A2, A3, A4>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth);
 
-    /**
-     * Merges the dto to a pair of aggregate roots.
-     *
-     * @param first  the first aggregate root of the pair
-     * @param second the second aggregate root of the pair
-     * @param <A1>   the first aggregate root type
-     * @param <A2>   the second aggregate root type
-     */
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
+    MergeFromRepository<Quintet<A1, A2, A3, A4, A5>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth);
+
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
+    MergeFromRepository<Sextet<A1, A2, A3, A4, A5, A6>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth);
+
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
+    MergeFromRepository<Septet<A1, A2, A3, A4, A5, A6, A7>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh);
+
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
+    MergeFromRepository<Octet<A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth);
+
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
+    MergeFromRepository<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth);
+
+    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
+    MergeFromRepository<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth, Class<A10> tenth);
+
+    <A extends AggregateRoot<ID>, ID>
+    void into(A aggregateRoot);
+
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
     void into(A1 first, A2 second);
 
@@ -82,44 +83,33 @@ public interface MergeSingle<D> {
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
     void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth, A9 ninth, A10 tenth);
 
-    // --- The above method are tuples of classes
+    <A extends AggregateRoot<ID>, ID>
+    void into(Unit<A> unit);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Pair<A1, A2>> into(Class<A1> first, Class<A2> second);
+    void into(Pair<A1, A2> pair);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Triplet<A1, A2, A3>> into(Class<A1> first, Class<A2> second, Class<A3> third);
+    void into(Triplet<A1, A2, A3> triplet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Quartet<A1, A2, A3, A4>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth);
+    void into(Quartet<A1, A2, A3, A4> quartet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Quintet<A1, A2, A3, A4, A5>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth);
+    void into(Quintet<A1, A2, A3, A4, A5> quintet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Sextet<A1, A2, A3, A4, A5, A6>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth);
+    void into(Sextet<A1, A2, A3, A4, A5, A6> sextet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Septet<A1, A2, A3, A4, A5, A6, A7>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh);
+    void into(Septet<A1, A2, A3, A4, A5, A6, A7> septet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Octet<A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth);
+    void into(Octet<A1, A2, A3, A4, A5, A6, A7, A8> octet);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth);
+    void into(Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9> ennead);
 
     <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
-    MergeSingleTupleWithRepository<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth, Class<A10> tenth);
-
-    /**
-     * Merge the dto into a tuple of aggregate roots. This method is not recommended.
-     * <p>
-     * If you can, use the method matching the number of aggregate roots you have in the tuple. For instance use
-     * {@link #into(Class, Class)} for a {@code Pair&lt;Customer, Order&gt;}. The result will be a more typed.
-     * </p>
-     *
-     * @param aggregateRootClasses a list of aggregate root classes
-     * @return a tuple of aggregate roots
-     */
-    MergeSingleTupleWithRepository<Tuple> into(List<Class<? extends AggregateRoot<?>>> aggregateRootClasses);
+    void into(Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10> decade);
 }

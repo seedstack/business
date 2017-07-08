@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.pagination;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class SimpleSlice<T> implements Slice<T> {
     private final long size;
-    private List<T> items;
+    private final List<T> items;
 
     /**
      * This constructor take a list of items that can potentially be huge.
@@ -30,7 +31,7 @@ public class SimpleSlice<T> implements Slice<T> {
 
     @Override
     public List<T> getItems() {
-        return this.items;
+        return Collections.unmodifiableList(this.items);
     }
 
     @Override
