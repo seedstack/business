@@ -11,7 +11,6 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 import java.util.Date;
 
-
 public class StoredBook extends BaseAggregateRoot<BookId> {
     private BookId id;
     private Date publishDate;

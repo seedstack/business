@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
     @Inject
     private MyService myService;

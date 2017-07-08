@@ -9,12 +9,9 @@ package org.seedstack.business.fixtures.assembler.auto;
 
 import org.seedstack.business.assembler.DtoOf;
 
-
 @DtoOf(Order.class)
 public class OrderDto {
-
     private String id;
-
     private Address billingAddress;
 
     public OrderDto() {

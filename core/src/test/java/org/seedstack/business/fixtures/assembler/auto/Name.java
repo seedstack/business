@@ -7,16 +7,11 @@
  */
 package org.seedstack.business.fixtures.assembler.auto;
 
-
 public class Name {
-    String firstName;
-    String lastName;
-
-    public Name() {
-    }
+    private String firstName;
+    private String lastName;
 
     public Name(String firstName, String lastName) {
-
         this.firstName = firstName;
         this.lastName = lastName;
     }

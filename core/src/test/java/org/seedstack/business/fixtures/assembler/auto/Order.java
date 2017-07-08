@@ -9,7 +9,6 @@ package org.seedstack.business.fixtures.assembler.auto;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-
 public class Order extends BaseAggregateRoot<String> {
     private String id;
     private Address billingAddress;

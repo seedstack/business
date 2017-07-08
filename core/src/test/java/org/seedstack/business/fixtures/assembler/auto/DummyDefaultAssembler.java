@@ -16,11 +16,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Method;
 
-
 @GenericImplementation
 @Named("Dummy")
 public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
-
     @SuppressWarnings("unchecked")
     @Inject
     public DummyDefaultAssembler(@Assisted Object[] genericClasses) {

@@ -11,14 +11,10 @@ import org.seedstack.business.assembler.DtoOf;
 
 import java.util.UUID;
 
-
 @DtoOf(BasicAggregate.class)
 public class BasicDto {
-
     private UUID id;
-
     private String field1;
-
     private String field2;
 
     public BasicDto(UUID id, String field1, String field2) {

@@ -11,15 +11,12 @@ import org.seedstack.business.fixtures.application.SingletonService;
 
 import javax.inject.Singleton;
 
-
 @Singleton
 public class SingletonServiceInternal implements SingletonService {
-
     private Object singletonObject = new Object();
 
     @Override
     public Object getStuff() {
         return singletonObject;
     }
-
 }

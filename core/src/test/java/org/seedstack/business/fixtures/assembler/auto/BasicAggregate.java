@@ -13,7 +13,6 @@ import org.seedstack.business.domain.identity.UUIDHandler;
 
 import java.util.UUID;
 
-
 public class BasicAggregate extends BaseAggregateRoot<UUID> {
     @Identity(UUIDHandler.class)
     private UUID id;

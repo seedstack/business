@@ -9,7 +9,6 @@ package org.seedstack.business.fixtures.assembler.auto;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-
 public class Customer extends BaseAggregateRoot<String> {
     private String id;
     private Name name;

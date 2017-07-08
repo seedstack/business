@@ -8,7 +8,7 @@
 package org.seedstack.business.fixtures.registry;
 
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.fixtures.DummyRepository;
+import org.seedstack.business.fixtures.repositories.DummyRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 /**

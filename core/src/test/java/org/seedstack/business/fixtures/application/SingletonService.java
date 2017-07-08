@@ -9,12 +9,7 @@ package org.seedstack.business.fixtures.application;
 
 import org.seedstack.business.Service;
 
-
 @Service
 public interface SingletonService {
-
-
     Object getStuff();
-
-
 }

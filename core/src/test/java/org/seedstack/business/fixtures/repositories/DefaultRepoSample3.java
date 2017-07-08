@@ -9,7 +9,6 @@ package org.seedstack.business.fixtures.repositories;
 
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.fixtures.DummyRepository;
 import org.seedstack.business.spi.GenericImplementation;
 
 import javax.inject.Inject;

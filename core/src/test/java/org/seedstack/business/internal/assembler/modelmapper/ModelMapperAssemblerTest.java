@@ -23,7 +23,6 @@ import java.util.Map;
 
 
 public class ModelMapperAssemblerTest {
-
     private ModelMapperAssembler<Order, OrderDTO> modelMapperAssembler;
     private DefaultModelMapperAssembler<Order, OrderDTO> defaultModelMappedAssembler;
 

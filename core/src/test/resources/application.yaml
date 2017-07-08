@@ -29,7 +29,7 @@ org:
   seedstack:
     toto: toto
 transaction:
-    defaultHandler: org.seedstack.seed.persistence.inmemory.internal.InMemoryTransactionHandler
+    defaultHandler: org.seedstack.business.fixtures.inmemory.internal.InMemoryTransactionHandler
 business:
   events:
     publishRepositoryEvents: true

@@ -18,7 +18,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.fixtures.DummyRepository;
+import org.seedstack.business.fixtures.repositories.DummyRepository;
 import org.seedstack.business.fixtures.repositories.MyQualifier;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Application;

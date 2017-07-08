@@ -9,15 +9,15 @@ package org.seedstack.business.fixtures.assembler.auto;
 
 import org.seedstack.business.assembler.DtoOf;
 
-
 @DtoOf({Order.class, Customer.class})
 public class Recipe {
-    String customerFirstName;
-    String customerLastName;
-    String billingStreet;
-    String billingCity;
+    private String customerFirstName;
+    private String customerLastName;
+    private String billingStreet;
+    private String billingCity;
 
-    public Recipe() {
+    private Recipe() {
+        // for ModelMapper
     }
 
     public Recipe(String customerFirstName, String customerLastName, String billingStreet, String billingCity) {

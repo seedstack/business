@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
-import org.seedstack.business.fixtures.infrastructure.persistence.customer.CustomerInMemoryRepository;
+import org.seedstack.business.fixtures.inmemory.CustomerInMemoryRepository;
 import org.seedstack.business.fixtures.repositories.DefaultRepoSample;
 import org.seedstack.business.fixtures.repositories.DefaultRepoSample2;
 import org.seedstack.business.fixtures.repositories.DefaultRepoSample3;

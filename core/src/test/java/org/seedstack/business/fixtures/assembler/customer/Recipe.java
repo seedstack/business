@@ -17,13 +17,9 @@ import org.seedstack.business.assembler.MatchingFactoryParameter;
 // As no assembler implementation is provided the following annotation is required
 @DtoOf({Order.class, Customer.class})
 public class Recipe {
-
     private String customerId;
-
     private String customerName;
-
     private String product;
-
     private String orderId;
 
     public Recipe(String customerId, String customerName, String orderId, String product) {

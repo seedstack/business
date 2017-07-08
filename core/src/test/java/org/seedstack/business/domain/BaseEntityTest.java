@@ -7,27 +7,29 @@
  */
 package org.seedstack.business.domain;
 
+import com.google.common.collect.Sets;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BaseEntityTest {
-    private Entity1 one;
-    private Entity1 two;
-    private Entity1 three;
+    private TestEntity one;
+    private TestEntity two;
+    private TestEntity three;
 
     @Before
-    public void init() {
-        one = new Entity1();
-        one.setId(1l);
+    public void setUp() {
+        one = new TestEntity(1L);
         one.setName("one");
 
-        two = new Entity1();
-        two.setId(1l);
+        two = new TestEntity(1L);
         two.setName("two");
 
-        three = new Entity1();
-        three.setId(2l);
+        three = new TestEntity(2L);
         three.setName("one");
     }
 
@@ -38,16 +40,49 @@ public class BaseEntityTest {
     }
 
     @Test
-    public void testEqualsObject() {
+    public void testEquality() {
         Assertions.assertThat(one).isEqualTo(two);
         Assertions.assertThat(one).isNotEqualTo(three);
     }
 
-    static class Entity1 extends BaseEntity<Long> {
+    @Test
+    public void checkHashcode() {
+        Long entityId = 12L;
+        TestEntity entity = new TestEntity(entityId);
+        assertThat(entity.hashCode()).isEqualTo(entityId.hashCode());
+    }
+
+    @Test
+    public void checkEquals() {
+        Long entityId = 12L;
+        TestEntity entity1 = new TestEntity(entityId);
+        TestEntity entity2 = new TestEntity(entityId);
+
+        Set<TestEntity> entities = Sets.newHashSet();
+        entities.add(entity1);
+        entities.add(entity2);
+
+        assertThat(entities).hasSize(1);
+        assertThat(entity1).isEqualTo(entity2);
+    }
+
+    @Test
+    public void emptyEntityCanBeAddedToCollection() {
+        TestEntity entity = new TestEntity();
+        Set<TestEntity> entities = Sets.newHashSet();
+        entities.add(entity);
+    }
+
+
+    static class TestEntity extends BaseEntity<Long> {
         private Long id;
         private String name;
 
-        public Entity1() {
+        TestEntity(Long id) {
+            this.id = id;
+        }
+
+        TestEntity() {
         }
 
         public String getName() {
@@ -56,10 +91,6 @@ public class BaseEntityTest {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public void setId(long l) {
-            this.id = l;
         }
     }
 }

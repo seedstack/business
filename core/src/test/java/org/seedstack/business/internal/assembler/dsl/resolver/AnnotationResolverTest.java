@@ -10,13 +10,13 @@ package org.seedstack.business.internal.assembler.dsl.resolver;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
-import org.seedstack.business.fixtures.assembler.sample.Case1Dto;
-import org.seedstack.business.fixtures.assembler.sample.Case2Dto;
-import org.seedstack.business.fixtures.assembler.sample.Case3Dto;
-import org.seedstack.business.fixtures.assembler.sample.Case4Dto;
-import org.seedstack.business.fixtures.assembler.sample.CaseFail1Dto;
-import org.seedstack.business.fixtures.assembler.sample.CaseFail2Dto;
-import org.seedstack.business.fixtures.assembler.sample.CaseFail3Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.Case1Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.Case2Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.Case3Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.Case4Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail1Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail2Dto;
+import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail3Dto;
 import org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver;
 
 import java.util.Date;
@@ -29,10 +29,9 @@ import static org.junit.Assert.fail;
  * @see org.seedstack.business.internal.assembler.dsl.resolver.impl.AnnotationResolver
  */
 public class AnnotationResolverTest {
-
-    public static final String firstName = "john";
-    public static final Date birthDate = new Date();
-    public static final String lastName = "doe";
+    private static final String firstName = "john";
+    private static final Date birthDate = new Date();
+    private static final String lastName = "doe";
 
     private DtoInfoResolver underTest;
     private CaseFail1Dto caseFail1Dto;
@@ -42,7 +41,6 @@ public class AnnotationResolverTest {
     @Before
     public void setup() {
         underTest = new AnnotationResolver();
-
         caseFail1Dto = new CaseFail1Dto(firstName, lastName);
         caseFail2Dto = new CaseFail2Dto(firstName, lastName);
         caseFail3Dto = new CaseFail3Dto(firstName, lastName);

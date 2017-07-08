@@ -9,7 +9,6 @@ package org.seedstack.business.fixtures.assembler.book;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-
 public class BookId extends BaseValueObject {
     private String title;
     private String author;

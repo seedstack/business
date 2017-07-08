@@ -27,11 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Tests the helper class {@link Tuples}.
- */
 public class TuplesTest {
-
     @Test
     public void testCreateTupleFromVarArgs() {
 

@@ -9,15 +9,10 @@ package org.seedstack.business.fixtures.assembler.book;
 
 import java.util.Date;
 
-
 public class BookDto {
-
     private String title;
-
     private String author;
-
     private Date publishDate;
-
     private String editor;
 
     public String getTitle() {

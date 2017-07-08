@@ -34,6 +34,7 @@ public class AssembleSingleProviderImplTest {
     private Context context;
 
     @Before
+    @SuppressWarnings("unchecked")
     public void before() {
         AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
         Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());

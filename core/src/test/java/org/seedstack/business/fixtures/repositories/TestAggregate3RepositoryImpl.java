@@ -7,7 +7,5 @@
  */
 package org.seedstack.business.fixtures.repositories;
 
-import org.seedstack.business.fixtures.DummyRepository;
-
 public class TestAggregate3RepositoryImpl extends DummyRepository<TestAggregate3, String> implements TestAggregate3Repository {
 }

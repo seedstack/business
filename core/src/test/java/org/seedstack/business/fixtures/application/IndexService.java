@@ -10,10 +10,7 @@ package org.seedstack.business.fixtures.application;
 import org.seedstack.business.Service;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 
-
 @Service
 public interface IndexService {
-
     void index(Customer customer);
-
 }

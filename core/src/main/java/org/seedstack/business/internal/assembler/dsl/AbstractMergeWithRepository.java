@@ -83,19 +83,17 @@ abstract class AbstractMergeWithRepository {
     }
 
     <A extends AggregateRoot<?>> A createFromFactory(Class<A> aggregateClass, Object[] parameters) {
-        // TODO: cache
         return getAggregateFromFactory(context.factoryOf(aggregateClass), aggregateClass, parameters);
     }
 
     @SuppressWarnings("unchecked")
     <A extends AggregateRoot<ID>, ID, D> void mergeAggregateFromDto(A aggregateRoot, D dto) {
-        // TODO: cache
         Assembler<A, D> assembler = context.assemblerOf((Class<A>) aggregateRoot.getClass(), (Class<D>) dto.getClass());
         assembler.mergeAggregateWithDto(aggregateRoot, dto);
     }
 
     @SuppressWarnings("unchecked")
-    <A extends AggregateRoot<?>> A getAggregateFromFactory(Factory<A> factory, Class<A> aggregateClass, Object[] parameters) {
+    private <A extends AggregateRoot<?>> A getAggregateFromFactory(Factory<A> factory, Class<A> aggregateClass, Object[] parameters) {
         checkNotNull(factory);
         checkNotNull(aggregateClass);
         checkNotNull(parameters);

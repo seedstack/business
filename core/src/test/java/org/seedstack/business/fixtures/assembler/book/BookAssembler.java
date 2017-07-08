@@ -11,10 +11,8 @@ import org.seedstack.business.assembler.BaseAssembler;
 
 import javax.inject.Named;
 
-
-@Named("Book") // just to test the DSL with qualifier
+@Named("Book")
 public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
-
     @Override
     protected void doAssembleDtoFromAggregate(BookDto targetDto, StoredBook sourceAggregate) {
         targetDto.setTitle(sourceAggregate.getId().getTitle());
@@ -27,6 +25,5 @@ public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
     protected void doMergeAggregateWithDto(StoredBook targetAggregate, BookDto sourceDto) {
         targetAggregate.setPublishDate(sourceDto.getPublishDate());
         targetAggregate.setEditor(sourceDto.getEditor());
-        // identity never change
     }
 }
