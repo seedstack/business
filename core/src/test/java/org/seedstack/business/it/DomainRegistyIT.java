@@ -31,7 +31,7 @@ import org.seedstack.business.fixtures.registry.service.RebateServiceInternal;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierComposite;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierNamed;
 import org.seedstack.business.fixtures.registry.service.ServiceQualifier;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.shed.reflect.TypeOf;
 
@@ -59,7 +59,7 @@ public class DomainRegistyIT {
     /**
      * Test a bad service from the {@link DomainRegistry}.
      */
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void testBadService() {
         this.domainRegistry.getService(String.class);
     }
@@ -123,7 +123,7 @@ public class DomainRegistyIT {
     /**
      * Test a bad service from the {@link DomainRegistry}.
      */
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void testBadPolicy() {
         this.domainRegistry.getPolicy(String.class);
     }

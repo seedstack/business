@@ -15,7 +15,7 @@ import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +47,7 @@ class DomainEventPublisherInternal implements DomainEventPublisher {
                 try {
                     notifyHandlers(eventClass, event);
                 } catch (Exception e) {
-                    throw SeedException.wrap(e, BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
+                    throw BusinessException.wrap(e, BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
                             .put("event", eventClass.getName());
                 } finally {
                     if (isFirstCall) {
@@ -60,7 +60,7 @@ class DomainEventPublisherInternal implements DomainEventPublisher {
 
     private void checkCyclicCall(Class<? extends DomainEvent> eventClass, DomainEvent domainEvent) {
         if (context.get().get(eventClass).contains(domainEvent)) {
-            throw SeedException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED).put("event", eventClass);
+            throw BusinessException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED).put("event", eventClass);
         }
     }
 

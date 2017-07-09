@@ -18,8 +18,10 @@ import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.pagination.Page;
+import org.seedstack.business.spi.assembler.DtoInfoResolver;
 
 import javax.inject.Inject;
+import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -34,8 +36,8 @@ public class FluentAssemblerImpl implements FluentAssembler {
     private Context context;
 
     @Inject
-    public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry) {
-        context = new Context(domainRegistry, registry);
+    public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry, Set<DtoInfoResolver> dtoInfoResolvers) {
+        context = new Context(domainRegistry, registry, dtoInfoResolvers);
     }
 
     @Override

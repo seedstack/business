@@ -18,6 +18,7 @@ import javax.inject.Inject;
 @MyQualifier
 public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
     @Inject
+    @SuppressWarnings("unchecked")
     public DefaultRepoSample3(@Assisted Object[] genericClasses) {
         super((Class) genericClasses[0], (Class) genericClasses[1]);
     }

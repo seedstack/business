@@ -15,10 +15,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.io.Serializable;
 
 /**
- * This class is the inheritance base for ValueObject implementations. It offers specific {@code equals()} and
- * {@code hashCode()} methods which are computed by reflection on all non-transient field values. If performance is critical,
- * consider overriding those methods with optimized versions. Be sure to respect the equality semantics for value objects
- * when doing so.
+ * A base class implementing basic features of DDD value objects.
+ *
+ * It provides {@link #equals(Object)} and {@link #hashCode()} methods based on all the value object attributes. This
+ * mechanism is reflection-based and can be overridden for performance purposes. When doing so, take care of respecting
+ * the semantics of value object equality.
  */
 public abstract class BaseValueObject implements ValueObject, Serializable {
     /**

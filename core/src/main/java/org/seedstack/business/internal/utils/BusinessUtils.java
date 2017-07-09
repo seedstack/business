@@ -18,7 +18,7 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.shed.ClassLoaders;
 import org.seedstack.shed.reflect.AnnotationPredicates;
@@ -54,10 +54,13 @@ public final class BusinessUtils {
         return (Class<ID>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
     }
 
-    @SuppressWarnings("unchecked")
-    @SafeVarargs
-    public static <A extends AggregateRoot<?>> Class<A>[] createAggregateClasses(Class<? extends AggregateRoot<?>>... aggregateRootClasses) {
-        return (Class<A>[]) aggregateRootClasses;
+    public static Class<?>[] getAggregateIdClasses(Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {
+        checkNotNull(aggregateRootClasses, "aggregateRootClasses should not be null");
+        Class<?>[] result = new Class<?>[aggregateRootClasses.length];
+        for (int i = 0; i < aggregateRootClasses.length; i++) {
+            result[i] = (Class<?>) resolveGenerics(AggregateRoot.class, aggregateRootClasses[i])[0];
+        }
+        return result;
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +94,7 @@ public final class BusinessUtils {
                     if (Annotation.class.isAssignableFrom(qualifierClass)) {
                         defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
                     } else {
-                        throw SeedException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
+                        throw BusinessException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
                                 .put("aggregateClass", aggregateClass.getName())
                                 .put("qualifierClass", qualifierName);
                     }

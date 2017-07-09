@@ -28,14 +28,14 @@ import org.seedstack.business.Producible;
  * </pre>
  * Then this interface has to be implemented by the actual factory implementation .
  *
- * @param <DO> Domain Object type to be produced.
+ * @param <T> Domain Object type to be produced.
  */
 @DomainFactory
-public interface Factory<DO extends DomainObject & Producible> extends DomainObject {
+public interface Factory<T extends Producible> extends DomainObject {
     /**
      * @return the produced class
      */
-    Class<DO> getProducedClass();
+    Class<T> getProducedClass();
 
     /**
      * Creates a domain object.
@@ -43,7 +43,7 @@ public interface Factory<DO extends DomainObject & Producible> extends DomainObj
      * @param args arguments
      * @return an instance of DomainObject
      */
-    default DO create(Object... args) {
+    default T create(Object... args) {
         throw new UnsupportedOperationException("Generic creation is not supported by this factory");
     }
 }

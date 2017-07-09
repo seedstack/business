@@ -18,7 +18,7 @@ import org.seedstack.business.fixtures.identity.MyAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.fixtures.identity.MyAggregateWithNoIdentityManagement;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -42,7 +42,7 @@ public class IdentityServiceInternalIT {
         try {
             identityService.identify(myAggregate);
             Assertions.fail("no exception occured");
-        } catch (SeedException e) {
+        } catch (BusinessException e) {
             Assertions.assertThat(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
                     .isEqualTo(e.getErrorCode());
         }
@@ -54,7 +54,7 @@ public class IdentityServiceInternalIT {
         try {
             identityService.identify(myAggregate);
             Assertions.fail("no exception occured");
-        } catch (SeedException e) {
+        } catch (BusinessException e) {
             Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED_BY_HANDLER)
                     .isEqualTo(e.getErrorCode());
         }
@@ -67,7 +67,7 @@ public class IdentityServiceInternalIT {
 
             identityService.identify(myAggregate);
             Assertions.fail("no exception occured");
-        } catch (SeedException e) {
+        } catch (BusinessException e) {
             Assertions.assertThat(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
                     .isEqualTo(e.getErrorCode());
         }

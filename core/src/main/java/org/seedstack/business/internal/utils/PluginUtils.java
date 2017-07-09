@@ -37,6 +37,7 @@ public final class PluginUtils {
      *
      * @param interfaces the interfaces
      */
+    @SuppressWarnings("unchecked")
     public static <T extends Class<?>> Map<T, Specification<? extends T>> classpathRequestForDescendantTypesOf(ClasspathScanRequestBuilder classpathScanRequestBuilder, Collection<T> interfaces) {
         Map<T, Specification<? extends T>> specsByInterface = new HashMap<>();
         for (T anInterface : interfaces) {

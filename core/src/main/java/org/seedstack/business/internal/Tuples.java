@@ -163,7 +163,7 @@ public final class Tuples {
      * @return the tuple type.
      */
     public static ParameterizedType typeOfTuple(final Class<?>... classes) {
-        return Types.newParameterizedType(classOfTuple((Object[]) classes), (Type[]) classes);
+        return Types.newParameterizedType(classOfTuple(classes.length), (Type[]) classes);
     }
 
     /**

@@ -12,6 +12,11 @@ import org.junit.Test;
 import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
+import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.specification.DelegatingSpecification;
+import org.seedstack.business.specification.NotSpecification;
+import org.seedstack.business.specification.OrSpecification;
+import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
@@ -51,17 +56,19 @@ public class SpecificationBuilderTest {
                 .property("leader.name").equalTo("Sammy")
                 .build();
 
-        System.out.println(spec);
-//
-//        assertThat(spec).isInstanceOf(PropertySpecification.class);
-//        spec = ((PropertySpecification<Team, ?>) spec).getValueSpecification();
-//        assertThat(((OrSpecification<Team>) spec).getLhs()).isInstanceOf(OrSpecification.class);
-//        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).isInstanceOf(StringEqualSpecification.class);
-//        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).isInstanceOf(GreaterThanSpecification.class);
-//        assertThat(((OrSpecification<Team>) spec).getRhs()).isInstanceOf(NotSpecification.class);
-//        assertThat(((NotSpecification<Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).isInstanceOf(AndSpecification.class);
-//        assertThat(((AndSpecification<Team>) ((NotSpecification<Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).isInstanceOf(StringEqualSpecification.class);
-//        assertThat(((AndSpecification<Team>) ((NotSpecification<Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).isInstanceOf(StringEqualSpecification.class);
+        assertThat(spec).isInstanceOf(DelegatingSpecification.class);
+        spec = ((DelegatingSpecification<Team>) spec).getDelegate();
+        assertThat(spec).isInstanceOf(OrSpecification.class);
+        assertThat(((OrSpecification<Team>) spec).getLhs()).isInstanceOf(OrSpecification.class);
+        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).isInstanceOf(PropertySpecification.class);
+        assertThat(((PropertySpecification<Team, ?>) ((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).getPath()).isEqualTo("leader.name");
+        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).isInstanceOf(PropertySpecification.class);
+        assertThat(((PropertySpecification<? super Team, ?>) ((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).getPath()).isEqualTo("leader.age");
+        assertThat(((OrSpecification<Team>) spec).getRhs()).isInstanceOf(NotSpecification.class);
+        assertThat(((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).isInstanceOf(AndSpecification.class);
+        assertThat(((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).isInstanceOf(PropertySpecification.class);
+        assertThat(((PropertySpecification<? super Team, ?>) ((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).getPath()).isEqualTo("name");
+        assertThat(((PropertySpecification<? super Team, ?>) ((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getRhs()).getPath()).isEqualTo("leader.name");
     }
 
     @Test

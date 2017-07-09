@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Factory;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 
 /**
  * FactoryInternalTest
@@ -57,22 +57,22 @@ public class DefaultFactoryTest {
         Assertions.assertThat(myAggregateTest.getName()).isEqualTo(NOM);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void create_aggregate_using_two_parameter_conflicted_constructor() {
         myFactory.create(ID, NOM);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void create_aggregate_using_a_primitive_parameter_conflicted_constructor() {
         myFactory.create(ID_PRIMITIVE, NOM);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void create_aggregate_using_null_parameters_conflicted_constructor() {
         myFactory.create(AGE, null);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void create_aggregate_using_parameters_for_no_existing_constructor() {
         myFactory.create(AGE, "test1", "test2", "test3");
     }
