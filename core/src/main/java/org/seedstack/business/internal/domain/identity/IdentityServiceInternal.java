@@ -20,7 +20,7 @@ import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -56,11 +56,11 @@ class IdentityServiceInternal implements IdentityService {
             if (id == null) {
                 entityIdField.set(entity, identityHandler.handle(entity, entityConfiguration));
             } else {
-                throw SeedException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY).put(ENTITY_CLASS,
+                throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY).put(ENTITY_CLASS,
                         entity.getClass().getName());
             }
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw SeedException.wrap(e, BusinessErrorCode.UNABLE_TO_INJECT_ENTITY_IDENTITY)
+            throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INJECT_ENTITY_IDENTITY)
                     .put(ENTITY_CLASS, entity.getClass().getName());
         }
 
@@ -78,7 +78,7 @@ class IdentityServiceInternal implements IdentityService {
         Class<?> entityIdClass = getEntityIdType(entity);
         Class<?> identityHandlerIdClass = getHandlerIdType(identityHandler);
         if (!entityIdClass.isAssignableFrom(identityHandlerIdClass)) {
-            throw SeedException.createNew(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED_BY_HANDLER)
+            throw BusinessException.createNew(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED_BY_HANDLER)
                     .put(ENTITY_CLASS, entity.getClass().getName())
                     .put(HANDLER_CLASS, identityHandler.getClass().getName())
                     .put("entityIdClass", entityIdClass.getName())
@@ -104,7 +104,7 @@ class IdentityServiceInternal implements IdentityService {
             if (!Strings.isNullOrEmpty(identityQualifier)) {
                 identityHandler = injector.getInstance(Key.get(identity.value(), Names.named(identityQualifier)));
             } else {
-                throw SeedException.createNew(BusinessErrorCode.NO_IDENTITY_HANDLER_QUALIFIER_FOUND_ON_ENTITY)
+                throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_HANDLER_QUALIFIER_FOUND_ON_ENTITY)
                         .put(HANDLER_CLASS, identity.value())
                         .put(ENTITY_CLASS, entityClass.getName());
             }
@@ -125,7 +125,7 @@ class IdentityServiceInternal implements IdentityService {
         if (field.isPresent()) {
             return field.get();
         } else {
-            throw SeedException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
+            throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
                     .put(ENTITY_CLASS, entity.getClass().getName());
         }
     }

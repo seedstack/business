@@ -18,7 +18,7 @@ import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.Tuples;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -80,7 +80,7 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
                 o = (Assembler<T, D>) getInstance(Assembler.class, aggregateRoot, dto);
             }
         } catch (ConfigurationException e) {
-            SeedException seedException = SeedException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
+            BusinessException seedException = BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
                     .put("aggregateRoot", aggregateRoot)
                     .put("dto", dto);
             if (qualifier != null) {
@@ -90,7 +90,7 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
                 seedException.put("qualifier", qualifierClass.getSimpleName());
                 throw seedException;
             } else {
-                throw SeedException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER)
+                throw BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER)
                         .put("aggregateRoot", aggregateRoot)
                         .put("dto", dto);
             }

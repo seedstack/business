@@ -39,6 +39,7 @@ public class DefaultRepositoryCollectorTest {
     private TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(Repository.class, MyAgg.class));
 
     @Before
+    @SuppressWarnings("unchecked")
     public void before() {
         application = mock(Application.class);
         underTest = new DefaultRepositoryCollector(
@@ -48,6 +49,7 @@ public class DefaultRepositoryCollectorTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testCollectSuperclasses() throws Exception {
         Collection<BindingStrategy> bindingStrategies = underTest.collect(Lists.newArrayList(MySubAgg1.class, MySubAgg2.class));
         assertThat(((Map<?, ?>) Whitebox.getInternalState(bindingStrategies.iterator().next(), "constructorParamsMap")).size()).isEqualTo(3);
@@ -76,6 +78,6 @@ public class DefaultRepositoryCollectorTest {
     private static class MySubAgg2 extends MyAgg {
     }
 
-    public class MyDefaultRepo<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
+    private static class MyDefaultRepo<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
     }
 }

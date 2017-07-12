@@ -6,7 +6,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-logs: WARN
+logging:
+  level: WARN
+
 classes:
   org:
     seedstack:
@@ -38,9 +40,10 @@ security:
     Anakin: imsodark
 
 jmh:
+  include: FluentAssemblerBenchmark
   mode: Throughput
   timeUnit: SECONDS
   warmup:
-    iterations: 3
+    iterations: 2
   measurement:
-    iterations: 5
+    iterations: 2

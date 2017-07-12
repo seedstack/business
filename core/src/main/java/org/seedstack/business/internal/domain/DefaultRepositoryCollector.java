@@ -39,7 +39,7 @@ class DefaultRepositoryCollector {
      * Prepares the binding strategies which bind default repositories. The specificity here is that it could have
      * multiple implementations of default repository, i.e. one per persistence.
      *
-     * @param aggregateClasses
+     * @param aggregateClasses the aggregates classes to collect repositories from.
      * @return a binding strategy
      */
     Collection<BindingStrategy> collect(Collection<Class<? extends AggregateRoot<?>>> aggregateClasses) {

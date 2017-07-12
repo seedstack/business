@@ -19,4 +19,6 @@ public interface MyAggregateFactory extends Factory<MyAggregate> {
 
     MyAggregate createMyAggregate(String name);
 
+    MyAggregate createMyAggregate();
+
 }

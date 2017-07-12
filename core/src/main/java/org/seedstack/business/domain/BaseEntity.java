@@ -13,16 +13,21 @@ import org.seedstack.shed.reflect.ReflectUtils;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * This abstract class is the base class for all Entities in Seed Business Framework.
+ * A base class implementing basic features of DDD entities.
  *
- * It provides an {@code equals()} method based on the entity identity. This also enforce
- * the entity to valid, i.e. not null. Otherwise a SeedException will be thrown.
+ * It provides {@link #equals(Object)} and {@link #hashCode()} methods based on the entity identity. It also provides
+ * auto-detection of the identity field by reflection (see {@link BaseEntity#getId()}).
  *
- * @param <ID> The identifier type.
+ * @param <ID> The type of the entity identifier.
  */
 public abstract class BaseEntity<ID> implements Entity<ID> {
+    // This unbounded cache of identity fields can only grow up to the number of entity classes in the system
+    private static final ConcurrentMap<Class<?>, Field> identityFields = new ConcurrentHashMap<>();
+
     /**
      * Starting from the current class and going up in the hierarchy, this method tries to find:
      * <ul>
@@ -35,14 +40,18 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
      * @return the value of the identity field if found, null otherwise.
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ID getId() {
-        return findIdentityByAnnotation()
+        Field identityField = identityFields.computeIfAbsent(getClass(), key -> findIdentityByAnnotation()
                 .map(Optional::of)
                 .orElseGet(this::findIdentityByName)
                 .map(ReflectUtils::makeAccessible)
-                .map(field -> (ID) ReflectUtils.getValue(field, this))
-                .orElse(null);
+                .orElse(null));
+
+        if (identityField != null) {
+            return ReflectUtils.getValue(identityField, this);
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -12,19 +12,22 @@ import org.seedstack.business.assembler.dsl.MergeFromRepository;
 import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.internal.utils.BusinessUtils;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 
-class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<ID>, ID, D> extends AbstractMergeWithRepository implements MergeFromRepository<MergeAs<A>>, MergeFromRepositoryOrFactory<MergeAs<A>> {
+class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<ID>, ID, D> implements MergeFromRepository<MergeAs<A>>, MergeFromRepositoryOrFactory<MergeAs<A>> {
+    private final Context context;
     private final Class<A> aggregateClass;
+    private final Class<ID> aggregateClassId;
     private final Stream<D> dtoStream;
 
     MergeMultipleAggregatesFromRepositoryImpl(Context context, Stream<D> dtoStream, Class<A> aggregateClass) {
-        super(context);
-        this.aggregateClass = aggregateClass;
+        this.context = context;
         this.dtoStream = dtoStream;
+        this.aggregateClass = aggregateClass;
+        this.aggregateClassId = BusinessUtils.getAggregateIdClass(aggregateClass);
     }
 
     @Override
@@ -35,12 +38,9 @@ class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<ID>, ID,
     @Override
     public MergeAs<A> fromFactory() {
         return new MergeAsImpl<>(dtoStream.map(dto -> {
-            A aggregateFromFactory = createFromFactory(
-                    aggregateClass,
-                    getDtoInfoResolver().resolveAggregate(dto).parameters()
-            );
-            mergeAggregateFromDto(aggregateFromFactory, dto);
-            return aggregateFromFactory;
+            A a = context.create(dto, aggregateClass);
+            context.mergeDtoIntoAggregate(dto, a);
+            return a;
         }));
     }
 
@@ -48,36 +48,26 @@ class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<ID>, ID,
     public MergeAs<A> orFail() throws AggregateNotFoundException {
         return new MergeAsImpl<>(
                 dtoStream.map(dto -> {
-                    ID identifier = createIdentifier(getDtoInfoResolver().resolveId(dto), aggregateClass);
-                    A aggregateRootFromRepository = loadFromRepository(identifier)
-                            .orElseThrow(() -> new AggregateNotFoundException(String.format(
-                                    "Unable to load aggregate %s for id: %s",
-                                    aggregateClass.getName(),
-                                    identifier)
-                            ));
-                    mergeAggregateFromDto(aggregateRootFromRepository, dto);
-                    return aggregateRootFromRepository;
+                    ID id = context.resolveId(dto, aggregateClassId);
+                    A a = context.load(id, aggregateClass);
+                    if (a == null) {
+                        throw new AggregateNotFoundException("Unable to load aggregate " + aggregateClass.getName() + "[" + id + "]");
+                    }
+                    context.mergeDtoIntoAggregate(dto, a);
+                    return a;
                 })
         );
     }
 
     @Override
     public MergeAs<A> orFromFactory() {
-        return new MergeAsImpl<>(
-                dtoStream.map(dto -> {
-                    ID identifier = createIdentifier(getDtoInfoResolver().resolveId(dto), aggregateClass);
-                    A aggregateRootFromRepositoryOrFactory = loadFromRepository(identifier)
-                            .orElseGet(() -> createFromFactory(
-                                    aggregateClass,
-                                    getDtoInfoResolver().resolveAggregate(dto).parameters())
-                            );
-                    mergeAggregateFromDto(aggregateRootFromRepositoryOrFactory, dto);
-                    return aggregateRootFromRepositoryOrFactory;
-                })
-        );
-    }
-
-    private Optional<A> loadFromRepository(ID identifier) {
-        return getContext().repositoryOf(aggregateClass).get(identifier);
+        return new MergeAsImpl<>(dtoStream.map(dto -> {
+            A a = context.load(context.resolveId(dto, aggregateClassId), aggregateClass);
+            if (a == null) {
+                a = context.create(dto, aggregateClass);
+            }
+            context.mergeDtoIntoAggregate(dto, a);
+            return a;
+        }));
     }
 }

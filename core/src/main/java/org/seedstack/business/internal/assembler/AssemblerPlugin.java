@@ -13,6 +13,7 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessSpecifications;
+import org.seedstack.business.spi.assembler.DtoInfoResolver;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
@@ -23,14 +24,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
+import static org.seedstack.shed.PriorityUtils.sortByPriority;
 
 public class AssemblerPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
     private final Map<Key<Assembler>, Class<? extends Assembler>> assemblerBindings = new HashMap<>();
     private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
+    private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
     private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
 
@@ -44,6 +48,7 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
         return classpathScanRequestBuilder()
                 .specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
                 .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
+                .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
                 .specification(BusinessSpecifications.DTO_OF)
                 .build();
     }
@@ -57,6 +62,10 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
         streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class).forEach(defaultAssemblerClasses::add);
         LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
+        streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class).forEach(dtoInfoResolverClasses::add);
+        sortByPriority(dtoInfoResolverClasses);
+        LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
+
         Collection subTypes = initContext.scannedTypesBySpecification().get(BusinessSpecifications.EXPLICIT_ASSEMBLER);
         assemblerBindings.putAll(BindingUtils.resolveBindingDefinitions(Assembler.class, (Collection<Class<? extends Assembler>>) subTypes));
 
@@ -67,6 +76,6 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return new AssemblerModule(assemblerBindings, bindingStrategies);
+        return new AssemblerModule(assemblerBindings, dtoInfoResolverClasses, bindingStrategies);
     }
 }

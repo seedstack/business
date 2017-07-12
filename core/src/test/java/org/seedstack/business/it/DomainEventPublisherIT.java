@@ -14,7 +14,7 @@ import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.fixtures.event.MyDomainEvent;
 import org.seedstack.business.fixtures.event.MyDomainEvent2;
 import org.seedstack.business.fixtures.event.cyclic.Event1;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
@@ -57,7 +57,7 @@ public class DomainEventPublisherIT {
         }
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void fire_cyclic_events() {
         domainEventPublisher.publish(new Event1());
     }

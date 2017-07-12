@@ -33,6 +33,11 @@ public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implemen
         return myAggregate;
     }
 
+    @Override
+    public MyAggregate createMyAggregate() {
+        return new MyAggregate();
+    }
+
     @Create
     MyEntity createMySubAggregate() {
         return new MyEntity();

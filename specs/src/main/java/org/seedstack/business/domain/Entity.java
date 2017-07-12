@@ -8,27 +8,23 @@
 package org.seedstack.business.domain;
 
 /**
- * This interface is the parent type for all implementations of Entity in the Business Framework.
- * <p>
- * This interface should not be used directly as we already provide a base implementation for equals and hashcode.
+ * Interface for domain entities.
  *
- * @param <ID> the type of the entityId
+ * @param <ID> the type of the entity identifier.
  */
 @DomainEntity
 public interface Entity<ID> extends DomainObject {
 
     /**
-     * Gets the entity id.
-     *
-     * @return the entity id
+     * @return the entity identifier.
      */
     ID getId();
 
     /**
-     * Entities compare by identity, not by attributes.
+     * Entity equality is computed on identity only.
      *
      * @param other The other entity.
-     * @return true if the identities are the same, regardles of other attributes.
+     * @return true if the both entity identities are equal, false otherwise.
      */
     boolean equals(Object other);
 

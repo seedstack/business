@@ -22,6 +22,7 @@ import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.identity.IdentityHandler;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
+import org.seedstack.business.spi.assembler.DtoInfoResolver;
 import org.seedstack.business.spi.specification.SpecificationConverter;
 import org.seedstack.business.spi.specification.SpecificationTranslator;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
@@ -166,6 +167,15 @@ public final class BusinessSpecifications {
      */
     public static final Specification<Class<?>> DTO_OF = new SpecificationBuilder<Class<?>>(
             elementAnnotatedWith(DtoOf.class, false))
+            .build();
+
+    /**
+     * The specification for specification translators.
+     */
+    public static final Specification<Class<?>> DTO_INFO_RESOLVER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(DtoInfoResolver.class)))
             .build();
 
     /**

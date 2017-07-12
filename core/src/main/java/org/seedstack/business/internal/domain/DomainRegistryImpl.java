@@ -14,13 +14,12 @@ import com.google.inject.util.Types;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.Producible;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.shed.exception.ErrorCode;
 import org.seedstack.shed.reflect.TypeOf;
 
@@ -43,15 +42,13 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
-    public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf,
-                                                                                       Class<? extends Annotation> qualifier) {
+    public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf, Class<? extends Annotation> qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
         return getInstance(getKey(typeOf.getType(), qualifier));
     }
 
     @Override
-    public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf,
-                                                                                       String qualifier) {
+    public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf, String qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
         return getInstance(getKey(typeOf.getType(), qualifier));
     }
@@ -62,49 +59,46 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
-    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key,
-                                                                          Class<? extends Annotation> qualifier) {
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, Class<? extends Annotation> qualifier) {
         return getInstance(getKey(getType(Repository.class, aggregateRoot, key), qualifier));
     }
 
     @Override
-    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key,
-                                                                          String qualifier) {
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, String qualifier) {
         return getInstance(getKey(getType(Repository.class, aggregateRoot, key), qualifier));
     }
 
     @Override
-    public <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf) {
+    public <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf) {
         checkType(typeOf.getRawType(), BusinessSpecifications.FACTORY, BusinessErrorCode.ILLEGAL_FACTORY);
         return getInstance(getKey(typeOf.getType()));
     }
 
     @Override
-    public <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf,
-                                                                                    Class<? extends Annotation> qualifier) {
+    public <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, Class<? extends Annotation> qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.FACTORY, BusinessErrorCode.ILLEGAL_FACTORY);
         return getInstance(getKey(typeOf.getType(), qualifier));
     }
 
     @Override
-    public <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf, String qualifier) {
+    public <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, String qualifier) {
         checkType(typeOf.getRawType(), BusinessSpecifications.FACTORY, BusinessErrorCode.ILLEGAL_FACTORY);
         return getInstance(getKey(typeOf.getType(), qualifier));
     }
 
     @Override
-    public <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot) {
+    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot) {
         return getInstance(getKey(getType(Factory.class, aggregateRoot)));
     }
 
     @Override
-    public <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot,
-                                                                       Class<? extends Annotation> qualifier) {
+    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot,
+                                                        Class<? extends Annotation> qualifier) {
         return getInstance(getKey(getType(Factory.class, aggregateRoot), qualifier));
     }
 
     @Override
-    public <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier) {
+    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier) {
         return getInstance(getKey(getType(Factory.class, aggregateRoot), qualifier));
     }
 
@@ -199,7 +193,7 @@ class DomainRegistryImpl implements DomainRegistry {
      * @param qualifier Optional Key {@link Qualifier}.
      * @return the {@link Key}.
      */
-    private <T> Key<?> getKey(Type type, Class<? extends Annotation> qualifier) {
+    private Key<?> getKey(Type type, Class<? extends Annotation> qualifier) {
         return Key.get(type, qualifier);
     }
 
@@ -209,7 +203,7 @@ class DomainRegistryImpl implements DomainRegistry {
      * @param type class
      * @return the {@link Key}.
      */
-    private <T> Key<?> getKey(Type type, String qualifier) {
+    private Key<?> getKey(Type type, String qualifier) {
         return Key.get(type, Names.named(qualifier));
     }
 
@@ -219,7 +213,7 @@ class DomainRegistryImpl implements DomainRegistry {
      * @param type class
      * @return the {@link Key}.
      */
-    private <T> Key<?> getKey(Type type) {
+    private Key<?> getKey(Type type) {
         return Key.get(type);
     }
 
@@ -244,7 +238,7 @@ class DomainRegistryImpl implements DomainRegistry {
      */
     private <T> void checkType(Class<T> rawType, Specification<Class<?>> spec, ErrorCode errorCode) {
         if (!spec.isSatisfiedBy(rawType)) {
-            throw SeedException.createNew(errorCode).put("class", rawType);
+            throw BusinessException.createNew(errorCode).put("class", rawType);
         }
     }
 }

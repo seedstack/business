@@ -94,7 +94,7 @@ public interface DomainRegistry {
      * @param aggregateRoot the aggregate root linked to the factoy.
      * @return an instance of the {@link Factory}
      */
-    <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot);
+    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot);
 
     /**
      * Get the {@link Factory} with a qualifier for an aggregate root.
@@ -103,7 +103,7 @@ public interface DomainRegistry {
      * @param qualifier     factory qualifier.
      * @return an instance of the {@link Factory}
      */
-    <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot, Class<? extends Annotation> qualifier);
+    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, Class<? extends Annotation> qualifier);
 
     /**
      * Get the {@link Factory} with a qualifier for an aggregate root.
@@ -112,7 +112,7 @@ public interface DomainRegistry {
      * @param qualifier     factory qualifier.
      * @return an instance of the {@link Factory}
      */
-    <T extends DomainObject & Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier);
+    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier);
 
     /**
      * Get a {@link Factory} from the domain.
@@ -120,7 +120,7 @@ public interface DomainRegistry {
      * @param typeOf the {@link TypeOf} to define all generic pattern.
      * @return a {@link Factory} found in the domain.
      */
-    <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf);
+    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf);
 
     /**
      * Get a {@link Factory} from the domain.
@@ -129,7 +129,7 @@ public interface DomainRegistry {
      * @param qualifier factory qualifier
      * @return a {@link Factory} found in the domain.
      */
-    <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
+    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Factory} from the domain.
@@ -138,7 +138,7 @@ public interface DomainRegistry {
      * @param qualifier factory qualifier
      * @return a {@link Factory} found in the domain.
      */
-    <T extends Factory<A>, A extends DomainObject & Producible> T getFactory(TypeOf<T> typeOf, String qualifier);
+    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, String qualifier);
 
     /**
      * Get a {@link Service} from the domain.

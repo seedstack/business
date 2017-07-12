@@ -9,7 +9,7 @@ package org.seedstack.business.internal.utils;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 
 import java.lang.reflect.Method;
 
@@ -31,7 +31,7 @@ public class MethodMatcherTest {
         Assertions.assertThat(testMethod3.getName()).isEqualTo("test3");
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void test_method_matcher_fail() {
         MethodMatcher.findMatchingMethod(TestedClass2.class, Integer.class, "aa", ProjectStatus.FIRST);
     }

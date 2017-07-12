@@ -15,7 +15,7 @@ import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.identity.IdentityHandler;
 import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.seed.core.internal.utils.MethodMatcherBuilder;
 import org.seedstack.shed.reflect.ClassPredicates;
 import org.seedstack.shed.reflect.Classes;
@@ -64,7 +64,7 @@ class IdentityModule extends AbstractModule {
         if (first.isPresent()) {
             return (Class<IdentityHandler>) first.get();
         } else {
-            throw SeedException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_HANDLER).put("class", identityHandlerClass.getName());
+            throw BusinessException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_HANDLER).put("class", identityHandlerClass.getName());
         }
     }
 

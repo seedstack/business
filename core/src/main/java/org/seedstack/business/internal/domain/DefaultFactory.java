@@ -13,7 +13,6 @@ package org.seedstack.business.internal.domain;
 import com.google.inject.assistedinject.Assisted;
 import org.seedstack.business.Producible;
 import org.seedstack.business.domain.BaseFactory;
-import org.seedstack.business.domain.DomainObject;
 
 import javax.inject.Inject;
 
@@ -43,20 +42,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * MyObject(Integer age)
  * </pre>
  *
- * @param <DO> the domain object type
+ * @param <T> the domain object type
  */
-public class DefaultFactory<DO extends DomainObject & Producible> extends BaseFactory<DO> {
-    private final Class<DO> domainObjectClass;
+public class DefaultFactory<T extends Producible> extends BaseFactory<T> {
+    private final Class<T> domainObjectClass;
 
     @SuppressWarnings("unchecked")
     @Inject
     DefaultFactory(@Assisted Object[] domainObjectClass) {
         checkNotNull(domainObjectClass);
         checkArgument(domainObjectClass.length == 1);
-        this.domainObjectClass = (Class<DO>) domainObjectClass[0];
+        this.domainObjectClass = (Class<T>) domainObjectClass[0];
     }
 
-    public Class<DO> getProducedClass() {
+    public Class<T> getProducedClass() {
         return domainObjectClass;
     }
 }

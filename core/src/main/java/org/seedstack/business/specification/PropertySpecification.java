@@ -8,7 +8,7 @@
 package org.seedstack.business.specification;
 
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.shed.reflect.Classes;
 
 import java.lang.reflect.Field;
@@ -96,7 +96,7 @@ public class PropertySpecification<T, V> implements Specification<T> {
         try {
             return field.get(candidate);
         } catch (Exception e) {
-            throw SeedException.wrap(e, BusinessErrorCode.ERROR_ACCESSING_FIELD)
+            throw BusinessException.wrap(e, BusinessErrorCode.ERROR_ACCESSING_FIELD)
                     .put("className", candidate.getClass().getName())
                     .put("fieldName", field.getName());
         }

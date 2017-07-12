@@ -10,7 +10,6 @@
  */
 package org.seedstack.business.it;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.domain.Factory;
@@ -21,30 +20,36 @@ import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @RunWith(SeedITRunner.class)
 public class IdentityHandlerIT {
-
     @Inject
     private MyAggregateFactory myAggregateFactory;
-
     @Inject
     private Factory<MyAggregate> factory;
 
     @Test
+    public void sameClass() {
+        assertThat(myAggregateFactory).isInstanceOf(MyAggregateFactory.class);
+        assertThat(factory).isInstanceOf(MyAggregateFactory.class);
+        assertThat(factory.getClass()).isSameAs(myAggregateFactory.getClass());
+    }
+
+    @Test
     public void testCustomFactory() {
         MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
-        Assertions.assertThat(myAggregate.getId()).isNotNull();
-        Assertions.assertThat(myAggregate.getMySubEntity().getId()).isNotNull();
+        assertThat(myAggregate.getId()).isNotNull();
+        assertThat(myAggregate.getMySubEntity().getId()).isNotNull();
         for (MyEntity entity : myAggregate.getMySubEntities()) {
-            Assertions.assertThat(entity.getId()).isNotNull();
+            assertThat(entity.getId()).isNotNull();
         }
     }
 
     @Test
     public void testDefaultFactory() {
         MyAggregate myAggregate = factory.create();
-        Assertions.assertThat(myAggregate.getId()).isNotNull();
+        assertThat(myAggregate.getId()).isNotNull();
     }
-
 }

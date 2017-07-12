@@ -22,7 +22,7 @@ import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.seed.SeedException;
+import org.seedstack.business.BusinessException;
 import org.seedstack.shed.reflect.TypeOf;
 
 import java.lang.annotation.ElementType;
@@ -266,7 +266,7 @@ public class DomainRegistryImplTest {
         Assertions.assertThat(domainRegistry.getService(MockedService.class)).isEqualTo(service);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void testGetServiceBad() {
         DomainRegistry domainRegistry = createDomainRegistry();
 
@@ -348,7 +348,7 @@ public class DomainRegistryImplTest {
         Assertions.assertThat(domainRegistry.getPolicy(MockedPolicy.class, "dummyAnnotation")).isEqualTo(policy);
     }
 
-    @Test(expected = SeedException.class)
+    @Test(expected = BusinessException.class)
     public void testGetPolicyBad() {
         DomainRegistry domainRegistry = createDomainRegistry();
 

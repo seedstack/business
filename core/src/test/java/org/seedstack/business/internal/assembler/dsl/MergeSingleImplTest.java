@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl;
 
+import com.google.common.collect.Sets;
 import org.assertj.core.api.Assertions;
 import org.fest.reflect.core.Reflection;
 import org.javatuples.Pair;
@@ -24,11 +25,9 @@ import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.Recipe;
 import org.seedstack.business.internal.assembler.DefaultModelMapperTupleAssembler;
+import org.seedstack.business.spi.assembler.DtoInfoResolver;
 
 import java.util.stream.Stream;
-
-import static org.seedstack.business.internal.utils.BusinessUtils.createAggregateClasses;
-
 
 public class MergeSingleImplTest {
     private Context context;
@@ -36,13 +35,14 @@ public class MergeSingleImplTest {
     @Before
     @SuppressWarnings("unchecked")
     public void before() {
+        DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
         AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
         Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());
         DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
-        context = new Context(domainRegistry, assemblerRegistry);
+        context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
         Mockito.when(assemblerRegistry.tupleAssemblerOf(
-                createAggregateClasses(Order.class, Customer.class),
+                (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
                 Recipe.class)
         ).thenReturn((Assembler) new DefaultModelMapperTupleAssembler<Pair<Order, Customer>, Recipe>(new Object[]{null, Recipe.class}));
     }
@@ -86,12 +86,10 @@ public class MergeSingleImplTest {
         assertToMethod(underTest.into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testToAggregateClassWithNullValue() {
-        Recipe dto = new Recipe("customer1", "luke", "order1", "lightsaber");
-        MergeSingleImpl<Recipe> underTest = new MergeSingleImpl<>(context, dto);
-
-        assertToMethod(underTest.into(null, null, null, Customer.class), dto, null, null, null, Customer.class);
+        new MergeSingleImpl<>(context, new Recipe("customer1", "luke", "order1", "lightsaber"))
+                .into(Customer.class, null);
     }
 
     private void assertToMethod(MergeFromRepository<?> to, Object dto, Class<?>... classes) {
@@ -102,6 +100,7 @@ public class MergeSingleImplTest {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void assertMultiple(MergeFromRepository<?> to, Object dto, Class<?>[] classes) {
         Class<? extends AggregateRoot<?>>[] aggregateClasses = Reflection.field("aggregateClasses").ofType(Class[].class).in(to).get();
         Assertions.assertThat(aggregateClasses).isEqualTo(classes);
