@@ -81,6 +81,6 @@ public @interface FactoryArgument {
      *
      * @return the index of the argument to match in the factory method.
      */
-    int index() default 0;
+    int index() default -1;
 
 }
