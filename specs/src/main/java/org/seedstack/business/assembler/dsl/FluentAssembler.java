@@ -27,6 +27,8 @@ public interface FluentAssembler {
     /**
      * Assembles an aggregate.
      *
+     * @param <A>           the type of the aggregate root.
+     * @param <ID>          the type of the aggregate root identifier.
      * @param aggregateRoot the aggregate root to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -35,6 +37,8 @@ public interface FluentAssembler {
     /**
      * Assembles a stream of aggregates.
      *
+     * @param <A>    the type of the aggregate root.
+     * @param <ID>   the type of the aggregate root identifier.
      * @param stream the stream of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -43,6 +47,8 @@ public interface FluentAssembler {
     /**
      * Assembles an iterable of aggregates.
      *
+     * @param <A>      the type of the aggregate root.
+     * @param <ID>     the type of the aggregate root identifier.
      * @param iterable the iterable of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -51,6 +57,8 @@ public interface FluentAssembler {
     /**
      * Assembles a page of aggregates.
      *
+     * @param <A>  the type of the aggregate root.
+     * @param <ID> the type of the aggregate root identifier.
      * @param page the page of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -59,6 +67,7 @@ public interface FluentAssembler {
     /**
      * Assembles a tuple of aggregates into a single DTO.
      *
+     * @param <T>   the type of the tuple.
      * @param tuple the tuple of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -67,6 +76,7 @@ public interface FluentAssembler {
     /**
      * Assembles a stream of tuple of aggregates.
      *
+     * @param <T>    the type of the tuple.
      * @param stream the stream of tuples of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -75,6 +85,7 @@ public interface FluentAssembler {
     /**
      * Assembles an iterable of tuple of aggregates.
      *
+     * @param <T>      the type of the tuple.
      * @param iterable the iterable of tuples of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -83,6 +94,7 @@ public interface FluentAssembler {
     /**
      * Assembles a page of tuple of aggregates.
      *
+     * @param <T>  the type of the tuple.
      * @param page the page of tuples of aggregate roots to assemble.
      * @return the next type for FluentAssembler DSL.
      */
@@ -91,8 +103,8 @@ public interface FluentAssembler {
     /**
      * Merges a DTO back into an aggregate.
      *
-     * @param dto the dto to merge
      * @param <D> the DTO type.
+     * @param dto the dto to merge
      * @return the next type for FluentAssembler DSL.
      */
     <D> MergeSingleWithQualifier merge(D dto);
@@ -100,8 +112,8 @@ public interface FluentAssembler {
     /**
      * Merges a stream of DTO back into aggregates.
      *
-     * @param stream the stream of DTO.
      * @param <D>    the DTO type.
+     * @param stream the stream of DTO.
      * @return the next type for FluentAssembler DSL.
      */
     <D> MergeMultipleWithQualifier merge(Stream<D> stream);
@@ -109,8 +121,8 @@ public interface FluentAssembler {
     /**
      * Merges an iterable of DTO back into aggregates.
      *
-     * @param iterable the iterable of DTO.
      * @param <D>      the DTO type.
+     * @param iterable the iterable of DTO.
      * @return the next type for FluentAssembler DSL.
      */
     <D> MergeMultipleWithQualifier merge(Iterable<D> iterable);

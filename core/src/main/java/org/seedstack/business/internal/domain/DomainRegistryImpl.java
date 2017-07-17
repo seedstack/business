@@ -12,14 +12,14 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.Producible;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Producible;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.business.BusinessException;
 import org.seedstack.shed.exception.ErrorCode;
 import org.seedstack.shed.reflect.TypeOf;
 
@@ -54,18 +54,18 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
-    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key) {
-        return getInstance(getKey(getType(Repository.class, aggregateRoot, key)));
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass) {
+        return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass)));
     }
 
     @Override
-    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, Class<? extends Annotation> qualifier) {
-        return getInstance(getKey(getType(Repository.class, aggregateRoot, key), qualifier));
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass, Class<? extends Annotation> qualifier) {
+        return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
     }
 
     @Override
-    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, String qualifier) {
-        return getInstance(getKey(getType(Repository.class, aggregateRoot, key), qualifier));
+    public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass, String qualifier) {
+        return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
     }
 
     @Override
@@ -87,19 +87,19 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
-    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot) {
-        return getInstance(getKey(getType(Factory.class, aggregateRoot)));
+    public <T extends Producible> Factory<T> getFactory(Class<T> producibleClass) {
+        return getInstance(getKey(getType(Factory.class, producibleClass)));
     }
 
     @Override
-    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot,
+    public <T extends Producible> Factory<T> getFactory(Class<T> producibleClass,
                                                         Class<? extends Annotation> qualifier) {
-        return getInstance(getKey(getType(Factory.class, aggregateRoot), qualifier));
+        return getInstance(getKey(getType(Factory.class, producibleClass), qualifier));
     }
 
     @Override
-    public <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier) {
-        return getInstance(getKey(getType(Factory.class, aggregateRoot), qualifier));
+    public <T extends Producible> Factory<T> getFactory(Class<T> producibleClass, String qualifier) {
+        return getInstance(getKey(getType(Factory.class, producibleClass), qualifier));
     }
 
     @Override
@@ -121,40 +121,40 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
-    public <T> T getService(Class<T> rawType) {
-        checkType(rawType, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
-        return getInstance(getKey(getType(rawType)));
+    public <T> T getService(Class<T> serviceClass) {
+        checkType(serviceClass, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
+        return getInstance(getKey(getType(serviceClass)));
     }
 
     @Override
-    public <T> T getService(Class<T> rawType, Class<? extends Annotation> qualifier) {
-        checkType(rawType, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
-        return getInstance(getKey(rawType, qualifier));
+    public <T> T getService(Class<T> serviceClass, Class<? extends Annotation> qualifier) {
+        checkType(serviceClass, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
+        return getInstance(getKey(serviceClass, qualifier));
     }
 
 
     @Override
-    public <T> T getService(Class<T> rawType, String qualifier) {
-        checkType(rawType, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
-        return getInstance(getKey(getType(rawType), qualifier));
+    public <T> T getService(Class<T> serviceClass, String qualifier) {
+        checkType(serviceClass, BusinessSpecifications.SERVICE, BusinessErrorCode.ILLEGAL_SERVICE);
+        return getInstance(getKey(getType(serviceClass), qualifier));
     }
 
     @Override
-    public <T> T getPolicy(Class<T> rawType) {
-        checkType(rawType, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
-        return getInstance(getKey(getType(rawType)));
+    public <T> T getPolicy(Class<T> policyClass) {
+        checkType(policyClass, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
+        return getInstance(getKey(getType(policyClass)));
     }
 
     @Override
-    public <T> T getPolicy(Class<T> rawType, Class<? extends Annotation> qualifier) {
-        checkType(rawType, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
-        return getInstance(getKey(rawType, qualifier));
+    public <T> T getPolicy(Class<T> policyClass, Class<? extends Annotation> qualifier) {
+        checkType(policyClass, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
+        return getInstance(getKey(policyClass, qualifier));
     }
 
     @Override
-    public <T> T getPolicy(Class<T> rawType, String qualifier) {
-        checkType(rawType, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
-        return getInstance(getKey(getType(rawType), qualifier));
+    public <T> T getPolicy(Class<T> policyClass, String qualifier) {
+        checkType(policyClass, BusinessSpecifications.POLICY, BusinessErrorCode.ILLEGAL_POLICY);
+        return getInstance(getKey(getType(policyClass), qualifier));
     }
 
     @Override

@@ -7,7 +7,6 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
 import org.seedstack.shed.reflect.TypeOf;
 
@@ -34,213 +33,249 @@ import java.lang.annotation.Annotation;
 public interface DomainRegistry {
 
     /**
-     * Get a {@link Repository} from the domain.
-     *
-     * @param typeOf the {@link TypeOf} to define all generic pattern.
-     * @return a {@link Repository} found in the domain.
-     */
-    <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf);
-
-    /**
-     * Get a {@link Repository} from the domain.
-     *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier repository qualifier
-     * @return a {@link Repository} found in the domain.
-     */
-    <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
-
-    /**
-     * Get a {@link Repository} from the domain.
-     *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier repository qualifier
-     * @return a {@link Repository} found in the domain.
-     */
-    <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(TypeOf<T> typeOf, String qualifier);
-
-    /**
      * Get the {@link Repository} for an aggregate root.
      *
-     * @param aggregateRoot the aggregate root linked to the repository.
-     * @param key           the aggregate root's key.
-     * @return an instance of the {@link Repository}
+     * @param <A>                the type of the aggregate root.
+     * @param <ID>               the type of the aggregate root identifier.
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
+     * @return an instance of the repository.
      */
-    <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key);
+    <A extends AggregateRoot<ID>, ID> Repository<A, ID> getRepository(Class<A> aggregateRootClass, Class<ID> idClass);
 
     /**
      * Get the {@link Repository} for an aggregate root and a qualifier.
      *
-     * @param aggregateRoot the aggregate root linked to the repository.
-     * @param key           the aggregate root's key.
-     * @param qualifier     repository qualifier (example: JPA, ...).
-     * @return an instance of the {@link Repository}
+     * @param <A>                the type of the aggregate root.
+     * @param <ID>               the type of the aggregate root identifier.
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
+     * @param qualifier          the repository qualifier.
+     * @return an instance of the repository.
      */
-    <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, Class<? extends Annotation> qualifier);
+    <A extends AggregateRoot<ID>, ID> Repository<A, ID> getRepository(Class<A> aggregateRootClass, Class<ID> idClass, Class<? extends Annotation> qualifier);
 
     /**
      * Get the {@link Repository} for an aggregate root and a qualifier.
      *
-     * @param aggregateRoot the aggregate root linked to the repository.
-     * @param key           the aggregate root's key.
-     * @param qualifier     repository qualifier (example: JPA, ...).
-     * @return an instance of the {@link Repository}
+     * @param <A>                the type of the aggregate root.
+     * @param <ID>               the type of the aggregate root identifier.
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
+     * @param qualifier          the repository qualifier.
+     * @return an instance of the repository.
      */
-    <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRoot, Class<K> key, String qualifier);
+    <A extends AggregateRoot<ID>, ID> Repository<A, ID> getRepository(Class<A> aggregateRootClass, Class<ID> idClass, String qualifier);
+
+    /**
+     * Get a {@link Repository} from the domain.
+     *
+     * @param <R>    the type of the repository.
+     * @param <A>    the type of the aggregate root.
+     * @param <ID>   the type of the aggregate root identifier.
+     * @param typeOf the capture of the full generic type.
+     * @return an instance of the repository.
+     */
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf);
+
+    /**
+     * Get a {@link Repository} from the domain.
+     *
+     * @param <R>       the type of the repository.
+     * @param <A>       the type of the aggregate root.
+     * @param <ID>      the type of the aggregate root identifier.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the repository qualifier.
+     * @return an instance of the repository.
+     */
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf, Class<? extends Annotation> qualifier);
+
+    /**
+     * Get a {@link Repository} from the domain.
+     *
+     * @param <R>       the type of the repository.
+     * @param <A>       the type of the aggregate root.
+     * @param <ID>      the type of the aggregate root identifier.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the repository qualifier.
+     * @return an instance of the repository.
+     */
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf, String qualifier);
 
     /**
      * Get the {@link Factory} for an aggregate root.
      *
-     * @param aggregateRoot the aggregate root linked to the factoy.
-     * @return an instance of the {@link Factory}
+     * @param <P>             the type of the producible object.
+     * @param producibleClass the producible class.
+     * @return an instance of the factory.
      */
-    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot);
+    <P extends Producible> Factory<P> getFactory(Class<P> producibleClass);
 
     /**
      * Get the {@link Factory} with a qualifier for an aggregate root.
      *
-     * @param aggregateRoot the aggregate root linked to the factoy.
-     * @param qualifier     factory qualifier.
-     * @return an instance of the {@link Factory}
+     * @param <P>             the type of the producible object.
+     * @param producibleClass the producible class.
+     * @param qualifier       the factory qualifier.
+     * @return an instance of the factory.
      */
-    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, Class<? extends Annotation> qualifier);
+    <P extends Producible> Factory<P> getFactory(Class<P> producibleClass, Class<? extends Annotation> qualifier);
 
     /**
      * Get the {@link Factory} with a qualifier for an aggregate root.
      *
-     * @param aggregateRoot the aggregate root linked to the factoy.
-     * @param qualifier     factory qualifier.
-     * @return an instance of the {@link Factory}
+     * @param <P>             the type of the producible object.
+     * @param producibleClass the producible class.
+     * @param qualifier       the factory qualifier.
+     * @return an instance of the factory.
      */
-    <T extends Producible> Factory<T> getFactory(Class<T> aggregateRoot, String qualifier);
+    <P extends Producible> Factory<P> getFactory(Class<P> producibleClass, String qualifier);
 
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param typeOf the {@link TypeOf} to define all generic pattern.
-     * @return a {@link Factory} found in the domain.
+     * @param <F>    the type of the factory.
+     * @param <P>    the type of the producible object.
+     * @param typeOf the capture of the full generic type.
+     * @return an instance of the factory.
      */
-    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf);
+    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf);
 
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier factory qualifier
-     * @return a {@link Factory} found in the domain.
+     * @param <F>       the type of the factory.
+     * @param <P>       the type of the producible object.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the factory qualifier.
+     * @return an instance of the factory.
      */
-    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
+    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier factory qualifier
-     * @return a {@link Factory} found in the domain.
+     * @param <F>       the type of the factory.
+     * @param <P>       the type of the producible object.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the factory qualifier.
+     * @return an instance of the factory.
      */
-    <T extends Factory<A>, A extends Producible> T getFactory(TypeOf<T> typeOf, String qualifier);
+    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf, String qualifier);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param rawType the service class.
-     * @return a {@link Service} found in the domain.
+     * @param <S>          the type of the service.
+     * @param serviceClass the class of the service interface.
+     * @return an instance of the service.
      */
-    <T> T getService(Class<T> rawType);
+    <S> S getService(Class<S> serviceClass);
 
     /**
      * Get a {@link Service} with a qualifier from the domain.
      *
-     * @param rawType   the service class.
-     * @param qualifier service qualifier
-     * @return a {@link Service} found in the domain.
+     * @param <S>          the type of the service.
+     * @param serviceClass the class of the service interface.
+     * @param qualifier    the service qualifier.
+     * @return an instance of the service.
      */
-    <T> T getService(Class<T> rawType, Class<? extends Annotation> qualifier);
+    <S> S getService(Class<S> serviceClass, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Service} with a qualifier from the domain.
      *
-     * @param rawType   the service class.
-     * @param qualifier service qualifier
-     * @return a {@link Service} found in the domain.
+     * @param <S>          the type of the service.
+     * @param serviceClass the class of the service interface.
+     * @param qualifier    the service qualifier.
+     * @return an instance of the service.
      */
-    <T> T getService(Class<T> rawType, String qualifier);
+    <S> S getService(Class<S> serviceClass, String qualifier);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param typeOf the {@link TypeOf} to define all generic pattern.
-     * @return a {@link Service} found in the domain.
+     * @param <S>    the type of the service.
+     * @param typeOf the capture of the full generic type.
+     * @return an instance of the service.
      */
-    <T> T getService(TypeOf<T> typeOf);
+    <S> S getService(TypeOf<S> typeOf);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier service qualifier
-     * @return a {@link Service} found in the domain.
+     * @param <S>       the type of the service.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the service qualifier.
+     * @return an instance of the service.
      */
-    <T> T getService(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
+    <S> S getService(TypeOf<S> typeOf, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier service qualifier
-     * @return a {@link Service} found in the domain.
+     * @param <S>       the type of the service.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the service qualifier.
+     * @return an instance of the service.
      */
-    <T> T getService(TypeOf<T> typeOf, String qualifier);
+    <S> S getService(TypeOf<S> typeOf, String qualifier);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param rawType the policy class.
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>         the type of the policy.
+     * @param policyClass the policy class.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(Class<T> rawType);
+    <P> P getPolicy(Class<P> policyClass);
 
     /**
      * Get a {@link DomainPolicy} with a qualifier from the domain.
      *
-     * @param rawType   the policy class.
-     * @param qualifier policy qualifier
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>         the type of the policy.
+     * @param policyClass the policy class.
+     * @param qualifier   the policy qualifier.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(Class<T> rawType, Class<? extends Annotation> qualifier);
+    <P> P getPolicy(Class<P> policyClass, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link DomainPolicy} with a qualifier from the domain.
      *
-     * @param rawType   the policy class.
-     * @param qualifier policy qualifier
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>         the type of the policy.
+     * @param policyClass the policy class.
+     * @param qualifier   the policy qualifier.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(Class<T> rawType, String qualifier);
+    <P> P getPolicy(Class<P> policyClass, String qualifier);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param typeOf the {@link TypeOf} to define all generic pattern.
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>    the type of the policy.
+     * @param typeOf the capture of the full generic type.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(TypeOf<T> typeOf);
+    <P> P getPolicy(TypeOf<P> typeOf);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier policy qualifier
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>       the type of the policy.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the policy qualifier.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(TypeOf<T> typeOf, Class<? extends Annotation> qualifier);
+    <P> P getPolicy(TypeOf<P> typeOf, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param typeOf    the {@link TypeOf} to define all generic pattern.
-     * @param qualifier policy qualifier
-     * @return a {@link DomainPolicy} found in the domain.
+     * @param <P>       the type of the policy.
+     * @param typeOf    the capture of the full generic type.
+     * @param qualifier the policy qualifier.
+     * @return an instance of the domain policy.
      */
-    <T> T getPolicy(TypeOf<T> typeOf, String qualifier);
+    <P> P getPolicy(TypeOf<P> typeOf, String qualifier);
 }

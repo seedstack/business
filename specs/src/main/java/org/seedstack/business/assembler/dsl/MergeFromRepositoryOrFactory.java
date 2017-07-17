@@ -11,7 +11,7 @@ import org.seedstack.business.assembler.FactoryArgument;
 import org.seedstack.business.domain.AggregateNotFoundException;
 
 /**
- * Specifies the behavior in the case where the aggregates cannot be loaded from the repository.
+ * Specifies the behavior in the case where the aggregates cannot be retrieved from the repository.
  **/
 public interface MergeFromRepositoryOrFactory<T> {
 
@@ -19,19 +19,18 @@ public interface MergeFromRepositoryOrFactory<T> {
      * Returns the aggregate roots or throws an {@code AggregateNotFoundException}
      * if one of the aggregate roots cannot be loaded from their repository.
      *
-     * @return the stream of merged aggregate roots.
-     * @throws AggregateNotFoundException if the aggregate doesn't exist
+     * @return the next element in the DSL.
+     * @throws AggregateNotFoundException if an aggregate cannot be retrieved from the repository.
      */
     T orFail() throws AggregateNotFoundException;
 
     /**
      * Returns the aggregate roots, allowing them to come both from repository and factory.
      * <p>
-     * It uses the {@link FactoryArgument} annotation on
-     * the DTO to find the factory method parameters.
+     * It uses the {@link FactoryArgument} annotation on the DTO to find the factory method parameters.
      * </p>
      *
-     * @return the stream of merged aggregate roots
+     * @return the next element in the DSL.
      */
     T orFromFactory();
 

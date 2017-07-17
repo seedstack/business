@@ -8,12 +8,12 @@
 /**
  *
  */
-package org.seedstack.business.internal.domain.identity;
+package org.seedstack.business.internal.domain;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.identity.IdentityService;
+import org.seedstack.business.domain.IdentityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +31,7 @@ class IdentityInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         Object object = invocation.proceed();
         if (object instanceof Entity) {
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("Invoking identity service to identify an entity of class {}", object.getClass());
-            }
+            LOGGER.trace("Invoking identity service to identify an entity of class {}", object.getClass());
             return identityService.identify(((Entity<?>) object));
         } else {
             return object;

@@ -13,19 +13,19 @@ package org.seedstack.business.it;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.domain.identity.IdentityService;
+import org.seedstack.business.BusinessException;
+import org.seedstack.business.domain.IdentityService;
 import org.seedstack.business.fixtures.identity.MyAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.fixtures.identity.MyAggregateWithNoIdentityManagement;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;
 import java.util.UUID;
 
 @RunWith(SeedITRunner.class)
-public class IdentityServiceInternalIT {
+public class IdentityServiceIT {
     @Inject
     private IdentityService identityService;
 
@@ -55,7 +55,7 @@ public class IdentityServiceInternalIT {
             identityService.identify(myAggregate);
             Assertions.fail("no exception occured");
         } catch (BusinessException e) {
-            Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED_BY_HANDLER)
+            Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
                     .isEqualTo(e.getErrorCode());
         }
     }

@@ -15,6 +15,7 @@ import mockit.Mocked;
 import mockit.StrictExpectations;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainElement;
@@ -22,7 +23,6 @@ import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.BusinessException;
 import org.seedstack.shed.reflect.TypeOf;
 
 import java.lang.annotation.ElementType;

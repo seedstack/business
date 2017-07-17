@@ -22,10 +22,10 @@ classes:
             TestAggregate3:
               defaultRepository:
           identity:
-              identityHandler: simpleUUID
+              identityGenerator: simpleUUID
           assembler:
             auto:
-                identityHandler: simpleUUID
+                identityGenerator: simpleUUID
 
 org:
   seedstack:

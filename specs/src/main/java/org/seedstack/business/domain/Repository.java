@@ -101,6 +101,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * Count the number of aggregates in the repository satisfying the given specification.
      *
      * @param specification the specification aggregates must satisfy.
+     * @return the number of aggregates in the repository satisfying the specification.
      */
     default long count(Specification<A> specification) {
         return get(specification).count();
@@ -129,6 +130,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * Removes all aggregates in the repository satisfying the given specification.
      *
      * @param specification the specification aggregates must satisfy.
+     * @return the number of aggregates removed from the repository.
      * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
     long remove(Specification<A> specification) throws AggregateNotFoundException;

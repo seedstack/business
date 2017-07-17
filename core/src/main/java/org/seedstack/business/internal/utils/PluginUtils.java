@@ -35,7 +35,10 @@ public final class PluginUtils {
     /**
      * Builds a ClasspathScanRequest to find all the descendant of the given interfaces.
      *
-     * @param interfaces the interfaces
+     * @param <T>                         the class of the interface.
+     * @param classpathScanRequestBuilder the Nuun classpath scan request builder.
+     * @param interfaces                  the interfaces.
+     * @return a map where the key is an interface and the value is a specification matching descendants of this interface.
      */
     @SuppressWarnings("unchecked")
     public static <T extends Class<?>> Map<T, Specification<? extends T>> classpathRequestForDescendantTypesOf(ClasspathScanRequestBuilder classpathScanRequestBuilder, Collection<T> interfaces) {
@@ -56,8 +59,10 @@ public final class PluginUtils {
      * This is the "default mode" for binding in the business framework.
      * </p>
      *
-     * @param initContext the context containing the implementations
-     * @param interfaces  the interfaces to bind
+     * @param <T>              the class of the interface.
+     * @param initContext      the context containing the implementations
+     * @param interfaces       the interfaces to bind
+     * @param specsByInterface the descendant specifications indexed by their common interface.
      * @return the map of interface/implementation to bind
      * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
      */

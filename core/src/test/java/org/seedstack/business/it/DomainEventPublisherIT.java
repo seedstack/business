@@ -10,11 +10,11 @@ package org.seedstack.business.it;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.fixtures.event.MyDomainEvent;
 import org.seedstack.business.fixtures.event.MyDomainEvent2;
 import org.seedstack.business.fixtures.event.cyclic.Event1;
-import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

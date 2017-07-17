@@ -7,13 +7,13 @@
  */
 package org.seedstack.business.spi.assembler;
 
-import org.seedstack.business.Producible;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.Producible;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.utils.MethodMatcher;
-import org.seedstack.business.BusinessException;
 import org.seedstack.shed.reflect.ReflectUtils;
 
 import javax.inject.Inject;

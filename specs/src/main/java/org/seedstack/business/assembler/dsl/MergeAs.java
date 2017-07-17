@@ -15,16 +15,53 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+/**
+ * Terminal operation of the {@link FluentAssembler} DSL, allowing to choose the result of a merge.
+ *
+ * @param <T> the type of the merged item.
+ */
 public interface MergeAs<T> {
+    /**
+     * Merge as a stream of items.
+     *
+     * @return the stream.
+     */
     Stream<T> asStream();
 
+    /**
+     * Merge as a collection of items.
+     *
+     * @param <C>                the type of the collection of items.
+     * @param collectionSupplier the provider of a (preferably empty) collection.
+     * @return the collection.
+     */
     <C extends Collection<T>> C asCollection(Supplier<C> collectionSupplier);
 
+    /**
+     * Merge as a list of items.
+     *
+     * @return the list.
+     */
     List<T> asList();
 
+    /**
+     * Merge as a set of items.
+     *
+     * @return the set.
+     */
     Set<T> asSet();
 
+    /**
+     * Merge as a slice of items.
+     *
+     * @return the slice.
+     */
     Slice<T> asSlice();
 
+    /**
+     * Merge as an array of items.
+     *
+     * @return the array.
+     */
     T[] asArray();
 }

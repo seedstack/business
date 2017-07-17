@@ -7,14 +7,12 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.Producible;
-
 
 /**
  * Interface for domain value objects.
  */
 @DomainValueObject
-public interface ValueObject extends DomainObject, Producible {
+public interface ValueObject extends Producible {
 
     /**
      * Value Object equality is computed on all attributes.

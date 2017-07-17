@@ -14,7 +14,9 @@ import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.Factory;
+import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.ValueObject;
 import org.seedstack.business.internal.BusinessSpecifications;
@@ -55,6 +57,10 @@ public class DomainPlugin extends AbstractSeedPlugin {
     private final Collection<Class<?>> policyInterfaces = new HashSet<>();
     private final Map<Class<?>, Specification<? extends Class<?>>> policySpecs = new HashMap<>();
 
+    private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses = new HashSet<>();
+
+    private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses = new HashSet<>();
+
     private final Map<Key<?>, Class<?>> bindings = new HashMap<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
@@ -72,8 +78,11 @@ public class DomainPlugin extends AbstractSeedPlugin {
                     .specification(BusinessSpecifications.REPOSITORY)
                     .specification(BusinessSpecifications.DEFAULT_REPOSITORY)
                     .specification(BusinessSpecifications.FACTORY)
+                    .specification(BusinessSpecifications.IDENTITY_GENERATOR)
                     .specification(BusinessSpecifications.SERVICE)
                     .specification(BusinessSpecifications.POLICY)
+                    .specification(BusinessSpecifications.DOMAIN_EVENT)
+                    .specification(BusinessSpecifications.DOMAIN_EVENT_HANDLER)
                     .build();
         } else {
             ClasspathScanRequestBuilder classpathScanRequestBuilder = classpathScanRequestBuilder();
@@ -105,11 +114,17 @@ public class DomainPlugin extends AbstractSeedPlugin {
             streamClasses(initContext, BusinessSpecifications.FACTORY, Factory.class).forEach(factoryInterfaces::add);
             LOGGER.debug("Factory interfaces => {}", factoryInterfaces);
 
+            streamClasses(initContext, BusinessSpecifications.IDENTITY_GENERATOR, IdentityGenerator.class).forEach(identityGeneratorClasses::add);
+            LOGGER.debug("Identity generator classes => {}", identityGeneratorClasses);
+
             streamClasses(initContext, BusinessSpecifications.SERVICE, Object.class).forEach(serviceInterfaces::add);
             LOGGER.debug("Service interfaces => {}", serviceInterfaces);
 
             streamClasses(initContext, BusinessSpecifications.POLICY, Object.class).forEach(policyInterfaces::add);
             LOGGER.debug("Policy interfaces => {}", policyInterfaces);
+
+            streamClasses(initContext, BusinessSpecifications.DOMAIN_EVENT_HANDLER, DomainEventHandler.class).forEach(eventHandlerClasses::add);
+            LOGGER.debug("Event handler => {}", eventHandlerClasses);
 
             return InitState.NON_INITIALIZED;
         } else {
@@ -131,6 +146,6 @@ public class DomainPlugin extends AbstractSeedPlugin {
 
     @Override
     public Object nativeUnitModule() {
-        return new DomainModule(bindings, bindingStrategies);
+        return new DomainModule(bindings, bindingStrategies, identityGeneratorClasses, eventHandlerClasses);
     }
 }

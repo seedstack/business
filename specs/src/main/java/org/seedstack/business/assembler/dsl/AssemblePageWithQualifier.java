@@ -10,7 +10,19 @@ package org.seedstack.business.assembler.dsl;
 import java.lang.annotation.Annotation;
 
 public interface AssemblePageWithQualifier extends AssemblePage {
+    /**
+     * Allows to specify the qualifier of the assembler to use.
+     *
+     * @param qualifier the qualifier annotation.
+     * @return the next element of the DSL.
+     */
     AssemblePage with(Annotation qualifier);
 
+    /**
+     * Allows to specify the qualifier class of the assembler to use.
+     *
+     * @param qualifier the qualifier annotation class.
+     * @return the next element of the DSL.
+     */
     AssemblePage with(Class<? extends Annotation> qualifier);
 }

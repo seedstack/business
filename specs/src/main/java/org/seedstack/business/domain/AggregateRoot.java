@@ -7,13 +7,11 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.Producible;
-
 /**
- * This interface is the parent type for all implementations of AggregateRoot in the Business Framework.
+ * Specialisation of {@link Entity} for entities acting as aggregate roots.
  *
- * @param <ID> the type of the entityId
+ * @param <ID> the type of the aggregate root identifier.
  */
 @DomainAggregateRoot
-public interface AggregateRoot<ID> extends Entity<ID>, DomainObject, Producible {
+public interface AggregateRoot<ID> extends Entity<ID>, Producible {
 }

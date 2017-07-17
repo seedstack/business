@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.event;
 
-import org.seedstack.business.it.DomainEventPublisherIT;
 import org.seedstack.business.domain.BaseDomainEventHandler;
+import org.seedstack.business.it.DomainEventPublisherIT;
 
 public class MyDomainEventHandler extends BaseDomainEventHandler<MyDomainEvent> {
 

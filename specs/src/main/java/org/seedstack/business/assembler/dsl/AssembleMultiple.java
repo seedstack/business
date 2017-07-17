@@ -20,27 +20,28 @@ public interface AssembleMultiple {
     /**
      * Assembles to a {@link Stream} of DTO.
      *
-     * @param dtoClass the DTO class to assemble
      * @param <D>      the type of the DTO.
-     * @return the list of dtos
+     * @param dtoClass the DTO class to assemble.
+     * @return the list of DTO.
      */
     <D> Stream<D> toStreamOf(Class<D> dtoClass);
 
     /**
      * Assembles to the supplied {@link Collection}.
      *
-     * @param dtoClass the DTO class to assemble
-     * @param <D>      the type of the DTO.
-     * @param <C>      the type of the collection.
-     * @return the list of dtos
+     * @param <D>                the type of the DTO.
+     * @param <C>                the type of the collection.
+     * @param dtoClass           the DTO class to assemble.
+     * @param collectionSupplier the provider of a (preferably empty) collection.
+     * @return the collection of DTO.
      */
     <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass, Supplier<C> collectionSupplier);
 
     /**
      * Assembles to a {@link List} of DTO.
      *
-     * @param dtoClass the DTO class to assemble.
      * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
      * @return the list of DTO.
      */
     <D> List<D> toListOf(Class<D> dtoClass);
@@ -48,8 +49,8 @@ public interface AssembleMultiple {
     /**
      * Assembles to a {@link Set} of DTO.
      *
-     * @param dtoClass the DTO class to assemble.
      * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
      * @return the set of DTO.
      */
     <D> Set<D> toSetOf(Class<D> dtoClass);
@@ -57,17 +58,17 @@ public interface AssembleMultiple {
     /**
      * Assembles to a {@link Slice} of DTO.
      *
-     * @param dtoClass the DTO class to assemble
      * @param <D>      the type of the DTO.
-     * @return the list of dtos
+     * @param dtoClass the DTO class to assemble
+     * @return the list of DTO.
      */
     <D> Slice<D> toSliceOf(Class<D> dtoClass);
 
     /**
      * Assembles to an array of DTO.
      *
-     * @param dtoClass the DTO class to assemble.
      * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
      * @return the array of DTO.
      */
     <D> D[] toArrayOf(Class<D> dtoClass);

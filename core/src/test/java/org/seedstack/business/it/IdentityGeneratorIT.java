@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SeedITRunner.class)
-public class IdentityHandlerIT {
+public class IdentityGeneratorIT {
     @Inject
     private MyAggregateFactory myAggregateFactory;
     @Inject

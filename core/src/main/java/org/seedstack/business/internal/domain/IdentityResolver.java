@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.domain.identity;
+package org.seedstack.business.internal.domain;
 
 import org.seedstack.business.domain.Identity;
 import org.seedstack.shed.reflect.AnnotationResolver;
@@ -16,10 +16,10 @@ import java.util.Optional;
 
 import static org.seedstack.shed.reflect.AnnotationPredicates.elementAnnotatedWith;
 
-public class IdentityAnnotationResolver implements AnnotationResolver<Class<?>, Identity> {
-    public static final IdentityAnnotationResolver INSTANCE = new IdentityAnnotationResolver();
+public class IdentityResolver implements AnnotationResolver<Class<?>, Identity> {
+    public static final IdentityResolver INSTANCE = new IdentityResolver();
 
-    private IdentityAnnotationResolver() {
+    private IdentityResolver() {
         // no external instantiation allowed
     }
 
@@ -33,7 +33,7 @@ public class IdentityAnnotationResolver implements AnnotationResolver<Class<?>, 
         return resolveField(aClass).isPresent();
     }
 
-    Optional<Field> resolveField(Class<?> aClass) {
+    public Optional<Field> resolveField(Class<?> aClass) {
         return Classes.from(aClass)
                 .traversingSuperclasses()
                 .fields()

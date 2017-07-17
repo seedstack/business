@@ -11,9 +11,9 @@ package org.seedstack.business.internal.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Factory;
-import org.seedstack.business.BusinessException;
 
 /**
  * FactoryInternalTest

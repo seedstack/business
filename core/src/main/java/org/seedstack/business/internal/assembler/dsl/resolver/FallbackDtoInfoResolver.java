@@ -7,9 +7,9 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver;
 
-import org.seedstack.business.Producible;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
+import org.seedstack.business.domain.Producible;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
 import org.seedstack.business.spi.assembler.DtoInfoResolverPriority;
 

@@ -9,13 +9,10 @@
 package org.seedstack.business.fixtures.identity;
 
 import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.identity.IdentityHandler;
+import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.seed.ClassConfiguration;
 
-/**
- * MyIdentityHandler
- */
-public class RandomIdentityHandler implements IdentityHandler<Entity<Double>, Double> {
+public class RandomIdentityGenerator implements IdentityGenerator<Entity<Double>, Double> {
     @Override
     public Double handle(Entity<Double> entity, ClassConfiguration<Entity<Double>> entityConfiguration) {
         return Math.random();

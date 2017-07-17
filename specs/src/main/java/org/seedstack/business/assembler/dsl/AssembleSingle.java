@@ -12,8 +12,8 @@ public interface AssembleSingle {
     /**
      * Assembles to a DTO.
      *
-     * @param dtoClass the DTO class to assemble.
      * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
      * @return the DTO.
      */
     <D> D to(Class<D> dtoClass);

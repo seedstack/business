@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  * When {@link FluentAssembler} DSL needs to get an aggregate from repository (i.e. when the {@code fromRepository()}
  * method is used), this annotation allows to specify a matching between a DTO getter and the identifier of the aggregate.
  *
- * <h4>Case 1: single aggregate, simple identifier</h4>
+ * <h3>Example 1: single aggregate, simple identifier</h3>
  * <pre>
  * public class OrderDto {
  *     {@literal @}AggregateId
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * <h4>Case 2: single aggregate, composite identifier</h4>
+ * <h3>Example 2: single aggregate, composite identifier</h3>
  * <pre>
  * public class CustomerDto {
  *     {@literal @}AggregateId(index = 0)
@@ -51,7 +51,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * <h4>Case 3: tuple of aggregates, one with composite identifier, the other with simple identifier</h4>
+ * <h3>Example 3: tuple of aggregates, one with composite identifier, the other with simple identifier</h3>
  * <pre>
  * public class RecipeDto {
  *     {@literal @}MatchingEntityId(aggregateIndex = 0, index = 0)

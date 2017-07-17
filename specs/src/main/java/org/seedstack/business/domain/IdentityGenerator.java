@@ -5,9 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.domain.identity;
+package org.seedstack.business.domain;
 
-import org.seedstack.business.domain.Entity;
 import org.seedstack.seed.ClassConfiguration;
 
 /**
@@ -16,7 +15,7 @@ import org.seedstack.seed.ClassConfiguration;
  * @param <E>  the entity
  * @param <ID> the entity id
  */
-public interface IdentityHandler<E extends Entity<ID>, ID> {
+public interface IdentityGenerator<E extends Entity<ID>, ID> {
 
     /**
      * Generate new id for entity.

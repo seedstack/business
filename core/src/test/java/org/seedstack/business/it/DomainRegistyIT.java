@@ -10,6 +10,7 @@ package org.seedstack.business.it;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
@@ -31,7 +32,6 @@ import org.seedstack.business.fixtures.registry.service.RebateServiceInternal;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierComposite;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierNamed;
 import org.seedstack.business.fixtures.registry.service.ServiceQualifier;
-import org.seedstack.business.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
 import org.seedstack.shed.reflect.TypeOf;
 

@@ -18,22 +18,20 @@ public interface MergeFromRepository<T> {
     /**
      * Loads the aggregates from their repository.
      * <p>
-     * It uses the {@link AggregateId} annotation on
-     * the DTO to find the aggregate IDs.
+     * It uses the {@link AggregateId} annotation on the DTO to find the aggregate IDs.
      * </p>
      *
-     * @return next DSL element
+     * @return the next element of the DSL.
      */
     MergeFromRepositoryOrFactory<T> fromRepository();
 
     /**
      * Create the aggregates from their factory.
      * <p>
-     * It uses the {@link FactoryArgument} annotation on
-     * the DTO to find the factory method parameters.
+     * It uses the {@link FactoryArgument} annotation on the DTO to find the factory method parameters.
      * </p>
      *
-     * @return next DSL element
+     * @return the next element of the DSL.
      */
     T fromFactory();
 

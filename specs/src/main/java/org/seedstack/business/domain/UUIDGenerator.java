@@ -5,10 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business;
+package org.seedstack.business.domain;
+
+import java.util.UUID;
 
 /**
- * Marks objects as being able to be produced by a factory.
+ * Interface for handling UUID generation.
  */
-public interface Producible {
+public interface UUIDGenerator extends IdentityGenerator<Entity<UUID>, UUID> {
 }

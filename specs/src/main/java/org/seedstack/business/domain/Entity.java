@@ -13,7 +13,7 @@ package org.seedstack.business.domain;
  * @param <ID> the type of the entity identifier.
  */
 @DomainEntity
-public interface Entity<ID> extends DomainObject {
+public interface Entity<ID> {
 
     /**
      * @return the entity identifier.

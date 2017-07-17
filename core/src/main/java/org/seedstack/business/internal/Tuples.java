@@ -169,6 +169,7 @@ public final class Tuples {
     /**
      * Returns a list containing the classes of the elements of the tuple.
      *
+     * @param <T>   the common of the classes contained by the tuple.
      * @param tuple the tuple to convert.
      * @return the list of classes.
      */

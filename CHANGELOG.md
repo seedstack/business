@@ -7,15 +7,22 @@
 * [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
 * [new] Business framework now takes advantage of Java 8 features (notably streams and optional).
 * [new] `FluentAssembler` can now assemble and merge streams of objects among other useful types (arrays, lists, sets, slices, pages and arbitrary collections).
-* [new] A pagination DSL has been added.
-* [brk] The pagination API has been refactored.
+* [new] A pagination DSL injectable through the `Paginator` interface has been added.
+* [brk] The `@MatchingFactoryParameter` annotation has been renamed to `@FactoryArgument`. 
+* [brk] The `@MatchingEntityId` annotation has been renamed to `@AggregateId`.
+* [brk] The `typeIndex()` method of `@FactoryArgument` and `@AggregateId` annotations has been renamed to `aggregateIndex()`.
+* [brk] The `Assembler` methods `assembleDtoFromAggregate()`, `assembleDtoFromAggregate()` and `mergeAggregateWithDto()` have been renamed to `createDtoFromAggregate()`, `mergeAggregateIntoDto()` and `mergeDtoIntoAggregate()` respectively.
+* [brk] The `BaseAssembler` and `BaseTupleAssembler` now follow the `Assembler` interface (no more `do*()` methods).
 * [brk] The `getEntityId()` method of `Entity` has been renamed to `getId()`.
 * [brk] The `Repository` interface has been refactored as a collection-like interface.
 * [brk] The `Factory` and `GenericFactory` interfaces are merged into a unique `Factory` interface.
-* [brk] Intermediate interfaces of `FluentAssembler` have been renamed.
+* [brk] The `DomainObject` interface has been removed.
+* [brk] The old pagination API has been removed.
+* [brk] Intermediate interfaces of `FluentAssembler` DSL have been renamed.
 * [brk] Generic events have been replaced by domain-only events.
-* [brk] Remove the `source` parameter from `@Identity` annotation. This is better done in class configuration.
-* [brk] Rename the `handler` parameter from `@Identity` annotation to `value`.
+* [brk] The interface `IdentityHandler` has been renamed to `IdentityGenerator` to better reflect its responsibility.
+* [brk] The `source` parameter from `@Identity` annotation has been removed. This is better done in class configuration.
+* [brk] The `handler` parameter of the `@Identity` annotation has been renamed `generator`.
 
 # Version 3.1.0 (2017-04-30)
 

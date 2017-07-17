@@ -13,8 +13,8 @@ public interface AssemblePage extends AssembleMultiple {
     /**
      * Assembles to a {@link Page} of DTO.
      *
-     * @param dtoClass the DTO class to assemble.
      * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
      * @return the page of DTO.
      */
     <D> Page<D> toPageOf(Class<D> dtoClass);

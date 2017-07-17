@@ -12,13 +12,13 @@ package org.seedstack.business.fixtures.identity;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Identity;
-import org.seedstack.business.domain.identity.UUIDHandler;
+import org.seedstack.business.domain.UUIDGenerator;
 
 import java.util.Set;
 import java.util.UUID;
 
 public class MyAggregate extends BaseAggregateRoot<UUID> {
-    @Identity(UUIDHandler.class)
+    @Identity(generator = UUIDGenerator.class)
     private UUID id;
     private String name;
     private MyEntity mySubEntity;

@@ -23,10 +23,10 @@ import org.seedstack.business.fixtures.domain.product.InternalProductFactory;
 import org.seedstack.business.fixtures.domain.product.InternalProductNamePolicy;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductId;
-import org.seedstack.business.fixtures.finder.SomeCustomerFinder;
 import org.seedstack.business.fixtures.finder.CustomerRepresentation;
-import org.seedstack.seed.it.AbstractSeedIT;
+import org.seedstack.business.fixtures.finder.SomeCustomerFinder;
 import org.seedstack.business.fixtures.inmemory.Store;
+import org.seedstack.seed.it.AbstractSeedIT;
 
 import javax.inject.Inject;
 import java.util.Date;

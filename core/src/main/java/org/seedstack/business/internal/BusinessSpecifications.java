@@ -8,18 +8,19 @@
 package org.seedstack.business.internal;
 
 import org.kametic.specifications.Specification;
-import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.DomainAggregateRoot;
 import org.seedstack.business.domain.DomainEntity;
+import org.seedstack.business.domain.DomainEvent;
+import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainFactory;
-import org.seedstack.business.domain.DomainObject;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
-import org.seedstack.business.domain.identity.IdentityHandler;
+import org.seedstack.business.domain.IdentityGenerator;
+import org.seedstack.business.domain.Producible;
 import org.seedstack.business.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
@@ -120,8 +121,7 @@ public final class BusinessSpecifications {
      * The specification for the classes producible by factories.
      */
     public static final Specification<Class<?>> PRODUCIBLE = new SpecificationBuilder<>(
-            classIsAssignableFrom(Producible.class)
-                    .and(classIsAssignableFrom(DomainObject.class)))
+            classIsAssignableFrom(Producible.class))
             .build();
 
     /**
@@ -179,13 +179,12 @@ public final class BusinessSpecifications {
             .build();
 
     /**
-     * The identity handler specification. It matches all the classes implementing
-     * the identity handler SPI.
+     * The specification for identity generators.
      */
-    public static final Specification<Class<?>> IDENTITY_HANDLER = new SpecificationBuilder<>(
+    public static final Specification<Class<?>> IDENTITY_GENERATOR = new SpecificationBuilder<>(
             classIsInterface().negate()
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
-                    .and(classIsDescendantOf(IdentityHandler.class)))
+                    .and(classIsDescendantOf(IdentityGenerator.class)))
             .build();
 
     /**
@@ -206,6 +205,21 @@ public final class BusinessSpecifications {
                     .and(classIsDescendantOf(SpecificationConverter.class)))
             .build();
 
+    /**
+     * The specification for domain events.
+     */
+    public static final Specification<Class<?>> DOMAIN_EVENT = new SpecificationBuilder<>(
+            classIsAssignableFrom(DomainEvent.class))
+            .build();
+
+    /**
+     * The specification for domain event handlers.
+     */
+    public static final Specification<Class<?>> DOMAIN_EVENT_HANDLER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsAssignableFrom(DomainEventHandler.class)))
+            .build();
 
     private BusinessSpecifications() {
         // no instantiation allowed

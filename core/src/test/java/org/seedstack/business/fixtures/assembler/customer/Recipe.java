@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.assembler.customer;
 
-import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.assembler.FactoryArgument;
 
 /**

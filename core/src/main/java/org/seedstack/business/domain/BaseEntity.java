@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.domain;
 
+import org.seedstack.business.internal.domain.IdentityResolver;
 import org.seedstack.shed.reflect.Classes;
 import org.seedstack.shed.reflect.ReflectUtils;
 
@@ -41,11 +42,14 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
      */
     @Override
     public ID getId() {
-        Field identityField = identityFields.computeIfAbsent(getClass(), key -> findIdentityByAnnotation()
-                .map(Optional::of)
-                .orElseGet(this::findIdentityByName)
-                .map(ReflectUtils::makeAccessible)
-                .orElse(null));
+        Field identityField = identityFields.computeIfAbsent(
+                getClass(),
+                aClass -> IdentityResolver.INSTANCE.resolveField(aClass)
+                        .map(Optional::of)
+                        .orElseGet(() -> findIdentityByName(aClass))
+                        .map(ReflectUtils::makeAccessible)
+                        .orElse(null)
+        );
 
         if (identityField != null) {
             return ReflectUtils.getValue(identityField, this);
@@ -82,16 +86,8 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
         return String.format("%s[%s]", getClass().getSimpleName(), getId());
     }
 
-    private Optional<Field> findIdentityByAnnotation() {
-        return Classes.from(getClass())
-                .traversingSuperclasses()
-                .fields()
-                .filter(field -> field.isAnnotationPresent(Identity.class))
-                .findFirst();
-    }
-
-    private Optional<Field> findIdentityByName() {
-        return Classes.from(getClass())
+    private Optional<Field> findIdentityByName(Class<?> aClass) {
+        return Classes.from(aClass)
                 .traversingSuperclasses()
                 .fields()
                 .filter(field -> field.getName().equals("id"))

@@ -11,8 +11,8 @@
 package org.seedstack.business.internal.domain;
 
 import com.google.inject.assistedinject.Assisted;
-import org.seedstack.business.Producible;
 import org.seedstack.business.domain.BaseFactory;
+import org.seedstack.business.domain.Producible;
 
 import javax.inject.Inject;
 
@@ -20,7 +20,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * FactoryInternal allows the creations of {@link org.seedstack.business.domain.DomainObject} objects using their constructors.
+ * DefaultFactory allows the creations of {@link org.seedstack.business.domain.Producible} objects using their
+ * constructors.
  * <p>
  * The {@link #create(Object...)} method will look for a constructor matching the given parameters.
  * If a constructor is found the method will use it to create a new instance. If ambiguous constructors are
@@ -36,13 +37,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * factory.create(null);
  * </pre>
  *
- * 2. If two constructor are found, one with primitive, and another with boxed type.
+ * 2. If two constructors are found, one with primitive, and another with boxed type.
  * <pre>
  * MyObject(int age)
  * MyObject(Integer age)
  * </pre>
  *
- * @param <T> the domain object type
+ * @param <T> the producible type.
  */
 public class DefaultFactory<T extends Producible> extends BaseFactory<T> {
     private final Class<T> domainObjectClass;

@@ -8,6 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
@@ -15,7 +16,6 @@ import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
-import org.seedstack.business.BusinessException;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;

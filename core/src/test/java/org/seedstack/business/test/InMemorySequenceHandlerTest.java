@@ -9,13 +9,14 @@ package org.seedstack.business.test;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.seedstack.business.domain.InMemorySequenceGenerator;
 
 
 public class InMemorySequenceHandlerTest {
 
     @Test
     public void testInMemorySequenceHandler() {
-        InMemorySequenceHandler inMemorySequenceHandler = new InMemorySequenceHandler();
+        InMemorySequenceGenerator inMemorySequenceHandler = new InMemorySequenceGenerator();
         Long handle = inMemorySequenceHandler.handle(null, null);
         Assertions.assertThat(handle).isEqualTo(2);
     }

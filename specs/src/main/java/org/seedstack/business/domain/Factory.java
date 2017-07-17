@@ -7,8 +7,6 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.Producible;
-
 
 /**
  * This interface has to be extended in order to create a Domain Factory interface.
@@ -31,7 +29,7 @@ import org.seedstack.business.Producible;
  * @param <T> Domain Object type to be produced.
  */
 @DomainFactory
-public interface Factory<T extends Producible> extends DomainObject {
+public interface Factory<T extends Producible> {
     /**
      * @return the produced class
      */

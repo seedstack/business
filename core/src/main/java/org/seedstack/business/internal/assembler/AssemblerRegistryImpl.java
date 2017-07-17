@@ -13,12 +13,12 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.javatuples.Tuple;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.Tuples;
-import org.seedstack.business.BusinessException;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -35,33 +35,33 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
     }
 
     @Override
-    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot, Class<D> dto) {
-        return findAssemblerOf(aggregateRoot, dto, null, null);
+    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass) {
+        return findAssemblerOf(aggregateRootClass, dtoClass, null, null);
     }
 
     @Override
-    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot, Class<D> dto, @Nullable Annotation qualifier) {
-        return findAssemblerOf(aggregateRoot, dto, qualifier, null);
+    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Annotation qualifier) {
+        return findAssemblerOf(aggregateRootClass, dtoClass, qualifier, null);
     }
 
     @Override
-    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot, Class<D> dto, @Nullable Class<? extends Annotation> qualifier) {
-        return findAssemblerOf(aggregateRoot, dto, null, qualifier);
+    public <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier) {
+        return findAssemblerOf(aggregateRootClass, dtoClass, null, qualifier);
     }
 
     @Override
-    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto) {
-        return findAssemblerOf(classesToTupleType(aggregateRootTuple), dto, null, null);
+    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass) {
+        return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, null, null);
     }
 
     @Override
-    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto, Annotation qualifier) {
-        return findAssemblerOf(classesToTupleType(aggregateRootTuple), dto, qualifier, null);
+    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, Annotation qualifier) {
+        return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, qualifier, null);
     }
 
     @Override
-    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto, @Nullable Class<? extends Annotation> qualifier) {
-        return findAssemblerOf(classesToTupleType(aggregateRootTuple), dto, null, qualifier);
+    public <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier) {
+        return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, null, qualifier);
     }
 
     private Type classesToTupleType(Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {

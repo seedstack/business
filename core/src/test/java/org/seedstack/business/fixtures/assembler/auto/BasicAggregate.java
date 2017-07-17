@@ -9,12 +9,12 @@ package org.seedstack.business.fixtures.assembler.auto;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Identity;
-import org.seedstack.business.domain.identity.UUIDHandler;
+import org.seedstack.business.domain.UUIDGenerator;
 
 import java.util.UUID;
 
 public class BasicAggregate extends BaseAggregateRoot<UUID> {
-    @Identity(UUIDHandler.class)
+    @Identity(generator = UUIDGenerator.class)
     private UUID id;
 
     private String field1;

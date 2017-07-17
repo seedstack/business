@@ -8,11 +8,9 @@
 package org.seedstack.business.domain;
 
 import org.seedstack.business.BusinessException;
-import org.seedstack.business.Producible;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
-import org.seedstack.business.domain.identity.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.internal.domain.identity.IdentityAnnotationResolver;
+import org.seedstack.business.internal.domain.IdentityResolver;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.internal.utils.MethodMatcher;
 
@@ -92,7 +90,7 @@ public abstract class BaseFactory<T extends Producible> implements Factory<T> {
         }
 
         if (producedInstance instanceof Entity) {
-            if (IdentityAnnotationResolver.INSTANCE.test(effectivelyProducedClass)) {
+            if (IdentityResolver.INSTANCE.test(effectivelyProducedClass)) {
                 producedInstance = (T) identityService.identify((Entity<?>) producedInstance);
             }
         }

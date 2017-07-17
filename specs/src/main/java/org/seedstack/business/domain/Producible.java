@@ -5,15 +5,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.domain.identity;
-
-import org.seedstack.business.domain.Entity;
+package org.seedstack.business.domain;
 
 /**
- * Interface for handling UUID generation.
- *
- * @param <E>  the entity
- * @param <ID> the entity id
+ * Marks objects as being able to be produced by a factory.
  */
-public interface UUIDHandler<E extends Entity<ID>, ID> extends IdentityHandler<E, ID> {
+public interface Producible {
 }

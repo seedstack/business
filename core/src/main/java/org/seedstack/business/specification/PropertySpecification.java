@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.specification;
 
-import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.shed.reflect.Classes;
 
 import java.lang.reflect.Field;

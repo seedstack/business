@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * this annotation allows to specify a matching between a DTO getter and an argument of an aggregate factory method
  * by position.
  *
- * <h4>Case 1: single aggregate</h4>
+ * <h3>Example 1: single aggregate</h3>
  * <pre>
  * public class CustomerDto {
  *     {@literal @}FactoryArgument(index = 0)
@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * <h4>Case 2: tuple of aggregates</h4>
+ * <h3>Example 2: tuple of aggregates</h3>
  * <pre>
  * public class RecipeDto {
  *     {@literal @}FactoryArgument(aggregateIndex = 0, index = 0)

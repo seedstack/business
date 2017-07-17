@@ -7,11 +7,10 @@
  */
 package org.seedstack.business.fixtures.qualifier.domain;
 
-import org.seedstack.business.Producible;
 import org.seedstack.business.Service;
-import org.seedstack.business.domain.DomainObject;
+import org.seedstack.business.domain.Producible;
 
 
 @Service
-public interface MyDomainService extends DomainObject, Producible {
+public interface MyDomainService extends Producible {
 }

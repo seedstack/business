@@ -5,33 +5,32 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.domain.event;
+package org.seedstack.business.internal.domain;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Injector;
+import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.Collection;
 
-class DomainEventPublisherInternal implements DomainEventPublisher {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherInternal.class);
+class DomainEventPublisherImpl implements DomainEventPublisher {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
     private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context = ThreadLocal.withInitial(ArrayListMultimap::create);
-    private final ImmutableListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent;
+    private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent;
     private final Injector injector;
 
     @Inject
-    DomainEventPublisherInternal(Injector injector, Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent) {
+    DomainEventPublisherImpl(Injector injector, Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent) {
         this.injector = injector;
-        this.eventHandlerClassesByEvent = ImmutableListMultimap.copyOf(eventHandlerClassesByEvent);
+        this.eventHandlerClassesByEvent = eventHandlerClassesByEvent;
     }
 
     @Override

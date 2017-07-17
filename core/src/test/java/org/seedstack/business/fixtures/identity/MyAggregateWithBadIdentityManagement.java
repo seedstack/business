@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MyAggregateWithBadIdentityManagement extends BaseAggregateRoot<UUID> {
-    @Identity(RandomIdentityHandler.class)
+    @Identity(generator = RandomIdentityGenerator.class)
     private UUID id;
 
     private String name;

@@ -9,8 +9,8 @@
 package org.seedstack.business.fixtures.inmemory.internal;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.business.fixtures.inmemory.Store;
+import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.seed.transaction.Propagation;
 import org.seedstack.seed.transaction.spi.TransactionMetadata;
 import org.seedstack.seed.transaction.spi.TransactionMetadataResolver;

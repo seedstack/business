@@ -6,18 +6,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.seedstack.business.test;
+package org.seedstack.business.domain;
 
-import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.identity.SequenceHandler;
 import org.seedstack.seed.ClassConfiguration;
 
 import javax.inject.Named;
 import java.util.concurrent.atomic.AtomicLong;
 
 
+/**
+ * Sequence generator that uses an every-incrementing {@link AtomicLong}.
+ */
 @Named("inMemorySequence")
-public class InMemorySequenceHandler implements SequenceHandler<Entity<Long>, Long> {
+public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
     private static final AtomicLong sequence = new AtomicLong(1L);
 
     @Override
