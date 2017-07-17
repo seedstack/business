@@ -15,7 +15,7 @@ import org.seedstack.business.fixtures.domain.activation.ActivationException;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerFactoryDefault;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
-import org.seedstack.business.fixtures.domain.customer.internal.CustomerSampleServiceInternal;
+import org.seedstack.business.fixtures.domain.customer.CustomerSampleServiceImpl;
 import org.seedstack.business.fixtures.domain.order.Order;
 import org.seedstack.business.fixtures.domain.order.OrderFactoryDefault;
 import org.seedstack.business.fixtures.domain.order.OrderId;
@@ -61,15 +61,19 @@ public class BusinessIT extends AbstractSeedIT {
         assertThat(InternalProductNamePolicy.class.isAssignableFrom(holder.productNamePolicy.getClass())).isTrue();
 
 
-        // Application Service
+        // Service
         assertThat(holder.indexService).isNotNull();
         assertThat(IndexServiceInternal.class.isAssignableFrom(holder.indexService.getClass())).isTrue();
         assertThat(holder.genericService).isNotNull();
         assertThat(GenericServiceInternal.class.isAssignableFrom(holder.genericService.getClass())).isTrue();
 
-        // Domain Service
+        // Service
         assertThat(holder.customerService).isNotNull();
-        assertThat(CustomerSampleServiceInternal.class.isAssignableFrom(holder.customerService.getClass())).isTrue();
+        assertThat(CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerService.getClass())).isTrue();
+
+        // Meta-annotated service
+        assertThat(holder.customerDomainService).isNotNull();
+        assertThat(CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerDomainService.getClass())).isTrue();
 
         // Finder
         assertThat(holder.customerFinder).isNotNull();

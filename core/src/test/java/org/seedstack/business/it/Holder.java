@@ -13,6 +13,7 @@ import org.seedstack.business.fixtures.domain.activation.ActivationFactory;
 import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
 import org.seedstack.business.fixtures.domain.customer.CustomerFactory;
 import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
+import org.seedstack.business.fixtures.domain.customer.CustomerSampleDomainService;
 import org.seedstack.business.fixtures.domain.customer.CustomerSampleService;
 import org.seedstack.business.fixtures.domain.order.OrderFactory;
 import org.seedstack.business.fixtures.domain.order.OrderRepository;
@@ -40,6 +41,9 @@ class Holder {
 
     @Inject
     CustomerSampleService customerService;
+
+    @Inject
+    CustomerSampleDomainService customerDomainService;
 
     @Inject
     CustomerFactory customerFactory;

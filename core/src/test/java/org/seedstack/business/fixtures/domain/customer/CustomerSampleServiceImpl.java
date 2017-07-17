@@ -5,15 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.fixtures.domain.customer.internal;
+package org.seedstack.business.fixtures.domain.customer;
 
-import org.seedstack.business.fixtures.domain.customer.Customer;
-import org.seedstack.business.fixtures.domain.customer.CustomerSampleService;
 import org.seedstack.seed.Configuration;
 import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
-public class CustomerSampleServiceInternal implements CustomerSampleService {
+public class CustomerSampleServiceImpl implements CustomerSampleService, CustomerSampleDomainService {
 
     @Logging
     Logger logger;
@@ -21,7 +19,7 @@ public class CustomerSampleServiceInternal implements CustomerSampleService {
     @Configuration("org.seedstack.toto")
     String property;
 
-    public CustomerSampleServiceInternal() {
+    public CustomerSampleServiceImpl() {
     }
 
     @Override
