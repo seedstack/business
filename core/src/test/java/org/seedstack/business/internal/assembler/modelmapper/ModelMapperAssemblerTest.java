@@ -41,14 +41,14 @@ public class ModelMapperAssemblerTest {
     public void testAssembleDtoFromAggregate() {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
 
-        OrderDTO orderDTO = modelMapperAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = modelMapperAssembler.createDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
 
-        orderDTO = defaultModelMappedAssembler.assembleDtoFromAggregate(order);
+        orderDTO = defaultModelMappedAssembler.createDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -62,14 +62,14 @@ public class ModelMapperAssemblerTest {
         specs.put("price", "cheap");
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), features, specs);
 
-        OrderDTO orderDTO = modelMapperAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = modelMapperAssembler.createDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         Assertions.assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         Assertions.assertThat(orderDTO.billingStreet).isEqualTo("main street");
 
-        orderDTO = defaultModelMappedAssembler.assembleDtoFromAggregate(order);
+        orderDTO = defaultModelMappedAssembler.createDtoFromAggregate(order);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -80,7 +80,7 @@ public class ModelMapperAssemblerTest {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
         OrderDTO orderDTO = new OrderDTO("Jane", "Doe", "", "");
 
-        modelMapperAssembler.assembleDtoFromAggregate(orderDTO, order);
+        modelMapperAssembler.mergeAggregateIntoDto(order, orderDTO);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -97,7 +97,7 @@ public class ModelMapperAssemblerTest {
         // This custom assembler test a custom mapping for the merge
         // this mapping is necessary because the name are not matching billing != billingAddress
 
-        modelMapperAssembler.mergeAggregateWithDto(order, orderDTO);
+        modelMapperAssembler.mergeDtoIntoAggregate(orderDTO, order);
 
         Assertions.assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("John");
         Assertions.assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");

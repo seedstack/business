@@ -8,7 +8,7 @@
 package org.seedstack.business.fixtures.assembler.auto;
 
 import com.google.inject.assistedinject.Assisted;
-import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.spi.GenericImplementation;
 
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 
 @GenericImplementation
 @Named("Dummy")
-public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
+public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
     @SuppressWarnings("unchecked")
     @Inject
     public DummyDefaultAssembler(@Assisted Object[] genericClasses) {
@@ -26,7 +26,7 @@ public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends Abstra
     }
 
     @Override
-    public D assembleDtoFromAggregate(A sourceAggregate) {
+    public D createDtoFromAggregate(A sourceAggregate) {
         D dto;
         try {
             dto = getDtoClass().newInstance();
@@ -37,12 +37,12 @@ public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends Abstra
     }
 
     @Override
-    public void assembleDtoFromAggregate(D sourceDto, A sourceAggregate) {
+    public void mergeAggregateIntoDto(A sourceAggregate, D sourceDto) {
         hodorify(getDtoClass(), sourceDto);
     }
 
     @Override
-    public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+    public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
         hodorify(targetAggregate.getClass(), targetAggregate);
     }
 

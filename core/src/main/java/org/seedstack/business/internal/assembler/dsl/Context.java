@@ -91,13 +91,13 @@ class Context {
         checkNotNull(dto);
         checkNotNull(aggregateRoot);
         Assembler<A, D> assembler = assemblerOf((Class<A>) aggregateRoot.getClass(), (Class<D>) dto.getClass());
-        assembler.mergeAggregateWithDto(aggregateRoot, dto);
+        assembler.mergeDtoIntoAggregate(dto, aggregateRoot);
     }
 
     @SuppressWarnings("unchecked")
     <D, T extends Tuple> void mergeDtoIntoTuple(D dto, T tuple, Class<? extends AggregateRoot<?>>[] aggregateClasses) {
         Assembler<Tuple, D> tupleAssembler = tupleAssemblerOf(aggregateClasses, (Class<D>) dto.getClass());
-        tupleAssembler.mergeAggregateWithDto(tuple, dto);
+        tupleAssembler.mergeDtoIntoAggregate(dto, tuple);
     }
 
     private <D> DtoInfoResolver findResolverFor(D dto) {

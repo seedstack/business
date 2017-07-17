@@ -9,7 +9,7 @@ package org.seedstack.business.assembler.modelmapper;
 
 import org.javatuples.Tuple;
 import org.modelmapper.ModelMapper;
-import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.assembler.BaseTupleAssembler;
 
 /**
  * This assembler automatically assembles aggregates in DTO and vice versa.
@@ -17,7 +17,7 @@ import org.seedstack.business.assembler.AbstractBaseAssembler;
  * @param <T> the tuple
  * @param <D> the dto
  */
-public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends AbstractBaseAssembler<T, D> {
+public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends BaseTupleAssembler<T, D> {
     private ModelMapper assembleModelMapper;
     private ModelMapper mergeModelMapper;
 
@@ -32,12 +32,12 @@ public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends Abst
     }
 
     @Override
-    public D assembleDtoFromAggregate(T sourceAggregate) {
+    public D createDtoFromAggregate(T sourceAggregate) {
         D sourceDto = null;
 
         for (Object o : sourceAggregate) {
             if (sourceDto == null) {
-                sourceDto = assembleModelMapper.map(o, dtoClass);
+                sourceDto = assembleModelMapper.map(o, getDtoClass());
             }
             assembleModelMapper.map(o, sourceDto);
 
@@ -46,14 +46,14 @@ public abstract class ModelMapperTupleAssembler<T extends Tuple, D> extends Abst
     }
 
     @Override
-    public void assembleDtoFromAggregate(D targetDto, T sourceAggregate) {
+    public void mergeAggregateIntoDto(T sourceAggregate, D targetDto) {
         for (Object o : sourceAggregate) {
             assembleModelMapper.map(o, targetDto);
         }
     }
 
     @Override
-    public void mergeAggregateWithDto(T targetAggregate, D sourceDto) {
+    public void mergeDtoIntoAggregate(D sourceDto, T targetAggregate) {
         for (Object o : targetAggregate) {
             mergeModelMapper.map(sourceDto, o);
         }

@@ -8,6 +8,7 @@
 package org.seedstack.business.assembler;
 
 import org.seedstack.business.assembler.dsl.FluentAssembler;
+import org.seedstack.shed.reflect.Classes;
 
 /**
  * This interface represents the Assembler pattern.
@@ -26,40 +27,56 @@ import org.seedstack.business.assembler.dsl.FluentAssembler;
 public interface Assembler<A, D> {
 
     /**
-     * Creates a new DTO and assemble it from the aggregate.
-     * <p>
-     * Equivalent of {@link #assembleDtoFromAggregate(Object, Object) assembleDtoFromAggregate(new D(), sourceAggregate)}
-     * </p>
+     * Creates a new DTO and merge the given aggregate into it. Method {@link #createDto()} is called to create the DTO
+     * instance, then {@link #mergeAggregateIntoDto(Object, Object)} is called to do the merge.
      *
      * @param sourceAggregate The source aggregate
      * @return the resulting dto
      */
-    D assembleDtoFromAggregate(A sourceAggregate);
+    default D createDtoFromAggregate(A sourceAggregate) {
+        D dto = createDto();
+        mergeAggregateIntoDto(sourceAggregate, dto);
+        return dto;
+    }
 
     /**
      * Updates an existing DTO with a source aggregate root.
      *
-     * @param targetDto       The target dto
      * @param sourceAggregate The source aggregate
+     * @param targetDto       The target dto
      */
-    void assembleDtoFromAggregate(D targetDto, A sourceAggregate);
+    void mergeAggregateIntoDto(A sourceAggregate, D targetDto);
 
     /**
      * Merges a source DTO into an existing aggregate root.
      *
-     * @param targetAggregate The target aggregate
      * @param sourceDto       The source dto
+     * @param targetAggregate The target aggregate
      */
-    void mergeAggregateWithDto(A targetAggregate, D sourceDto);
+    void mergeDtoIntoAggregate(D sourceDto, A targetAggregate);
 
     /**
      * Returns the DTO type handled by the assembler.
      * <p>
-     * This method is used by {@link #assembleDtoFromAggregate(Object)}
+     * This method is used by {@link #createDtoFromAggregate(Object)}
      * to determine the DTO type to instantiate.
      * </p>
      *
      * @return the dto class
      */
     Class<D> getDtoClass();
+
+    /**
+     * This protected method is in charge of creating a new instance of the DTO.
+     * <p>
+     * The actual implementation is fine for simple POJO, but it can be
+     * extended. The developers will then use {@link #getDtoClass()} to retrieve
+     * the destination class.
+     * </p>
+     *
+     * @return the DTO instance.
+     */
+    default D createDto() {
+        return Classes.instantiateDefault(getDtoClass());
+    }
 }

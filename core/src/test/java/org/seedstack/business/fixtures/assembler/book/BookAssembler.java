@@ -14,7 +14,7 @@ import javax.inject.Named;
 @Named("Book")
 public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
     @Override
-    protected void doAssembleDtoFromAggregate(BookDto targetDto, StoredBook sourceAggregate) {
+    public void mergeAggregateIntoDto(StoredBook sourceAggregate, BookDto targetDto) {
         targetDto.setTitle(sourceAggregate.getId().getTitle());
         targetDto.setAuthor(sourceAggregate.getId().getAuthor());
         targetDto.setPublishDate(sourceAggregate.getPublishDate());
@@ -22,7 +22,7 @@ public class BookAssembler extends BaseAssembler<StoredBook, BookDto> {
     }
 
     @Override
-    protected void doMergeAggregateWithDto(StoredBook targetAggregate, BookDto sourceDto) {
+    public void mergeDtoIntoAggregate(BookDto sourceDto, StoredBook targetAggregate) {
         targetAggregate.setPublishDate(sourceDto.getPublishDate());
         targetAggregate.setEditor(sourceDto.getEditor());
     }

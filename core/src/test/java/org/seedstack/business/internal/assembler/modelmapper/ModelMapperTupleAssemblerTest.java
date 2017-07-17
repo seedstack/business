@@ -34,7 +34,7 @@ public class ModelMapperTupleAssemblerTest {
         Order order = new Order(new Address("main street", "bevillecity"));
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        OrderDTO orderDTO = automaticAssembler.assembleDtoFromAggregate(tuple);
+        OrderDTO orderDTO = automaticAssembler.createDtoFromAggregate(tuple);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -55,7 +55,7 @@ public class ModelMapperTupleAssemblerTest {
 
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        automaticAssembler.assembleDtoFromAggregate(orderDTO, tuple);
+        automaticAssembler.mergeAggregateIntoDto(tuple, orderDTO);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -70,7 +70,7 @@ public class ModelMapperTupleAssemblerTest {
         OrderDTO orderDTO = new OrderDTO("John", "Doe", "main street", "bevillecity");
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        automaticAssembler.mergeAggregateWithDto(tuple, orderDTO);
+        automaticAssembler.mergeDtoIntoAggregate(orderDTO, tuple);
 
         Assertions.assertThat(orderDTO.customerFirstName).isEqualTo("John");
         Assertions.assertThat(orderDTO.customerLastName).isEqualTo("Doe");

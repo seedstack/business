@@ -37,23 +37,23 @@ public class BaseAssemblerIT {
         entity1.setAge(35);
         entity1.setAddress("1 rue de la paix, 75001, Paris");
 
-        MyUnrestrictedDto dto1 = normalAssembler.assembleDtoFromAggregate(entity1);
+        MyUnrestrictedDto dto1 = normalAssembler.createDtoFromAggregate(entity1);
         assertThat(dto1).isNotNull();
-        assertThat(dto1.getNom()).isEqualTo("Jemba, Epo");
+        assertThat(dto1.getName()).isEqualTo("Jemba, Epo");
         assertThat(dto1.getAge()).isEqualTo(35);
-        assertThat(dto1.getAddresse()).isEqualTo("1 rue de la paix, 75001, Paris");
+        assertThat(dto1.getAddress()).isEqualTo("1 rue de la paix, 75001, Paris");
     }
 
     @Test
     public void dto_to_entity_way_should_work_fine() {
         MyUnrestrictedDto dto1 = new MyUnrestrictedDto();
-        dto1.setNom("Lauer, Adrien");
+        dto1.setName("Lauer, Adrien");
         dto1.setAge(32);
-        dto1.setAddresse("rue des hotels, paris, 75001");
+        dto1.setAddress("rue des hotels, paris, 75001");
 
         MyAggregateRoot entity1 = new MyAggregateRoot();
 
-        normalAssembler.mergeAggregateWithDto(entity1, dto1);
+        normalAssembler.mergeDtoIntoAggregate(dto1, entity1);
 
         assertThat(entity1.getFirstName()).isEqualTo("Adrien");
         assertThat(entity1.getLastName()).isEqualTo("Lauer");

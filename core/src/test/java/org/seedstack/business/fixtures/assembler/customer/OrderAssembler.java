@@ -16,7 +16,7 @@ import javax.inject.Named;
 public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
 
     @Override
-    protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
+    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
         targetDto.setOrderId(sourceAggregate.getId());
         targetDto.setPrice(sourceAggregate.getPrice());
         targetDto.setProduct(sourceAggregate.getProduct());
@@ -24,7 +24,7 @@ public class OrderAssembler extends BaseAssembler<Order, OrderDto> {
     }
 
     @Override
-    protected void doMergeAggregateWithDto(Order targetAggregate, OrderDto sourceDto) {
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
         targetAggregate.setProduct(sourceDto.getProduct());
         targetAggregate.setOrderDate(sourceDto.getOrderDate());
         targetAggregate.setPrice(sourceDto.getPrice());

@@ -7,10 +7,13 @@
  */
 package org.seedstack.business.spi.assembler;
 
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
+
 public class DtoInfoResolverPriority {
     /**
-     * Matching annotations DTO info resolver uses {@link org.seedstack.business.assembler.MatchingEntityId} and
-     * {@link org.seedstack.business.assembler.MatchingFactoryParameter} annotations to resolve DTO information. It is
+     * Matching annotations DTO info resolver uses {@link AggregateId} and
+     * {@link FactoryArgument} annotations to resolve DTO information. It is
      * able to use factories for {@link org.seedstack.business.domain.ValueObject}s and {@link org.seedstack.business.domain.AggregateRoot}s
      * creation.
      */

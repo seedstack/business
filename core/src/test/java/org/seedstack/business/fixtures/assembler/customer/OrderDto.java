@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.fixtures.assembler.customer;
 
-import org.seedstack.business.assembler.MatchingEntityId;
-import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
 
 import java.util.Date;
 
@@ -35,8 +35,8 @@ public class OrderDto {
         this.price = price;
     }
 
-    @MatchingEntityId // no need for index because id is primitive
-    @MatchingFactoryParameter(index = 0)
+    @AggregateId // no need for index because id is primitive
+    @FactoryArgument(index = 0)
     public String getOrderId() {
         return orderId;
     }
@@ -45,7 +45,7 @@ public class OrderDto {
         this.orderId = orderId;
     }
 
-    @MatchingFactoryParameter(index = 1)
+    @FactoryArgument(index = 1)
     public String getProduct() {
         return product;
     }

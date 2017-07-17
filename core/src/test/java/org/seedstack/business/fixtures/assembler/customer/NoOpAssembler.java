@@ -14,12 +14,12 @@ import javax.inject.Named;
 @Named("noop")
 public class NoOpAssembler extends BaseAssembler<Order, OrderDto> {
     @Override
-    protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
+    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
 
     }
 
     @Override
-    protected void doMergeAggregateWithDto(Order targetAggregate, OrderDto sourceDto) {
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
 
     }
 }

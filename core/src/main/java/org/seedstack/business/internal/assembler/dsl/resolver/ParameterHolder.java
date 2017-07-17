@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl.resolver;
 
 import org.seedstack.business.BusinessException;
-import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.shed.reflect.ReflectUtils;
 
@@ -70,9 +70,9 @@ class ParameterHolder<D> {
             Method conflictingGetter = methodMap.get(aggregateIndex).get(index);
             BusinessException exception;
             if (index > -1) {
-                exception = BusinessException.createNew(annotation == MatchingEntityId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_INDEX_MATCHING : BusinessErrorCode.CONFLICTING_DTO_FACTORY_INDEX_MATCHING);
+                exception = BusinessException.createNew(annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_INDEX_MATCHING : BusinessErrorCode.CONFLICTING_DTO_FACTORY_INDEX_MATCHING);
             } else {
-                exception = BusinessException.createNew(annotation == MatchingEntityId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_MATCHING : BusinessErrorCode.CONFLICTING_DTO_FACTORY_MATCHING);
+                exception = BusinessException.createNew(annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_MATCHING : BusinessErrorCode.CONFLICTING_DTO_FACTORY_MATCHING);
             }
             exception
                     .put("index", index)

@@ -7,16 +7,16 @@
  */
 package org.seedstack.business.fixtures.assembler;
 
-import org.seedstack.business.assembler.MatchingEntityId;
-import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
 
 public class MyCustomerRepresentation {
     private String id;
     private String name;
     private String primaryAccountNumber;
 
-    @MatchingEntityId
-    @MatchingFactoryParameter(index = 0)
+    @AggregateId
+    @FactoryArgument(index = 0)
     public String getId() {
         return id;
     }
@@ -33,7 +33,7 @@ public class MyCustomerRepresentation {
         this.name = name;
     }
 
-    @MatchingFactoryParameter(index = 1)
+    @FactoryArgument(index = 1)
     public String factoryFirstName() {
         if (name != null) {
             return name.split(" ")[0];
@@ -41,7 +41,7 @@ public class MyCustomerRepresentation {
         return null;
     }
 
-    @MatchingFactoryParameter(index = 2)
+    @FactoryArgument(index = 2)
     public String factoryLastName() {
         if (name != null) {
             return name.split(" ")[1];

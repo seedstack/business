@@ -37,7 +37,7 @@ public class ModelMapperTupleAssemblerIT {
         Order order = new Order(new Address("main street", "bevillecity"));
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        Recipe recipe = defaultTupleAssembler.assembleDtoFromAggregate(tuple);
+        Recipe recipe = defaultTupleAssembler.createDtoFromAggregate(tuple);
 
         Assertions.assertThat(recipe.getCustomerFirstName()).isEqualTo("John");
         Assertions.assertThat(recipe.getCustomerLastName()).isEqualTo("Doe");
@@ -53,7 +53,7 @@ public class ModelMapperTupleAssemblerIT {
 
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        defaultTupleAssembler.assembleDtoFromAggregate(recipe, tuple);
+        defaultTupleAssembler.mergeAggregateIntoDto(tuple, recipe);
 
         Assertions.assertThat(recipe.getCustomerFirstName()).isEqualTo("John");
         Assertions.assertThat(recipe.getCustomerLastName()).isEqualTo("Doe");
@@ -68,7 +68,7 @@ public class ModelMapperTupleAssemblerIT {
         Recipe recipe = new Recipe("John", "Doe", "main street", "bevillecity");
 
         Pair<Order, Customer> tuple = Tuples.create(order, customer);
-        defaultTupleAssembler.mergeAggregateWithDto(tuple, recipe);
+        defaultTupleAssembler.mergeDtoIntoAggregate(recipe, tuple);
 
         Assertions.assertThat(recipe.getCustomerFirstName()).isEqualTo("John");
         Assertions.assertThat(recipe.getCustomerLastName()).isEqualTo("Doe");

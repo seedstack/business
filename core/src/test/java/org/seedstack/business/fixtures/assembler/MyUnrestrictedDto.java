@@ -11,29 +11,25 @@
 package org.seedstack.business.fixtures.assembler;
 
 
-/**
- * Dummy unrestricted dto (without EL)
- */
 public class MyUnrestrictedDto {
+    private String name;
+    private String address;
+    private int age;
 
-    String nom;
-    String addresse;
-    int age;
-
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAddresse() {
-        return addresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddresse(String addresse) {
-        this.addresse = addresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getAge() {
@@ -43,5 +39,4 @@ public class MyUnrestrictedDto {
     public void setAge(int age) {
         this.age = age;
     }
-
 }

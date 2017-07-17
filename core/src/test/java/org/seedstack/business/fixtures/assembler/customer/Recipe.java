@@ -8,8 +8,8 @@
 package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.assembler.DtoOf;
-import org.seedstack.business.assembler.MatchingEntityId;
-import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
 
 /**
  * The recipe assembled based on an order and the customer who passed the order.
@@ -30,19 +30,19 @@ public class Recipe {
     }
 
     // The order of the typeIndex depends on the position in @DtoOf
-    @MatchingEntityId(typeIndex = 0) // Don't specify the index as it is not a value object id
-    @MatchingFactoryParameter(typeIndex = 0, index = 0)
+    @AggregateId(aggregateIndex = 0) // Don't specify the index as it is not a value object id
+    @FactoryArgument(aggregateIndex = 0, index = 0)
     public String getOrderId() {
         return orderId;
     }
 
-    @MatchingFactoryParameter(typeIndex = 0, index = 1)
+    @FactoryArgument(aggregateIndex = 0, index = 1)
     public String getProduct() {
         return product;
     }
 
-    @MatchingEntityId(typeIndex = 1)
-    @MatchingFactoryParameter(typeIndex = 1, index = 0)
+    @AggregateId(aggregateIndex = 1)
+    @FactoryArgument(aggregateIndex = 1, index = 0)
     public String getCustomerId() {
         return customerId;
     }

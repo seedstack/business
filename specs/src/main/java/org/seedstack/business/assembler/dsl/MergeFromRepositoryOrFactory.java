@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import org.seedstack.business.assembler.FactoryArgument;
 import org.seedstack.business.domain.AggregateNotFoundException;
 
 /**
@@ -26,7 +27,7 @@ public interface MergeFromRepositoryOrFactory<T> {
     /**
      * Returns the aggregate roots, allowing them to come both from repository and factory.
      * <p>
-     * It uses the {@link org.seedstack.business.assembler.MatchingFactoryParameter} annotation on
+     * It uses the {@link FactoryArgument} annotation on
      * the DTO to find the factory method parameters.
      * </p>
      *

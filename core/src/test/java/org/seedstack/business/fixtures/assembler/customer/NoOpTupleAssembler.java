@@ -15,12 +15,12 @@ import javax.inject.Named;
 @Named("noop")
 public class NoOpTupleAssembler extends BaseTupleAssembler<Pair<Order, Customer>, OrderDto> {
     @Override
-    protected void doAssembleDtoFromAggregate(OrderDto targetDto, Pair<Order, Customer> sourceAggregate) {
+    public void mergeAggregateIntoDto(Pair<Order, Customer> sourceAggregate, OrderDto targetDto) {
 
     }
 
     @Override
-    protected void doMergeAggregateWithDto(Pair<Order, Customer> targetAggregate, OrderDto sourceDto) {
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Pair<Order, Customer> targetAggregate) {
 
     }
 }

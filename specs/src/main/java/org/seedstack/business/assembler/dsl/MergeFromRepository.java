@@ -7,6 +7,9 @@
  */
 package org.seedstack.business.assembler.dsl;
 
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
+
 /**
  * Specifies whether the aggregate roots should be retrieved from a repository or created from a factory.
  **/
@@ -15,7 +18,7 @@ public interface MergeFromRepository<T> {
     /**
      * Loads the aggregates from their repository.
      * <p>
-     * It uses the {@link org.seedstack.business.assembler.MatchingEntityId} annotation on
+     * It uses the {@link AggregateId} annotation on
      * the DTO to find the aggregate IDs.
      * </p>
      *
@@ -26,7 +29,7 @@ public interface MergeFromRepository<T> {
     /**
      * Create the aggregates from their factory.
      * <p>
-     * It uses the {@link org.seedstack.business.assembler.MatchingFactoryParameter} annotation on
+     * It uses the {@link FactoryArgument} annotation on
      * the DTO to find the factory method parameters.
      * </p>
      *

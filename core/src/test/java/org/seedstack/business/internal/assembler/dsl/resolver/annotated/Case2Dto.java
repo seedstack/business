@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
-import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.AggregateId;
 
 import java.util.Date;
 
@@ -21,12 +21,12 @@ public class Case2Dto {
         this.birthDate = birthDate;
     }
 
-    @MatchingEntityId(index = 0)
+    @AggregateId(index = 0)
     public String getName() {
         return name;
     }
 
-    @MatchingEntityId(index = 1)
+    @AggregateId(index = 1)
     public Date getBirthDate() {
         return birthDate;
     }

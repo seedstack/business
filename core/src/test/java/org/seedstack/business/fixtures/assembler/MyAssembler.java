@@ -11,20 +11,19 @@ package org.seedstack.business.fixtures.assembler;
 import org.seedstack.business.assembler.BaseAssembler;
 
 public class MyAssembler extends BaseAssembler<MyAggregateRoot, MyUnrestrictedDto> {
-
     @Override
-    protected void doAssembleDtoFromAggregate(MyUnrestrictedDto targetDto, MyAggregateRoot sourceEntity) {
-        targetDto.setNom(sourceEntity.getLastName() + ", " + sourceEntity.getFirstName());
+    public void mergeAggregateIntoDto(MyAggregateRoot sourceEntity, MyUnrestrictedDto targetDto) {
+        targetDto.setName(sourceEntity.getLastName() + ", " + sourceEntity.getFirstName());
         targetDto.setAge(sourceEntity.getAge());
-        targetDto.setAddresse(sourceEntity.getAddress());
+        targetDto.setAddress(sourceEntity.getAddress());
     }
 
     @Override
-    public void doMergeAggregateWithDto(MyAggregateRoot targetEntity, MyUnrestrictedDto sourceDto) {
-        String[] split = sourceDto.getNom().split(",");
+    public void mergeDtoIntoAggregate(MyUnrestrictedDto sourceDto, MyAggregateRoot targetEntity) {
+        String[] split = sourceDto.getName().split(",");
         targetEntity.setFirstName(split[1].trim());
         targetEntity.setLastName(split[0].trim());
         targetEntity.setAge(sourceDto.getAge());
-        targetEntity.setAddress(sourceDto.getAddresse());
+        targetEntity.setAddress(sourceDto.getAddress());
     }
 }

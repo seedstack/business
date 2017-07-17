@@ -202,16 +202,16 @@ public class BusinessSpecificationsTest {
     @Ignore
     private static class MyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
-        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
+        public MySimplePojo createDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
             return null;
         }
 
         @Override
-        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) {
+        public void mergeAggregateIntoDto(MyAggregateRoot1 sourceAggregate, MySimplePojo sourceDto) {
         }
 
         @Override
-        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) {
+        public void mergeDtoIntoAggregate(MySimplePojo sourceDto, MyAggregateRoot1 targetAggregate) {
         }
 
         @Override
@@ -224,16 +224,16 @@ public class BusinessSpecificationsTest {
     @Ignore
     private static class DefaultMyAssembler1 implements Assembler<MyAggregateRoot1, MySimplePojo> {
         @Override
-        public MySimplePojo assembleDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
+        public MySimplePojo createDtoFromAggregate(MyAggregateRoot1 sourceAggregate) {
             return null;
         }
 
         @Override
-        public void assembleDtoFromAggregate(MySimplePojo sourceDto, MyAggregateRoot1 sourceAggregate) {
+        public void mergeAggregateIntoDto(MyAggregateRoot1 sourceAggregate, MySimplePojo sourceDto) {
         }
 
         @Override
-        public void mergeAggregateWithDto(MyAggregateRoot1 targetAggregate, MySimplePojo sourceDto) {
+        public void mergeDtoIntoAggregate(MySimplePojo sourceDto, MyAggregateRoot1 targetAggregate) {
         }
 
         @Override

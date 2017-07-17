@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
-import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.AggregateId;
 
 
 public class CaseFail2Dto {
@@ -19,13 +19,13 @@ public class CaseFail2Dto {
         this.lastName = lastName;
     }
 
-    @MatchingEntityId(index = 0)
+    @AggregateId(index = 0)
     public String getFirstName() {
         return firstName;
     }
 
 
-    @MatchingEntityId(index = 0)
+    @AggregateId(index = 0)
     public String getLastName() {
         return lastName;
     }

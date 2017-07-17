@@ -100,61 +100,61 @@ class MergeSingleImpl<D> implements MergeSingleWithQualifier {
 
     @Override
     public <A extends AggregateRoot<ID>, ID> void into(Unit<A> unit) {
-        context.tupleAssemblerOf(Tuples.itemClasses(unit), dtoClass).mergeAggregateWithDto(unit, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(unit), dtoClass).mergeDtoIntoAggregate(dto, unit);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
     void into(Pair<A1, A2> pair) {
-        context.tupleAssemblerOf(Tuples.itemClasses(pair), dtoClass).mergeAggregateWithDto(pair, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(pair), dtoClass).mergeDtoIntoAggregate(dto, pair);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
     void into(Triplet<A1, A2, A3> triplet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(triplet), dtoClass).mergeAggregateWithDto(triplet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(triplet), dtoClass).mergeDtoIntoAggregate(dto, triplet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
     void into(Quartet<A1, A2, A3, A4> quartet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(quartet), dtoClass).mergeAggregateWithDto(quartet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(quartet), dtoClass).mergeDtoIntoAggregate(dto, quartet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
     void into(Quintet<A1, A2, A3, A4, A5> quintet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(quintet), dtoClass).mergeAggregateWithDto(quintet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(quintet), dtoClass).mergeDtoIntoAggregate(dto, quintet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
     void into(Sextet<A1, A2, A3, A4, A5, A6> sextet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(sextet), dtoClass).mergeAggregateWithDto(sextet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(sextet), dtoClass).mergeDtoIntoAggregate(dto, sextet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
     void into(Septet<A1, A2, A3, A4, A5, A6, A7> septet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(septet), dtoClass).mergeAggregateWithDto(septet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(septet), dtoClass).mergeDtoIntoAggregate(dto, septet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
     void into(Octet<A1, A2, A3, A4, A5, A6, A7, A8> octet) {
-        context.tupleAssemblerOf(Tuples.itemClasses(octet), dtoClass).mergeAggregateWithDto(octet, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(octet), dtoClass).mergeDtoIntoAggregate(dto, octet);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
     void into(Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9> ennead) {
-        context.tupleAssemblerOf(Tuples.itemClasses(ennead), dtoClass).mergeAggregateWithDto(ennead, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(ennead), dtoClass).mergeDtoIntoAggregate(dto, ennead);
     }
 
     @Override
     public <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
     void into(Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10> decade) {
-        context.tupleAssemblerOf(Tuples.itemClasses(decade), dtoClass).mergeAggregateWithDto(decade, dto);
+        context.tupleAssemblerOf(Tuples.itemClasses(decade), dtoClass).mergeDtoIntoAggregate(dto, decade);
     }
 
     // --------------------------------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ class MergeSingleImpl<D> implements MergeSingleWithQualifier {
     @SuppressWarnings("unchecked")
     public <A extends AggregateRoot<ID>, ID>
     void into(A aggregateRoot) {
-        context.assemblerOf((Class<A>) aggregateRoot.getClass(), dtoClass).mergeAggregateWithDto(aggregateRoot, dto);
+        context.assemblerOf((Class<A>) aggregateRoot.getClass(), dtoClass).mergeDtoIntoAggregate(dto, aggregateRoot);
     }
 
     @Override

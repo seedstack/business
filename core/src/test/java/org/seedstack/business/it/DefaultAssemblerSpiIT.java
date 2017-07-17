@@ -36,7 +36,7 @@ public class DefaultAssemblerSpiIT {
     public void test_using_custom_default_assembler() {
         Assertions.assertThat(defaultAssembler).isNotNull();
         Assertions.assertThat(defaultAssembler).isInstanceOf(DummyDefaultAssembler.class);
-        OrderDto orderDto = defaultAssembler.assembleDtoFromAggregate(new Order(new Address("street", "city")));
+        OrderDto orderDto = defaultAssembler.createDtoFromAggregate(new Order(new Address("street", "city")));
         Assertions.assertThat(orderDto.getId()).isEqualTo("hodor");
     }
 
@@ -44,6 +44,6 @@ public class DefaultAssemblerSpiIT {
     public void test_custom_assembler() {
         Assertions.assertThat(customAssembler).isNotNull();
         Assertions.assertThat(customAssembler).isInstanceOf(OrderDtoAssembler.class);
-        customAssembler.assembleDtoFromAggregate(new Order(new Address("street", "city")));
+        customAssembler.createDtoFromAggregate(new Order(new Address("street", "city")));
     }
 }

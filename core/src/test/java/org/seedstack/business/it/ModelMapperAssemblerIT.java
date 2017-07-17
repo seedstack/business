@@ -54,16 +54,16 @@ public class ModelMapperAssemblerIT {
 
     @Test
     public void testInjectionInConfigureMethods() throws Exception {
-        Name nameResult = customerAssembler.assembleDtoFromAggregate(new Customer(new Name("Hello", "Kitty")));
+        Name nameResult = customerAssembler.createDtoFromAggregate(new Customer(new Name("Hello", "Kitty")));
         assertThat(nameResult.getFirstName()).isEqualTo("Hello");
         assertThat(nameResult.getLastName()).isEqualTo("Kitty");
 
-        customerAssembler.assembleDtoFromAggregate(nameResult, new Customer(new Name("John", "Doe")));
+        customerAssembler.mergeAggregateIntoDto(new Customer(new Name("John", "Doe")), nameResult);
         assertThat(nameResult.getFirstName()).isEqualTo("John");
         assertThat(nameResult.getLastName()).isEqualTo("Doe");
 
         Customer customerResult = new Customer(new Name("dummy", "dummy"));
-        customerAssembler.mergeAggregateWithDto(customerResult, new Name("Jane", "Doe"));
+        customerAssembler.mergeDtoIntoAggregate(new Name("Jane", "Doe"), customerResult);
         assertThat(customerResult.getName().getFirstName()).isEqualTo("Jane");
         assertThat(customerResult.getName().getLastName()).isEqualTo("Doe");
     }
@@ -72,7 +72,7 @@ public class ModelMapperAssemblerIT {
     public void testAssembleDtoFromAggregate() {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
 
-        OrderDTO orderDTO = defaultOrderAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = defaultOrderAssembler.createDtoFromAggregate(order);
 
         assertThat(orderDTO.customerFirstName).isEqualTo("John");
         assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -88,14 +88,14 @@ public class ModelMapperAssemblerIT {
         specs.put("price", "cheap");
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), features, specs);
 
-        OrderDTO orderDTO = defaultOrderAssembler.assembleDtoFromAggregate(order);
+        OrderDTO orderDTO = defaultOrderAssembler.createDtoFromAggregate(order);
 
         assertThat(orderDTO.customerFirstName).isEqualTo("John");
         assertThat(orderDTO.customerLastName).isEqualTo("Doe");
         assertThat(orderDTO.billingCity).isEqualTo("bevillecity");
         assertThat(orderDTO.billingStreet).isEqualTo("main street");
 
-        orderDTO = defaultOrderAssembler.assembleDtoFromAggregate(order);
+        orderDTO = defaultOrderAssembler.createDtoFromAggregate(order);
 
         assertThat(orderDTO.customerFirstName).isEqualTo("John");
         assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -106,7 +106,7 @@ public class ModelMapperAssemblerIT {
         Order order = new Order(new Customer(new Name("John", "Doe")), new Address("main street", "bevillecity"), null, null);
         OrderDTO orderDTO = new OrderDTO("Jane", "Doe", "", "");
 
-        defaultOrderAssembler.assembleDtoFromAggregate(orderDTO, order);
+        defaultOrderAssembler.mergeAggregateIntoDto(order, orderDTO);
 
         assertThat(orderDTO.customerFirstName).isEqualTo("John");
         assertThat(orderDTO.customerLastName).isEqualTo("Doe");
@@ -120,7 +120,7 @@ public class ModelMapperAssemblerIT {
         order.setIgnoredProp("this should not be deleted");
         OrderDTO orderDTO = new OrderDTO("John", "Doe", "main street", "bevillecity");
 
-        customOrderAssembler.mergeAggregateWithDto(order, orderDTO);
+        customOrderAssembler.mergeDtoIntoAggregate(orderDTO, order);
 
         assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("John");
         assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");
@@ -135,7 +135,7 @@ public class ModelMapperAssemblerIT {
         order.setIgnoredProp("this should not be deleted");
         OrderDTO orderDTO = new OrderDTO(null, null, "main street", "bevillecity");
 
-        customOrderAssembler.mergeAggregateWithDto(order, orderDTO);
+        customOrderAssembler.mergeDtoIntoAggregate(orderDTO, order);
 
         assertThat(order.getCustomer().getName().getFirstName()).isEqualTo("Jane");
         assertThat(order.getCustomer().getName().getLastName()).isEqualTo("Doe");
@@ -384,8 +384,15 @@ public class ModelMapperAssemblerIT {
 
     @Named("custom")
     static class CustomOrderAssembler extends ModelMapperAssembler<Order, OrderDTO> {
+        @Inject
+        private MyService myService;
+        @Logging
+        private Logger logger;
+
         @Override
         protected void configureAssembly(org.modelmapper.ModelMapper modelMapper) {
+            assertThat(myService).isNotNull();
+            assertThat(logger).isNotNull();
             modelMapper.createTypeMap(Order.class, OrderDTO.class)
                     .addMappings(mapper -> {
                         mapper.map(src -> src.getBillingAddress().getStreet(), OrderDTO::setBillingStreet);
@@ -395,6 +402,8 @@ public class ModelMapperAssemblerIT {
 
         @Override
         protected void configureMerge(org.modelmapper.ModelMapper modelMapper) {
+            assertThat(myService).isNotNull();
+            assertThat(logger).isNotNull();
             modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
             modelMapper.createTypeMap(OrderDTO.class, Order.class)
                     .addMappings(mapper -> {

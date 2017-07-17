@@ -47,9 +47,9 @@ class AssembleMultipleImpl<A extends AggregateRoot<ID>, ID, T extends Tuple> imp
     @Override
     public <D> Stream<D> toStreamOf(Class<D> dtoClass) {
         if (aggregates != null) {
-            return aggregates.map(aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass).assembleDtoFromAggregate(aggregate));
+            return aggregates.map(aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass).createDtoFromAggregate(aggregate));
         } else if (aggregateTuples != null) {
-            return aggregateTuples.map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass).assembleDtoFromAggregate(tuple));
+            return aggregateTuples.map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass).createDtoFromAggregate(tuple));
         }
         throw new IllegalStateException("Nothing to assemble");
     }

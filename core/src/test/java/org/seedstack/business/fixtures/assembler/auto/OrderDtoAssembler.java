@@ -23,7 +23,7 @@ public class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
     private Logger logger;
 
     @Override
-    protected void doAssembleDtoFromAggregate(OrderDto targetDto, Order sourceAggregate) {
+    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
         assertThat(myService).isNotNull();
         assertThat(logger).isNotNull();
         targetDto.setId(sourceAggregate.getId());
@@ -31,7 +31,7 @@ public class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
     }
 
     @Override
-    protected void doMergeAggregateWithDto(Order targetAggregate, OrderDto sourceDto) {
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
         assertThat(myService).isNotNull();
         assertThat(logger).isNotNull();
         targetAggregate.setBillingAddress(sourceDto.getBillingAddress());

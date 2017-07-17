@@ -13,7 +13,7 @@ import org.fest.reflect.core.Reflection;
 import org.fest.reflect.reference.TypeRef;
 import org.junit.Before;
 import org.junit.Test;
-import org.seedstack.business.assembler.AbstractBaseAssembler;
+import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.AggregateRoot;
@@ -75,33 +75,33 @@ public class DefaultAssemblerCollectorTest {
     private static class Dto4 {
     }
 
-    private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
+    private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
         @Override
-        public D assembleDtoFromAggregate(A sourceAggregate) {
+        public D createDtoFromAggregate(A sourceAggregate) {
             return null;
         }
 
         @Override
-        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
         }
 
         @Override
-        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+        public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
         }
     }
 
-    private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
+    private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
         @Override
-        public D assembleDtoFromAggregate(A sourceAggregate) {
+        public D createDtoFromAggregate(A sourceAggregate) {
             return null;
         }
 
         @Override
-        public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
+        public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
         }
 
         @Override
-        public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
+        public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
         }
     }
 }

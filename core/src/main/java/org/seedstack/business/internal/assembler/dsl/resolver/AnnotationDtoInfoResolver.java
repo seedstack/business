@@ -8,8 +8,8 @@
 package org.seedstack.business.internal.assembler.dsl.resolver;
 
 import org.seedstack.business.BusinessException;
-import org.seedstack.business.assembler.MatchingEntityId;
-import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.FactoryArgument;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.spi.assembler.BaseDtoInfoResolver;
@@ -34,14 +34,14 @@ import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
  * See Their respective documentation to understand {@code AnnotationResolver} implementation.
  * </p>
  *
- * @see org.seedstack.business.assembler.MatchingEntityId
- * @see org.seedstack.business.assembler.MatchingFactoryParameter
+ * @see AggregateId
+ * @see FactoryArgument
  */
 @Priority(DtoInfoResolverPriority.MATCHING_ANNOTATIONS)
 public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationDtoInfoResolver.class);
-    private static final Class<? extends Annotation> MATCHING_ENTITY_ID = MatchingEntityId.class;
-    private static final Class<? extends Annotation> MATCHING_FACT_PARAM = MatchingFactoryParameter.class;
+    private static final Class<? extends Annotation> MATCHING_ENTITY_ID = AggregateId.class;
+    private static final Class<? extends Annotation> MATCHING_FACT_PARAM = FactoryArgument.class;
     // This unbounded cache of DTO info can only grow up to the number of DTO classes in the system
     private static final ConcurrentMap<Class<?>, DtoInfo<?>> cache = new ConcurrentHashMap<>();
 
@@ -105,13 +105,13 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
                     .forEach(method -> {
                         makeAccessible(method);
 
-                        MatchingEntityId idAnnotation = method.getAnnotation(MatchingEntityId.class);
+                        AggregateId idAnnotation = method.getAnnotation(AggregateId.class);
                         if (idAnnotation != null) {
-                            if (idAnnotation.typeIndex() >= 0) {
+                            if (idAnnotation.aggregateIndex() >= 0) {
                                 if (idAnnotation.index() >= 0) {
-                                    idParameterHolder.addTupleParameter(MATCHING_ENTITY_ID, idAnnotation.typeIndex(), idAnnotation.index(), method);
+                                    idParameterHolder.addTupleParameter(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), idAnnotation.index(), method);
                                 } else {
-                                    idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.typeIndex(), method);
+                                    idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), method);
                                 }
                             } else {
                                 if (idAnnotation.index() >= 0) {
@@ -123,13 +123,13 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
                             supported.set(true);
                         }
 
-                        MatchingFactoryParameter factoryAnnotation = method.getAnnotation(MatchingFactoryParameter.class);
+                        FactoryArgument factoryAnnotation = method.getAnnotation(FactoryArgument.class);
                         if (factoryAnnotation != null) {
-                            if (factoryAnnotation.typeIndex() >= 0) {
+                            if (factoryAnnotation.aggregateIndex() >= 0) {
                                 if (factoryAnnotation.index() >= 0) {
-                                    aggregateParameterHolder.addTupleParameter(MATCHING_FACT_PARAM, factoryAnnotation.typeIndex(), factoryAnnotation.index(), method);
+                                    aggregateParameterHolder.addTupleParameter(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), factoryAnnotation.index(), method);
                                 } else {
-                                    aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM, factoryAnnotation.typeIndex(), method);
+                                    aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), method);
                                 }
                             } else {
                                 if (factoryAnnotation.index() >= 0) {

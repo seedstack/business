@@ -12,18 +12,18 @@ import org.seedstack.business.fixtures.domain.customer.Customer;
 
 public class MyCustomerAssembler extends BaseAssembler<Customer, MyCustomerRepresentation> {
     @Override
-    protected void doAssembleDtoFromAggregate(MyCustomerRepresentation targetDto, Customer sourceEntity) {
+    public void mergeAggregateIntoDto(Customer sourceEntity, MyCustomerRepresentation targetDto) {
         targetDto.setName(sourceEntity.getFullName());
         targetDto.setId(sourceEntity.getId().getCustomerId());
     }
 
     @Override
-    public void doMergeAggregateWithDto(Customer targetEntity, MyCustomerRepresentation sourceDto) {
+    public void mergeDtoIntoAggregate(MyCustomerRepresentation sourceDto, Customer targetAggregate) {
         String name = sourceDto.getName();
         if (name != null) {
             String[] split = name.split(" ");
-            targetEntity.setFirstName(split[1].trim());
-            targetEntity.setLastName(split[0].trim());
+            targetAggregate.setFirstName(split[1].trim());
+            targetAggregate.setLastName(split[0].trim());
         }
     }
 }

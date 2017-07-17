@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
-import org.seedstack.business.assembler.MatchingEntityId;
+import org.seedstack.business.assembler.AggregateId;
 
 /**
  * Case 4: The first name and last name are mapped to a {@code Pair&lt;String, String&gt;} in the constructor.
@@ -25,22 +25,22 @@ public class Case4Dto {
         this.orderDescription = orderDescription;
     }
 
-    @MatchingEntityId(index = 0, typeIndex = 0)
+    @AggregateId(index = 0, aggregateIndex = 0)
     public String getFirstName() {
         return firstName;
     }
 
-    @MatchingEntityId(index = 1, typeIndex = 0)
+    @AggregateId(index = 1, aggregateIndex = 0)
     public String getLastName() {
         return lastName;
     }
 
-    @MatchingEntityId(index = 0, typeIndex = 1)
+    @AggregateId(index = 0, aggregateIndex = 1)
     public String getOrderItem() {
         return orderItem;
     }
 
-    @MatchingEntityId(index = 1, typeIndex = 1)
+    @AggregateId(index = 1, aggregateIndex = 1)
     public String getOrderDescription() {
         return orderDescription;
     }
