@@ -10,11 +10,11 @@ package org.seedstack.business.fixtures.inmemory;
 import org.seedstack.business.fixtures.domain.product.Product;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 import org.seedstack.business.fixtures.domain.product.ProductRepository;
+import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
-@Store("ProductInMemoryRepository")
-public class ProductInMemoryRepository extends InMemoryRepository<Product, ProductId> implements ProductRepository {
+public class ProductInMemoryRepository extends BaseInMemoryRepository<Product, ProductId> implements ProductRepository {
     @Logging
     private Logger logger;
 

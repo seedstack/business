@@ -9,10 +9,10 @@ package org.seedstack.business.fixtures.inmemory;
 
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
+import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
 
-@Store("ActivationInMemoryRepository")
-public class ActivationInMemoryRepository extends InMemoryRepository<Activation, String> implements ActivationRepository {
+public class ActivationInMemoryRepository extends BaseInMemoryRepository<Activation, String> implements ActivationRepository {
 
 
 }

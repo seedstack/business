@@ -21,7 +21,7 @@ import org.seedstack.business.assembler.dsl.MergeFromRepository;
 import org.seedstack.business.assembler.dsl.MergeSingle;
 import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 
 import java.lang.annotation.Annotation;
 

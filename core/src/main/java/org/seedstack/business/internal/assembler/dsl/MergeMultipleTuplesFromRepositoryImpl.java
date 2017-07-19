@@ -13,7 +13,7 @@ import org.seedstack.business.assembler.dsl.MergeFromRepository;
 import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 
 import java.util.stream.Stream;
 

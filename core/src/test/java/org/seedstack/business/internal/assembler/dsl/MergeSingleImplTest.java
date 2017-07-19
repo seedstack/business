@@ -19,12 +19,11 @@ import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.assembler.dsl.MergeFromRepository;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
-import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.Customer;
 import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.Recipe;
-import org.seedstack.business.internal.assembler.DefaultModelMapperTupleAssembler;
+import org.seedstack.business.fixtures.assembler.customer.RecipeAssembler;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
 
 import java.util.stream.Stream;
@@ -37,14 +36,14 @@ public class MergeSingleImplTest {
     public void before() {
         DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
         AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
-        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());
+        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
         DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
         context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
         Mockito.when(assemblerRegistry.tupleAssemblerOf(
                 (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
                 Recipe.class)
-        ).thenReturn((Assembler) new DefaultModelMapperTupleAssembler<Pair<Order, Customer>, Recipe>(new Object[]{null, Recipe.class}));
+        ).thenReturn((Assembler) new RecipeAssembler());
     }
 
     @Test

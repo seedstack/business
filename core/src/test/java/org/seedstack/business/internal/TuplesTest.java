@@ -22,6 +22,7 @@ import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.javatuples.Unit;
 import org.junit.Test;
+import org.seedstack.business.util.Tuples;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

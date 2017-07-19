@@ -52,4 +52,20 @@ public class Recipe {
     public String getCustomerName() {
         return customerName;
     }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 }

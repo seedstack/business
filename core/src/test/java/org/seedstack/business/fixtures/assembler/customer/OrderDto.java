@@ -8,18 +8,19 @@
 package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.assembler.AggregateId;
+import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.assembler.FactoryArgument;
 
 import java.util.Date;
 
 
-//@DtoOf(Order.class) // specify the link to the aggregate root
+@DtoOf(Order.class) // specify the link to the aggregate root
 public class OrderDto {
-    String orderId;
-    String product;
-    String customerName;
-    int price;
-    Date orderDate;
+    private String orderId;
+    private String product;
+    private String customerName;
+    private int price;
+    private Date orderDate;
 
     public OrderDto() {
     }

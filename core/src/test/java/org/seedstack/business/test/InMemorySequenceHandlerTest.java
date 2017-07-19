@@ -9,7 +9,7 @@ package org.seedstack.business.test;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.seedstack.business.domain.InMemorySequenceGenerator;
+import org.seedstack.business.util.inmemory.InMemorySequenceGenerator;
 
 
 public class InMemorySequenceHandlerTest {

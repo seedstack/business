@@ -17,12 +17,10 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
-import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
-import org.seedstack.business.fixtures.assembler.customer.AutoTupleAssembler;
 import org.seedstack.business.fixtures.assembler.customer.Customer;
 import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
 
 import java.util.List;
@@ -39,7 +37,7 @@ public class AssembleSingleProviderImplTest {
     public void before() {
         DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
         AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
-        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());
+        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
         DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
         context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
@@ -47,7 +45,7 @@ public class AssembleSingleProviderImplTest {
                 assemblerRegistry.tupleAssemblerOf(
                         (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
                         OrderDto.class)
-        ).thenReturn((Assembler) new AutoTupleAssembler());
+        ).thenReturn((Assembler) new OrderDtoTupleAssembler());
     }
 
     @Test

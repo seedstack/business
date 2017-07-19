@@ -12,7 +12,7 @@ import org.javatuples.Tuple;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 

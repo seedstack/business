@@ -18,8 +18,8 @@ import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.fixtures.assembler.customer.AutoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.Order;
+import org.seedstack.business.fixtures.assembler.customer.OrderDtoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactoryInternal;
 import org.seedstack.business.internal.assembler.dsl.resolver.AnnotationDtoInfoResolver;
@@ -47,7 +47,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
         Mockito.when(domainRegistry.getRepository(Order.class, String.class)).thenReturn(repository);
         Mockito.when(domainRegistry.getFactory(Order.class)).thenReturn(new OrderFactoryInternal());
         Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
-        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new AutoAssembler());
+        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
 
         underTest = new MergeSingleAggregateFromRepositoryImpl<>(context, new OrderDto("1", "lightsaber"), Order.class);
     }

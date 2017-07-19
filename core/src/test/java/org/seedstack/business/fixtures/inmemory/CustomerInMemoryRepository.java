@@ -7,23 +7,19 @@
  */
 package org.seedstack.business.fixtures.inmemory;
 
-import com.google.common.collect.Lists;
 import org.seedstack.business.fixtures.domain.customer.Customer;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
+import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
+import org.seedstack.business.specification.Specification;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
-public class CustomerInMemoryRepository extends InMemoryRepository<Customer, CustomerId> implements CustomerRepository {
+public class CustomerInMemoryRepository extends BaseInMemoryRepository<Customer, CustomerId> implements CustomerRepository {
     @Override
     public Collection<Customer> findAll() {
-        Collection<Customer> customers = Lists.newArrayList();
-        for (Object object : inMemorySortedMap.values()) {
-            if (Customer.class.isAssignableFrom(object.getClass())) {
-                customers.add((Customer) object);
-            }
-        }
-        return customers;
+        return get(Specification.any()).collect(Collectors.toList());
     }
 }
 

@@ -11,7 +11,7 @@ import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleMultiple;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 

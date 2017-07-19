@@ -18,7 +18,7 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.internal.Tuples;
+import org.seedstack.business.util.Tuples;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;

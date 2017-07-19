@@ -43,7 +43,6 @@ import static org.seedstack.shed.reflect.ClassPredicates.classModifierIs;
 /**
  * This class provides all the specifications use by the business plugins.
  */
-@SuppressWarnings("unchecked")
 public final class BusinessSpecifications {
     /**
      * The aggregate root specification.
@@ -82,7 +81,7 @@ public final class BusinessSpecifications {
             .build();
 
     public static final Specification<Class<?>> DEFAULT_REPOSITORY = new SpecificationBuilder<>(
-            AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, false)
+            AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, true)
                     .and(classIsInterface().negate())
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
                     .and(classOrAncestorAnnotatedWith(DomainRepository.class, true)))
@@ -134,7 +133,7 @@ public final class BusinessSpecifications {
             .build();
 
     /**
-     * The assembler specification. It accepts all assemblers: default assemblers and classic assemblers.
+     * The assembler specification. It accepts all assemblers: default assemblers and explicit assemblers.
      */
     public static final Specification<Class<?>> ASSEMBLER = new SpecificationBuilder<>(
             classIsDescendantOf(Assembler.class)
@@ -143,10 +142,10 @@ public final class BusinessSpecifications {
             .build();
 
     /**
-     * The assembler specification matching only the classic assembler, i.e. non-default assemblers.
+     * The assembler specification matching only the explicit assembler
      */
     public static final Specification<Class<?>> EXPLICIT_ASSEMBLER = ASSEMBLER.and(new SpecificationBuilder<>(
-            elementAnnotatedWith(GenericImplementation.class, false).negate()
+            elementAnnotatedWith(GenericImplementation.class, true).negate()
     ).build());
 
     /**
@@ -157,16 +156,16 @@ public final class BusinessSpecifications {
      * </p>
      */
     public static final Specification<Class<?>> DEFAULT_ASSEMBLER = ASSEMBLER.and(new SpecificationBuilder<>(
-            elementAnnotatedWith(GenericImplementation.class, false)
+            elementAnnotatedWith(GenericImplementation.class, true)
     ).build());
 
     /**
-     * The specification for the dtos which require an default assembler to be bound.
+     * The specification for the DTO which require an default assembler to be bound.
      *
      * @see #DEFAULT_ASSEMBLER
      */
     public static final Specification<Class<?>> DTO_OF = new SpecificationBuilder<Class<?>>(
-            elementAnnotatedWith(DtoOf.class, false))
+            elementAnnotatedWith(DtoOf.class, true))
             .build();
 
     /**

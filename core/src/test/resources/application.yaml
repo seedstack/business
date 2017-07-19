@@ -23,21 +23,10 @@ classes:
               defaultRepository:
           identity:
               identityGenerator: simpleUUID
-          assembler:
-            auto:
-                identityGenerator: simpleUUID
 
 org:
   seedstack:
     toto: toto
-transaction:
-    defaultHandler: org.seedstack.business.fixtures.inmemory.internal.InMemoryTransactionHandler
-business:
-  events:
-    publishRepositoryEvents: true
-security:
-  users:
-    Anakin: imsodark
 
 jmh:
   include: FluentAssemblerBenchmark
