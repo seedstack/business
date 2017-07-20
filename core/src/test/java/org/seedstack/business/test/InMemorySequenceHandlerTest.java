@@ -17,7 +17,7 @@ public class InMemorySequenceHandlerTest {
     @Test
     public void testInMemorySequenceHandler() {
         InMemorySequenceGenerator inMemorySequenceHandler = new InMemorySequenceGenerator();
-        Long handle = inMemorySequenceHandler.handle(null, null);
+        Long handle = inMemorySequenceHandler.generate(null, null);
         Assertions.assertThat(handle).isEqualTo(2);
     }
 }

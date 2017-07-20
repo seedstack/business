@@ -24,7 +24,7 @@ public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
     private static final AtomicLong sequence = new AtomicLong(1L);
 
     @Override
-    public Long handle(Entity<Long> entity, ClassConfiguration<Entity<Long>> entityConfiguration) {
+    public <E extends Entity<Long>> Long generate(Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
         return sequence.incrementAndGet();
     }
 }

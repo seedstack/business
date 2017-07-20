@@ -8,7 +8,9 @@
 package org.seedstack.business.domain;
 
 /**
- * Interface for handling sequence identity generation
+ * Interface for generating ever-incrementing numbers as identity of entities.
+ *
+ * @param <ID> the type of generated numbers.
  */
-public interface SequenceGenerator<ID extends Number> extends IdentityGenerator<Entity<ID>, ID> {
+public interface SequenceGenerator<ID extends Number> extends IdentityGenerator<ID> {
 }

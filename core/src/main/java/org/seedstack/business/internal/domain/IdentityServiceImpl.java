@@ -19,6 +19,7 @@ import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.shed.exception.BaseException;
@@ -34,6 +35,7 @@ class IdentityServiceImpl implements IdentityService {
     private static final String ENTITY_CLASS = "entityClass";
     private static final String GENERATOR_CLASS = "generatorClass";
     private static final String IDENTITY_GENERATOR_KEY = "identityGenerator";
+    private static final int IDENTITY_TYPE_INDEX = 0;
     @Inject
     private Injector injector;
     @Inject
@@ -45,14 +47,14 @@ class IdentityServiceImpl implements IdentityService {
         Field entityIdField = getIdentityField(entityClass);
         Identity identity = getIdentityAnnotation(entityClass);
         ClassConfiguration<E> entityConfiguration = application.getConfiguration(entityClass);
-        IdentityGenerator<E, ID> identityGenerator = getIdentityGenerator(identity, entityConfiguration, entityClass);
+        IdentityGenerator<ID> identityGenerator = getIdentityGenerator(identity, entityClass, entityConfiguration);
 
         compareIDType(entityClass, identityGenerator);
         makeAccessible(entityIdField);
 
         Object id = getValue(entityIdField, entity);
         if (id == null) {
-            setValue(entityIdField, entity, identityGenerator.handle(entity, entityConfiguration));
+            setValue(entityIdField, entity, identityGenerator.generate(entityClass, entityConfiguration));
         } else {
             throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
                     .put(ENTITY_CLASS, entityClass);
@@ -61,7 +63,7 @@ class IdentityServiceImpl implements IdentityService {
         return entity;
     }
 
-    private <E extends Entity<ID>, ID> void compareIDType(Class<E> entityClass, IdentityGenerator<E, ID> identityGenerator) {
+    private <E extends Entity<ID>, ID> void compareIDType(Class<E> entityClass, IdentityGenerator<ID> identityGenerator) {
         Class<?> entityIdClass = getEntityIdClass(entityClass);
         Class<?> identityGeneratorIdClass = getGeneratorIdClass(identityGenerator);
         if (!entityIdClass.isAssignableFrom(identityGeneratorIdClass)) {
@@ -82,8 +84,8 @@ class IdentityServiceImpl implements IdentityService {
         return TypeResolver.resolveRawArguments(Entity.class, entityClass)[0];
     }
 
-    private <E extends Entity<ID>, ID> Class<?> getGeneratorIdClass(IdentityGenerator<E, ID> identityGenerator) {
-        return TypeResolver.resolveRawArguments(IdentityGenerator.class, identityGenerator.getClass())[1];
+    private <ID> Class<?> getGeneratorIdClass(IdentityGenerator<ID> identityGenerator) {
+        return (Class<?>) BusinessUtils.resolveGenerics(IdentityGenerator.class, identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
     }
 
     private Field getIdentityField(Class<? extends Entity> entityClass) {
@@ -99,10 +101,10 @@ class IdentityServiceImpl implements IdentityService {
     }
 
     @SuppressWarnings("unchecked")
-    private <E extends Entity<ID>, ID> IdentityGenerator<E, ID> getIdentityGenerator(Identity identity, ClassConfiguration<E> entityConfiguration, Class<E> entityClass) {
-        IdentityGenerator<E, ID> identityGenerator;
+    private <E extends Entity<ID>, ID> IdentityGenerator<ID> getIdentityGenerator(Identity identity, Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
+        IdentityGenerator<ID> identityGenerator;
         if (!identity.generator().isInterface()) {
-            identityGenerator = (IdentityGenerator<E, ID>) injector.getInstance(identity.generator());
+            identityGenerator = (IdentityGenerator<ID>) injector.getInstance(identity.generator());
         } else if (IdentityGenerator.class.equals(identity.generator())) {
             throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_GENERATOR_SPECIFIED)
                     .put(ENTITY_CLASS, entityClass);
@@ -110,7 +112,7 @@ class IdentityServiceImpl implements IdentityService {
             String identityQualifier = entityConfiguration.get(IDENTITY_GENERATOR_KEY);
 
             if (!Strings.isNullOrEmpty(identityQualifier)) {
-                identityGenerator = (IdentityGenerator<E, ID>) injector.getInstance(Key.get(identity.generator(), Names.named(identityQualifier)));
+                identityGenerator = (IdentityGenerator<ID>) injector.getInstance(Key.get(identity.generator(), Names.named(identityQualifier)));
             } else {
                 throw BusinessException.createNew(BusinessErrorCode.UNQUALIFIED_IDENTITY_GENERATOR)
                         .put(GENERATOR_CLASS, identity.generator())

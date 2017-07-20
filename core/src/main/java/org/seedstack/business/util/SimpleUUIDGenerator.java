@@ -21,7 +21,7 @@ import java.util.UUID;
 @Named("simpleUUID")
 public class SimpleUUIDGenerator implements UUIDGenerator {
     @Override
-    public UUID handle(Entity<UUID> entity, ClassConfiguration<Entity<UUID>> entityConfiguration) {
+    public <E extends Entity<UUID>> UUID generate(Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
         return UUID.randomUUID();
     }
 }

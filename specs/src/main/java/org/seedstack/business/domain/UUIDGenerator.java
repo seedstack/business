@@ -12,5 +12,5 @@ import java.util.UUID;
 /**
  * Interface for handling UUID generation.
  */
-public interface UUIDGenerator extends IdentityGenerator<Entity<UUID>, UUID> {
+public interface UUIDGenerator extends IdentityGenerator<UUID> {
 }

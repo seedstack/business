@@ -10,20 +10,18 @@ package org.seedstack.business.domain;
 import org.seedstack.seed.ClassConfiguration;
 
 /**
- * Interface for handling identity generation.
+ * A generator of identity for entities.
  *
- * @param <E>  the entity
- * @param <ID> the entity id
+ * @param <ID> the identifier type.
  */
-public interface IdentityGenerator<E extends Entity<ID>, ID> {
-
+public interface IdentityGenerator<ID> {
     /**
-     * Generate new id for entity.
+     * Generate a new identifier for an entity of the specified class.
      *
-     * @param entity              Generate by the factory
-     * @param entityConfiguration property coming from props configuration for entity
-     * @return the entity id
+     * @param <E>                 the entity type.
+     * @param entityClass         the entity class to generate an identity for.
+     * @param entityConfiguration configuration properties for the entity class.
+     * @return the generated identifier.
      */
-    ID handle(final E entity, ClassConfiguration<E> entityConfiguration);
-
+    <E extends Entity<ID>> ID generate(Class<E> entityClass, ClassConfiguration<E> entityConfiguration);
 }

@@ -12,9 +12,9 @@ import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.seed.ClassConfiguration;
 
-public class RandomIdentityGenerator implements IdentityGenerator<Entity<Double>, Double> {
+public class RandomIdentityGenerator implements IdentityGenerator<Double> {
     @Override
-    public Double handle(Entity<Double> entity, ClassConfiguration<Entity<Double>> entityConfiguration) {
+    public <E extends Entity<Double>> Double generate(Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
         return Math.random();
     }
 }
