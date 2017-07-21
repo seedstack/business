@@ -15,10 +15,9 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation tells the Business Framework that the current class is candidate to be an entity from DDD approach.
+ * This annotation marks entities.
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface DomainEntity {

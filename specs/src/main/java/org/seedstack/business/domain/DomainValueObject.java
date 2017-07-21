@@ -15,12 +15,9 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation marks its annotated interface as a domain value object for the framework.
- *
- * Verification will be done by the framework on either or not this service is in the right place.
+ * This annotation marks value objects.
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface DomainValueObject {

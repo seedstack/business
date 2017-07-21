@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
-import static org.seedstack.business.internal.utils.PluginUtils.associateInterfaceToImplementations;
+import static org.seedstack.business.internal.utils.PluginUtils.associateInterfacesToImplementations;
 import static org.seedstack.business.internal.utils.PluginUtils.classpathRequestForDescendantTypesOf;
 
 /**
@@ -36,9 +36,12 @@ import static org.seedstack.business.internal.utils.PluginUtils.classpathRequest
  */
 public class FinderPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(FinderPlugin.class);
+
     private final Collection<Class<?>> finderInterfaces = new HashSet<>();
     private final Map<Class<?>, Specification<? extends Class<?>>> finderSpecs = new HashMap<>();
+
     private final Map<Key<?>, Class<?>> bindings = new HashMap<>();
+    private final Map<Key<?>, Class<?>> overridingBindings = new HashMap<>();
     private final List<BindingStrategy> bindingStrategies = new ArrayList<>();
 
     @Override
@@ -62,15 +65,16 @@ public class FinderPlugin extends AbstractSeedPlugin {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        // The first round is used to scan interfaces
         if (round.isFirst()) {
+            // Scan interfaces
             streamClasses(initContext, BusinessSpecifications.FINDER, Object.class).forEach(finderInterfaces::add);
-            LOGGER.debug("Finder interfaces => {}", finderInterfaces);
+            LOGGER.debug("Finders => {}", finderInterfaces);
 
             return InitState.NON_INITIALIZED;
         } else {
-            // The second round is used to scan implementations of the previously scanned interfaces
-            bindings.putAll(associateInterfaceToImplementations(initContext, finderInterfaces, finderSpecs));
+            // Then add bindings for explicit implementations
+            bindings.putAll(associateInterfacesToImplementations(initContext, finderInterfaces, finderSpecs, false));
+            overridingBindings.putAll(associateInterfacesToImplementations(initContext, finderInterfaces, finderSpecs, true));
 
             return InitState.INITIALIZED;
         }
@@ -79,5 +83,10 @@ public class FinderPlugin extends AbstractSeedPlugin {
     @Override
     public Object nativeUnitModule() {
         return new FinderModule(bindings, bindingStrategies);
+    }
+
+    @Override
+    public Object nativeOverridingUnitModule() {
+        return new FinderOverridingModule(overridingBindings);
     }
 }

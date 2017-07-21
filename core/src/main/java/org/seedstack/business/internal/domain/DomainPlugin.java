@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
-import static org.seedstack.business.internal.utils.PluginUtils.associateInterfaceToImplementations;
+import static org.seedstack.business.internal.utils.PluginUtils.associateInterfacesToImplementations;
 import static org.seedstack.business.internal.utils.PluginUtils.classpathRequestForDescendantTypesOf;
 
 /**
@@ -41,6 +41,7 @@ import static org.seedstack.business.internal.utils.PluginUtils.classpathRequest
  */
 public class DomainPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlugin.class);
+
     private final Collection<Class<? extends AggregateRoot<?>>> aggregateClasses = new HashSet<>();
     private final Collection<Class<? extends ValueObject>> valueObjectClasses = new HashSet<>();
 
@@ -62,6 +63,7 @@ public class DomainPlugin extends AbstractSeedPlugin {
     private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses = new HashSet<>();
 
     private final Map<Key<?>, Class<?>> bindings = new HashMap<>();
+    private final Map<Key<?>, Class<?>> overridingBindings = new HashMap<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
     @Override
@@ -97,8 +99,8 @@ public class DomainPlugin extends AbstractSeedPlugin {
     @SuppressWarnings({"unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        // The first round is used to scan interfaces
         if (round.isFirst()) {
+            // Scan interfaces
             streamClasses(initContext, BusinessSpecifications.AGGREGATE_ROOT, AggregateRoot.class).map(aggregateClass -> (Class<AggregateRoot<?>>) aggregateClass).forEach(aggregateClasses::add);
             LOGGER.debug("Aggregate roots => {}", aggregateClasses);
 
@@ -106,38 +108,45 @@ public class DomainPlugin extends AbstractSeedPlugin {
             LOGGER.debug("Value objects => {}", valueObjectClasses);
 
             streamClasses(initContext, BusinessSpecifications.REPOSITORY, Repository.class).forEach(repositoryInterfaces::add);
-            LOGGER.debug("Repository interfaces => {}", repositoryInterfaces);
+            LOGGER.debug("Repositories => {}", repositoryInterfaces);
 
             streamClasses(initContext, BusinessSpecifications.DEFAULT_REPOSITORY, Repository.class).forEach(defaultRepositoryClasses::add);
             LOGGER.debug("Default repositories => {}", defaultRepositoryClasses);
 
             streamClasses(initContext, BusinessSpecifications.FACTORY, Factory.class).forEach(factoryInterfaces::add);
-            LOGGER.debug("Factory interfaces => {}", factoryInterfaces);
+            LOGGER.debug("Factories => {}", factoryInterfaces);
 
             streamClasses(initContext, BusinessSpecifications.IDENTITY_GENERATOR, IdentityGenerator.class).forEach(identityGeneratorClasses::add);
-            LOGGER.debug("Identity generator classes => {}", identityGeneratorClasses);
+            LOGGER.debug("Identity generators => {}", identityGeneratorClasses);
 
             streamClasses(initContext, BusinessSpecifications.SERVICE, Object.class).forEach(serviceInterfaces::add);
-            LOGGER.debug("Service interfaces => {}", serviceInterfaces);
+            LOGGER.debug("Services => {}", serviceInterfaces);
 
             streamClasses(initContext, BusinessSpecifications.POLICY, Object.class).forEach(policyInterfaces::add);
-            LOGGER.debug("Policy interfaces => {}", policyInterfaces);
+            LOGGER.debug("Policies => {}", policyInterfaces);
 
             streamClasses(initContext, BusinessSpecifications.DOMAIN_EVENT_HANDLER, DomainEventHandler.class).forEach(eventHandlerClasses::add);
-            LOGGER.debug("Event handler => {}", eventHandlerClasses);
+            LOGGER.debug("Domain event handlers => {}", eventHandlerClasses);
 
             return InitState.NON_INITIALIZED;
         } else {
-            // The second round is used to scan implementations of the previously scanned interfaces
-            bindings.putAll(associateInterfaceToImplementations(initContext, repositoryInterfaces, repositorySpecs));
-            bindings.putAll(associateInterfaceToImplementations(initContext, factoryInterfaces, factorySpecs));
-            bindings.putAll(associateInterfaceToImplementations(initContext, serviceInterfaces, serviceSpecs));
-            bindings.putAll(associateInterfaceToImplementations(initContext, policyInterfaces, policySpecs));
+            // Then add bindings for explicit implementations
+            bindings.putAll(associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs, false));
+            overridingBindings.putAll(associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs, true));
 
-            // Bindings for default repositories
+            bindings.putAll(associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs, false));
+            overridingBindings.putAll(associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs, true));
+
+            bindings.putAll(associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs, false));
+            overridingBindings.putAll(associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs, true));
+
+            bindings.putAll(associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs, false));
+            overridingBindings.putAll(associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs, true));
+
+            // Then add bindings for default repositories
             bindingStrategies.addAll(new DefaultRepositoryCollector(defaultRepositoryClasses, getApplication()).collect(aggregateClasses));
 
-            // Bindings for default factories
+            // Then add bindings for default factories when no explicit factory has been defined
             bindingStrategies.addAll(new DefaultFactoryCollector(bindings).collect(aggregateClasses, valueObjectClasses));
 
             return InitState.INITIALIZED;
@@ -147,5 +156,10 @@ public class DomainPlugin extends AbstractSeedPlugin {
     @Override
     public Object nativeUnitModule() {
         return new DomainModule(bindings, bindingStrategies, identityGeneratorClasses, eventHandlerClasses);
+    }
+
+    @Override
+    public Object nativeOverridingUnitModule() {
+        return new DomainOverrideModule(overridingBindings);
     }
 }

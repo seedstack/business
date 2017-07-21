@@ -8,24 +8,39 @@
 package org.seedstack.business;
 
 import org.junit.Test;
+import org.seedstack.business.fixtures.application.GenericService;
+import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.application.internal.GenericServiceInternal;
 import org.seedstack.business.fixtures.application.internal.IndexServiceInternal;
 import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.activation.ActivationException;
+import org.seedstack.business.fixtures.domain.activation.ActivationFactory;
+import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
 import org.seedstack.business.fixtures.domain.customer.Customer;
+import org.seedstack.business.fixtures.domain.customer.CustomerFactory;
 import org.seedstack.business.fixtures.domain.customer.CustomerFactoryDefault;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
+import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
+import org.seedstack.business.fixtures.domain.customer.CustomerSampleDomainService;
+import org.seedstack.business.fixtures.domain.customer.CustomerSampleService;
 import org.seedstack.business.fixtures.domain.customer.CustomerSampleServiceImpl;
 import org.seedstack.business.fixtures.domain.order.Order;
+import org.seedstack.business.fixtures.domain.order.OrderFactory;
 import org.seedstack.business.fixtures.domain.order.OrderFactoryDefault;
 import org.seedstack.business.fixtures.domain.order.OrderId;
+import org.seedstack.business.fixtures.domain.order.OrderRepository;
 import org.seedstack.business.fixtures.domain.product.InternalProductFactory;
 import org.seedstack.business.fixtures.domain.product.InternalProductNamePolicy;
 import org.seedstack.business.fixtures.domain.product.Product;
+import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductId;
+import org.seedstack.business.fixtures.domain.product.ProductNamePolicy;
+import org.seedstack.business.fixtures.domain.product.ProductRepository;
+import org.seedstack.business.fixtures.finder.CustomerFinder;
 import org.seedstack.business.fixtures.finder.CustomerRepresentation;
 import org.seedstack.business.fixtures.finder.SomeCustomerFinder;
 import org.seedstack.seed.it.AbstractSeedIT;
+import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -167,5 +182,50 @@ public class BusinessIT extends AbstractSeedIT {
         activation.setActivationDate(new Date());
         activation.setCreationDate(new Date());
         holder.activationRepository.add(activation);
+    }
+
+    @ITBind
+    static class Holder {
+        @Inject
+        ActivationRepository activationRepository;
+
+        @Inject
+        ActivationFactory activationFactory;
+
+        @Inject
+        CustomerRepository customerRepo;
+
+        @Inject
+        IndexService indexService;
+
+        @Inject
+        CustomerSampleService customerService;
+
+        @Inject
+        CustomerSampleDomainService customerDomainService;
+
+        @Inject
+        CustomerFactory customerFactory;
+
+        @Inject
+        CustomerFinder customerFinder;
+
+        @Inject
+        OrderRepository orderRepo;
+
+        @Inject
+        OrderFactory orderFactory;
+
+        @Inject
+        ProductRepository productRepo;
+
+        @Inject
+        ProductFactory productFactory;
+
+        @Inject
+        ProductNamePolicy productNamePolicy;
+
+        @Inject
+        GenericService<String> genericService;
     }
 }

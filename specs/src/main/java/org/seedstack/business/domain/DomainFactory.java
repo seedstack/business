@@ -14,10 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is a marker for {@link Factory}.
+ * This annotation marks factory interfaces.
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface DomainFactory {

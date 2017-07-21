@@ -14,28 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is a marker for a domain policy interface.
- * <p>
- * Use this annotation to annotate your Domain Policy Interface.
- * <p>
- * Example of Domain Policy Interface is the following.
- * <pre>
- * {@literal  @}DomainPolicy
- * public interface RebatePolicy {
- *
- *    public Money calculateRebate(Product product, int quantity, Money regularCost);
- *
- * }
- * </pre>
- *
- * Then developers just implements this interface
- *
- *
- *
- * and can ask injection via the inter
+ * This annotation marks policy interfaces.
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface DomainPolicy {

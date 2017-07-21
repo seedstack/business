@@ -10,6 +10,7 @@
  */
 package org.seedstack.business.domain;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -19,6 +20,7 @@ import java.lang.annotation.Target;
  * This annotation marks the field of an entity as its identity. A generation strategy can be specified with an
  * identity generator.
  */
+@Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Identity {

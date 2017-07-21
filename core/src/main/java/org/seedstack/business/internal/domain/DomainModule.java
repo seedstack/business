@@ -62,7 +62,7 @@ class DomainModule extends AbstractModule {
         // Simple bindings
         for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue().getSimpleName());
-            bind(binding.getKey()).to(getExtendingClass(binding.getValue()));
+            bind(binding.getKey()).to(cast(binding.getValue()));
         }
 
         // Binding strategies
@@ -94,7 +94,7 @@ class DomainModule extends AbstractModule {
     }
 
     @SuppressWarnings("unchecked")
-    private <C extends Class<?>> C getExtendingClass(Class<?> aClass) {
+    private <C extends Class<?>> C cast(Class<?> aClass) {
         return (C) aClass;
     }
 

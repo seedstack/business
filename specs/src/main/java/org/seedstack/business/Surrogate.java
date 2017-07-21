@@ -5,9 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.domain;
-
-import org.seedstack.business.BusinessElement;
+package org.seedstack.business;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -15,13 +13,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * DomainElement marks all domain annotations or types
- */
 @Documented
-@BusinessElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
-public @interface DomainElement {
-
+@Target({ElementType.TYPE})
+public @interface Surrogate {
 }

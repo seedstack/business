@@ -18,7 +18,6 @@ import org.junit.Test;
 import org.seedstack.business.BusinessException;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.domain.DomainElement;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
@@ -403,7 +402,6 @@ public class DomainRegistryImplTest {
         }, "dummyAnnotation")).isEqualTo(policy);
     }
 
-    @DomainElement
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.TYPE})
     @BindingAnnotation

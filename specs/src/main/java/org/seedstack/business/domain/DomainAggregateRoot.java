@@ -15,11 +15,9 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation tells the Framework that the current class is candidate to be
- * an aggregate root.
+ * This annotation marks aggregate roots.
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface DomainAggregateRoot {

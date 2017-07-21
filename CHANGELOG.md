@@ -9,6 +9,7 @@
 * [new] `FluentAssembler` can now assemble and merge streams of objects among other useful types (arrays, lists, sets, slices, pages and arbitrary collections).
 * [new] A pagination DSL injectable through the `Paginator` interface has been added.
 * [new] Add an in-memory default implementation of repository (useful for testing or other specific use-cases).
+* [new] Annotating an implementation with `@Surrogate` will allow it to replace an existing similar implementation. 
 * [chg] Extracted ModelMapper automatic assemblers to a separate add-on.
 * [brk] The `@MatchingFactoryParameter` annotation has been renamed to `@FactoryArgument`. 
 * [brk] The `@MatchingEntityId` annotation has been renamed to `@AggregateId`.

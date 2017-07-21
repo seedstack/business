@@ -15,8 +15,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation indicates a creation. Be careful, a creation is related to object instantiation not to persistence.
- * For instance, it could be used on a factory.
+ * This annotation marks methods creating entities. Those methods are intercepted to allow for identity generation to
+ * occur on the returned entity, just after creation. If this annotation is placed on a class, all methods of the class
+ * are intercepted.
  */
 @Documented
 @Inherited
