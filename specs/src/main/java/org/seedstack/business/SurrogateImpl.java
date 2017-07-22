@@ -13,8 +13,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Using this annotation on an implementation class will make it replace an existing similar implementation. Every
+ * relevant injection point or dynamic retrieval will be provided with the surrogate implementation instead of the
+ * original one.
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface Surrogate {
+public @interface SurrogateImpl {
 }

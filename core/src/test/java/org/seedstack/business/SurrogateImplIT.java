@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SurrogateIT extends AbstractSeedIT {
+public class SurrogateImplIT extends AbstractSeedIT {
     @Inject
     private SomeRepository someRepository;
     @Inject
@@ -85,7 +85,7 @@ public class SurrogateIT extends AbstractSeedIT {
     static class SomeNormalRepository extends BaseInMemoryRepository<SomeAggregate, String> implements SomeRepository {
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestRepository extends BaseInMemoryRepository<SomeAggregate, String> implements SomeRepository {
     }
 
@@ -97,7 +97,7 @@ public class SurrogateIT extends AbstractSeedIT {
 
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestFactory extends BaseFactory<SomeAggregate> implements SomeFactory {
 
     }
@@ -115,7 +115,7 @@ public class SurrogateIT extends AbstractSeedIT {
         }
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestAssembler extends BaseAssembler<SomeAggregate, SomeDto> {
 
         @Override
@@ -138,7 +138,7 @@ public class SurrogateIT extends AbstractSeedIT {
 
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestFinder implements SomeFinder {
 
     }
@@ -152,7 +152,7 @@ public class SurrogateIT extends AbstractSeedIT {
 
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestService implements SomeService {
 
     }
@@ -166,7 +166,7 @@ public class SurrogateIT extends AbstractSeedIT {
 
     }
 
-    @Surrogate
+    @SurrogateImpl
     static class SomeTestPolicy implements SomePolicy {
 
     }

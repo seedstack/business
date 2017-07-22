@@ -11,7 +11,7 @@ import com.google.inject.Key;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.Surrogate;
+import org.seedstack.business.SurrogateImpl;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.Annotations;
@@ -111,7 +111,7 @@ public final class PluginUtils {
         return (item) -> Annotations.on(item)
                 .traversingSuperclasses()
                 .includingMetaAnnotations()
-                .find(Surrogate.class)
+                .find(SurrogateImpl.class)
                 .isPresent();
     }
 }
