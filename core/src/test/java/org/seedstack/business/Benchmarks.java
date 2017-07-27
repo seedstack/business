@@ -7,10 +7,10 @@
  */
 package org.seedstack.business;
 
-import org.seedstack.seed.core.SeedMain;
+import org.seedstack.seed.core.Seed;
 
 public class Benchmarks {
     public static void main(String[] args) throws Exception {
-        SeedMain.getLauncher().launch(new String[0]);
+        Seed.getLauncher().launch(new String[0]);
     }
 }
