@@ -11,7 +11,7 @@ import com.google.inject.Key;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.SurrogateImpl;
+import org.seedstack.business.Overriding;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.Annotations;
@@ -97,21 +97,21 @@ public final class PluginUtils {
      * @return the map of interface/implementation to bind
      * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
      */
-    public static <T> Map<Key<T>, Class<? extends T>> associateInterfaceToImplementations(Class<T> anInterface, Collection<Class<? extends T>> implementations, boolean testMode) {
+    public static <T> Map<Key<T>, Class<? extends T>> associateInterfaceToImplementations(Class<T> anInterface, Collection<Class<? extends T>> implementations, boolean overridingMode) {
         return BindingUtils.resolveBindingDefinitions(
                 anInterface,
                 implementations
                         .stream()
-                        .filter(testMode ? isTestImplementation() : isTestImplementation().negate())
+                        .filter(overridingMode ? isOverridingImplementation() : isOverridingImplementation().negate())
                         .collect(Collectors.toList())
         );
     }
 
-    public static Predicate<Class<?>> isTestImplementation() {
+    public static Predicate<Class<?>> isOverridingImplementation() {
         return (item) -> Annotations.on(item)
                 .traversingSuperclasses()
                 .includingMetaAnnotations()
-                .find(SurrogateImpl.class)
+                .find(Overriding.class)
                 .isPresent();
     }
 }
