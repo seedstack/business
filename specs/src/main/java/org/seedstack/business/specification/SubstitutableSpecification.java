@@ -7,11 +7,11 @@
  */
 package org.seedstack.business.specification;
 
-public interface DelegatingSpecification<T> extends Specification<T> {
-    Specification<T> getDelegate();
+public interface SubstitutableSpecification<T> extends Specification<T> {
+    Specification<T> getSubstitute();
 
     @Override
     default boolean isSatisfiedBy(T candidate) {
-        return getDelegate().isSatisfiedBy(candidate);
+        return getSubstitute().isSatisfiedBy(candidate);
     }
 }

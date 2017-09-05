@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.specification;
 
 import com.google.common.base.Preconditions;
-import org.seedstack.business.specification.DelegatingSpecification;
+import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.TrueSpecification;
 import org.seedstack.business.specification.dsl.BaseSelector;
@@ -105,7 +105,7 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
         NONE
     }
 
-    private static class ClassSpecification<C> implements DelegatingSpecification<C> {
+    private static class ClassSpecification<C> implements SubstitutableSpecification<C> {
         private final Class<C> targetClass;
         private final Specification<C> delegate;
 
@@ -115,7 +115,7 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
         }
 
         @Override
-        public Specification<C> getDelegate() {
+        public Specification<C> getSubstitute() {
             return delegate;
         }
 

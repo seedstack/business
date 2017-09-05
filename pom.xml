@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>3.1.0</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
@@ -25,7 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.3.0-SNAPSHOT</seed.version>
+        <seed.version>3.3.0</seed.version>
         <modelmapper.version>1.0.0</modelmapper.version>
         <jmh-addon.version>1.0.1</jmh-addon.version>
 

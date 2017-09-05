@@ -10,6 +10,8 @@ package org.seedstack.business.specification;
 import java.util.regex.Pattern;
 
 public class StringMatchingSpecification extends StringSpecification {
+    public static final String MULTI_CHARACTER_WILDCARD = "*";
+    public static final String SINGLE_CHARACTER_WILDCARD = "?";
     private volatile Pattern ignoringCasePattern;
     private volatile Pattern pattern;
 
@@ -22,14 +24,14 @@ public class StringMatchingSpecification extends StringSpecification {
         if (options.isIgnoringCase()) {
             if (ignoringCasePattern == null) {
                 ignoringCasePattern = Pattern.compile(
-                        expectedString.replace("*", ".*").replace("?", "."),
+                        expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*").replace(SINGLE_CHARACTER_WILDCARD, "."),
                         Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
                 );
             }
             return ignoringCasePattern.matcher(candidateString).matches();
         } else {
             if (pattern == null) {
-                pattern = Pattern.compile(expectedString.replace("*", ".*").replace("?", "."));
+                pattern = Pattern.compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*").replace(SINGLE_CHARACTER_WILDCARD, "."));
             }
             return pattern.matcher(candidateString).matches();
         }

@@ -28,7 +28,7 @@ import java.util.Map;
 
 import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
 import static org.seedstack.business.internal.utils.PluginUtils.associateInterfaceToImplementations;
-import static org.seedstack.shed.PriorityUtils.sortByPriority;
+import static org.seedstack.shed.misc.PriorityUtils.sortByPriority;
 
 public class AssemblerPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);

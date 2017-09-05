@@ -13,7 +13,7 @@ import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
 import org.seedstack.business.specification.AndSpecification;
-import org.seedstack.business.specification.DelegatingSpecification;
+import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.NotSpecification;
 import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.PropertySpecification;
@@ -56,8 +56,8 @@ public class SpecificationBuilderTest {
                 .property("leader.name").equalTo("Sammy")
                 .build();
 
-        assertThat(spec).isInstanceOf(DelegatingSpecification.class);
-        spec = ((DelegatingSpecification<Team>) spec).getDelegate();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        spec = ((SubstitutableSpecification<Team>) spec).getSubstitute();
         assertThat(spec).isInstanceOf(OrSpecification.class);
         assertThat(((OrSpecification<Team>) spec).getLhs()).isInstanceOf(OrSpecification.class);
         assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).isInstanceOf(PropertySpecification.class);
