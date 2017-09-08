@@ -13,12 +13,9 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequestBuilder;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainEventHandler;
-import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.domain.ValueObject;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
@@ -42,15 +39,15 @@ import static org.seedstack.business.internal.utils.PluginUtils.classpathRequest
 public class DomainPlugin extends AbstractSeedPlugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlugin.class);
 
-    private final Collection<Class<? extends AggregateRoot<?>>> aggregateClasses = new HashSet<>();
-    private final Collection<Class<? extends ValueObject>> valueObjectClasses = new HashSet<>();
+    private final Collection<Class<?>> aggregateClasses = new HashSet<>();
+    private final Collection<Class<?>> valueObjectClasses = new HashSet<>();
 
-    private final Collection<Class<? extends Repository>> repositoryInterfaces = new HashSet<>();
+    private final Collection<Class<?>> repositoryInterfaces = new HashSet<>();
     private final Collection<Class<? extends Repository>> defaultRepositoryClasses = new HashSet<>();
-    private final Map<Class<? extends Repository>, Specification<? extends Class<? extends Repository>>> repositorySpecs = new HashMap<>();
+    private final Map<Class<?>, Specification<? extends Class<?>>> repositorySpecs = new HashMap<>();
 
-    private final Collection<Class<? extends Factory>> factoryInterfaces = new HashSet<>();
-    private final Map<Class<? extends Factory>, Specification<? extends Class<? extends Factory>>> factorySpecs = new HashMap<>();
+    private final Collection<Class<?>> factoryInterfaces = new HashSet<>();
+    private final Map<Class<?>, Specification<? extends Class<?>>> factorySpecs = new HashMap<>();
 
     private final Collection<Class<?>> serviceInterfaces = new HashSet<>();
     private final Map<Class<?>, Specification<? extends Class<?>>> serviceSpecs = new HashMap<>();
@@ -101,23 +98,17 @@ public class DomainPlugin extends AbstractSeedPlugin {
     public InitState initialize(InitContext initContext) {
         if (round.isFirst()) {
             // Scan interfaces
-            streamClasses(initContext, BusinessSpecifications.AGGREGATE_ROOT, AggregateRoot.class).map(aggregateClass -> (Class<AggregateRoot<?>>) aggregateClass).forEach(aggregateClasses::add);
+            streamClasses(initContext, BusinessSpecifications.AGGREGATE_ROOT, Object.class).forEach(aggregateClasses::add);
             LOGGER.debug("Aggregate roots => {}", aggregateClasses);
 
-            streamClasses(initContext, BusinessSpecifications.VALUE_OBJECT, ValueObject.class).forEach(valueObjectClasses::add);
+            streamClasses(initContext, BusinessSpecifications.VALUE_OBJECT, Object.class).forEach(valueObjectClasses::add);
             LOGGER.debug("Value objects => {}", valueObjectClasses);
 
-            streamClasses(initContext, BusinessSpecifications.REPOSITORY, Repository.class).forEach(repositoryInterfaces::add);
+            streamClasses(initContext, BusinessSpecifications.REPOSITORY, Object.class).forEach(repositoryInterfaces::add);
             LOGGER.debug("Repositories => {}", repositoryInterfaces);
 
-            streamClasses(initContext, BusinessSpecifications.DEFAULT_REPOSITORY, Repository.class).forEach(defaultRepositoryClasses::add);
-            LOGGER.debug("Default repositories => {}", defaultRepositoryClasses);
-
-            streamClasses(initContext, BusinessSpecifications.FACTORY, Factory.class).forEach(factoryInterfaces::add);
+            streamClasses(initContext, BusinessSpecifications.FACTORY, Object.class).forEach(factoryInterfaces::add);
             LOGGER.debug("Factories => {}", factoryInterfaces);
-
-            streamClasses(initContext, BusinessSpecifications.IDENTITY_GENERATOR, IdentityGenerator.class).forEach(identityGeneratorClasses::add);
-            LOGGER.debug("Identity generators => {}", identityGeneratorClasses);
 
             streamClasses(initContext, BusinessSpecifications.SERVICE, Object.class).forEach(serviceInterfaces::add);
             LOGGER.debug("Services => {}", serviceInterfaces);
@@ -125,8 +116,14 @@ public class DomainPlugin extends AbstractSeedPlugin {
             streamClasses(initContext, BusinessSpecifications.POLICY, Object.class).forEach(policyInterfaces::add);
             LOGGER.debug("Policies => {}", policyInterfaces);
 
+            streamClasses(initContext, BusinessSpecifications.DEFAULT_REPOSITORY, Repository.class).forEach(defaultRepositoryClasses::add);
+            LOGGER.debug("Default repositories => {}", defaultRepositoryClasses);
+
             streamClasses(initContext, BusinessSpecifications.DOMAIN_EVENT_HANDLER, DomainEventHandler.class).forEach(eventHandlerClasses::add);
             LOGGER.debug("Domain event handlers => {}", eventHandlerClasses);
+
+            streamClasses(initContext, BusinessSpecifications.IDENTITY_GENERATOR, IdentityGenerator.class).forEach(identityGeneratorClasses::add);
+            LOGGER.debug("Identity generators => {}", identityGeneratorClasses);
 
             return InitState.NON_INITIALIZED;
         } else {

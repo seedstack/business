@@ -11,9 +11,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Key;
 import com.google.inject.util.Types;
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Factory;
-import org.seedstack.business.domain.ValueObject;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
@@ -34,8 +32,8 @@ class DefaultFactoryCollector {
         this.bindings = bindings;
     }
 
-    Collection<BindingStrategy> collect(Collection<Class<? extends AggregateRoot<?>>> aggregateClasses,
-                                        Collection<Class<? extends ValueObject>> valueObjectClasses) {
+    Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses,
+                                        Collection<Class<?>> valueObjectClasses) {
         Collection<BindingStrategy> strategies = new ArrayList<>();
         boolean bindGuiceFactory = true;
 

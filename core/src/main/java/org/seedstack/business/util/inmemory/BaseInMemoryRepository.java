@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.util.inmemory;
 
+import org.seedstack.business.domain.AggregateExistsException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.domain.LimitOption;
@@ -45,7 +46,7 @@ public class BaseInMemoryRepository<A extends AggregateRoot<ID>, ID> extends Bas
     }
 
     @Override
-    public void add(A a) {
+    public void add(A a) throws AggregateExistsException {
         getBucket().put(a.getId(), a);
     }
 

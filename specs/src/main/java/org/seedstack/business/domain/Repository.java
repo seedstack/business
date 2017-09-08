@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  * </p>
  *
  * @param <A>  the type of the aggregate root class.
- * @param <ID> the type of the aggregate root class.
+ * @param <ID> the type of identifier of the aggregate root class.
  */
 @DomainRepository
 public interface Repository<A extends AggregateRoot<ID>, ID> {
@@ -73,7 +73,7 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @return true if at least one aggregate satisfying the specification is present, false otherwise.
      */
     default boolean contains(Specification<A> specification) {
-        return get(specification).findFirst().isPresent();
+        return count(specification) > 0;
     }
 
     /**
@@ -141,12 +141,12 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
      * @param id the identifier of the aggregate to remove.
      * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    default void remove(ID id) throws AggregateNotFoundException, IllegalStateException {
+    default void remove(ID id) throws AggregateNotFoundException {
         long removedCount = remove(new IdentitySpecification<>(id));
         if (removedCount == 0L) {
-            throw new AggregateNotFoundException("Aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " cannot be removed");
+            throw new AggregateNotFoundException("Non-existent aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " cannot be removed");
         } else if (removedCount > 1L) {
-            throw new IllegalStateException("More than one aggregate has been removed");
+            throw new IllegalStateException("More than one aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " have been removed");
         }
     }
 
@@ -161,19 +161,14 @@ public interface Repository<A extends AggregateRoot<ID>, ID> {
     }
 
     /**
-     * Updates an existing aggregate with the specified aggregate.
+     * Updates an existing aggregate with the specified instance.
      *
-     * @param aggregate the updated aggregate.
+     * @param aggregate the aggregate to update.
      * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
     default void update(A aggregate) throws AggregateNotFoundException {
-        ID id = aggregate.getId();
-        Optional<A> found = get(id);
-        if (found.isPresent()) {
-            remove(found.get());
-        } else {
-            throw new AggregateNotFoundException("Aggregate " + getAggregateRootClass().getSimpleName() + " identified with " + id + " cannot be updated");
-        }
+        remove(aggregate);
+        add(aggregate);
     }
 
     /**

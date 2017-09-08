@@ -14,50 +14,50 @@ import java.lang.reflect.Type;
 /**
  * This class serves as inheritance base for all repositories.
  *
- * @param <AGGREGATE> the aggregate root type
- * @param <KEY>       the key type
+ * @param <A>  the type of the aggregate root class.
+ * @param <ID> the type of identifier of the aggregate root class.
  */
-public abstract class BaseRepository<AGGREGATE extends AggregateRoot<KEY>, KEY> implements Repository<AGGREGATE, KEY> {
+public abstract class BaseRepository<A extends AggregateRoot<ID>, ID> implements Repository<A, ID> {
     private static final int AGGREGATE_INDEX = 0;
     private static final int KEY_INDEX = 1;
-    private final Class<AGGREGATE> aggregateRootClass;
-    private final Class<KEY> keyClass;
+    private final Class<A> aggregateRootClass;
+    private final Class<ID> idClass;
 
     /**
      * Constructs a base repository.
      * <p>
-     * The aggregate root class and the key class are found by reflection.
+     * The aggregate root class and the identifier classes are determined by reflection.
      * </p>
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected BaseRepository() {
         Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
-        this.aggregateRootClass = (Class<AGGREGATE>) generics[AGGREGATE_INDEX];
-        this.keyClass = (Class<KEY>) generics[KEY_INDEX];
+        this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
+        this.idClass = (Class<ID>) generics[KEY_INDEX];
     }
 
     /**
-     * Constructs a base repository settings explicitly the aggregate root class and the key class.
+     * Constructs a base repository settings explicitly the aggregate root class and the identifier class.
      * <p>
      * This is used when the implementation class does not resolve the generics. Since the generic
-     * types can't be resolve at runtime, they should be passed explicitly.
+     * types can't be resolved at runtime, they should be passed explicitly.
      * </p>
      *
-     * @param aggregateRootClass the aggregate root class
-     * @param keyClass           the key class
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
      */
-    protected BaseRepository(Class<AGGREGATE> aggregateRootClass, Class<KEY> keyClass) {
+    protected BaseRepository(Class<A> aggregateRootClass, Class<ID> idClass) {
         this.aggregateRootClass = aggregateRootClass;
-        this.keyClass = keyClass;
+        this.idClass = idClass;
     }
 
     @Override
-    public Class<AGGREGATE> getAggregateRootClass() {
+    public Class<A> getAggregateRootClass() {
         return aggregateRootClass;
     }
 
     @Override
-    public Class<KEY> getIdentifierClass() {
-        return keyClass;
+    public Class<ID> getIdentifierClass() {
+        return idClass;
     }
 }

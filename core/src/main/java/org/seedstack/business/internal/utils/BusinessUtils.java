@@ -80,7 +80,6 @@ public final class BusinessUtils {
                 .findFirst();
     }
 
-
     @SuppressWarnings("unchecked")
     public static Key<?> defaultQualifier(Application application, String key, Class<?> aggregateClass, TypeLiteral<?> genericInterface) {
         Key<?> defaultKey = null;
@@ -106,14 +105,13 @@ public final class BusinessUtils {
         return defaultKey;
     }
 
-    @SuppressWarnings("unchecked")
-    public static Set<Class<? extends AggregateRoot<?>>> includeSuperClasses(Collection<Class<? extends AggregateRoot<?>>> aggregateClasses) {
-        Set<Class<? extends AggregateRoot<?>>> results = new HashSet<>();
+    public static Set<Class<?>> includeSuperClasses(Collection<Class<?>> aggregateClasses) {
+        Set<Class<?>> results = new HashSet<>();
         for (Class<?> aggregateClass : aggregateClasses) {
             Class<?> classToAdd = aggregateClass;
             while (classToAdd != null) {
                 if (AggregateRoot.class.isAssignableFrom(classToAdd) && !classToAdd.equals(BaseAggregateRoot.class) && !classToAdd.equals(AggregateRoot.class)) {
-                    results.add((Class<? extends AggregateRoot<?>>) classToAdd);
+                    results.add(classToAdd);
                     classToAdd = classToAdd.getSuperclass();
                 } else {
                     break;

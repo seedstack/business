@@ -39,6 +39,10 @@ import org.seedstack.business.fixtures.domain.product.ProductRepository;
 import org.seedstack.business.fixtures.finder.CustomerFinder;
 import org.seedstack.business.fixtures.finder.CustomerRepresentation;
 import org.seedstack.business.fixtures.finder.SomeCustomerFinder;
+import org.seedstack.business.fixtures.standalone.StandaloneFactory;
+import org.seedstack.business.fixtures.standalone.StandaloneFactoryImpl;
+import org.seedstack.business.fixtures.standalone.StandaloneRepositoryImpl;
+import org.seedstack.business.fixtures.standalone.StandaloneRepository;
 import org.seedstack.seed.it.AbstractSeedIT;
 import org.seedstack.seed.it.ITBind;
 
@@ -54,7 +58,13 @@ public class BusinessIT extends AbstractSeedIT {
     private Holder holder;
 
     @Test
-    public void all_bindings_should_be_bound() throws ActivationException {
+    public void standaloneBindings() throws Exception {
+        assertThat(holder.standaloneFactory).isInstanceOf(StandaloneFactoryImpl.class);
+        assertThat(holder.standaloneRepository).isInstanceOf(StandaloneRepositoryImpl.class);
+    }
+
+    @Test
+    public void frameworkBindings() throws Exception {
         assertThat(holder.activationRepository).isNotNull();
         assertThat(holder.activationFactory).isNotNull();
         assertThat(holder.activationFactory.createNewActivation("id", "pok")).isNotNull();
@@ -91,9 +101,10 @@ public class BusinessIT extends AbstractSeedIT {
         // Finder
         assertThat(holder.customerFinder).isNotNull();
         assertThat(SomeCustomerFinder.class.isAssignableFrom(holder.customerFinder.getClass())).isTrue();
+    }
 
-        // Functional Cases
-
+    @Test
+    public void basicFunctionalTests() throws ActivationException {
         // Create customers and launch services
         Customer testCusto = holder.customerFactory.createNewCustomer("key1", "test1", "");
         Customer c2 = holder.customerFactory.createNewCustomer("2", "f1", "l1");
@@ -227,5 +238,12 @@ public class BusinessIT extends AbstractSeedIT {
 
         @Inject
         GenericService<String> genericService;
+
+        // Standalone classes (independent from framework interfaces)
+        @Inject
+        StandaloneFactory standaloneFactory;
+
+        @Inject
+        StandaloneRepository standaloneRepository;
     }
 }

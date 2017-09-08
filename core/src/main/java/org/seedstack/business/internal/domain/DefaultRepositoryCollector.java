@@ -42,7 +42,7 @@ class DefaultRepositoryCollector {
      * @param aggregateClasses the aggregates classes to collect repositories from.
      * @return a binding strategy
      */
-    Collection<BindingStrategy> collect(Collection<Class<? extends AggregateRoot<?>>> aggregateClasses) {
+    Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses) {
         Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
         // Extract the type variables which will be passed to the constructor
