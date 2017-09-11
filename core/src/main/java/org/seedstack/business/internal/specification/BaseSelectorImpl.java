@@ -7,6 +7,7 @@
  */
 package org.seedstack.business.internal.specification;
 
+import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
 
@@ -23,5 +24,10 @@ class BaseSelectorImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements
     public SpecificationPicker<T, SELECTOR> property(String path) {
         context.setProperty(path);
         return new SpecificationPickerImpl<>(context);
+    }
+
+    @Override
+    public Specification<T> build() {
+        return context.build();
     }
 }

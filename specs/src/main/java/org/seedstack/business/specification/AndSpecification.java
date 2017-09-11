@@ -8,29 +8,44 @@
 package org.seedstack.business.specification;
 
 public class AndSpecification<T> implements Specification<T> {
-    private final Specification<T> lhs;
-    private final Specification<? super T> rhs;
+    private final Specification<? super T>[] specifications;
 
-    public AndSpecification(Specification<T> lhs, Specification<? super T> rhs) {
-        this.lhs = lhs;
-        this.rhs = rhs;
-    }
-
-    public Specification<T> getLhs() {
-        return lhs;
-    }
-
-    public Specification<? super T> getRhs() {
-        return rhs;
+    @SafeVarargs
+    public AndSpecification(Specification<? super T>... specifications) {
+        this.specifications = specifications.clone();
     }
 
     @Override
     public boolean isSatisfiedBy(T candidate) {
-        return lhs.isSatisfiedBy(candidate) && rhs.isSatisfiedBy(candidate);
+        for (Specification<? super T> specification : specifications) {
+            if (!specification.isSatisfiedBy(candidate)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Specification<? super T>[] getSpecifications() {
+        return specifications.clone();
     }
 
     @Override
     public String toString() {
-        return String.format("(%s) ∧ (%s)", lhs.toString(), rhs.toString());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < specifications.length; i++) {
+            Specification<? super T> term = specifications[i];
+            boolean isNegation = term instanceof NotSpecification;
+            if (!isNegation) {
+                sb.append("(");
+            }
+            sb.append(term.toString());
+            if (!isNegation) {
+                sb.append(")");
+            }
+            if (i < specifications.length - 1) {
+                sb.append(" ∧ ");
+            }
+        }
+        return sb.toString();
     }
 }

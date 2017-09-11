@@ -13,11 +13,11 @@ import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
 import org.seedstack.business.specification.AndSpecification;
-import org.seedstack.business.specification.SubstitutableSpecification;
-import org.seedstack.business.specification.NotSpecification;
 import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.SubstitutableSpecification;
+import org.seedstack.business.specification.TrueSpecification;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 import java.util.stream.Stream;
@@ -43,32 +43,6 @@ public class SpecificationBuilderTest {
         blueTeam.addMember("Marguerite", 61, new Address(55, "Other street", "OtherCity"));
 
         greenTeam = new TeamWithLeader("GREEN", "Sammy", 36, new Address(11, "Tulip street", "Metropolis"));
-    }
-
-    @Test
-    public void testComposition() throws Exception {
-        Specification<Team> spec = specificationBuilder.of(Team.class)
-                .property("leader.name").equalTo("ALICE").ignoringCase()
-                .or()
-                .property("leader.age").greaterThan(25)
-                .orNot()
-                .property("name").equalTo("GREEN").and()
-                .property("leader.name").equalTo("Sammy")
-                .build();
-
-        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
-        spec = ((SubstitutableSpecification<Team>) spec).getSubstitute();
-        assertThat(spec).isInstanceOf(OrSpecification.class);
-        assertThat(((OrSpecification<Team>) spec).getLhs()).isInstanceOf(OrSpecification.class);
-        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).isInstanceOf(PropertySpecification.class);
-        assertThat(((PropertySpecification<Team, ?>) ((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getLhs()).getPath()).isEqualTo("leader.name");
-        assertThat(((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).isInstanceOf(PropertySpecification.class);
-        assertThat(((PropertySpecification<? super Team, ?>) ((OrSpecification<Team>) ((OrSpecification<Team>) spec).getLhs()).getRhs()).getPath()).isEqualTo("leader.age");
-        assertThat(((OrSpecification<Team>) spec).getRhs()).isInstanceOf(NotSpecification.class);
-        assertThat(((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).isInstanceOf(AndSpecification.class);
-        assertThat(((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).isInstanceOf(PropertySpecification.class);
-        assertThat(((PropertySpecification<? super Team, ?>) ((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getLhs()).getPath()).isEqualTo("name");
-        assertThat(((PropertySpecification<? super Team, ?>) ((AndSpecification<? super Team>) ((NotSpecification<? super Team>) ((OrSpecification<Team>) spec).getRhs()).getSpecification()).getRhs()).getPath()).isEqualTo("leader.name");
     }
 
     @Test
@@ -98,9 +72,13 @@ public class SpecificationBuilderTest {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.name").not().equalTo("Alice")
                 .or()
-                .property("leader.age").greaterThan(25)
+                .property("leader.name").not().equalTo("Roger")
+                .or()
+                .property("leader.age").lessThan(15).and()
+                .property("leader.address.number").not().equalTo(5).and()
+                .property("leader.address.city").equalTo("SomeCity")
                 .build();
-        assertThat(spec.toString()).isEqualTo("Team[(¬(leader.name = Alice)) ∨ (leader.age > 25)]");
+        assertThat(spec.toString()).isEqualTo("Team[¬(leader.name = Alice) ∨ ¬(leader.name = Roger) ∨ ((leader.age < 15) ∧ ¬(leader.address.number = 5) ∧ (leader.address.city = SomeCity))]");
     }
 
     @Test
@@ -111,5 +89,43 @@ public class SpecificationBuilderTest {
                 .identity().is("GREEN")
                 .build();
         assertThat(Stream.of(redTeam, blueTeam, greenTeam).filter(spec.asPredicate()).collect(toList())).containsExactly(blueTeam, greenTeam);
+    }
+
+    @Test
+    public void buildEmptySpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class).build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(TrueSpecification.class);
+    }
+
+    @Test
+    public void buildUnitarySpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class)
+                .property("leader.name").equalTo("ALICE")
+                .build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(PropertySpecification.class);
+    }
+
+    @Test
+    public void buildBinaryAndSpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class)
+                .property("leader.name").equalTo("ALICE").ignoringCase().and()
+                .property("leader.name").not().equalTo("aliCe")
+                .build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(AndSpecification.class);
+    }
+
+    @Test
+    public void buildBinaryOrSpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class)
+                .property("leader.name").equalTo("ALICE")
+                .or()
+                .property("leader.name").equalTo("Alice")
+                .build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(OrSpecification.class);
+        assertThat(((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0]).isInstanceOf(PropertySpecification.class);
     }
 }

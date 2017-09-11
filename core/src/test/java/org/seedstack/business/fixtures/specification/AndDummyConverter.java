@@ -8,16 +8,20 @@
 package org.seedstack.business.fixtures.specification;
 
 import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.specification.Specification;
 import org.seedstack.business.spi.specification.SpecificationConverter;
 import org.seedstack.business.spi.specification.SpecificationTranslator;
 
 public class AndDummyConverter implements SpecificationConverter<AndSpecification<?>, StringBuilder, String> {
     @Override
     public String convert(AndSpecification<?> specification, StringBuilder builder, SpecificationTranslator<StringBuilder, String> translator) {
-        return builder
-                .append(translator.translate(specification.getLhs(), builder))
-                .append(" && ")
-                .append(translator.translate(specification.getRhs(), builder))
-                .toString();
+        Specification<?>[] specifications = specification.getSpecifications();
+        for (int i = 0; i < specifications.length; i++) {
+            builder.append(translator.translate(specifications[i], builder));
+            if (i < specifications.length - 1) {
+                builder.append(" && ");
+            }
+        }
+        return builder.toString();
     }
 }

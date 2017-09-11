@@ -10,7 +10,7 @@ package org.seedstack.business.internal.specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.IdentitySpecification;
 import org.seedstack.business.specification.dsl.AggregateSelector;
-import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.IdentityPicker;
 
 class IdentityPickerImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> implements IdentityPicker<A, ID, SELECTOR> {
@@ -21,14 +21,14 @@ class IdentityPickerImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends Aggre
     }
 
     @Override
-    public BaseOptionPicker<A, SELECTOR> is(ID id) {
+    public OperatorPicker<A, SELECTOR> is(ID id) {
         context.addSpecification(new IdentitySpecification<>(id));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public BaseOptionPicker<A, SELECTOR> isNot(ID id) {
+    public OperatorPicker<A, SELECTOR> isNot(ID id) {
         context.addSpecification(new IdentitySpecification<A, ID>(id).negate());
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 }

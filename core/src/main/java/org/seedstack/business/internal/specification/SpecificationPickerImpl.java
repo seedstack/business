@@ -14,7 +14,7 @@ import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
-import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
 import org.seedstack.business.specification.dsl.StringOptionPicker;
@@ -49,42 +49,42 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
     }
 
     @Override
-    public <V> BaseOptionPicker<T, SELECTOR> equalTo(V value) {
+    public <V> OperatorPicker<T, SELECTOR> equalTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value)));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThan(V value) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> greaterThan(V value) {
         context.addSpecification(processSpecification(new GreaterThanSpecification<>(value)));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> greaterThanOrEqualTo(V value) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> greaterThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new GreaterThanSpecification<>(value))));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThan(V value) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> lessThan(V value) {
         context.addSpecification(processSpecification(new LessThanSpecification<>(value)));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> lessThanOrEqualTo(V value) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> lessThanOrEqualTo(V value) {
         context.addSpecification(processSpecification(new EqualSpecification<>(value).or(new LessThanSpecification<>(value))));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> between(V leftValue, V rightValue) {
         return between(leftValue, rightValue, true, true);
     }
 
     @Override
-    public <V extends Comparable<? super V>> BaseOptionPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
+    public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> between(V leftValue, V rightValue, boolean leftInclusive, boolean rightInclusive) {
         Specification<V> gt = new GreaterThanSpecification<>(leftValue);
         if (leftInclusive) {
             gt = gt.or(new EqualSpecification<>(leftValue));
@@ -94,7 +94,7 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
             lt = lt.or(new EqualSpecification<>(rightValue));
         }
         context.addSpecification(processSpecification(gt.and(lt)));
-        return new BaseOptionPickerImpl<>(context);
+        return new OperatorPickerImpl<>(context);
     }
 
     @SuppressWarnings("unchecked")

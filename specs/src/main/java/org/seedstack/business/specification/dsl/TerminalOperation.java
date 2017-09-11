@@ -7,10 +7,8 @@
  */
 package org.seedstack.business.specification.dsl;
 
-import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.specification.Specification;
 
-public interface IdentityPicker<A extends AggregateRoot<ID>, ID, SELECTOR extends BaseSelector> {
-    OperatorPicker<A, SELECTOR> is(ID id);
-
-    OperatorPicker<A, SELECTOR> isNot(ID id);
+public interface TerminalOperation<T> {
+    Specification<T> build();
 }

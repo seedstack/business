@@ -7,14 +7,8 @@
  */
 package org.seedstack.business.specification.dsl;
 
-import org.seedstack.business.specification.Specification;
-
-public interface BaseOptionPicker<T, SELECTOR extends BaseSelector> {
+public interface OperatorPicker<T, SELECTOR extends BaseSelector> extends TerminalOperation<T> {
     SELECTOR and();
 
     SELECTOR or();
-
-    SELECTOR orNot();
-
-    Specification<T> build();
 }

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.specification.dsl;
 
-public interface StringOptionPicker<T, SELECTOR extends BaseSelector> extends BaseOptionPicker<T, SELECTOR> {
+public interface StringOptionPicker<T, SELECTOR extends BaseSelector> extends OperatorPicker<T, SELECTOR> {
     StringOptionPicker<T, SELECTOR> trimmed();
 
     StringOptionPicker<T, SELECTOR> leftTrimmed();

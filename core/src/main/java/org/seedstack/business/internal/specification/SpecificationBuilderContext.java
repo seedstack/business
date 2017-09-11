@@ -7,57 +7,50 @@
  */
 package org.seedstack.business.internal.specification;
 
-import com.google.common.base.Preconditions;
-import org.seedstack.business.specification.SubstitutableSpecification;
+import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.TrueSpecification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>> {
     private final Class<T> targetClass;
-    private final List<Specification<T>> disjunctions = new ArrayList<>();
+    private final List<List<Specification<T>>> disjunction = new ArrayList<>();
     private SELECTOR selector;
     private Mode mode = Mode.DISJUNCTION;
     private String path;
-    private boolean not;
 
     SpecificationBuilderContext(Class<T> targetClass) {
         this.targetClass = targetClass;
     }
 
     void addSpecification(Specification<T> specification) {
-        Preconditions.checkNotNull(specification, "Specification cannot be null");
+        checkNotNull(specification, "Specification cannot be null");
         if (mode == Mode.CONJUNCTION) {
-            Preconditions.checkArgument(!disjunctions.isEmpty(), "Cannot add a conjunction without an existing disjunction");
-            int index = disjunctions.size() - 1;
-            disjunctions.set(index, disjunctions.get(index).and(specification));
-            mode = Mode.NONE;
-        } else if (mode == Mode.NEGATIVE_DISJUNCTION) {
-            processNegativeDisjunction(true);
-            disjunctions.add(specification);
+            checkArgument(!disjunction.isEmpty(), "Cannot add a conjunction without an existing disjunction");
+            List<Specification<T>> lastConjunction = this.disjunction.get(this.disjunction.size() - 1);
+            lastConjunction.add(specification);
             mode = Mode.NONE;
         } else if (mode == Mode.DISJUNCTION) {
-            processNegativeDisjunction(false);
-            disjunctions.add(specification);
+            List<Specification<T>> newConjunction = new ArrayList<>();
+            newConjunction.add(specification);
+            disjunction.add(newConjunction);
             mode = Mode.NONE;
         } else {
             throw new IllegalStateException("Cannot add specification, invalid mode " + mode);
         }
     }
 
-    private void processNegativeDisjunction(boolean newStatus) {
-        if (not) {
-            int index = disjunctions.size() - 1;
-            disjunctions.set(index, disjunctions.get(index).negate());
-        }
-        not = newStatus;
-    }
-
     void setProperty(String path) {
-        Preconditions.checkNotNull(path, "Property cannot be null");
+        checkNotNull(path, "Property cannot be null");
         if (this.path != null) {
             throw new IllegalStateException("A property is already set");
         }
@@ -78,6 +71,7 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     }
 
     void setMode(Mode mode) {
+        checkState(this.mode == Mode.NONE, "Cannot change specification mode, it is already set");
         this.mode = mode;
     }
 
@@ -90,17 +84,40 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     }
 
     Specification<T> build() {
-        processNegativeDisjunction(false);
-        if (disjunctions.isEmpty()) {
-            return new ClassSpecification<>(targetClass, new TrueSpecification<>());
+        return new ClassSpecification<>(targetClass, buildOrSpecification());
+    }
+
+    private Specification<T> buildOrSpecification() {
+        if (disjunction.isEmpty()) {
+            return new TrueSpecification<>();
+        } else if (disjunction.size() == 1) {
+            return buildAndSpecification(disjunction.get(0));
         } else {
-            return new ClassSpecification<>(targetClass, disjunctions.stream().skip(1).reduce(disjunctions.get(0), Specification::or));
+            return new OrSpecification<>(
+                    disjunction.stream()
+                            .map(this::buildAndSpecification)
+                            .toArray(this::createSpecificationArray)
+            );
         }
+    }
+
+    private Specification<T> buildAndSpecification(List<Specification<T>> conjunction) {
+        if (conjunction.isEmpty()) {
+            return new TrueSpecification<>();
+        } else if (conjunction.size() == 1) {
+            return conjunction.get(0);
+        } else {
+            return new AndSpecification<>(conjunction.toArray(createSpecificationArray(conjunction.size())));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    Specification<? super T>[] createSpecificationArray(int size) {
+        return new Specification[size];
     }
 
     enum Mode {
         DISJUNCTION,
-        NEGATIVE_DISJUNCTION,
         CONJUNCTION,
         NONE
     }

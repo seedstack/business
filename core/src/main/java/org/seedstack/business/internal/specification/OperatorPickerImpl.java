@@ -8,13 +8,13 @@
 package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.specification.Specification;
-import org.seedstack.business.specification.dsl.BaseOptionPicker;
+import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.BaseSelector;
 
-class BaseOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements BaseOptionPicker<T, SELECTOR> {
+class OperatorPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements OperatorPicker<T, SELECTOR> {
     private final SpecificationBuilderContext<T, SELECTOR> context;
 
-    BaseOptionPickerImpl(SpecificationBuilderContext<T, SELECTOR> context) {
+    OperatorPickerImpl(SpecificationBuilderContext<T, SELECTOR> context) {
         this.context = context;
     }
 
@@ -27,12 +27,6 @@ class BaseOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implem
     @Override
     public SELECTOR or() {
         context.setMode(SpecificationBuilderContext.Mode.DISJUNCTION);
-        return context.getSelector();
-    }
-
-    @Override
-    public SELECTOR orNot() {
-        context.setMode(SpecificationBuilderContext.Mode.NEGATIVE_DISJUNCTION);
         return context.getSelector();
     }
 
