@@ -13,6 +13,7 @@ import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
 import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.specification.FalseSpecification;
 import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
@@ -92,10 +93,17 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildEmptySpecification() throws Exception {
-        Specification<Team> spec = specificationBuilder.of(Team.class).build();
+    public void buildTrueSpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class).all().build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(TrueSpecification.class);
+    }
+
+    @Test
+    public void buildFalseSpecification() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class).none().build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(FalseSpecification.class);
     }
 
     @Test

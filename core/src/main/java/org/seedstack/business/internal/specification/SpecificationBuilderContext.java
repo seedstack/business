@@ -11,7 +11,6 @@ import org.seedstack.business.specification.AndSpecification;
 import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.SubstitutableSpecification;
-import org.seedstack.business.specification.TrueSpecification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 
 import java.util.ArrayList;
@@ -88,9 +87,8 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     }
 
     private Specification<T> buildOrSpecification() {
-        if (disjunction.isEmpty()) {
-            return new TrueSpecification<>();
-        } else if (disjunction.size() == 1) {
+        checkState(!disjunction.isEmpty(), "Illegal empty specification");
+        if (disjunction.size() == 1) {
             return buildAndSpecification(disjunction.get(0));
         } else {
             return new OrSpecification<>(
@@ -102,9 +100,8 @@ class SpecificationBuilderContext<T, SELECTOR extends BaseSelector<T, SELECTOR>>
     }
 
     private Specification<T> buildAndSpecification(List<Specification<T>> conjunction) {
-        if (conjunction.isEmpty()) {
-            return new TrueSpecification<>();
-        } else if (conjunction.size() == 1) {
+        checkState(!conjunction.isEmpty(), "Illegal empty conjunction");
+        if (conjunction.size() == 1) {
             return conjunction.get(0);
         } else {
             return new AndSpecification<>(conjunction.toArray(createSpecificationArray(conjunction.size())));

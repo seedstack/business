@@ -7,6 +7,8 @@
  */
 package org.seedstack.business.specification.dsl;
 
-public interface BaseSelector<T, SELECTOR extends BaseSelector<T, SELECTOR>> extends TerminalOperation<T> {
-    SpecificationPicker<T, SELECTOR> property(String path);
+public interface BaseSelector<T, SELECTOR extends BaseSelector<T, SELECTOR>> {
+    TerminalOperation<T> all();
+
+    TerminalOperation<T> none();
 }

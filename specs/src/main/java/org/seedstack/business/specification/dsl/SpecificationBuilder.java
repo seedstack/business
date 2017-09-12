@@ -10,7 +10,7 @@ package org.seedstack.business.specification.dsl;
 import org.seedstack.business.domain.AggregateRoot;
 
 public interface SpecificationBuilder {
-    <T, SELECTOR extends BaseSelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass);
+    <T, SELECTOR extends PropertySelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass);
 
     <A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> SELECTOR ofAggregate(Class<A> aggregateClass);
 }

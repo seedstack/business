@@ -9,10 +9,13 @@ package org.seedstack.business.specification;
 
 import org.seedstack.business.domain.AggregateRoot;
 
+import static java.util.Objects.requireNonNull;
+
 public class IdentitySpecification<A extends AggregateRoot<ID>, ID> implements Specification<A> {
     private final ID expectedIdentifier;
 
     public IdentitySpecification(ID expectedIdentifier) {
+        requireNonNull(expectedIdentifier, "Expected identifier cannot be null");
         this.expectedIdentifier = expectedIdentifier;
     }
 
@@ -23,5 +26,10 @@ public class IdentitySpecification<A extends AggregateRoot<ID>, ID> implements S
 
     public ID getExpectedIdentifier() {
         return expectedIdentifier;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(expectedIdentifier);
     }
 }

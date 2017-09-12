@@ -10,13 +10,14 @@ package org.seedstack.business.internal.specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.dsl.AggregateSelector;
 import org.seedstack.business.specification.dsl.BaseSelector;
+import org.seedstack.business.specification.dsl.PropertySelector;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 class SpecificationBuilderImpl implements SpecificationBuilder {
     @Override
     @SuppressWarnings("unchecked")
-    public <T, SELECTOR extends BaseSelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass) {
-        return (SELECTOR) new BaseSelectorImpl<T, SELECTOR>(new SpecificationBuilderContext<>(anyClass));
+    public <T, SELECTOR extends PropertySelector<T, SELECTOR>> SELECTOR of(Class<T> anyClass) {
+        return (SELECTOR) new PropertySelectorImpl<T, SELECTOR>(new SpecificationBuilderContext<>(anyClass));
     }
 
     @Override

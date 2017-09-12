@@ -9,21 +9,13 @@ package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.dsl.BaseSelector;
-import org.seedstack.business.specification.dsl.SpecificationPicker;
+import org.seedstack.business.specification.dsl.TerminalOperation;
 
-class BaseSelectorImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements BaseSelector<T, SELECTOR> {
+class TerminalOperationImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implements TerminalOperation<T> {
     protected final SpecificationBuilderContext<T, SELECTOR> context;
 
-    @SuppressWarnings("unchecked")
-    BaseSelectorImpl(SpecificationBuilderContext<T, SELECTOR> context) {
+    TerminalOperationImpl(SpecificationBuilderContext<T, SELECTOR> context) {
         this.context = context;
-        this.context.setSelector((SELECTOR) this);
-    }
-
-    @Override
-    public SpecificationPicker<T, SELECTOR> property(String path) {
-        context.setProperty(path);
-        return new SpecificationPickerImpl<>(context);
     }
 
     @Override

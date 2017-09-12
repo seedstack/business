@@ -11,7 +11,7 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.dsl.AggregateSelector;
 import org.seedstack.business.specification.dsl.IdentityPicker;
 
-class AggregateSelectorImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> extends BaseSelectorImpl<A, SELECTOR> implements AggregateSelector<A, ID, SELECTOR> {
+class AggregateSelectorImpl<A extends AggregateRoot<ID>, ID, SELECTOR extends AggregateSelector<A, ID, SELECTOR>> extends PropertySelectorImpl<A, SELECTOR> implements AggregateSelector<A, ID, SELECTOR> {
     AggregateSelectorImpl(SpecificationBuilderContext<A, SELECTOR> context) {
         super(context);
     }
