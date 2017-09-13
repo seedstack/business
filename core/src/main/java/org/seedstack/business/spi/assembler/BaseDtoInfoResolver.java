@@ -33,7 +33,7 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
     }
 
     @Override
-    public <D, A extends AggregateRoot<ID>, ID> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
         return resolveAggregate(dto, aggregateRootClass, -1);
     }
 

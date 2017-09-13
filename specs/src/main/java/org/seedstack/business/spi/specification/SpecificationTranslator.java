@@ -10,8 +10,32 @@ package org.seedstack.business.spi.specification;
 
 import org.seedstack.business.specification.Specification;
 
-public interface SpecificationTranslator<B, C> {
+/**
+ * Translates a {@link Specification} into a target object by invoking the relevant {@link SpecificationConverter}s.
+ *
+ * @param <C> the type of the translation context object.
+ * @param <T> the type of the translated target object.
+ */
+public interface SpecificationTranslator<C, T> {
 
-    <T> C translate(Specification<T> specification, B criteriaBuilder);
+    /**
+     * Translates the specified composite specification into a target object.
+     *
+     * @param specification the {@link Specification} to translate.
+     * @param context       the translation context.
+     * @param <S>           the type of the specification to translate.
+     * @return the target object representing the fully translated specification.
+     */
+    <S extends Specification<?>> T translate(S specification, C context);
+
+    /**
+     * @return the class of the translation context object.
+     */
+    Class<C> getContextClass();
+
+    /**
+     * @return the class of the target object.
+     */
+    Class<T> getTargetClass();
 
 }

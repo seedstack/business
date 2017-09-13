@@ -13,7 +13,7 @@ import org.seedstack.business.spi.specification.SpecificationTranslator;
 
 public class PropertyDummyConverter implements SpecificationConverter<PropertySpecification<?, ?>, StringBuilder, String> {
     @Override
-    public String convert(PropertySpecification<?, ?> specification, StringBuilder builder, SpecificationTranslator<StringBuilder, String> translator) {
-        return builder.append(specification.getPath()).append(translator.translate(specification.getValueSpecification(), builder)).toString();
+    public String convert(PropertySpecification<?, ?> specification, StringBuilder context, SpecificationTranslator<StringBuilder, String> translator) {
+        return context.append(specification.getPath()).append(translator.translate(specification.getValueSpecification(), context)).toString();
     }
 }

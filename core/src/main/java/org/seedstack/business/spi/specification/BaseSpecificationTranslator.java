@@ -13,8 +13,8 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.seedstack.business.internal.utils.BusinessUtils;
-import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.SubstitutableSpecification;
 
 import javax.inject.Inject;
 import java.lang.annotation.Annotation;
@@ -22,9 +22,16 @@ import java.lang.reflect.Type;
 
 import static org.seedstack.business.internal.utils.BusinessUtils.getQualifier;
 
-public abstract class BaseSpecificationTranslator<B, C> implements SpecificationTranslator<B, C> {
-    private final Class<B> criteriaBuilderClass;
-    private final Class<C> criteriaClass;
+/**
+ * Helper base class for implementing {@link SpecificationTranslator}s. Handles the invocation of the relevant
+ * {@link SpecificationConverter} in the {@link #convert(Specification, Object)} method.
+ *
+ * @param <C> the type of the translation context.
+ * @param <T> the type of the target object.
+ */
+public abstract class BaseSpecificationTranslator<C, T> implements SpecificationTranslator<C, T> {
+    private final Class<C> contextClass;
+    private final Class<T> targetClass;
     private final Annotation qualifier;
     @Inject
     private Injector injector;
@@ -32,46 +39,65 @@ public abstract class BaseSpecificationTranslator<B, C> implements Specification
     @SuppressWarnings("unchecked")
     protected BaseSpecificationTranslator() {
         Type[] generics = BusinessUtils.resolveGenerics(BaseSpecificationTranslator.class, getClass());
-        this.criteriaBuilderClass = (Class<B>) generics[0];
-        this.criteriaClass = (Class<C>) generics[1];
+        this.contextClass = (Class<C>) generics[0];
+        this.targetClass = (Class<T>) generics[1];
         this.qualifier = getQualifier(getClass()).orElse(null);
     }
 
-    protected <T> C convert(Specification<T> specification, B builder) {
+    /**
+     * Find and invoke the relevant {@link SpecificationConverter} for the given specification to convert
+     * it into an object of type {@link T}.
+     *
+     * @param specification the specification to convert.
+     * @param context       the translation context.
+     * @param <S>           the type of the specification to convert.
+     * @return the converted target object representing the given specification.
+     */
+    protected <S extends Specification<?>> T convert(S specification, C context) {
         if (specification instanceof SubstitutableSpecification) {
-            return convert(((SubstitutableSpecification<T>) specification).getSubstitute(), builder);
+            return convert(((SubstitutableSpecification<?>) specification).getSubstitute(), context);
         } else {
-            SpecificationConverter<Specification<T>, B, C> converter;
+            SpecificationConverter<S, C, T> converter;
             Class<? extends Specification> specificationClass = specification.getClass();
             try {
                 converter = injector.getInstance(buildKey(specificationClass));
             } catch (ConfigurationException e) {
                 throw new RuntimeException("No converter found for " + specificationClass.getName(), e);
             }
-            return converter.convert(specification, builder, this);
+            return converter.convert(specification, context, this);
         }
     }
 
+    @Override
+    public Class<C> getContextClass() {
+        return contextClass;
+    }
+
+    @Override
+    public Class<T> getTargetClass() {
+        return targetClass;
+    }
+
     @SuppressWarnings("unchecked")
-    private <T> Key<SpecificationConverter<Specification<T>, B, C>> buildKey(Class<? extends Specification> specificationClass) {
+    private <S extends Specification<?>> Key<SpecificationConverter<S, C, T>> buildKey(Class<? extends Specification> specificationClass) {
         if (qualifier != null) {
             return Key.get(
-                    (TypeLiteral<SpecificationConverter<Specification<T>, B, C>>) TypeLiteral.get(
+                    (TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral.get(
                             Types.newParameterizedType(
                                     SpecificationConverter.class,
                                     specificationClass,
-                                    criteriaBuilderClass,
-                                    criteriaClass)
+                                    contextClass,
+                                    targetClass)
                     ),
                     qualifier);
         } else {
             return Key.get(
-                    (TypeLiteral<SpecificationConverter<Specification<T>, B, C>>) TypeLiteral.get(
+                    (TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral.get(
                             Types.newParameterizedType(
                                     SpecificationConverter.class,
                                     specificationClass,
-                                    criteriaBuilderClass,
-                                    criteriaClass)
+                                    contextClass,
+                                    targetClass)
                     ));
         }
     }

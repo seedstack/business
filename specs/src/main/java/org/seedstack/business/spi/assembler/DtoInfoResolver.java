@@ -18,7 +18,7 @@ public interface DtoInfoResolver {
 
     <D, ID> ID resolveId(D dto, Class<ID> aggregateIdClass, int position);
 
-    <D, A extends AggregateRoot<ID>, ID> A resolveAggregate(D dto, Class<A> aggregateRootClass);
+    <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass);
 
     <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position);
 

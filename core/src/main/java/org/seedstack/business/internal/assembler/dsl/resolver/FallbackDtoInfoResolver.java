@@ -39,13 +39,13 @@ public class FallbackDtoInfoResolver implements DtoInfoResolver {
     }
 
     @Override
-    public <D, A extends AggregateRoot<ID>, ID> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
         return createObject(aggregateRootClass);
     }
 
     @Override
     public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position) {
-        return this.createObject(aggregateRootClass);
+        return createObject(aggregateRootClass);
     }
 
     @SuppressWarnings("unchecked")
