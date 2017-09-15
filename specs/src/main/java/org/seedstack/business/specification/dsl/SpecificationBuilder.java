@@ -16,13 +16,13 @@ import org.seedstack.business.domain.AggregateRoot;
  *
  * <p>
  * Examples of formulae in DNF:
+ * </p>
  * <ul>
  * <li>(A ∧ ¬B ∧ ¬C) ∨ (¬D ∧ E ∧ F)</li>
  * <li>(A ∧ B) ∨ C</li>
  * <li>A ∧ B</li>
  * <li>A</li>
  * </ul>
- * </p>
  */
 public interface SpecificationBuilder {
     /**

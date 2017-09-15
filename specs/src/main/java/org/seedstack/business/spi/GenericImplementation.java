@@ -50,7 +50,7 @@ import java.lang.annotation.Target;
  * public class SomeClass {
  *     {@literal @}Inject
  *     {@literal @}SomeQualifier
- *      private Repository&lt;SomeAggregate, SomeId&gt someAggregateRepository;
+ *      private Repository&lt;SomeAggregate, SomeId&gt; someAggregateRepository;
  * }
  * </pre>
  */

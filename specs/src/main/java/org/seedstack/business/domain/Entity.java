@@ -12,7 +12,6 @@ package org.seedstack.business.domain;
  * It is not defined primarily by its attributes but by its identity that stays the same through time and across
  * distinct representations.
  *
- * <p>
  * The identity of an entity must be unique and immutable. It must be chosen carefully and well defined in the model.
  * Identification can come from:
  * <ul>
@@ -20,7 +19,6 @@ package org.seedstack.business.domain;
  * <li>The inside: the entity can generate its own identity using an algorithm.</li>
  * <li>An {@link IdentityGenerator}.</li>
  * </ul>
- * </p>
  *
  * <p>
  * An entity should not be merely a holder of attributes, but should also contain the behavior that is directly relevant to
@@ -37,6 +35,7 @@ package org.seedstack.business.domain;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * public class SomeEntity implements Entity&lt;SomeEntityId&gt; {
  *     private SomeEntityId id;
@@ -63,7 +62,6 @@ package org.seedstack.business.domain;
  *     // Other methods
  * }
  * </pre>
- * </p>
  *
  * @param <ID> the type of the entity identifier.
  */
