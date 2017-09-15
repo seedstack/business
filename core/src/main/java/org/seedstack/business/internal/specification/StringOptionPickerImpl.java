@@ -31,7 +31,7 @@ class StringOptionPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> exte
     }
 
     @Override
-    public StringOptionPicker<T, SELECTOR> trimmingTrail() {
+    public StringOptionPicker<T, SELECTOR> trimmingTail() {
         stringValueOptions.setRightTrimmed(true);
         return this;
     }

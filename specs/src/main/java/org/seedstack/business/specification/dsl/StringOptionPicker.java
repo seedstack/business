@@ -15,25 +15,25 @@ package org.seedstack.business.specification.dsl;
  */
 public interface StringOptionPicker<T, SELECTOR extends BaseSelector> extends OperatorPicker<T, SELECTOR> {
     /**
-     * Specifies that the value should be leading and trailing trimmed before comparison.
+     * Specifies that the value should trimmed of leading and trailing whitespaces before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a new specification.
      */
     StringOptionPicker<T, SELECTOR> trimming();
 
     /**
-     * Specifies that the value should be leading-trimmed before comparison.
+     * Specifies that the value should be trimmed of leading whitespace before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a new specification.
      */
     StringOptionPicker<T, SELECTOR> trimmingLead();
 
     /**
-     * Specifies that the value should be trailing-trimmed before comparison.
+     * Specifies that the value should be trimmed of trailing whitespace before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a new specification.
      */
-    StringOptionPicker<T, SELECTOR> trimmingTrail();
+    StringOptionPicker<T, SELECTOR> trimmingTail();
 
     /**
      * Specifies that the comparison should be done ignoring case.
