@@ -11,9 +11,22 @@ import org.seedstack.business.domain.AggregateRoot;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * A specification that can only be applied to {@link AggregateRoot}s and that is satisfied only if the candidate
+ * aggregate has an identifier equal to the expected one.
+ *
+ * @param <A>  the aggregate type this specification applies to.
+ * @param <ID> the aggregate identifier type.
+ */
 public class IdentitySpecification<A extends AggregateRoot<ID>, ID> implements Specification<A> {
     private final ID expectedIdentifier;
 
+    /**
+     * Creates a specification satisfied only if the candidate aggregate has an identifier equal to the identifier passed
+     * as argument.
+     *
+     * @param expectedIdentifier the expected identifier.
+     */
     public IdentitySpecification(ID expectedIdentifier) {
         requireNonNull(expectedIdentifier, "Expected identifier cannot be null");
         this.expectedIdentifier = expectedIdentifier;
@@ -24,12 +37,15 @@ public class IdentitySpecification<A extends AggregateRoot<ID>, ID> implements S
         return expectedIdentifier.equals(candidate.getId());
     }
 
-    public ID getExpectedIdentifier() {
-        return expectedIdentifier;
-    }
-
     @Override
     public String toString() {
         return String.valueOf(expectedIdentifier);
+    }
+
+    /**
+     * @return the expected identifier.
+     */
+    public ID getExpectedIdentifier() {
+        return expectedIdentifier;
     }
 }

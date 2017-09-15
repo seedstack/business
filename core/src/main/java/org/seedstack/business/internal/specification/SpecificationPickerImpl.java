@@ -14,8 +14,8 @@ import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
-import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.BaseSelector;
+import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
 import org.seedstack.business.specification.dsl.StringOptionPicker;
 
@@ -30,7 +30,7 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
 
     @Override
     public SpecificationPicker<T, SELECTOR> not() {
-        not = true;
+        not = !not;
         return this;
     }
 
@@ -80,7 +80,7 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
 
     @Override
     public <V extends Comparable<? super V>> OperatorPicker<T, SELECTOR> between(V leftValue, V rightValue) {
-        return between(leftValue, rightValue, true, true);
+        return between(leftValue, rightValue, false, false);
     }
 
     @Override

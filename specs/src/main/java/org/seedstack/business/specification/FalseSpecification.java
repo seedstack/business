@@ -7,6 +7,11 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * An always false specification, NOT satisfied by any candidate object.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class FalseSpecification<T> implements Specification<T> {
     @Override
     public boolean isSatisfiedBy(T candidate) {

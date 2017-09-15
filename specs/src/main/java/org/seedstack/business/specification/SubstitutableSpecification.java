@@ -7,7 +7,16 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * Specifications that can be substituted by another specification <strong>without changing the satisfaction result</strong>
+ * should implement this interface.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public interface SubstitutableSpecification<T> extends Specification<T> {
+    /**
+     * @return the specification this specification can be substituted with.
+     */
     Specification<T> getSubstitute();
 
     @Override

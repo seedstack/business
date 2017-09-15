@@ -36,6 +36,11 @@ class PropertySelectorImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> implem
     }
 
     @Override
+    public SpecificationPicker<T, SELECTOR> whole() {
+        return new SpecificationPickerImpl<>(context);
+    }
+
+    @Override
     public SpecificationPicker<T, SELECTOR> property(String path) {
         context.setProperty(path);
         return new SpecificationPickerImpl<>(context);

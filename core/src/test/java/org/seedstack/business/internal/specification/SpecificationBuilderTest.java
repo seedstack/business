@@ -13,6 +13,7 @@ import org.seedstack.business.fixtures.domain.specification.Address;
 import org.seedstack.business.fixtures.domain.specification.Team;
 import org.seedstack.business.fixtures.domain.specification.TeamWithLeader;
 import org.seedstack.business.specification.AndSpecification;
+import org.seedstack.business.specification.EqualSpecification;
 import org.seedstack.business.specification.FalseSpecification;
 import org.seedstack.business.specification.OrSpecification;
 import org.seedstack.business.specification.PropertySpecification;
@@ -118,8 +119,8 @@ public class SpecificationBuilderTest {
     @Test
     public void buildBinaryAndSpecification() throws Exception {
         Specification<Team> spec = specificationBuilder.of(Team.class)
-                .property("leader.name").equalTo("ALICE").ignoringCase().and()
-                .property("leader.name").not().equalTo("aliCe")
+                .property("leader.name").not().equalTo("aliCe").and()
+                .property("leader.name").equalTo("ALICE").ignoringCase()
                 .build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(AndSpecification.class);
@@ -135,5 +136,15 @@ public class SpecificationBuilderTest {
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(OrSpecification.class);
         assertThat(((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0]).isInstanceOf(PropertySpecification.class);
+    }
+
+    @Test
+    public void testWhole() throws Exception {
+        Specification<Team> spec = specificationBuilder.of(Team.class)
+                .whole().equalTo(new Team("BLUE"))
+                .build();
+        assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(EqualSpecification.class);
+        assertThat(Stream.of(redTeam, blueTeam, greenTeam).filter(spec.asPredicate()).collect(toList())).containsExactly(blueTeam);
     }
 }

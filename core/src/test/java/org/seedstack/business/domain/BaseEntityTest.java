@@ -69,10 +69,24 @@ public class BaseEntityTest {
     @Test
     public void emptyEntityCanBeAddedToCollection() {
         TestEntity entity = new TestEntity();
-        Set<TestEntity> entities = Sets.newHashSet();
-        entities.add(entity);
+        Sets.newHashSet().add(entity);
     }
 
+    @Test
+    public void inheritingEntityCanBeCompared() throws Exception {
+        TestEntity entity = new TestEntity(1L);
+        InheritingTestEntity inheritingEntity = new InheritingTestEntity(1L);
+        assertThat(entity.equals(inheritingEntity)).isTrue();
+        assertThat(inheritingEntity.equals(entity)).isTrue();
+    }
+
+    @Test
+    public void cannotBeComparedWithNonEntity() throws Exception {
+        TestEntity entity = new TestEntity(1L);
+        Object nonEntity = new Object();
+        assertThat(entity.equals(nonEntity)).isFalse();
+        assertThat(nonEntity.equals(entity)).isFalse();
+    }
 
     static class TestEntity extends BaseEntity<Long> {
         private Long id;
@@ -91,6 +105,12 @@ public class BaseEntityTest {
 
         public void setName(String name) {
             this.name = name;
+        }
+    }
+
+    static class InheritingTestEntity extends TestEntity {
+        public InheritingTestEntity(Long id) {
+            super(id);
         }
     }
 }

@@ -9,24 +9,62 @@ package org.seedstack.business.domain;
 
 
 /**
- * Interface for domain value objects.
+ * A value object measures, quantifies or describes something in the domain. A value object has no lifecycle from the
+ * domain perspective. As such we don’t need to provide him an identity. Value objects can be created and destroyed at
+ * will without any impact.
+ *
+ * <p>
+ * A value object is immutable, meaning that its state cannot be changed after creation. If you need to change a value
+ * object, create a new one derived from the initial one. Value object immutability means that they can be easily shared
+ * across the whole system.
+ * </p>
+ *
+ * <p>
+ * A value object describes a conceptual whole. All of its attributes are related to each other and are all participating
+ * to the description of the thing.
+ * </p>
+ *
+ * <p>
+ * As entities, value objects should contain behavior that is relevant to them. If the domain concept described by the
+ * value object has a behavior, write methods encapsulating it. This behavior must remain side-effect free (not depending
+ * upon any mutable state).
+ * </p>
+ *
+ * <p>
+ * <strong>
+ * The BaseValueObject class can be used as a base class for domain entities. It already implements the {@link #equals(Object)}
+ * and {@link #hashCode()} methods properly.
+ * </strong>
+ * </p>
+ *
+ * <p>
+ * Example:
+ * <pre>
+ * public class SomeValueObject implements ValueObject {
+ *     private String attribute1;
+ *     private String attribute2;
+ *
+ *     public SomeValueObject(String attribute1, String attribute2) {
+ *         this.attribute1 = attribute1;
+ *         this.attribute2 = attribute2;
+ *     }
+ *
+ *    {@literal @}Override
+ *     public int hashCode() {
+ *         // implement based on all attributes
+ *     }
+ *
+ *    {@literal @}Override
+ *     public boolean equals() {
+ *         // implement based on all attributes
+ *     }
+ *
+ *     // Other methods
+ * }
+ * </pre>
+ * </p>
  */
 @DomainValueObject
 public interface ValueObject extends Producible {
-
-    /**
-     * Value Object equality is computed on all attributes.
-     *
-     * @param other The other value object.
-     * @return true if the both value objects have equal attributes, false otherwise.
-     */
-    @Override
-    boolean equals(Object other);
-
-    @Override
-    int hashCode();
-
-    @Override
-    String toString();
 
 }

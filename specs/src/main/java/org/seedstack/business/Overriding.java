@@ -15,8 +15,8 @@ import java.lang.annotation.Target;
 
 /**
  * Using this annotation on an implementation class will make it override an existing similar implementation. Every
- * relevant injection point or dynamic retrieval will be provided with the overriding implementation instead of the
- * original one.
+ * relevant injection point or dynamic retrieval through {@link org.seedstack.business.domain.DomainRegistry} will be
+ * provided with the overriding implementation instead of the original one.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

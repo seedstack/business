@@ -7,9 +7,19 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * A specification negating another specification.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class NotSpecification<T> implements Specification<T> {
     private final Specification<T> specification;
 
+    /**
+     * Creates a specification negating the specification passed as argument.
+     *
+     * @param specification the specification to negate.
+     */
     public NotSpecification(Specification<T> specification) {
         this.specification = specification;
     }
@@ -19,12 +29,15 @@ public class NotSpecification<T> implements Specification<T> {
         return !specification.isSatisfiedBy(candidate);
     }
 
-    public Specification<T> getSpecification() {
-        return specification;
-    }
-
     @Override
     public String toString() {
         return String.format("¬(%s)", specification.toString());
+    }
+
+    /**
+     * @return the negated specification.
+     */
+    public Specification<T> getSpecification() {
+        return specification;
     }
 }

@@ -14,6 +14,7 @@ import org.seedstack.shed.reflect.Classes;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -67,6 +68,8 @@ public class PropertySpecification<T, V> implements Specification<T> {
                         return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
                     } else if (result.getClass().isArray()) {
                         return Arrays.stream((Object[]) result).anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                    } else if (result instanceof Map) {
+                        return ((Collection<?>) ((Map<?, ?>) result).values()).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
                     } else {
                         return isSatisfiedBy(result, propertyIndex + 1);
                     }

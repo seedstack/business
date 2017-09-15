@@ -58,27 +58,28 @@ public abstract class BaseEntity<ID> implements Entity<ID> {
         }
     }
 
-    /**
-     * Computes the hash code on the entity identity returned by {@link #getId()}. This method can be overridden
-     * but be sure to respect the equality semantics for entities when doing so.
-     *
-     * @return Hash code built from all non-transient fields.
-     */
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
 
-    /**
-     * Computes the equality on the entity identity returned by {@link #getId()}. This method can be overridden
-     * but be sure to respect the equality semantics for entities when doing so.
-     *
-     * @param other other object
-     * @return true if the other object is of the same class and has the same identity a this entity, false otherwise.
-     */
     @Override
     public boolean equals(Object other) {
-        return this == other || !(other == null || getClass() != other.getClass()) && Objects.equals(getId(), ((BaseEntity<?>) other).getId());
+        if (other == this) {
+            // equal reference
+            return true;
+        }
+        if (other == null) {
+            // comparison to null
+            return false;
+        }
+        Class<? extends BaseEntity> thisClass = getClass();
+        Class<?> otherClass = other.getClass();
+        if (!(other instanceof Entity) || (!thisClass.isAssignableFrom(otherClass) && !otherClass.isAssignableFrom(thisClass))) {
+            // objects are not from the same class hierarchy
+            return false;
+        }
+        return Objects.equals(getId(), ((Entity<?>) other).getId());
     }
 
     @Override

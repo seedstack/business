@@ -14,31 +14,56 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation marks its annotated interface as a service. The implementation
- * of the annotated interface will be registered by the framework and bound to this interface.
+ * This annotation can be applied to an interface to declare a service. Any class implementing the annotated interface
+ * will be registered by the framework as the service implementation.
  * <p>
- * For instance the following service:
+ * Considering the following service:
  * </p>
  * <pre>
  * {@literal @}Service
- * public interface TransferService {
- *
- *    public void transfer(Account accountSource, Account accountTarget);
+ *  public interface MoneyTransferService {
+ *     public void transfer(Account source, Account target);
+ *  }
+ * </pre>
+ * Its implementation is declared as:
+ * <pre>
+ *  public class ElectronicMoneyTransferService implements MoneyTransferService {
+ *      public void transfer(Account source, Account target) {
+ *          // implementation
+ *      }
+ *  }
+ * </pre>
+ * The implementation can then be injected as follows:
+ * <pre>
+ * public class SomeClass {
+ *     {@literal @}Inject
+ *      TransferService transferService;
  * }
  * </pre>
- * with its implementation:
- * <pre>
- * public class TransferServiceBase implements TransferService {
  *
- *     public void transfer(Account accountSource, Account accountTarget) {
- *      ...
- *     }
- * }
- * </pre>
- * can be used as follows:
+ * <p>
+ * When a service interface has multiple implementations, it is necessary
+ * to differentiate them by using a different {@link javax.inject.Qualifier} annotation on each. This qualifier can then
+ * be used at the injection point to specify which implementation is required. Considering the additional implementation
+ * of the MoneyTransferService below:
+ * </p>
  * <pre>
- * {@literal @}Inject
- * TransferService transferService;
+ * {@literal @}Named("solidGold")
+ *  public class SolidGoldMoneyTransferService implements MoneyTransferService {
+ *      public void transfer(Account source, Account target) {
+ *          // implementation
+ *      }
+ *  }
+ * </pre>
+ * <p>
+ * This implementation can be injected as follows:
+ * </p>
+ * <pre>
+ *  public class SomeClass {
+ *      {@literal @}Inject
+ *      {@literal @}Named("solidGold")
+ *       TransferService transferService;
+ *  }
  * </pre>
  */
 @Documented

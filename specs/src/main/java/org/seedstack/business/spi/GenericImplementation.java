@@ -14,10 +14,45 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks an implementation as a default implementation.
+ * This annotation can be used on an implementation of a {@link org.seedstack.business.domain.Repository} or an
+ * {@link org.seedstack.business.assembler.Assembler} to declare it as a generic implementation.
+ *
  * <p>
- * It is used only defining default assemblers or repositories.
+ * Generic implementations are able to work with all types satisfying the conditions of their interface. For instance a
+ * generic implementation of a {@link org.seedstack.business.domain.Repository} must be able to work with any aggregate
+ * in the system.
  * </p>
+ *
+ * <p>
+ * A generic implementation often exist along with user-defined explicit implementations of the same interface, so it is
+ * recommended to annotate it with a {@link javax.inject.Qualifier}, leaving the unqualified implementation for user code.
+ *
+ * A generic implementation is instantiated through assisted injection, invoking a constructor whose unique parameter
+ * must be an array of the classes it will work on. Consider the following example:
+ * </p>
+ *
+ * <pre>
+ * {@literal @}GenericImplementation
+ * {@literal @}SomeQualifier
+ *  public class SomeGenericRepository&lt;A extends AggregateRoot&lt;ID&gt;, ID&gt; implements Repository&lt;A, ID&gt; {
+ *      {@literal @}Inject
+ *       public SomeGenericRepository({@literal @}Assisted Object[] genericClasses) {
+ *           // genericClasses contains the aggregate root class and the identifier class
+ *           // this instance must work with
+ *       }
+ *  }
+ * </pre>
+ *
+ * <p>
+ * This generic implementation can be injected as follows:
+ * </p>
+ * <pre>
+ * public class SomeClass {
+ *     {@literal @}Inject
+ *     {@literal @}SomeQualifier
+ *      private Repository&lt;SomeAggregate, SomeId&gt someAggregateRepository;
+ * }
+ * </pre>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

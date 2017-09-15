@@ -7,6 +7,11 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * An always true specification, satisfied by any candidate object.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class TrueSpecification<T> implements Specification<T> {
     @Override
     public boolean isSatisfiedBy(T candidate) {

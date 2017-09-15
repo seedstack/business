@@ -7,9 +7,19 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * A specification composing multiple specifications with a logical OR.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class OrSpecification<T> implements Specification<T> {
     private final Specification<? super T>[] specifications;
 
+    /**
+     * Creates a specification composing the specifications passed as argument with a logical OR.
+     *
+     * @param specifications the specifications to compose in a logical OR.
+     */
     @SafeVarargs
     public OrSpecification(Specification<? super T>... specifications) {
         this.specifications = specifications.clone();
@@ -23,10 +33,6 @@ public class OrSpecification<T> implements Specification<T> {
             }
         }
         return false;
-    }
-
-    public Specification<? super T>[] getSpecifications() {
-        return specifications.clone();
     }
 
     @Override
@@ -47,5 +53,12 @@ public class OrSpecification<T> implements Specification<T> {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * @return all specifications composed with the logical AND.
+     */
+    public Specification<? super T>[] getSpecifications() {
+        return specifications.clone();
     }
 }
