@@ -8,9 +8,10 @@
 package org.seedstack.business.domain;
 
 /**
- * Specialisation of {@link Entity} for entities acting as aggregate roots.
+ * Specialization of {@link Entity} when acting as an aggregate root.
  *
  * @param <ID> the type of the aggregate root identifier.
+ * @see DomainAggregateRoot
  */
 @DomainAggregateRoot
 public interface AggregateRoot<ID> extends Entity<ID>, Producible {

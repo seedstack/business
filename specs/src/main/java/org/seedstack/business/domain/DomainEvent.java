@@ -8,7 +8,7 @@
 package org.seedstack.business.domain;
 
 /**
- * Interface for business events.
+ * Interface for domain events.
  *
  * @see DomainEventHandler
  * @see DomainEventPublisher

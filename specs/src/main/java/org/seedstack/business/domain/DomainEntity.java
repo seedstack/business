@@ -15,7 +15,15 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation marks entities.
+ * Marks a type as an entity. This is the minimal element to apply on a class to make the business framework
+ * recognize it as an entity.
+ *
+ * <p>
+ * For better semantics it is recommended to use the {@link Entity} interface which is already annotated
+ * with {@link DomainEntity}.
+ * </p>
+ *
+ * @see Entity
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

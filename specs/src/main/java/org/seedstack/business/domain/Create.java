@@ -15,9 +15,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation marks methods creating entities. Those methods are intercepted to allow for identity generation to
- * occur on the returned entity, just after creation. If this annotation is placed on a class, all methods of the class
- * are intercepted.
+ * Marks a method which has the responsibility of creating an entity (i.e. a factory method). Such method is intercepted
+ * to allow for identity generation to occur on the returned entity, just after creation.
+ *
+ * @see IdentityGenerator
  */
 @Documented
 @Inherited

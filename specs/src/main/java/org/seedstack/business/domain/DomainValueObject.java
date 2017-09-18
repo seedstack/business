@@ -15,7 +15,15 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation marks value objects.
+ * Marks a type as a value object. This is the minimal element to apply on a class to make the business framework
+ * recognize it as a value object.
+ *
+ * <p>
+ * For better semantics it is recommended to use the {@link ValueObject} interface which is already annotated
+ * with {@link DomainValueObject}.
+ * </p>
+ *
+ * @see DomainValueObject
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

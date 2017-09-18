@@ -15,7 +15,15 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation marks aggregate roots.
+ * Marks a type as an aggregate root. This is the minimal element to apply on a class to make the business framework
+ * recognize it as an aggregate root.
+ *
+ * <p>
+ * For better semantics it is recommended to use the {@link AggregateRoot} interface which is already annotated
+ * with {@link DomainAggregateRoot}.
+ * </p>
+ *
+ * @see AggregateRoot
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
