@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.domain;
 
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.domain.IdentityResolver;

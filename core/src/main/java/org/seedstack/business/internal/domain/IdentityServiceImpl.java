@@ -13,12 +13,12 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import net.jodah.typetools.TypeResolver;
-import org.seedstack.business.BusinessException;
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.IdentityService;
 import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
@@ -54,7 +54,7 @@ class IdentityServiceImpl implements IdentityService {
 
         Object id = getValue(entityIdField, entity);
         if (id == null) {
-            setValue(entityIdField, entity, identityGenerator.generate(entityClass, entityConfiguration));
+            setValue(entityIdField, entity, identityGenerator.generate(entityClass, entityConfiguration.asMap()));
         } else {
             throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
                     .put(ENTITY_CLASS, entityClass);

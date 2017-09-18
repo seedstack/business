@@ -8,9 +8,9 @@
 package org.seedstack.business.domain;
 
 import org.seedstack.business.Service;
-import org.seedstack.shed.reflect.TypeOf;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 
 /**
  * This registry allows to access domain objects programmatically.
@@ -70,37 +70,37 @@ public interface DomainRegistry {
     /**
      * Get a {@link Repository} from the domain.
      *
-     * @param <R>    the type of the repository.
-     * @param <A>    the type of the aggregate root.
-     * @param <ID>   the type of the aggregate root identifier.
-     * @param typeOf the capture of the full generic type.
+     * @param <R>            the type of the repository.
+     * @param <A>            the type of the aggregate root.
+     * @param <ID>           the type of the aggregate root identifier.
+     * @param repositoryType the full generic type.
      * @return an instance of the repository.
      */
-    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf);
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(Type repositoryType);
 
     /**
      * Get a {@link Repository} from the domain.
      *
-     * @param <R>       the type of the repository.
-     * @param <A>       the type of the aggregate root.
-     * @param <ID>      the type of the aggregate root identifier.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the repository qualifier.
+     * @param <R>            the type of the repository.
+     * @param <A>            the type of the aggregate root.
+     * @param <ID>           the type of the aggregate root identifier.
+     * @param repositoryType the full generic type.
+     * @param qualifier      the repository qualifier.
      * @return an instance of the repository.
      */
-    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf, Class<? extends Annotation> qualifier);
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(Type repositoryType, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Repository} from the domain.
      *
-     * @param <R>       the type of the repository.
-     * @param <A>       the type of the aggregate root.
-     * @param <ID>      the type of the aggregate root identifier.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the repository qualifier.
+     * @param <R>            the type of the repository.
+     * @param <A>            the type of the aggregate root.
+     * @param <ID>           the type of the aggregate root identifier.
+     * @param repositoryType the full generic type.
+     * @param qualifier      the repository qualifier.
      * @return an instance of the repository.
      */
-    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(TypeOf<R> typeOf, String qualifier);
+    <R extends Repository<A, ID>, A extends AggregateRoot<ID>, ID> R getRepository(Type repositoryType, String qualifier);
 
     /**
      * Get the {@link Factory} for an aggregate root.
@@ -134,34 +134,34 @@ public interface DomainRegistry {
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param <F>    the type of the factory.
-     * @param <P>    the type of the producible object.
-     * @param typeOf the capture of the full generic type.
+     * @param <F>         the type of the factory.
+     * @param <P>         the type of the producible object.
+     * @param factoryType the capture of the full generic type.
      * @return an instance of the factory.
      */
-    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf);
+    <F extends Factory<P>, P extends Producible> F getFactory(Type factoryType);
 
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param <F>       the type of the factory.
-     * @param <P>       the type of the producible object.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the factory qualifier.
+     * @param <F>         the type of the factory.
+     * @param <P>         the type of the producible object.
+     * @param factoryType the full generic type.
+     * @param qualifier   the factory qualifier.
      * @return an instance of the factory.
      */
-    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf, Class<? extends Annotation> qualifier);
+    <F extends Factory<P>, P extends Producible> F getFactory(Type factoryType, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Factory} from the domain.
      *
-     * @param <F>       the type of the factory.
-     * @param <P>       the type of the producible object.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the factory qualifier.
+     * @param <F>         the type of the factory.
+     * @param <P>         the type of the producible object.
+     * @param factoryType the full generic type.
+     * @param qualifier   the factory qualifier.
      * @return an instance of the factory.
      */
-    <F extends Factory<P>, P extends Producible> F getFactory(TypeOf<F> typeOf, String qualifier);
+    <F extends Factory<P>, P extends Producible> F getFactory(Type factoryType, String qualifier);
 
     /**
      * Get a {@link Service} from the domain.
@@ -195,31 +195,31 @@ public interface DomainRegistry {
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param <S>    the type of the service.
-     * @param typeOf the capture of the full generic type.
+     * @param <S>         the type of the service.
+     * @param serviceType the full generic type.
      * @return an instance of the service.
      */
-    <S> S getService(TypeOf<S> typeOf);
+    <S> S getService(Type serviceType);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param <S>       the type of the service.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the service qualifier.
+     * @param <S>         the type of the service.
+     * @param serviceType the full generic type.
+     * @param qualifier   the service qualifier.
      * @return an instance of the service.
      */
-    <S> S getService(TypeOf<S> typeOf, Class<? extends Annotation> qualifier);
+    <S> S getService(Type serviceType, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link Service} from the domain.
      *
-     * @param <S>       the type of the service.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the service qualifier.
+     * @param <S>         the type of the service.
+     * @param serviceType the full generic type.
+     * @param qualifier   the service qualifier.
      * @return an instance of the service.
      */
-    <S> S getService(TypeOf<S> typeOf, String qualifier);
+    <S> S getService(Type serviceType, String qualifier);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
@@ -253,29 +253,29 @@ public interface DomainRegistry {
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param <P>    the type of the policy.
-     * @param typeOf the capture of the full generic type.
+     * @param <P>        the type of the policy.
+     * @param policyType the full generic type.
      * @return an instance of the domain policy.
      */
-    <P> P getPolicy(TypeOf<P> typeOf);
+    <P> P getPolicy(Type policyType);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param <P>       the type of the policy.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the policy qualifier.
+     * @param <P>        the type of the policy.
+     * @param policyType the full generic type.
+     * @param qualifier  the policy qualifier.
      * @return an instance of the domain policy.
      */
-    <P> P getPolicy(TypeOf<P> typeOf, Class<? extends Annotation> qualifier);
+    <P> P getPolicy(Type policyType, Class<? extends Annotation> qualifier);
 
     /**
      * Get a {@link DomainPolicy} from the domain.
      *
-     * @param <P>       the type of the policy.
-     * @param typeOf    the capture of the full generic type.
-     * @param qualifier the policy qualifier.
+     * @param <P>        the type of the policy.
+     * @param policyType the full generic type.
+     * @param qualifier  the policy qualifier.
      * @return an instance of the domain policy.
      */
-    <P> P getPolicy(TypeOf<P> typeOf, String qualifier);
+    <P> P getPolicy(Type policyType, String qualifier);
 }

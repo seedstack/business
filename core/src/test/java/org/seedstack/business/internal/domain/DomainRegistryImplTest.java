@@ -10,24 +10,25 @@ package org.seedstack.business.internal.domain;
 import com.google.inject.BindingAnnotation;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
 import mockit.Deencapsulation;
 import mockit.Mocked;
 import mockit.StrictExpectations;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.shed.reflect.TypeOf;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit test for {@link DomainRegistryImpl}
@@ -49,34 +50,53 @@ public class DomainRegistryImplTest {
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetRepositoryTypeOfOfTClassOfQextendsAnnotation(final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
+    public void testGetRepositoryTypeOf(final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
-                result = repository;
+                result = repository1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getRepository(new TypeOf<Repository<AggregateRoot<Long>, Long>>() {
-        }, MockedAnnotation.class)).isEqualTo(repository);
+        Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry.getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType());
+        assertThat(repository2).isEqualTo(repository1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetRepositoryTypeOfOfTString(final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
+    public void testGetRepositoryTypeOfOfTClassOfQextendsAnnotation(final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
-                result = repository;
+                result = repository1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getRepository(new TypeOf<Repository<AggregateRoot<Long>, Long>>() {
-        }, "dummyAnnotation")).isEqualTo(repository);
+        Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry.getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType(), MockedAnnotation.class);
+        assertThat(repository2).isEqualTo(repository1);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Test
+    public void testGetRepositoryTypeOfOfTString(final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
+        DomainRegistry domainRegistry = createDomainRegistry();
+
+        new StrictExpectations() {
+            {
+                injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
+                result = repository1;
+            }
+        };
+
+        Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry.getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType(), "dummyAnnotation");
+        assertThat(repository2).isEqualTo(repository1);
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +111,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getRepository(AggregateRoot.class, Long.class, MockedAnnotation.class)).isEqualTo(repository);
+        assertThat(domainRegistry.getRepository(AggregateRoot.class, Long.class, MockedAnnotation.class)).isEqualTo(repository);
     }
 
     @SuppressWarnings("unchecked")
@@ -106,55 +126,58 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getRepository(AggregateRoot.class, Long.class, "dummyAnnotation")).isEqualTo(repository);
+        assertThat(domainRegistry.getRepository(AggregateRoot.class, Long.class, "dummyAnnotation")).isEqualTo(repository);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetFactoryTypeOfOfT(final @Mocked Factory<?> factory) {
+    public void testGetFactoryTypeOfOfT(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
-                result = factory;
+                result = factory1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(new TypeOf<Factory<AggregateRoot<Long>>>() {
-        })).isEqualTo(factory);
+        Factory<AggregateRoot<Long>> factory2 = domainRegistry.getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType());
+        assertThat(factory2).isEqualTo(factory1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetFactoryTypeOfOfTClassOfQextendsAnnotation(final @Mocked Factory<?> factory) {
+    public void testGetFactoryTypeOfOfTClassOfQextendsAnnotation(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
-                result = factory;
+                result = factory1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(new TypeOf<Factory<AggregateRoot<Long>>>() {
-        }, MockedAnnotation.class)).isEqualTo(factory);
+        Factory<AggregateRoot<Long>> factory2 = domainRegistry.getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType(), MockedAnnotation.class);
+        assertThat(factory2).isEqualTo(factory1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetFactoryTypeOfOfTString(final @Mocked Factory<?> factory) {
+    public void testGetFactoryTypeOfOfTString(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
-                result = factory;
+                result = factory1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(new TypeOf<Factory<AggregateRoot<Long>>>() {
-        }, "dummyAnnotation")).isEqualTo(factory);
+        Factory<AggregateRoot<Long>> factory2 = domainRegistry.getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType(), "dummyAnnotation");
+        assertThat(factory2).isEqualTo(factory1);
     }
 
     @SuppressWarnings("unchecked")
@@ -169,7 +192,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(AggregateRoot.class)).isEqualTo(factory);
+        assertThat(domainRegistry.getFactory(AggregateRoot.class)).isEqualTo(factory);
     }
 
     @SuppressWarnings("unchecked")
@@ -184,7 +207,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(AggregateRoot.class, MockedAnnotation.class)).isEqualTo(factory);
+        assertThat(domainRegistry.getFactory(AggregateRoot.class, MockedAnnotation.class)).isEqualTo(factory);
     }
 
     @SuppressWarnings("unchecked")
@@ -199,55 +222,58 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getFactory(AggregateRoot.class, "dummyAnnotation")).isEqualTo(factory);
+        assertThat(domainRegistry.getFactory(AggregateRoot.class, "dummyAnnotation")).isEqualTo(factory);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetServiceTypeOfOfT(final @Mocked MockedServiceParameterized<Long> service) {
+    public void testGetServiceTypeOfOfT(final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
-                result = service;
+                result = service1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(new TypeOf<MockedServiceParameterized<Long>>() {
-        })).isEqualTo(service);
+        MockedServiceParameterized<Long> service2 = domainRegistry.getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType());
+        assertThat(service2).isEqualTo(service1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetServiceTypeOfOfTClassOfQextendsAnnotation(final @Mocked MockedServiceParameterized<Long> service) {
+    public void testGetServiceTypeOfOfTClassOfQextendsAnnotation(final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
-                result = service;
+                result = service1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(new TypeOf<MockedServiceParameterized<Long>>() {
-        }, MockedAnnotation.class)).isEqualTo(service);
+        MockedServiceParameterized<Long> service2 = domainRegistry.getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType(), MockedAnnotation.class);
+        assertThat(service2).isEqualTo(service1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetServiceTypeOfOfTString(final @Mocked MockedServiceParameterized<Long> service) {
+    public void testGetServiceTypeOfOfTString(final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
-                result = service;
+                result = service1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(new TypeOf<MockedServiceParameterized<Long>>() {
-        }, "dummyAnnotation")).isEqualTo(service);
+        MockedServiceParameterized<Long> service2 = domainRegistry.getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType(), "dummyAnnotation");
+        assertThat(service2).isEqualTo(service1);
     }
 
     @SuppressWarnings("unchecked")
@@ -262,7 +288,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(MockedService.class)).isEqualTo(service);
+        assertThat(domainRegistry.getService(MockedService.class)).isEqualTo(service);
     }
 
     @Test(expected = BusinessException.class)
@@ -284,7 +310,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(MockedService.class, MockedAnnotation.class)).isEqualTo(service);
+        assertThat(domainRegistry.getService(MockedService.class, MockedAnnotation.class)).isEqualTo(service);
     }
 
     @SuppressWarnings("unchecked")
@@ -299,7 +325,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getService(MockedService.class, "dummyAnnotation")).isEqualTo(service);
+        assertThat(domainRegistry.getService(MockedService.class, "dummyAnnotation")).isEqualTo(service);
     }
 
     @SuppressWarnings("unchecked")
@@ -314,7 +340,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(MockedPolicy.class)).isEqualTo(policy);
+        assertThat(domainRegistry.getPolicy(MockedPolicy.class)).isEqualTo(policy);
     }
 
     @SuppressWarnings("unchecked")
@@ -329,7 +355,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(MockedPolicy.class, MockedAnnotation.class)).isEqualTo(policy);
+        assertThat(domainRegistry.getPolicy(MockedPolicy.class, MockedAnnotation.class)).isEqualTo(policy);
     }
 
     @SuppressWarnings("unchecked")
@@ -344,7 +370,7 @@ public class DomainRegistryImplTest {
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(MockedPolicy.class, "dummyAnnotation")).isEqualTo(policy);
+        assertThat(domainRegistry.getPolicy(MockedPolicy.class, "dummyAnnotation")).isEqualTo(policy);
     }
 
     @Test(expected = BusinessException.class)
@@ -356,50 +382,53 @@ public class DomainRegistryImplTest {
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetPolicyTypeOfOfT(final @Mocked MockedPolicyParameterized<Long> policy) {
+    public void testGetPolicyTypeOfOfT(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
-                result = policy;
+                result = policy1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(new TypeOf<MockedPolicyParameterized<Long>>() {
-        })).isEqualTo(policy);
+        MockedPolicyParameterized<Long> policy2 = domainRegistry.getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType());
+        assertThat(policy2).isEqualTo(policy1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetPolicyTypeOfOfTClassOfQextendsAnnotation(final @Mocked MockedPolicyParameterized<Long> policy) {
+    public void testGetPolicyTypeOfOfTClassOfQextendsAnnotation(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
-                result = policy;
+                result = policy1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(new TypeOf<MockedPolicyParameterized<Long>>() {
-        }, MockedAnnotation.class)).isEqualTo(policy);
+        MockedPolicyParameterized<Long> policy2 = domainRegistry.getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType(), MockedAnnotation.class);
+        assertThat(policy2).isEqualTo(policy1);
     }
 
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testGetPolicyTypeOfOfTString(final @Mocked MockedPolicyParameterized<Long> policy) {
+    public void testGetPolicyTypeOfOfTString(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
         new StrictExpectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
-                result = policy;
+                result = policy1;
             }
         };
 
-        Assertions.assertThat(domainRegistry.getPolicy(new TypeOf<MockedPolicyParameterized<Long>>() {
-        }, "dummyAnnotation")).isEqualTo(policy);
+        MockedPolicyParameterized<Long> policy2 = domainRegistry.getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType(), "dummyAnnotation");
+        assertThat(policy2).isEqualTo(policy1);
     }
 
     @Retention(RetentionPolicy.RUNTIME)

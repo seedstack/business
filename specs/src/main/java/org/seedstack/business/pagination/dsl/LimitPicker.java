@@ -10,6 +10,21 @@ package org.seedstack.business.pagination.dsl;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Slice;
 
-public interface LimitPicker<V extends Slice<A>, A extends AggregateRoot<ID>, ID> extends SpecificationPicker<V, A, ID> {
-    SpecificationPicker<V, A, ID> limit(long limit);
+/**
+ * An element of the {@link Paginator} DSL allowing to specify a limit on the number of objects returned, in the case
+ * of an offset-based pagination.
+ *
+ * @param <S>  the type of the slice.
+ * @param <A>  the aggregate root type that is paginated.
+ * @param <ID> the aggregate root identifier type.
+ */
+public interface LimitPicker<S extends Slice<A>, A extends AggregateRoot<ID>, ID> extends SpecificationPicker<S, A, ID> {
+    /**
+     * Specify a limit on the number of objects returned.
+     *
+     * @param limit the limit.
+     * @return the next operation of the paginator DSL, allowing to pick a specification for selecting objects returned
+     * from the repository.
+     */
+    SpecificationPicker<S, A, ID> limit(long limit);
 }

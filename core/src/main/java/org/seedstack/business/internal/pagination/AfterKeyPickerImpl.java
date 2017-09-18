@@ -21,6 +21,12 @@ class AfterKeyPickerImpl<A extends AggregateRoot<ID>, ID> extends LimitPickerImp
     }
 
     @Override
+    public <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, ID> before(T value) {
+        this.context.setBeforeAttributeValue(value);
+        return this;
+    }
+
+    @Override
     public <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, ID> after(T value) {
         this.context.setAfterAttributeValue(value);
         return this;

@@ -7,11 +7,10 @@
  */
 package org.seedstack.business;
 
+import com.google.inject.TypeLiteral;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seedstack.business.BusinessException;
-import org.seedstack.business.Service;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
@@ -32,10 +31,11 @@ import org.seedstack.business.fixtures.registry.service.RebateServiceInternal;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierComposite;
 import org.seedstack.business.fixtures.registry.service.RebateServiceInternalWithQualifierNamed;
 import org.seedstack.business.fixtures.registry.service.ServiceQualifier;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.seed.it.SeedITRunner;
-import org.seedstack.shed.reflect.TypeOf;
 
 import javax.inject.Inject;
+import java.lang.reflect.Type;
 
 
 /**
@@ -70,8 +70,8 @@ public class DomainRegistyIT {
      */
     @Test
     public void testService() {
-        TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>() {
-        };
+        Type type = new TypeLiteral<RebateService<Client>>() {
+        }.getType();
 
         RebateService<Client> service = this.domainRegistry.getService(type);
         Assertions.assertThat(service).isInstanceOf(RebateServiceInternal.class);
@@ -82,8 +82,8 @@ public class DomainRegistyIT {
      */
     @Test
     public void testServiceWithStringQualifierFromTypeOf() {
-        TypeOf<RebateService<Client>> type = new TypeOf<RebateService<Client>>() {
-        };
+        Type type = new TypeLiteral<RebateService<Client>>() {
+        }.getType();
 
         RebateService<Client> service = this.domainRegistry.getService(type, "Dummy");
         Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierNamed.class);
@@ -103,8 +103,8 @@ public class DomainRegistyIT {
      */
     @Test
     public void testServiceWithQualifierAndComposite() {
-        TypeOf<RebateService<Composite<Long>>> type = new TypeOf<RebateService<Composite<Long>>>() {
-        };
+        Type type = new TypeLiteral<RebateService<Composite<Long>>>() {
+        }.getType();
         RebateService<Composite<Long>> service = this.domainRegistry.getService(type, ServiceQualifier.class);
         Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierComposite.class);
 
@@ -151,9 +151,9 @@ public class DomainRegistyIT {
      */
     @Test
     public void testRepositoryFromTypeOf() {
-        TypeOf<Repository<Client, Long>> typeOf = new TypeOf<Repository<Client, Long>>() {
-        };
-        Repository<Client, Long> repository = this.domainRegistry.getRepository(typeOf, TestJpaQualifier.class);
+        Type type = new TypeLiteral<Repository<Client, Long>>() {
+        }.getType();
+        Repository<Client, Long> repository = this.domainRegistry.getRepository(type, TestJpaQualifier.class);
         Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
     }
 
@@ -171,10 +171,10 @@ public class DomainRegistyIT {
      */
     @Test
     public void testFactoryFromTypeOf() {
-        TypeOf<Factory<Client>> typeOf = new TypeOf<Factory<Client>>() {
-        };
+        Type type = new TypeLiteral<Factory<Client>>() {
+        }.getType();
 
-        Factory<Client> factory = domainRegistry.getFactory(typeOf);
+        Factory<Client> factory = domainRegistry.getFactory(type);
         Assertions.assertThat(factory).isInstanceOf(Factory.class);
     }
 

@@ -17,6 +17,7 @@ import org.seedstack.business.pagination.SimplePage;
 import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.specification.GreaterThanSpecification;
+import org.seedstack.business.specification.LessThanSpecification;
 import org.seedstack.business.specification.PropertySpecification;
 import org.seedstack.business.specification.Specification;
 
@@ -75,6 +76,11 @@ class PaginatorContext<A extends AggregateRoot<ID>, ID> {
         checkState(mode == PaginationMode.NONE, "Pagination mode cannot be changed");
         this.attribute = attribute;
         this.mode = PaginationMode.ATTRIBUTE;
+    }
+
+    public <T extends Comparable<? super T>> void setBeforeAttributeValue(T value) {
+        checkState(mode == PaginationMode.ATTRIBUTE && attribute != null, "A value can only be set in ATTRIBUTE mode");
+        this.attributeSpecification = new PropertySpecification<>(attribute, new LessThanSpecification<>(value));
     }
 
     <T extends Comparable<? super T>> void setAfterAttributeValue(T value) {

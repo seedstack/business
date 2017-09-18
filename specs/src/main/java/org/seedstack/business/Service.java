@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  *
  * <p>
  * When a service interface has multiple implementations, it is necessary
- * to differentiate them by using a different {@link javax.inject.Qualifier} annotation on each. This qualifier can then
+ * to differentiate them by using a different {@code javax.inject.Qualifier} annotation on each. This qualifier can then
  * be used at the injection point to specify which implementation is required. Considering the additional implementation
  * of the MoneyTransferService below:
  * </p>

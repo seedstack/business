@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  *
  * <p>
  * A generic implementation often exist along with user-defined explicit implementations of the same interface, so it is
- * recommended to annotate it with a {@link javax.inject.Qualifier}, leaving the unqualified implementation for user code.
+ * recommended to annotate it with a {@code javax.inject.Qualifier}, leaving the unqualified implementation for user code.
  *
  * A generic implementation is instantiated through assisted injection, invoking a constructor whose unique parameter
  * must be an array of the classes it will work on. Consider the following example:

@@ -17,7 +17,7 @@ import org.seedstack.business.domain.AggregateRoot;
  *
  * <p>
  * There can be several {@link DtoInfoResolver}s in the system: the first one returning true from the {@link #supports(Object)}
- * for a particular DTO will be used. Implementations can be annotated with {@link javax.annotation.Priority} to define
+ * for a particular DTO will be used. Implementations can be annotated with {@code javax.annotation.Priority} to define
  * an absolute order amongst them.
  * </p>
  */

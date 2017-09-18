@@ -8,7 +8,7 @@
 package org.seedstack.business.internal.utils;
 
 import com.google.common.primitives.Primitives;
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.BusinessErrorCode;
 
 import java.lang.reflect.Constructor;

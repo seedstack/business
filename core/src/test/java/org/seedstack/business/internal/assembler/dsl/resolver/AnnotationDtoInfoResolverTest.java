@@ -10,7 +10,7 @@ package org.seedstack.business.internal.assembler.dsl.resolver;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.BaseValueObject;
 import org.seedstack.business.domain.DomainRegistry;

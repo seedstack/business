@@ -15,7 +15,6 @@ import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.finder.Finder;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 import org.seedstack.seed.it.AbstractSeedIT;
 
@@ -36,8 +35,6 @@ public class OverridingIT extends AbstractSeedIT {
     private SomeService someService;
     @Inject
     private SomePolicy somePolicy;
-    @Inject
-    private SomeFinder someFinder;
     @Inject
     private Assembler<SomeAggregate, SomeDto> someDtoAssembler;
 
@@ -61,11 +58,6 @@ public class OverridingIT extends AbstractSeedIT {
     @Test
     public void overridePolicy() throws Exception {
         assertThat(somePolicy).isInstanceOf(SomeTestPolicy.class);
-    }
-
-    @Test
-    public void overrideFinder() throws Exception {
-        assertThat(someFinder).isInstanceOf(SomeTestFinder.class);
     }
 
     @Test
@@ -127,20 +119,6 @@ public class OverridingIT extends AbstractSeedIT {
         public void mergeDtoIntoAggregate(SomeDto sourceDto, SomeAggregate targetAggregate) {
 
         }
-    }
-
-    @Finder
-    interface SomeFinder {
-
-    }
-
-    static class SomeNormalFinder implements SomeFinder {
-
-    }
-
-    @Overriding
-    static class SomeTestFinder implements SomeFinder {
-
     }
 
     @Service

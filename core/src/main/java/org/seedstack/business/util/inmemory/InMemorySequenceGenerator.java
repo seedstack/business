@@ -10,9 +10,9 @@ package org.seedstack.business.util.inmemory;
 
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.SequenceGenerator;
-import org.seedstack.seed.ClassConfiguration;
 
 import javax.inject.Named;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -24,7 +24,7 @@ public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
     private static final AtomicLong sequence = new AtomicLong(1L);
 
     @Override
-    public <E extends Entity<Long>> Long generate(Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
+    public <E extends Entity<Long>> Long generate(Class<E> entityClass, Map<String, String> entityProperties) {
         return sequence.incrementAndGet();
     }
 }

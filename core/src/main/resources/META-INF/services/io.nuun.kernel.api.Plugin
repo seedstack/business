@@ -1,5 +1,4 @@
 org.seedstack.business.internal.domain.DomainPlugin
 org.seedstack.business.internal.assembler.AssemblerPlugin
-org.seedstack.business.internal.finder.FinderPlugin
 org.seedstack.business.internal.specification.SpecificationPlugin
 org.seedstack.business.internal.pagination.PaginatorPlugin

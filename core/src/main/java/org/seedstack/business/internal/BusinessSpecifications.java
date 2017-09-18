@@ -21,7 +21,6 @@ import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Producible;
-import org.seedstack.business.finder.Finder;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.business.spi.assembler.DtoInfoResolver;
 import org.seedstack.business.spi.specification.SpecificationConverter;
@@ -121,15 +120,6 @@ public final class BusinessSpecifications {
      */
     public static final Specification<Class<?>> PRODUCIBLE = new SpecificationBuilder<>(
             classIsAssignableFrom(Producible.class))
-            .build();
-
-    /**
-     * The finder service specification.
-     */
-    public static final Specification<Class<?>> FINDER = new SpecificationBuilder<>(
-            classOrAncestorAnnotatedWith(Finder.class, true)
-                    .and(classIsInterface())
-                    .and(classIsAnnotation().negate()))
             .build();
 
     /**

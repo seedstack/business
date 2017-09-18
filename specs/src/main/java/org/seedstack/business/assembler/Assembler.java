@@ -8,7 +8,6 @@
 package org.seedstack.business.assembler;
 
 import org.seedstack.business.assembler.dsl.FluentAssembler;
-import org.seedstack.shed.reflect.Classes;
 
 /**
  * This interface represents the Assembler pattern.
@@ -76,7 +75,5 @@ public interface Assembler<A, D> {
      *
      * @return the DTO instance.
      */
-    default D createDto() {
-        return Classes.instantiateDefault(getDtoClass());
-    }
+    D createDto();
 }

@@ -13,7 +13,7 @@ import com.google.inject.name.Names;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import net.jodah.typetools.TypeResolver;
 import org.kametic.specifications.Specification;
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;

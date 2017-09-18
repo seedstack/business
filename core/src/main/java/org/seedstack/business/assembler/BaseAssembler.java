@@ -10,6 +10,7 @@ package org.seedstack.business.assembler;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.utils.BusinessUtils;
+import org.seedstack.shed.reflect.Classes;
 
 /**
  * This base class can be extended to create an assembler between an aggregate and a DTO.
@@ -37,11 +38,13 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D> implements As
         this.dtoClass = dtoClass;
     }
 
-    /**
-     * @return the DTO class this assembler handles.
-     */
     @Override
     public Class<D> getDtoClass() {
         return this.dtoClass;
+    }
+
+    @Override
+    public D createDto() {
+        return Classes.instantiateDefault(getDtoClass());
     }
 }

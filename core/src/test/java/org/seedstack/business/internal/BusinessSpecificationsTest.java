@@ -23,7 +23,6 @@ import org.seedstack.business.domain.DomainRepository;
 import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.finder.Finder;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.Ignore;
@@ -117,12 +116,6 @@ public class BusinessSpecificationsTest {
     }
 
     @Test
-    public void testFinderServiceSpecification() {
-        assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder1.class)).isTrue();
-        assertThat(BusinessSpecifications.FINDER.isSatisfiedBy(MyFinder2.class)).isFalse();
-    }
-
-    @Test
     public void testPolicyServiceSpecification() {
         assertThat(BusinessSpecifications.POLICY.isSatisfiedBy(MyPolicy1.class)).isTrue();
         assertThat(BusinessSpecifications.POLICY.isSatisfiedBy(MyPolicy2.class)).isFalse();
@@ -157,11 +150,6 @@ public class BusinessSpecificationsTest {
     @Service
     @Ignore
     private interface MyDomainServiceSpecification1 {
-    }
-
-    @Finder
-    @Ignore
-    private interface MyFinder1 {
     }
 
     @DomainPolicy
@@ -218,6 +206,11 @@ public class BusinessSpecificationsTest {
         public Class<MySimplePojo> getDtoClass() {
             return null;
         }
+
+        @Override
+        public MySimplePojo createDto() {
+            return null;
+        }
     }
 
     @GenericImplementation
@@ -238,6 +231,11 @@ public class BusinessSpecificationsTest {
 
         @Override
         public Class<MySimplePojo> getDtoClass() {
+            return null;
+        }
+
+        @Override
+        public MySimplePojo createDto() {
             return null;
         }
     }
@@ -287,11 +285,6 @@ public class BusinessSpecificationsTest {
     @DtoOf({MyAggregateRoot1.class, MyAggregateRoot1.class})
     @Ignore
     private static class MyPojo2 {
-    }
-
-    @Finder
-    @Ignore
-    private static class MyFinder2 {
     }
 
     @DomainPolicy

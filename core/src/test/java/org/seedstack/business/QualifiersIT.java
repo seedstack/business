@@ -16,9 +16,6 @@ import org.seedstack.business.fixtures.qualifier.domain.FactImpl2;
 import org.seedstack.business.fixtures.qualifier.domain.MyDomainPolicy;
 import org.seedstack.business.fixtures.qualifier.domain.MyDomainService;
 import org.seedstack.business.fixtures.qualifier.domain.MyFactory;
-import org.seedstack.business.fixtures.qualifier.interfaces.FinderImpl1;
-import org.seedstack.business.fixtures.qualifier.interfaces.FinderImpl2;
-import org.seedstack.business.fixtures.qualifier.interfaces.MyFinder;
 import org.seedstack.business.fixtures.qualifier.interfaces.MyInterfaceService;
 import org.seedstack.business.fixtures.qualifier.interfaces.Q1;
 import org.seedstack.seed.it.SeedITRunner;
@@ -56,11 +53,6 @@ public class QualifiersIT {
     @Inject
     @Named("2")
     MyFactory myFactory2;
-    @Inject
-    @Q1
-    MyFinder myFinder1;
-    @Inject
-    MyFinder myFinder2;
 
     @Test
     public void qualified_implementation_should_be_injected() {
@@ -76,10 +68,6 @@ public class QualifiersIT {
         Assertions.assertThat(myFactory1).isInstanceOf(FactImpl1.class);
         Assertions.assertThat(myFactory2).isNotNull();
         Assertions.assertThat(myFactory2).isInstanceOf(FactImpl2.class);
-        Assertions.assertThat(myFinder1).isNotNull();
-        Assertions.assertThat(myFinder1).isInstanceOf(FinderImpl1.class);
-        Assertions.assertThat(myFinder2).isNotNull();
-        Assertions.assertThat(myFinder2).isInstanceOf(FinderImpl2.class);
     }
 
 }

@@ -7,7 +7,7 @@
  */
 package org.seedstack.business.internal.assembler.dsl.resolver;
 
-import org.seedstack.business.BusinessException;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.assembler.FactoryArgument;
 import org.seedstack.business.domain.AggregateRoot;

@@ -21,11 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.seedstack.seed</groupId>
-            <artifactId>seed-specs</artifactId>
-            <version>${seed.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
             <version>1.2</version>

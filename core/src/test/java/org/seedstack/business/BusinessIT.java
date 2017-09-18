@@ -36,19 +36,15 @@ import org.seedstack.business.fixtures.domain.product.ProductFactory;
 import org.seedstack.business.fixtures.domain.product.ProductId;
 import org.seedstack.business.fixtures.domain.product.ProductNamePolicy;
 import org.seedstack.business.fixtures.domain.product.ProductRepository;
-import org.seedstack.business.fixtures.finder.CustomerFinder;
-import org.seedstack.business.fixtures.finder.CustomerRepresentation;
-import org.seedstack.business.fixtures.finder.SomeCustomerFinder;
 import org.seedstack.business.fixtures.standalone.StandaloneFactory;
 import org.seedstack.business.fixtures.standalone.StandaloneFactoryImpl;
-import org.seedstack.business.fixtures.standalone.StandaloneRepositoryImpl;
 import org.seedstack.business.fixtures.standalone.StandaloneRepository;
+import org.seedstack.business.fixtures.standalone.StandaloneRepositoryImpl;
 import org.seedstack.seed.it.AbstractSeedIT;
 import org.seedstack.seed.it.ITBind;
 
 import javax.inject.Inject;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,10 +93,6 @@ public class BusinessIT extends AbstractSeedIT {
         // Meta-annotated service
         assertThat(holder.customerDomainService).isNotNull();
         assertThat(CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerDomainService.getClass())).isTrue();
-
-        // Finder
-        assertThat(holder.customerFinder).isNotNull();
-        assertThat(SomeCustomerFinder.class.isAssignableFrom(holder.customerFinder.getClass())).isTrue();
     }
 
     @Test
@@ -157,11 +149,6 @@ public class BusinessIT extends AbstractSeedIT {
         holder.customerRepo.add(testCusto);
         holder.orderRepo.add(order1);
 
-        // find
-        List<CustomerRepresentation> findAll = holder.customerFinder.findAll();
-        assertThat(findAll).isNotNull();
-        assertThat(findAll).hasSize(1);
-
         // persist
         holder.customerRepo.add(c2);
 
@@ -173,11 +160,6 @@ public class BusinessIT extends AbstractSeedIT {
 
         assertThat(load2_.getId().getValue()).isEqualTo(new OrderId("commande01").getValue());
         assertThat(load2_.getCustomerId()).isEqualTo(new CustomerId("2"));
-
-        // find
-        findAll = holder.customerFinder.findAll();
-        assertThat(findAll).isNotNull();
-        assertThat(findAll).hasSize(2);
 
         CustomerId entityId = new CustomerId("key1");
         Customer load = holder.customerRepo.get(entityId).get();
@@ -217,9 +199,6 @@ public class BusinessIT extends AbstractSeedIT {
 
         @Inject
         CustomerFactory customerFactory;
-
-        @Inject
-        CustomerFinder customerFinder;
 
         @Inject
         OrderRepository orderRepo;

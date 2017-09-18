@@ -10,6 +10,19 @@ package org.seedstack.business.pagination.dsl;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Page;
 
+/**
+ * An element of the {@link Paginator} DSL allowing to specify the size of the page in the case of page-based pagination.
+ *
+ * @param <A>  the aggregate root type that is paginated.
+ * @param <ID> the aggregate root identifier type.
+ */
 public interface SizePicker<A extends AggregateRoot<ID>, ID> {
+    /**
+     * Specify the size of the page.
+     *
+     * @param size the size of a page.
+     * @return the next operation of the paginator DSL, allowing to pick a specification for selecting objects returned
+     * from the repository.
+     */
     SpecificationPicker<Page<A>, A, ID> ofSize(long size);
 }
