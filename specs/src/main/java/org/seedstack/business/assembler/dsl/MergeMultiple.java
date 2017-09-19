@@ -18,7 +18,9 @@ import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 import org.seedstack.business.domain.AggregateRoot;
 
-
+/**
+ * An element of the {@link FluentAssembler DSL} allowing to merge multiple DTO into aggregates or tuples of aggregates.
+ **/
 public interface MergeMultiple {
     <A extends AggregateRoot<ID>, ID>
     MergeFromRepository<MergeAs<A>> into(Class<A> aggregateRootClass);

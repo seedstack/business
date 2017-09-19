@@ -12,45 +12,87 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * {@link Repository} option for sorting aggregates.
+ */
 public class SortOption implements Repository.Option {
     private final List<SortedAttribute> sortedAttributes = new ArrayList<>();
     private final Direction defaultDirection;
 
+    /**
+     * Creates an empty sort option with {@link Direction#ASCENDING} as default sort direction.
+     */
     public SortOption() {
         this.defaultDirection = Direction.ASCENDING;
     }
 
+    /**
+     * Creates an empty sort option with the specified argument as default sort direction.
+     *
+     * @param defaultDirection the default sort direction.
+     */
     public SortOption(Direction defaultDirection) {
         this.defaultDirection = defaultDirection;
     }
 
+    /**
+     * Adds the specified attribute to the list of sorted attributes with the default direction.
+     *
+     * @param attribute the attribute to sort.
+     * @return the sort option itself.
+     */
     public SortOption add(String attribute) {
-        sortedAttributes.add(new SortedAttribute(defaultDirection, attribute));
+        sortedAttributes.add(new SortedAttribute(attribute, defaultDirection));
         return this;
     }
 
-    public SortOption add(Direction direction, String attribute) {
-        sortedAttributes.add(new SortedAttribute(direction, attribute));
+    /**
+     * Adds the specified attribute to the list of sorted attributes with the specified direction.
+     *
+     * @param attribute the attribute to sort.
+     * @param direction the direction this attribute will be sorted with.
+     * @return the sort option itself.
+     */
+    public SortOption add(String attribute, Direction direction) {
+        sortedAttributes.add(new SortedAttribute(attribute, direction));
         return this;
     }
 
+    /**
+     * @return the list of currently registered sorted attributes.
+     */
     public List<SortedAttribute> getSortedAttributes() {
         return Collections.unmodifiableList(sortedAttributes);
     }
 
+    /**
+     * Represents a specific sorted attribute in a {@link SortOption}.
+     */
     public static class SortedAttribute {
-        private final Direction direction;
         private final String attribute;
+        private final Direction direction;
 
-        public SortedAttribute(Direction direction, String attribute) {
+        /**
+         * Creates a sorted attribute.
+         *
+         * @param attribute the name of the attribute to sort.
+         * @param direction the direction of the sort.
+         */
+        SortedAttribute(String attribute, Direction direction) {
             this.direction = direction;
             this.attribute = attribute;
         }
 
+        /**
+         * @return the direction the attribute will be sorted with.
+         */
         public Direction getDirection() {
             return direction;
         }
 
+        /**
+         * @return the sorted attribute name.
+         */
         public String getAttribute() {
             return attribute;
         }
@@ -70,6 +112,9 @@ public class SortOption implements Repository.Option {
         }
     }
 
+    /**
+     * Sort direction associated to a sorted attribute.
+     */
     public enum Direction {
         ASCENDING,
         DESCENDING

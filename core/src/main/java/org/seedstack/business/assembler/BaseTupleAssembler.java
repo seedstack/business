@@ -13,7 +13,7 @@ import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.shed.reflect.Classes;
 
 /**
- * This base class can be extended to create an assembler between a tuple of aggregates and a DTO.
+ * An helper base class that can be extended to create an assembler between a tuple of aggregates and a DTO.
  *
  * @param <T> the tuple of aggregates type.
  * @param <D> the dto type.

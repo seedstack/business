@@ -16,7 +16,7 @@ import org.seedstack.business.specification.AndSpecification;
 import org.seedstack.business.specification.EqualSpecification;
 import org.seedstack.business.specification.FalseSpecification;
 import org.seedstack.business.specification.OrSpecification;
-import org.seedstack.business.specification.PropertySpecification;
+import org.seedstack.business.specification.AttributeSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.TrueSpecification;
@@ -113,7 +113,7 @@ public class SpecificationBuilderTest {
                 .property("leader.name").equalTo("ALICE")
                 .build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
-        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(PropertySpecification.class);
+        assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(AttributeSpecification.class);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class SpecificationBuilderTest {
                 .build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(OrSpecification.class);
-        assertThat(((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0]).isInstanceOf(PropertySpecification.class);
+        assertThat(((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0]).isInstanceOf(AttributeSpecification.class);
     }
 
     @Test

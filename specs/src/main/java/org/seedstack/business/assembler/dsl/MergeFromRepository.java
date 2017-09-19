@@ -11,7 +11,8 @@ import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.assembler.FactoryArgument;
 
 /**
- * Specifies whether the aggregate roots should be retrieved from a repository or created from a factory.
+ * An element of the {@link FluentAssembler DSL} allowing to specify whether the aggregates should be retrieved
+ * from a repository or created from a factory.
  **/
 public interface MergeFromRepository<T> {
 

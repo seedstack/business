@@ -14,13 +14,13 @@ import org.seedstack.business.pagination.Page;
 import java.util.stream.Stream;
 
 /**
- * FluentAssembler provides the entry point for the assembler DSL.
+ * FluentAssembler is a DSL aimed at automating the most frequent tasks that occurs when mapping aggregates to
+ * Data Transfer Objects (DTO) and back. It works seamlessly on individual objects, {@link Stream}s, {@link Iterable}s,
+ * and {@link Page}s. It also works with tuples of aggregates.
+ *
  * <p>
- * As {@link org.seedstack.business.assembler.Assembler} it allows to assemble aggregate
- * to DTOs, or merge DTOs into aggregates. But compare to {@code Assembler}, it's not typed so you can
- * do it programmatically, the DSL will find the appropriate assembler to call. It also provides more
- * advanced features like automatically retrieving an aggregate from its repository. Or automatically
- * creating it from its factory.
+ * When merging a DTO back into aggregate(s), FluentAssembler can use a {@link org.seedstack.business.domain.Repository}
+ * and/or a {@link org.seedstack.business.domain.Factory} to obtain the aggregate(s).
  * </p>
  */
 public interface FluentAssembler {

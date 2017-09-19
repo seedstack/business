@@ -7,13 +7,24 @@
  */
 package org.seedstack.business.domain;
 
+/**
+ * {@link Repository} option for limiting the number of aggregates returned.
+ */
 public class LimitOption implements Repository.Option {
     private final long limit;
 
+    /**
+     * Creates a limit option.
+     *
+     * @param limit the number of aggregates to limit to.
+     */
     public LimitOption(long limit) {
         this.limit = limit;
     }
 
+    /**
+     * @return the number of aggregates to limit to.
+     */
     public long getLimit() {
         return limit;
     }

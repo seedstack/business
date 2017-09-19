@@ -9,12 +9,21 @@ package org.seedstack.business.domain;
 
 import org.seedstack.business.internal.utils.BusinessUtils;
 
+/**
+ * An helper base class that can be extended to create a domain event handler. If extending this base class is not desirable,
+ * you can instead implement {@link org.seedstack.business.domain.DomainEventHandler}.
+ *
+ * @param <E> the type of the handled event.
+ */
 public abstract class BaseDomainEventHandler<E extends DomainEvent> implements DomainEventHandler<E> {
     private static final int EVENT_INDEX = 0;
     private final Class<E> eventClass;
 
     @SuppressWarnings("unchecked")
-    public BaseDomainEventHandler() {
+    /**
+     * Creates a base domain event handler. Actual handled event class is determined by reflection.
+     */
+    protected BaseDomainEventHandler() {
         this.eventClass = (Class<E>) BusinessUtils.resolveGenerics(DomainEventHandler.class, getClass())[EVENT_INDEX];
     }
 

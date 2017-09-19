@@ -16,29 +16,28 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to indicate to the default assembler
- * the aggregate classes into which this dto should assemble.
+ * This annotation allows to declare a relation between a class acting as DTO and the aggregate (or tuple of aggregates)
+ * it represents. It is only required by the business framework if you don't have an explicit {@link Assembler} implementation
+ * for the types involved, as it allows it to generate a default generic implementation.
  * <p>
- * This is <b>only needed for default assemblers</b>.
- * </p>
  * Usage:
+ * </p>
  * <pre>
  * {@literal @}DtoOf(Customer.class)
- * public class CustomerDto {
- *     ...
- * }
- * </pre>
- * Then
- * <pre>
- * {@literal @}Inject
- * DefaultAssembler{@literal <Customer, CustomerDto>} customerAssembler;
+ *  public class CustomerDto {
+ *      ...
+ *  }
  * </pre>
  *
- * or for tuple of aggregates:
+ * <p>
+ * Depending upon the assembler default implementation(s) present in the classpath, a generic assembler can be injected
+ * with a qualified {@link Assembler} interface:
+ * </p>
  * <pre>
- * {@literal @}DtoOf(Customer.class, Order.class)
- * public class CustomerDto {
- *     ...
+ * public class SomeClass {
+ *    {@literal @}Inject
+ *    {@literal @}SomeQualifier
+ *     Assembler{@literal <Customer, CustomerDto>} customerAssembler;
  * }
  * </pre>
  */

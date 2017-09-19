@@ -9,7 +9,10 @@ package org.seedstack.business.assembler.dsl;
 
 import java.lang.annotation.Annotation;
 
-
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to multiple DTO in various forms (stream, list, set,
+ * array, ...) or specify the qualifier of the assembler to use.
+ */
 public interface AssembleMultipleWithQualifier extends AssembleMultiple {
     /**
      * Allows to specify the qualifier of the assembler to use.

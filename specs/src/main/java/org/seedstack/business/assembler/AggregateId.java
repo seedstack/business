@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  * <h3>Example 1: single aggregate, simple identifier</h3>
  * <pre>
  * public class OrderDto {
- *     {@literal @}AggregateId
+ *    {@literal @}AggregateId
  *     public String getId() {...}
  * }
  *
@@ -34,10 +34,10 @@ import java.lang.annotation.Target;
  * <h3>Example 2: single aggregate, composite identifier</h3>
  * <pre>
  * public class CustomerDto {
- *     {@literal @}AggregateId(index = 0)
+ *    {@literal @}AggregateId(index = 0)
  *     public String getFirstName() {...}
  *
- *     {@literal @}AggregateId(index = 1)
+ *    {@literal @}AggregateId(index = 1)
  *     public String getLastName() {...}
  *
  *     // No annotation here as the birth date is not part of the customer id
@@ -55,13 +55,13 @@ import java.lang.annotation.Target;
  * <h3>Example 3: tuple of aggregates, one with composite identifier, the other with simple identifier</h3>
  * <pre>
  * public class RecipeDto {
- *     {@literal @}MatchingEntityId(aggregateIndex = 0, index = 0)
+ *    {@literal @}MatchingEntityId(aggregateIndex = 0, index = 0)
  *     public String getCustomerFirstName() {...}
  *
- *     {@literal @}MatchingEntityId(aggregateIndex = 0, index = 1)
+ *    {@literal @}MatchingEntityId(aggregateIndex = 0, index = 1)
  *     public String getCustomerLastName() {...}
  *
- *     {@literal @}MatchingEntityId(aggregateIndex = 1)
+ *    {@literal @}MatchingEntityId(aggregateIndex = 1)
  *     public int getOrderId() {...}
  * }
  *

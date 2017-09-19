@@ -20,7 +20,7 @@ import org.javatuples.Unit;
 import org.seedstack.business.domain.AggregateRoot;
 
 /**
- * Specifies the target aggregate to merge.
+ * An element of the {@link FluentAssembler DSL} allowing to merge one DTO into an aggregate or a tuple of aggregates.
  */
 public interface MergeSingle {
     <A extends AggregateRoot<ID>, ID>

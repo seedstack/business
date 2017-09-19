@@ -9,6 +9,10 @@ package org.seedstack.business.assembler.dsl;
 
 import org.seedstack.business.pagination.Page;
 
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to a {@link Page} of multiple DTO. This is only available in
+ * the DSL if a page of aggregates has been specified as input.
+ */
 public interface AssemblePage extends AssembleMultiple {
     /**
      * Assembles to a {@link Page} of DTO.

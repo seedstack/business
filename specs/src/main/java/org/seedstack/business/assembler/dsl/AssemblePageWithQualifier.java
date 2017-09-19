@@ -9,6 +9,11 @@ package org.seedstack.business.assembler.dsl;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to a {@link org.seedstack.business.pagination.Page}
+ * of multiple DTO or specify the qualifier of the assembler to use. This is only available in the DSL if a page of aggregates
+ * has been specified as input.
+ */
 public interface AssemblePageWithQualifier extends AssemblePage {
     /**
      * Allows to specify the qualifier of the assembler to use.

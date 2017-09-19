@@ -7,8 +7,8 @@
  */
 package org.seedstack.business.specification;
 
-import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.reflect.Classes;
 
 import java.lang.reflect.Field;
@@ -20,30 +20,41 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Base class for value-bound specifications which are checking that the value of an object attribute is satisfying
- * an expected value. This supports nested attributes with a dot notation.
+ * A specification that restricts the application of another specification to an attribute of the candidate object.
+ * It supports nested attributes with a dot notation.
  *
- * @param <T> the type on which this specification applies to.
- * @param <V> the type of the value which is targeted by this specification.
+ * @param <T> the type of the candidate object the specification applies to.
+ * @param <V> the type of the attribute which is targeted by this specification.
  */
-public class PropertySpecification<T, V> implements Specification<T> {
-    private static final String PROPERTY_PATTERN = "\\.";
+public class AttributeSpecification<T, V> implements Specification<T> {
+    private static final String ATTRIBUTE_PATH_PATTERN = "\\.";
     private static final ConcurrentMap<FieldReference, Optional<Field>> fieldCache = new ConcurrentHashMap<>();
-    private final String[] properties;
     private final String path;
+    private final String[] splitPath;
     private final Specification<V> valueSpecification;
 
-    @SuppressWarnings("unchecked")
-    public PropertySpecification(String path, Specification<V> valueSpecification) {
-        this.properties = path.split(PROPERTY_PATTERN);
+    /**
+     * Creates an attribute specification.
+     *
+     * @param path               the path to the target attribute, supporting dot notation for nested attributes.
+     * @param valueSpecification the specification that the value of the target attribute must satisfy.
+     */
+    public AttributeSpecification(String path, Specification<V> valueSpecification) {
         this.path = path;
+        this.splitPath = path.split(ATTRIBUTE_PATH_PATTERN);
         this.valueSpecification = valueSpecification;
     }
 
+    /**
+     * @return the path to the target attribute.
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * @return the specification that the value of the target attribute must satisfy.
+     */
     public Specification<V> getValueSpecification() {
         return valueSpecification;
     }
@@ -58,20 +69,20 @@ public class PropertySpecification<T, V> implements Specification<T> {
         return path + " " + String.valueOf(valueSpecification);
     }
 
-    private boolean isSatisfiedBy(Object candidate, int propertyIndex) {
+    private boolean isSatisfiedBy(Object candidate, int pathIndex) {
         if (candidate != null) {
-            Optional<Field> fieldOptional = findField(candidate.getClass(), properties[propertyIndex]);
+            Optional<Field> fieldOptional = findField(candidate.getClass(), splitPath[pathIndex]);
             if (fieldOptional.isPresent()) {
                 Object result = getFieldValue(candidate, fieldOptional.get());
-                if (propertyIndex < properties.length - 1) {
+                if (pathIndex < splitPath.length - 1) {
                     if (result instanceof Collection) {
-                        return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                        return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
                     } else if (result.getClass().isArray()) {
-                        return Arrays.stream((Object[]) result).anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                        return Arrays.stream((Object[]) result).anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
                     } else if (result instanceof Map) {
-                        return ((Collection<?>) ((Map<?, ?>) result).values()).stream().anyMatch(item -> isSatisfiedBy(item, propertyIndex + 1));
+                        return ((Collection<?>) ((Map<?, ?>) result).values()).stream().anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
                     } else {
-                        return isSatisfiedBy(result, propertyIndex + 1);
+                        return isSatisfiedBy(result, pathIndex + 1);
                     }
                 } else {
                     return isSatisfiedByValue(result);

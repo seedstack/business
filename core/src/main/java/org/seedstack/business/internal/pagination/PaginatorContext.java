@@ -18,7 +18,7 @@ import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.specification.GreaterThanSpecification;
 import org.seedstack.business.specification.LessThanSpecification;
-import org.seedstack.business.specification.PropertySpecification;
+import org.seedstack.business.specification.AttributeSpecification;
 import org.seedstack.business.specification.Specification;
 
 import java.util.stream.Collectors;
@@ -80,12 +80,12 @@ class PaginatorContext<A extends AggregateRoot<ID>, ID> {
 
     public <T extends Comparable<? super T>> void setBeforeAttributeValue(T value) {
         checkState(mode == PaginationMode.ATTRIBUTE && attribute != null, "A value can only be set in ATTRIBUTE mode");
-        this.attributeSpecification = new PropertySpecification<>(attribute, new LessThanSpecification<>(value));
+        this.attributeSpecification = new AttributeSpecification<>(attribute, new LessThanSpecification<>(value));
     }
 
     <T extends Comparable<? super T>> void setAfterAttributeValue(T value) {
         checkState(mode == PaginationMode.ATTRIBUTE && attribute != null, "A value can only be set in ATTRIBUTE mode");
-        this.attributeSpecification = new PropertySpecification<>(attribute, new GreaterThanSpecification<>(value));
+        this.attributeSpecification = new AttributeSpecification<>(attribute, new GreaterThanSpecification<>(value));
     }
 
     void setLimit(long limit) {

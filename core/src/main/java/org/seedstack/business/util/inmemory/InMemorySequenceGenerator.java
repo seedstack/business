@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 /**
- * Sequence generator that uses an every-incrementing {@link AtomicLong}.
+ * Identity generator that generates {@link Long} numbers by using an every-incrementing {@link AtomicLong}.
  */
 @Named("inMemorySequence")
 public class InMemorySequenceGenerator implements SequenceGenerator<Long> {

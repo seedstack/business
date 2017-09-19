@@ -18,10 +18,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A base class implementing basic features of DDD entities.
+ * An helper base class that can be extended to create a domain entity. If extending this base class is not desirable,
+ * you can instead do one of the following:
+ * <ul>
+ * <li>Implement {@link Entity},</li>
+ * <li>Annotate your class with {@link DomainEntity} (but this limits the ability to use framework features).</li>
+ * </ul>
  *
- * It provides {@link #equals(Object)} and {@link #hashCode()} methods based on the entity identity. It also provides
- * auto-detection of the identity field by reflection (see {@link BaseEntity#getId()}).
+ * This base class provides {@link #equals(Object)} and {@link #hashCode()} methods based on the entity identity. It also
+ * provides auto-detection of the identity field by reflection (see {@link BaseEntity#getId()}).
  *
  * @param <ID> The type of the entity identifier.
  */

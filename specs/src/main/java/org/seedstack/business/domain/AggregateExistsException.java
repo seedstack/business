@@ -8,7 +8,7 @@
 package org.seedstack.business.domain;
 
 /**
- * This exception is thrown by a {@link Repository} when the existence of an aggregate is an error condition.
+ * This exception is thrown when the existence of an aggregate is an error condition.
  */
 public class AggregateExistsException extends RuntimeException {
     /**

@@ -7,18 +7,34 @@
  */
 package org.seedstack.business.specification;
 
+import java.util.Objects;
+
+/**
+ * A specification satisfied only when the expected and the candidate values are equal according to
+ * {@link Objects#equals(Object, Object)}.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class EqualSpecification<T> implements Specification<T> {
     private final T expectedValue;
 
+    /**
+     * Creates an specification of equality.
+     *
+     * @param expectedValue the value used to do the equality check against.
+     */
     public EqualSpecification(T expectedValue) {
         this.expectedValue = expectedValue;
     }
 
     @Override
     public boolean isSatisfiedBy(T candidate) {
-        return candidate.equals(expectedValue);
+        return Objects.equals(candidate, expectedValue);
     }
 
+    /**
+     * @return the value equality is checked against.
+     */
     public T getExpectedValue() {
         return expectedValue;
     }

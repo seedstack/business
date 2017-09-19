@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Static utility methods to easily create tuples.
+ * Static utility methods to manage tuples.
  */
 public final class Tuples {
     private Tuples() {

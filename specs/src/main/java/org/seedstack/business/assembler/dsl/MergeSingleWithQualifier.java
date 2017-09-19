@@ -9,6 +9,10 @@ package org.seedstack.business.assembler.dsl;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * An element of the {@link FluentAssembler DSL} allowing to merge one DTO into an aggregate or a tuple of aggregates
+ * or specify the qualifier of the assembler to use.
+ */
 public interface MergeSingleWithQualifier extends MergeSingle {
     /**
      * Allows to specify the qualifier of the assembler to use.

@@ -15,11 +15,19 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.io.Serializable;
 
 /**
- * A base class implementing basic features of DDD value objects.
+ * An helper base class that can be extended to create a domain value object. If extending this base class is not desirable,
+ * you can instead do one of the following:
+ * <ul>
+ * <li>Implement {@link ValueObject},</li>
+ * <li>Annotate your class with {@link DomainValueObject}.</li>
+ * </ul>
  *
- * It provides {@link #equals(Object)} and {@link #hashCode()} methods based on all the value object attributes. This
- * mechanism is reflection-based and can be overridden for performance purposes. When doing so, take care of respecting
- * the semantics of value object equality.
+ * This base class provides an implementation {@link #equals(Object)} and {@link #hashCode()} methods based on all the
+ * value object attributes. This mechanism is reflection-based and can be overridden for performance purposes. When doing
+ * so, take care of respecting the semantics of value object equality.
+ *
+ * @see ValueObject
+ * @see DomainValueObject
  */
 public abstract class BaseValueObject implements ValueObject, Serializable {
     /**
@@ -35,7 +43,7 @@ public abstract class BaseValueObject implements ValueObject, Serializable {
     }
 
     /**
-     * Computes the equality by reflection on all non-transient fields. This method can is quite costly and may be
+     * Computes the equality by reflection on all non-transient fields. This method can be quite costly and may be
      * overridden by an optimized version if performance is critical. Be sure to respect the equality semantics for value objects
      * when doing so.
      *

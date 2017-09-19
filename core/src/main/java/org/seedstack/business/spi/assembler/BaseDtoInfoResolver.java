@@ -7,12 +7,12 @@
  */
 package org.seedstack.business.spi.assembler;
 
-import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Producible;
 import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.shed.reflect.ReflectUtils;
 
@@ -23,6 +23,9 @@ import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * An helper base class that can be extended to create an implementation of {@link DtoInfoResolver}.
+ */
 public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
     @Inject
     private DomainRegistry domainRegistry;
@@ -37,6 +40,15 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
         return resolveAggregate(dto, aggregateRootClass, -1);
     }
 
+    /**
+     * Implements the logic to create an aggregate identifier, using a factory if the identifier class implements {@link Producible}.
+     *
+     * @param aggregateIdClass the identifier class.
+     * @param id               the existing identifier if any.
+     * @param parameters       the parameters to pass to the factory if any.
+     * @param <ID>             the type of the aggregate root identifier.
+     * @return the identifier.
+     */
     @SuppressWarnings("unchecked")
     protected <ID> ID createIdentifier(Class<ID> aggregateIdClass, ID id, Object... parameters) {
         if (id != null) {
@@ -57,7 +69,15 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
         }
     }
 
-    protected <A extends AggregateRoot<?>> A createFromFactory(Class<A> aggregateClass, Object[] parameters) {
+    /**
+     * Implements the logic to create an aggregate
+     *
+     * @param aggregateClass the aggregate class.
+     * @param parameters     the parameters to pass to the factory if any.
+     * @param <A>            the type of the aggregate root.
+     * @return the aggregate root.
+     */
+    protected <A extends AggregateRoot<?>> A createFromFactory(Class<A> aggregateClass, Object... parameters) {
         checkNotNull(aggregateClass);
         checkNotNull(parameters);
 

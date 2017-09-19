@@ -24,10 +24,10 @@ import java.lang.annotation.Target;
  * <h3>Example 1: single aggregate</h3>
  * <pre>
  * public class CustomerDto {
- *     {@literal @}FactoryArgument(index = 0)
+ *    {@literal @}FactoryArgument(index = 0)
  *     public String getName() {...}
  *
- *     {@literal @}FactoryArgument(index = 1)
+ *    {@literal @}FactoryArgument(index = 1)
  *     public Date getBirthDate() {...}
  *
  *     // No need for annotation here as the address is not part of the factory method
@@ -35,33 +35,33 @@ import java.lang.annotation.Target;
  * }
  *
  * {@literal @}Factory
- * public class CustomerFactory {
- *     public Customer createCustomer(String name, Date birthDate);
- * }
+ *  public class CustomerFactory {
+ *      public Customer createCustomer(String name, Date birthDate);
+ *  }
  * </pre>
  *
  * <h3>Example 2: tuple of aggregates</h3>
  * <pre>
  * public class RecipeDto {
- *     {@literal @}FactoryArgument(aggregateIndex = 0, index = 0)
+ *    {@literal @}FactoryArgument(aggregateIndex = 0, index = 0)
  *     public String getCustomerName() {...}
  *
- *     {@literal @}FactoryArgument(aggregateIndex = 0, index = 1)
+ *    {@literal @}FactoryArgument(aggregateIndex = 0, index = 1)
  *     public Date getCustomerBirthDate() {...}
  *
- *     {@literal @}FactoryArgument(aggregateIndex = 1, index = 0)
+ *    {@literal @}FactoryArgument(aggregateIndex = 1, index = 0)
  *     public int getOrderId() {...}
  * }
  *
  * {@literal @}Factory
- * public class CustomerFactory {
- *     Customer createCustomer(String name, Date birthDate);
- * }
+ *  public class CustomerFactory {
+ *      Customer createCustomer(String name, Date birthDate);
+ *  }
  *
  * {@literal @}Factory
- * public class OrderFactory {
- *     Customer createOrder(int orderId);
- * }
+ *  public class OrderFactory {
+ *      Customer createOrder(int orderId);
+ *  }
  * </pre>
  */
 @Documented

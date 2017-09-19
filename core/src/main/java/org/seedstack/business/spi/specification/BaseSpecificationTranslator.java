@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 import static org.seedstack.business.internal.utils.BusinessUtils.getQualifier;
 
 /**
- * Helper base class for implementing {@link SpecificationTranslator}s. Handles the invocation of the relevant
- * {@link SpecificationConverter} in the {@link #convert(Specification, Object)} method.
+ * An helper base class that can be extended for implementing {@link SpecificationTranslator}s. Handles the invocation
+ * of the relevant {@link SpecificationConverter} in the {@link #convert(Specification, Object)} method.
  *
  * @param <C> the type of the translation context.
  * @param <T> the type of the target object.
@@ -36,6 +36,9 @@ public abstract class BaseSpecificationTranslator<C, T> implements Specification
     @Inject
     private Injector injector;
 
+    /**
+     * Creates a base specification translator. Actual classes used for translation are determined by reflection.
+     */
     @SuppressWarnings("unchecked")
     protected BaseSpecificationTranslator() {
         Type[] generics = BusinessUtils.resolveGenerics(BaseSpecificationTranslator.class, getClass());

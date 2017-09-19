@@ -12,6 +12,12 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Base class for specifications that compare their expected and candidate value. Those values must implement
+ * {@link Comparable}.
+ *
+ * @param <T> the type of the compared value.
+ */
 public abstract class ComparableSpecification<T extends Comparable<? super T>> implements Specification<T> {
     private static final Set<Class<?>> convertibleToLong = new HashSet<>();
 
@@ -22,11 +28,17 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
         convertibleToLong.add(Byte.class);
     }
 
-    protected final T expectedValue;
-    protected final Class<? extends Comparable> expectedValueClass;
+    private final T expectedValue;
+    private final Class<? extends Comparable> expectedValueClass;
     private final int expectedResult;
 
-    public ComparableSpecification(T expectedValue, int expectedResult) {
+    /**
+     * Creates a comparable specification.
+     *
+     * @param expectedValue  the value used to do the comparison against.
+     * @param expectedResult the expected result of the comparison done with {@link Comparable#compareTo(Object)}.
+     */
+    protected ComparableSpecification(T expectedValue, int expectedResult) {
         checkNotNull(expectedValue, "Expected value cannot be null");
         Class<? extends Comparable> expectedValueClass = expectedValue.getClass();
         if (convertibleToLong.contains(expectedValueClass)) {
@@ -48,8 +60,18 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
         }
     }
 
+    /**
+     * @return the value used to do the comparison against.
+     */
     public T getExpectedValue() {
         return expectedValue;
+    }
+
+    /**
+     * @return the expected result of the comparison done with {@link Comparable#compareTo(Object)}.
+     */
+    public int getExpectedResult() {
+        return expectedResult;
     }
 
     @SuppressWarnings("unchecked")

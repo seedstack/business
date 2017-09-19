@@ -7,13 +7,24 @@
  */
 package org.seedstack.business.domain;
 
+/**
+ * {@link Repository} option for skipping a specified amount of aggregates.
+ */
 public class OffsetOption implements Repository.Option {
     private final long offset;
 
+    /**
+     * Creates an offset option.
+     *
+     * @param offset the number of aggregates to skip.
+     */
     public OffsetOption(long offset) {
         this.offset = offset;
     }
 
+    /**
+     * @return the number of aggregates to skip.
+     */
     public long getOffset() {
         return offset;
     }

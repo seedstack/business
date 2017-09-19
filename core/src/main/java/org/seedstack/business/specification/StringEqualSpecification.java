@@ -7,7 +7,17 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * A string-specialized specification that is satisfied only when the expected and the candidate strings are equal according
+ * to the given {@link StringSpecification.Options}.
+ */
 public class StringEqualSpecification extends StringSpecification {
+    /**
+     * Creates a string-equality specification.
+     *
+     * @param expectedString the string to compare the candidate against.
+     * @param options        the comparison options.
+     */
     public StringEqualSpecification(String expectedString, Options options) {
         super(expectedString, options);
     }

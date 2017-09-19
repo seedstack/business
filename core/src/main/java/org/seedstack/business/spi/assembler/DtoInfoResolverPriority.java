@@ -10,6 +10,11 @@ package org.seedstack.business.spi.assembler;
 import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.assembler.FactoryArgument;
 
+/**
+ * Class holding priorities used by {@link org.seedstack.business.assembler.dsl.FluentAssembler} to invoke the
+ * {@link DtoInfoResolver}s. Any custom {@link DtoInfoResolver} can be prioritized accordingly using the {@link javax.annotation.Priority}
+ * annotation.
+ */
 public class DtoInfoResolverPriority {
     /**
      * Matching annotations DTO info resolver uses {@link AggregateId} and

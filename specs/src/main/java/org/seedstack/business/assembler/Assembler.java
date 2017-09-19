@@ -10,27 +10,20 @@ package org.seedstack.business.assembler;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 
 /**
- * This interface represents the Assembler pattern.
- * <p>
- * It provides two types of transformations:
- * </p>
- * <ul>
- * <li>assembling data from one or multiple aggregates into a representation of the model or a part of the model.</li>
- * <li>merging data from a DTO into one or multiple aggregates</li>
- * </ul>
+ * An assembler implementation contains the logic responsible for assembling an aggregate (or a tuple of multiple aggregates)
+ * into into a DTO and back. Assemblers can be used by the {@link FluentAssembler} DSL to execute complex mapping tasks.
  *
- * @param <A> the aggregate root
- * @param <D> the dto type
+ * @param <A> the type of the aggregate root or of the {@link org.javatuples.Tuple} of aggregate roots.
+ * @param <D> the type of the DTO.
  * @see FluentAssembler
  */
 public interface Assembler<A, D> {
-
     /**
      * Creates a new DTO and merge the given aggregate into it. Method {@link #createDto()} is called to create the DTO
      * instance, then {@link #mergeAggregateIntoDto(Object, Object)} is called to do the merge.
      *
-     * @param sourceAggregate The source aggregate
-     * @return the resulting dto
+     * @param sourceAggregate the source aggregate.
+     * @return the resulting dto.
      */
     default D createDtoFromAggregate(A sourceAggregate) {
         D dto = createDto();
@@ -39,41 +32,31 @@ public interface Assembler<A, D> {
     }
 
     /**
-     * Updates an existing DTO with a source aggregate root.
+     * Merge a source aggregate into an existing target DTO.
      *
-     * @param sourceAggregate The source aggregate
-     * @param targetDto       The target dto
+     * @param sourceAggregate the source aggregate.
+     * @param targetDto       the target dto.
      */
     void mergeAggregateIntoDto(A sourceAggregate, D targetDto);
 
     /**
-     * Merges a source DTO into an existing aggregate root.
+     * Merges a source DTO into an existing target aggregate root.
      *
-     * @param sourceDto       The source dto
-     * @param targetAggregate The target aggregate
+     * @param sourceDto       the source dto.
+     * @param targetAggregate the target aggregate.
      */
     void mergeDtoIntoAggregate(D sourceDto, A targetAggregate);
 
     /**
-     * Returns the DTO type handled by the assembler.
-     * <p>
-     * This method is used by {@link #createDtoFromAggregate(Object)}
-     * to determine the DTO type to instantiate.
-     * </p>
+     * This method is responsible for creating a new DTO instance during the assembling task.
      *
-     * @return the dto class
-     */
-    Class<D> getDtoClass();
-
-    /**
-     * This protected method is in charge of creating a new instance of the DTO.
-     * <p>
-     * The actual implementation is fine for simple POJO, but it can be
-     * extended. The developers will then use {@link #getDtoClass()} to retrieve
-     * the destination class.
-     * </p>
-     *
-     * @return the DTO instance.
+     * @return a newly-created DTO instance.
+     * @see #createDtoFromAggregate(Object)
      */
     D createDto();
+
+    /**
+     * @return the DTO class.
+     */
+    Class<D> getDtoClass();
 }

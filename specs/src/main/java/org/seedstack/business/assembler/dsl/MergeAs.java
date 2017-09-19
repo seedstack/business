@@ -16,7 +16,8 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * Terminal operation of the {@link FluentAssembler} DSL, allowing to choose the result of a merge.
+ * Terminal operation of the {@link FluentAssembler} DSL, allowing to choose the result of merging a DTO into
+ * multiple aggregates (stream, list, set, array, ...).
  *
  * @param <T> the type of the merged item.
  */

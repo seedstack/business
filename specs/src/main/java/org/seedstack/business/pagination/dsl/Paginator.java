@@ -11,7 +11,7 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 
 /**
- * The paginator is an helper aimed at paginating domain objects provided by a {@link Repository} into
+ * Paginator is a DSL aimed at paginating domain objects provided by a {@link Repository} into
  * {@link org.seedstack.business.pagination.Slice}s or {@link org.seedstack.business.pagination.Page}s. It supports
  * offset-based and key-based pagination.
  */

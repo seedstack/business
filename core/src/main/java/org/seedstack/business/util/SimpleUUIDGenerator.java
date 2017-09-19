@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Simple UUID generator which uses {@link UUID#randomUUID()}.
+ * Identity generator that generates {@link UUID} by using {@link UUID#randomUUID()}.
  */
 @Named("simpleUUID")
 public class SimpleUUIDGenerator implements UUIDGenerator {

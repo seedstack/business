@@ -12,10 +12,18 @@ import org.seedstack.business.internal.utils.BusinessUtils;
 import java.lang.reflect.Type;
 
 /**
- * This class serves as inheritance base for all repositories.
+ * An helper base class that can be extended to create an <strong>implementation</strong> of a repository interface which,
+ * in turn, must extend {@link Repository}.
  *
- * @param <A>  the type of the aggregate root class.
- * @param <ID> the type of identifier of the aggregate root class.
+ * <p>
+ * This class is mainly used as a common base for specialized technology-specific implementations. Client code will often
+ * extend these more specialized classes instead of this one.
+ * </p>
+ *
+ * @param <A>  Type of the aggregate root.
+ * @param <ID> Type of the aggregate root identifier.
+ * @see Repository
+ * @see org.seedstack.business.util.inmemory.BaseInMemoryRepository
  */
 public abstract class BaseRepository<A extends AggregateRoot<ID>, ID> implements Repository<A, ID> {
     private static final int AGGREGATE_INDEX = 0;
@@ -24,12 +32,9 @@ public abstract class BaseRepository<A extends AggregateRoot<ID>, ID> implements
     private final Class<ID> idClass;
 
     /**
-     * Constructs a base repository.
-     * <p>
-     * The aggregate root class and the identifier classes are determined by reflection.
-     * </p>
+     * Creates a base domain repository. Actual classes managed by the repository are determined by reflection.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     protected BaseRepository() {
         Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
         this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
@@ -37,11 +42,8 @@ public abstract class BaseRepository<A extends AggregateRoot<ID>, ID> implements
     }
 
     /**
-     * Constructs a base repository settings explicitly the aggregate root class and the identifier class.
-     * <p>
-     * This is used when the implementation class does not resolve the generics. Since the generic
-     * types can't be resolved at runtime, they should be passed explicitly.
-     * </p>
+     * Creates a base domain repository. Actual classes managed by the repository are specified explicitly. This can
+     * be used to create a dynamic implementation of a repository.
      *
      * @param aggregateRootClass the aggregate root class.
      * @param idClass            the aggregate root identifier class.

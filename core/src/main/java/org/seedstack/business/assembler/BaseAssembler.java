@@ -13,7 +13,7 @@ import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.shed.reflect.Classes;
 
 /**
- * This base class can be extended to create an assembler between an aggregate and a DTO.
+ * An helper base class that can be extended to create an assembler between an aggregate and a DTO.
  *
  * @param <A> the aggregate root type.
  * @param <D> the dto type.
@@ -22,7 +22,7 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D> implements As
     private final Class<D> dtoClass;
 
     /**
-     * Creates an assembler with automatic resolution of its DTO class.
+     * Creates a base assembler. Actual classes handled by the assembler are determined by reflection.
      */
     @SuppressWarnings("unchecked")
     public BaseAssembler() {
@@ -30,7 +30,8 @@ public abstract class BaseAssembler<A extends AggregateRoot<?>, D> implements As
     }
 
     /**
-     * Creates an assembler with the DTO class explicitly specified.
+     * Creates a base assembler. Actual classes handled by the assembler are specified explicitly. This can be used
+     * to create a dynamic implementation of an assembler.
      *
      * @param dtoClass the DTO class.
      */

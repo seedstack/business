@@ -7,9 +7,12 @@
  */
 package org.seedstack.business.assembler.dsl;
 
-
 import java.lang.annotation.Annotation;
 
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to a single DTO or specify the qualifier of the
+ * assembler to use.
+ */
 public interface AssembleSingleWithQualifier extends AssembleSingle {
     /**
      * Allows to specify the qualifier of the assembler to use.

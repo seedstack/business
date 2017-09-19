@@ -23,36 +23,38 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Stream;
 
 /**
- * Default repository for in-memory persistence.
- * <p>
- * When no specific repository exist for the aggregate, this repository will be injected for
- * {@link Repository} with the qualifier {@literal @}InMemory.
- * </p>
+ * An helper base class that can be extended to create an in-memory implementation of a {@link Repository}. It is backed
+ * by a {@link ConcurrentHashMap} per aggregate root class.
  */
-public class BaseInMemoryRepository<A extends AggregateRoot<ID>, ID> extends BaseRepository<A, ID> {
+public abstract class BaseInMemoryRepository<A extends AggregateRoot<ID>, ID> extends BaseRepository<A, ID> {
     private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
     @SuppressWarnings("unchecked")
     private final Map<ID, A> bucket = (Map<ID, A>) buckets.computeIfAbsent(getAggregateRootClass(), key -> new ConcurrentHashMap<ID, A>());
 
-    public BaseInMemoryRepository() {
+    /**
+     * Creates a base in-memory repository. Actual classes managed by the repository are determined by reflection.
+     */
+    protected BaseInMemoryRepository() {
     }
 
+    /**
+     * Creates a base in-memory repository. Actual classes managed by the repository are specified explicitly.
+     *
+     * @param aggregateRootClass the actual aggregate root class.
+     * @param idClass            the actual aggregate identifier class.
+     */
     protected BaseInMemoryRepository(Class<A> aggregateRootClass, Class<ID> idClass) {
         super(aggregateRootClass, idClass);
     }
 
-    protected Map<ID, A> getBucket() {
-        return bucket;
-    }
-
     @Override
     public void add(A a) throws AggregateExistsException {
-        getBucket().put(a.getId(), a);
+        bucket.put(a.getId(), a);
     }
 
     @Override
     public Stream<A> get(Specification<A> specification, Option... options) {
-        Stream<A> aStream = getBucket().values().stream().filter(specification.asPredicate());
+        Stream<A> aStream = bucket.values().stream().filter(specification.asPredicate());
         for (Option option : options) {
             if (option instanceof OffsetOption) {
                 aStream = aStream.skip(((OffsetOption) option).getOffset());
@@ -67,7 +69,7 @@ public class BaseInMemoryRepository<A extends AggregateRoot<ID>, ID> extends Bas
 
     @Override
     public long remove(Specification<A> specification) {
-        Iterator<Map.Entry<ID, A>> iterator = getBucket().entrySet().iterator();
+        Iterator<Map.Entry<ID, A>> iterator = bucket.entrySet().iterator();
         int count = 0;
         while (iterator.hasNext()) {
             Map.Entry<ID, A> next = iterator.next();

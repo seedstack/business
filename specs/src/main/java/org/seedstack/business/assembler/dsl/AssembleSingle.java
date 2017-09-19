@@ -8,6 +8,9 @@
 package org.seedstack.business.assembler.dsl;
 
 
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to a single DTO.
+ */
 public interface AssembleSingle {
     /**
      * Assembles to a DTO.

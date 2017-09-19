@@ -7,13 +7,13 @@
  */
 package org.seedstack.business.fixtures.specification;
 
-import org.seedstack.business.specification.PropertySpecification;
+import org.seedstack.business.specification.AttributeSpecification;
 import org.seedstack.business.spi.specification.SpecificationConverter;
 import org.seedstack.business.spi.specification.SpecificationTranslator;
 
-public class PropertyDummyConverter implements SpecificationConverter<PropertySpecification<?, ?>, StringBuilder, String> {
+public class PropertyDummyConverter implements SpecificationConverter<AttributeSpecification<?, ?>, StringBuilder, String> {
     @Override
-    public String convert(PropertySpecification<?, ?> specification, StringBuilder context, SpecificationTranslator<StringBuilder, String> translator) {
+    public String convert(AttributeSpecification<?, ?> specification, StringBuilder context, SpecificationTranslator<StringBuilder, String> translator) {
         return context.append(specification.getPath()).append(translator.translate(specification.getValueSpecification(), context)).toString();
     }
 }

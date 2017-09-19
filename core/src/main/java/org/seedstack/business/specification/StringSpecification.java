@@ -10,13 +10,20 @@ package org.seedstack.business.specification;
 import com.google.common.base.CharMatcher;
 
 /**
- * Base for string-based value specifications.
+ * Base class for specifications that compare strings. Allows to specify string-related comparison options like trimming
+ * or case sensitivity.
  */
 public abstract class StringSpecification implements Specification<String> {
     protected final String expectedString;
     protected final Options options;
 
-    public StringSpecification(String expectedString, Options options) {
+    /**
+     * Creates a string specification.
+     *
+     * @param expectedString the string to compare the candidate against.
+     * @param options        the comparison options.
+     */
+    protected StringSpecification(String expectedString, Options options) {
         this.options = options;
         this.expectedString = expectedString;
     }
@@ -26,10 +33,10 @@ public abstract class StringSpecification implements Specification<String> {
         if (options.isTrimmed()) {
             candidateValue = CharMatcher.WHITESPACE.trimFrom(candidateValue);
         } else {
-            if (options.isLeftTrimmed()) {
+            if (options.isLeadTrimmed()) {
                 candidateValue = CharMatcher.WHITESPACE.trimLeadingFrom(candidateValue);
             }
-            if (options.isRightTrimmed()) {
+            if (options.isTailTrimmed()) {
                 candidateValue = CharMatcher.WHITESPACE.trimTrailingFrom(candidateValue);
             }
         }
@@ -38,21 +45,42 @@ public abstract class StringSpecification implements Specification<String> {
 
     protected abstract boolean isSatisfiedByString(String candidateString);
 
+    /**
+     * @return the string that is compared against the candidate.
+     */
     public String getExpectedString() {
         return expectedString;
     }
 
+    /**
+     * @return the comparison options.
+     */
     public Options getOptions() {
         return options;
     }
 
+    /**
+     * Options used for comparing strings.
+     */
     public interface Options {
-        boolean isLeftTrimmed();
+        /**
+         * @return true if the comparison should ignore leading whitespace, false otherwise.
+         */
+        boolean isLeadTrimmed();
 
-        boolean isRightTrimmed();
+        /**
+         * @return true if the comparison should ignore trailing whitespace, false otherwise.
+         */
+        boolean isTailTrimmed();
 
+        /**
+         * @return true if the comparison should ignore leading and trailing whitespace, false otherwise.
+         */
         boolean isTrimmed();
 
+        /**
+         * @return true if the comparison should be sensitive to case differences, false otherwise.
+         */
         boolean isIgnoringCase();
     }
 }

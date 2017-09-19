@@ -10,9 +10,9 @@ package org.seedstack.business.specification.dsl;
 import org.seedstack.business.domain.AggregateRoot;
 
 /**
- * A builder that makes it easy to create complex composite specifications. It relies on expressing boolean predicates
- * in the disjunctive normal form, which is a disjunction (OR) of conjunctive clauses (AND). In other words it requires
- * that the predicates are expressed as an OR clause of AND clauses.
+ * SpecificationBuilder is a DSL that makes it easy to create complex composite specifications. It relies on expressing
+ * boolean predicates in the disjunctive normal form, which is a disjunction (OR) of conjunctive clauses (AND). In other
+ * words it requires that the predicates are expressed as an OR clause of AND clauses.
  *
  * <p>
  * Examples of formulae in DNF:

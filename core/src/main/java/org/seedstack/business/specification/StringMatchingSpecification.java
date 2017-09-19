@@ -9,12 +9,32 @@ package org.seedstack.business.specification;
 
 import java.util.regex.Pattern;
 
+/**
+ * A string-specialized specification that is satisfied only when the expected and the candidate strings are matching according
+ * to the given {@link StringSpecification.Options}. Matching supports the following wildcards:
+ * <ul>
+ * <li>'{@literal *}' which matches any zero-length or longer character sequence,</li>
+ * <li>'{@literal ?}' which matches any character.</li>
+ * </ul>
+ */
 public class StringMatchingSpecification extends StringSpecification {
+    /**
+     * Wildcard for matching any zero-length or longer character sequence.
+     */
     public static final String MULTI_CHARACTER_WILDCARD = "*";
+    /**
+     * Wildcard for matching any character.
+     */
     public static final String SINGLE_CHARACTER_WILDCARD = "?";
     private volatile Pattern ignoringCasePattern;
     private volatile Pattern pattern;
 
+    /**
+     * Creates a string-matching specification.
+     *
+     * @param expectedString the string that the candidate is expected to match.
+     * @param options        the matching options.
+     */
     public StringMatchingSpecification(String expectedString, Options options) {
         super(expectedString, options);
     }

@@ -7,13 +7,24 @@
  */
 package org.seedstack.business.specification;
 
+/**
+ * A specification satisfied only when the candidate value is less than the expected value according to
+ * {@link Comparable#compareTo(Object)}.
+ *
+ * @param <T> the type of the candidate object the specification applies to.
+ */
 public class LessThanSpecification<T extends Comparable<? super T>> extends ComparableSpecification<T> {
+    /**
+     * Creates a less than specification.
+     *
+     * @param expectedValue the value used to do the comparison against.
+     */
     public LessThanSpecification(T expectedValue) {
         super(expectedValue, -1);
     }
 
     @Override
     public String toString() {
-        return "< " + String.valueOf(expectedValue);
+        return "< " + String.valueOf(getExpectedValue());
     }
 }

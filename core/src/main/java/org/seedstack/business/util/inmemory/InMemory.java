@@ -13,7 +13,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * This qualifier can be used to inject an in-memory persistence map.
+ * Qualifier annotation that can be used at {@link org.seedstack.business.domain.Repository} injection points to specify
+ * that the {@link DefaultInMemoryRepository} implementation should be injected.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

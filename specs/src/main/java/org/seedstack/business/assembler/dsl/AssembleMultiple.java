@@ -15,7 +15,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-
+/**
+ * An element of the {@link FluentAssembler} DSL allowing to assemble to multiple DTO in various forms (stream, list, set,
+ * array, ...).
+ */
 public interface AssembleMultiple {
     /**
      * Assembles to a {@link Stream} of DTO.

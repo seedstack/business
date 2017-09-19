@@ -16,7 +16,7 @@ class StringValueOptionsImpl implements StringSpecification.Options {
     private boolean ignoringCase;
 
     @Override
-    public boolean isLeftTrimmed() {
+    public boolean isLeadTrimmed() {
         return leftTrimmed;
     }
 
@@ -25,7 +25,7 @@ class StringValueOptionsImpl implements StringSpecification.Options {
     }
 
     @Override
-    public boolean isRightTrimmed() {
+    public boolean isTailTrimmed() {
         return rightTrimmed;
     }
 

@@ -63,20 +63,24 @@ public final class PluginUtils {
      * This is the "default mode" for binding in the business framework.
      * </p>
      *
-     * @param initContext the context containing the implementations
-     * @param interfaces  the interfaces to bind
-     * @return the map of interface/implementation to bind
+     * @param initContext      the context containing the implementations.
+     * @param interfaces       the interfaces to bind.
+     * @param specsByInterface the specifications used to scan implementations, indexed by interfaces.
+     * @param overridingMode   if true, only implementations that satisfy {@link #isOverridingImplementation()} are bound, if false
+     *                         only implementations that don't satisfy {@link #isOverridingImplementation()} are bound.
+     * @param <T>              supertype of all interfaces to bind.
+     * @return the map of interface/implementation to bind.
      * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Class> Map<Key<T>, ? extends T> associateInterfacesToImplementations(InitContext initContext, Collection<T> interfaces, Map<T, Specification<? extends T>> specsByInterface, boolean testMode) {
+    public static <T extends Class> Map<Key<T>, ? extends T> associateInterfacesToImplementations(InitContext initContext, Collection<T> interfaces, Map<T, Specification<? extends T>> specsByInterface, boolean overridingMode) {
         Map<Key<T>, ? extends T> keyMap = new HashMap<>();
         for (T anInterface : interfaces) {
             keyMap.putAll(
                     associateInterfaceToImplementations(
                             anInterface,
                             initContext.scannedTypesBySpecification().get(specsByInterface.get(anInterface)),
-                            testMode
+                            overridingMode
                     )
             );
 
@@ -94,6 +98,8 @@ public final class PluginUtils {
      * @param <T>             the class of the interface.
      * @param anInterface     the interface to bind
      * @param implementations the classes implementing the interface.
+     * @param overridingMode  if true, only implementations that satisfy {@link #isOverridingImplementation()} are bound, if false
+     *                        only implementations that don't satisfy {@link #isOverridingImplementation()} are bound.
      * @return the map of interface/implementation to bind
      * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
      */

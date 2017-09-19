@@ -10,7 +10,7 @@ package org.seedstack.business.internal.specification;
 import org.seedstack.business.specification.EqualSpecification;
 import org.seedstack.business.specification.GreaterThanSpecification;
 import org.seedstack.business.specification.LessThanSpecification;
-import org.seedstack.business.specification.PropertySpecification;
+import org.seedstack.business.specification.AttributeSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
@@ -101,7 +101,7 @@ class SpecificationPickerImpl<T, SELECTOR extends BaseSelector<T, SELECTOR>> imp
     private Specification<T> processSpecification(Specification<?> specification) {
         Specification<T> result;
         if (context.hasProperty()) {
-            result = new PropertySpecification<>(context.pickProperty(), specification);
+            result = new AttributeSpecification<>(context.pickProperty(), specification);
         } else {
             result = (Specification<T>) specification;
         }

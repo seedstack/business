@@ -14,9 +14,9 @@ import org.seedstack.business.spi.GenericImplementation;
 import javax.inject.Inject;
 
 /**
- * Default repository for in-memory persistence.
+ * Default repository implementation for in-memory persistence.
  * <p>
- * When no specific repository exist for the aggregate, this repository will be injected for
+ * When no custom repository exists for the aggregate, this in-memory implementation can be injected for
  * {@link org.seedstack.business.domain.Repository} with the qualifier {@literal @}InMemory.
  * </p>
  */
@@ -24,7 +24,7 @@ import javax.inject.Inject;
 @InMemory
 public class DefaultInMemoryRepository<A extends AggregateRoot<ID>, ID> extends BaseInMemoryRepository<A, ID> {
     /**
-     * Constructs a DefaultInMemoryRepository.
+     * Creates a default in-memory repository.
      *
      * @param genericClasses the resolved generics for the aggregate root class and the key class
      */
