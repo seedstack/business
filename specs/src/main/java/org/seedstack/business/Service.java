@@ -14,15 +14,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * A service is a stateless object that implements domain, applicative, infrastructure or interface logic.
+ *
+ * <p>
  * This annotation can be applied to an interface to declare a service. Any class implementing the annotated interface
- * will be registered by the framework as the service implementation.
+ * will be registered by the framework as an implementation of this service.
+ * </p>
+ *
  * <p>
  * Considering the following service:
  * </p>
  * <pre>
  * {@literal @}Service
  *  public interface MoneyTransferService {
- *     public void transfer(Account source, Account target);
+ *     void transfer(Account source, Account target);
  *  }
  * </pre>
  * Its implementation is declared as:
@@ -37,7 +42,7 @@ import java.lang.annotation.Target;
  * <pre>
  * public class SomeClass {
  *     {@literal @}Inject
- *      TransferService transferService;
+ *      MoneyTransferService moneyTransferService;
  * }
  * </pre>
  *

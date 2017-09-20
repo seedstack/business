@@ -21,8 +21,8 @@ import java.lang.annotation.Target;
  * identity generator.
  */
 @Documented
-@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface Identity {
     /**
      * @return the identity generator used to generate identity if any.

@@ -13,7 +13,7 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.slf4j.Logger;

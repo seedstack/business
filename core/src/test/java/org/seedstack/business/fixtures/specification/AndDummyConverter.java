@@ -9,8 +9,8 @@ package org.seedstack.business.fixtures.specification;
 
 import org.seedstack.business.specification.AndSpecification;
 import org.seedstack.business.specification.Specification;
-import org.seedstack.business.spi.specification.SpecificationConverter;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.SpecificationConverter;
+import org.seedstack.business.spi.SpecificationTranslator;
 
 public class AndDummyConverter implements SpecificationConverter<AndSpecification<?>, StringBuilder, String> {
     @Override

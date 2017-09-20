@@ -10,7 +10,7 @@ package org.seedstack.business.domain;
 import java.util.UUID;
 
 /**
- * Interface for handling UUID generation.
+ * Interface for generating random UUID to be used as identity of entities.
  */
 public interface UUIDGenerator extends IdentityGenerator<UUID> {
 }

@@ -13,6 +13,7 @@ import java.util.Map;
  * A generator of identity for entities.
  *
  * @param <ID> the identifier type.
+ * @see IdentityService
  */
 public interface IdentityGenerator<ID> {
     /**

@@ -27,7 +27,7 @@ public interface AssemblerRegistry {
      * @param dtoClass           the dto class.
      * @return an assembler instance.
      */
-    <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass);
+    <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass);
 
     /**
      * Returns the Assembler matching the given aggregate root class and the dto class for the specified qualifier.
@@ -39,7 +39,7 @@ public interface AssemblerRegistry {
      * @param qualifier          the assembler qualifier.
      * @return an assembler instance.
      */
-    <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Annotation qualifier);
+    <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Annotation qualifier);
 
     /**
      * Returns the Assembler matching the given aggregate root class and the dto class for the specified qualifier.
@@ -51,7 +51,7 @@ public interface AssemblerRegistry {
      * @param qualifier          the assembler qualifier.
      * @return an assembler instance.
      */
-    <A extends AggregateRoot<?>, D> Assembler<A, D> assemblerOf(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier);
+    <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier);
 
     /**
      * Returns the Assembler matching the given list of aggregate root classes and the dto class.
@@ -62,7 +62,7 @@ public interface AssemblerRegistry {
      * @param dtoClass             the dto class.
      * @return an assembler instance.
      */
-    <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass);
+    <T extends Tuple, D> Assembler<T, D> getTupleAssembler(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass);
 
     /**
      * Returns the Assembler matching the given list of aggregate root classes and the dto class for the specified qualifier.
@@ -74,7 +74,7 @@ public interface AssemblerRegistry {
      * @param qualifier            the assembler qualifier.
      * @return an assembler instance.
      */
-    <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, @Nullable Annotation qualifier);
+    <T extends Tuple, D> Assembler<T, D> getTupleAssembler(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, @Nullable Annotation qualifier);
 
     /**
      * Returns the Assembler matching the given list of aggregate root classes and the dto class for the specified qualifier.
@@ -86,5 +86,5 @@ public interface AssemblerRegistry {
      * @param qualifier            the assembler qualifier.
      * @return an assembler instance.
      */
-    <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier);
+    <T extends Tuple, D> Assembler<T, D> getTupleAssembler(Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, @Nullable Class<? extends Annotation> qualifier);
 }

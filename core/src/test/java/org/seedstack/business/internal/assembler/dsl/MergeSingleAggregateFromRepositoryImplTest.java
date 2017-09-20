@@ -23,7 +23,7 @@ import org.seedstack.business.fixtures.assembler.customer.OrderDtoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactoryInternal;
 import org.seedstack.business.internal.assembler.dsl.resolver.AnnotationDtoInfoResolver;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 import java.util.Optional;
 
@@ -47,7 +47,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
         Mockito.when(domainRegistry.getRepository(Order.class, String.class)).thenReturn(repository);
         Mockito.when(domainRegistry.getFactory(Order.class)).thenReturn(new OrderFactoryInternal());
         Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
-        Mockito.when(assemblerRegistry.assemblerOf(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
+        Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
 
         underTest = new MergeSingleAggregateFromRepositoryImpl<>(context, new OrderDto("1", "lightsaber"), Order.class);
     }

@@ -8,8 +8,8 @@
 package org.seedstack.business.fixtures.specification;
 
 import org.seedstack.business.specification.AttributeSpecification;
-import org.seedstack.business.spi.specification.SpecificationConverter;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.SpecificationConverter;
+import org.seedstack.business.spi.SpecificationTranslator;
 
 public class PropertyDummyConverter implements SpecificationConverter<AttributeSpecification<?, ?>, StringBuilder, String> {
     @Override

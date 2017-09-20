@@ -12,7 +12,7 @@ import org.seedstack.business.domain.DomainEventHandler;
 
 public class MyHandler2Domain implements DomainEventHandler<DomainEvent> {
     @Override
-    public void handle(DomainEvent domainEvent) {
+    public void onEvent(DomainEvent domainEvent) {
         // do nothing
     }
 

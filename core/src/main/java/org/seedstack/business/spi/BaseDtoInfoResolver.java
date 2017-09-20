@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.spi.assembler;
+package org.seedstack.business.spi;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
@@ -14,6 +14,7 @@ import org.seedstack.business.domain.Producible;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.MethodMatcher;
+import org.seedstack.business.spi.DtoInfoResolver;
 import org.seedstack.shed.reflect.ReflectUtils;
 
 import javax.inject.Inject;

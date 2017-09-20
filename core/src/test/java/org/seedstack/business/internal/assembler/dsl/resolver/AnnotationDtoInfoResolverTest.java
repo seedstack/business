@@ -21,7 +21,7 @@ import org.seedstack.business.internal.assembler.dsl.resolver.annotated.Case4Dto
 import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail1Dto;
 import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail2Dto;
 import org.seedstack.business.internal.assembler.dsl.resolver.annotated.CaseFail3Dto;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 import java.util.Date;
 

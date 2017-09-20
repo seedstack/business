@@ -20,6 +20,6 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface Overriding {
 }

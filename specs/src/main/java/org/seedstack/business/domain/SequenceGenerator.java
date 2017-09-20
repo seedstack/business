@@ -8,7 +8,7 @@
 package org.seedstack.business.domain;
 
 /**
- * Interface for generating ever-incrementing numbers as identity of entities.
+ * Interface for generating ever-incrementing numbers to be used as identity of entities.
  *
  * @param <ID> the type of generated numbers.
  */

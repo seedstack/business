@@ -11,7 +11,7 @@ import org.seedstack.business.domain.DomainEventHandler;
 
 public class MyHandler3Domain implements DomainEventHandler<DummyDomainEvent> {
     @Override
-    public void handle(DummyDomainEvent event) {
+    public void onEvent(DummyDomainEvent event) {
         // do nothing
     }
 

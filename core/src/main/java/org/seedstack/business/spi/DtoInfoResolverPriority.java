@@ -5,10 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.spi.assembler;
+package org.seedstack.business.spi;
 
 import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.assembler.FactoryArgument;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 /**
  * Class holding priorities used by {@link org.seedstack.business.assembler.dsl.FluentAssembler} to invoke the

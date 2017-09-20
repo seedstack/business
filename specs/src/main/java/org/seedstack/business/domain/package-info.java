@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Provides classes for the domain layer.
+ * Provides classes, interfaces and annotations for building the domain layer.
  */
 package org.seedstack.business.domain;

@@ -18,7 +18,7 @@ import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.pagination.Page;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 import javax.inject.Inject;
 import java.util.Set;

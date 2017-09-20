@@ -39,7 +39,7 @@ public class AssemblerRegistryIT {
 
     @Test
     public void testAssemblerOfWithProvidedAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(MyAggregateRoot.class, MyUnrestrictedDto.class);
+        Assembler<?, ?> assembler = registry.getAssembler(MyAggregateRoot.class, MyUnrestrictedDto.class);
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(BaseAssembler.class);
         Assertions.assertThat(assembler).isInstanceOf(MyAssembler.class);
@@ -50,7 +50,7 @@ public class AssemblerRegistryIT {
 
     @Test
     public void testAssemblerOfWithDefaultAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class, Names.named("special"));
+        Assembler<?, ?> assembler = registry.getAssembler(Order.class, OrderDto.class, Names.named("special"));
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
         Assertions.assertThat(assembler).isInstanceOf(DefaultSpecialAssembler.class);
@@ -63,13 +63,13 @@ public class AssemblerRegistryIT {
     @SuppressWarnings("unchecked")
     public void testAssemblerOfTuple() {
         Class<? extends AggregateRoot<?>>[] aggregateRootTuple = new Class[]{Order.class, Customer.class};
-        Assembler<?, ?> assembler = registry.tupleAssemblerOf(aggregateRootTuple, OrderDto.class);
+        Assembler<?, ?> assembler = registry.getTupleAssembler(aggregateRootTuple, OrderDto.class);
         Assertions.assertThat(assembler).isNotNull();
     }
 
     @Test
     public void testAssemblerOfWithAutomaticAssembler() {
-        Assembler<?, ?> assembler = registry.assemblerOf(Order.class, OrderDto.class, Names.named("custom"));
+        Assembler<?, ?> assembler = registry.getAssembler(Order.class, OrderDto.class, Names.named("custom"));
         Assertions.assertThat(assembler).isNotNull();
         Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
         Assertions.assertThat(assembler).isNotInstanceOf(DefaultSpecialAssembler.class);

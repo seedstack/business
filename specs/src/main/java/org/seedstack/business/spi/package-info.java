@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Provides all the classes available to extend the API.
+ * Provides classes, interfaces and annotations to extend the business framework.
  */
 package org.seedstack.business.spi;

@@ -15,7 +15,7 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.utils.BusinessUtils;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -48,20 +48,20 @@ class Context {
 
     <A extends AggregateRoot<ID>, ID, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot, Class<D> dto) {
         if (assemblerQualifierClass != null) {
-            return assemblerRegistry.assemblerOf(aggregateRoot, dto, assemblerQualifierClass);
+            return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
         } else if (assemblerQualifier != null) {
-            return assemblerRegistry.assemblerOf(aggregateRoot, dto, assemblerQualifier);
+            return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifier);
         }
-        return assemblerRegistry.assemblerOf(aggregateRoot, dto);
+        return assemblerRegistry.getAssembler(aggregateRoot, dto);
     }
 
     <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto) {
         if (assemblerQualifierClass != null) {
-            return assemblerRegistry.tupleAssemblerOf(aggregateRootTuple, dto, assemblerQualifierClass);
+            return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
         } else if (assemblerQualifier != null) {
-            return assemblerRegistry.tupleAssemblerOf(aggregateRootTuple, dto, assemblerQualifier);
+            return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifier);
         }
-        return assemblerRegistry.tupleAssemblerOf(aggregateRootTuple, dto);
+        return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
     }
 
     <D, A extends AggregateRoot<ID>, ID> A create(D dto, Class<A> aggregateClass) {

@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Provides classes specific to the assembler DSL.
+ * Provides a fluent DSL to do advanced domain-object/DTO mapping operations.
  */
 package org.seedstack.business.assembler.dsl;

@@ -69,7 +69,7 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
         for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlers) {
             LOGGER.debug("Notifying event handler {}", eventHandlerClass.getName());
             DomainEventHandler domainEventHandler = injector.getInstance(eventHandlerClass);
-            domainEventHandler.handle(event);
+            domainEventHandler.onEvent(event);
         }
     }
 }

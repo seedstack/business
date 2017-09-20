@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.SpecificationTranslator;
 import org.seedstack.seed.it.SeedITRunner;
 
 import javax.inject.Inject;

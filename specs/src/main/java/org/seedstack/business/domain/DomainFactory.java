@@ -14,7 +14,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation marks factory interfaces.
+ * Marks a type as a domain factory. This is the minimal element to apply on a class to make the business framework
+ * recognize it as a domain factory.
+ *
+ * <p>
+ * For better semantics it is recommended to use the {@link Factory} interface which is already annotated
+ * with {@link DomainFactory}.
+ * </p>
+ *
+ * @see Factory
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

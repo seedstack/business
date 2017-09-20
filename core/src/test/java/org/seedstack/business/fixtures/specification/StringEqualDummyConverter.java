@@ -8,8 +8,8 @@
 package org.seedstack.business.fixtures.specification;
 
 import org.seedstack.business.specification.StringEqualSpecification;
-import org.seedstack.business.spi.specification.SpecificationConverter;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.SpecificationConverter;
+import org.seedstack.business.spi.SpecificationTranslator;
 
 public class StringEqualDummyConverter implements SpecificationConverter<StringEqualSpecification, StringBuilder, String> {
     @Override

@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Provides general APIs of the Business Framework.
+ * Provides general purpose classes, interfaces and annotations.
  */
 package org.seedstack.business;

@@ -22,9 +22,9 @@ import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Producible;
 import org.seedstack.business.spi.GenericImplementation;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
-import org.seedstack.business.spi.specification.SpecificationConverter;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.DtoInfoResolver;
+import org.seedstack.business.spi.SpecificationConverter;
+import org.seedstack.business.spi.SpecificationTranslator;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.AnnotationPredicates;
 

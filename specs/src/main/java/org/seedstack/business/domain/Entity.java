@@ -12,8 +12,10 @@ package org.seedstack.business.domain;
  * It is not defined primarily by its attributes but by its identity that stays the same through time and across
  * distinct representations.
  *
+ * <p>
  * The identity of an entity must be unique and immutable. It must be chosen carefully and well defined in the model.
  * Identification can come from:
+ * </p>
  * <ul>
  * <li>The outside: a user of the system can provide the identity, handling the uniqueness himself.</li>
  * <li>The inside: the entity can generate its own identity using an algorithm.</li>
@@ -27,10 +29,8 @@ package org.seedstack.business.domain;
  * </p>
  *
  * <p>
- * <strong>
- * The BaseEntity class can be used as a base class for domain entities. It already implements the {@link #getId()},
- * {@link #equals(Object)} and {@link #hashCode()} methods properly.
- * </strong>
+ * The {@code BaseEntity} class can be used as a base class for domain entities. It provides an implementation of the {@link #getId()},
+ * {@link #equals(Object)} and {@link #hashCode()} methods.
  * </p>
  *
  * <p>

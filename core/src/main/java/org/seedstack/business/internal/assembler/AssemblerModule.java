@@ -15,7 +15,7 @@ import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
-import org.seedstack.business.spi.assembler.DtoInfoResolver;
+import org.seedstack.business.spi.DtoInfoResolver;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

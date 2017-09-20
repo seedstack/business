@@ -12,8 +12,8 @@ import com.google.inject.PrivateModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
-import org.seedstack.business.spi.specification.SpecificationConverter;
-import org.seedstack.business.spi.specification.SpecificationTranslator;
+import org.seedstack.business.spi.SpecificationConverter;
+import org.seedstack.business.spi.SpecificationTranslator;
 
 import java.util.Set;
 

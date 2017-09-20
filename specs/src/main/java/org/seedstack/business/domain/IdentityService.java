@@ -8,7 +8,10 @@
 package org.seedstack.business.domain;
 
 /**
- * IdentityService generate a unique appropriate ID for a given entity
+ * IdentityService provides the ability to generate an identity using an {@link IdentityGenerator} and inject it in the
+ * specified entity.
+ *
+ * @see IdentityGenerator
  */
 public interface IdentityService {
 

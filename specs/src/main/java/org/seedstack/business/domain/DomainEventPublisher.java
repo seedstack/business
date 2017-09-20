@@ -8,28 +8,18 @@
 package org.seedstack.business.domain;
 
 /**
- * EventService provides methods to fire events. These events will be caught by EventHandlers.
- * <p>
- * The implementation for EventService is provided by Seed. You don't have to implement it.
- * </p>
- * For instance to fire an event:
- * <pre>
- * {@literal @}Inject
- * private DomainEventPublisher domainEventPublisher;
- *
- * domainEventPublisher.publish(new MyEvent());
- * </pre>
+ * The domain event publisher provides the ability to publish {@link DomainEvent} instances to be handled by
+ * {@link DomainEventHandler} implementations.
  *
  * @see DomainEvent
  * @see DomainEventHandler
  */
 public interface DomainEventPublisher {
-
     /**
      * Publishes an event.
      *
-     * @param event the fired event
-     * @param <E>   the event type
+     * @param event the published event instance.
+     * @param <E>   the event type.
      */
     <E extends DomainEvent> void publish(E event);
 }

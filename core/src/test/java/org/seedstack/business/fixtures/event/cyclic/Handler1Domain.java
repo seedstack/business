@@ -18,7 +18,7 @@ public class Handler1Domain implements DomainEventHandler<Event1> {
     private DomainEventPublisher domainEventPublisher;
 
     @Override
-    public void handle(Event1 event) {
+    public void onEvent(Event1 event) {
         domainEventPublisher.publish(new Event2());
     }
 

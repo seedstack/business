@@ -14,24 +14,44 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * This interface has to be extended in order to create a Domain Repository <em>interface</em>.
+ * A repository is responsible for consistently storing and retrieving a whole aggregate. It has a simple
+ * collection-like global interface and optionally domain-specific methods.
+ *
  * <p>
- * To be a valid repository interface, Type must respect the followings:
+ * A repository is responsible for storing and retrieve a whole aggregate. It manipulates the aggregate through its
+ * root entity. It cannot directly store or retrieve parts of the aggregate.
  * </p>
- * <ul>
- * <li>be an interface</li>
- * <li>extends {@link Repository}</li>
- * </ul>
- * The following is a valid Domain repository interface.
+ *
+ * <p>
+ * A repository provides the illusion of an in-memory collection of all objects that are of the corresponding
+ * aggregate root type.
+ * </p>
+ *
+ * <p>
+ * A repository implements a well-known interface that provides methods for adding, removing and querying objects.
+ * </p>
+ *
+ * <p>
+ * A repository optionally implements methods that select objects based on criteria meaningful to domain experts.
+ * Those methods return fully instantiated objects or collections of objects whose attribute values meet the criteria.
+ * </p>
+ *
+ * <p>
+ * Example:
+ * </p>
  * <pre>
- *  public interface ProductRepository extends Repository&lt;Product,String&gt; {
- *     // nothing needed, but you can add methods with specifics
- *     // then implements them
- *  }
+ * public interface SomeRepository extends Repository&lt;SomeAggregate, SomeId&gt; {
+ *     // Optional business-meaningful methods
+ *     List&lt;SomeAggregate&gt; objectsByCategory(String category);
+ * }
+ *
+ * public class SomeJpaRepository implements SomeRepository {
+ *    {@literal @}Override
+ *     public List&lt;SomeAggregate&gt; objectsByCategory(String category) {
+ *         // implement specific query
+ *     }
+ * }
  * </pre>
- * <p>
- * Then this interface has to be implemented by the actual repository implementation.
- * </p>
  *
  * @param <A>  the type of the aggregate root class.
  * @param <ID> the type of identifier of the aggregate root class.

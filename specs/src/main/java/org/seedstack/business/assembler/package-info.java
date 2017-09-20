@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /**
- * Contains all the classes related to the assembly pattern.
+ * Provides classes, interfaces and annotations to map the domain layer to Data Transfer Objects (DTO) and back.
  */
 package org.seedstack.business.assembler;

@@ -31,10 +31,8 @@ package org.seedstack.business.domain;
  * </p>
  *
  * <p>
- * <strong>
- * The BaseValueObject class can be used as a base class for domain entities. It already implements the {@link #equals(Object)}
+ * The {@code BaseValueObject} class can be used as a base class for domain entities. It already implements the {@link #equals(Object)}
  * and {@link #hashCode()} methods properly.
- * </strong>
  * </p>
  *
  * <p>

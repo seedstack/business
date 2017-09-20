@@ -13,22 +13,29 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 /**
- * This registry allows to access domain objects programmatically.
+ * The domain registry provides programmatic access to domain objects.
  *
+ * <p>
  * Usage for a class without generic parameter:
+ * </p>
  * <pre>
- * <code>MyPolicy policy = domainRegistry.getPolicy(MyPolicy.class,"qualifier");
- * </code>
+ * MyPolicy policy = domainRegistry.getPolicy(MyPolicy.class,"qualifier");
  * </pre>
  *
+ * <p>
  * Usage for a class with generic parameter(s):
+ * </p>
  * <pre>
- * <code>AnotherPolicy&lt;MyClient&lt;Long&gt;&gt; policy = domainRegistry.getPolicy(
+ * AnotherPolicy&lt;MyClient&lt;Long&gt;&gt; policy = domainRegistry.getPolicy(
  *     new TypeOf&lt;AnotherPolicy&lt;MyClient&lt;Long&gt;&gt;&gt;(){},
  *     "qualifier"
  * );
- * </code>
  * </pre>
+ *
+ * <p>
+ * Note that generics are specified with a {@link Type} instance. In the example above, SeedStack {@code TypeOf} is used
+ * to capture generics and provide a {@link Type} instance but any other implementation can be used.
+ * </p>
  */
 public interface DomainRegistry {
 

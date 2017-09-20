@@ -13,7 +13,7 @@ import org.seedstack.business.domain.BaseDomainEventHandler;
 public class MyDomainEventHandler extends BaseDomainEventHandler<MyDomainEvent> {
 
     @Override
-    public void handle(MyDomainEvent event) {
+    public void onEvent(MyDomainEvent event) {
         DomainEventPublisherIT.countMyEvent++;
     }
 }

@@ -10,8 +10,14 @@ package org.seedstack.business.domain;
 /**
  * Specialization of {@link Entity} when acting as an aggregate root.
  *
+ * <p>
+ * The {@code BaseAggregateRoot} class can be used as a base class for aggregate roots. It provides an implementation
+ * of the {@link #getId()}, {@link #equals(Object)} and {@link #hashCode()} methods.
+ * </p>
+ *
  * @param <ID> the type of the aggregate root identifier.
  * @see DomainAggregateRoot
+ * @see Entity
  */
 @DomainAggregateRoot
 public interface AggregateRoot<ID> extends Entity<ID>, Producible {

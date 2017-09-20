@@ -16,7 +16,7 @@ public class MyHandlerDomain implements DomainEventHandler<SomeDomainEvent> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyHandlerDomain.class);
 
     @Override
-    public void handle(SomeDomainEvent event) {
+    public void onEvent(SomeDomainEvent event) {
         LOGGER.info("MyHandler gets a MyEvent event.");
     }
 
