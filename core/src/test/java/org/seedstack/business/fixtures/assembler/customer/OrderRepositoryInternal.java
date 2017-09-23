@@ -1,62 +1,59 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.fixtures.assembler.customer;
 
-import org.seedstack.business.domain.BaseRepository;
+package org.seedstack.business.fixtures.assembler.customer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
+import org.seedstack.business.domain.BaseRepository;
+import org.seedstack.business.domain.LimitOption;
+import org.seedstack.business.domain.OffsetOption;
+import org.seedstack.business.domain.Repository;
+import org.seedstack.business.specification.Specification;
 
 
-public class OrderRepositoryInternal extends BaseRepository<Order, String> implements OrderRepository {
+public class OrderRepositoryInternal extends BaseRepository<Order, String> implements
+  OrderRepository {
 
-    private static Map<String, Order> orderMap = new ConcurrentHashMap<>();
+  private static Map<String, Order> orderMap = new ConcurrentHashMap<>();
 
-    @Override
-    public Order load(String id) {
-        return orderMap.get(id);
-    }
+  @Override
+  public void add(Order order) {
+    orderMap.put(order.getId(), order);
+  }
 
-    @Override
-    public boolean exists(String id) {
-        return orderMap.containsKey(id);
-    }
-
-    @Override
-    public long count() {
-        return orderMap.size();
-    }
-
-    public void clear() {
-        orderMap.clear();
-    }
-
-    @Override
-    public void delete(String id) {
-        orderMap.remove(id);
-    }
-
-    @Override
-    public void delete(Order order) {
-        for (Order order1 : orderMap.values()) {
-            if (order1.equals(order)) {
-                orderMap.remove(order.getEntityId());
-            }
+  @Override
+  public Stream<Order> get(Specification<Order> specification, Repository.Option... options) {
+    Stream<Order> orderStream = orderMap.values().stream().filter(specification.asPredicate());
+    if (options != null) {
+      for (Option option : options) {
+        if (option instanceof OffsetOption) {
+          orderStream = orderStream.skip(((OffsetOption) option).getOffset());
+        } else if (option instanceof LimitOption) {
+          orderStream = orderStream.limit(((LimitOption) option).getLimit());
         }
+      }
     }
+    return orderStream;
+  }
 
-    @Override
-    public void persist(Order order) {
-        orderMap.put(order.getEntityId(), order);
+  @Override
+  public long remove(Specification<Order> specification) {
+    AtomicInteger atomicInteger = new AtomicInteger(0);
+    for (Order order1 : orderMap.values()) {
+      if (specification.isSatisfiedBy(order1)) {
+        if (orderMap.remove(order1.getId()) != null) {
+          atomicInteger.incrementAndGet();
+        }
+      }
     }
-
-    @Override
-    public Order save(Order order) {
-        return orderMap.put(order.getEntityId(), order);
-    }
+    return atomicInteger.get();
+  }
 }

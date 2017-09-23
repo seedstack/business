@@ -1,10 +1,11 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
 import java.lang.annotation.Documented;
@@ -14,35 +15,60 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation marks its annotated interface as a service. The implementation
- * of the annotated interface will be registered by the framework and bound to this interface.
- * <p>
- * For instance the following service:
+ * A service is a stateless object that implements domain, applicative, infrastructure or interface
+ * logic.
+ *
+ * <p> This annotation can be applied to an interface to declare a service. Any class implementing
+ * the annotated interface will be registered by the framework as an implementation of this service.
  * </p>
+ *
+ * <p> Considering the following service: </p>
  * <pre>
  * {@literal @}Service
- * public interface TransferService {
- *
- *    public void transfer(Account accountSource, Account accountTarget);
+ *  public interface MoneyTransferService {
+ *     void transfer(Account source, Account target);
+ *  }
+ * </pre>
+ * Its implementation is declared as:
+ * <pre>
+ *  public class ElectronicMoneyTransferService implements MoneyTransferService {
+ *      public void transfer(Account source, Account target) {
+ *          // implementation
+ *      }
+ *  }
+ * </pre>
+ * The implementation can then be injected as follows:
+ * <pre>
+ * public class SomeClass {
+ *     {@literal @}Inject
+ *      MoneyTransferService moneyTransferService;
  * }
  * </pre>
- * with its implementation:
- * <pre>
- * public class TransferServiceBase implements TransferService {
  *
- *     public void transfer(Account accountSource, Account accountTarget) {
- *      ...
- *     }
- * }
- * </pre>
- * can be used as follows:
+ * <p> When a service interface has multiple implementations, it is necessary to differentiate them
+ * by using a different {@code javax.inject.Qualifier} annotation on each. This qualifier can then
+ * be used at the injection point to specify which implementation is required. Considering the
+ * additional implementation of the MoneyTransferService below: </p>
  * <pre>
- * {@literal @}Inject
- * TransferService transferService;
+ * {@literal @}Named("solidGold")
+ *  public class SolidGoldMoneyTransferService implements MoneyTransferService {
+ *      public void transfer(Account source, Account target) {
+ *          // implementation
+ *      }
+ *  }
+ * </pre>
+ * <p> This implementation can be injected as follows: </p>
+ * <pre>
+ *  public class SomeClass {
+ *      {@literal @}Inject
+ *      {@literal @}Named("solidGold")
+ *       TransferService transferService;
+ *  }
  * </pre>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface Service {
+
 }

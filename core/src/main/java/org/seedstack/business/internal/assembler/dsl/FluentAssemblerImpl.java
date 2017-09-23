@@ -1,64 +1,100 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
-import org.javatuples.Tuple;
-import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.assembler.FluentAssembler;
-import org.seedstack.business.assembler.dsl.*;
-
+import java.util.Set;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import javax.inject.Inject;
-import java.util.List;
+import org.javatuples.Tuple;
+import org.seedstack.business.assembler.AssemblerRegistry;
+import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.AssemblePageWithQualifier;
+import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
+import org.seedstack.business.assembler.dsl.FluentAssembler;
+import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
+import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
+import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainRegistry;
+import org.seedstack.business.pagination.Page;
+import org.seedstack.business.spi.DtoInfoResolver;
 
 /**
- * Implementation of {@link org.seedstack.business.assembler.FluentAssembler}.
- * <p>
- * It uses a Guice provider to get the DSL entry point. Each time you call the {@code assemble()}
- * method a new DSL instance is provided.
- * </p>
+ * Implementation of {@link FluentAssembler}. <p> It uses a Guice provider to get the DSL entry point. Each time you
+ * call the {@code assemble()} method a new DSL instance is provided. </p>
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 
-    private AssemblerDslContext context;
+  private Context context;
 
-    @Inject
-    public FluentAssemblerImpl(InternalRegistry registry) {
-        context = new AssemblerDslContext();
-        context.setRegistry(registry);
-    }
+  @Inject
+  public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry,
+    Set<DtoInfoResolver> dtoInfoResolvers) {
+    context = new Context(domainRegistry, registry, dtoInfoResolvers);
+  }
 
-    @Override
-    public AssembleDtoWithQualifierProvider assemble(AggregateRoot<?> aggregateRoot) {
-        return new AssembleDtoProviderImpl(context, aggregateRoot);
-    }
+  @Override
+  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleSingleWithQualifier assemble(
+    AggregateRootT aggregateRoot) {
+    return new AssembleSingleImpl<>(context, aggregateRoot, null);
+  }
 
-    @Override
-    public AssembleDtosWithQualifierProvider assemble(List<? extends AggregateRoot<?>> aggregateRoots) {
-        return new AssembleDtosProviderImpl(context, aggregateRoots, null);
-    }
+  @Override
+  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
+    Iterable<AggregateRootT> iterable) {
+    return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false), null);
+  }
 
-    @Override
-    public AssembleDtoWithQualifierProvider assembleTuple(Tuple aggregateRoots) {
-        return new AssembleDtoProviderImpl(context, aggregateRoots);
-    }
+  @Override
+  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
+    Stream<AggregateRootT> stream) {
+    return new AssembleMultipleImpl<>(context, stream, null);
+  }
 
-    @Override
-    public AssembleDtosWithQualifierProvider assembleTuple(List<? extends Tuple> aggregateRoots) {
-        return new AssembleDtosProviderImpl(context, null, aggregateRoots);
-    }
+  @Override
+  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssemblePageWithQualifier assemble(
+    Page<AggregateRootT> page) {
+    return new AssemblePageImpl<>(context, page, null);
+  }
 
-    @Override
-    public <D> MergeAggregateOrTupleWithQualifierProvider<D> merge(D dto) {
-        return new MergeAggregateOrTupleProviderImpl<>(context, dto);
-    }
+  @Override
+  public <TupleT extends Tuple> AssembleSingleWithQualifier assembleTuple(TupleT tuple) {
+    return new AssembleSingleImpl<>(context, null, tuple);
+  }
 
-    @Override
-    public <D> MergeAggregatesOrTuplesWithQualifierProvider<D> merge(List<D> dtos) {
-        return new MergeAggregatesOrTuplesProviderImpl<>(context, dtos);
-    }
+  @Override
+  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<TupleT> stream) {
+    return new AssembleMultipleImpl<>(context, null, stream);
+  }
+
+  @Override
+  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<TupleT> iterable) {
+    return new AssembleMultipleImpl<>(context, null, StreamSupport.stream(iterable.spliterator(), false));
+  }
+
+  @Override
+  public <TupleT extends Tuple> AssemblePageWithQualifier assembleTuples(Page<TupleT> page) {
+    return new AssemblePageImpl<>(context, null, page);
+  }
+
+  @Override
+  public <DtoT> MergeSingleWithQualifier merge(DtoT dto) {
+    return new MergeSingleImpl<>(context, dto);
+  }
+
+  @Override
+  public <DtoT> MergeMultipleWithQualifier merge(Stream<DtoT> stream) {
+    return new MergeMultipleImpl<>(context, stream);
+  }
+
+  @Override
+  public <DtoT> MergeMultipleWithQualifier merge(Iterable<DtoT> iterable) {
+    return new MergeMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false));
+  }
 }

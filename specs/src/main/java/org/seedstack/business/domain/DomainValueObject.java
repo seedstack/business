@@ -1,10 +1,11 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.domain;
 
 import java.lang.annotation.Documented;
@@ -15,14 +16,17 @@ import java.lang.annotation.Target;
 
 
 /**
- * This annotation marks its annotated interface as a domain value object for the framework.
+ * Marks a type as a value object. This is the minimal element to apply on a class to make the
+ * business framework recognize it as a value object.
  *
- * Verification will be done by the framework on either or not this service is in the right place.
+ * <p> For better semantics it is recommended to use the {@link ValueObject} interface which is
+ * already annotated with {@link DomainValueObject}. </p>
+ *
+ * @see DomainValueObject
  */
 @Documented
-@DomainElement
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface DomainValueObject {
 
 }

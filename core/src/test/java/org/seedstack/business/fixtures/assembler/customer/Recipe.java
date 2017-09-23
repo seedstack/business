@@ -1,15 +1,16 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.fixtures.assembler.customer;
 
+import org.seedstack.business.assembler.AggregateId;
 import org.seedstack.business.assembler.DtoOf;
-import org.seedstack.business.assembler.MatchingEntityId;
-import org.seedstack.business.assembler.MatchingFactoryParameter;
+import org.seedstack.business.assembler.FactoryArgument;
 
 /**
  * The recipe assembled based on an order and the customer who passed the order.
@@ -18,42 +19,55 @@ import org.seedstack.business.assembler.MatchingFactoryParameter;
 @DtoOf({Order.class, Customer.class})
 public class Recipe {
 
-    private String customerId;
+  private String customerId;
+  private String customerName;
+  private String product;
+  private String orderId;
 
-    private String customerName;
+  public Recipe(String customerId, String customerName, String orderId, String product) {
+    this.customerId = customerId;
+    this.customerName = customerName;
+    this.product = product;
+    this.orderId = orderId;
+  }
 
-    private String product;
+  // The order of the typeIndex depends on the position in @DtoOf
+  @AggregateId(aggregateIndex = 0) // Don't specify the index as it is not a value object id
+  @FactoryArgument(aggregateIndex = 0, index = 0)
+  public String getOrderId() {
+    return orderId;
+  }
 
-    private String orderId;
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
 
-    public Recipe(String customerId, String customerName, String orderId, String product) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.product = product;
-        this.orderId = orderId;
-    }
+  @FactoryArgument(aggregateIndex = 0, index = 1)
+  public String getProduct() {
+    return product;
+  }
 
-    // The order of the typeIndex depends on the position in @DtoOf
-    @MatchingEntityId(typeIndex = 0) // Don't specify the index as it is not a value object id
-    @MatchingFactoryParameter(typeIndex = 0, index = 0)
-    public String getOrderId() {
-        return orderId;
-    }
+  public void setProduct(String product) {
+    this.product = product;
+  }
 
-    @MatchingFactoryParameter(typeIndex = 0, index = 1)
-    public String getProduct() {
-        return product;
-    }
+  @AggregateId(aggregateIndex = 1)
+  @FactoryArgument(aggregateIndex = 1, index = 0)
+  public String getCustomerId() {
+    return customerId;
+  }
 
-    @MatchingEntityId(typeIndex = 1)
-    @MatchingFactoryParameter(typeIndex = 1, index = 0)
-    public String getCustomerId() {
-        return customerId;
-    }
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
+  }
 
-    // No annotation require here as the customer name is not part of
-    // the customer id or factory method
-    public String getCustomerName() {
-        return customerName;
-    }
+  // No annotation require here as the customer name is not part of
+  // the customer id or factory method
+  public String getCustomerName() {
+    return customerName;
+  }
+
+  public void setCustomerName(String customerName) {
+    this.customerName = customerName;
+  }
 }

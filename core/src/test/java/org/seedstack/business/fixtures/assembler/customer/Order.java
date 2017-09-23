@@ -1,67 +1,77 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.fixtures.assembler.customer;
 
+import java.util.Date;
 import org.seedstack.business.domain.BaseAggregateRoot;
 
 
 public class Order extends BaseAggregateRoot<String> {
 
-    private String orderId;
+  private String id;
+  private String product;
+  private int price;
+  private Date orderDate;
+  private String otherDetails;
 
-    private String product;
+  public Order() {
+  }
 
-    private int price;
+  public Order(String id, String product) {
+    this.id = id;
+    this.product = product;
+  }
 
-    private String otherDetails;
+  public Order(String id, String product, Date orderDate) {
+    this.id = id;
+    this.product = product;
+    this.orderDate = orderDate;
+  }
 
-    public String getOrderId() {
-        return orderId;
-    }
+  public Order(String product) {
+    this.product = product;
+  }
 
-    @Override
-    public String getEntityId() {
-        return orderId;
-    }
+  public String getProduct() {
+    return product;
+  }
 
-    public Order() {
-    }
+  public void setProduct(String product) {
+    this.product = product;
+  }
 
-    public Order(String id, String product) {
-        this.orderId = id;
-        this.product = product;
-    }
+  public int getPrice() {
+    return price;
+  }
 
-    public Order(String product) {
-        this.product = product;
-    }
+  public void setPrice(int price) {
+    this.price = price;
+  }
 
-    public String getProduct() {
-        return product;
-    }
+  public String getOtherDetails() {
+    return otherDetails;
+  }
 
-    public void setProduct(String product) {
-        this.product = product;
-    }
+  public void setOtherDetails(String otherDetails) {
+    this.otherDetails = otherDetails;
+  }
 
-    public int getPrice() {
-        return price;
-    }
+  public Date getOrderDate() {
+    return orderDate;
+  }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+  public void setOrderDate(Date orderDate) {
+    this.orderDate = orderDate;
+  }
 
-    public String getOtherDetails() {
-        return otherDetails;
-    }
-
-    public void setOtherDetails(String otherDetails) {
-        this.otherDetails = otherDetails;
-    }
+  @Override
+  public String getId() {
+    return id;
+  }
 }

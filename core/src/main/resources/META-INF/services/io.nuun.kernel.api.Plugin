@@ -1,3 +1,4 @@
-org.seedstack.business.internal.BusinessPlugin
-org.seedstack.business.internal.identity.IdentityPlugin
-org.seedstack.business.internal.event.EventPlugin
+org.seedstack.business.internal.domain.DomainPlugin
+org.seedstack.business.internal.assembler.AssemblerPlugin
+org.seedstack.business.internal.specification.SpecificationPlugin
+org.seedstack.business.internal.pagination.PaginatorPlugin

@@ -1,7 +1,36 @@
+# Version 4.0.0 (2016-07-??)
+
+* [new] A default implementation of `getId()` has been added in `BaseEntity` which searches for a field named "id" or annotated with `@Identity`. 
+* [new] DDD specifications have been added.
+* [new] A specification builder allows to create DDD specifications with a fluent DSL. 
+* [new] Add SPI and base infrastructure for specification translation.
+* [new] New methods in the `Repository` interface allow to work on multiple aggregates with specifications. 
+* [new] Business framework now takes advantage of Java 8 features (notably streams and optional).
+* [new] `FluentAssembler` can now assemble and merge streams of objects among other useful types (arrays, lists, sets, slices, pages and arbitrary collections).
+* [new] A pagination DSL injectable through the `Paginator` interface has been added.
+* [new] Add an in-memory default implementation of repository (useful for testing or other specific use-cases).
+* [new] Annotating an implementation with `@Overriding` will allow it to override an existing similar implementation.
+* [chg] Extracted ModelMapper automatic assemblers to a separate add-on.
+* [brk] The `@MatchingFactoryParameter` annotation has been renamed to `@FactoryArgument`. 
+* [brk] The `@MatchingEntityId` annotation has been renamed to `@AggregateId`.
+* [brk] The `typeIndex()` method of `@FactoryArgument` and `@AggregateId` annotations has been renamed to `aggregateIndex()`.
+* [brk] The `Assembler` methods `assembleDtoFromAggregate()`, `assembleDtoFromAggregate()` and `mergeAggregateWithDto()` have been renamed to `createDtoFromAggregate()`, `mergeAggregateIntoDto()` and `mergeDtoIntoAggregate()` respectively.
+* [brk] The `BaseAssembler` and `BaseTupleAssembler` now follow the `Assembler` interface (no more `do*()` methods).
+* [brk] The `getEntityId()` method of `Entity` has been renamed to `getId()`.
+* [brk] The `Repository` interface has been refactored as a collection-like interface.
+* [brk] The `Factory` and `GenericFactory` interfaces are merged into a unique `Factory` interface.
+* [brk] The `DomainObject` interface has been removed.
+* [brk] The old pagination API has been removed.
+* [brk] Intermediate interfaces of `FluentAssembler` DSL have been renamed.
+* [brk] Generic events have been replaced by domain-only events.
+* [brk] The interface `IdentityHandler` has been renamed to `IdentityGenerator` to better reflect its responsibility.
+* [brk] The `source` parameter from `@Identity` annotation has been removed. This is better done in class configuration.
+* [brk] The `handler` parameter of the `@Identity` annotation has been renamed `generator`.
+
 # Version 3.1.0 (2017-04-30)
 
 * [new] It is now possible to assemble a list of DTOs to aggregates coming both from repository and factory.
-* [chg] When assembling a DTO list, aggregates coming both from repository and factory and allowed by default.
+* [chg] When assembling a DTO list, aggregates coming both from repository and factory are allowed by default.
 
 # Version 3.0.2 (2017-02-26)
 

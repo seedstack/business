@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.1-SNAPSHOT</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.2.0</seed.version>
+        <seed.version>3.3.2-SNAPSHOT</seed.version>
+        <modelmapper.version>1.0.0</modelmapper.version>
+        <jmh-addon.version>1.0.1</jmh-addon.version>
 
-        <compatibility.version>3.0.1</compatibility.version>
+        <compatibility.skip>true</compatibility.skip>
 
         <bintray.package>business</bintray.package>
     </properties>

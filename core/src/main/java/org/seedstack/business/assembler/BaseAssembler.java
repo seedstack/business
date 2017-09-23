@@ -1,131 +1,53 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.assembler;
 
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.internal.utils.BusinessUtils;
+import org.seedstack.shed.reflect.Classes;
 
 /**
- * This class is the class to be extended by the users in order to create an Assembler.
- * <p>
- * User must implements
- * {@link BaseAssembler#doAssembleDtoFromAggregate(Object, org.seedstack.business.domain.AggregateRoot)} and
- * {@link BaseAssembler#doMergeAggregateWithDto(org.seedstack.business.domain.AggregateRoot, Object)} to provide
- * implementation of the copy.
- * </p>
- * For instance:
- * <pre>
- * public class ProductAssembler extends BaseAssembler&lt;Product,ProductRepresentation&gt; {
+ * An helper base class that can be extended to create an assembler between an aggregate and a DTO.
  *
- *     {@literal @}Override
- *     protected void doAssembleDtoFromAggregate(ProductRepresentation targetDto, Product sourceAggregate) {
- *     	  targetDto.fillProductId(sourceAggregate.getEntityId().getStoreId(),
- *     	      sourceAggregate.getEntityId().getProductCode());
- *     	  targetDto.setName(sourceAggregate.getName());
- *     	  targetDto.setDescription(sourceAggregate.getDescription());
- *     }
- *
- *     {@literal @}Override
- *     protected void doMergeAggregateWithDto(Product targetAggregate, ProductRepresentation sourceDto) {
- *     	  targetAggregate.setName(sourceDto.getName());
- *     	  targetAggregate.setDescription(sourceDto.getDescription());
- *     }
- * }
- * </pre>
- * Then the assembler can be used via:
- * <pre>
- * {@literal @}Inject
- * ProductAssembler productAssembler;
- * </pre>
- * And used like this:
- * <pre>
- * ProductRepresentation productRepresentation = productAssembler.assembleDtoFromAggregate(productFromRepo);
- * </pre>
- * or
- * <pre>
- * productAssembler.mergeAggregateWithDto(productToMerge, productRepresentationSource);
- * </pre>
- *
- * @param <A> the aggregate root type
- * @param <D> the dto type
+ * @param <AggregateRootT> the aggregate root type.
+ * @param <DtoT>           the dto type.
  */
-public abstract class BaseAssembler<A extends AggregateRoot<?>, D> extends AbstractBaseAssembler<A, D> {
+public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, DtoT> implements
+  Assembler<AggregateRootT, DtoT> {
 
-    /**
-     * This method is used by developers or by the DSL to assemble a new DTO from the given aggregate.
-     * <ul>
-     * <li>It calls {@link AbstractBaseAssembler#newDto()} for the DTO creation
-     * <li>and {@link #doAssembleDtoFromAggregate(Object, org.seedstack.business.domain.AggregateRoot)}
-     * for the assembly algorithm.
-     * </ul>
-     *
-     * @param sourceAggregate The aggregate from which create the DTO.
-     * @return the assembled DTO
-     * @see Assembler#assembleDtoFromAggregate(Object)
-     */
-    @Override
-    public D assembleDtoFromAggregate(A sourceAggregate) {
-        D newDto = newDto();
-        doAssembleDtoFromAggregate(newDto, sourceAggregate);
+  private final Class<DtoT> dtoClass;
 
-        return newDto;
-    }
+  /**
+   * Creates a base assembler. Actual classes handled by the assembler are determined by reflection.
+   */
+  @SuppressWarnings("unchecked")
+  public BaseAssembler() {
+    this.dtoClass = (Class<DtoT>) BusinessUtils.resolveGenerics(BaseAssembler.class, getClass())[1];
+  }
 
-    @Override
-    public void assembleDtoFromAggregate(D targetDto, A sourceAggregate) {
-        doAssembleDtoFromAggregate(targetDto, sourceAggregate);
-    }
+  /**
+   * Creates a base assembler. Actual classes handled by the assembler are specified explicitly. This can be used to
+   * create a dynamic implementation of an assembler.
+   *
+   * @param dtoClass the DTO class.
+   */
+  protected BaseAssembler(Class<DtoT> dtoClass) {
+    this.dtoClass = dtoClass;
+  }
 
-    /**
-     * This method has to be overridden by users to actually assemble the DTO from the aggregate.
-     * <pre>
-     * targetDto.fillProductId(sourceAggregate.getEntityId().getStoreId(),
-     *     sourceAggregate.getEntityId().getProductCode());
-     * targetDto.setName(sourceAggregate.getName());
-     * targetDto.setDescription(sourceAggregate.getDescription());
-     * </pre>
-     * This method will be called by the public method
-     * {@link #assembleDtoFromAggregate(org.seedstack.business.domain.AggregateRoot)}
-     *
-     * @param targetDto       the target dto
-     * @param sourceAggregate the source aggregate
-     */
-    protected abstract void doAssembleDtoFromAggregate(D targetDto, A sourceAggregate);
+  @Override
+  public Class<DtoT> getDtoClass() {
+    return this.dtoClass;
+  }
 
-    /**
-     * This method is used by developers or by the DSL to actually merge the aggregate.
-     * <p>
-     * It will call {@link #doMergeAggregateWithDto(org.seedstack.business.domain.AggregateRoot, Object)}, which
-     * is overridden by developers.
-     * </p>
-     *
-     * @param targetAggregate the target aggregate
-     * @param sourceDto       the source dto
-     * @see Assembler#mergeAggregateWithDto(Object, Object)
-     */
-    @Override
-    public void mergeAggregateWithDto(A targetAggregate, D sourceDto) {
-        doMergeAggregateWithDto(targetAggregate, sourceDto);
-    }
-
-    /**
-     * This method has to be overridden by users to actually merge an aggregate with the DTO.
-     * <pre>
-     * ...
-     * targetAggregate.setName(sourceDto.getName());
-     * targetAggregate.setDescription(sourceDto.getDescription());
-     * ...
-     * </pre>
-     * This method will be called by the public method
-     * {@link #mergeAggregateWithDto(org.seedstack.business.domain.AggregateRoot, Object)}.
-     *
-     * @param sourceDto       the source dto
-     * @param targetAggregate the target aggregate
-     */
-    protected abstract void doMergeAggregateWithDto(A targetAggregate, D sourceDto);
-
+  @Override
+  public DtoT createDto() {
+    return Classes.instantiateDefault(getDtoClass());
+  }
 }
