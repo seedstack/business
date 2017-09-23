@@ -1,10 +1,11 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.pagination;
 
 import java.util.Iterator;
@@ -18,30 +19,33 @@ import java.util.function.Consumer;
  * @param <T> the item type
  */
 public interface Slice<T> extends Iterable<T> {
-    /**
-     * @return the items.
-     */
-    List<T> getItems();
 
-    /**
-     * Return the number of the view result.
-     *
-     * @return the number of items.
-     */
-    long getSize();
+  /**
+   * Return items contained in the slice.
+   *
+   * @return the items.
+   */
+  List<T> getItems();
 
-    @Override
-    default Iterator<T> iterator() {
-        return getItems().iterator();
-    }
+  /**
+   * Returns the size of the slice.
+   *
+   * @return the number of items.
+   */
+  long getSize();
 
-    @Override
-    default void forEach(Consumer<? super T> action) {
-        getItems().forEach(action);
-    }
+  @Override
+  default Iterator<T> iterator() {
+    return getItems().iterator();
+  }
 
-    @Override
-    default Spliterator<T> spliterator() {
-        return getItems().spliterator();
-    }
+  @Override
+  default void forEach(Consumer<? super T> action) {
+    getItems().forEach(action);
+  }
+
+  @Override
+  default Spliterator<T> spliterator() {
+    return getItems().spliterator();
+  }
 }

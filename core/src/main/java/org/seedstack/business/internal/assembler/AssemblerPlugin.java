@@ -1,16 +1,27 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler;
+
+import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
+import static org.seedstack.business.internal.utils.PluginUtils.associateInterfaceToImplementations;
+import static org.seedstack.shed.misc.PriorityUtils.sortByPriority;
 
 import com.google.inject.Key;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.spi.DtoInfoResolver;
@@ -19,83 +30,73 @@ import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
-import static org.seedstack.business.internal.utils.PluginUtils.associateInterfaceToImplementations;
-import static org.seedstack.shed.misc.PriorityUtils.sortByPriority;
-
 public class AssemblerPlugin extends AbstractSeedPlugin {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
 
-    private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
-    private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
+  private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
 
-    private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
-    private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
+  private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
+  private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
 
-    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
-    private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
-    private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
+  private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
+  private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
 
-    @Override
-    public String name() {
-        return "business-assemblers";
-    }
+  private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
+  private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
+  private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
-    @Override
-    public Collection<ClasspathScanRequest> classpathScanRequests() {
-        return classpathScanRequestBuilder()
-                .specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
-                .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
-                .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
-                .specification(BusinessSpecifications.DTO_OF)
-                .build();
-    }
+  @Override
+  public String name() {
+    return "business-assemblers";
+  }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    @Override
-    public InitState initialize(InitContext initContext) {
-        streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class).forEach(assemblerClasses::add);
-        LOGGER.debug("Assemblers => {}", assemblerClasses);
+  @Override
+  public Collection<ClasspathScanRequest> classpathScanRequests() {
+    return classpathScanRequestBuilder().specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
+      .specification(BusinessSpecifications.DEFAULT_ASSEMBLER).specification(BusinessSpecifications.DTO_INFO_RESOLVER)
+      .specification(BusinessSpecifications.DTO_OF).build();
+  }
 
-        streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class).forEach(defaultAssemblerClasses::add);
-        LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  @Override
+  public InitState initialize(InitContext initContext) {
+    streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class)
+      .forEach(assemblerClasses::add);
+    LOGGER.debug("Assemblers => {}", assemblerClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
-        LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
+    streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class)
+      .forEach(defaultAssemblerClasses::add);
+    LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class).forEach(dtoInfoResolverClasses::add);
-        sortByPriority(dtoInfoResolverClasses);
-        LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
+    streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
+    LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
 
-        // Add bindings for explicit assemblers
-        bindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, false));
-        overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
+    streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class)
+      .forEach(dtoInfoResolverClasses::add);
+    sortByPriority(dtoInfoResolverClasses);
+    LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
 
-        // Then add bindings for default assemblers
-        bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
+    // Add bindings for explicit assemblers
+    bindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, false));
+    overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
 
-        return InitState.INITIALIZED;
-    }
+    // Then add bindings for default assemblers
+    bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
 
-    @Override
-    public Object nativeUnitModule() {
-        return new AssemblerModule(bindings, dtoInfoResolverClasses, bindingStrategies);
-    }
+    return InitState.INITIALIZED;
+  }
 
-    @Override
-    public Object nativeOverridingUnitModule() {
-        return new AssemblerOverridingModule(overridingBindings);
-    }
+  @Override
+  public Object nativeUnitModule() {
+    return new AssemblerModule(bindings, dtoInfoResolverClasses, bindingStrategies);
+  }
 
-    @SuppressWarnings("unchecked")
-    private <C extends Class<?>> Collection<C> cast(Collection<Class<?>> classes) {
-        return (Collection<C>) classes;
-    }
+  @Override
+  public Object nativeOverridingUnitModule() {
+    return new AssemblerOverridingModule(overridingBindings);
+  }
+
+  @SuppressWarnings("unchecked")
+  private <C extends Class<?>> Collection<C> cast(Collection<Class<?>> classes) {
+    return (Collection<C>) classes;
+  }
 }

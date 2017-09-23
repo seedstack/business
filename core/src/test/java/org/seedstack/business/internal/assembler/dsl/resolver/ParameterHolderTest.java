@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -42,7 +42,8 @@
 //
 //        Assertions.assertThat(parameterHolder.parameters()).isNotEmpty();
 //        Assertions.assertThat(parameterHolder.parameters()).isEqualTo(new Object[]{1, 2, 3});
-//        Assertions.assertThat(parameterHolder.parameters()).isEqualTo(parameterHolder.parametersOfAggregateRoot(-1));
+//        Assertions.assertThat(parameterHolder.parameters()).isEqualTo(parameterHolder
+// .parametersOfAggregateRoot(-1));
 //    }
 //
 //    @Test
@@ -75,8 +76,10 @@
 //        Assertions.assertThat(parameterHolder.isEmpty()).isFalse();
 //
 //        Assertions.assertThat(parameterHolder.parameters()).isEmpty();
-//        Assertions.assertThat(parameterHolder.parametersOfAggregateRoot(0)).isEqualTo(new Object[]{1, 2});
-//        Assertions.assertThat(parameterHolder.parametersOfAggregateRoot(1)).isEqualTo(new Object[]{3});
+//        Assertions.assertThat(parameterHolder.parametersOfAggregateRoot(0)).isEqualTo(new
+// Object[]{1, 2});
+//        Assertions.assertThat(parameterHolder.parametersOfAggregateRoot(1)).isEqualTo(new
+// Object[]{3});
 //    }
 //
 //    @Test(expected = IllegalArgumentException.class)

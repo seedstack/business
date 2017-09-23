@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,12 +13,13 @@ package org.seedstack.business.fixtures.factory;
 import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class MyFactoryAggregate extends BaseAggregateRoot<String> {
-    private String id;
 
-    public MyFactoryAggregate() {
-    }
+  private String id;
 
-    public MyFactoryAggregate(String id) {
-        this.id = id;
-    }
+  public MyFactoryAggregate() {
+  }
+
+  public MyFactoryAggregate(String id) {
+    this.id = id;
+  }
 }

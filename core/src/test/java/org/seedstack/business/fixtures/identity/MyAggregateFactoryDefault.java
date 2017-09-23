@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,36 +10,37 @@
  */
 package org.seedstack.business.fixtures.identity;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.Create;
 
-import java.util.HashSet;
-import java.util.Set;
 
+public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implements
+  MyAggregateFactory {
 
-public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implements MyAggregateFactory {
-    @Override
-    public MyAggregate createMyAggregate(String name) {
-        MyAggregate myAggregate = new MyAggregate();
-        myAggregate.setName(name);
-        MyEntity mySubAggregate = createMySubAggregate();
-        myAggregate.setMySubEntity(mySubAggregate);
-        Set<MyEntity> mySubAggregates = new HashSet<>();
-        mySubAggregates.add(createMySubAggregate());
-        mySubAggregates.add(mySubAggregate);
-        mySubAggregates.add(createMySubAggregate());
-        mySubAggregates.add(createMySubAggregate());
-        myAggregate.setMySubAggregates(mySubAggregates);
-        return myAggregate;
-    }
+  @Override
+  public MyAggregate createMyAggregate(String name) {
+    MyAggregate myAggregate = new MyAggregate();
+    myAggregate.setName(name);
+    MyEntity mySubAggregate = createMySubAggregate();
+    myAggregate.setMySubEntity(mySubAggregate);
+    Set<MyEntity> mySubAggregates = new HashSet<>();
+    mySubAggregates.add(createMySubAggregate());
+    mySubAggregates.add(mySubAggregate);
+    mySubAggregates.add(createMySubAggregate());
+    mySubAggregates.add(createMySubAggregate());
+    myAggregate.setMySubAggregates(mySubAggregates);
+    return myAggregate;
+  }
 
-    @Override
-    public MyAggregate createMyAggregate() {
-        return new MyAggregate();
-    }
+  @Override
+  public MyAggregate createMyAggregate() {
+    return new MyAggregate();
+  }
 
-    @Create
-    MyEntity createMySubAggregate() {
-        return new MyEntity();
-    }
+  @Create
+  MyEntity createMySubAggregate() {
+    return new MyEntity();
+  }
 }

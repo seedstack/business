@@ -1,22 +1,25 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.fixtures.repositories;
 
 import com.google.inject.assistedinject.Assisted;
+import javax.inject.Inject;
 import org.seedstack.business.domain.AggregateRoot;
 
-import javax.inject.Inject;
 
+public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends
+  DummyRepository<A, K> {
 
-public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
-    @Inject
-    @SuppressWarnings("unchecked")
-    public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass, @Assisted("keyClass") Object keyClass) {
-        super((Class) aggregateRootClass, (Class) keyClass);
-    }
+  @Inject
+  @SuppressWarnings("unchecked")
+  public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass,
+    @Assisted("keyClass") Object keyClass) {
+    super((Class) aggregateRootClass, (Class) keyClass);
+  }
 }

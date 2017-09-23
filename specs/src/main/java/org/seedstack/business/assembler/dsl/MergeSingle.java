@@ -1,10 +1,11 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.assembler.dsl;
 
 import org.javatuples.Decade;
@@ -20,96 +21,215 @@ import org.javatuples.Unit;
 import org.seedstack.business.domain.AggregateRoot;
 
 /**
- * An element of the {@link FluentAssembler DSL} allowing to merge one DTO into an aggregate or a tuple of aggregates.
+ * An element of the {@link FluentAssembler DSL} allowing to merge one DTO into an aggregate or a
+ * tuple of aggregates.
  */
 public interface MergeSingle {
-    <A extends AggregateRoot<ID>, ID>
-    MergeFromRepository<A> into(Class<A> aggregateRootClass);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
-    MergeFromRepository<Pair<A1, A2>> into(Class<A1> first, Class<A2> second);
+  <AggregateRootT extends AggregateRoot<IdT>, IdT> MergeFromRepository<AggregateRootT> into(
+    Class<AggregateRootT> aggregateRootClass);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
-    MergeFromRepository<Triplet<A1, A2, A3>> into(Class<A1> first, Class<A2> second, Class<A3> third);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>> MergeFromRepository<Pair<A0, A1>> into(Class<A0> first, Class<A1> second);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
-    MergeFromRepository<Quartet<A1, A2, A3, A4>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>> MergeFromRepository<Triplet<A0, A1, A2>> into(Class<A0> first, Class<A1> second,
+    Class<A2> third);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
-    MergeFromRepository<Quintet<A1, A2, A3, A4, A5>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>> MergeFromRepository<Quartet<A0, A1, A2, A3>> into(Class<A0> first, Class<A1> second,
+    Class<A2> third, Class<A3> fourth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
-    MergeFromRepository<Sextet<A1, A2, A3, A4, A5, A6>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>> MergeFromRepository<Quintet<A0, A1, A2, A3, A4>> into(Class<A0> first,
+    Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
-    MergeFromRepository<Septet<A1, A2, A3, A4, A5, A6, A7>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>> MergeFromRepository<Sextet<A0, A1, A2, A3, A4, A5>> into(Class<A0> first,
+    Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
-    MergeFromRepository<Octet<A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>> MergeFromRepository<Septet<A0, A1, A2, A3, A4, A5, A6>> into(Class<A0> first,
+    Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth, Class<A6> seventh);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
-    MergeFromRepository<Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>> MergeFromRepository<Octet<A0, A1, A2, A3, A4, A5, A6, A7>> into(Class<A0> first,
+    Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth, Class<A6> seventh,
+    Class<A7> eighth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
-    MergeFromRepository<Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>> into(Class<A1> first, Class<A2> second, Class<A3> third, Class<A4> fourth, Class<A5> fifth, Class<A6> sixth, Class<A7> seventh, Class<A8> eighth, Class<A9> ninth, Class<A10> tenth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>> MergeFromRepository<Ennead<A0, A1, A2, A3, A4, A5, A6, A7, A8>> into(Class<A0> first,
+    Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth, Class<A6> seventh,
+    Class<A7> eighth, Class<A8> ninth);
 
-    <A extends AggregateRoot<ID>, ID>
-    void into(A aggregateRoot);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>,
+    A9 extends AggregateRoot<?>> MergeFromRepository<Decade<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>> into(
+    Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth,
+    Class<A6> seventh, Class<A7> eighth, Class<A8> ninth, Class<A9> tenth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
-    void into(A1 first, A2 second);
+  <AggregateRootT extends AggregateRoot<IdT>, IdT> void into(AggregateRootT aggregateRoot);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third);
+  <A0 extends AggregateRoot<?>, A1 extends AggregateRoot<?>> void into(A0 first, A1 second);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth);
+  <A0 extends AggregateRoot<?>, A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth, A5 sixth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth, A5 sixth, A6 seventh);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth, A9 ninth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth, A5 sixth, A6 seventh,
+    A7 eighth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
-    void into(A1 first, A2 second, A3 third, A4 fourth, A5 fifth, A6 sixth, A7 seventh, A8 eighth, A9 ninth, A10 tenth);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth, A5 sixth, A6 seventh,
+    A7 eighth, A8 ninth);
 
-    <A extends AggregateRoot<ID>, ID>
-    void into(Unit<A> unit);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>,
+    A9 extends AggregateRoot<?>> void into(A0 first, A1 second, A2 third, A3 fourth, A4 fifth, A5 sixth, A6 seventh,
+    A7 eighth, A8 ninth, A9 tenth);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>>
-    void into(Pair<A1, A2> pair);
+  <AggregateRootT extends AggregateRoot<IdT>, IdT> void into(Unit<AggregateRootT> unit);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>>
-    void into(Triplet<A1, A2, A3> triplet);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>> void into(Pair<A0, A1> pair);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>>
-    void into(Quartet<A1, A2, A3, A4> quartet);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>> void into(Triplet<A0, A1, A2> triplet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>>
-    void into(Quintet<A1, A2, A3, A4, A5> quintet);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>> void into(Quartet<A0, A1, A2, A3> quartet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>>
-    void into(Sextet<A1, A2, A3, A4, A5, A6> sextet);
+  <A0 extends AggregateRoot<?>, A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>> void into(Quintet<A0, A1, A2, A3, A4> quintet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>>
-    void into(Septet<A1, A2, A3, A4, A5, A6, A7> septet);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>> void into(Sextet<A0, A1, A2, A3, A4, A5> sextet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>>
-    void into(Octet<A1, A2, A3, A4, A5, A6, A7, A8> octet);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>> void into(Septet<A0, A1, A2, A3, A4, A5, A6> septet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>>
-    void into(Ennead<A1, A2, A3, A4, A5, A6, A7, A8, A9> ennead);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>> void into(Octet<A0, A1, A2, A3, A4, A5, A6, A7> octet);
 
-    <A1 extends AggregateRoot<?>, A2 extends AggregateRoot<?>, A3 extends AggregateRoot<?>, A4 extends AggregateRoot<?>, A5 extends AggregateRoot<?>, A6 extends AggregateRoot<?>, A7 extends AggregateRoot<?>, A8 extends AggregateRoot<?>, A9 extends AggregateRoot<?>, A10 extends AggregateRoot<?>>
-    void into(Decade<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10> decade);
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>> void into(Ennead<A0, A1, A2, A3, A4, A5, A6, A7, A8> ennead);
+
+  <A0 extends AggregateRoot<?>,
+    A1 extends AggregateRoot<?>,
+    A2 extends AggregateRoot<?>,
+    A3 extends AggregateRoot<?>,
+    A4 extends AggregateRoot<?>,
+    A5 extends AggregateRoot<?>,
+    A6 extends AggregateRoot<?>,
+    A7 extends AggregateRoot<?>,
+    A8 extends AggregateRoot<?>,
+    A9 extends AggregateRoot<?>> void into(Decade<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9> decade);
 }

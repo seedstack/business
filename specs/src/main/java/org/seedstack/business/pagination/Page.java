@@ -1,10 +1,11 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.pagination;
 
 /**
@@ -13,18 +14,25 @@ package org.seedstack.business.pagination;
  * @param <T> the item type
  */
 public interface Page<T> extends Slice<T> {
-    /**
-     * @return the page index.
-     */
-    long getIndex();
 
-    /**
-     * @return the maximum capacity of the page.
-     */
-    long getCapacity();
+  /**
+   * Returns the index of the page.
+   *
+   * @return the page index.
+   */
+  long getIndex();
 
-    /**
-     * @return the total size of the bigger list.
-     */
-    long getTotalSize();
+  /**
+   * Returns the maximum capacity of the page.
+   *
+   * @return the maximum capacity of the page.
+   */
+  long getCapacity();
+
+  /**
+   * Returns the total size of the list this page is derived from.
+   *
+   * @return the total size of the bigger list.
+   */
+  long getTotalSize();
 }

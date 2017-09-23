@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,38 +10,38 @@
  */
 package org.seedstack.business.fixtures.identity;
 
-import org.seedstack.business.domain.BaseAggregateRoot;
-
 import java.util.Set;
 import java.util.UUID;
+import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class MyAggregateWithNoIdentityManagement extends BaseAggregateRoot<UUID> {
-    private UUID id;
-    private String name;
-    private MyEntity mySubAggregate;
-    private Set<MyEntity> mySubAggregates;
 
-    public String getName() {
-        return name;
-    }
+  private UUID id;
+  private String name;
+  private MyEntity mySubAggregate;
+  private Set<MyEntity> mySubAggregates;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public MyEntity getMySubAggregate() {
-        return mySubAggregate;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setMySubAggregate(MyEntity mySubAggregate) {
-        this.mySubAggregate = mySubAggregate;
-    }
+  public MyEntity getMySubAggregate() {
+    return mySubAggregate;
+  }
 
-    public Set<MyEntity> getMySubAggregates() {
-        return mySubAggregates;
-    }
+  public void setMySubAggregate(MyEntity mySubAggregate) {
+    this.mySubAggregate = mySubAggregate;
+  }
 
-    public void setMySubAggregates(Set<MyEntity> mySubAggregates) {
-        this.mySubAggregates = mySubAggregates;
-    }
+  public Set<MyEntity> getMySubAggregates() {
+    return mySubAggregates;
+  }
+
+  public void setMySubAggregates(Set<MyEntity> mySubAggregates) {
+    this.mySubAggregates = mySubAggregates;
+  }
 }

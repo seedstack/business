@@ -1,12 +1,16 @@
-/**
- * Copyright (c) 2013-2016, The SeedStack authors <http://seedstack.org>
+/*
+ * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import javax.inject.Inject;
 import org.junit.Test;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.BaseAssembler;
@@ -18,134 +22,138 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 import org.seedstack.seed.it.AbstractSeedIT;
 
-import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class OverridingIT extends AbstractSeedIT {
-    @Inject
-    private SomeRepository someRepository;
-    @Inject
-    private Repository<SomeAggregate, String> someAggregateRepository;
-    @Inject
-    private Factory<SomeAggregate> someAggregateFactory;
-    @Inject
-    private SomeFactory someFactory;
-    @Inject
-    private SomeService someService;
-    @Inject
-    private SomePolicy somePolicy;
-    @Inject
-    private Assembler<SomeAggregate, SomeDto> someDtoAssembler;
 
-    @Test
-    public void overrideRepository() throws Exception {
-        assertThat(someRepository).isInstanceOf(SomeTestRepository.class);
-        assertThat(someAggregateRepository).isInstanceOf(SomeTestRepository.class);
-    }
+  @Inject
+  private SomeRepository someRepository;
+  @Inject
+  private Repository<SomeAggregate, String> someAggregateRepository;
+  @Inject
+  private Factory<SomeAggregate> someAggregateFactory;
+  @Inject
+  private SomeFactory someFactory;
+  @Inject
+  private SomeService someService;
+  @Inject
+  private SomePolicy somePolicy;
+  @Inject
+  private Assembler<SomeAggregate, SomeDto> someDtoAssembler;
 
-    @Test
-    public void overrideFactory() throws Exception {
-        assertThat(someAggregateFactory).isInstanceOf(SomeTestFactory.class);
-        assertThat(someFactory).isInstanceOf(SomeTestFactory.class);
-    }
+  @Test
+  public void overrideRepository() throws Exception {
+    assertThat(someRepository).isInstanceOf(SomeTestRepository.class);
+    assertThat(someAggregateRepository).isInstanceOf(SomeTestRepository.class);
+  }
 
-    @Test
-    public void overrideService() throws Exception {
-        assertThat(someService).isInstanceOf(SomeTestService.class);
-    }
+  @Test
+  public void overrideFactory() throws Exception {
+    assertThat(someAggregateFactory).isInstanceOf(SomeTestFactory.class);
+    assertThat(someFactory).isInstanceOf(SomeTestFactory.class);
+  }
 
-    @Test
-    public void overridePolicy() throws Exception {
-        assertThat(somePolicy).isInstanceOf(SomeTestPolicy.class);
-    }
+  @Test
+  public void overrideService() throws Exception {
+    assertThat(someService).isInstanceOf(SomeTestService.class);
+  }
 
-    @Test
-    public void overrideAssembler() throws Exception {
-        assertThat(someDtoAssembler).isInstanceOf(SomeTestAssembler.class);
-    }
+  @Test
+  public void overridePolicy() throws Exception {
+    assertThat(somePolicy).isInstanceOf(SomeTestPolicy.class);
+  }
 
-    static class SomeAggregate extends BaseAggregateRoot<String> {
-    }
+  @Test
+  public void overrideAssembler() throws Exception {
+    assertThat(someDtoAssembler).isInstanceOf(SomeTestAssembler.class);
+  }
 
-    static class SomeDto {
-    }
+  interface SomeRepository extends Repository<SomeAggregate, String> {
 
-    interface SomeRepository extends Repository<SomeAggregate, String> {
-    }
+  }
 
-    static class SomeNormalRepository extends BaseInMemoryRepository<SomeAggregate, String> implements SomeRepository {
-    }
+  interface SomeFactory extends Factory<SomeAggregate> {
 
-    @Overriding
-    static class SomeTestRepository extends BaseInMemoryRepository<SomeAggregate, String> implements SomeRepository {
-    }
+  }
 
-    interface SomeFactory extends Factory<SomeAggregate> {
+  @Service
+  interface SomeService {
 
-    }
+  }
 
-    static class SomeNormalFactory extends BaseFactory<SomeAggregate> implements SomeFactory {
+  @DomainPolicy
+  interface SomePolicy {
 
-    }
+  }
 
-    @Overriding
-    static class SomeTestFactory extends BaseFactory<SomeAggregate> implements SomeFactory {
+  static class SomeAggregate extends BaseAggregateRoot<String> {
 
-    }
+  }
 
-    static class SomeAssembler extends BaseAssembler<SomeAggregate, SomeDto> {
+  static class SomeDto {
 
-        @Override
-        public void mergeAggregateIntoDto(SomeAggregate sourceAggregate, SomeDto targetDto) {
+  }
 
-        }
+  static class SomeNormalRepository extends BaseInMemoryRepository<SomeAggregate, String> implements
+    SomeRepository {
 
-        @Override
-        public void mergeDtoIntoAggregate(SomeDto sourceDto, SomeAggregate targetAggregate) {
+  }
 
-        }
-    }
+  @Overriding
+  static class SomeTestRepository extends BaseInMemoryRepository<SomeAggregate, String> implements
+    SomeRepository {
 
-    @Overriding
-    static class SomeTestAssembler extends BaseAssembler<SomeAggregate, SomeDto> {
+  }
 
-        @Override
-        public void mergeAggregateIntoDto(SomeAggregate sourceAggregate, SomeDto targetDto) {
+  static class SomeNormalFactory extends BaseFactory<SomeAggregate> implements SomeFactory {
 
-        }
+  }
 
-        @Override
-        public void mergeDtoIntoAggregate(SomeDto sourceDto, SomeAggregate targetAggregate) {
+  @Overriding
+  static class SomeTestFactory extends BaseFactory<SomeAggregate> implements SomeFactory {
 
-        }
-    }
+  }
 
-    @Service
-    interface SomeService {
+  static class SomeAssembler extends BaseAssembler<SomeAggregate, SomeDto> {
+
+    @Override
+    public void mergeAggregateIntoDto(SomeAggregate sourceAggregate, SomeDto targetDto) {
 
     }
 
-    static class SomeNormalService implements SomeService {
+    @Override
+    public void mergeDtoIntoAggregate(SomeDto sourceDto, SomeAggregate targetAggregate) {
+
+    }
+  }
+
+  @Overriding
+  static class SomeTestAssembler extends BaseAssembler<SomeAggregate, SomeDto> {
+
+    @Override
+    public void mergeAggregateIntoDto(SomeAggregate sourceAggregate, SomeDto targetDto) {
 
     }
 
-    @Overriding
-    static class SomeTestService implements SomeService {
+    @Override
+    public void mergeDtoIntoAggregate(SomeDto sourceDto, SomeAggregate targetAggregate) {
 
     }
+  }
 
-    @DomainPolicy
-    interface SomePolicy {
+  static class SomeNormalService implements SomeService {
 
-    }
+  }
 
-    static class SomeNormalPolicy implements SomePolicy {
+  @Overriding
+  static class SomeTestService implements SomeService {
 
-    }
+  }
 
-    @Overriding
-    static class SomeTestPolicy implements SomePolicy {
+  static class SomeNormalPolicy implements SomePolicy {
 
-    }
+  }
+
+  @Overriding
+  static class SomeTestPolicy implements SomePolicy {
+
+  }
 }
