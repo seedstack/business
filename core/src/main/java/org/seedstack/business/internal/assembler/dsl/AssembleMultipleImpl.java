@@ -8,6 +8,7 @@
 
 package org.seedstack.business.internal.assembler.dsl;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.lang.annotation.Annotation;
@@ -36,12 +37,10 @@ class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, Tuple
 
   AssembleMultipleImpl(Context context, Stream<AggregateRootT> aggregates, Stream<TupleT> aggregateTuples) {
     this.context = checkNotNull(context, "Context must not be null");
-    if (aggregates == null && aggregateTuples == null) {
-      throw new NullPointerException("Cannot assemble null");
-    }
-    if (aggregates != null && aggregateTuples != null) {
-      throw new IllegalArgumentException("Cannot specify both aggregates and tuples to assemble");
-    }
+    checkArgument(aggregates != null || aggregateTuples != null,
+      "Cannot assemble null");
+    checkArgument(aggregates == null || aggregateTuples == null,
+      "Cannot specify both aggregates and tuples to assemble");
     this.aggregates = aggregates;
     this.aggregateTuples = aggregateTuples;
   }

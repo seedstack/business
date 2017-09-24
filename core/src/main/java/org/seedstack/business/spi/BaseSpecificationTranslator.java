@@ -18,6 +18,8 @@ import com.google.inject.util.Types;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import javax.inject.Inject;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.SubstitutableSpecification;
@@ -66,7 +68,10 @@ public abstract class BaseSpecificationTranslator<C, T> implements Specification
       try {
         converter = injector.getInstance(buildKey(specificationClass));
       } catch (ConfigurationException e) {
-        throw new RuntimeException("No converter found for " + specificationClass.getName(), e);
+        throw BusinessException.wrap(e, BusinessErrorCode.NO_CONVERTER_FOUND)
+          .put("contextClass", contextClass)
+          .put("targetClass", targetClass)
+          .put("specificationClass", specificationClass);
       }
       return converter.convert(specification, context, this);
     }

@@ -124,7 +124,8 @@ class ParameterHolder<DtoT> {
       return new Object[]{uniqueElement};
     } else if (aggregateGetters != null) {
       Object[] values = new Object[aggregateGetters.length];
-      for (int i = 0, length = aggregateGetters.length; i < length; i++) {
+      for (int i = 0,
+        length = aggregateGetters.length; i < length; i++) {
         values[i] = ReflectUtils.invoke(aggregateGetters[i], dto);
       }
       return values;
@@ -144,7 +145,8 @@ class ParameterHolder<DtoT> {
       Method[] methods = tupleGetters[aggregateIndex];
       if (methods != null && methods.length > 0) {
         Object[] values = new Object[methods.length];
-        for (int i = 0, length = methods.length; i < length; i++) {
+        for (int i = 0,
+          length = methods.length; i < length; i++) {
           values[i] = ReflectUtils.invoke(methods[i], dto);
         }
         return values;

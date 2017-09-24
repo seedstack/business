@@ -55,7 +55,7 @@ public final class PluginUtils {
       Specification<Class<?>> spec = new SpecificationBuilder<>(
         classIsDescendantOf(anInterface).and(classIsInterface().negate())
           .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
-      classpathScanRequestBuilder = classpathScanRequestBuilder.specification(spec);
+      classpathScanRequestBuilder.specification(spec);
       specsByInterface.put(anInterface, (Specification<? extends T>) spec);
     }
     return specsByInterface;

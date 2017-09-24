@@ -75,10 +75,8 @@ public abstract class BaseFactory<P extends Producible> implements Factory<P> {
         .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
     }
 
-    if (producedInstance instanceof Entity) {
-      if (IdentityResolver.INSTANCE.test(effectivelyProducedClass)) {
-        producedInstance = (P) identityService.identify((Entity<?>) producedInstance);
-      }
+    if (producedInstance instanceof Entity && IdentityResolver.INSTANCE.test(effectivelyProducedClass)) {
+      producedInstance = (P) identityService.identify((Entity<?>) producedInstance);
     }
 
     return producedInstance;

@@ -71,7 +71,7 @@ public class FluentAssemblerAssembleIT {
     Assertions.assertThat(dto.getPublishDate()).isEqualTo(PUBLISH_DATE);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void assembleNullAggregate() {
     fluently.assemble((AggregateRoot<?>) null).to(BookDto.class);
   }
@@ -103,7 +103,7 @@ public class FluentAssemblerAssembleIT {
     Assertions.assertThat(dto2.getPublishDate()).isEqualTo(PUBLISH_DATE);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void assembleNullStream() {
     fluently.assemble((Stream<? extends AggregateRoot<Object>>) null).toListOf(BookDto.class);
   }

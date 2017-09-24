@@ -10,7 +10,6 @@ package org.seedstack.business.pagination.dsl;
 
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
-import org.seedstack.business.specification.Specification;
 
 /**
  * An element of the {@link Paginator} DSL allowing to specify repository options.
@@ -23,7 +22,7 @@ public interface RepositoryOptionsPicker<AggregateRootT extends AggregateRoot<Id
 
   /**
    * Allows to specify the repository options used when invoking the repository {@link
-   * Repository#get(Specification, Repository.Option...)} method.
+   * Repository#get(org.seedstack.business.specification.Specification, Repository.Option...)} method.
    *
    * @param options the options to use.
    * @return the next operation of the paginator DSL, allowing to specify the pagination type.

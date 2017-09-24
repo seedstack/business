@@ -26,6 +26,8 @@ import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.javatuples.Unit;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 
 /**
  * Static utility methods to manage tuples.
@@ -48,7 +50,7 @@ public final class Tuples {
     try {
       return (TupleT) tupleClass.getMethod("fromCollection", Collection.class).invoke(null, objects);
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      throw new RuntimeException("Unable to create tuple", e);
+      throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
     }
   }
 
@@ -65,7 +67,7 @@ public final class Tuples {
     try {
       return (TupleT) tupleClass.getMethod("fromArray", Object[].class).invoke(null, new Object[]{objects});
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      throw new RuntimeException("Unable to create tuple", e);
+      throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
     }
   }
 

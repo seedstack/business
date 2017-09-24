@@ -32,17 +32,18 @@ public abstract class StringSpecification implements Specification<String> {
 
   @Override
   public boolean isSatisfiedBy(String candidateValue) {
+    String testValue = candidateValue;
     if (options.isTrimmed()) {
-      candidateValue = CharMatcher.WHITESPACE.trimFrom(candidateValue);
+      testValue = CharMatcher.WHITESPACE.trimFrom(testValue);
     } else {
       if (options.isLeadTrimmed()) {
-        candidateValue = CharMatcher.WHITESPACE.trimLeadingFrom(candidateValue);
+        testValue = CharMatcher.WHITESPACE.trimLeadingFrom(testValue);
       }
       if (options.isTailTrimmed()) {
-        candidateValue = CharMatcher.WHITESPACE.trimTrailingFrom(candidateValue);
+        testValue = CharMatcher.WHITESPACE.trimTrailingFrom(testValue);
       }
     }
-    return isSatisfiedByString(candidateValue);
+    return isSatisfiedByString(testValue);
   }
 
   protected abstract boolean isSatisfiedByString(String candidateString);

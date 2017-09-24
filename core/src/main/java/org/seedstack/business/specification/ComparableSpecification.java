@@ -55,7 +55,7 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
   @Override
   public boolean isSatisfiedBy(T candidate) {
     Class<? extends Comparable> candidateClass = candidate.getClass();
-    if (candidateClass != expectedValueClass && convertibleToLong.contains(candidateClass)) {
+    if (!candidateClass.equals(expectedValueClass) && convertibleToLong.contains(candidateClass)) {
       return asLong((Number) candidate).compareTo(expectedValue) == expectedResult;
     } else {
       return candidate.compareTo(expectedValue) == expectedResult;

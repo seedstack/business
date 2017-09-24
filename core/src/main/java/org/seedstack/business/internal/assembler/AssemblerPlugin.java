@@ -94,9 +94,4 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
   public Object nativeOverridingUnitModule() {
     return new AssemblerOverridingModule(overridingBindings);
   }
-
-  @SuppressWarnings("unchecked")
-  private <C extends Class<?>> Collection<C> cast(Collection<Class<?>> classes) {
-    return (Collection<C>) classes;
-  }
 }
