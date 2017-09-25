@@ -45,13 +45,13 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
   private static final ConcurrentMap<Class<?>, DtoInfo<?>> cache = new ConcurrentHashMap<>();
 
   @Override
-  public <DtoT> boolean supports(DtoT dto) {
+  public <D> boolean supports(D dto) {
     return getCachedInfo(dto).supported;
   }
 
   @Override
-  public <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass, int position) {
-    ParameterHolder<DtoT> parameterHolder = getCachedInfo(dto).idParameterHolder;
+  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
+    ParameterHolder<D> parameterHolder = getCachedInfo(dto).idParameterHolder;
 
     if (parameterHolder.isEmpty()) {
       throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
@@ -69,9 +69,9 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
   }
 
   @Override
-  public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass, int position) {
-    ParameterHolder<DtoT> parameterHolder = getCachedInfo(dto).aggregateParameterHolder;
+  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
+      int position) {
+    ParameterHolder<D> parameterHolder = getCachedInfo(dto).aggregateParameterHolder;
 
     if (position == -1) {
       return createFromFactory(aggregateRootClass, parameterHolder.parameters(dto));
@@ -82,11 +82,11 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
   }
 
   @SuppressWarnings("unchecked")
-  private <DtoT> DtoInfo<DtoT> getCachedInfo(DtoT dto) {
-    return (DtoInfo<DtoT>) cache.computeIfAbsent(dto.getClass(), dtoClass -> {
-      final ParameterHolder<DtoT> idParameterHolder = new ParameterHolder<>((Class<DtoT>) dtoClass);
-      final ParameterHolder<DtoT> aggregateParameterHolder = new ParameterHolder<>(
-          (Class<DtoT>) dtoClass);
+  private <D> DtoInfo<D> getCachedInfo(D dto) {
+    return (DtoInfo<D>) cache.computeIfAbsent(dto.getClass(), dtoClass -> {
+      final ParameterHolder<D> idParameterHolder = new ParameterHolder<>((Class<D>) dtoClass);
+      final ParameterHolder<D> aggregateParameterHolder = new ParameterHolder<>(
+          (Class<D>) dtoClass);
       final AtomicBoolean supported = new AtomicBoolean(false);
 
       LOGGER.debug("Resolving DTO information on {}", dtoClass);
@@ -146,14 +146,14 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
     });
   }
 
-  private static class DtoInfo<DtoT> {
+  private static class DtoInfo<D> {
 
     final boolean supported;
-    final ParameterHolder<DtoT> idParameterHolder;
-    final ParameterHolder<DtoT> aggregateParameterHolder;
+    final ParameterHolder<D> idParameterHolder;
+    final ParameterHolder<D> aggregateParameterHolder;
 
-    private DtoInfo(boolean supported, ParameterHolder<DtoT> idParameterHolder,
-        ParameterHolder<DtoT> aggregateParameterHolder) {
+    private DtoInfo(boolean supported, ParameterHolder<D> idParameterHolder,
+        ParameterHolder<D> aggregateParameterHolder) {
       this.supported = supported;
       this.idParameterHolder = idParameterHolder;
       this.aggregateParameterHolder = aggregateParameterHolder;

@@ -25,22 +25,21 @@ import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
 
-class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
+class MergeSingleImpl<D> implements MergeSingleWithQualifier {
 
   private final Context context;
-  private final DtoT dto;
-  private final Class<DtoT> dtoClass;
+  private final D dto;
+  private final Class<D> dtoClass;
 
   @SuppressWarnings("unchecked")
-  MergeSingleImpl(Context context, DtoT dto) {
+  MergeSingleImpl(Context context, D dto) {
     this.context = context;
     this.dto = dto;
-    this.dtoClass = (Class<DtoT>) dto.getClass();
+    this.dtoClass = (Class<D>) dto.getClass();
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> MergeFromRepository<AggregateRootT> into(
-      Class<AggregateRootT> aggregateRootClass) {
+  public <A extends AggregateRoot<I>, I> MergeFromRepository<A> into(Class<A> aggregateRootClass) {
     return new MergeSingleAggregateFromRepositoryImpl<>(context, dto, aggregateRootClass);
   }
 
@@ -55,8 +54,7 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
   public <A0 extends AggregateRoot<?>,
       A1 extends AggregateRoot<?>,
       A2 extends AggregateRoot<?>> MergeFromRepository<Triplet<A0, A1, A2>> into(Class<A0> first,
-      Class<A1> second,
-      Class<A2> third) {
+      Class<A1> second, Class<A2> third) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third);
   }
 
@@ -65,8 +63,7 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A1 extends AggregateRoot<?>,
       A2 extends AggregateRoot<?>,
       A3 extends AggregateRoot<?>> MergeFromRepository<Quartet<A0, A1, A2, A3>> into(
-      Class<A0> first, Class<A1> second,
-      Class<A2> third, Class<A3> fourth) {
+      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth);
   }
 
@@ -76,8 +73,7 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A2 extends AggregateRoot<?>,
       A3 extends AggregateRoot<?>,
       A4 extends AggregateRoot<?>> MergeFromRepository<Quintet<A0, A1, A2, A3, A4>> into(
-      Class<A0> first,
-      Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth) {
+      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth);
   }
@@ -89,8 +85,8 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A3 extends AggregateRoot<?>,
       A4 extends AggregateRoot<?>,
       A5 extends AggregateRoot<?>> MergeFromRepository<Sextet<A0, A1, A2, A3, A4, A5>> into(
-      Class<A0> first,
-      Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth) {
+      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth,
+      Class<A5> sixth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth, sixth);
   }
@@ -103,9 +99,8 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A4 extends AggregateRoot<?>,
       A5 extends AggregateRoot<?>,
       A6 extends AggregateRoot<?>> MergeFromRepository<Septet<A0, A1, A2, A3, A4, A5, A6>> into(
-      Class<A0> first,
-      Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth,
-      Class<A6> seventh) {
+      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth,
+      Class<A5> sixth, Class<A6> seventh) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth, sixth, seventh);
   }
@@ -119,10 +114,8 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A5 extends AggregateRoot<?>,
       A6 extends AggregateRoot<?>,
       A7 extends AggregateRoot<?>> MergeFromRepository<Octet<A0, A1, A2, A3, A4, A5, A6, A7>> into(
-      Class<A0> first,
-      Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth,
-      Class<A6> seventh,
-      Class<A7> eighth) {
+      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth,
+      Class<A5> sixth, Class<A6> seventh, Class<A7> eighth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth, sixth, seventh,
         eighth);
@@ -138,11 +131,8 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A6 extends AggregateRoot<?>,
       A7 extends AggregateRoot<?>,
       A8 extends AggregateRoot<?>> MergeFromRepository<Ennead<A0, A1, A2, A3, A4, A5, A6, A7,
-      A8>> into(
-      Class<A0> first,
-      Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth, Class<A5> sixth,
-      Class<A6> seventh,
-      Class<A7> eighth, Class<A8> ninth) {
+      A8>> into(Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth,
+      Class<A4> fifth, Class<A5> sixth, Class<A6> seventh, Class<A7> eighth, Class<A8> ninth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth, sixth, seventh,
         eighth, ninth);
@@ -159,17 +149,16 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
       A7 extends AggregateRoot<?>,
       A8 extends AggregateRoot<?>,
       A9 extends AggregateRoot<?>> MergeFromRepository<Decade<A0, A1, A2, A3, A4, A5, A6, A7, A8,
-      A9>> into(
-      Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth, Class<A4> fifth,
-      Class<A5> sixth,
-      Class<A6> seventh, Class<A7> eighth, Class<A8> ninth, Class<A9> tenth) {
+      A9>> into(Class<A0> first, Class<A1> second, Class<A2> third, Class<A3> fourth,
+      Class<A4> fifth, Class<A5> sixth, Class<A6> seventh, Class<A7> eighth, Class<A8> ninth,
+      Class<A9> tenth) {
     return new MergeSingleTupleFromRepositoryImpl<>(context, dto, first, second, third, fourth,
         fifth, sixth, seventh,
         eighth, ninth, tenth);
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> void into(Unit<AggregateRootT> unit) {
+  public <A extends AggregateRoot<I>, I> void into(Unit<A> unit) {
     context.tupleAssemblerOf(Tuples.itemClasses(unit), dtoClass).mergeDtoIntoAggregate(dto, unit);
   }
 
@@ -271,8 +260,8 @@ class MergeSingleImpl<DtoT> implements MergeSingleWithQualifier {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> void into(AggregateRootT aggregateRoot) {
-    context.assemblerOf((Class<AggregateRootT>) aggregateRoot.getClass(), dtoClass)
+  public <A extends AggregateRoot<I>, I> void into(A aggregateRoot) {
+    context.assemblerOf((Class<A>) aggregateRoot.getClass(), dtoClass)
         .mergeDtoIntoAggregate(dto, aggregateRoot);
   }
 

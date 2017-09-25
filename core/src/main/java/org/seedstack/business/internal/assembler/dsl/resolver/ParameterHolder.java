@@ -24,9 +24,9 @@ import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.reflect.ReflectUtils;
 
 
-class ParameterHolder<DtoT> {
+class ParameterHolder<D> {
 
-  private final Class<DtoT> dtoClass;
+  private final Class<D> dtoClass;
   private Map<Integer, SortedMap<Integer, Method>> methodMap = new HashMap<>();
 
   // for DTO mapped to only one aggregate
@@ -37,7 +37,7 @@ class ParameterHolder<DtoT> {
   private Method[] tupleGetter;
   private Method[][] tupleGetters;
 
-  ParameterHolder(Class<DtoT> dtoClass) {
+  ParameterHolder(Class<D> dtoClass) {
     this.dtoClass = dtoClass;
   }
 
@@ -67,8 +67,7 @@ class ParameterHolder<DtoT> {
   }
 
   private void internalAddParameter(Class<? extends Annotation> annotation, int aggregateIndex,
-      int index,
-      Method getter) {
+      int index, Method getter) {
     checkState(methodMap != null, "Cannot add parameter after having called freeze()");
     if (methodMap.computeIfAbsent(aggregateIndex, k -> new TreeMap<>()).putIfAbsent(index, getter)
         != null) {
@@ -95,7 +94,7 @@ class ParameterHolder<DtoT> {
     }
   }
 
-  ParameterHolder<DtoT> freeze() {
+  ParameterHolder<D> freeze() {
     if (methodMap.containsKey(-1)) {
       SortedMap<Integer, Method> aggregateGetters = methodMap.get(-1);
       if (aggregateGetters.containsKey(-1)) {
@@ -122,7 +121,7 @@ class ParameterHolder<DtoT> {
     return this;
   }
 
-  Object[] parameters(DtoT dto) {
+  Object[] parameters(D dto) {
     checkNotNull(dto, "DTO cannot be null");
 
     Object uniqueElement = uniqueElement(dto);
@@ -140,7 +139,7 @@ class ParameterHolder<DtoT> {
     }
   }
 
-  Object[] parametersOfAggregateRoot(DtoT dto, int aggregateIndex) {
+  Object[] parametersOfAggregateRoot(D dto, int aggregateIndex) {
     checkNotNull(dto, "DTO cannot be null");
     checkArgument(aggregateIndex >= 0, "Aggregate index must be greater than or equal to zero");
 
@@ -161,7 +160,7 @@ class ParameterHolder<DtoT> {
     return new Object[0];
   }
 
-  <IdT> IdT uniqueElement(DtoT dto) {
+  <I> I uniqueElement(D dto) {
     checkNotNull(dto, "DTO cannot be null");
 
     if (aggregateGetter != null) {
@@ -171,7 +170,7 @@ class ParameterHolder<DtoT> {
     }
   }
 
-  <IdT> IdT uniqueElementForAggregate(DtoT dto, int aggregateIndex) {
+  <I> I uniqueElementForAggregate(D dto, int aggregateIndex) {
     checkNotNull(dto, "DTO cannot be null");
     checkArgument(aggregateIndex >= 0, "Aggregate index must be greater than or equal to zero");
 

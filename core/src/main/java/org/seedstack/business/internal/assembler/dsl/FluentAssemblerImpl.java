@@ -40,65 +40,60 @@ public class FluentAssemblerImpl implements FluentAssembler {
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleSingleWithQualifier assemble(
-      AggregateRootT aggregateRoot) {
+  public <A extends AggregateRoot<I>, I> AssembleSingleWithQualifier assemble(A aggregateRoot) {
     return new AssembleSingleImpl<>(context, aggregateRoot, null);
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
-      Iterable<AggregateRootT> iterable) {
+  public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(
+      Iterable<A> iterable) {
     return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false),
         null);
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
-      Stream<AggregateRootT> stream) {
+  public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Stream<A> stream) {
     return new AssembleMultipleImpl<>(context, stream, null);
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssemblePageWithQualifier assemble(
-      Page<AggregateRootT> page) {
+  public <A extends AggregateRoot<I>, I> AssemblePageWithQualifier assemble(Page<A> page) {
     return new AssemblePageImpl<>(context, page, null);
   }
 
   @Override
-  public <TupleT extends Tuple> AssembleSingleWithQualifier assembleTuple(TupleT tuple) {
+  public <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple) {
     return new AssembleSingleImpl<>(context, null, tuple);
   }
 
   @Override
-  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(
-      Stream<TupleT> stream) {
+  public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream) {
     return new AssembleMultipleImpl<>(context, null, stream);
   }
 
   @Override
-  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(
-      Iterable<TupleT> iterable) {
+  public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable) {
     return new AssembleMultipleImpl<>(context, null,
         StreamSupport.stream(iterable.spliterator(), false));
   }
 
   @Override
-  public <TupleT extends Tuple> AssemblePageWithQualifier assembleTuples(Page<TupleT> page) {
+  public <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page) {
     return new AssemblePageImpl<>(context, null, page);
   }
 
   @Override
-  public <DtoT> MergeSingleWithQualifier merge(DtoT dto) {
+  public <D> MergeSingleWithQualifier merge(D dto) {
     return new MergeSingleImpl<>(context, dto);
   }
 
   @Override
-  public <DtoT> MergeMultipleWithQualifier merge(Stream<DtoT> stream) {
+  public <D> MergeMultipleWithQualifier merge(Stream<D> stream) {
     return new MergeMultipleImpl<>(context, stream);
   }
 
   @Override
-  public <DtoT> MergeMultipleWithQualifier merge(Iterable<DtoT> iterable) {
+  public <D> MergeMultipleWithQualifier merge(Iterable<D> iterable) {
     return new MergeMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false));
   }
 }

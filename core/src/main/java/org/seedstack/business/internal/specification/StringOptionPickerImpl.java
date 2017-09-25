@@ -11,37 +11,37 @@ package org.seedstack.business.internal.specification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.StringOptionPicker;
 
-class StringOptionPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> extends
-    OperatorPickerImpl<T, SelectorT> implements StringOptionPicker<T, SelectorT> {
+class StringOptionPickerImpl<T, S extends BaseSelector<T, S>> extends
+    OperatorPickerImpl<T, S> implements StringOptionPicker<T, S> {
 
   private final StringValueOptionsImpl stringValueOptions;
 
-  StringOptionPickerImpl(SpecificationBuilderContext<T, SelectorT> context,
+  StringOptionPickerImpl(SpecificationBuilderContext<T, S> context,
       StringValueOptionsImpl stringValueOptions) {
     super(context);
     this.stringValueOptions = stringValueOptions;
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> trimming() {
+  public StringOptionPicker<T, S> trimming() {
     stringValueOptions.setTrimmed(true);
     return this;
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> trimmingLead() {
+  public StringOptionPicker<T, S> trimmingLead() {
     stringValueOptions.setLeftTrimmed(true);
     return this;
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> trimmingTail() {
+  public StringOptionPicker<T, S> trimmingTail() {
     stringValueOptions.setRightTrimmed(true);
     return this;
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> ignoringCase() {
+  public StringOptionPicker<T, S> ignoringCase() {
     stringValueOptions.setIgnoringCase(true);
     return this;
   }

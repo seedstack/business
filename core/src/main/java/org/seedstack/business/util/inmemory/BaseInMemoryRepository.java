@@ -26,14 +26,14 @@ import org.seedstack.business.specification.Specification;
  * An helper base class that can be extended to create an in-memory implementation of a {@link
  * Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root class.
  */
-public abstract class BaseInMemoryRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-    BaseRepository<AggregateRootT, IdT> {
+public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> extends
+    BaseRepository<A, I> {
 
   private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
   @SuppressWarnings("unchecked")
-  private final Map<IdT, AggregateRootT> bucket = (Map<IdT, AggregateRootT>) buckets
+  private final Map<I, A> bucket = (Map<I, A>) buckets
       .computeIfAbsent(getAggregateRootClass(),
-          key -> new ConcurrentHashMap<IdT, AggregateRootT>());
+          key -> new ConcurrentHashMap<I, A>());
 
   /**
    * Creates a base in-memory repository. Actual classes managed by the repository are determined by
@@ -49,19 +49,18 @@ public abstract class BaseInMemoryRepository<AggregateRootT extends AggregateRoo
    * @param aggregateRootClass the actual aggregate root class.
    * @param idClass            the actual aggregate identifier class.
    */
-  protected BaseInMemoryRepository(Class<AggregateRootT> aggregateRootClass, Class<IdT> idClass) {
+  protected BaseInMemoryRepository(Class<A> aggregateRootClass, Class<I> idClass) {
     super(aggregateRootClass, idClass);
   }
 
   @Override
-  public void add(AggregateRootT a) throws AggregateExistsException {
+  public void add(A a) throws AggregateExistsException {
     bucket.put(a.getId(), a);
   }
 
   @Override
-  public Stream<AggregateRootT> get(Specification<AggregateRootT> specification,
-      Option... options) {
-    Stream<AggregateRootT> stream = bucket.values().stream().filter(specification.asPredicate());
+  public Stream<A> get(Specification<A> specification, Option... options) {
+    Stream<A> stream = bucket.values().stream().filter(specification.asPredicate());
     for (Option option : options) {
       if (option instanceof OffsetOption) {
         stream = stream.skip(((OffsetOption) option).getOffset());
@@ -75,11 +74,11 @@ public abstract class BaseInMemoryRepository<AggregateRootT extends AggregateRoo
   }
 
   @Override
-  public long remove(Specification<AggregateRootT> specification) {
-    Iterator<Map.Entry<IdT, AggregateRootT>> iterator = bucket.entrySet().iterator();
+  public long remove(Specification<A> specification) {
+    Iterator<Map.Entry<I, A>> iterator = bucket.entrySet().iterator();
     int count = 0;
     while (iterator.hasNext()) {
-      Map.Entry<IdT, AggregateRootT> next = iterator.next();
+      Map.Entry<I, A> next = iterator.next();
       if (specification.isSatisfiedBy(next.getValue())) {
         iterator.remove();
         count++;

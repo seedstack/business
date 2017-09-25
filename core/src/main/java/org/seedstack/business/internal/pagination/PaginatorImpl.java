@@ -16,9 +16,8 @@ import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
 class PaginatorImpl implements Paginator {
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT> RepositoryOptionsPicker<AggregateRootT,
-      IdT> paginate(
-      Repository<AggregateRootT, IdT> repository) {
+  public <A extends AggregateRoot<I>, I> RepositoryOptionsPicker<A, I> paginate(
+      Repository<A, I> repository) {
     return new RepositoryOptionsTypePickerImpl<>(repository);
   }
 }

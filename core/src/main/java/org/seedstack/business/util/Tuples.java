@@ -40,15 +40,15 @@ public final class Tuples {
   /**
    * Builds a tuple from a collection of objects.
    *
-   * @param objects  the collection of objects (size must be less or equal than 10).
-   * @param <TupleT> the tuple type.
+   * @param objects the collection of objects (size must be less or equal than 10).
+   * @param <T>     the tuple type.
    * @return the constructed tuple.
    */
   @SuppressWarnings("unchecked")
-  public static <TupleT extends Tuple> TupleT create(Collection<?> objects) {
+  public static <T extends Tuple> T create(Collection<?> objects) {
     Class<? extends Tuple> tupleClass = classOfTuple(objects.size());
     try {
-      return (TupleT) tupleClass.getMethod("fromCollection", Collection.class)
+      return (T) tupleClass.getMethod("fromCollection", Collection.class)
           .invoke(null, objects);
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
@@ -58,15 +58,15 @@ public final class Tuples {
   /**
    * Builds a tuple from an array of objects.
    *
-   * @param objects  the collection of objects (size must be less or equal than 10).
-   * @param <TupleT> the tuple type.
+   * @param objects the collection of objects (size must be less or equal than 10).
+   * @param <T>     the tuple type.
    * @return the constructed tuple.
    */
   @SuppressWarnings("unchecked")
-  public static <TupleT extends Tuple> TupleT create(Object... objects) {
+  public static <T extends Tuple> T create(Object... objects) {
     Class<? extends Tuple> tupleClass = classOfTuple(objects.length);
     try {
-      return (TupleT) tupleClass.getMethod("fromArray", Object[].class)
+      return (T) tupleClass.getMethod("fromArray", Object[].class)
           .invoke(null, new Object[]{objects});
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
@@ -76,13 +76,13 @@ public final class Tuples {
   /**
    * Builds a tuple from an {@link Iterable}, optionally limiting the number of items.
    *
-   * @param objects  the iterable of objects (size must be less or equal than 10).
-   * @param limit    the item number limit (-1 means no limit).
-   * @param <TupleT> the tuple type.
+   * @param objects the iterable of objects (size must be less or equal than 10).
+   * @param limit   the item number limit (-1 means no limit).
+   * @param <T>     the tuple type.
    * @return the constructed tuple.
    */
   @SuppressWarnings("unchecked")
-  public static <TupleT extends Tuple> TupleT create(Iterable<?> objects, int limit) {
+  public static <T extends Tuple> T create(Iterable<?> objects, int limit) {
     List<Object> list = new ArrayList<>();
     int index = 0;
     for (Object object : objects) {
@@ -97,11 +97,11 @@ public final class Tuples {
   /**
    * Builds a tuple from an {@link Iterable}.
    *
-   * @param objects  the iterable of objects (size must be less or equal than 10).
-   * @param <TupleT> the tuple type.
+   * @param objects the iterable of objects (size must be less or equal than 10).
+   * @param <T>     the tuple type.
    * @return the constructed tuple.
    */
-  public static <TupleT extends Tuple> TupleT create(Iterable<?> objects) {
+  public static <T extends Tuple> T create(Iterable<?> objects) {
     return create(objects, -1);
   }
 

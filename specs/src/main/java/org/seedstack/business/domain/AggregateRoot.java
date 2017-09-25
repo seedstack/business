@@ -15,11 +15,11 @@ package org.seedstack.business.domain;
  * provides an implementation of the {@link #getId()}, {@link #equals(Object)} and {@link
  * #hashCode()} methods. </p>
  *
- * @param <IdT> the type of the aggregate root identifier.
+ * @param <I> the type of the aggregate root identifier.
  * @see DomainAggregateRoot
  * @see Entity
  */
 @DomainAggregateRoot
-public interface AggregateRoot<IdT> extends Entity<IdT>, Producible {
+public interface AggregateRoot<I> extends Entity<I>, Producible {
 
 }

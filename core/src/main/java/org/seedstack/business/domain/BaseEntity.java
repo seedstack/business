@@ -27,9 +27,9 @@ import org.seedstack.shed.reflect.ReflectUtils;
  * entity identity. It also provides auto-detection of the identity field by reflection (see {@link
  * BaseEntity#getId()}).</p>
  *
- * @param <IdT> The type of the entity identifier.
+ * @param <I> The type of the entity identifier.
  */
-public abstract class BaseEntity<IdT> implements Entity<IdT> {
+public abstract class BaseEntity<I> implements Entity<I> {
 
   // This unbounded cache of identity fields can only grow up to the number of entity classes in
   // the system
@@ -46,7 +46,7 @@ public abstract class BaseEntity<IdT> implements Entity<IdT> {
    * @return the value of the identity field if found, null otherwise.
    */
   @Override
-  public IdT getId() {
+  public I getId() {
     Field identityField = identityFields.computeIfAbsent(getClass(),
         aClass -> IdentityResolver.INSTANCE.resolveField(aClass).map(Optional::of)
             .orElseGet(() -> findIdentityByName(aClass)).map(ReflectUtils::makeAccessible)

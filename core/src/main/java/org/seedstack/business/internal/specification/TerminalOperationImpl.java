@@ -12,12 +12,11 @@ import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.TerminalOperation;
 
-class TerminalOperationImpl<T, SelectorT extends BaseSelector<T, SelectorT>> implements
-    TerminalOperation<T> {
+class TerminalOperationImpl<T, S extends BaseSelector<T, S>> implements TerminalOperation<T> {
 
-  protected final SpecificationBuilderContext<T, SelectorT> context;
+  protected final SpecificationBuilderContext<T, S> context;
 
-  TerminalOperationImpl(SpecificationBuilderContext<T, SelectorT> context) {
+  TerminalOperationImpl(SpecificationBuilderContext<T, S> context) {
     this.context = context;
   }
 

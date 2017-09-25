@@ -21,24 +21,24 @@ import org.seedstack.business.specification.dsl.SpecificationPicker;
 import org.seedstack.business.specification.dsl.StringOptionPicker;
 
 
-class SpecificationPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> implements
-    SpecificationPicker<T, SelectorT> {
+class SpecificationPickerImpl<T, S extends BaseSelector<T, S>> implements
+    SpecificationPicker<T, S> {
 
-  private final SpecificationBuilderContext<T, SelectorT> context;
+  private final SpecificationBuilderContext<T, S> context;
   private boolean not;
 
-  SpecificationPickerImpl(SpecificationBuilderContext<T, SelectorT> context) {
+  SpecificationPickerImpl(SpecificationBuilderContext<T, S> context) {
     this.context = context;
   }
 
   @Override
-  public SpecificationPicker<T, SelectorT> not() {
+  public SpecificationPicker<T, S> not() {
     not = !not;
     return this;
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> matching(String pattern) {
+  public StringOptionPicker<T, S> matching(String pattern) {
     StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
     context.addSpecification(
         processSpecification(new StringMatchingSpecification(pattern, stringValueOptions)));
@@ -46,7 +46,7 @@ class SpecificationPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> i
   }
 
   @Override
-  public StringOptionPicker<T, SelectorT> equalTo(String value) {
+  public StringOptionPicker<T, S> equalTo(String value) {
     StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
     context.addSpecification(
         processSpecification(new StringEqualSpecification(value, stringValueOptions)));
@@ -54,19 +54,19 @@ class SpecificationPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> i
   }
 
   @Override
-  public <V> OperatorPicker<T, SelectorT> equalTo(V value) {
+  public <V> OperatorPicker<T, S> equalTo(V value) {
     context.addSpecification(processSpecification(new EqualSpecification<>(value)));
     return new OperatorPickerImpl<>(context);
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThan(V value) {
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThan(V value) {
     context.addSpecification(processSpecification(new GreaterThanSpecification<>(value)));
     return new OperatorPickerImpl<>(context);
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThanOrEqualTo(
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThanOrEqualTo(
       V value) {
     context.addSpecification(
         processSpecification(
@@ -75,13 +75,13 @@ class SpecificationPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> i
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThan(V value) {
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> lessThan(V value) {
     context.addSpecification(processSpecification(new LessThanSpecification<>(value)));
     return new OperatorPickerImpl<>(context);
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThanOrEqualTo(V value) {
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> lessThanOrEqualTo(V value) {
     context
         .addSpecification(processSpecification(
             new EqualSpecification<>(value).or(new LessThanSpecification<>(value))));
@@ -89,13 +89,13 @@ class SpecificationPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> i
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue,
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue,
       V rightValue) {
     return between(leftValue, rightValue, false, false);
   }
 
   @Override
-  public <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue,
+  public <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue,
       V rightValue,
       boolean leftInclusive, boolean rightInclusive) {
     Specification<V> gt = new GreaterThanSpecification<>(leftValue);

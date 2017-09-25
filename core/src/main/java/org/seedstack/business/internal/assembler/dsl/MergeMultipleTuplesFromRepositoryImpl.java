@@ -92,8 +92,8 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements
   }
 
   @SuppressWarnings("unchecked")
-  private <AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRoot<?> load(Object id,
+  private <A extends AggregateRoot<I>, I> AggregateRoot<?> load(Object id,
       Class<? extends AggregateRoot<?>> aggregateClass) {
-    return context.load((IdT) id, (Class<AggregateRootT>) aggregateClass);
+    return context.load((I) id, (Class<A>) aggregateClass);
   }
 }

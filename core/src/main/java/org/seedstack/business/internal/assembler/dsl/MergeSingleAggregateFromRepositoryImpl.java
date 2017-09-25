@@ -14,37 +14,36 @@ import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 
-class MergeSingleAggregateFromRepositoryImpl<AggregateRootT extends AggregateRoot<IdT>, IdT,
-    DtoT> implements
-    MergeFromRepository<AggregateRootT>, MergeFromRepositoryOrFactory<AggregateRootT> {
+class MergeSingleAggregateFromRepositoryImpl<A extends AggregateRoot<I>, I, D> implements
+    MergeFromRepository<A>, MergeFromRepositoryOrFactory<A> {
 
-  private final MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT, IdT, DtoT> multipleMerger;
+  private final MergeMultipleAggregatesFromRepositoryImpl<A, I, D> multipleMerger;
 
-  MergeSingleAggregateFromRepositoryImpl(Context context, DtoT dto,
-      Class<AggregateRootT> aggregateRootClass) {
+  MergeSingleAggregateFromRepositoryImpl(Context context, D dto,
+      Class<A> aggregateRootClass) {
     multipleMerger = new MergeMultipleAggregatesFromRepositoryImpl<>(context, Stream.of(dto),
         aggregateRootClass);
   }
 
   @Override
-  public MergeFromRepositoryOrFactory<AggregateRootT> fromRepository() {
+  public MergeFromRepositoryOrFactory<A> fromRepository() {
     return this;
   }
 
   @Override
-  public AggregateRootT fromFactory() {
+  public A fromFactory() {
     return multipleMerger.fromFactory().asStream().findFirst()
         .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }
 
   @Override
-  public AggregateRootT orFail() throws AggregateNotFoundException {
+  public A orFail() throws AggregateNotFoundException {
     return multipleMerger.orFail().asStream().findFirst()
         .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }
 
   @Override
-  public AggregateRootT orFromFactory() {
+  public A orFromFactory() {
     return multipleMerger.orFromFactory().asStream().findFirst()
         .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }

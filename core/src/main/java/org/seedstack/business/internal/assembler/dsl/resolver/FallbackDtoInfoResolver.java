@@ -25,29 +25,28 @@ public class FallbackDtoInfoResolver implements DtoInfoResolver {
   private DomainRegistry domainRegistry;
 
   @Override
-  public <DtoT> boolean supports(DtoT dto) {
+  public <D> boolean supports(D dto) {
     return true;
   }
 
   @Override
-  public <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass) {
+  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
     return createObject(aggregateIdClass);
   }
 
   @Override
-  public <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass, int position) {
+  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
     return createObject(aggregateIdClass);
   }
 
   @Override
-  public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass) {
+  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
     return createObject(aggregateRootClass);
   }
 
   @Override
-  public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass, int position) {
+  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
+      int position) {
     return createObject(aggregateRootClass);
   }
 

@@ -37,9 +37,8 @@ class MergeMultipleImpl<D> implements MergeMultipleWithQualifier {
   }
 
   @Override
-  public <AggregateRootT extends AggregateRoot<IdT>,
-      IdT> MergeFromRepository<MergeAs<AggregateRootT>> into(
-      Class<AggregateRootT> aggregateRootClass) {
+  public <A extends AggregateRoot<I>, I> MergeFromRepository<MergeAs<A>> into(
+      Class<A> aggregateRootClass) {
     return new MergeMultipleAggregatesFromRepositoryImpl<>(context, dtoStream, aggregateRootClass);
   }
 

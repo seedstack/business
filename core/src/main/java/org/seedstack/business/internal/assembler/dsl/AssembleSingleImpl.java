@@ -15,14 +15,13 @@ import org.seedstack.business.assembler.dsl.AssembleSingle;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
-class AssembleSingleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple>
-    implements
+class AssembleSingleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements
     AssembleSingleWithQualifier {
 
   private final Context context;
-  private final AssembleMultipleImpl<AggregateRootT, IdT, TupleT> multipleAssembler;
+  private final AssembleMultipleImpl<A, I, T> multipleAssembler;
 
-  AssembleSingleImpl(Context context, AggregateRootT aggregateRoot, TupleT tuple) {
+  AssembleSingleImpl(Context context, A aggregateRoot, T tuple) {
     this.context = context;
     this.multipleAssembler = new AssembleMultipleImpl<>(context,
         aggregateRoot == null ? null : Stream.of(aggregateRoot),

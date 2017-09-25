@@ -13,19 +13,18 @@ import java.util.Map;
 /**
  * A generator of identity for entities.
  *
- * @param <IdT> the identifier type.
+ * @param <I> the identifier type.
  * @see IdentityService
  */
-public interface IdentityGenerator<IdT> {
+public interface IdentityGenerator<I> {
 
   /**
    * Generate a new identifier for an entity of the specified class.
    *
-   * @param <EntityT>        the entity type.
+   * @param <E>              the entity type.
    * @param entityClass      the entity class to generate an identity for.
    * @param entityProperties configuration properties for the entity class.
    * @return the generated identifier.
    */
-  <EntityT extends Entity<IdT>> IdT generate(Class<EntityT> entityClass,
-      Map<String, String> entityProperties);
+  <E extends Entity<I>> I generate(Class<E> entityClass, Map<String, String> entityProperties);
 }

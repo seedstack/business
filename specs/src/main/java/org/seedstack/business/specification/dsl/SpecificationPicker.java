@@ -12,17 +12,17 @@ package org.seedstack.business.specification.dsl;
  * An element of the {@link SpecificationBuilder} DSL to pick the specification that will apply to
  * the current selection.
  *
- * @param <T>         the type of the object the specification applies to.
- * @param <SelectorT> the type of the selector.
+ * @param <T> the type of the object the specification applies to.
+ * @param <S> the type of the selector.
  */
-public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
+public interface SpecificationPicker<T, S extends BaseSelector> {
 
   /**
    * Negates the specification that will be picked.
    *
    * @return the next operation of the builder DSL, allowing to pick the negated specification.
    */
-  SpecificationPicker<T, SelectorT> not();
+  SpecificationPicker<T, S> not();
 
   /**
    * Picks a {@link String}-specific matching specification that will be satisfied if the current
@@ -33,7 +33,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param pattern the pattern to match.
    * @return the next operation of the builder DSL, allowing to pick the string matching options.
    */
-  StringOptionPicker<T, SelectorT> matching(String pattern);
+  StringOptionPicker<T, S> matching(String pattern);
 
   /**
    * Picks a {@link String}-specific equality specification that will be satisfied if the current
@@ -42,7 +42,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be equal to.
    * @return the next operation of the builder DSL, allowing to pick the string equality options.
    */
-  StringOptionPicker<T, SelectorT> equalTo(String value);
+  StringOptionPicker<T, S> equalTo(String value);
 
   /**
    * Picks a general purpose equality specification that will be satisfied if the current selection
@@ -53,7 +53,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V> OperatorPicker<T, SelectorT> equalTo(V value);
+  <V> OperatorPicker<T, S> equalTo(V value);
 
   /**
    * Picks a greater than specification that will be satisfied if the current selection is strictly
@@ -64,7 +64,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThan(V value);
+  <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThan(V value);
 
   /**
    * Picks a greater than or equal to specification that will be satisfied if the current selection
@@ -75,7 +75,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThanOrEqualTo(V value);
+  <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThanOrEqualTo(V value);
 
   /**
    * Picks a less than specification that will be satisfied if the current selection is strictly
@@ -86,7 +86,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThan(V value);
+  <V extends Comparable<? super V>> OperatorPicker<T, S> lessThan(V value);
 
   /**
    * Picks a less than or equal to specification that will be satisfied if the current selection is
@@ -97,7 +97,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThanOrEqualTo(V value);
+  <V extends Comparable<? super V>> OperatorPicker<T, S> lessThanOrEqualTo(V value);
 
   /**
    * Picks a between specification that will be satisfied if the current selection is strictly
@@ -109,7 +109,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue, V rightValue);
+  <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue, V rightValue);
 
   /**
    * Picks a between specification that will be satisfied if the current selection is (strictly or
@@ -125,6 +125,6 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @return the next operation of the builder DSL, allowing to combine this specification with
    *     another one.
    */
-  <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue, V rightValue,
+  <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue, V rightValue,
       boolean leftInclusive, boolean rightInclusive);
 }

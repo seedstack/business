@@ -12,11 +12,11 @@ package org.seedstack.business.specification.dsl;
  * An element of the {@link SpecificationBuilder} DSL to select a property of the object a
  * specification will apply to.
  *
- * @param <T>         the type of the object the specification applies to.
- * @param <SelectorT> the type of the selector.
+ * @param <T> the type of the object the specification applies to.
+ * @param <S> the type of the selector.
  */
-public interface PropertySelector<T, SelectorT extends BaseSelector<T, SelectorT>> extends
-    BaseSelector<T, SelectorT> {
+public interface PropertySelector<T, S extends BaseSelector<T, S>> extends
+    BaseSelector<T, S> {
 
   /**
    * Selects a property of the object to be the subject of a specification. For instance, if an
@@ -32,5 +32,5 @@ public interface PropertySelector<T, SelectorT extends BaseSelector<T, SelectorT
    * @param path the path of the the property to select.
    * @return the next operation of the builder DSL, allowing to choose the specification.
    */
-  SpecificationPicker<T, SelectorT> property(String path);
+  SpecificationPicker<T, S> property(String path);
 }

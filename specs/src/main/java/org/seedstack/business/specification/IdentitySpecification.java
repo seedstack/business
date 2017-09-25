@@ -16,13 +16,13 @@ import org.seedstack.business.domain.AggregateRoot;
  * A specification that can only be applied to {@link AggregateRoot}s and that is satisfied only if
  * the candidate aggregate has an identifier equal to the expected one.
  *
- * @param <AggregateRootT> the aggregate type this specification applies to.
- * @param <IdT>            the aggregate identifier type.
+ * @param <A> the aggregate type this specification applies to.
+ * @param <I> the aggregate identifier type.
  */
-public class IdentitySpecification<AggregateRootT extends AggregateRoot<IdT>, IdT> implements
-    Specification<AggregateRootT> {
+public class IdentitySpecification<A extends AggregateRoot<I>, I> implements
+    Specification<A> {
 
-  private final IdT expectedIdentifier;
+  private final I expectedIdentifier;
 
   /**
    * Creates a specification satisfied only if the candidate aggregate has an identifier equal to
@@ -30,13 +30,13 @@ public class IdentitySpecification<AggregateRootT extends AggregateRoot<IdT>, Id
    *
    * @param expectedIdentifier the expected identifier.
    */
-  public IdentitySpecification(IdT expectedIdentifier) {
+  public IdentitySpecification(I expectedIdentifier) {
     requireNonNull(expectedIdentifier, "Expected identifier cannot be null");
     this.expectedIdentifier = expectedIdentifier;
   }
 
   @Override
-  public boolean isSatisfiedBy(AggregateRootT candidate) {
+  public boolean isSatisfiedBy(A candidate) {
     return expectedIdentifier.equals(candidate.getId());
   }
 
@@ -50,7 +50,7 @@ public class IdentitySpecification<AggregateRootT extends AggregateRoot<IdT>, Id
    *
    * @return the expected identifier.
    */
-  public IdT getExpectedIdentifier() {
+  public I getExpectedIdentifier() {
     return expectedIdentifier;
   }
 }

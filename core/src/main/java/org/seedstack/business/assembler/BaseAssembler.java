@@ -15,13 +15,12 @@ import org.seedstack.shed.reflect.Classes;
 /**
  * An helper base class that can be extended to create an assembler between an aggregate and a DTO.
  *
- * @param <AggregateRootT> the aggregate root type.
- * @param <DtoT>           the dto type.
+ * @param <A> the aggregate root type.
+ * @param <D> the dto type.
  */
-public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, DtoT> implements
-    Assembler<AggregateRootT, DtoT> {
+public abstract class BaseAssembler<A extends AggregateRoot<?>, D> implements Assembler<A, D> {
 
-  private final Class<DtoT> dtoClass;
+  private final Class<D> dtoClass;
 
   /**
    * Creates a base assembler. Actual classes handled by the assembler are determined by
@@ -29,7 +28,7 @@ public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, Dto
    */
   @SuppressWarnings("unchecked")
   public BaseAssembler() {
-    this.dtoClass = (Class<DtoT>) BusinessUtils.resolveGenerics(BaseAssembler.class, getClass())[1];
+    this.dtoClass = (Class<D>) BusinessUtils.resolveGenerics(BaseAssembler.class, getClass())[1];
   }
 
   /**
@@ -38,17 +37,17 @@ public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, Dto
    *
    * @param dtoClass the DTO class.
    */
-  protected BaseAssembler(Class<DtoT> dtoClass) {
+  protected BaseAssembler(Class<D> dtoClass) {
     this.dtoClass = dtoClass;
   }
 
   @Override
-  public Class<DtoT> getDtoClass() {
+  public Class<D> getDtoClass() {
     return this.dtoClass;
   }
 
   @Override
-  public DtoT createDto() {
+  public D createDto() {
     return Classes.instantiateDefault(getDtoClass());
   }
 }

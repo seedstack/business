@@ -20,8 +20,8 @@ import org.seedstack.business.spi.GenericImplementation;
  */
 @GenericImplementation
 @InMemory
-public class DefaultInMemoryRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-    BaseInMemoryRepository<AggregateRootT, IdT> {
+public class DefaultInMemoryRepository<A extends AggregateRoot<I>, I> extends
+    BaseInMemoryRepository<A, I> {
 
   /**
    * Creates a default in-memory repository.
@@ -31,6 +31,6 @@ public class DefaultInMemoryRepository<AggregateRootT extends AggregateRoot<IdT>
   @SuppressWarnings("unchecked")
   @Inject
   public DefaultInMemoryRepository(@Assisted Object[] genericClasses) {
-    super((Class<AggregateRootT>) genericClasses[0], (Class<IdT>) genericClasses[1]);
+    super((Class<A>) genericClasses[0], (Class<I>) genericClasses[1]);
   }
 }

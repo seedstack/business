@@ -22,13 +22,13 @@ public interface Paginator {
   /**
    * Initiate a pagination operation using the specified repository.
    *
-   * @param repository       the repository where the domain objects come from.
-   * @param <AggregateRootT> the aggregate root type that is paginated.
-   * @param <IdT>            the aggregate root identifier type.
+   * @param repository the repository where the domain objects come from.
+   * @param <A>        the aggregate root type that is paginated.
+   * @param <I>        the aggregate root identifier type.
    * @return the next operation of the paginator DSL, allowing to specify repository options.
    */
-  <AggregateRootT extends AggregateRoot<IdT>, IdT> RepositoryOptionsPicker<AggregateRootT,
-      IdT> paginate(Repository<AggregateRootT, IdT> repository);
+  <A extends AggregateRoot<I>, I> RepositoryOptionsPicker<A, I> paginate(
+      Repository<A, I> repository);
 }
 
 

@@ -36,17 +36,17 @@ package org.seedstack.business.domain;
  * }
  * </pre>
  *
- * @param <ProducibleT> the type of the produced object.
+ * @param <P> the type of the produced object.
  */
 @DomainFactory
-public interface Factory<ProducibleT extends Producible> {
+public interface Factory<P extends Producible> {
 
   /**
    * Returns the class produced by the factory.
    *
    * @return the produced class
    */
-  Class<ProducibleT> getProducedClass();
+  Class<P> getProducedClass();
 
   /**
    * Creates an object instance in a generic way, using the given arguments. How are these arguments
@@ -55,7 +55,7 @@ public interface Factory<ProducibleT extends Producible> {
    * @param args the arguments for object creation.
    * @return an instance of the class produced by the factory.
    */
-  default ProducibleT create(Object... args) {
+  default P create(Object... args) {
     throw new UnsupportedOperationException("Generic creation is not supported by this factory");
   }
 }

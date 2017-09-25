@@ -13,11 +13,11 @@ import org.seedstack.business.domain.AggregateRoot;
 /**
  * An element of the {@link SpecificationBuilder} DSL to specify the identity of an aggregate.
  *
- * @param <A>         the type of the aggregate.
- * @param <I>         the type of the identifier of the aggregate.
- * @param <SelectorT> the type of the selector.
+ * @param <A> the type of the aggregate.
+ * @param <I> the type of the identifier of the aggregate.
+ * @param <S> the type of the selector.
  */
-public interface IdentityPicker<A extends AggregateRoot<I>, I, SelectorT extends BaseSelector> {
+public interface IdentityPicker<A extends AggregateRoot<I>, I, S extends BaseSelector> {
 
   /**
    * Specify that the identity of the aggregate must be equal to the one passed as argument.
@@ -26,7 +26,7 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, SelectorT extends
    * @return the next operation of the builder DSL, allowing to compose the just-defined
    *     specification with another one.
    */
-  OperatorPicker<A, SelectorT> is(I id);
+  OperatorPicker<A, S> is(I id);
 
   /**
    * Specify that the identity of the aggregate must NOT be equal to the one passed as argument.
@@ -35,5 +35,5 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, SelectorT extends
    * @return the next operation of the builder DSL, allowing to compose the just-defined
    *     specification with another one.
    */
-  OperatorPicker<A, SelectorT> isNot(I id);
+  OperatorPicker<A, S> isNot(I id);
 }

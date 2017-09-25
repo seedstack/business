@@ -28,9 +28,9 @@ import org.seedstack.business.specification.GreaterThanSpecification;
 import org.seedstack.business.specification.LessThanSpecification;
 import org.seedstack.business.specification.Specification;
 
-class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
+class PaginatorContext<A extends AggregateRoot<I>, I> {
 
-  private final Repository<AggregateRootT, IdT> repository;
+  private final Repository<A, I> repository;
   private final Repository.Option[] options;
   private PaginationMode mode = PaginationMode.NONE;
   private long limit = 10;
@@ -43,9 +43,9 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
 
   // For attribute-based slicing
   private String attribute;
-  private Specification<AggregateRootT> attributeSpecification;
+  private Specification<A> attributeSpecification;
 
-  PaginatorContext(Repository<AggregateRootT, IdT> repository, Repository.Option... options) {
+  PaginatorContext(Repository<A, I> repository, Repository.Option... options) {
     checkNotNull(repository, "Repository cannot be null");
     checkNotNull(options, "Options cannot be null");
     this.repository = repository;
@@ -79,7 +79,7 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
     this.mode = PaginationMode.ATTRIBUTE;
   }
 
-  public <T extends Comparable<? super T>> void setBeforeAttributeValue(T value) {
+  <T extends Comparable<? super T>> void setBeforeAttributeValue(T value) {
     checkState(mode == PaginationMode.ATTRIBUTE && attribute != null,
         "A value can only be set in ATTRIBUTE mode");
     this.attributeSpecification = new AttributeSpecification<>(attribute,
@@ -100,19 +100,19 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
     this.limit = limit;
   }
 
-  Page<AggregateRootT> buildPage(Specification<AggregateRootT> specification) {
+  Page<A> buildPage(Specification<A> specification) {
     checkState(mode == PaginationMode.PAGE, "A page can only be built in PAGE pagination mode");
-    Stream<AggregateRootT> stream = buildStream(specification);
+    Stream<A> stream = buildStream(specification);
     return new SimplePage<>(stream.collect(Collectors.toList()), pageIndex, limit,
         repository.count(specification));
   }
 
-  Slice<AggregateRootT> buildSlice(Specification<AggregateRootT> specification) {
+  Slice<A> buildSlice(Specification<A> specification) {
     return new SimpleSlice<>(buildStream(specification).collect(Collectors.toList()));
   }
 
-  private Stream<AggregateRootT> buildStream(Specification<AggregateRootT> specification) {
-    Stream<AggregateRootT> streamRepo;
+  private Stream<A> buildStream(Specification<A> specification) {
+    Stream<A> streamRepo;
     if (mode.equals(PaginationMode.ATTRIBUTE)) {
       streamRepo = repository
           .get(specification.and(attributeSpecification), applyLimit(options, limit));

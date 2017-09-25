@@ -12,11 +12,11 @@ package org.seedstack.business.specification.dsl;
  * An element of the {@link SpecificationBuilder} DSL to pick the options for a {@link
  * String}-specific specification.
  *
- * @param <T>         the type of the object the specification applies to.
- * @param <SelectorT> the type of the selector.
+ * @param <T> the type of the object the specification applies to.
+ * @param <S> the type of the selector.
  */
-public interface StringOptionPicker<T, SelectorT extends BaseSelector> extends
-    OperatorPicker<T, SelectorT> {
+public interface StringOptionPicker<T, S extends BaseSelector> extends
+    OperatorPicker<T, S> {
 
   /**
    * Specifies that the value should trimmed of leading and trailing whitespaces before comparison.
@@ -24,7 +24,7 @@ public interface StringOptionPicker<T, SelectorT extends BaseSelector> extends
    * @return the next operation of the builder DSL, allowing to specify more options or compose a
    *     new specification.
    */
-  StringOptionPicker<T, SelectorT> trimming();
+  StringOptionPicker<T, S> trimming();
 
   /**
    * Specifies that the value should be trimmed of leading whitespace before comparison.
@@ -32,7 +32,7 @@ public interface StringOptionPicker<T, SelectorT extends BaseSelector> extends
    * @return the next operation of the builder DSL, allowing to specify more options or compose a
    *     new specification.
    */
-  StringOptionPicker<T, SelectorT> trimmingLead();
+  StringOptionPicker<T, S> trimmingLead();
 
   /**
    * Specifies that the value should be trimmed of trailing whitespace before comparison.
@@ -40,7 +40,7 @@ public interface StringOptionPicker<T, SelectorT extends BaseSelector> extends
    * @return the next operation of the builder DSL, allowing to specify more options or compose a
    *     new specification.
    */
-  StringOptionPicker<T, SelectorT> trimmingTail();
+  StringOptionPicker<T, S> trimmingTail();
 
   /**
    * Specifies that the comparison should be done ignoring case.
@@ -48,5 +48,5 @@ public interface StringOptionPicker<T, SelectorT extends BaseSelector> extends
    * @return the next operation of the builder DSL, allowing to specify more options or compose a
    *     new specification.
    */
-  StringOptionPicker<T, SelectorT> ignoringCase();
+  StringOptionPicker<T, S> ignoringCase();
 }

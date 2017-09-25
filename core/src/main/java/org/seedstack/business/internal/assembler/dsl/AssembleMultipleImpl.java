@@ -28,16 +28,14 @@ import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.util.Tuples;
 
 
-class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple>
-    implements
-    AssembleMultipleWithQualifier {
+class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple>
+    implements AssembleMultipleWithQualifier {
 
   private final Context context;
-  private final Stream<AggregateRootT> aggregates;
-  private final Stream<TupleT> aggregateTuples;
+  private final Stream<A> aggregates;
+  private final Stream<T> aggregateTuples;
 
-  AssembleMultipleImpl(Context context, Stream<AggregateRootT> aggregates,
-      Stream<TupleT> aggregateTuples) {
+  AssembleMultipleImpl(Context context, Stream<A> aggregates, Stream<T> aggregateTuples) {
     this.context = checkNotNull(context, "Context must not be null");
     checkArgument(aggregates != null || aggregateTuples != null,
         "Cannot assemble null");
@@ -48,7 +46,7 @@ class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, Tuple
   }
 
   @Override
-  public <DtoT> Stream<DtoT> toStreamOf(Class<DtoT> dtoClass) {
+  public <D> Stream<D> toStreamOf(Class<D> dtoClass) {
     if (aggregates != null) {
       return aggregates.map(
           aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass)
@@ -62,33 +60,32 @@ class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, Tuple
   }
 
   @Override
-  public <DtoT, CollectionT extends Collection<DtoT>> CollectionT toCollectionOf(
-      Class<DtoT> dtoClass,
-      Supplier<CollectionT> collectionSupplier) {
-    CollectionT collection = collectionSupplier.get();
+  public <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass,
+      Supplier<C> collectionSupplier) {
+    C collection = collectionSupplier.get();
     toStreamOf(dtoClass).forEach(collection::add);
     return collection;
   }
 
   @Override
-  public <DtoT> List<DtoT> toListOf(Class<DtoT> dtoClass) {
+  public <D> List<D> toListOf(Class<D> dtoClass) {
     return toCollectionOf(dtoClass, ArrayList::new);
   }
 
   @Override
-  public <DtoT> Set<DtoT> toSetOf(Class<DtoT> dtoClass) {
+  public <D> Set<D> toSetOf(Class<D> dtoClass) {
     return toCollectionOf(dtoClass, HashSet::new);
   }
 
   @Override
-  public <DtoT> Slice<DtoT> toSliceOf(Class<DtoT> dtoClass) {
+  public <D> Slice<D> toSliceOf(Class<D> dtoClass) {
     return new SimpleSlice<>(toListOf(dtoClass));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <DtoT> DtoT[] toArrayOf(Class<DtoT> dtoClass) {
-    return toStreamOf(dtoClass).toArray(size -> (DtoT[]) new Object[size]);
+  public <D> D[] toArrayOf(Class<D> dtoClass) {
+    return toStreamOf(dtoClass).toArray(size -> (D[]) new Object[size]);
   }
 
   @Override
@@ -108,7 +105,7 @@ class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, Tuple
   }
 
   @SuppressWarnings("unchecked")
-  private Class<AggregateRootT> getAggregateClass(AggregateRootT aggregate) {
-    return (Class<AggregateRootT>) aggregate.getClass();
+  private Class<A> getAggregateClass(A aggregate) {
+    return (Class<A>) aggregate.getClass();
   }
 }

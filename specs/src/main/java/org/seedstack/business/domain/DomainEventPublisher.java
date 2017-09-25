@@ -20,8 +20,8 @@ public interface DomainEventPublisher {
   /**
    * Publishes an event.
    *
-   * @param event    the published event instance.
-   * @param <EventT> the event type.
+   * @param event the published event instance.
+   * @param <E>   the event type.
    */
-  <EventT extends DomainEvent> void publish(EventT event);
+  <E extends DomainEvent> void publish(E event);
 }

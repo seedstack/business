@@ -19,18 +19,17 @@ import org.seedstack.business.internal.utils.BusinessUtils;
  * implementations. Client code will often extend these more specialized classes instead of this
  * one. </p>
  *
- * @param <AggregateRootT> Type of the aggregate root.
- * @param <IdT>            Type of the aggregate root identifier.
+ * @param <A> Type of the aggregate root.
+ * @param <I> Type of the aggregate root identifier.
  * @see Repository
  * @see org.seedstack.business.util.inmemory.BaseInMemoryRepository
  */
-public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> implements
-    Repository<AggregateRootT, IdT> {
+public abstract class BaseRepository<A extends AggregateRoot<I>, I> implements Repository<A, I> {
 
   private static final int AGGREGATE_INDEX = 0;
   private static final int KEY_INDEX = 1;
-  private final Class<AggregateRootT> aggregateRootClass;
-  private final Class<IdT> idClass;
+  private final Class<A> aggregateRootClass;
+  private final Class<I> idClass;
 
   /**
    * Creates a base domain repository. Actual classes managed by the repository are determined by
@@ -39,8 +38,8 @@ public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, 
   @SuppressWarnings("unchecked")
   protected BaseRepository() {
     Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
-    this.aggregateRootClass = (Class<AggregateRootT>) generics[AGGREGATE_INDEX];
-    this.idClass = (Class<IdT>) generics[KEY_INDEX];
+    this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
+    this.idClass = (Class<I>) generics[KEY_INDEX];
   }
 
   /**
@@ -50,18 +49,18 @@ public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, 
    * @param aggregateRootClass the aggregate root class.
    * @param idClass            the aggregate root identifier class.
    */
-  protected BaseRepository(Class<AggregateRootT> aggregateRootClass, Class<IdT> idClass) {
+  protected BaseRepository(Class<A> aggregateRootClass, Class<I> idClass) {
     this.aggregateRootClass = aggregateRootClass;
     this.idClass = idClass;
   }
 
   @Override
-  public Class<AggregateRootT> getAggregateRootClass() {
+  public Class<A> getAggregateRootClass() {
     return aggregateRootClass;
   }
 
   @Override
-  public Class<IdT> getIdentifierClass() {
+  public Class<I> getIdentifierClass() {
     return idClass;
   }
 }

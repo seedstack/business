@@ -12,22 +12,22 @@ package org.seedstack.business.specification.dsl;
  * An element of the {@link SpecificationBuilder} DSL to compose the current specification with
  * another one.
  *
- * @param <T>         the type of the object the specification applies to.
- * @param <SelectorT> the type of the selector.
+ * @param <T> the type of the object the specification applies to.
+ * @param <S> the type of the selector.
  */
-public interface OperatorPicker<T, SelectorT extends BaseSelector> extends TerminalOperation<T> {
+public interface OperatorPicker<T, S extends BaseSelector> extends TerminalOperation<T> {
 
   /**
    * Compose the current specification with a new one using a logical AND.
    *
    * @return the next operation of the builder DSL, allowing to further compose a new specification.
    */
-  SelectorT and();
+  S and();
 
   /**
    * Compose the current specification with a new one using a logical OR.
    *
    * @return the next operation of the builder DSL, allowing to further compose a new specification.
    */
-  SelectorT or();
+  S or();
 }

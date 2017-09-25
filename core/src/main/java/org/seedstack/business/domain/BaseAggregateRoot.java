@@ -14,8 +14,8 @@ package org.seedstack.business.domain;
  * AggregateRoot},</li> <li>Annotate your class with {@link DomainAggregateRoot} (but this limits
  * the ability to use framework features).</li> </ul>
  *
- * @param <IdT> The type of the aggregate root identifier.
+ * @param <I> The type of the aggregate root identifier.
  */
-public abstract class BaseAggregateRoot<IdT> extends BaseEntity<IdT> implements AggregateRoot<IdT> {
+public abstract class BaseAggregateRoot<I> extends BaseEntity<I> implements AggregateRoot<I> {
 
 }

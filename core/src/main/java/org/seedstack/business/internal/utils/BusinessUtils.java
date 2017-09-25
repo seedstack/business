@@ -63,10 +63,10 @@ public final class BusinessUtils {
    * Returns the identifier class for an aggregate root class.
    */
   @SuppressWarnings("unchecked")
-  public static <AggregateRootT extends AggregateRoot<IdT>, IdT> Class<IdT> getAggregateIdClass(
-      Class<AggregateRootT> aggregateRootClass) {
+  public static <A extends AggregateRoot<I>, I> Class<I> getAggregateIdClass(
+      Class<A> aggregateRootClass) {
     checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
-    return (Class<IdT>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
+    return (Class<I>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
   }
 
   /**

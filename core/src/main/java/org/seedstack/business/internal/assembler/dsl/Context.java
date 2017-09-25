@@ -48,8 +48,8 @@ class Context {
     this.assemblerQualifierClass = assemblerQualifierClass;
   }
 
-  <AggregateRootT extends AggregateRoot<IdT>, IdT, DtoT> Assembler<AggregateRootT,
-      DtoT> assemblerOf(Class<AggregateRootT> aggregateRoot, Class<DtoT> dto) {
+  <A extends AggregateRoot<I>, I, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot,
+      Class<D> dto) {
     if (assemblerQualifierClass != null) {
       return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
     } else if (assemblerQualifier != null) {
@@ -58,8 +58,8 @@ class Context {
     return assemblerRegistry.getAssembler(aggregateRoot, dto);
   }
 
-  <TupleT extends Tuple, DtoT> Assembler<TupleT, DtoT> tupleAssemblerOf(
-      Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<DtoT> dto) {
+  <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(
+      Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto) {
     if (assemblerQualifierClass != null) {
       return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
     } else if (assemblerQualifier != null) {
@@ -68,52 +68,47 @@ class Context {
     return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
   }
 
-  <DtoT, AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRootT create(DtoT dto,
-      Class<AggregateRootT> aggregateClass) {
+  <D, A extends AggregateRoot<I>, I> A create(D dto, Class<A> aggregateClass) {
     return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
   }
 
-  <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT create(DtoT dto,
-      Class<AggregateRootT> aggregateClass,
-      int indexInTuple) {
+  <D, A extends AggregateRoot<?>> A create(D dto, Class<A> aggregateClass, int indexInTuple) {
     return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
   }
 
-  <AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRootT load(IdT id,
-      Class<AggregateRootT> aggregateClass) {
+  <A extends AggregateRoot<I>, I> A load(I id, Class<A> aggregateClass) {
     return domainRegistry
         .getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass)).get(id)
         .orElse(null);
   }
 
-  <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass) {
+  <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
     return findResolverFor(dto).resolveId(dto, aggregateIdClass);
   }
 
-  <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass, int position) {
+  <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
     return findResolverFor(dto).resolveId(dto, aggregateIdClass, position);
   }
 
   @SuppressWarnings("unchecked")
-  <AggregateRootT extends AggregateRoot<IdT>, IdT, D> void mergeDtoIntoAggregate(D dto,
-      AggregateRootT aggregateRoot) {
+  <A extends AggregateRoot<I>, I, D> void mergeDtoIntoAggregate(D dto, A aggregateRoot) {
     checkNotNull(dto);
     checkNotNull(aggregateRoot);
-    Assembler<AggregateRootT, D> assembler = assemblerOf(
-        (Class<AggregateRootT>) aggregateRoot.getClass(),
+    Assembler<A, D> assembler = assemblerOf(
+        (Class<A>) aggregateRoot.getClass(),
         (Class<D>) dto.getClass());
     assembler.mergeDtoIntoAggregate(dto, aggregateRoot);
   }
 
   @SuppressWarnings("unchecked")
-  <DtoT, TupleT extends Tuple> void mergeDtoIntoTuple(DtoT dto, TupleT tuple,
+  <D, T extends Tuple> void mergeDtoIntoTuple(D dto, T tuple,
       Class<? extends AggregateRoot<?>>[] aggregateClasses) {
-    Assembler<Tuple, DtoT> tupleAssembler = tupleAssemblerOf(aggregateClasses,
-        (Class<DtoT>) dto.getClass());
+    Assembler<Tuple, D> tupleAssembler = tupleAssemblerOf(aggregateClasses,
+        (Class<D>) dto.getClass());
     tupleAssembler.mergeDtoIntoAggregate(dto, tuple);
   }
 
-  private <DtoT> DtoInfoResolver findResolverFor(DtoT dto) {
+  private <D> DtoInfoResolver findResolverFor(D dto) {
     for (DtoInfoResolver dtoInfoResolver : dtoInfoResolvers) {
       if (dtoInfoResolver.supports(dto)) {
         return dtoInfoResolver;

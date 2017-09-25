@@ -46,11 +46,11 @@ import org.seedstack.business.specification.Specification;
  * }
  * </pre>
  *
- * @param <AggregateRootT> the type of the aggregate root class.
- * @param <IdT>            the type of identifier of the aggregate root class.
+ * @param <A> the type of the aggregate root class.
+ * @param <I> the type of identifier of the aggregate root class.
  */
 @DomainRepository
-public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
+public interface Repository<A extends AggregateRoot<I>, I> {
 
   /**
    * Adds an aggregate to the repository.
@@ -58,7 +58,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param aggregate the aggregate to add.
    * @throws AggregateExistsException if the repository already contains the aggregate.
    */
-  void add(AggregateRootT aggregate) throws AggregateExistsException;
+  void add(A aggregate) throws AggregateExistsException;
 
   /**
    * Finds all aggregates in the repository satisfying the given specification. Options can be
@@ -68,7 +68,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param options       result options.
    * @return a stream of aggregates.
    */
-  Stream<AggregateRootT> get(Specification<AggregateRootT> specification, Option... options);
+  Stream<A> get(Specification<A> specification, Option... options);
 
   /**
    * Gets an aggregate identified by its identifier.
@@ -76,7 +76,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param id the aggregate identifier.
    * @return an optional of the corresponding aggregate.
    */
-  default Optional<AggregateRootT> get(IdT id) {
+  default Optional<A> get(I id) {
     return get(new IdentitySpecification<>(id)).findFirst();
   }
 
@@ -88,7 +88,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @return true if at least one aggregate satisfying the specification is present, false
    *     otherwise.
    */
-  default boolean contains(Specification<AggregateRootT> specification) {
+  default boolean contains(Specification<A> specification) {
     return count(specification) > 0;
   }
 
@@ -98,7 +98,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param id the aggregate identifier.
    * @return true if the aggregate is present, false otherwise.
    */
-  default boolean contains(IdT id) {
+  default boolean contains(I id) {
     return contains(new IdentitySpecification<>(id));
   }
 
@@ -110,7 +110,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param aggregate the aggregate identifier.
    * @return true if the aggregate is present, false otherwise.
    */
-  default boolean contains(AggregateRootT aggregate) {
+  default boolean contains(A aggregate) {
     return contains(aggregate.getId());
   }
 
@@ -120,7 +120,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param specification the specification aggregates must satisfy.
    * @return the number of aggregates in the repository satisfying the specification.
    */
-  default long count(Specification<AggregateRootT> specification) {
+  default long count(Specification<A> specification) {
     return get(specification).count();
   }
 
@@ -150,7 +150,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @return the number of aggregates removed from the repository.
    * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
    */
-  long remove(Specification<AggregateRootT> specification) throws AggregateNotFoundException;
+  long remove(Specification<A> specification) throws AggregateNotFoundException;
 
   /**
    * Removes the existing aggregate identified with the specified identifier.
@@ -158,7 +158,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param id the identifier of the aggregate to remove.
    * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
    */
-  default void remove(IdT id) throws AggregateNotFoundException {
+  default void remove(I id) throws AggregateNotFoundException {
     long removedCount = remove(new IdentitySpecification<>(id));
     if (removedCount == 0L) {
       throw new AggregateNotFoundException(
@@ -177,7 +177,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param aggregate the aggregate to remove.
    * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
    */
-  default void remove(AggregateRootT aggregate) throws AggregateNotFoundException {
+  default void remove(A aggregate) throws AggregateNotFoundException {
     remove(aggregate.getId());
   }
 
@@ -187,7 +187,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    * @param aggregate the aggregate to update.
    * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
    */
-  default void update(AggregateRootT aggregate) throws AggregateNotFoundException {
+  default void update(A aggregate) throws AggregateNotFoundException {
     remove(aggregate);
     add(aggregate);
   }
@@ -204,14 +204,14 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    *
    * @return the aggregate root class.
    */
-  Class<AggregateRootT> getAggregateRootClass();
+  Class<A> getAggregateRootClass();
 
   /**
    * Returns the aggregate root identifier class managed by the repository.
    *
    * @return the aggregate root identifier.
    */
-  Class<IdT> getIdentifierClass();
+  Class<I> getIdentifierClass();
 
   interface Option {
 

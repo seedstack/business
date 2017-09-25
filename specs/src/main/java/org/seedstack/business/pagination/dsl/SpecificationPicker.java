@@ -16,12 +16,11 @@ import org.seedstack.business.specification.Specification;
  * An element of the {@link Paginator} DSL allowing to specify the specification that will be used
  * to retrieve objects from the repository.
  *
- * @param <SliceT>         the type of the slice.
- * @param <AggregateRootT> the aggregate root type that is paginated.
- * @param <IdT>            the aggregate root identifier type.
+ * @param <S> the type of the slice.
+ * @param <A> the aggregate root type that is paginated.
+ * @param <I> the aggregate root identifier type.
  */
-public interface SpecificationPicker<SliceT extends Slice<AggregateRootT>, AggregateRootT extends
-    AggregateRoot<IdT>, IdT> {
+public interface SpecificationPicker<S extends Slice<A>, A extends AggregateRoot<I>, I> {
 
   /**
    * Restricts objects coming from the repository to ones matching the specification. This is a
@@ -30,7 +29,7 @@ public interface SpecificationPicker<SliceT extends Slice<AggregateRootT>, Aggre
    * @param spec the specification that objects must match.
    * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
    */
-  SliceT matching(Specification<AggregateRootT> spec);
+  S matching(Specification<A> spec);
 
   /**
    * Do not restrict objects coming from the repository. This is a terminal operation of the
@@ -38,5 +37,5 @@ public interface SpecificationPicker<SliceT extends Slice<AggregateRootT>, Aggre
    *
    * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
    */
-  SliceT all();
+  S all();
 }

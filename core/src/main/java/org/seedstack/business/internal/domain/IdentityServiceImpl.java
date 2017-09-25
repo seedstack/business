@@ -42,12 +42,12 @@ class IdentityServiceImpl implements IdentityService {
   private Application application;
 
   @Override
-  public <EntityT extends Entity<IdT>, IdT> EntityT identify(EntityT entity) {
-    Class<EntityT> entityClass = getEntityClass(entity);
+  public <E extends Entity<I>, I> E identify(E entity) {
+    Class<E> entityClass = getEntityClass(entity);
     Field entityIdField = getIdentityField(entityClass);
     Identity identity = getIdentityAnnotation(entityClass);
-    ClassConfiguration<EntityT> entityConfiguration = application.getConfiguration(entityClass);
-    IdentityGenerator<IdT> identityGenerator = getIdentityGenerator(identity, entityClass,
+    ClassConfiguration<E> entityConfiguration = application.getConfiguration(entityClass);
+    IdentityGenerator<I> identityGenerator = getIdentityGenerator(identity, entityClass,
         entityConfiguration);
 
     compareIdType(entityClass, identityGenerator);
@@ -65,8 +65,8 @@ class IdentityServiceImpl implements IdentityService {
     return entity;
   }
 
-  private <EntityT extends Entity<IdT>, IdT> void compareIdType(Class<EntityT> entityClass,
-      IdentityGenerator<IdT> identityGenerator) {
+  private <E extends Entity<I>, I> void compareIdType(Class<E> entityClass,
+      IdentityGenerator<I> identityGenerator) {
     Class<?> entityIdClass = getEntityIdClass(entityClass);
     Class<?> identityGeneratorIdClass = getGeneratorIdClass(identityGenerator);
     if (!entityIdClass.isAssignableFrom(identityGeneratorIdClass)) {
@@ -77,18 +77,17 @@ class IdentityServiceImpl implements IdentityService {
   }
 
   @SuppressWarnings("unchecked")
-  private <EntityT extends Entity<IdT>, IdT> Class<EntityT> getEntityClass(EntityT entity) {
-    return (Class<EntityT>) entity.getClass();
+  private <E extends Entity<I>, I> Class<E> getEntityClass(E entity) {
+    return (Class<E>) entity.getClass();
   }
 
-  private <EntityT extends Entity<IdT>, IdT> Class<?> getEntityIdClass(Class<EntityT> entityClass) {
+  private <E extends Entity<I>, I> Class<?> getEntityIdClass(Class<E> entityClass) {
     return TypeResolver.resolveRawArguments(Entity.class, entityClass)[0];
   }
 
-  private <IdT> Class<?> getGeneratorIdClass(IdentityGenerator<IdT> identityGenerator) {
-    return (Class<?>) BusinessUtils
-        .resolveGenerics(IdentityGenerator.class,
-            identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
+  private <I> Class<?> getGeneratorIdClass(IdentityGenerator<I> identityGenerator) {
+    return (Class<?>) BusinessUtils.resolveGenerics(IdentityGenerator.class,
+        identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
   }
 
   private Field getIdentityField(Class<? extends Entity> entityClass) {
@@ -104,12 +103,11 @@ class IdentityServiceImpl implements IdentityService {
   }
 
   @SuppressWarnings("unchecked")
-  private <EntityT extends Entity<IdT>, IdT> IdentityGenerator<IdT> getIdentityGenerator(
-      Identity identity,
-      Class<EntityT> entityClass, ClassConfiguration<EntityT> entityConfiguration) {
-    IdentityGenerator<IdT> identityGenerator;
+  private <E extends Entity<I>, I> IdentityGenerator<I> getIdentityGenerator(Identity identity,
+      Class<E> entityClass, ClassConfiguration<E> entityConfiguration) {
+    IdentityGenerator<I> identityGenerator;
     if (!identity.generator().isInterface()) {
-      identityGenerator = (IdentityGenerator<IdT>) injector.getInstance(identity.generator());
+      identityGenerator = (IdentityGenerator<I>) injector.getInstance(identity.generator());
     } else if (IdentityGenerator.class.equals(identity.generator())) {
       throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_GENERATOR_SPECIFIED)
           .put(ENTITY_CLASS, entityClass);
@@ -117,7 +115,7 @@ class IdentityServiceImpl implements IdentityService {
       String identityQualifier = entityConfiguration.get(IDENTITY_GENERATOR_KEY);
 
       if (!Strings.isNullOrEmpty(identityQualifier)) {
-        identityGenerator = (IdentityGenerator<IdT>) injector
+        identityGenerator = (IdentityGenerator<I>) injector
             .getInstance(Key.get(identity.generator(), Names.named(identityQualifier)));
       } else {
         throw BusinessException.createNew(BusinessErrorCode.UNQUALIFIED_IDENTITY_GENERATOR)

@@ -24,25 +24,24 @@ public interface SpecificationBuilder {
   /**
    * Starts the building of a composite specification that applies on any type.
    *
-   * @param anyClass    the class the specification applies to.
-   * @param <T>         the type of the object the specification applies to.
-   * @param <SelectorT> the type of the selector.
+   * @param anyClass the class the specification applies to.
+   * @param <T>      the type of the object the specification applies to.
+   * @param <S>      the type of the selector.
    * @return the next operation of the builder DSL, allowing to select all or a part of the object
    *     the specification will apply to.
    */
-  <T, SelectorT extends PropertySelector<T, SelectorT>> SelectorT of(Class<T> anyClass);
+  <T, S extends PropertySelector<T, S>> S of(Class<T> anyClass);
 
   /**
    * Starts the building of a composite specification that applies on any {@link AggregateRoot}.
    *
-   * @param aggregateClass   the aggregate class the specification applies to.
-   * @param <AggregateRootT> the type of the aggregate the specification applies to.
-   * @param <IdT>            the type of the identifier of the aggregate.
-   * @param <SelectorT>      the type of the selector.
+   * @param aggregateClass the aggregate class the specification applies to.
+   * @param <A>            the type of the aggregate the specification applies to.
+   * @param <I>            the type of the identifier of the aggregate.
+   * @param <S>            the type of the selector.
    * @return the next operation of the builder DSL, allowing to select all or a part of the object
    *     the specification will apply to.
    */
-  <AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends
-      AggregateSelector<AggregateRootT, IdT, SelectorT>> SelectorT ofAggregate(
-      Class<AggregateRootT> aggregateClass);
+  <A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> S ofAggregate(
+      Class<A> aggregateClass);
 }

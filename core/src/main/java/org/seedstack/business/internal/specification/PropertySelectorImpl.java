@@ -15,15 +15,14 @@ import org.seedstack.business.specification.dsl.PropertySelector;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
 import org.seedstack.business.specification.dsl.TerminalOperation;
 
-class PropertySelectorImpl<T, SelectorT extends BaseSelector<T, SelectorT>> implements
-    PropertySelector<T, SelectorT> {
+class PropertySelectorImpl<T, S extends BaseSelector<T, S>> implements PropertySelector<T, S> {
 
-  protected final SpecificationBuilderContext<T, SelectorT> context;
+  protected final SpecificationBuilderContext<T, S> context;
 
   @SuppressWarnings("unchecked")
-  PropertySelectorImpl(SpecificationBuilderContext<T, SelectorT> context) {
+  PropertySelectorImpl(SpecificationBuilderContext<T, S> context) {
     this.context = context;
-    this.context.setSelector((SelectorT) this);
+    this.context.setSelector((S) this);
   }
 
   @Override
@@ -39,12 +38,12 @@ class PropertySelectorImpl<T, SelectorT extends BaseSelector<T, SelectorT>> impl
   }
 
   @Override
-  public SpecificationPicker<T, SelectorT> whole() {
+  public SpecificationPicker<T, S> whole() {
     return new SpecificationPickerImpl<>(context);
   }
 
   @Override
-  public SpecificationPicker<T, SelectorT> property(String path) {
+  public SpecificationPicker<T, S> property(String path) {
     context.setProperty(path);
     return new SpecificationPickerImpl<>(context);
   }

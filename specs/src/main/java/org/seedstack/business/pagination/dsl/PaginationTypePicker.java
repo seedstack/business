@@ -18,10 +18,10 @@ import org.seedstack.business.pagination.Slice;
  * skipped objects as a number of pages,</li> <li>Key-based which allows to select objects that come
  * after a specific value of a specific attribute.</li> </ul>
  *
- * @param <AggregateRootT> the aggregate root type that is paginated.
- * @param <IdT>            the aggregate root identifier type.
+ * @param <A> the aggregate root type that is paginated.
+ * @param <I> the aggregate root identifier type.
  */
-public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> {
+public interface PaginationTypePicker<A extends AggregateRoot<I>, I> {
 
   /**
    * Choose a page-based pagination type. Objects that come before the beginning of specified page
@@ -30,7 +30,7 @@ public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>,
    * @param pageIndex the index of the page containing objects that will be returned.
    * @return the next operation of the paginator DSL, allowing to specify page size.
    */
-  SizePicker<AggregateRootT, IdT> byPage(long pageIndex);
+  SizePicker<A, I> byPage(long pageIndex);
 
   /**
    * Choose an offset-based pagination type. Objects that come before the specified index will be
@@ -40,7 +40,7 @@ public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>,
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
    *     objects returned.
    */
-  LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> byOffset(long startingOffset);
+  LimitPicker<Slice<A>, A, I> byOffset(long startingOffset);
 
   /**
    * Choose a key-based pagination type.
@@ -49,5 +49,5 @@ public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>,
    * @return the next operation of the paginator DSL, allowing to specify the value used as
    *     boundary.
    */
-  KeyValuePicker<AggregateRootT, IdT> byAttribute(String attributeName);
+  KeyValuePicker<A, I> byAttribute(String attributeName);
 }

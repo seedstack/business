@@ -11,8 +11,8 @@ package org.seedstack.business.domain;
 /**
  * Interface for generating ever-incrementing numbers to be used as identity of entities.
  *
- * @param <IdT> the type of generated numbers.
+ * @param <I> the type of generated numbers.
  */
-public interface SequenceGenerator<IdT extends Number> extends IdentityGenerator<IdT> {
+public interface SequenceGenerator<I extends Number> extends IdentityGenerator<I> {
 
 }

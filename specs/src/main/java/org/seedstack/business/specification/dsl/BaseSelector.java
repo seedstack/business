@@ -12,10 +12,10 @@ package org.seedstack.business.specification.dsl;
  * An element of the {@link SpecificationBuilder} DSL to select all or a part of the object a clause
  * will apply to.
  *
- * @param <T>         the type of the object the specification applies to.
- * @param <SelectorT> the type of the selector.
+ * @param <T> the type of the object the specification applies to.
+ * @param <S> the type of the selector.
  */
-public interface BaseSelector<T, SelectorT extends BaseSelector<T, SelectorT>> {
+public interface BaseSelector<T, S extends BaseSelector<T, S>> {
 
   /**
    * Define a specification satisfied by any candidate.
@@ -39,5 +39,5 @@ public interface BaseSelector<T, SelectorT extends BaseSelector<T, SelectorT>> {
    * @return the next operation of the builder DSL, allowing to choose the specification that will
    *     apply on the whole object.
    */
-  SpecificationPicker<T, SelectorT> whole();
+  SpecificationPicker<T, S> whole();
 }

@@ -15,10 +15,10 @@ import org.seedstack.business.pagination.Slice;
  * An element of the {@link Paginator} DSL allowing to specify the value used as boundary in the
  * case of a key-based pagination.
  *
- * @param <AggregateRootT> the aggregate root type that is paginated.
- * @param <IdT>            the aggregate root identifier type.
+ * @param <A> the aggregate root type that is paginated.
+ * @param <I> the aggregate root identifier type.
  */
-public interface KeyValuePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> {
+public interface KeyValuePicker<A extends AggregateRoot<I>, I> {
 
   /**
    * Specify the value used as upper-boundary of the previously specified attribute. Objects having
@@ -29,8 +29,7 @@ public interface KeyValuePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> 
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
    *     objects returned.
    */
-  <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> before(
-      T value);
+  <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, I> before(T value);
 
   /**
    * Specify the value used as lower-boundary of the previously specified attribute. Objects having
@@ -41,6 +40,5 @@ public interface KeyValuePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> 
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
    *     objects returned.
    */
-  <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> after(
-      T value);
+  <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, I> after(T value);
 }

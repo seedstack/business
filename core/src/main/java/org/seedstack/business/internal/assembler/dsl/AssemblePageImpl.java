@@ -16,14 +16,13 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.SimplePage;
 
-class AssemblePageImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple> extends
-    AssembleMultipleImpl<AggregateRootT, IdT, TupleT> implements AssemblePageWithQualifier {
+class AssemblePageImpl<A extends AggregateRoot<I>, I, T extends Tuple> extends
+    AssembleMultipleImpl<A, I, T> implements AssemblePageWithQualifier {
 
-  private final Page<AggregateRootT> pageOfAggregates;
-  private final Page<TupleT> pageOfTuples;
+  private final Page<A> pageOfAggregates;
+  private final Page<T> pageOfTuples;
 
-  AssemblePageImpl(Context context, Page<AggregateRootT> pageOfAggregates,
-      Page<TupleT> pageOfTuples) {
+  AssemblePageImpl(Context context, Page<A> pageOfAggregates, Page<T> pageOfTuples) {
     super(context, pageOfAggregates == null ? null : pageOfAggregates.getItems().stream(),
         pageOfTuples == null ? null : pageOfTuples.getItems().stream());
     this.pageOfAggregates = pageOfAggregates;

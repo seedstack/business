@@ -26,22 +26,22 @@ public interface DtoInfoResolver {
    * Returns whether the resolver supports the DTO instance passed as argument. The first resolver
    * to support a particular DTO is used.
    *
-   * @param dto    the DTO to check for.
-   * @param <DtoT> the type of the DTO.
+   * @param dto the DTO to check for.
+   * @param <D> the type of the DTO.
    * @return true if the resolver supports this particular DTO, false otherwise.
    */
-  <DtoT> boolean supports(DtoT dto);
+  <D> boolean supports(D dto);
 
   /**
    * Returns the identifier instance derived from the DTO instance passed as first argument.
    *
    * @param dto              the DTO used to resolve the identifier.
    * @param aggregateIdClass the identifier class.
-   * @param <DtoT>           the type of the DTO.
-   * @param <IdT>            the type of the identifier.
+   * @param <D>              the type of the DTO.
+   * @param <I>              the type of the identifier.
    * @return the newly created identifier derived from the DTO.
    */
-  <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass);
+  <D, I> I resolveId(D dto, Class<I> aggregateIdClass);
 
   /**
    * Similar to {@link #resolveId(Object, Class)} but used in the case where a {@link
@@ -51,23 +51,22 @@ public interface DtoInfoResolver {
    * @param dto              the DTO used to resolve the identifier.
    * @param aggregateIdClass the identifier class.
    * @param position         the position in the tuple of the aggregate this identifier relates to.
-   * @param <DtoT>           the type of the DTO.
-   * @param <IdT>            the type of the identifier.
+   * @param <D>              the type of the DTO.
+   * @param <I>              the type of the identifier.
    * @return the newly created identifier derived from the DTO.
    */
-  <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass, int position);
+  <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position);
 
   /**
    * Returns the aggregate instance derived from the DTO instance passed as first argument.
    *
    * @param dto                the DTO sued to resolve the aggregate.
    * @param aggregateRootClass the aggregate root class.
-   * @param <DtoT>             the type of the DTO.
-   * @param <AggregateRootT>   the type of the aggregate root.
+   * @param <D>                the type of the DTO.
+   * @param <A>                the type of the aggregate root.
    * @return the newly created aggregate derived from the DTO.
    */
-  <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass);
+  <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass);
 
   /**
    * Similar to {@link #resolveAggregate(Object, Class)} but used in the case where a {@link
@@ -77,11 +76,10 @@ public interface DtoInfoResolver {
    * @param dto                the DTO sued to resolve the aggregate.
    * @param aggregateRootClass the aggregate root class.
    * @param position           the position in the tuple of the aggregate to create.
-   * @param <DtoT>             the type of the DTO.
-   * @param <AggregateRootT>   the type of the aggregate root.
+   * @param <D>                the type of the DTO.
+   * @param <A>                the type of the aggregate root.
    * @return the newly created aggregate derived from the DTO.
    */
-  <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass,
+  <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
       int position);
 }

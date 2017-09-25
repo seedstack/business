@@ -16,20 +16,19 @@ import org.seedstack.shed.reflect.Classes;
  * An helper base class that can be extended to create an assembler between a tuple of aggregates
  * and a DTO.
  *
- * @param <TupleT> the tuple of aggregates type.
- * @param <DtoT>   the dto type.
+ * @param <T> the tuple of aggregates type.
+ * @param <D> the dto type.
  */
-public abstract class BaseTupleAssembler<TupleT extends Tuple, DtoT> implements
-    Assembler<TupleT, DtoT> {
+public abstract class BaseTupleAssembler<T extends Tuple, D> implements Assembler<T, D> {
 
-  private final Class<DtoT> dtoClass;
+  private final Class<D> dtoClass;
 
   /**
    * Creates an assembler with automatic resolution of its DTO class.
    */
   @SuppressWarnings("unchecked")
   public BaseTupleAssembler() {
-    this.dtoClass = (Class<DtoT>) BusinessUtils
+    this.dtoClass = (Class<D>) BusinessUtils
         .resolveGenerics(BaseTupleAssembler.class, getClass())[1];
   }
 
@@ -38,17 +37,17 @@ public abstract class BaseTupleAssembler<TupleT extends Tuple, DtoT> implements
    *
    * @param dtoClass the DTO class.
    */
-  protected BaseTupleAssembler(Class<DtoT> dtoClass) {
+  protected BaseTupleAssembler(Class<D> dtoClass) {
     this.dtoClass = dtoClass;
   }
 
   @Override
-  public Class<DtoT> getDtoClass() {
+  public Class<D> getDtoClass() {
     return this.dtoClass;
   }
 
   @Override
-  public DtoT createDto() {
+  public D createDto() {
     return Classes.instantiateDefault(getDtoClass());
   }
 }

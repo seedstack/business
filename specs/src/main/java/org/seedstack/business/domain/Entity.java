@@ -55,17 +55,17 @@ package org.seedstack.business.domain;
  * }
  * </pre>
  *
- * @param <IdT> the type of the entity identifier.
+ * @param <I> the type of the entity identifier.
  */
 @DomainEntity
-public interface Entity<IdT> {
+public interface Entity<I> {
 
   /**
    * Returns the identifier of this entity instance.
    *
    * @return the entity identifier.
    */
-  IdT getId();
+  I getId();
 
   /**
    * As per Domain-Driven Design semantics, entity equality must be computed on its identity only,

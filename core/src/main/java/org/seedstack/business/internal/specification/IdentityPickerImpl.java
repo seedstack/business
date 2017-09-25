@@ -14,25 +14,25 @@ import org.seedstack.business.specification.dsl.AggregateSelector;
 import org.seedstack.business.specification.dsl.IdentityPicker;
 import org.seedstack.business.specification.dsl.OperatorPicker;
 
-class IdentityPickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends
-    AggregateSelector<AggregateRootT, IdT, SelectorT>> implements
-    IdentityPicker<AggregateRootT, IdT, SelectorT> {
+class IdentityPickerImpl<A extends AggregateRoot<I>, I, S
+    extends AggregateSelector<A, I, S>>
+    implements IdentityPicker<A, I, S> {
 
-  private final SpecificationBuilderContext<AggregateRootT, SelectorT> context;
+  private final SpecificationBuilderContext<A, S> context;
 
-  IdentityPickerImpl(SpecificationBuilderContext<AggregateRootT, SelectorT> context) {
+  IdentityPickerImpl(SpecificationBuilderContext<A, S> context) {
     this.context = context;
   }
 
   @Override
-  public OperatorPicker<AggregateRootT, SelectorT> is(IdT id) {
+  public OperatorPicker<A, S> is(I id) {
     context.addSpecification(new IdentitySpecification<>(id));
     return new OperatorPickerImpl<>(context);
   }
 
   @Override
-  public OperatorPicker<AggregateRootT, SelectorT> isNot(IdT id) {
-    context.addSpecification(new IdentitySpecification<AggregateRootT, IdT>(id).negate());
+  public OperatorPicker<A, S> isNot(I id) {
+    context.addSpecification(new IdentitySpecification<A, I>(id).negate());
     return new OperatorPickerImpl<>(context);
   }
 }

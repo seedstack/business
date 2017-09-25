@@ -19,10 +19,10 @@ public interface IdentityService {
   /**
    * Identifies the given entity
    *
-   * @param entity    the entity to identify
-   * @param <EntityT> the entity type
-   * @param <IdT>     the entity key type
+   * @param entity the entity to identify
+   * @param <E>    the entity type
+   * @param <I>    the entity key type
    * @return the identified entity
    */
-  <EntityT extends Entity<IdT>, IdT> EntityT identify(EntityT entity);
+  <E extends Entity<I>, I> E identify(E entity);
 }

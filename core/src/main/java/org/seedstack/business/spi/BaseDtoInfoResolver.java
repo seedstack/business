@@ -33,13 +33,12 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
   private DomainRegistry domainRegistry;
 
   @Override
-  public <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass) {
+  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
     return resolveId(dto, aggregateIdClass, -1);
   }
 
   @Override
-  public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-      Class<AggregateRootT> aggregateRootClass) {
+  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
     return resolveAggregate(dto, aggregateRootClass, -1);
   }
 
@@ -50,11 +49,11 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
    * @param aggregateIdClass the identifier class.
    * @param id               the existing identifier if any.
    * @param parameters       the parameters to pass to the factory if any.
-   * @param <IdT>            the type of the aggregate root identifier.
+   * @param <I>              the type of the aggregate root identifier.
    * @return the identifier.
    */
   @SuppressWarnings("unchecked")
-  protected <IdT> IdT createIdentifier(Class<IdT> aggregateIdClass, IdT id, Object... parameters) {
+  protected <I> I createIdentifier(Class<I> aggregateIdClass, I id, Object... parameters) {
     if (id != null) {
       if (aggregateIdClass.isAssignableFrom(id.getClass())) {
         return id;
@@ -68,7 +67,7 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
         throw BusinessException.createNew(BusinessErrorCode.RESOLVED_DTO_ID_IS_NOT_PRODUCIBLE)
             .put("aggregateIdClass", aggregateIdClass.getName());
       } else {
-        return (IdT) domainRegistry.getFactory(aggregateIdClass.asSubclass(Producible.class))
+        return (I) domainRegistry.getFactory(aggregateIdClass.asSubclass(Producible.class))
             .create(parameters);
       }
     }
@@ -77,17 +76,17 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
   /**
    * Implements the logic to create an aggregate.
    *
-   * @param aggregateClass   the aggregate class.
-   * @param parameters       the parameters to pass to the factory if any.
-   * @param <AggregateRootT> the type of the aggregate root.
+   * @param aggregateClass the aggregate class.
+   * @param parameters     the parameters to pass to the factory if any.
+   * @param <A>            the type of the aggregate root.
    * @return the aggregate root.
    */
-  protected <AggregateRootT extends AggregateRoot<?>> AggregateRootT createFromFactory(
-      Class<AggregateRootT> aggregateClass, Object... parameters) {
+  protected <A extends AggregateRoot<?>> A createFromFactory(Class<A> aggregateClass,
+      Object... parameters) {
     checkNotNull(aggregateClass);
     checkNotNull(parameters);
 
-    Factory<AggregateRootT> factory = domainRegistry.getFactory(aggregateClass);
+    Factory<A> factory = domainRegistry.getFactory(aggregateClass);
 
     // Find the method in the factory which match the signature determined with the previously
     // extracted parameters

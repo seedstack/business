@@ -12,18 +12,18 @@ package org.seedstack.business.domain;
  * Interface for event handlers, which handle events domain events fired by the {@link
  * DomainEventPublisher}.
  *
- * @param <EventT> the type of event which is handled.
+ * @param <E> the type of event which is handled.
  * @see DomainEvent
  * @see DomainEventPublisher
  */
-public interface DomainEventHandler<EventT extends DomainEvent> {
+public interface DomainEventHandler<E extends DomainEvent> {
 
   /**
    * Called when an event of the correct type must be handled.
    *
    * @param event the event to handle.
    */
-  void onEvent(EventT event);
+  void onEvent(E event);
 
-  Class<EventT> getEventClass();
+  Class<E> getEventClass();
 }

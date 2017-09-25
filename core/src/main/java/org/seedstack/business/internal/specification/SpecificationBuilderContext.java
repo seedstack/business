@@ -20,11 +20,11 @@ import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.SubstitutableSpecification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 
-class SpecificationBuilderContext<T, SelectorT extends BaseSelector<T, SelectorT>> {
+class SpecificationBuilderContext<T, S extends BaseSelector<T, S>> {
 
   private final Class<T> targetClass;
   private final List<List<Specification<T>>> disjunction = new ArrayList<>();
-  private SelectorT selector;
+  private S selector;
   private Mode mode = Mode.DISJUNCTION;
   private String path;
 
@@ -76,11 +76,11 @@ class SpecificationBuilderContext<T, SelectorT extends BaseSelector<T, SelectorT
     this.mode = mode;
   }
 
-  public SelectorT getSelector() {
+  public S getSelector() {
     return selector;
   }
 
-  public void setSelector(SelectorT selector) {
+  public void setSelector(S selector) {
     this.selector = selector;
   }
 
