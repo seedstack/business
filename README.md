@@ -1,6 +1,6 @@
 # SeedStack Business Framework 
 
-[![Build status](https://travis-ci.org/seedstack/business.svg?branch=master)](https://travis-ci.org/seedstack/business) [![Coverage Status](https://coveralls.io/repos/seedstack/business/badge.svg?branch=master)](https://coveralls.io/r/seedstack/business?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.business/business/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.business/business)
+[![Build status](https://travis-ci.org/seedstack/business.svg?branch=master)](https://travis-ci.org/seedstack/business) [![Coverage Status](https://coveralls.io/repos/github/seedstack/business/badge.svg?branch=master)](https://coveralls.io/github/seedstack/business?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.seedstack.business/business/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.seedstack.business/business)
 
 Based on the Domain-Driven-Design methodology, the business framework will help you structure and implement your business code cleanly and efficiently.
 
