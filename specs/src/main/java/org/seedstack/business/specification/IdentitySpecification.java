@@ -20,7 +20,7 @@ import org.seedstack.business.domain.AggregateRoot;
  * @param <IdT>            the aggregate identifier type.
  */
 public class IdentitySpecification<AggregateRootT extends AggregateRoot<IdT>, IdT> implements
-  Specification<AggregateRootT> {
+    Specification<AggregateRootT> {
 
   private final IdT expectedIdentifier;
 

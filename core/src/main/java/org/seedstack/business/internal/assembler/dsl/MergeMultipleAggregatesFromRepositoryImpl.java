@@ -17,8 +17,10 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.utils.BusinessUtils;
 
 
-class MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, DtoT> implements
-  MergeFromRepository<MergeAs<AggregateRootT>>, MergeFromRepositoryOrFactory<MergeAs<AggregateRootT>> {
+class MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT extends AggregateRoot<IdT>, IdT,
+    DtoT> implements
+    MergeFromRepository<MergeAs<AggregateRootT>>,
+    MergeFromRepositoryOrFactory<MergeAs<AggregateRootT>> {
 
   private final Context context;
   private final Class<AggregateRootT> aggregateClass;
@@ -26,7 +28,7 @@ class MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT extends Aggregate
   private final Stream<DtoT> dtoStream;
 
   MergeMultipleAggregatesFromRepositoryImpl(Context context, Stream<DtoT> dtoStream,
-    Class<AggregateRootT> aggregateClass) {
+      Class<AggregateRootT> aggregateClass) {
     this.context = context;
     this.dtoStream = dtoStream;
     this.aggregateClass = aggregateClass;
@@ -53,7 +55,8 @@ class MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT extends Aggregate
       IdT id = context.resolveId(dto, aggregateClassId);
       AggregateRootT a = context.load(id, aggregateClass);
       if (a == null) {
-        throw new AggregateNotFoundException("Unable to load aggregate " + aggregateClass.getName() + "[" + id + "]");
+        throw new AggregateNotFoundException(
+            "Unable to load aggregate " + aggregateClass.getName() + "[" + id + "]");
       }
       context.mergeDtoIntoAggregate(dto, a);
       return a;

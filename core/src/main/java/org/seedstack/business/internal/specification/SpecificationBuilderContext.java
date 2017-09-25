@@ -35,7 +35,8 @@ class SpecificationBuilderContext<T, SelectorT extends BaseSelector<T, SelectorT
   void addSpecification(Specification<T> specification) {
     checkNotNull(specification, "Specification cannot be null");
     if (mode == Mode.CONJUNCTION) {
-      checkArgument(!disjunction.isEmpty(), "Cannot add a conjunction without an existing disjunction");
+      checkArgument(!disjunction.isEmpty(),
+          "Cannot add a conjunction without an existing disjunction");
       List<Specification<T>> lastConjunction = this.disjunction.get(this.disjunction.size() - 1);
       lastConjunction.add(specification);
       mode = Mode.NONE;
@@ -93,7 +94,8 @@ class SpecificationBuilderContext<T, SelectorT extends BaseSelector<T, SelectorT
       return buildAndSpecification(disjunction.get(0));
     } else {
       return new OrSpecification<>(
-        disjunction.stream().map(this::buildAndSpecification).toArray(this::createSpecificationArray));
+          disjunction.stream().map(this::buildAndSpecification)
+              .toArray(this::createSpecificationArray));
     }
   }
 
@@ -102,7 +104,8 @@ class SpecificationBuilderContext<T, SelectorT extends BaseSelector<T, SelectorT
     if (conjunction.size() == 1) {
       return conjunction.get(0);
     } else {
-      return new AndSpecification<>(conjunction.toArray(createSpecificationArray(conjunction.size())));
+      return new AndSpecification<>(
+          conjunction.toArray(createSpecificationArray(conjunction.size())));
     }
   }
 

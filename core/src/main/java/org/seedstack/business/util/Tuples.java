@@ -48,7 +48,8 @@ public final class Tuples {
   public static <TupleT extends Tuple> TupleT create(Collection<?> objects) {
     Class<? extends Tuple> tupleClass = classOfTuple(objects.size());
     try {
-      return (TupleT) tupleClass.getMethod("fromCollection", Collection.class).invoke(null, objects);
+      return (TupleT) tupleClass.getMethod("fromCollection", Collection.class)
+          .invoke(null, objects);
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
     }
@@ -65,7 +66,8 @@ public final class Tuples {
   public static <TupleT extends Tuple> TupleT create(Object... objects) {
     Class<? extends Tuple> tupleClass = classOfTuple(objects.length);
     try {
-      return (TupleT) tupleClass.getMethod("fromArray", Object[].class).invoke(null, new Object[]{objects});
+      return (TupleT) tupleClass.getMethod("fromArray", Object[].class)
+          .invoke(null, new Object[]{objects});
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_TUPLE);
     }
@@ -152,13 +154,15 @@ public final class Tuples {
       case 10:
         return Decade.class;
       default:
-        throw new IllegalArgumentException("Cannot create a tuple with " + cardinality + " element(s)");
+        throw new IllegalArgumentException(
+            "Cannot create a tuple with " + cardinality + " element(s)");
     }
   }
 
   /**
-   * Returns the {@link ParameterizedType} of the Tuple class corresponding to the specified classes. <p> For instance,
-   * for a list with Customer.class and Order.class the method will return Pair&lt;Customer, Order&gt;. </p>
+   * Returns the {@link ParameterizedType} of the Tuple class corresponding to the specified
+   * classes. <p> For instance, for a list with Customer.class and Order.class the method will
+   * return Pair&lt;Customer, Order&gt;. </p>
    *
    * @param classes the tuple classes.
    * @return the tuple type.

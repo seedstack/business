@@ -18,11 +18,12 @@ import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.internal.utils.MethodMatcher;
 
 /**
- * An helper base class that can be extended to create an <strong>implementation</strong> of a factory interface which,
- * in turn, must extend {@link Factory}.
+ * An helper base class that can be extended to create an <strong>implementation</strong> of a
+ * factory interface which, in turn, must extend {@link Factory}.
  *
- * <p> This base implementation provides generic object creation through the {@link #create(Object...)} method that will
- * resolve a constructor with the same argument types as its own and invoke it. </p>
+ * <p> This base implementation provides generic object creation through the {@link
+ * #create(Object...)} method that will resolve a constructor with the same argument types as its
+ * own and invoke it. </p>
  *
  * @param <P> Type of the produced object.
  * @see Factory
@@ -34,7 +35,8 @@ public abstract class BaseFactory<P extends Producible> implements Factory<P> {
   private IdentityService identityService;
 
   /**
-   * Creates a base domain factory. Actual class produced by the factory is determined by reflection.
+   * Creates a base domain factory. Actual class produced by the factory is determined by
+   * reflection.
    */
   @SuppressWarnings("unchecked")
   protected BaseFactory() {
@@ -42,8 +44,8 @@ public abstract class BaseFactory<P extends Producible> implements Factory<P> {
   }
 
   /**
-   * Creates a base domain factory. Actual class produced by the factory is specified explicitly. This can be used to
-   * create a dynamic implementation of a factory.
+   * Creates a base domain factory. Actual class produced by the factory is specified explicitly.
+   * This can be used to create a dynamic implementation of a factory.
    *
    * @param producedClass the produced class.
    */
@@ -60,10 +62,11 @@ public abstract class BaseFactory<P extends Producible> implements Factory<P> {
   @SuppressWarnings("unchecked")
   public P create(Object... args) {
     Class<P> effectivelyProducedClass = getProducedClass();
-    Constructor<P> constructor = MethodMatcher.findMatchingConstructor(effectivelyProducedClass, args);
+    Constructor<P> constructor = MethodMatcher
+        .findMatchingConstructor(effectivelyProducedClass, args);
     if (constructor == null) {
       throw BusinessException.createNew(BusinessErrorCode.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
-        .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
+          .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
     }
 
     P producedInstance;
@@ -71,11 +74,13 @@ public abstract class BaseFactory<P extends Producible> implements Factory<P> {
       constructor.setAccessible(true);
       producedInstance = constructor.newInstance(args);
     } catch (Exception e) {
-      throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INVOKE_CONSTRUCTOR).put("constructor", constructor)
-        .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
+      throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INVOKE_CONSTRUCTOR)
+          .put("constructor", constructor)
+          .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
     }
 
-    if (producedInstance instanceof Entity && IdentityResolver.INSTANCE.test(effectivelyProducedClass)) {
+    if (producedInstance instanceof Entity && IdentityResolver.INSTANCE
+        .test(effectivelyProducedClass)) {
       producedInstance = (P) identityService.identify((Entity<?>) producedInstance);
     }
 

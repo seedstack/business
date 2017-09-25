@@ -20,8 +20,9 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
 
 
-class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements MergeFromRepository<MergeAs<T>>,
-  MergeFromRepositoryOrFactory<MergeAs<T>> {
+class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements
+    MergeFromRepository<MergeAs<T>>,
+    MergeFromRepositoryOrFactory<MergeAs<T>> {
 
   private final Context context;
   private final Class<? extends AggregateRoot<?>>[] aggregateClasses;
@@ -30,7 +31,7 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
 
   @SafeVarargs
   MergeMultipleTuplesFromRepositoryImpl(Context context, Stream<D> dtoStream,
-    Class<? extends AggregateRoot<?>>... aggregateClasses) {
+      Class<? extends AggregateRoot<?>>... aggregateClasses) {
     this.context = context;
     this.dtoStream = dtoStream;
     this.aggregateClasses = aggregateClasses;
@@ -64,7 +65,7 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
         aggregateRoots[i] = load(id, aggregateClasses[i]);
         if (aggregateRoots[i] == null) {
           throw new AggregateNotFoundException(
-            "Unable to load aggregate " + aggregateClasses[i].getName() + "[" + id + "]");
+              "Unable to load aggregate " + aggregateClasses[i].getName() + "[" + id + "]");
         }
       }
       T tuple = Tuples.create((Object[]) aggregateRoots);
@@ -78,7 +79,8 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
     return new MergeAsImpl<>(dtoStream.map(dto -> {
       AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
       for (int i = 0; i < aggregateClasses.length; i++) {
-        aggregateRoots[i] = load(context.resolveId(dto, aggregateIdClasses[i], i), aggregateClasses[i]);
+        aggregateRoots[i] = load(context.resolveId(dto, aggregateIdClasses[i], i),
+            aggregateClasses[i]);
         if (aggregateRoots[i] == null) {
           aggregateRoots[i] = context.create(dto, aggregateClasses[i], i);
         }
@@ -91,7 +93,7 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
 
   @SuppressWarnings("unchecked")
   private <AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRoot<?> load(Object id,
-    Class<? extends AggregateRoot<?>> aggregateClass) {
+      Class<? extends AggregateRoot<?>> aggregateClass) {
     return context.load((IdT) id, (Class<AggregateRootT>) aggregateClass);
   }
 }

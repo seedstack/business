@@ -58,33 +58,37 @@ class ParameterHolder<DtoT> {
     internalAddParameter(annotation, aggregateIndex, -1, getter);
   }
 
-  void addTupleParameter(Class<? extends Annotation> annotation, int aggregateIndex, int index, Method getter) {
+  void addTupleParameter(Class<? extends Annotation> annotation, int aggregateIndex, int index,
+      Method getter) {
     checkNotNull(getter, "Getter cannot be null");
     checkArgument(aggregateIndex >= 0, "Aggregate index must be greater than or equal to zero");
     checkArgument(index >= 0, "Parameter index must be greater than or equal to zero");
     internalAddParameter(annotation, aggregateIndex, index, getter);
   }
 
-  private void internalAddParameter(Class<? extends Annotation> annotation, int aggregateIndex, int index,
-    Method getter) {
+  private void internalAddParameter(Class<? extends Annotation> annotation, int aggregateIndex,
+      int index,
+      Method getter) {
     checkState(methodMap != null, "Cannot add parameter after having called freeze()");
-    if (methodMap.computeIfAbsent(aggregateIndex, k -> new TreeMap<>()).putIfAbsent(index, getter) != null) {
+    if (methodMap.computeIfAbsent(aggregateIndex, k -> new TreeMap<>()).putIfAbsent(index, getter)
+        != null) {
       Method conflictingGetter = methodMap.get(aggregateIndex).get(index);
       BusinessException exception;
       if (index > -1) {
         exception = BusinessException.createNew(
-          annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_INDEX_MATCHING
-            : BusinessErrorCode.CONFLICTING_DTO_FACTORY_INDEX_MATCHING);
+            annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_INDEX_MATCHING
+                : BusinessErrorCode.CONFLICTING_DTO_FACTORY_INDEX_MATCHING);
       } else {
         exception = BusinessException.createNew(
-          annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_MATCHING
-            : BusinessErrorCode.CONFLICTING_DTO_FACTORY_MATCHING);
+            annotation == AggregateId.class ? BusinessErrorCode.CONFLICTING_DTO_ID_MATCHING
+                : BusinessErrorCode.CONFLICTING_DTO_FACTORY_MATCHING);
       }
-      exception.put("index", index).put("dtoClass", dtoClass).put("annotation", annotation).put("getter", getter)
-        .put("conflictingGetter", conflictingGetter);
+      exception.put("index", index).put("dtoClass", dtoClass).put("annotation", annotation)
+          .put("getter", getter)
+          .put("conflictingGetter", conflictingGetter);
       if (aggregateIndex > -1) {
         throw BusinessException.wrap(exception, BusinessErrorCode.CONFLICTING_DTO_TUPLE_MATCHING)
-          .put("dtoClass", dtoClass).put("aggregateIndex", aggregateIndex);
+            .put("dtoClass", dtoClass).put("aggregateIndex", aggregateIndex);
       } else {
         throw exception;
       }
@@ -97,7 +101,8 @@ class ParameterHolder<DtoT> {
       if (aggregateGetters.containsKey(-1)) {
         this.aggregateGetter = aggregateGetters.get(-1);
       } else {
-        this.aggregateGetters = aggregateGetters.values().toArray(new Method[aggregateGetters.size()]);
+        this.aggregateGetters = aggregateGetters.values()
+            .toArray(new Method[aggregateGetters.size()]);
       }
     } else {
       tupleGetters = new Method[methodMap.size()][];
@@ -108,7 +113,8 @@ class ParameterHolder<DtoT> {
         if (aggregateGetters.containsKey(-1)) {
           this.tupleGetter[aggregateIndex] = aggregateGetters.get(-1);
         } else {
-          this.tupleGetters[aggregateIndex] = aggregateGetters.values().toArray(new Method[aggregateGetters.size()]);
+          this.tupleGetters[aggregateIndex] = aggregateGetters.values()
+              .toArray(new Method[aggregateGetters.size()]);
         }
       }
     }
@@ -125,7 +131,7 @@ class ParameterHolder<DtoT> {
     } else if (aggregateGetters != null) {
       Object[] values = new Object[aggregateGetters.length];
       for (int i = 0,
-        length = aggregateGetters.length; i < length; i++) {
+          length = aggregateGetters.length; i < length; i++) {
         values[i] = ReflectUtils.invoke(aggregateGetters[i], dto);
       }
       return values;
@@ -146,7 +152,7 @@ class ParameterHolder<DtoT> {
       if (methods != null && methods.length > 0) {
         Object[] values = new Object[methods.length];
         for (int i = 0,
-          length = methods.length; i < length; i++) {
+            length = methods.length; i < length; i++) {
           values[i] = ReflectUtils.invoke(methods[i], dto);
         }
         return values;
@@ -180,13 +186,14 @@ class ParameterHolder<DtoT> {
 
   boolean isEmpty() {
     return aggregateGetter == null && (aggregateGetters == null || aggregateGetters.length == 0)
-      && isEmptyForAggregateRoot(0);
+        && isEmptyForAggregateRoot(0);
   }
 
   private boolean isEmptyForAggregateRoot(int aggregateIndex) {
     checkArgument(aggregateIndex >= 0, "Aggregate index must be greater than or equal to zero");
-    return (tupleGetter == null || tupleGetter.length == 0) && (tupleGetters == null || tupleGetters.length == 0
-      || aggregateIndex >= tupleGetters.length || tupleGetters[aggregateIndex] == null
-      || tupleGetters[aggregateIndex].length == 0);
+    return (tupleGetter == null || tupleGetter.length == 0) && (tupleGetters == null
+        || tupleGetters.length == 0
+        || aggregateIndex >= tupleGetters.length || tupleGetters[aggregateIndex] == null
+        || tupleGetters[aggregateIndex].length == 0);
   }
 }

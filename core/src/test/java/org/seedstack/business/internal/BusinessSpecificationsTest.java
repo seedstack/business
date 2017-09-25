@@ -36,13 +36,13 @@ public class BusinessSpecificationsTest {
   @Test
   public void testAggregateRootSpecification() {
     assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot1.class))
-      .isTrue();
+        .isTrue();
     assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MyAggregateRoot2.class))
-      .isTrue();
+        .isTrue();
     assertThat(BusinessSpecifications.AGGREGATE_ROOT.isSatisfiedBy(MySimplePojo.class)).isFalse();
     assertThat(BusinessSpecifications.AGGREGATE_ROOT)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.AGGREGATE_ROOT);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.AGGREGATE_ROOT);
   }
 
   @Test
@@ -51,8 +51,8 @@ public class BusinessSpecificationsTest {
     assertThat(BusinessSpecifications.ENTITY.isSatisfiedBy(MyEntity2.class)).isTrue();
     assertThat(BusinessSpecifications.ENTITY.isSatisfiedBy(MySimplePojo.class)).isFalse();
     assertThat(BusinessSpecifications.ENTITY)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.ENTITY);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.ENTITY);
   }
 
   @Test
@@ -60,30 +60,30 @@ public class BusinessSpecificationsTest {
     assertThat(BusinessSpecifications.ASSEMBLER.isSatisfiedBy(MyAssembler1.class)).isTrue();
     assertThat(BusinessSpecifications.ASSEMBLER.isSatisfiedBy(MySimplePojo.class)).isFalse();
     assertThat(BusinessSpecifications.ASSEMBLER)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.ASSEMBLER);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.ASSEMBLER);
   }
 
   @Test
   public void testClassicAssemblerSpecification() {
     assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER.isSatisfiedBy(MyAssembler1.class))
-      .isTrue();
+        .isTrue();
     assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class))
-      .isFalse();
+        .isFalse();
     assertThat(BusinessSpecifications.EXPLICIT_ASSEMBLER)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.EXPLICIT_ASSEMBLER);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.EXPLICIT_ASSEMBLER);
   }
 
   @Test
   public void testDefaultAssemblerSpecification() {
     assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(DefaultMyAssembler1.class))
-      .isTrue();
+        .isTrue();
     assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER.isSatisfiedBy(MyAssembler1.class))
-      .isFalse();
+        .isFalse();
     assertThat(BusinessSpecifications.DEFAULT_ASSEMBLER)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.DEFAULT_ASSEMBLER);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.DEFAULT_ASSEMBLER);
   }
 
   @Test
@@ -93,8 +93,8 @@ public class BusinessSpecificationsTest {
     assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory3.class)).isFalse();
     assertThat(BusinessSpecifications.FACTORY.isSatisfiedBy(MyFactory4.class)).isTrue();
     assertThat(BusinessSpecifications.FACTORY)
-      .describedAs("specification should be comparable")
-      .isEqualTo(BusinessSpecifications.FACTORY);
+        .describedAs("specification should be comparable")
+        .isEqualTo(BusinessSpecifications.FACTORY);
   }
 
   @Test
@@ -107,15 +107,15 @@ public class BusinessSpecificationsTest {
   @Test
   public void testDomainRepoImplSpecification() {
     assertThat(BusinessSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepositoryImpl1.class))
-      .isTrue();
+        .isTrue();
     assertThat(BusinessSpecifications.DEFAULT_REPOSITORY.isSatisfiedBy(MyRepository1.class))
-      .isFalse();
+        .isFalse();
   }
 
   @Test
   public void testDomainServiceSpecification() {
     assertThat(BusinessSpecifications.SERVICE.isSatisfiedBy(MyDomainServiceSpecification1.class))
-      .isTrue();
+        .isTrue();
   }
 
   @Test
@@ -278,7 +278,7 @@ public class BusinessSpecificationsTest {
   @GenericImplementation
   @Ignore
   private static class MyRepositoryImpl1<A extends AggregateRoot<K>, K> implements
-    Repository<A, K> {
+      Repository<A, K> {
 
     @Override
     public void add(A a) {

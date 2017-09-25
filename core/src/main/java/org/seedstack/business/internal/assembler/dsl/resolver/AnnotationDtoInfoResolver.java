@@ -28,8 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the {@link DtoInfoResolver} based on the MatchingFactoryParameter and MatchingFactoryParameter
- * annotation. <p> See Their respective documentation to understand {@code AnnotationResolver} implementation. </p>
+ * Implementation of the {@link DtoInfoResolver} based on the MatchingFactoryParameter and
+ * MatchingFactoryParameter annotation. <p> See Their respective documentation to understand {@code
+ * AnnotationResolver} implementation. </p>
  *
  * @see AggregateId
  * @see FactoryArgument
@@ -54,26 +55,29 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
 
     if (parameterHolder.isEmpty()) {
       throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
-        .put("dtoClass", dto.getClass().getName()).put("aggregateIdClass", aggregateIdClass);
+          .put("dtoClass", dto.getClass().getName()).put("aggregateIdClass", aggregateIdClass);
     }
 
     if (position == -1) {
-      return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto), parameterHolder.parameters(dto));
+      return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto),
+          parameterHolder.parameters(dto));
     } else {
-      return createIdentifier(aggregateIdClass, parameterHolder.uniqueElementForAggregate(dto, position),
-        parameterHolder.parametersOfAggregateRoot(dto, position));
+      return createIdentifier(aggregateIdClass,
+          parameterHolder.uniqueElementForAggregate(dto, position),
+          parameterHolder.parametersOfAggregateRoot(dto, position));
     }
   }
 
   @Override
   public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-    Class<AggregateRootT> aggregateRootClass, int position) {
+      Class<AggregateRootT> aggregateRootClass, int position) {
     ParameterHolder<DtoT> parameterHolder = getCachedInfo(dto).aggregateParameterHolder;
 
     if (position == -1) {
       return createFromFactory(aggregateRootClass, parameterHolder.parameters(dto));
     } else {
-      return createFromFactory(aggregateRootClass, parameterHolder.parametersOfAggregateRoot(dto, position));
+      return createFromFactory(aggregateRootClass,
+          parameterHolder.parametersOfAggregateRoot(dto, position));
     }
   }
 
@@ -81,7 +85,8 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
   private <DtoT> DtoInfo<DtoT> getCachedInfo(DtoT dto) {
     return (DtoInfo<DtoT>) cache.computeIfAbsent(dto.getClass(), dtoClass -> {
       final ParameterHolder<DtoT> idParameterHolder = new ParameterHolder<>((Class<DtoT>) dtoClass);
-      final ParameterHolder<DtoT> aggregateParameterHolder = new ParameterHolder<>((Class<DtoT>) dtoClass);
+      final ParameterHolder<DtoT> aggregateParameterHolder = new ParameterHolder<>(
+          (Class<DtoT>) dtoClass);
       final AtomicBoolean supported = new AtomicBoolean(false);
 
       LOGGER.debug("Resolving DTO information on {}", dtoClass);
@@ -94,9 +99,11 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
           if (idAnnotation.aggregateIndex() >= 0) {
             if (idAnnotation.index() >= 0) {
               idParameterHolder
-                .addTupleParameter(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), idAnnotation.index(), method);
+                  .addTupleParameter(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(),
+                      idAnnotation.index(), method);
             } else {
-              idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), method);
+              idParameterHolder
+                  .addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), method);
             }
           } else {
             if (idAnnotation.index() >= 0) {
@@ -113,14 +120,17 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
           if (factoryAnnotation.aggregateIndex() >= 0) {
             if (factoryAnnotation.index() >= 0) {
               aggregateParameterHolder
-                .addTupleParameter(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), factoryAnnotation.index(),
-                  method);
+                  .addTupleParameter(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(),
+                      factoryAnnotation.index(),
+                      method);
             } else {
-              aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), method);
+              aggregateParameterHolder
+                  .addTupleValue(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), method);
             }
           } else {
             if (factoryAnnotation.index() >= 0) {
-              aggregateParameterHolder.addParameter(MATCHING_FACT_PARAM, factoryAnnotation.index(), method);
+              aggregateParameterHolder
+                  .addParameter(MATCHING_FACT_PARAM, factoryAnnotation.index(), method);
             } else {
               aggregateParameterHolder.addValue(MATCHING_FACT_PARAM, method);
             }
@@ -143,7 +153,7 @@ public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
     final ParameterHolder<DtoT> aggregateParameterHolder;
 
     private DtoInfo(boolean supported, ParameterHolder<DtoT> idParameterHolder,
-      ParameterHolder<DtoT> aggregateParameterHolder) {
+        ParameterHolder<DtoT> aggregateParameterHolder) {
       this.supported = supported;
       this.idParameterHolder = idParameterHolder;
       this.aggregateParameterHolder = aggregateParameterHolder;

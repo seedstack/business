@@ -36,48 +36,54 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
   }
 
   @Override
-  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass) {
+  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass,
+      Class<D> dtoClass) {
     return findAssemblerOf(aggregateRootClass, dtoClass, null, null);
   }
 
   @Override
-  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass,
-    @Nullable Annotation qualifier) {
+  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass,
+      Class<D> dtoClass,
+      @Nullable Annotation qualifier) {
     return findAssemblerOf(aggregateRootClass, dtoClass, qualifier, null);
   }
 
   @Override
-  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass, Class<D> dtoClass,
-    @Nullable Class<? extends Annotation> qualifier) {
+  public <A extends AggregateRoot<?>, D> Assembler<A, D> getAssembler(Class<A> aggregateRootClass,
+      Class<D> dtoClass,
+      @Nullable Class<? extends Annotation> qualifier) {
     return findAssemblerOf(aggregateRootClass, dtoClass, null, qualifier);
   }
 
   @Override
   public <T extends Tuple, D> Assembler<T, D> getTupleAssembler(
-    Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass) {
+      Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass) {
     return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, null, null);
   }
 
   @Override
   public <T extends Tuple, D> Assembler<T, D> getTupleAssembler(
-    Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass, Annotation qualifier) {
+      Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass,
+      Annotation qualifier) {
     return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, qualifier, null);
   }
 
   @Override
   public <T extends Tuple, D> Assembler<T, D> getTupleAssembler(
-    Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass,
-    @Nullable Class<? extends Annotation> qualifier) {
+      Class<? extends AggregateRoot<?>>[] aggregateRootClasses, Class<D> dtoClass,
+      @Nullable Class<? extends Annotation> qualifier) {
     return findAssemblerOf(classesToTupleType(aggregateRootClasses), dtoClass, null, qualifier);
   }
 
   private Type classesToTupleType(Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {
-    return Types.newParameterizedType(Tuples.classOfTuple(aggregateRootClasses.length), aggregateRootClasses);
+    return Types.newParameterizedType(Tuples.classOfTuple(aggregateRootClasses.length),
+        aggregateRootClasses);
   }
 
   @SuppressWarnings("unchecked")
-  private <T, D> Assembler<T, D> findAssemblerOf(Type aggregateRoot, Class<D> dto, @Nullable Annotation qualifier,
-    @Nullable Class<? extends Annotation> qualifierClass) {
+  private <T, D> Assembler<T, D> findAssemblerOf(Type aggregateRoot, Class<D> dto,
+      @Nullable Annotation qualifier,
+      @Nullable Class<? extends Annotation> qualifierClass) {
     Assembler<T, D> o;
     try {
       if (qualifier != null) {
@@ -89,8 +95,9 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
       }
     } catch (ConfigurationException e) {
       BusinessException seedException = BusinessException
-        .createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER).put("aggregateRoot", aggregateRoot)
-        .put("dto", dto);
+          .createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER_WITH_QUALIFIER)
+          .put("aggregateRoot", aggregateRoot)
+          .put("dto", dto);
       if (qualifier != null) {
         seedException.put("qualifier", qualifier);
         throw seedException;
@@ -99,23 +106,27 @@ public class AssemblerRegistryImpl implements AssemblerRegistry {
         throw seedException;
       } else {
         throw BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_ASSEMBLER)
-          .put("aggregateRoot", aggregateRoot).put("dto", dto);
+            .put("aggregateRoot", aggregateRoot).put("dto", dto);
       }
     }
     return o;
   }
 
-  private Object getInstance(Type rawType, Class<? extends Annotation> qualifier, Type... typeArguments) {
+  private Object getInstance(Type rawType, Class<? extends Annotation> qualifier,
+      Type... typeArguments) {
     return injector
-      .getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments)), qualifier));
+        .getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments)),
+            qualifier));
   }
 
   private Object getInstance(Type rawType, Annotation qualifier, Type... typeArguments) {
     return injector
-      .getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments)), qualifier));
+        .getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments)),
+            qualifier));
   }
 
   private Object getInstance(Type rawType, Type... typeArguments) {
-    return injector.getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments))));
+    return injector
+        .getInstance(Key.get(TypeLiteral.get(Types.newParameterizedType(rawType, typeArguments))));
   }
 }

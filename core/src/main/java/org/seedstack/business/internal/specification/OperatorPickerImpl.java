@@ -12,7 +12,7 @@ import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.OperatorPicker;
 
 class OperatorPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> extends
-  TerminalOperationImpl<T, SelectorT> implements OperatorPicker<T, SelectorT> {
+    TerminalOperationImpl<T, SelectorT> implements OperatorPicker<T, SelectorT> {
 
   OperatorPickerImpl(SpecificationBuilderContext<T, SelectorT> context) {
     super(context);

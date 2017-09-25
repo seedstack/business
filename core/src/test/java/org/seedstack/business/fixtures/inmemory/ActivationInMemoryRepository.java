@@ -14,7 +14,7 @@ import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
 
 public class ActivationInMemoryRepository extends
-  BaseInMemoryRepository<Activation, String> implements ActivationRepository {
+    BaseInMemoryRepository<Activation, String> implements ActivationRepository {
 
 
 }

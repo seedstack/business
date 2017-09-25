@@ -31,15 +31,16 @@ class DefaultRepositoryCollector {
   private final Collection<Class<? extends Repository>> defaultRepositoryImplementations;
   private final Application application;
 
-  DefaultRepositoryCollector(Collection<Class<? extends Repository>> defaultRepositoryImplementations,
-    Application application) {
+  DefaultRepositoryCollector(
+      Collection<Class<? extends Repository>> defaultRepositoryImplementations,
+      Application application) {
     this.defaultRepositoryImplementations = defaultRepositoryImplementations;
     this.application = application;
   }
 
   /**
-   * Prepares the binding strategies which bind default repositories. The specificity here is that it could have
-   * multiple implementations of default repository, i.e. one per persistence.
+   * Prepares the binding strategies which bind default repositories. The specificity here is that
+   * it could have multiple implementations of default repository, i.e. one per persistence.
    *
    * @param aggregateClasses the aggregates classes to collect repositories from.
    * @return a binding strategy
@@ -50,20 +51,23 @@ class DefaultRepositoryCollector {
     // Extract the type variables which will be passed to the constructor
     Map<Type[], Key<?>> generics = new HashMap<>();
     for (Class<?> aggregateClass : BusinessUtils.includeSuperClasses(aggregateClasses)) {
-      Class<?> aggregateKey = TypeToken.of(aggregateClass).resolveType(AggregateRoot.class.getTypeParameters()[0])
-        .getRawType();
+      Class<?> aggregateKey = TypeToken.of(aggregateClass)
+          .resolveType(AggregateRoot.class.getTypeParameters()[0])
+          .getRawType();
       Type[] params = {aggregateClass, aggregateKey};
 
-      TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(Repository.class, params));
+      TypeLiteral<?> genericInterface = TypeLiteral
+          .get(Types.newParameterizedType(Repository.class, params));
       Key<?> defaultKey = BusinessUtils
-        .defaultQualifier(application, DEFAULT_REPOSITORY_KEY, aggregateClass, genericInterface);
+          .defaultQualifier(application, DEFAULT_REPOSITORY_KEY, aggregateClass, genericInterface);
 
       generics.put(params, defaultKey);
     }
 
     // Create a binding strategy for each default repository implementation
     for (Class<? extends Repository> defaultRepoIml : defaultRepositoryImplementations) {
-      bindingStrategies.add(new GenericBindingStrategy<>(Repository.class, defaultRepoIml, generics));
+      bindingStrategies
+          .add(new GenericBindingStrategy<>(Repository.class, defaultRepoIml, generics));
     }
     return bindingStrategies;
   }

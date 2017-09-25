@@ -55,7 +55,8 @@ public final class BusinessUtils {
     checkNotNull(subType, "subType should not be null");
     Class<?> subTypeWithoutProxy = ProxyUtils.cleanProxy(subType);
     return TypeResolver
-      .resolveRawArguments(TypeResolver.resolveGenericType(superType, subTypeWithoutProxy), subTypeWithoutProxy);
+        .resolveRawArguments(TypeResolver.resolveGenericType(superType, subTypeWithoutProxy),
+            subTypeWithoutProxy);
   }
 
   /**
@@ -63,15 +64,17 @@ public final class BusinessUtils {
    */
   @SuppressWarnings("unchecked")
   public static <AggregateRootT extends AggregateRoot<IdT>, IdT> Class<IdT> getAggregateIdClass(
-    Class<AggregateRootT> aggregateRootClass) {
+      Class<AggregateRootT> aggregateRootClass) {
     checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
     return (Class<IdT>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
   }
 
   /**
-   * Returns an arrays of all identifier class corresponding the the given array of aggregate root classes.
+   * Returns an arrays of all identifier class corresponding the the given array of aggregate root
+   * classes.
    */
-  public static Class<?>[] getAggregateIdClasses(Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {
+  public static Class<?>[] getAggregateIdClasses(
+      Class<? extends AggregateRoot<?>>[] aggregateRootClasses) {
     checkNotNull(aggregateRootClasses, "aggregateRootClasses should not be null");
     Class<?>[] result = new Class<?>[aggregateRootClasses.length];
     for (int i = 0; i < aggregateRootClasses.length; i++) {
@@ -81,13 +84,17 @@ public final class BusinessUtils {
   }
 
   /**
-   * Checks that classes satisfying a specification are assignable to a base class and return a typed stream of it.
+   * Checks that classes satisfying a specification are assignable to a base class and return a
+   * typed stream of it.
    */
   @SuppressWarnings("unchecked")
-  public static <T> Stream<Class<? extends T>> streamClasses(InitContext initContext, Specification<Class<?>> spec,
-    Class<T> baseClass) {
-    Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext.scannedTypesBySpecification();
-    return scannedTypesBySpecification.get(spec).stream().filter(baseClass::isAssignableFrom).map(c -> (Class<T>) c);
+  public static <T> Stream<Class<? extends T>> streamClasses(InitContext initContext,
+      Specification<Class<?>> spec,
+      Class<T> baseClass) {
+    Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext
+        .scannedTypesBySpecification();
+    return scannedTypesBySpecification.get(spec).stream().filter(baseClass::isAssignableFrom)
+        .map(c -> (Class<T>) c);
   }
 
   /**
@@ -95,15 +102,16 @@ public final class BusinessUtils {
    */
   public static Optional<Annotation> getQualifier(Class<?> someClass) {
     return Annotations.on(ProxyUtils.cleanProxy(someClass)).findAll()
-      .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false)).findFirst();
+        .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false)).findFirst();
   }
 
   /**
    * Returns the Guice key qualified with the default qualifier configured for the specified class.
    */
   @SuppressWarnings("unchecked")
-  public static Key<?> defaultQualifier(Application application, String key, Class<?> aggregateClass,
-    TypeLiteral<?> genericInterface) {
+  public static Key<?> defaultQualifier(Application application, String key,
+      Class<?> aggregateClass,
+      TypeLiteral<?> genericInterface) {
     Key<?> defaultKey = null;
     ClassConfiguration<?> configuration = application.getConfiguration(aggregateClass);
     if (configuration != null && !configuration.isEmpty()) {
@@ -116,7 +124,8 @@ public final class BusinessUtils {
             defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
           } else {
             throw BusinessException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
-              .put("aggregateClass", aggregateClass.getName()).put("qualifierClass", qualifierName);
+                .put("aggregateClass", aggregateClass.getName())
+                .put("qualifierClass", qualifierName);
           }
         } catch (ClassNotFoundException e) {
           defaultKey = Key.get(genericInterface, Names.named(qualifierName));
@@ -127,15 +136,17 @@ public final class BusinessUtils {
   }
 
   /**
-   * Walks the class hierarchy of each class in the given collection and adds its superclasses to the mix.
+   * Walks the class hierarchy of each class in the given collection and adds its superclasses to
+   * the mix.
    */
   public static Set<Class<?>> includeSuperClasses(Collection<Class<?>> aggregateClasses) {
     Set<Class<?>> results = new HashSet<>();
     for (Class<?> aggregateClass : aggregateClasses) {
       Class<?> classToAdd = aggregateClass;
       while (classToAdd != null) {
-        if (AggregateRoot.class.isAssignableFrom(classToAdd) && !classToAdd.equals(BaseAggregateRoot.class)
-          && !classToAdd.equals(AggregateRoot.class)) {
+        if (AggregateRoot.class.isAssignableFrom(classToAdd) && !classToAdd
+            .equals(BaseAggregateRoot.class)
+            && !classToAdd.equals(AggregateRoot.class)) {
           results.add(classToAdd);
           classToAdd = classToAdd.getSuperclass();
         } else {

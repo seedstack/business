@@ -43,18 +43,19 @@ public final class PluginUtils {
    * @param <T>                         the class of the interface.
    * @param classpathScanRequestBuilder the Nuun classpath scan request builder.
    * @param interfaces                  the interfaces.
-   * @return a map where the key is an interface and the value is a specification matching descendants of this
-   *   interface.
+   * @return a map where the key is an interface and the value is a specification matching
+   *     descendants of this interface.
    */
   @SuppressWarnings("unchecked")
-  public static <T extends Class<?>> Map<T, Specification<? extends T>> classpathRequestForDescendantTypesOf(
-    ClasspathScanRequestBuilder classpathScanRequestBuilder, Collection<T> interfaces) {
+  public static <T extends Class<?>> Map<T,
+      Specification<? extends T>> classpathRequestForDescendantTypesOf(
+      ClasspathScanRequestBuilder classpathScanRequestBuilder, Collection<T> interfaces) {
     Map<T, Specification<? extends T>> specsByInterface = new HashMap<>();
     for (T anInterface : interfaces) {
       LOGGER.trace("Request implementations of: {}", anInterface.getName());
       Specification<Class<?>> spec = new SpecificationBuilder<>(
-        classIsDescendantOf(anInterface).and(classIsInterface().negate())
-          .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
+          classIsDescendantOf(anInterface).and(classIsInterface().negate())
+              .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
       classpathScanRequestBuilder.specification(spec);
       specsByInterface.put(anInterface, (Specification<? extends T>) spec);
     }
@@ -62,55 +63,62 @@ public final class PluginUtils {
   }
 
   /**
-   * Associates scanned interfaces to their implementations. It also handles qualified bindings in the case where there
-   * is multiple implementation for the same interface. <p> This is the "default mode" for binding in the business
-   * framework. </p>
+   * Associates scanned interfaces to their implementations. It also handles qualified bindings in
+   * the case where there is multiple implementation for the same interface. <p> This is the
+   * "default mode" for binding in the business framework. </p>
    *
    * @param initContext      the context containing the implementations.
    * @param interfaces       the interfaces to bind.
-   * @param specsByInterface the specifications used to scan implementations, indexed by interfaces.
-   * @param overridingMode   if true, only implementations that satisfy {@link #isOverridingImplementation()} are bound,
-   *                         if false only implementations that don't satisfy {@link #isOverridingImplementation()} are
-   *                         bound.
+   * @param specsByInterface the specifications used to scan implementations, indexed by
+   *                         interfaces.
+   * @param overridingMode   if true, only implementations that satisfy {@link
+   *                         #isOverridingImplementation()} are bound, if false only implementations
+   *                         that don't satisfy {@link #isOverridingImplementation()} are bound.
    * @param <T>              supertype of all interfaces to bind.
    * @return the map of interface/implementation to bind.
    * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
    */
   @SuppressWarnings("unchecked")
-  public static <T extends Class> Map<Key<T>, ? extends T> associateInterfacesToImplementations(InitContext initContext,
-    Collection<T> interfaces, Map<T, Specification<? extends T>> specsByInterface, boolean overridingMode) {
+  public static <T extends Class> Map<Key<T>, ? extends T> associateInterfacesToImplementations(
+      InitContext initContext,
+      Collection<T> interfaces, Map<T, Specification<? extends T>> specsByInterface,
+      boolean overridingMode) {
     Map<Key<T>, ? extends T> keyMap = new HashMap<>();
     for (T anInterface : interfaces) {
       keyMap.putAll(associateInterfaceToImplementations(anInterface,
-        initContext.scannedTypesBySpecification().get(specsByInterface.get(anInterface)), overridingMode));
+          initContext.scannedTypesBySpecification().get(specsByInterface.get(anInterface)),
+          overridingMode));
 
     }
     return keyMap;
   }
 
   /**
-   * Associates scanned interfaces to their implementations. It also handles qualified bindings in the case where there
-   * is multiple implementation for the same interface. <p> This is the "default mode" for binding in the business
-   * framework. </p>
+   * Associates scanned interfaces to their implementations. It also handles qualified bindings in
+   * the case where there is multiple implementation for the same interface. <p> This is the
+   * "default mode" for binding in the business framework. </p>
    *
    * @param <T>             the class of the interface.
    * @param anInterface     the interface to bind
    * @param implementations the classes implementing the interface.
-   * @param overridingMode  if true, only implementations that satisfy {@link #isOverridingImplementation()} are bound,
-   *                        if false only implementations that don't satisfy {@link #isOverridingImplementation()} are
-   *                        bound.
+   * @param overridingMode  if true, only implementations that satisfy {@link
+   *                        #isOverridingImplementation()} are bound, if false only implementations
+   *                        that don't satisfy {@link #isOverridingImplementation()} are bound.
    * @return the map of interface/implementation to bind
    * @see BindingUtils#resolveBindingDefinitions(Class, Class, Class[])
    */
-  public static <T> Map<Key<T>, Class<? extends T>> associateInterfaceToImplementations(Class<T> anInterface,
-    Collection<Class<? extends T>> implementations, boolean overridingMode) {
+  public static <T> Map<Key<T>, Class<? extends T>> associateInterfaceToImplementations(
+      Class<T> anInterface,
+      Collection<Class<? extends T>> implementations, boolean overridingMode) {
     return BindingUtils.resolveBindingDefinitions(anInterface, implementations.stream()
-      .filter(overridingMode ? isOverridingImplementation() : isOverridingImplementation().negate())
-      .collect(Collectors.toList()));
+        .filter(
+            overridingMode ? isOverridingImplementation() : isOverridingImplementation().negate())
+        .collect(Collectors.toList()));
   }
 
   private static Predicate<Class<?>> isOverridingImplementation() {
-    return (item) -> Annotations.on(item).traversingSuperclasses().includingMetaAnnotations().find(Overriding.class)
-      .isPresent();
+    return (item) -> Annotations.on(item).traversingSuperclasses().includingMetaAnnotations()
+        .find(Overriding.class)
+        .isPresent();
   }
 }

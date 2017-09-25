@@ -20,10 +20,11 @@ import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.Producible;
 
 /**
- * DefaultFactory allows the creations of {@link org.seedstack.business.domain.Producible} objects using their
- * constructors. <p> The {@link #create(Object...)} method will look for a constructor matching the given parameters. If
- * a constructor is found the method will use it to create a new instance. If ambiguous constructors are found, it
- * throws an exception. </p> Ambiguous constructor could be found in the following cases:
+ * DefaultFactory allows the creations of {@link org.seedstack.business.domain.Producible} objects
+ * using their constructors. <p> The {@link #create(Object...)} method will look for a constructor
+ * matching the given parameters. If a constructor is found the method will use it to create a new
+ * instance. If ambiguous constructors are found, it throws an exception. </p> Ambiguous constructor
+ * could be found in the following cases:
  *
  * <p>1. If a parameter is null and multiple constructors accept null.</p>
  * <pre>

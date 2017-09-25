@@ -19,7 +19,7 @@ import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.SizePicker;
 
 class PaginationTypePickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT> implements
-  PaginationTypePicker<AggregateRootT, IdT> {
+    PaginationTypePicker<AggregateRootT, IdT> {
 
   private final Repository<AggregateRootT, IdT> repository;
   protected Repository.Option[] options = new Repository.Option[0];

@@ -83,27 +83,31 @@ public class TuplesTest {
     Assertions.assertThat(type).isEqualTo(Quintet.class);
 
     type = Tuples.classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class,
-      Byte.class);
+        Byte.class);
     Assertions.assertThat(type).isEqualTo(Sextet.class);
 
     type = Tuples
-      .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class, Byte.class,
-        Short.class);
+        .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class,
+            Byte.class,
+            Short.class);
     Assertions.assertThat(type).isEqualTo(Septet.class);
 
     type = Tuples
-      .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class, Byte.class,
-        Short.class, Double.class);
+        .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class,
+            Byte.class,
+            Short.class, Double.class);
     Assertions.assertThat(type).isEqualTo(Octet.class);
 
     type = Tuples
-      .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class, Byte.class,
-        Short.class, Double.class, Number.class);
+        .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class,
+            Byte.class,
+            Short.class, Double.class, Number.class);
     Assertions.assertThat(type).isEqualTo(Ennead.class);
 
     type = Tuples
-      .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class, Byte.class,
-        Short.class, Double.class, Number.class, Character.class);
+        .classOfTuple(String.class, Integer.class, Long.class, Float.class, Boolean.class,
+            Byte.class,
+            Short.class, Double.class, Number.class, Character.class);
     Assertions.assertThat(type).isEqualTo(Decade.class);
   }
 
@@ -111,6 +115,6 @@ public class TuplesTest {
   public void testTypeOfTuple() {
     Type type = Tuples.typeOfTuple(String.class, Long.class);
     Assertions.assertThat(type)
-      .isEqualTo(Types.newParameterizedType(Pair.class, String.class, Long.class));
+        .isEqualTo(Types.newParameterizedType(Pair.class, String.class, Long.class));
   }
 }

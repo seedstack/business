@@ -78,7 +78,7 @@ public interface Entity<IdT> {
    *
    * @param other other object
    * @return true if the other object is an entity of the same class hierarchy as this entity and
-   *   has an identity equal to this entity identity.
+   *     has an identity equal to this entity identity.
    */
   boolean equals(Object other);
 

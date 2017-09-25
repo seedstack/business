@@ -43,7 +43,7 @@ public class FluentAssemblerTupleMergeIT {
     Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
     Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe)
-      .into(Order.class, Customer.class).fromFactory();
+        .into(Order.class, Customer.class).fromFactory();
 
     Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
     Assertions.assertThat(orderCustomerPair.getValue0().getId()).isEqualTo("order1");
@@ -67,7 +67,7 @@ public class FluentAssemblerTupleMergeIT {
     Pair<Order, Customer> orderCustomerPair = null;
     try {
       orderCustomerPair = fluently.merge(recipe).into(Order.class, Customer.class).fromRepository()
-        .orFail();
+          .orFail();
     } catch (AggregateNotFoundException e) {
       fail();
     }
@@ -98,7 +98,7 @@ public class FluentAssemblerTupleMergeIT {
     Recipe recipe = new Recipe("customer1", "luke", "order1", "light saber");
 
     Pair<Order, Customer> orderCustomerPair = fluently.merge(recipe)
-      .into(Order.class, Customer.class).fromRepository().orFromFactory();
+        .into(Order.class, Customer.class).fromRepository().orFromFactory();
 
     Assertions.assertThat(orderCustomerPair.getValue0()).isNotNull();
     Assertions.assertThat(orderCustomerPair.getValue0().getId()).isEqualTo("order1");

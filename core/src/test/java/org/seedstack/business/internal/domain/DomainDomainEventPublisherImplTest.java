@@ -34,8 +34,8 @@ public class DomainDomainEventPublisherImplTest {
   @Test
   public void fire_event() {
     ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap
-      = ArrayListMultimap
-      .create();
+        = ArrayListMultimap
+        .create();
     multiMap.put(SomeDomainEvent.class, MyDomainEventHandler.class);
 
     // provide an handler of MyEvent
@@ -48,8 +48,8 @@ public class DomainDomainEventPublisherImplTest {
   @Test
   public void fire_event_not_received() {
     ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap
-      = ArrayListMultimap
-      .create();
+        = ArrayListMultimap
+        .create();
     // no handler provided
     underTest = new DomainEventPublisherImpl(injector, multiMap);
     underTest.publish(new MyDomainEvent());

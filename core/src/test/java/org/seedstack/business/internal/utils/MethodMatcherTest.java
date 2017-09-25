@@ -19,12 +19,12 @@ public class MethodMatcherTest {
   @Test
   public void test_method_matcher() {
     Method testMethod = MethodMatcher
-      .findMatchingMethod(TestedClass.class, Integer.class, "aa", ProjectStatus.FIRST);
+        .findMatchingMethod(TestedClass.class, Integer.class, "aa", ProjectStatus.FIRST);
     Assertions.assertThat(testMethod).isNotNull();
     Assertions.assertThat(testMethod.getName()).isEqualTo("test");
 
     Method testMethod2 = MethodMatcher
-      .findMatchingMethod(TestedClass.class, Integer.class, "aa", ProjectStatus.FIRST, null);
+        .findMatchingMethod(TestedClass.class, Integer.class, "aa", ProjectStatus.FIRST, null);
     Assertions.assertThat(testMethod2).isNotNull();
     Assertions.assertThat(testMethod2.getName()).isEqualTo("test2");
 

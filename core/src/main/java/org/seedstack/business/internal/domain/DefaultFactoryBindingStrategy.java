@@ -23,8 +23,8 @@ import org.seedstack.seed.core.internal.guice.GenericGuiceFactory;
 import org.seedstack.seed.core.internal.guice.GenericGuiceProvider;
 
 /**
- * FactoryPatternBindingStrategy resolves bindings for generic factories. <p> For instance, given the following
- * multimap: </p>
+ * FactoryPatternBindingStrategy resolves bindings for generic factories. <p> For instance, given
+ * the following multimap: </p>
  * <pre>
  * Multimap&lt;Class&lt;?&gt;, Class&lt;?&gt;&gt; producedTypeMap = ArrayListMultimap.create();
  * // MyPolicy is the produced type
@@ -41,10 +41,11 @@ import org.seedstack.seed.core.internal.guice.GenericGuiceProvider;
  * {@literal @}Inject
  * Factory&lt;MyPolicy&gt; f; &lt;= new FactoryInternal&lt;MyPolicy&gt;(MyPolicyImpl.class);
  * </pre>
- * The injected object will be a {@code FactoryInternal} of {@code MyPolicy} with {@code MyPolicyImpl.class} passed to
- * the constructor. Like this, the factory will be a factory of type {@code MyPolicy}, but all the further reflection
- * will be done on the implementation ({@code MyPolicyImpl.class}). <p> Notice that if {@code MyPolicyImpl} is
- * qualified, the factory injectee point should be also qualified. </p>
+ * The injected object will be a {@code FactoryInternal} of {@code MyPolicy} with {@code
+ * MyPolicyImpl.class} passed to the constructor. Like this, the factory will be a factory of type
+ * {@code MyPolicy}, but all the further reflection will be done on the implementation ({@code
+ * MyPolicyImpl.class}). <p> Notice that if {@code MyPolicyImpl} is qualified, the factory injectee
+ * point should be also qualified. </p>
  */
 class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
 
@@ -63,7 +64,7 @@ class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
    * @param bindGuiceFactory allow to control the binding of the Guice assisted factory
    */
   DefaultFactoryBindingStrategy(Class<T> injecteeClass, Class<? extends T> injectedClass,
-    Multimap<Type, Class<?>> producedTypeMap, boolean bindGuiceFactory) {
+      Multimap<Type, Class<?>> producedTypeMap, boolean bindGuiceFactory) {
     this.injecteeClass = injecteeClass;
     this.injectedClass = injectedClass;
     this.typeVariables = producedTypeMap;
@@ -79,8 +80,9 @@ class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
       Class<Object> producedImplementationType = (Class<Object>) classes.getValue();
 
       Key<Object> key = BindingUtils
-        .resolveKey((Class<Object>) injecteeClass, producedImplementationType, producedType);
-      Provider<Object> provider = new GenericGuiceProvider<>(injectedClass, producedImplementationType);
+          .resolveKey((Class<Object>) injecteeClass, producedImplementationType, producedType);
+      Provider<Object> provider = new GenericGuiceProvider<>(injectedClass,
+          producedImplementationType);
       binder.requestInjection(provider);
       binder.bind(key).toProvider(provider);
       guiceFactoryBuilder.implement(key, injectedClass);
@@ -88,7 +90,8 @@ class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
 
     // Assisted factory should not be bound twice
     if (bindGuiceFactory) {
-      TypeLiteral<?> guiceAssistedFactory = TypeLiteral.get(Types.newParameterizedType(FACTORY_CLASS, injectedClass));
+      TypeLiteral<?> guiceAssistedFactory = TypeLiteral
+          .get(Types.newParameterizedType(FACTORY_CLASS, injectedClass));
       binder.install(guiceFactoryBuilder.build(guiceAssistedFactory));
     }
   }

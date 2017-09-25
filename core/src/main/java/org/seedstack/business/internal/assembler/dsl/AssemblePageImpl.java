@@ -17,14 +17,15 @@ import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.SimplePage;
 
 class AssemblePageImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple> extends
-  AssembleMultipleImpl<AggregateRootT, IdT, TupleT> implements AssemblePageWithQualifier {
+    AssembleMultipleImpl<AggregateRootT, IdT, TupleT> implements AssemblePageWithQualifier {
 
   private final Page<AggregateRootT> pageOfAggregates;
   private final Page<TupleT> pageOfTuples;
 
-  AssemblePageImpl(Context context, Page<AggregateRootT> pageOfAggregates, Page<TupleT> pageOfTuples) {
+  AssemblePageImpl(Context context, Page<AggregateRootT> pageOfAggregates,
+      Page<TupleT> pageOfTuples) {
     super(context, pageOfAggregates == null ? null : pageOfAggregates.getItems().stream(),
-      pageOfTuples == null ? null : pageOfTuples.getItems().stream());
+        pageOfTuples == null ? null : pageOfTuples.getItems().stream());
     this.pageOfAggregates = pageOfAggregates;
     this.pageOfTuples = pageOfTuples;
   }
@@ -32,11 +33,13 @@ class AssemblePageImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT ex
   @Override
   public <D> Page<D> toPageOf(Class<D> dtoClass) {
     if (pageOfAggregates != null) {
-      return new SimplePage<>(super.toListOf(dtoClass), pageOfAggregates.getIndex(), pageOfAggregates.getCapacity(),
-        pageOfAggregates.getTotalSize());
+      return new SimplePage<>(super.toListOf(dtoClass), pageOfAggregates.getIndex(),
+          pageOfAggregates.getCapacity(),
+          pageOfAggregates.getTotalSize());
     } else if (pageOfTuples != null) {
-      return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(), pageOfTuples.getCapacity(),
-        pageOfTuples.getTotalSize());
+      return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(),
+          pageOfTuples.getCapacity(),
+          pageOfTuples.getTotalSize());
     }
     throw new IllegalStateException("Nothing to assemble");
   }

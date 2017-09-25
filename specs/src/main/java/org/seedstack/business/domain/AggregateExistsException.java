@@ -57,7 +57,7 @@ public class AggregateExistsException extends RuntimeException {
    * @param writableStackTrace whether or not the stack trace should be writable
    */
   public AggregateExistsException(String message, Throwable cause, boolean enableSuppression,
-    boolean writableStackTrace) {
+      boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }

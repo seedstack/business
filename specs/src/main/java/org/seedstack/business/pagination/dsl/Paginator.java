@@ -27,8 +27,8 @@ public interface Paginator {
    * @param <IdT>            the aggregate root identifier type.
    * @return the next operation of the paginator DSL, allowing to specify repository options.
    */
-  <AggregateRootT extends AggregateRoot<IdT>, IdT> RepositoryOptionsPicker<AggregateRootT, IdT> paginate(
-    Repository<AggregateRootT, IdT> repository);
+  <AggregateRootT extends AggregateRoot<IdT>, IdT> RepositoryOptionsPicker<AggregateRootT,
+      IdT> paginate(Repository<AggregateRootT, IdT> repository);
 }
 
 

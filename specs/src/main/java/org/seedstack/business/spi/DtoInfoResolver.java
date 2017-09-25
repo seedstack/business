@@ -67,7 +67,7 @@ public interface DtoInfoResolver {
    * @return the newly created aggregate derived from the DTO.
    */
   <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-    Class<AggregateRootT> aggregateRootClass);
+      Class<AggregateRootT> aggregateRootClass);
 
   /**
    * Similar to {@link #resolveAggregate(Object, Class)} but used in the case where a {@link
@@ -82,6 +82,6 @@ public interface DtoInfoResolver {
    * @return the newly created aggregate derived from the DTO.
    */
   <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-    Class<AggregateRootT> aggregateRootClass,
-    int position);
+      Class<AggregateRootT> aggregateRootClass,
+      int position);
 }

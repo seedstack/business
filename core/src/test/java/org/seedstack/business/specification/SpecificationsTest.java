@@ -30,7 +30,7 @@ public class SpecificationsTest {
     redTeam.addMember("Cynthia", 34, new Address(45, "Some street", "SomeCity"));
 
     blueTeam = new TeamWithLeader("BLUE", "Bob", 44,
-      new Address(12, "Dandelion street", "Metropolis"));
+        new Address(12, "Dandelion street", "Metropolis"));
     blueTeam.addMember("Marguerite", 61, new Address(55, "Other street", "OtherCity"));
     blueTeam.addVip(0, "Robert", 60, new Address(58, "Other street", "OtherCity"));
     blueTeam.addVip(1, "Marcia", 62, new Address(60, "Other street", "OtherCity"));
@@ -39,7 +39,7 @@ public class SpecificationsTest {
   @Test
   public void testSimpleEquality() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<>("name",
-      new EqualSpecification<>("RED"));
+        new EqualSpecification<>("RED"));
     assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
     assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isFalse();
   }
@@ -47,14 +47,14 @@ public class SpecificationsTest {
   @Test
   public void testNullCandidate() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<>("name",
-      new EqualSpecification<>("RED"));
+        new EqualSpecification<>("RED"));
     assertThat(equalSpecification.isSatisfiedBy(null)).isFalse();
   }
 
   @Test
   public void testNestedEquality() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<>("leader.name",
-      new EqualSpecification<>("Alice"));
+        new EqualSpecification<>("Alice"));
     assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
     assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isFalse();
   }
@@ -62,7 +62,7 @@ public class SpecificationsTest {
   @Test
   public void testNestedArrayEquality() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<>("vips.address.city",
-      new EqualSpecification<>("OtherCity"));
+        new EqualSpecification<>("OtherCity"));
     assertThat(equalSpecification.isSatisfiedBy(redTeam)).isFalse();
     assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isTrue();
   }
@@ -70,7 +70,7 @@ public class SpecificationsTest {
   @Test
   public void testNestedCollectionEquality() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<>("members.address.city",
-      new EqualSpecification<>("SomeCity"));
+        new EqualSpecification<>("SomeCity"));
     assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
     assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isFalse();
   }
@@ -78,91 +78,100 @@ public class SpecificationsTest {
   @Test
   public void testEqualityAsPredicate() throws Exception {
     Specification<Team> equalSpecification = new AttributeSpecification<Team, String>("leader.name",
-      new EqualSpecification<>("Alice"))
-      .and(new AttributeSpecification<Team, String>("members.address.street",
-        new EqualSpecification<>("Other street")).negate());
+        new EqualSpecification<>("Alice"))
+        .and(new AttributeSpecification<Team, String>("members.address.street",
+            new EqualSpecification<>("Other street")).negate());
     assertThat(Stream.of(redTeam, blueTeam).filter(equalSpecification.asPredicate())
-      .collect(Collectors.toList())).containsExactly(redTeam);
+        .collect(Collectors.toList())).containsExactly(redTeam);
   }
 
   @Test
   public void testGreaterThan() throws Exception {
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new GreaterThanSpecification<>(60))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number",
+                new GreaterThanSpecification<>(60))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).isEmpty();
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new GreaterThanSpecification<>(50))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number",
+                new GreaterThanSpecification<>(50))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).containsExactly(blueTeam);
   }
 
   @Test
   public void testGreaterThanOrEqual() throws Exception {
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new GreaterThanSpecification<>(60))
-          .or(new AttributeSpecification<>("members.address.number", new EqualSpecification<>(60)))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number",
+                new GreaterThanSpecification<>(60))
+                .or(new AttributeSpecification<>("members.address.number",
+                    new EqualSpecification<>(60)))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).isEmpty();
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new GreaterThanSpecification<>(55))
-          .or(new AttributeSpecification<>("members.address.number", new EqualSpecification<>(55)))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number",
+                new GreaterThanSpecification<>(55))
+                .or(new AttributeSpecification<>("members.address.number",
+                    new EqualSpecification<>(55)))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).containsExactly(blueTeam);
   }
 
   @Test
   public void testLessThan() throws Exception {
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(40))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(40))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).isEmpty();
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(45))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(45))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).containsExactly(redTeam);
   }
 
   @Test
   public void testLessThanOrEqual() throws Exception {
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(39))
-          .or(new AttributeSpecification<>("members.address.number", new EqualSpecification<>(39)))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(39))
+                .or(new AttributeSpecification<>("members.address.number",
+                    new EqualSpecification<>(39)))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).isEmpty();
     assertThat(Stream.of(redTeam, blueTeam)
-      .filter(
-        new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(55))
-          .or(new AttributeSpecification<>("members.address.number", new EqualSpecification<>(55)))
-          .asPredicate())
-      .collect(Collectors.toList())
+        .filter(
+            new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(55))
+                .or(new AttributeSpecification<>("members.address.number",
+                    new EqualSpecification<>(55)))
+                .asPredicate())
+        .collect(Collectors.toList())
     ).containsExactly(redTeam, blueTeam);
   }
 
   @Test
   public void testToString() throws Exception {
     Specification<Team> spec = new AttributeSpecification<Team, Integer>("members.address.number",
-      new LessThanSpecification<>(40))
-      .and(new AttributeSpecification<Team, Integer>("members.address.number",
-        new GreaterThanSpecification<>(20))
-        .or(new AttributeSpecification<>("members.address.number", new EqualSpecification<>(20)))
-      );
+        new LessThanSpecification<>(40))
+        .and(new AttributeSpecification<Team, Integer>("members.address.number",
+            new GreaterThanSpecification<>(20))
+            .or(new AttributeSpecification<>("members.address.number",
+                new EqualSpecification<>(20)))
+        );
     assertThat(spec.toString()).isEqualTo(
-      "(members.address.number < 40) ∧ ((members.address.number > 20) ∨ (members.address.number ="
-        + " 20))");
+        "(members.address.number < 40) ∧ ((members.address.number > 20) ∨ (members.address.number ="
+            + " 20))");
   }
 }

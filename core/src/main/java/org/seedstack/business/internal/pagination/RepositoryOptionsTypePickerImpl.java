@@ -16,7 +16,8 @@ import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
 
 class RepositoryOptionsTypePickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  PaginationTypePickerImpl<AggregateRootT, IdT> implements RepositoryOptionsPicker<AggregateRootT, IdT> {
+    PaginationTypePickerImpl<AggregateRootT, IdT> implements
+    RepositoryOptionsPicker<AggregateRootT, IdT> {
 
   RepositoryOptionsTypePickerImpl(Repository<AggregateRootT, IdT> repository) {
     super(repository);

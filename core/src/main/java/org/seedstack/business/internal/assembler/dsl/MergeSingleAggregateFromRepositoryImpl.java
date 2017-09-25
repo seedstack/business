@@ -14,13 +14,16 @@ import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 
-class MergeSingleAggregateFromRepositoryImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, DtoT> implements
-  MergeFromRepository<AggregateRootT>, MergeFromRepositoryOrFactory<AggregateRootT> {
+class MergeSingleAggregateFromRepositoryImpl<AggregateRootT extends AggregateRoot<IdT>, IdT,
+    DtoT> implements
+    MergeFromRepository<AggregateRootT>, MergeFromRepositoryOrFactory<AggregateRootT> {
 
   private final MergeMultipleAggregatesFromRepositoryImpl<AggregateRootT, IdT, DtoT> multipleMerger;
 
-  MergeSingleAggregateFromRepositoryImpl(Context context, DtoT dto, Class<AggregateRootT> aggregateRootClass) {
-    multipleMerger = new MergeMultipleAggregatesFromRepositoryImpl<>(context, Stream.of(dto), aggregateRootClass);
+  MergeSingleAggregateFromRepositoryImpl(Context context, DtoT dto,
+      Class<AggregateRootT> aggregateRootClass) {
+    multipleMerger = new MergeMultipleAggregatesFromRepositoryImpl<>(context, Stream.of(dto),
+        aggregateRootClass);
   }
 
   @Override
@@ -31,18 +34,18 @@ class MergeSingleAggregateFromRepositoryImpl<AggregateRootT extends AggregateRoo
   @Override
   public AggregateRootT fromFactory() {
     return multipleMerger.fromFactory().asStream().findFirst()
-      .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }
 
   @Override
   public AggregateRootT orFail() throws AggregateNotFoundException {
     return multipleMerger.orFail().asStream().findFirst()
-      .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }
 
   @Override
   public AggregateRootT orFromFactory() {
     return multipleMerger.orFromFactory().asStream().findFirst()
-      .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
   }
 }

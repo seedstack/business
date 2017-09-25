@@ -11,8 +11,8 @@ package org.seedstack.business.specification;
 import java.util.Objects;
 
 /**
- * A specification satisfied only when the expected and the candidate values are equal according to {@link
- * Objects#equals(Object, Object)}.
+ * A specification satisfied only when the expected and the candidate values are equal according to
+ * {@link Objects#equals(Object, Object)}.
  *
  * @param <T> the type of the candidate object the specification applies to.
  */

@@ -106,9 +106,9 @@ public class DomainRegistyIT {
     Type type = new TypeLiteral<RebateService<Composite<Long>>>() {
     }.getType();
     RebateService<Composite<Long>> service = this.domainRegistry
-      .getService(type, ServiceQualifier.class);
+        .getService(type, ServiceQualifier.class);
     Assertions.assertThat(service).isInstanceOf(RebateServiceInternalWithQualifierComposite
-      .class);
+        .class);
 
   }
 
@@ -120,7 +120,7 @@ public class DomainRegistyIT {
     RebatePolicy policy = this.domainRegistry.getPolicy(RebatePolicy.class);
     final int rebateExpected = 10;
     Assertions.assertThat(policy.calculateRebate(new Product(), 10000)).isEqualTo
-      (rebateExpected);
+        (rebateExpected);
   }
 
   /**
@@ -146,7 +146,7 @@ public class DomainRegistyIT {
   @Test
   public void testRepository() {
     Repository<Client, Long> repository = this.domainRegistry
-      .getRepository(Client.class, Long.class, TestJpaQualifier.class);
+        .getRepository(Client.class, Long.class, TestJpaQualifier.class);
     Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
   }
 
@@ -158,7 +158,7 @@ public class DomainRegistyIT {
     Type type = new TypeLiteral<Repository<Client, Long>>() {
     }.getType();
     Repository<Client, Long> repository = this.domainRegistry
-      .getRepository(type, TestJpaQualifier.class);
+        .getRepository(type, TestJpaQualifier.class);
     Assertions.assertThat(repository).isInstanceOf(TestDefaultRepository.class);
   }
 

@@ -24,7 +24,8 @@ public final class MethodMatcher {
   /**
    * Finds a method matching the given parameters and return type.
    */
-  public static Method findMatchingMethod(Class<?> classToInspect, Class<?> returnType, Object... params) {
+  public static Method findMatchingMethod(Class<?> classToInspect, Class<?> returnType,
+      Object... params) {
     Method[] methods = classToInspect.getMethods();
     Method checkedMethod = null;
     for (Method method : methods) {
@@ -36,8 +37,10 @@ public final class MethodMatcher {
         if (checkedMethod == null) {
           checkedMethod = method;
         } else {
-          throw BusinessException.createNew(BusinessErrorCode.AMBIGUOUS_METHOD_FOUND).put("method1", method)
-            .put("method2", checkedMethod).put("object", classToInspect.getSimpleName()).put("parameters", params);
+          throw BusinessException.createNew(BusinessErrorCode.AMBIGUOUS_METHOD_FOUND)
+              .put("method1", method)
+              .put("method2", checkedMethod).put("object", classToInspect.getSimpleName())
+              .put("parameters", params);
         }
       }
     }
@@ -48,7 +51,8 @@ public final class MethodMatcher {
    * Finds a constructor matching the given parameters.
    */
   @SuppressWarnings("unchecked")
-  public static <T> Constructor<T> findMatchingConstructor(Class<T> classToInspect, Object... params) {
+  public static <T> Constructor<T> findMatchingConstructor(Class<T> classToInspect,
+      Object... params) {
     Constructor<T> checkedConstructors = null;
     for (Constructor<?> constructor : classToInspect.getDeclaredConstructors()) {
       Type[] parameterTypes = constructor.getParameterTypes();
@@ -57,8 +61,8 @@ public final class MethodMatcher {
           checkedConstructors = (Constructor<T>) constructor;
         } else {
           throw BusinessException.createNew(BusinessErrorCode.AMBIGUOUS_CONSTRUCTOR_FOUND)
-            .put("constructor1", constructor).put("constructor2", checkedConstructors)
-            .put("object", classToInspect.getSimpleName()).put("parameters", params);
+              .put("constructor1", constructor).put("constructor2", checkedConstructors)
+              .put("object", classToInspect.getSimpleName()).put("parameters", params);
         }
       }
     }
@@ -66,8 +70,9 @@ public final class MethodMatcher {
   }
 
   private static boolean checkParams(Type[] parameterTypes, Object[] params) {
-    return params.length == 0 || (parameterTypes.length == params.length && checkParameterTypes(parameterTypes,
-      params));
+    return params.length == 0 || (parameterTypes.length == params.length && checkParameterTypes(
+        parameterTypes,
+        params));
   }
 
   private static boolean checkParameterTypes(Type[] parameterTypes, Object[] args) {
@@ -81,7 +86,7 @@ public final class MethodMatcher {
           unWrapPrimitive = Primitives.unwrap(objectType);
         }
         if (!(((Class<?>) parameterType).isAssignableFrom(objectType) || (unWrapPrimitive != null
-          && ((Class<?>) parameterType).isAssignableFrom(unWrapPrimitive)))) {
+            && ((Class<?>) parameterType).isAssignableFrom(unWrapPrimitive)))) {
           return false;
         }
       }

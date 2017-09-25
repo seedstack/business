@@ -13,11 +13,11 @@ import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
 
 public class StringEqualDummyConverter implements
-  SpecificationConverter<StringEqualSpecification, StringBuilder, String> {
+    SpecificationConverter<StringEqualSpecification, StringBuilder, String> {
 
   @Override
   public String convert(StringEqualSpecification specification, StringBuilder context,
-    SpecificationTranslator<StringBuilder, String> translator) {
+      SpecificationTranslator<StringBuilder, String> translator) {
     return context.append(" == ").append(specification.getExpectedString()).toString();
   }
 }

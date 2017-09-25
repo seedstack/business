@@ -32,8 +32,10 @@ import org.slf4j.LoggerFactory;
 public class SpecificationPlugin extends AbstractSeedPlugin {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SpecificationPlugin.class);
-  private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses = new HashSet<>();
-  private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses = new HashSet<>();
+  private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses =
+      new HashSet<>();
+  private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses = new
+      HashSet<>();
 
   @Override
   public String name() {
@@ -42,18 +44,21 @@ public class SpecificationPlugin extends AbstractSeedPlugin {
 
   @Override
   public Collection<ClasspathScanRequest> classpathScanRequests() {
-    return classpathScanRequestBuilder().specification(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
-      .specification(BusinessSpecifications.SPECIFICATION_CONVERTER).build();
+    return classpathScanRequestBuilder()
+        .specification(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
+        .specification(BusinessSpecifications.SPECIFICATION_CONVERTER).build();
   }
 
   @Override
   public InitState initialize(InitContext initContext) {
-    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_TRANSLATOR, SpecificationTranslator.class)
-      .forEach(specificationTranslatorClasses::add);
+    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_TRANSLATOR,
+        SpecificationTranslator.class)
+        .forEach(specificationTranslatorClasses::add);
     LOGGER.debug("Specification translator classes => {}", specificationTranslatorClasses);
 
-    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_CONVERTER, SpecificationConverter.class)
-      .forEach(specificationConverterClasses::add);
+    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_CONVERTER,
+        SpecificationConverter.class)
+        .forEach(specificationConverterClasses::add);
     LOGGER.debug("Specification converter classes => {}", specificationConverterClasses);
 
     return InitState.INITIALIZED;

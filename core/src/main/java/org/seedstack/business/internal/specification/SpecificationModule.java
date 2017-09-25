@@ -26,7 +26,7 @@ class SpecificationModule extends PrivateModule {
   private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses;
 
   SpecificationModule(Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses,
-    Set<Class<? extends SpecificationConverter>> specificationConverterClasses) {
+      Set<Class<? extends SpecificationConverter>> specificationConverterClasses) {
     this.specificationTranslatorClasses = specificationTranslatorClasses;
     this.specificationConverterClasses = specificationConverterClasses;
   }
@@ -40,7 +40,8 @@ class SpecificationModule extends PrivateModule {
       expose(key);
     });
     specificationConverterClasses
-      .forEach(converterClass -> bind(buildKey(SpecificationConverter.class, converterClass)).to(converterClass));
+        .forEach(converterClass -> bind(buildKey(SpecificationConverter.class, converterClass))
+            .to(converterClass));
 
     bind(SpecificationBuilder.class).to(SpecificationBuilderImpl.class);
     expose(SpecificationBuilder.class);
@@ -49,8 +50,11 @@ class SpecificationModule extends PrivateModule {
   @SuppressWarnings("unchecked")
   private <T> Key<T> buildKey(Class<T> someInterface, Class<? extends T> someClass) {
     return getQualifier(someClass).map(annotation -> Key.get((TypeLiteral<T>) TypeLiteral
-      .get(Types.newParameterizedType(someInterface, resolveGenerics(someInterface, someClass))), annotation)).orElse(
-      Key.get((TypeLiteral<T>) TypeLiteral
-        .get(Types.newParameterizedType(someInterface, resolveGenerics(someInterface, someClass)))));
+            .get(Types.newParameterizedType(someInterface, resolveGenerics(someInterface,
+                someClass))),
+        annotation)).orElse(
+        Key.get((TypeLiteral<T>) TypeLiteral
+            .get(Types
+                .newParameterizedType(someInterface, resolveGenerics(someInterface, someClass)))));
   }
 }

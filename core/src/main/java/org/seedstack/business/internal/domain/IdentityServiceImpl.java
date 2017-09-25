@@ -47,30 +47,32 @@ class IdentityServiceImpl implements IdentityService {
     Field entityIdField = getIdentityField(entityClass);
     Identity identity = getIdentityAnnotation(entityClass);
     ClassConfiguration<EntityT> entityConfiguration = application.getConfiguration(entityClass);
-    IdentityGenerator<IdT> identityGenerator = getIdentityGenerator(identity, entityClass, entityConfiguration);
+    IdentityGenerator<IdT> identityGenerator = getIdentityGenerator(identity, entityClass,
+        entityConfiguration);
 
     compareIdType(entityClass, identityGenerator);
     makeAccessible(entityIdField);
 
     Object id = getValue(entityIdField, entity);
     if (id == null) {
-      setValue(entityIdField, entity, identityGenerator.generate(entityClass, entityConfiguration.asMap()));
+      setValue(entityIdField, entity,
+          identityGenerator.generate(entityClass, entityConfiguration.asMap()));
     } else {
       throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
-        .put(ENTITY_CLASS, entityClass);
+          .put(ENTITY_CLASS, entityClass);
     }
 
     return entity;
   }
 
   private <EntityT extends Entity<IdT>, IdT> void compareIdType(Class<EntityT> entityClass,
-    IdentityGenerator<IdT> identityGenerator) {
+      IdentityGenerator<IdT> identityGenerator) {
     Class<?> entityIdClass = getEntityIdClass(entityClass);
     Class<?> identityGeneratorIdClass = getGeneratorIdClass(identityGenerator);
     if (!entityIdClass.isAssignableFrom(identityGeneratorIdClass)) {
       throw BusinessException.createNew(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
-        .put(ENTITY_CLASS, entityClass).put(GENERATOR_CLASS, identityGenerator.getClass())
-        .put("entityIdClass", entityIdClass).put("generatorIdClass", identityGeneratorIdClass);
+          .put(ENTITY_CLASS, entityClass).put(GENERATOR_CLASS, identityGenerator.getClass())
+          .put("entityIdClass", entityIdClass).put("generatorIdClass", identityGeneratorIdClass);
     }
   }
 
@@ -85,39 +87,41 @@ class IdentityServiceImpl implements IdentityService {
 
   private <IdT> Class<?> getGeneratorIdClass(IdentityGenerator<IdT> identityGenerator) {
     return (Class<?>) BusinessUtils
-      .resolveGenerics(IdentityGenerator.class, identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
+        .resolveGenerics(IdentityGenerator.class,
+            identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
   }
 
   private Field getIdentityField(Class<? extends Entity> entityClass) {
     return IdentityResolver.INSTANCE.resolveField(entityClass).<BaseException>orElseThrow(
-      () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
-        .put(ENTITY_CLASS, entityClass));
+        () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
+            .put(ENTITY_CLASS, entityClass));
   }
 
   private Identity getIdentityAnnotation(Class<? extends Entity> entityClass) {
     return IdentityResolver.INSTANCE.apply(entityClass).<BaseException>orElseThrow(
-      () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
-        .put(ENTITY_CLASS, entityClass));
+        () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
+            .put(ENTITY_CLASS, entityClass));
   }
 
   @SuppressWarnings("unchecked")
-  private <EntityT extends Entity<IdT>, IdT> IdentityGenerator<IdT> getIdentityGenerator(Identity identity,
-    Class<EntityT> entityClass, ClassConfiguration<EntityT> entityConfiguration) {
+  private <EntityT extends Entity<IdT>, IdT> IdentityGenerator<IdT> getIdentityGenerator(
+      Identity identity,
+      Class<EntityT> entityClass, ClassConfiguration<EntityT> entityConfiguration) {
     IdentityGenerator<IdT> identityGenerator;
     if (!identity.generator().isInterface()) {
       identityGenerator = (IdentityGenerator<IdT>) injector.getInstance(identity.generator());
     } else if (IdentityGenerator.class.equals(identity.generator())) {
       throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_GENERATOR_SPECIFIED)
-        .put(ENTITY_CLASS, entityClass);
+          .put(ENTITY_CLASS, entityClass);
     } else {
       String identityQualifier = entityConfiguration.get(IDENTITY_GENERATOR_KEY);
 
       if (!Strings.isNullOrEmpty(identityQualifier)) {
         identityGenerator = (IdentityGenerator<IdT>) injector
-          .getInstance(Key.get(identity.generator(), Names.named(identityQualifier)));
+            .getInstance(Key.get(identity.generator(), Names.named(identityQualifier)));
       } else {
         throw BusinessException.createNew(BusinessErrorCode.UNQUALIFIED_IDENTITY_GENERATOR)
-          .put(GENERATOR_CLASS, identity.generator()).put(ENTITY_CLASS, entityClass);
+            .put(GENERATOR_CLASS, identity.generator()).put(ENTITY_CLASS, entityClass);
       }
     }
     return identityGenerator;

@@ -34,7 +34,7 @@ class Context {
   private Class<? extends Annotation> assemblerQualifierClass;
 
   public Context(DomainRegistry domainRegistry, AssemblerRegistry assemblerRegistry,
-    Set<DtoInfoResolver> dtoInfoResolvers) {
+      Set<DtoInfoResolver> dtoInfoResolvers) {
     this.domainRegistry = domainRegistry;
     this.assemblerRegistry = assemblerRegistry;
     this.dtoInfoResolvers = dtoInfoResolvers;
@@ -48,8 +48,8 @@ class Context {
     this.assemblerQualifierClass = assemblerQualifierClass;
   }
 
-  <AggregateRootT extends AggregateRoot<IdT>, IdT, DtoT> Assembler<AggregateRootT, DtoT> assemblerOf(
-    Class<AggregateRootT> aggregateRoot, Class<DtoT> dto) {
+  <AggregateRootT extends AggregateRoot<IdT>, IdT, DtoT> Assembler<AggregateRootT,
+      DtoT> assemblerOf(Class<AggregateRootT> aggregateRoot, Class<DtoT> dto) {
     if (assemblerQualifierClass != null) {
       return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
     } else if (assemblerQualifier != null) {
@@ -59,7 +59,7 @@ class Context {
   }
 
   <TupleT extends Tuple, DtoT> Assembler<TupleT, DtoT> tupleAssemblerOf(
-    Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<DtoT> dto) {
+      Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<DtoT> dto) {
     if (assemblerQualifierClass != null) {
       return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
     } else if (assemblerQualifier != null) {
@@ -69,18 +69,21 @@ class Context {
   }
 
   <DtoT, AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRootT create(DtoT dto,
-    Class<AggregateRootT> aggregateClass) {
+      Class<AggregateRootT> aggregateClass) {
     return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
   }
 
-  <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT create(DtoT dto, Class<AggregateRootT> aggregateClass,
-    int indexInTuple) {
+  <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT create(DtoT dto,
+      Class<AggregateRootT> aggregateClass,
+      int indexInTuple) {
     return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
   }
 
-  <AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRootT load(IdT id, Class<AggregateRootT> aggregateClass) {
-    return domainRegistry.getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass)).get(id)
-      .orElse(null);
+  <AggregateRootT extends AggregateRoot<IdT>, IdT> AggregateRootT load(IdT id,
+      Class<AggregateRootT> aggregateClass) {
+    return domainRegistry
+        .getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass)).get(id)
+        .orElse(null);
   }
 
   <DtoT, IdT> IdT resolveId(DtoT dto, Class<IdT> aggregateIdClass) {
@@ -92,18 +95,21 @@ class Context {
   }
 
   @SuppressWarnings("unchecked")
-  <AggregateRootT extends AggregateRoot<IdT>, IdT, D> void mergeDtoIntoAggregate(D dto, AggregateRootT aggregateRoot) {
+  <AggregateRootT extends AggregateRoot<IdT>, IdT, D> void mergeDtoIntoAggregate(D dto,
+      AggregateRootT aggregateRoot) {
     checkNotNull(dto);
     checkNotNull(aggregateRoot);
-    Assembler<AggregateRootT, D> assembler = assemblerOf((Class<AggregateRootT>) aggregateRoot.getClass(),
-      (Class<D>) dto.getClass());
+    Assembler<AggregateRootT, D> assembler = assemblerOf(
+        (Class<AggregateRootT>) aggregateRoot.getClass(),
+        (Class<D>) dto.getClass());
     assembler.mergeDtoIntoAggregate(dto, aggregateRoot);
   }
 
   @SuppressWarnings("unchecked")
   <DtoT, TupleT extends Tuple> void mergeDtoIntoTuple(DtoT dto, TupleT tuple,
-    Class<? extends AggregateRoot<?>>[] aggregateClasses) {
-    Assembler<Tuple, DtoT> tupleAssembler = tupleAssemblerOf(aggregateClasses, (Class<DtoT>) dto.getClass());
+      Class<? extends AggregateRoot<?>>[] aggregateClasses) {
+    Assembler<Tuple, DtoT> tupleAssembler = tupleAssemblerOf(aggregateClasses,
+        (Class<DtoT>) dto.getClass());
     tupleAssembler.mergeDtoIntoAggregate(dto, tuple);
   }
 
@@ -114,6 +120,6 @@ class Context {
       }
     }
     throw BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_SUITABLE_DTO_INFO_RESOLVER)
-      .put("dtoClass", dto.getClass().getName());
+        .put("dtoClass", dto.getClass().getName());
   }
 }

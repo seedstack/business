@@ -17,7 +17,7 @@ import org.seedstack.business.domain.Create;
 
 
 public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implements
-  MyAggregateFactory {
+    MyAggregateFactory {
 
   @Override
   public MyAggregate createMyAggregate(String name) {

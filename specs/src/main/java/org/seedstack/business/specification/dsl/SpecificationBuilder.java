@@ -28,7 +28,7 @@ public interface SpecificationBuilder {
    * @param <T>         the type of the object the specification applies to.
    * @param <SelectorT> the type of the selector.
    * @return the next operation of the builder DSL, allowing to select all or a part of the object
-   *   the specification will apply to.
+   *     the specification will apply to.
    */
   <T, SelectorT extends PropertySelector<T, SelectorT>> SelectorT of(Class<T> anyClass);
 
@@ -40,9 +40,9 @@ public interface SpecificationBuilder {
    * @param <IdT>            the type of the identifier of the aggregate.
    * @param <SelectorT>      the type of the selector.
    * @return the next operation of the builder DSL, allowing to select all or a part of the object
-   *   the specification will apply to.
+   *     the specification will apply to.
    */
   <AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends
-    AggregateSelector<AggregateRootT, IdT, SelectorT>> SelectorT ofAggregate(
-    Class<AggregateRootT> aggregateClass);
+      AggregateSelector<AggregateRootT, IdT, SelectorT>> SelectorT ofAggregate(
+      Class<AggregateRootT> aggregateClass);
 }

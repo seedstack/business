@@ -25,7 +25,7 @@ public interface SizePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    *
    * @param size the size of a page.
    * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
-   *   objects returned from the repository.
+   *     objects returned from the repository.
    */
   SpecificationPicker<Page<AggregateRootT>, AggregateRootT, IdT> ofSize(long size);
 }

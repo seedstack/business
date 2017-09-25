@@ -80,17 +80,22 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
   }
 
   public <T extends Comparable<? super T>> void setBeforeAttributeValue(T value) {
-    checkState(mode == PaginationMode.ATTRIBUTE && attribute != null, "A value can only be set in ATTRIBUTE mode");
-    this.attributeSpecification = new AttributeSpecification<>(attribute, new LessThanSpecification<>(value));
+    checkState(mode == PaginationMode.ATTRIBUTE && attribute != null,
+        "A value can only be set in ATTRIBUTE mode");
+    this.attributeSpecification = new AttributeSpecification<>(attribute,
+        new LessThanSpecification<>(value));
   }
 
   <T extends Comparable<? super T>> void setAfterAttributeValue(T value) {
-    checkState(mode == PaginationMode.ATTRIBUTE && attribute != null, "A value can only be set in ATTRIBUTE mode");
-    this.attributeSpecification = new AttributeSpecification<>(attribute, new GreaterThanSpecification<>(value));
+    checkState(mode == PaginationMode.ATTRIBUTE && attribute != null,
+        "A value can only be set in ATTRIBUTE mode");
+    this.attributeSpecification = new AttributeSpecification<>(attribute,
+        new GreaterThanSpecification<>(value));
   }
 
   void setLimit(long limit) {
-    checkState(mode != PaginationMode.NONE, "Limit can only be set after a pagination mode has been defined");
+    checkState(mode != PaginationMode.NONE,
+        "Limit can only be set after a pagination mode has been defined");
     checkArgument(limit > 0, "Limit must be greater than 0");
     this.limit = limit;
   }
@@ -98,7 +103,8 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
   Page<AggregateRootT> buildPage(Specification<AggregateRootT> specification) {
     checkState(mode == PaginationMode.PAGE, "A page can only be built in PAGE pagination mode");
     Stream<AggregateRootT> stream = buildStream(specification);
-    return new SimplePage<>(stream.collect(Collectors.toList()), pageIndex, limit, repository.count(specification));
+    return new SimplePage<>(stream.collect(Collectors.toList()), pageIndex, limit,
+        repository.count(specification));
   }
 
   Slice<AggregateRootT> buildSlice(Specification<AggregateRootT> specification) {
@@ -108,11 +114,13 @@ class PaginatorContext<AggregateRootT extends AggregateRoot<IdT>, IdT> {
   private Stream<AggregateRootT> buildStream(Specification<AggregateRootT> specification) {
     Stream<AggregateRootT> streamRepo;
     if (mode.equals(PaginationMode.ATTRIBUTE)) {
-      streamRepo = repository.get(specification.and(attributeSpecification), applyLimit(options, limit));
+      streamRepo = repository
+          .get(specification.and(attributeSpecification), applyLimit(options, limit));
     } else if (mode.equals(PaginationMode.OFFSET)) {
       streamRepo = repository.get(specification, applyLimit(applyOffset(options, offset), limit));
     } else if (mode.equals(PaginationMode.PAGE)) {
-      streamRepo = repository.get(specification, applyLimit(applyOffset(options, (pageIndex - 1) * limit), limit));
+      streamRepo = repository
+          .get(specification, applyLimit(applyOffset(options, (pageIndex - 1) * limit), limit));
     } else {
       throw new IllegalStateException("Unknown pagination mode " + mode);
     }

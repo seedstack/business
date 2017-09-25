@@ -24,7 +24,7 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, SelectorT extends
    *
    * @param id the identity.
    * @return the next operation of the builder DSL, allowing to compose the just-defined
-   *   specification with another one.
+   *     specification with another one.
    */
   OperatorPicker<A, SelectorT> is(I id);
 
@@ -33,7 +33,7 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, SelectorT extends
    *
    * @param id the identity.
    * @return the next operation of the builder DSL, allowing to compose the just-defined
-   *   specification with another one.
+   *     specification with another one.
    */
   OperatorPicker<A, SelectorT> isNot(I id);
 }

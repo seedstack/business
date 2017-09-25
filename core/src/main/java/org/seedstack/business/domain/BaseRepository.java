@@ -12,11 +12,12 @@ import java.lang.reflect.Type;
 import org.seedstack.business.internal.utils.BusinessUtils;
 
 /**
- * An helper base class that can be extended to create an <strong>implementation</strong> of a repository interface
- * which, in turn, must extend {@link Repository}.
+ * An helper base class that can be extended to create an <strong>implementation</strong> of a
+ * repository interface which, in turn, must extend {@link Repository}.
  *
- * <p> This class is mainly used as a common base for specialized technology-specific implementations. Client code will
- * often extend these more specialized classes instead of this one. </p>
+ * <p> This class is mainly used as a common base for specialized technology-specific
+ * implementations. Client code will often extend these more specialized classes instead of this
+ * one. </p>
  *
  * @param <AggregateRootT> Type of the aggregate root.
  * @param <IdT>            Type of the aggregate root identifier.
@@ -24,7 +25,7 @@ import org.seedstack.business.internal.utils.BusinessUtils;
  * @see org.seedstack.business.util.inmemory.BaseInMemoryRepository
  */
 public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> implements
-  Repository<AggregateRootT, IdT> {
+    Repository<AggregateRootT, IdT> {
 
   private static final int AGGREGATE_INDEX = 0;
   private static final int KEY_INDEX = 1;
@@ -32,7 +33,8 @@ public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, 
   private final Class<IdT> idClass;
 
   /**
-   * Creates a base domain repository. Actual classes managed by the repository are determined by reflection.
+   * Creates a base domain repository. Actual classes managed by the repository are determined by
+   * reflection.
    */
   @SuppressWarnings("unchecked")
   protected BaseRepository() {
@@ -42,8 +44,8 @@ public abstract class BaseRepository<AggregateRootT extends AggregateRoot<IdT>, 
   }
 
   /**
-   * Creates a base domain repository. Actual classes managed by the repository are specified explicitly. This can be
-   * used to create a dynamic implementation of a repository.
+   * Creates a base domain repository. Actual classes managed by the repository are specified
+   * explicitly. This can be used to create a dynamic implementation of a repository.
    *
    * @param aggregateRootClass the aggregate root class.
    * @param idClass            the aggregate root identifier class.

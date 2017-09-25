@@ -12,11 +12,12 @@ import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.StringOptionPicker;
 
 class StringOptionPickerImpl<T, SelectorT extends BaseSelector<T, SelectorT>> extends
-  OperatorPickerImpl<T, SelectorT> implements StringOptionPicker<T, SelectorT> {
+    OperatorPickerImpl<T, SelectorT> implements StringOptionPicker<T, SelectorT> {
 
   private final StringValueOptionsImpl stringValueOptions;
 
-  StringOptionPickerImpl(SpecificationBuilderContext<T, SelectorT> context, StringValueOptionsImpl stringValueOptions) {
+  StringOptionPickerImpl(SpecificationBuilderContext<T, SelectorT> context,
+      StringValueOptionsImpl stringValueOptions) {
     super(context);
     this.stringValueOptions = stringValueOptions;
   }

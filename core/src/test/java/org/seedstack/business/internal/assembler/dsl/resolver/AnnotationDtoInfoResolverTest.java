@@ -83,9 +83,9 @@ public class AnnotationDtoInfoResolverTest {
     when(domainRegistry.getFactory(Case4DtoVO.class)).thenReturn(new Case4DtoVOFactory());
     Case4Dto case4Dto = new Case4Dto(firstName, lastName, "oderItem", "description");
     assertThat(underTest.resolveId(case4Dto, Case4DtoVO.class, 0))
-      .isEqualTo(new Case4DtoVO(firstName, lastName));
+        .isEqualTo(new Case4DtoVO(firstName, lastName));
     assertThat(underTest.resolveId(case4Dto, Case4DtoVO.class, 1))
-      .isEqualTo(new Case4DtoVO("oderItem", "description"));
+        .isEqualTo(new Case4DtoVO("oderItem", "description"));
   }
 
   @Test

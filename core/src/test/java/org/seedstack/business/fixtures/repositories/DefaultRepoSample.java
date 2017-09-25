@@ -18,7 +18,7 @@ import org.seedstack.business.spi.GenericImplementation;
 @Named("DefaultRepo")
 @GenericImplementation
 public class DefaultRepoSample<A extends AggregateRoot<K>, K> extends
-  AbstractDefaultRepoSample<A, K> {
+    AbstractDefaultRepoSample<A, K> {
 
   @Inject
   public DefaultRepoSample(@Assisted Object[] genericClasses) {

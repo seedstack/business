@@ -14,11 +14,11 @@ import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
 
 public class AndDummyConverter implements
-  SpecificationConverter<AndSpecification<?>, StringBuilder, String> {
+    SpecificationConverter<AndSpecification<?>, StringBuilder, String> {
 
   @Override
   public String convert(AndSpecification<?> specification, StringBuilder context,
-    SpecificationTranslator<StringBuilder, String> translator) {
+      SpecificationTranslator<StringBuilder, String> translator) {
     Specification<?>[] specifications = specification.getSpecifications();
     for (int i = 0; i < specifications.length; i++) {
       context.append(translator.translate(specifications[i], context));

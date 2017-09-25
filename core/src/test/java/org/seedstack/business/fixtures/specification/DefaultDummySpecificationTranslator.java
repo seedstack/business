@@ -12,7 +12,7 @@ import org.seedstack.business.specification.Specification;
 import org.seedstack.business.spi.BaseSpecificationTranslator;
 
 public class DefaultDummySpecificationTranslator extends
-  BaseSpecificationTranslator<StringBuilder, String> {
+    BaseSpecificationTranslator<StringBuilder, String> {
 
   @Override
   public <S extends Specification<?>> String translate(S specification, StringBuilder context) {

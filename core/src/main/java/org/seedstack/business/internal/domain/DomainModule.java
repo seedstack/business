@@ -50,8 +50,8 @@ class DomainModule extends AbstractModule {
   private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses;
 
   DomainModule(Map<Key<?>, Class<?>> bindings, Collection<BindingStrategy> bindingStrategies,
-    Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses,
-    Collection<Class<? extends DomainEventHandler>> eventHandlerClasses) {
+      Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses,
+      Collection<Class<? extends DomainEventHandler>> eventHandlerClasses) {
     this.bindings = bindings;
     this.bindingStrategies = bindingStrategies;
     this.identityGeneratorClasses = identityGeneratorClasses;
@@ -78,8 +78,9 @@ class DomainModule extends AbstractModule {
       bind(identityGeneratorClass);
       Named named = identityGeneratorClass.getAnnotation(Named.class);
       if (named != null) {
-        bind(findIdentityGeneratorInterface(identityGeneratorClass)).annotatedWith(Names.named(named.value()))
-          .to(identityGeneratorClass);
+        bind(findIdentityGeneratorInterface(identityGeneratorClass))
+            .annotatedWith(Names.named(named.value()))
+            .to(identityGeneratorClass);
       }
     }
     bind(IdentityService.class).to(IdentityServiceImpl.class);
@@ -88,8 +89,9 @@ class DomainModule extends AbstractModule {
     bindInterceptor(Matchers.subclassesOf(Factory.class), factoryMethods(), identityInterceptor);
 
     // Domain events
-    Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent = HashMultimap
-      .create();
+    Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
+        eventHandlersByEvent = HashMultimap
+        .create();
     for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlerClasses) {
       eventHandlersByEvent.put(getEventClass(eventHandlerClass), eventHandlerClass);
       bind(eventHandlerClass);
@@ -104,29 +106,33 @@ class DomainModule extends AbstractModule {
   }
 
   @SuppressWarnings("unchecked")
-  private Class<DomainEvent> getEventClass(Class<? extends DomainEventHandler> domainEventHandlerClass) {
-    return (Class<DomainEvent>) BusinessUtils.resolveGenerics(DomainEventHandler.class, domainEventHandlerClass)[0];
+  private Class<DomainEvent> getEventClass(
+      Class<? extends DomainEventHandler> domainEventHandlerClass) {
+    return (Class<DomainEvent>) BusinessUtils
+        .resolveGenerics(DomainEventHandler.class, domainEventHandlerClass)[0];
   }
 
   @SuppressWarnings("unchecked")
   private Class<IdentityGenerator> findIdentityGeneratorInterface(
-    Class<? extends IdentityGenerator> identityGeneratorClass) {
+      Class<? extends IdentityGenerator> identityGeneratorClass) {
     return (Class<IdentityGenerator>) Classes.from(identityGeneratorClass).traversingInterfaces()
-      .traversingSuperclasses().classes()
-      .filter(ClassPredicates.classIsInterface().and(ClassPredicates.classIsAssignableFrom(IdentityGenerator.class)))
-      .findFirst().<BaseException>orElseThrow(
-        () -> BusinessException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_GENERATOR)
-          .put("class", identityGeneratorClass));
+        .traversingSuperclasses().classes()
+        .filter(ClassPredicates.classIsInterface()
+            .and(ClassPredicates.classIsAssignableFrom(IdentityGenerator.class)))
+        .findFirst().<BaseException>orElseThrow(
+            () -> BusinessException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_GENERATOR)
+                .put("class", identityGeneratorClass));
   }
 
   private Matcher<Method> factoryMethods() {
     return new MethodMatcherBuilder(
-      ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class).and(CreateResolver.INSTANCE))
-      .build();
+        ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class)
+            .and(CreateResolver.INSTANCE))
+        .build();
   }
 
   private static class EventHandlersByEventTypeLiteral extends
-    TypeLiteral<Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>> {
+      TypeLiteral<Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>> {
 
   }
 }

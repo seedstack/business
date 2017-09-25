@@ -14,7 +14,7 @@ import org.seedstack.business.fixtures.domain.order.OrderRepository;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
 public class OrderInMemoryRepository extends BaseInMemoryRepository<Order, OrderId> implements
-  OrderRepository {
+    OrderRepository {
 
 }
 

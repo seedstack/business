@@ -42,7 +42,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
     AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
     DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
     Context context = new Context(domainRegistry, assemblerRegistry,
-      Sets.newHashSet(dtoInfoResolver));
+        Sets.newHashSet(dtoInfoResolver));
     order = new Order("1", "death star");
     repository = Mockito.mock(Repository.class);
 
@@ -50,10 +50,10 @@ public class MergeSingleAggregateFromRepositoryImplTest {
     Mockito.when(domainRegistry.getFactory(Order.class)).thenReturn(new OrderFactoryInternal());
     Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
     Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-      .thenReturn(new OrderDtoAssembler());
+        .thenReturn(new OrderDtoAssembler());
 
     underTest = new MergeSingleAggregateFromRepositoryImpl<>(context,
-      new OrderDto("1", "lightsaber"), Order.class);
+        new OrderDto("1", "lightsaber"), Order.class);
   }
 
   @Test

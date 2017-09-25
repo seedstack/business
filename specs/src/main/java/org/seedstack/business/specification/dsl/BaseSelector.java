@@ -37,7 +37,7 @@ public interface BaseSelector<T, SelectorT extends BaseSelector<T, SelectorT>> {
    * level.
    *
    * @return the next operation of the builder DSL, allowing to choose the specification that will
-   *   apply on the whole object.
+   *     apply on the whole object.
    */
   SpecificationPicker<T, SelectorT> whole();
 }

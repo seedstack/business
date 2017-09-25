@@ -22,7 +22,7 @@ public class CustomerFactoryDefault extends BaseFactory<Customer> implements Cus
 
   @Override
   public Customer createNewCustomer(String entityId, String firstName, String lastName,
-    String addressType, String line1, String line2, String zipCode, String country) {
+      String addressType, String line1, String line2, String zipCode, String country) {
     Customer customer = createNewCustomer(entityId, firstName, lastName);
     Address address = new Address(line1, line2, zipCode, country);
     Address.AddressType addressTypeType = Address.AddressType.valueOf(addressType.toLowerCase());

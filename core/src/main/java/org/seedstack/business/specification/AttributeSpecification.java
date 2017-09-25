@@ -20,8 +20,8 @@ import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.reflect.Classes;
 
 /**
- * A specification that restricts the application of another specification to an attribute of the candidate object. It
- * supports nested attributes with a dot notation.
+ * A specification that restricts the application of another specification to an attribute of the
+ * candidate object. It supports nested attributes with a dot notation.
  *
  * @param <T> the type of the candidate object the specification applies to.
  * @param <V> the type of the attribute which is targeted by this specification.
@@ -29,7 +29,8 @@ import org.seedstack.shed.reflect.Classes;
 public class AttributeSpecification<T, V> implements Specification<T> {
 
   private static final String ATTRIBUTE_PATH_PATTERN = "\\.";
-  private static final ConcurrentMap<FieldReference, Optional<Field>> fieldCache = new ConcurrentHashMap<>();
+  private static final ConcurrentMap<FieldReference, Optional<Field>> fieldCache = new
+      ConcurrentHashMap<>();
   private final String path;
   private final String[] splitPath;
   private final Specification<V> valueSpecification;
@@ -37,8 +38,10 @@ public class AttributeSpecification<T, V> implements Specification<T> {
   /**
    * Creates an attribute specification.
    *
-   * @param path               the path to the target attribute, supporting dot notation for nested attributes.
-   * @param valueSpecification the specification that the value of the target attribute must satisfy.
+   * @param path               the path to the target attribute, supporting dot notation for nested
+   *                           attributes.
+   * @param valueSpecification the specification that the value of the target attribute must
+   *                           satisfy.
    */
   public AttributeSpecification(String path, Specification<V> valueSpecification) {
     this.path = path;
@@ -76,12 +79,14 @@ public class AttributeSpecification<T, V> implements Specification<T> {
         Object result = getFieldValue(candidate, fieldOptional.get());
         if (pathIndex < splitPath.length - 1) {
           if (result instanceof Collection) {
-            return ((Collection<?>) result).stream().anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
+            return ((Collection<?>) result).stream()
+                .anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
           } else if (result.getClass().isArray()) {
-            return Arrays.stream((Object[]) result).anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
+            return Arrays.stream((Object[]) result)
+                .anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
           } else if (result instanceof Map) {
             return ((Collection<?>) ((Map<?, ?>) result).values()).stream()
-              .anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
+                .anyMatch(item -> isSatisfiedBy(item, pathIndex + 1));
           } else {
             return isSatisfiedBy(result, pathIndex + 1);
           }
@@ -103,8 +108,9 @@ public class AttributeSpecification<T, V> implements Specification<T> {
     Optional<Field> field;
     if ((field = fieldCache.get(fieldReference)) == null) {
       fieldCache.put(fieldReference,
-        field = Classes.from(someClass).traversingSuperclasses().fields().filter(f -> f.getName().equals(fieldName))
-          .findFirst());
+          field = Classes.from(someClass).traversingSuperclasses().fields()
+              .filter(f -> f.getName().equals(fieldName))
+              .findFirst());
     }
     return field;
   }
@@ -115,7 +121,7 @@ public class AttributeSpecification<T, V> implements Specification<T> {
       return field.get(candidate);
     } catch (Exception e) {
       throw BusinessException.wrap(e, BusinessErrorCode.ERROR_ACCESSING_FIELD)
-        .put("className", candidate.getClass().getName()).put("fieldName", field.getName());
+          .put("className", candidate.getClass().getName()).put("fieldName", field.getName());
     }
   }
 

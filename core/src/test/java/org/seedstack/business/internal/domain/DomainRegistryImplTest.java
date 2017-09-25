@@ -52,7 +52,7 @@ public class DomainRegistryImplTest {
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetRepositoryTypeOf(
-    final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
+      final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -63,15 +63,15 @@ public class DomainRegistryImplTest {
     };
 
     Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry
-      .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
-      }.getType());
+        .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType());
     assertThat(repository2).isEqualTo(repository1);
   }
 
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetRepositoryTypeOfOfTClassOfQextendsAnnotation(
-    final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
+      final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -82,15 +82,15 @@ public class DomainRegistryImplTest {
     };
 
     Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry
-      .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
-      }.getType(), MockedAnnotation.class);
+        .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType(), MockedAnnotation.class);
     assertThat(repository2).isEqualTo(repository1);
   }
 
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetRepositoryTypeOfOfTString(
-    final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
+      final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -101,15 +101,15 @@ public class DomainRegistryImplTest {
     };
 
     Repository<AggregateRoot<Long>, Long> repository2 = domainRegistry
-      .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
-      }.getType(), "dummyAnnotation");
+        .getRepository(new TypeLiteral<Repository<AggregateRoot<Long>, Long>>() {
+        }.getType(), "dummyAnnotation");
     assertThat(repository2).isEqualTo(repository1);
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testGetRepositoryClassOfAClassOfKClassOfQextendsAnnotation(
-    final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
+      final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -120,14 +120,14 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(
-      domainRegistry.getRepository(AggregateRoot.class, Long.class, MockedAnnotation.class))
-      .isEqualTo(repository);
+        domainRegistry.getRepository(AggregateRoot.class, Long.class, MockedAnnotation.class))
+        .isEqualTo(repository);
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testGetRepositoryClassOfAClassOfKString(
-    final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
+      final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -138,7 +138,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getRepository(AggregateRoot.class, Long.class, "dummyAnnotation"))
-      .isEqualTo(repository);
+        .isEqualTo(repository);
   }
 
   @SuppressWarnings({"unchecked"})
@@ -154,8 +154,8 @@ public class DomainRegistryImplTest {
     };
 
     Factory<AggregateRoot<Long>> factory2 = domainRegistry
-      .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
-      }.getType());
+        .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType());
     assertThat(factory2).isEqualTo(factory1);
   }
 
@@ -172,8 +172,8 @@ public class DomainRegistryImplTest {
     };
 
     Factory<AggregateRoot<Long>> factory2 = domainRegistry
-      .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
-      }.getType(), MockedAnnotation.class);
+        .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType(), MockedAnnotation.class);
     assertThat(factory2).isEqualTo(factory1);
   }
 
@@ -190,8 +190,8 @@ public class DomainRegistryImplTest {
     };
 
     Factory<AggregateRoot<Long>> factory2 = domainRegistry
-      .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
-      }.getType(), "dummyAnnotation");
+        .getFactory(new TypeLiteral<Factory<AggregateRoot<Long>>>() {
+        }.getType(), "dummyAnnotation");
     assertThat(factory2).isEqualTo(factory1);
   }
 
@@ -223,7 +223,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getFactory(AggregateRoot.class, MockedAnnotation.class))
-      .isEqualTo(factory);
+        .isEqualTo(factory);
   }
 
   @SuppressWarnings("unchecked")
@@ -239,7 +239,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getFactory(AggregateRoot.class, "dummyAnnotation"))
-      .isEqualTo(factory);
+        .isEqualTo(factory);
   }
 
   @SuppressWarnings({"unchecked"})
@@ -255,15 +255,15 @@ public class DomainRegistryImplTest {
     };
 
     MockedServiceParameterized<Long> service2 = domainRegistry
-      .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
-      }.getType());
+        .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType());
     assertThat(service2).isEqualTo(service1);
   }
 
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetServiceTypeOfOfTClassOfQextendsAnnotation(
-    final @Mocked MockedServiceParameterized<Long> service1) {
+      final @Mocked MockedServiceParameterized<Long> service1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -274,15 +274,15 @@ public class DomainRegistryImplTest {
     };
 
     MockedServiceParameterized<Long> service2 = domainRegistry
-      .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
-      }.getType(), MockedAnnotation.class);
+        .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType(), MockedAnnotation.class);
     assertThat(service2).isEqualTo(service1);
   }
 
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetServiceTypeOfOfTString(
-    final @Mocked MockedServiceParameterized<Long> service1) {
+      final @Mocked MockedServiceParameterized<Long> service1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -293,8 +293,8 @@ public class DomainRegistryImplTest {
     };
 
     MockedServiceParameterized<Long> service2 = domainRegistry
-      .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
-      }.getType(), "dummyAnnotation");
+        .getService(new TypeLiteral<MockedServiceParameterized<Long>>() {
+        }.getType(), "dummyAnnotation");
     assertThat(service2).isEqualTo(service1);
   }
 
@@ -333,7 +333,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getService(MockedService.class, MockedAnnotation.class))
-      .isEqualTo(service);
+        .isEqualTo(service);
   }
 
   @SuppressWarnings("unchecked")
@@ -349,7 +349,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getService(MockedService.class, "dummyAnnotation"))
-      .isEqualTo(service);
+        .isEqualTo(service);
   }
 
   @SuppressWarnings("unchecked")
@@ -380,7 +380,7 @@ public class DomainRegistryImplTest {
     };
 
     assertThat(domainRegistry.getPolicy(MockedPolicy.class, MockedAnnotation.class))
-      .isEqualTo(policy);
+        .isEqualTo(policy);
   }
 
   @SuppressWarnings("unchecked")
@@ -418,15 +418,15 @@ public class DomainRegistryImplTest {
     };
 
     MockedPolicyParameterized<Long> policy2 = domainRegistry
-      .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
-      }.getType());
+        .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType());
     assertThat(policy2).isEqualTo(policy1);
   }
 
   @SuppressWarnings({"unchecked"})
   @Test
   public void testGetPolicyTypeOfOfTClassOfQextendsAnnotation(
-    final @Mocked MockedPolicyParameterized<Long> policy1) {
+      final @Mocked MockedPolicyParameterized<Long> policy1) {
     DomainRegistry domainRegistry = createDomainRegistry();
 
     new StrictExpectations() {
@@ -437,8 +437,8 @@ public class DomainRegistryImplTest {
     };
 
     MockedPolicyParameterized<Long> policy2 = domainRegistry
-      .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
-      }.getType(), MockedAnnotation.class);
+        .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType(), MockedAnnotation.class);
     assertThat(policy2).isEqualTo(policy1);
   }
 
@@ -455,8 +455,8 @@ public class DomainRegistryImplTest {
     };
 
     MockedPolicyParameterized<Long> policy2 = domainRegistry
-      .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
-      }.getType(), "dummyAnnotation");
+        .getPolicy(new TypeLiteral<MockedPolicyParameterized<Long>>() {
+        }.getType(), "dummyAnnotation");
     assertThat(policy2).isEqualTo(policy1);
   }
 

@@ -11,10 +11,10 @@ package org.seedstack.business.specification;
 import java.util.regex.Pattern;
 
 /**
- * A string-specialized specification that is satisfied only when the expected and the candidate strings are matching
- * according to the given {@link StringSpecification.Options}. Matching supports the following wildcards: <ul>
- * <li>'{@literal *}' which matches any zero-length or longer character sequence,</li> <li>'{@literal ?}' which matches
- * any character.</li> </ul>
+ * A string-specialized specification that is satisfied only when the expected and the candidate
+ * strings are matching according to the given {@link StringSpecification.Options}. Matching
+ * supports the following wildcards: <ul> <li>'{@literal *}' which matches any zero-length or longer
+ * character sequence,</li> <li>'{@literal ?}' which matches any character.</li> </ul>
  */
 public class StringMatchingSpecification extends StringSpecification {
 
@@ -44,14 +44,16 @@ public class StringMatchingSpecification extends StringSpecification {
     if (options.isIgnoringCase()) {
       if (ignoringCasePattern == null) {
         ignoringCasePattern = Pattern
-          .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*").replace(SINGLE_CHARACTER_WILDCARD, "."),
-            Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+            .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
+                    .replace(SINGLE_CHARACTER_WILDCARD, "."),
+                Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
       }
       return ignoringCasePattern.matcher(candidateString).matches();
     } else {
       if (pattern == null) {
         pattern = Pattern
-          .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*").replace(SINGLE_CHARACTER_WILDCARD, "."));
+            .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
+                .replace(SINGLE_CHARACTER_WILDCARD, "."));
       }
       return pattern.matcher(candidateString).matches();
     }

@@ -29,12 +29,14 @@ class DefaultAssemblerCollector {
 
   private final Collection<Class<? extends Assembler>> defaultAssemblersClasses;
 
-  public DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
+  public DefaultAssemblerCollector(
+      Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
     this.defaultAssemblersClasses = defaultAssemblersClasses;
   }
 
   /**
-   * Provides the list of binding strategies for the default assemblers based on classes annotated by {@literal
+   * Provides the list of binding strategies for the default assemblers based on classes annotated
+   * by {@literal
    *
    * @param dtoClasses the DTO classes annotated by {@literal @}DtoOf
    * @return collection of default assembler binding strategies
@@ -66,13 +68,15 @@ class DefaultAssemblerCollector {
     // default assemblers
     for (Class<? extends Assembler> defaultAssemblersClass : defaultAssemblersClasses) {
       Class<?> aggregateType = TypeToken.of(defaultAssemblersClass)
-        .resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
+          .resolveType(defaultAssemblersClass.getTypeParameters()[0]).getRawType();
 
       if (aggregateType.isAssignableFrom(Tuple.class) && !autoTupleAssemblerGenerics.isEmpty()) {
-        bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass, autoTupleAssemblerGenerics));
+        bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass,
+            autoTupleAssemblerGenerics));
 
       } else if (!aggregateType.isAssignableFrom(Tuple.class) && !autoAssemblerGenerics.isEmpty()) {
-        bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass, autoAssemblerGenerics));
+        bs.add(new GenericBindingStrategy<>(Assembler.class, defaultAssemblersClass,
+            autoAssemblerGenerics));
       }
     }
     return bs;

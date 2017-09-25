@@ -56,7 +56,7 @@ public class AggregateNotFoundException extends RuntimeException {
    * @param writableStackTrace whether or not the stack trace should be writable
    */
   public AggregateNotFoundException(String message, Throwable cause, boolean enableSuppression,
-    boolean writableStackTrace) {
+      boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }

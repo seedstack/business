@@ -46,7 +46,7 @@ public interface Specification<T> {
    *
    * @param other the other specification.
    * @return an {@link AndSpecification} composing this specification with the specification passed
-   *   as argument.
+   *     as argument.
    */
   default Specification<T> and(Specification<? super T> other) {
     Objects.requireNonNull(other);
@@ -67,7 +67,7 @@ public interface Specification<T> {
    *
    * @param other the other specification.
    * @return an {@link OrSpecification} composing this specification with the specification passed
-   *   as argument.
+   *     as argument.
    */
   default Specification<T> or(Specification<? super T> other) {
     Objects.requireNonNull(other);

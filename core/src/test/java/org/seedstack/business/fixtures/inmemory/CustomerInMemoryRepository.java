@@ -17,7 +17,7 @@ import org.seedstack.business.specification.Specification;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
 public class CustomerInMemoryRepository extends
-  BaseInMemoryRepository<Customer, CustomerId> implements CustomerRepository {
+    BaseInMemoryRepository<Customer, CustomerId> implements CustomerRepository {
 
   @Override
   public Collection<Customer> findAll() {

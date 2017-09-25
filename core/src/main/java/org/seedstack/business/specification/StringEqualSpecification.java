@@ -9,8 +9,8 @@
 package org.seedstack.business.specification;
 
 /**
- * A string-specialized specification that is satisfied only when the expected and the candidate strings are equal
- * according to the given {@link StringSpecification.Options}.
+ * A string-specialized specification that is satisfied only when the expected and the candidate
+ * strings are equal according to the given {@link StringSpecification.Options}.
  */
 public class StringEqualSpecification extends StringSpecification {
 

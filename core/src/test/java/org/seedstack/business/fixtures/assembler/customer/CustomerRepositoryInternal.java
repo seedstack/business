@@ -18,7 +18,7 @@ import org.seedstack.business.specification.Specification;
 
 
 public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements
-  CustomerRepository {
+    CustomerRepository {
 
   private static Map<String, Customer> orderMap = new ConcurrentHashMap<>();
 

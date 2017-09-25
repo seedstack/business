@@ -19,12 +19,13 @@ import org.seedstack.shed.reflect.Classes;
  * @param <DtoT>           the dto type.
  */
 public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, DtoT> implements
-  Assembler<AggregateRootT, DtoT> {
+    Assembler<AggregateRootT, DtoT> {
 
   private final Class<DtoT> dtoClass;
 
   /**
-   * Creates a base assembler. Actual classes handled by the assembler are determined by reflection.
+   * Creates a base assembler. Actual classes handled by the assembler are determined by
+   * reflection.
    */
   @SuppressWarnings("unchecked")
   public BaseAssembler() {
@@ -32,8 +33,8 @@ public abstract class BaseAssembler<AggregateRootT extends AggregateRoot<?>, Dto
   }
 
   /**
-   * Creates a base assembler. Actual classes handled by the assembler are specified explicitly. This can be used to
-   * create a dynamic implementation of an assembler.
+   * Creates a base assembler. Actual classes handled by the assembler are specified explicitly.
+   * This can be used to create a dynamic implementation of an assembler.
    *
    * @param dtoClass the DTO class.
    */

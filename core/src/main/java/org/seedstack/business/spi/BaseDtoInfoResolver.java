@@ -24,7 +24,8 @@ import org.seedstack.business.internal.utils.MethodMatcher;
 import org.seedstack.shed.reflect.ReflectUtils;
 
 /**
- * An helper base class that can be extended to create an implementation of {@link DtoInfoResolver}.
+ * An helper base class that can be extended to create an implementation of {@link
+ * DtoInfoResolver}.
  */
 public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
 
@@ -38,13 +39,13 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
 
   @Override
   public <DtoT, AggregateRootT extends AggregateRoot<?>> AggregateRootT resolveAggregate(DtoT dto,
-    Class<AggregateRootT> aggregateRootClass) {
+      Class<AggregateRootT> aggregateRootClass) {
     return resolveAggregate(dto, aggregateRootClass, -1);
   }
 
   /**
-   * Implements the logic to create an aggregate identifier, using a factory if the identifier class implements {@link
-   * Producible}.
+   * Implements the logic to create an aggregate identifier, using a factory if the identifier class
+   * implements {@link Producible}.
    *
    * @param aggregateIdClass the identifier class.
    * @param id               the existing identifier if any.
@@ -59,14 +60,16 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
         return id;
       } else {
         throw BusinessException.createNew(BusinessErrorCode.RESOLVED_DTO_ID_IS_INVALID)
-          .put("dtoIdClass", id.getClass().getName()).put("aggregateIdClass", aggregateIdClass.getName());
+            .put("dtoIdClass", id.getClass().getName())
+            .put("aggregateIdClass", aggregateIdClass.getName());
       }
     } else {
       if (!Producible.class.isAssignableFrom(aggregateIdClass)) {
         throw BusinessException.createNew(BusinessErrorCode.RESOLVED_DTO_ID_IS_NOT_PRODUCIBLE)
-          .put("aggregateIdClass", aggregateIdClass.getName());
+            .put("aggregateIdClass", aggregateIdClass.getName());
       } else {
-        return (IdT) domainRegistry.getFactory(aggregateIdClass.asSubclass(Producible.class)).create(parameters);
+        return (IdT) domainRegistry.getFactory(aggregateIdClass.asSubclass(Producible.class))
+            .create(parameters);
       }
     }
   }
@@ -80,7 +83,7 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
    * @return the aggregate root.
    */
   protected <AggregateRootT extends AggregateRoot<?>> AggregateRootT createFromFactory(
-    Class<AggregateRootT> aggregateClass, Object... parameters) {
+      Class<AggregateRootT> aggregateClass, Object... parameters) {
     checkNotNull(aggregateClass);
     checkNotNull(parameters);
 
@@ -91,13 +94,15 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
     Method factoryMethod;
     boolean useDefaultFactory = false;
     try {
-      factoryMethod = MethodMatcher.findMatchingMethod(factory.getClass(), aggregateClass, parameters);
+      factoryMethod = MethodMatcher
+          .findMatchingMethod(factory.getClass(), aggregateClass, parameters);
       if (factoryMethod == null) {
         useDefaultFactory = true;
       }
     } catch (Exception e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_FIND_FACTORY_METHOD)
-        .put("aggregateClass", aggregateClass.getName()).put("parameters", Arrays.toString(parameters));
+          .put("aggregateClass", aggregateClass.getName())
+          .put("parameters", Arrays.toString(parameters));
     }
 
     // Invoke the factory to create the aggregate root
@@ -113,9 +118,11 @@ public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
       }
     } catch (Exception e) {
       throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INVOKE_FACTORY_METHOD)
-        .put("aggregateClass", aggregateClass.getName()).put("factoryClass", factory.getClass().getName())
-        .put("factoryMethod", Optional.ofNullable(factoryMethod).map(Method::getName).orElse("create"))
-        .put("parameters", Arrays.toString(parameters));
+          .put("aggregateClass", aggregateClass.getName())
+          .put("factoryClass", factory.getClass().getName())
+          .put("factoryMethod",
+              Optional.ofNullable(factoryMethod).map(Method::getName).orElse("create"))
+          .put("parameters", Arrays.toString(parameters));
     }
   }
 }

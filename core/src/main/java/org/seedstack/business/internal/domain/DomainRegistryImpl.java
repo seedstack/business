@@ -35,39 +35,48 @@ class DomainRegistryImpl implements DomainRegistry {
   private Injector injector;
 
   @Override
-  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(Type repositoryType) {
-    checkType(repositoryType, BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
+  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(
+      Type repositoryType) {
+    checkType(repositoryType, BusinessSpecifications.REPOSITORY,
+        BusinessErrorCode.ILLEGAL_REPOSITORY);
     return getInstance(getKey(repositoryType));
   }
 
   @Override
-  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(Type repositoryType,
-    Class<? extends Annotation> qualifier) {
-    checkType(repositoryType, BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
+  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(
+      Type repositoryType,
+      Class<? extends Annotation> qualifier) {
+    checkType(repositoryType, BusinessSpecifications.REPOSITORY,
+        BusinessErrorCode.ILLEGAL_REPOSITORY);
     return getInstance(getKey(repositoryType, qualifier));
   }
 
   @Override
-  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(Type repositoryType,
-    String qualifier) {
-    checkType(repositoryType, BusinessSpecifications.REPOSITORY, BusinessErrorCode.ILLEGAL_REPOSITORY);
+  public <T extends Repository<A, K>, A extends AggregateRoot<K>, K> T getRepository(
+      Type repositoryType,
+      String qualifier) {
+    checkType(repositoryType, BusinessSpecifications.REPOSITORY,
+        BusinessErrorCode.ILLEGAL_REPOSITORY);
     return getInstance(getKey(repositoryType, qualifier));
   }
 
   @Override
-  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass) {
+  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass,
+      Class<K> idClass) {
     return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass)));
   }
 
   @Override
-  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass,
-    Class<? extends Annotation> qualifier) {
+  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass,
+      Class<K> idClass,
+      Class<? extends Annotation> qualifier) {
     return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
   }
 
   @Override
-  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass,
-    String qualifier) {
+  public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass,
+      Class<K> idClass,
+      String qualifier) {
     return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
   }
 
@@ -79,13 +88,14 @@ class DomainRegistryImpl implements DomainRegistry {
 
   @Override
   public <T extends Factory<A>, A extends Producible> T getFactory(Type factoryType,
-    Class<? extends Annotation> qualifier) {
+      Class<? extends Annotation> qualifier) {
     checkType(factoryType, BusinessSpecifications.FACTORY, BusinessErrorCode.ILLEGAL_FACTORY);
     return getInstance(getKey(factoryType, qualifier));
   }
 
   @Override
-  public <T extends Factory<A>, A extends Producible> T getFactory(Type factoryType, String qualifier) {
+  public <T extends Factory<A>, A extends Producible> T getFactory(Type factoryType,
+      String qualifier) {
     checkType(factoryType, BusinessSpecifications.FACTORY, BusinessErrorCode.ILLEGAL_FACTORY);
     return getInstance(getKey(factoryType, qualifier));
   }
@@ -96,7 +106,8 @@ class DomainRegistryImpl implements DomainRegistry {
   }
 
   @Override
-  public <T extends Producible> Factory<T> getFactory(Class<T> producibleClass, Class<? extends Annotation> qualifier) {
+  public <T extends Producible> Factory<T> getFactory(Class<T> producibleClass,
+      Class<? extends Annotation> qualifier) {
     return getInstance(getKey(getType(Factory.class, producibleClass), qualifier));
   }
 

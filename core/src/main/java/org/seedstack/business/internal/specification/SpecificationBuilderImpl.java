@@ -18,15 +18,17 @@ class SpecificationBuilderImpl implements SpecificationBuilder {
   @Override
   @SuppressWarnings("unchecked")
   public <T, SelectorT extends PropertySelector<T, SelectorT>> SelectorT of(Class<T> anyClass) {
-    return (SelectorT) new PropertySelectorImpl<T, SelectorT>(new SpecificationBuilderContext<>(anyClass));
+    return (SelectorT) new PropertySelectorImpl<T, SelectorT>(
+        new SpecificationBuilderContext<>(anyClass));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends AggregateSelector<AggregateRootT, IdT,
-    SelectorT>> SelectorT ofAggregate(
-    Class<AggregateRootT> aggregateClass) {
+  public <AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends
+      AggregateSelector<AggregateRootT, IdT,
+      SelectorT>> SelectorT ofAggregate(
+      Class<AggregateRootT> aggregateClass) {
     return (SelectorT) new AggregateSelectorImpl<AggregateRootT, IdT, SelectorT>(
-      new SpecificationBuilderContext<>(aggregateClass));
+        new SpecificationBuilderContext<>(aggregateClass));
   }
 }

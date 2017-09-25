@@ -13,9 +13,10 @@ import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 import org.seedstack.business.specification.Specification;
 
-class SpecificationPickerImpl<SliceT extends Slice<AggregateRootT>, AggregateRootT extends AggregateRoot<IdT>, IdT>
-  implements
-  SpecificationPicker<SliceT, AggregateRootT, IdT> {
+class SpecificationPickerImpl<SliceT extends Slice<AggregateRootT>, AggregateRootT extends
+    AggregateRoot<IdT>, IdT>
+    implements
+    SpecificationPicker<SliceT, AggregateRootT, IdT> {
 
   private final PaginatorContext<AggregateRootT, IdT> context;
   private final PaginationMode mode;

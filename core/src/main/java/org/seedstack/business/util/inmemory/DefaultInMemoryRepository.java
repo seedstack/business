@@ -14,14 +14,14 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.spi.GenericImplementation;
 
 /**
- * Default repository implementation for in-memory persistence. <p> When no custom repository exists for the aggregate,
- * this in-memory implementation can be injected for {@link org.seedstack.business.domain.Repository} with the qualifier
- * {@literal @}InMemory. </p>
+ * Default repository implementation for in-memory persistence. <p> When no custom repository exists
+ * for the aggregate, this in-memory implementation can be injected for {@link
+ * org.seedstack.business.domain.Repository} with the qualifier {@literal @}InMemory. </p>
  */
 @GenericImplementation
 @InMemory
 public class DefaultInMemoryRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  BaseInMemoryRepository<AggregateRootT, IdT> {
+    BaseInMemoryRepository<AggregateRootT, IdT> {
 
   /**
    * Creates a default in-memory repository.

@@ -32,7 +32,8 @@ class AssemblerModule extends AbstractModule {
   private final Collection<BindingStrategy> bindingStrategies;
 
   AssemblerModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings,
-    List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses, Collection<BindingStrategy> bindingStrategies) {
+      List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses,
+      Collection<BindingStrategy> bindingStrategies) {
     this.bindings = bindings;
     this.dtoInfoResolverClasses = dtoInfoResolverClasses;
     this.bindingStrategies = bindingStrategies;
@@ -66,7 +67,8 @@ class AssemblerModule extends AbstractModule {
       bind(AssemblerRegistry.class).to(AssemblerRegistryImpl.class);
       bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
 
-      Multibinder<DtoInfoResolver> multibinder = Multibinder.newSetBinder(binder(), DtoInfoResolver.class);
+      Multibinder<DtoInfoResolver> multibinder = Multibinder
+          .newSetBinder(binder(), DtoInfoResolver.class);
       for (Class<? extends DtoInfoResolver> dtoInfoResolverClass : dtoInfoResolverClasses) {
         LOGGER.trace("Binding DTO info resolver {}", dtoInfoResolverClass.getName());
         multibinder.addBinding().to(dtoInfoResolverClass);

@@ -16,7 +16,7 @@ package org.seedstack.business.specification.dsl;
  * @param <SelectorT> the type of the selector.
  */
 public interface PropertySelector<T, SelectorT extends BaseSelector<T, SelectorT>> extends
-  BaseSelector<T, SelectorT> {
+    BaseSelector<T, SelectorT> {
 
   /**
    * Selects a property of the object to be the subject of a specification. For instance, if an

@@ -27,10 +27,10 @@ public interface KeyValuePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> 
    * @param value the value used as upper-boundary.
    * @param <T>   the type of the value.
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-   *   objects returned.
+   *     objects returned.
    */
   <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> before(
-    T value);
+      T value);
 
   /**
    * Specify the value used as lower-boundary of the previously specified attribute. Objects having
@@ -39,8 +39,8 @@ public interface KeyValuePicker<AggregateRootT extends AggregateRoot<IdT>, IdT> 
    * @param value the value used as lower-boundary.
    * @param <T>   the type of the value.
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-   *   objects returned.
+   *     objects returned.
    */
   <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> after(
-    T value);
+      T value);
 }

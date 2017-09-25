@@ -39,14 +39,14 @@ public class AssembleSingleProviderImplTest {
     DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
     AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
     Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-      .thenReturn(new OrderDtoAssembler());
+        .thenReturn(new OrderDtoAssembler());
     DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
     context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
     Mockito.when(
-      assemblerRegistry.getTupleAssembler(
-        (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
-        OrderDto.class)
+        assemblerRegistry.getTupleAssembler(
+            (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
+            OrderDto.class)
     ).thenReturn((Assembler) new OrderDtoTupleAssembler());
   }
 
@@ -75,8 +75,8 @@ public class AssembleSingleProviderImplTest {
   @Test
   public void testToDtos() {
     underTest2 = new AssembleMultipleImpl<>(context, Stream.of(
-      new Order("lightsaber"),
-      new Order("death star")
+        new Order("lightsaber"),
+        new Order("death star")
     ), null);
 
     List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
@@ -89,8 +89,8 @@ public class AssembleSingleProviderImplTest {
   @Test
   public void testToDtosWithTuple() {
     underTest2 = new AssembleMultipleImpl<>(context, null, Stream.of(
-      Tuples.create(new Order("lightsaber"), new Customer("luke")),
-      Tuples.create(new Order("death star"), new Customer("dark vador"))
+        Tuples.create(new Order("lightsaber"), new Customer("luke")),
+        Tuples.create(new Order("death star"), new Customer("dark vador"))
     ));
 
     List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);

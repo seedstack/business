@@ -64,7 +64,7 @@ public class FluentAssemblerAssembleIT {
     book.setPublishDate(PUBLISH_DATE);
 
     BookDto dto = fluently.assemble(book).with((Names.named("Book")))
-      .to(BookDto.class); // test qualifiers
+        .to(BookDto.class); // test qualifiers
 
     Assertions.assertThat(dto.getAuthor()).isEqualTo(ALEXANDRE_DUMAS);
     Assertions.assertThat(dto.getTitle()).isEqualTo(THE_THREE_MUSKETEERS);
@@ -87,9 +87,9 @@ public class FluentAssemblerAssembleIT {
     book2.setPublishDate(PUBLISH_DATE);
 
     List<BookDto> dtoStream = fluently.assemble(Stream.of(book, book2))
-      .with(Names.named("Book"))
-      .toStreamOf(BookDto.class)
-      .collect(Collectors.toList());
+        .with(Names.named("Book"))
+        .toStreamOf(BookDto.class)
+        .collect(Collectors.toList());
 
     Assertions.assertThat(dtoStream).isNotNull();
     Assertions.assertThat(dtoStream).isNotEmpty();
@@ -117,9 +117,9 @@ public class FluentAssemblerAssembleIT {
     orderRepository.add(order2);
 
     List<OrderDto> dtos = fluently.assemble(
-      orderRepository.get(Specification.any()))
-      .toStreamOf(OrderDto.class)
-      .collect(Collectors.toList());
+        orderRepository.get(Specification.any()))
+        .toStreamOf(OrderDto.class)
+        .collect(Collectors.toList());
 
     Assertions.assertThat(dtos).isNotEmpty();
     Assertions.assertThat(dtos.size()).isEqualTo(2);

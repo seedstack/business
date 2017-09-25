@@ -44,8 +44,8 @@ public interface DomainRegistry {
    * @return an instance of the repository.
    */
   <AggregateRootT extends AggregateRoot<IdT>, IdT> Repository<AggregateRootT, IdT> getRepository(
-    Class<AggregateRootT> aggregateRootClass,
-    Class<IdT> idClass);
+      Class<AggregateRootT> aggregateRootClass,
+      Class<IdT> idClass);
 
   /**
    * Get the {@link Repository} for an aggregate root and a qualifier.
@@ -58,8 +58,8 @@ public interface DomainRegistry {
    * @return an instance of the repository.
    */
   <AggregateRootT extends AggregateRoot<I>, I> Repository<AggregateRootT, I> getRepository(
-    Class<AggregateRootT> aggregateRootClass,
-    Class<I> idClass, Class<? extends Annotation> qualifier);
+      Class<AggregateRootT> aggregateRootClass,
+      Class<I> idClass, Class<? extends Annotation> qualifier);
 
   /**
    * Get the {@link Repository} for an aggregate root and a qualifier.
@@ -72,8 +72,8 @@ public interface DomainRegistry {
    * @return an instance of the repository.
    */
   <AggregateRootT extends AggregateRoot<I>, I> Repository<AggregateRootT, I> getRepository(
-    Class<AggregateRootT> aggregateRootClass,
-    Class<I> idClass, String qualifier);
+      Class<AggregateRootT> aggregateRootClass,
+      Class<I> idClass, String qualifier);
 
   /**
    * Get a {@link Repository} from the domain.
@@ -85,24 +85,9 @@ public interface DomainRegistry {
    * @return an instance of the repository.
    */
   <RepositoryT extends Repository<AggregateRootT, IdT>,
-    AggregateRootT extends AggregateRoot<IdT>,
-    IdT> RepositoryT getRepository(
-    Type repositoryType);
-
-  /**
-   * Get a {@link Repository} from the domain.
-   *
-   * @param <RepositoryT>    the type of the repository.
-   * @param <AggregateRootT> the type of the aggregate root.
-   * @param <IdT>            the type of the aggregate root identifier.
-   * @param repositoryType   the full generic type.
-   * @param qualifier        the repository qualifier.
-   * @return an instance of the repository.
-   */
-  <RepositoryT extends Repository<AggregateRootT, IdT>,
-    AggregateRootT extends AggregateRoot<IdT>,
-    IdT> RepositoryT getRepository(
-    Type repositoryType, Class<? extends Annotation> qualifier);
+      AggregateRootT extends AggregateRoot<IdT>,
+      IdT> RepositoryT getRepository(
+      Type repositoryType);
 
   /**
    * Get a {@link Repository} from the domain.
@@ -115,9 +100,24 @@ public interface DomainRegistry {
    * @return an instance of the repository.
    */
   <RepositoryT extends Repository<AggregateRootT, IdT>,
-    AggregateRootT extends AggregateRoot<IdT>,
-    IdT> RepositoryT getRepository(
-    Type repositoryType, String qualifier);
+      AggregateRootT extends AggregateRoot<IdT>,
+      IdT> RepositoryT getRepository(
+      Type repositoryType, Class<? extends Annotation> qualifier);
+
+  /**
+   * Get a {@link Repository} from the domain.
+   *
+   * @param <RepositoryT>    the type of the repository.
+   * @param <AggregateRootT> the type of the aggregate root.
+   * @param <IdT>            the type of the aggregate root identifier.
+   * @param repositoryType   the full generic type.
+   * @param qualifier        the repository qualifier.
+   * @return an instance of the repository.
+   */
+  <RepositoryT extends Repository<AggregateRootT, IdT>,
+      AggregateRootT extends AggregateRoot<IdT>,
+      IdT> RepositoryT getRepository(
+      Type repositoryType, String qualifier);
 
   /**
    * Get the {@link Factory} for an aggregate root.
@@ -127,7 +127,7 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <ProducibleT extends Producible> Factory<ProducibleT> getFactory(
-    Class<ProducibleT> producibleClass);
+      Class<ProducibleT> producibleClass);
 
   /**
    * Get the {@link Factory} with a qualifier for an aggregate root.
@@ -138,8 +138,8 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <ProducibleT extends Producible> Factory<ProducibleT> getFactory(
-    Class<ProducibleT> producibleClass,
-    Class<? extends Annotation> qualifier);
+      Class<ProducibleT> producibleClass,
+      Class<? extends Annotation> qualifier);
 
   /**
    * Get the {@link Factory} with a qualifier for an aggregate root.
@@ -150,7 +150,7 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <ProducibleT extends Producible> Factory<ProducibleT> getFactory(
-    Class<ProducibleT> producibleClass, String qualifier);
+      Class<ProducibleT> producibleClass, String qualifier);
 
   /**
    * Get a {@link Factory} from the domain.
@@ -161,7 +161,7 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <FactoryT extends Factory<ProducibleT>, ProducibleT extends Producible> FactoryT getFactory(
-    Type factoryType);
+      Type factoryType);
 
   /**
    * Get a {@link Factory} from the domain.
@@ -173,8 +173,8 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <FactoryT extends Factory<ProducibleT>, ProducibleT extends Producible> FactoryT getFactory(
-    Type factoryType,
-    Class<? extends Annotation> qualifier);
+      Type factoryType,
+      Class<? extends Annotation> qualifier);
 
   /**
    * Get a {@link Factory} from the domain.
@@ -186,7 +186,7 @@ public interface DomainRegistry {
    * @return an instance of the factory.
    */
   <FactoryT extends Factory<ProducibleT>, ProducibleT extends Producible> FactoryT getFactory(
-    Type factoryType, String qualifier);
+      Type factoryType, String qualifier);
 
   /**
    * Get a {@link Service} from the domain.
@@ -206,7 +206,7 @@ public interface DomainRegistry {
    * @return an instance of the service.
    */
   <ServiceT> ServiceT getService(Class<ServiceT> serviceClass,
-    Class<? extends Annotation> qualifier);
+      Class<? extends Annotation> qualifier);
 
   /**
    * Get a {@link Service} with a qualifier from the domain.

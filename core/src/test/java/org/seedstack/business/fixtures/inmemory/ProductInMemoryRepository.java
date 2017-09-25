@@ -16,7 +16,7 @@ import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
 public class ProductInMemoryRepository extends BaseInMemoryRepository<Product, ProductId> implements
-  ProductRepository {
+    ProductRepository {
 
   @Logging
   private Logger logger;

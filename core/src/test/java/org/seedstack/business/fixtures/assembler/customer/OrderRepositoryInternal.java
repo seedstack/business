@@ -20,7 +20,7 @@ import org.seedstack.business.specification.Specification;
 
 
 public class OrderRepositoryInternal extends BaseRepository<Order, String> implements
-  OrderRepository {
+    OrderRepository {
 
   private static Map<String, Order> orderMap = new ConcurrentHashMap<>();
 

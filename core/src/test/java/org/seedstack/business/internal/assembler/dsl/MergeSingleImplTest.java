@@ -38,20 +38,20 @@ public class MergeSingleImplTest {
     DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
     AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
     Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-      .thenReturn(new OrderDtoAssembler());
+        .thenReturn(new OrderDtoAssembler());
     DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
     context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
     Mockito.when(assemblerRegistry.getTupleAssembler(
-      (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
-      Recipe.class)
+        (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
+        Recipe.class)
     ).thenReturn((Assembler) new RecipeAssembler());
   }
 
   @Test
   public void testToAggregate() {
     MergeSingleImpl<OrderDto> underTest = new MergeSingleImpl<>(context,
-      new OrderDto("1", "lightsaber"));
+        new OrderDto("1", "lightsaber"));
 
     Order order = new Order();
     underTest.into(order);
@@ -79,41 +79,49 @@ public class MergeSingleImplTest {
 
     assertToMethod(underTest.into(Order.class, Customer.class), dto, Order.class, Customer.class);
     assertToMethod(underTest.into(Order.class, Customer.class, Order.class), dto, Order.class,
-      Customer.class, Order.class);
+        Customer.class, Order.class);
     assertToMethod(underTest.into(Order.class, Customer.class, Order.class, Customer.class), dto,
-      Order.class, Customer.class, Order.class, Customer.class);
+        Order.class, Customer.class, Order.class, Customer.class);
     assertToMethod(
-      underTest.into(Order.class, Customer.class, Order.class, Customer.class, Order.class), dto,
-      Order.class, Customer.class, Order.class, Customer.class, Order.class);
+        underTest.into(Order.class, Customer.class, Order.class, Customer.class, Order.class), dto,
+        Order.class, Customer.class, Order.class, Customer.class, Order.class);
     assertToMethod(underTest
-        .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
-          .class),
-      dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
+            .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
+                .class),
+        dto, Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class);
     assertToMethod(underTest
-        .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
-          Order.class), dto, Order.class, Customer.class, Order.class, Customer.class, Order.class,
-      Customer.class, Order.class);
+            .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
+                    .class,
+                Order.class), dto, Order.class, Customer.class, Order.class, Customer.class,
+        Order.class,
+        Customer.class, Order.class);
     assertToMethod(underTest
-        .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
-          Order.class, Customer.class), dto, Order.class, Customer.class, Order.class, Customer
-        .class,
-      Order.class, Customer.class, Order.class, Customer.class);
+            .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
+                    .class,
+                Order.class, Customer.class), dto, Order.class, Customer.class, Order.class,
+        Customer
+            .class,
+        Order.class, Customer.class, Order.class, Customer.class);
     assertToMethod(underTest
-        .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
-          Order.class, Customer.class, Order.class), dto, Order.class, Customer.class, Order.class,
-      Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class);
+            .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
+                    .class,
+                Order.class, Customer.class, Order.class), dto, Order.class, Customer.class,
+        Order.class,
+        Customer.class, Order.class, Customer.class, Order.class, Customer.class, Order.class);
     assertToMethod(underTest
-        .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
-          Order.class, Customer.class, Order.class, Customer.class), dto, Order.class, Customer
-        .class,
-      Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
-      Order.class, Customer.class);
+            .into(Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer
+                    .class,
+                Order.class, Customer.class, Order.class, Customer.class), dto, Order.class,
+        Customer
+            .class,
+        Order.class, Customer.class, Order.class, Customer.class, Order.class, Customer.class,
+        Order.class, Customer.class);
   }
 
   @Test(expected = NullPointerException.class)
   public void testToAggregateClassWithNullValue() {
     new MergeSingleImpl<>(context, new Recipe("customer1", "luke", "order1", "lightsaber"))
-      .into(Customer.class, null);
+        .into(Customer.class, null);
   }
 
   private void assertToMethod(MergeFromRepository<?> to, Object dto, Class<?>... classes) {
@@ -121,15 +129,15 @@ public class MergeSingleImplTest {
       assertMultiple(to, dto, classes);
     } else if (to instanceof MergeSingleTupleFromRepositoryImpl) {
       assertMultiple(
-        Reflection.field("multipleMerger").ofType(MergeMultipleTuplesFromRepositoryImpl.class)
-          .in(to).get(), dto, classes);
+          Reflection.field("multipleMerger").ofType(MergeMultipleTuplesFromRepositoryImpl.class)
+              .in(to).get(), dto, classes);
     }
   }
 
   @SuppressWarnings("unchecked")
   private void assertMultiple(MergeFromRepository<?> to, Object dto, Class<?>[] classes) {
     Class<? extends AggregateRoot<?>>[] aggregateClasses = Reflection.field("aggregateClasses")
-      .ofType(Class[].class).in(to).get();
+        .ofType(Class[].class).in(to).get();
     Assertions.assertThat(aggregateClasses).isEqualTo(classes);
     Stream<Object> stream = Reflection.field("dtoStream").ofType(Stream.class).in(to).get();
     Assertions.assertThat(stream.findFirst()).contains(dto);

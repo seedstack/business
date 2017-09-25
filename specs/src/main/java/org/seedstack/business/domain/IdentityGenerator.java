@@ -27,5 +27,5 @@ public interface IdentityGenerator<IdT> {
    * @return the generated identifier.
    */
   <EntityT extends Entity<IdT>> IdT generate(Class<EntityT> entityClass,
-    Map<String, String> entityProperties);
+      Map<String, String> entityProperties);
 }

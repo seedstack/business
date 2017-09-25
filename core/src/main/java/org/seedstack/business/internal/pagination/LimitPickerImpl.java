@@ -13,8 +13,10 @@ import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.pagination.dsl.LimitPicker;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 
-class LimitPickerImpl<SliceT extends Slice<AggregateRootT>, AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  SpecificationPickerImpl<SliceT, AggregateRootT, IdT> implements LimitPicker<SliceT, AggregateRootT, IdT> {
+class LimitPickerImpl<SliceT extends Slice<AggregateRootT>, AggregateRootT extends
+    AggregateRoot<IdT>, IdT> extends
+    SpecificationPickerImpl<SliceT, AggregateRootT, IdT> implements
+    LimitPicker<SliceT, AggregateRootT, IdT> {
 
   private final PaginatorContext<AggregateRootT, IdT> context;
 

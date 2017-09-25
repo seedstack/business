@@ -26,8 +26,8 @@ import org.seedstack.business.pagination.Page;
 import org.seedstack.business.spi.DtoInfoResolver;
 
 /**
- * Implementation of {@link FluentAssembler}. <p> It uses a Guice provider to get the DSL entry point. Each time you
- * call the {@code assemble()} method a new DSL instance is provided. </p>
+ * Implementation of {@link FluentAssembler}. <p> It uses a Guice provider to get the DSL entry
+ * point. Each time you call the {@code assemble()} method a new DSL instance is provided. </p>
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 
@@ -35,31 +35,32 @@ public class FluentAssemblerImpl implements FluentAssembler {
 
   @Inject
   public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry,
-    Set<DtoInfoResolver> dtoInfoResolvers) {
+      Set<DtoInfoResolver> dtoInfoResolvers) {
     context = new Context(domainRegistry, registry, dtoInfoResolvers);
   }
 
   @Override
   public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleSingleWithQualifier assemble(
-    AggregateRootT aggregateRoot) {
+      AggregateRootT aggregateRoot) {
     return new AssembleSingleImpl<>(context, aggregateRoot, null);
   }
 
   @Override
   public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
-    Iterable<AggregateRootT> iterable) {
-    return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false), null);
+      Iterable<AggregateRootT> iterable) {
+    return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false),
+        null);
   }
 
   @Override
   public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssembleMultipleWithQualifier assemble(
-    Stream<AggregateRootT> stream) {
+      Stream<AggregateRootT> stream) {
     return new AssembleMultipleImpl<>(context, stream, null);
   }
 
   @Override
   public <AggregateRootT extends AggregateRoot<IdT>, IdT> AssemblePageWithQualifier assemble(
-    Page<AggregateRootT> page) {
+      Page<AggregateRootT> page) {
     return new AssemblePageImpl<>(context, page, null);
   }
 
@@ -69,13 +70,16 @@ public class FluentAssemblerImpl implements FluentAssembler {
   }
 
   @Override
-  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<TupleT> stream) {
+  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(
+      Stream<TupleT> stream) {
     return new AssembleMultipleImpl<>(context, null, stream);
   }
 
   @Override
-  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<TupleT> iterable) {
-    return new AssembleMultipleImpl<>(context, null, StreamSupport.stream(iterable.spliterator(), false));
+  public <TupleT extends Tuple> AssembleMultipleWithQualifier assembleTuples(
+      Iterable<TupleT> iterable) {
+    return new AssembleMultipleImpl<>(context, null,
+        StreamSupport.stream(iterable.spliterator(), false));
   }
 
   @Override

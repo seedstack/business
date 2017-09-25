@@ -41,7 +41,7 @@ public class AssemblerRegistryIT {
   @Test
   public void testAssemblerOfWithProvidedAssembler() {
     Assembler<?, ?> assembler = registry
-      .getAssembler(MyAggregateRoot.class, MyUnrestrictedDto.class);
+        .getAssembler(MyAggregateRoot.class, MyUnrestrictedDto.class);
     Assertions.assertThat(assembler).isNotNull();
     Assertions.assertThat(assembler).isInstanceOf(BaseAssembler.class);
     Assertions.assertThat(assembler).isInstanceOf(MyAssembler.class);
@@ -53,7 +53,7 @@ public class AssemblerRegistryIT {
   @Test
   public void testAssemblerOfWithDefaultAssembler() {
     Assembler<?, ?> assembler = registry
-      .getAssembler(Order.class, OrderDto.class, Names.named("special"));
+        .getAssembler(Order.class, OrderDto.class, Names.named("special"));
     Assertions.assertThat(assembler).isNotNull();
     Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
     Assertions.assertThat(assembler).isInstanceOf(DefaultSpecialAssembler.class);
@@ -66,7 +66,7 @@ public class AssemblerRegistryIT {
   @SuppressWarnings("unchecked")
   public void testAssemblerOfTuple() {
     Class<? extends AggregateRoot<?>>[] aggregateRootTuple = new Class[]{Order.class,
-      Customer.class};
+        Customer.class};
     Assembler<?, ?> assembler = registry.getTupleAssembler(aggregateRootTuple, OrderDto.class);
     Assertions.assertThat(assembler).isNotNull();
   }
@@ -74,7 +74,7 @@ public class AssemblerRegistryIT {
   @Test
   public void testAssemblerOfWithAutomaticAssembler() {
     Assembler<?, ?> assembler = registry
-      .getAssembler(Order.class, OrderDto.class, Names.named("custom"));
+        .getAssembler(Order.class, OrderDto.class, Names.named("custom"));
     Assertions.assertThat(assembler).isNotNull();
     Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
     Assertions.assertThat(assembler).isNotInstanceOf(DefaultSpecialAssembler.class);
@@ -83,7 +83,7 @@ public class AssemblerRegistryIT {
   }
 
   static abstract class SpecialAssembler<A extends AggregateRoot<?>, D> extends
-    BaseAssembler<A, D> {
+      BaseAssembler<A, D> {
 
   }
 
@@ -104,7 +104,7 @@ public class AssemblerRegistryIT {
   @GenericImplementation
   @Named("special")
   public static class DefaultSpecialAssembler<A extends AggregateRoot<?>, D> extends
-    SpecialAssembler<A, D> {
+      SpecialAssembler<A, D> {
 
     @Override
     public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {

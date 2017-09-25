@@ -93,13 +93,13 @@ public class OverridingIT extends AbstractSeedIT {
   }
 
   static class SomeNormalRepository extends BaseInMemoryRepository<SomeAggregate, String> implements
-    SomeRepository {
+      SomeRepository {
 
   }
 
   @Overriding
   static class SomeTestRepository extends BaseInMemoryRepository<SomeAggregate, String> implements
-    SomeRepository {
+      SomeRepository {
 
   }
 

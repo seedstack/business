@@ -15,8 +15,9 @@ import org.seedstack.business.assembler.dsl.AssembleSingle;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
-class AssembleSingleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple> implements
-  AssembleSingleWithQualifier {
+class AssembleSingleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple>
+    implements
+    AssembleSingleWithQualifier {
 
   private final Context context;
   private final AssembleMultipleImpl<AggregateRootT, IdT, TupleT> multipleAssembler;
@@ -24,13 +25,14 @@ class AssembleSingleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT 
   AssembleSingleImpl(Context context, AggregateRootT aggregateRoot, TupleT tuple) {
     this.context = context;
     this.multipleAssembler = new AssembleMultipleImpl<>(context,
-      aggregateRoot == null ? null : Stream.of(aggregateRoot), tuple == null ? null : Stream.of(tuple));
+        aggregateRoot == null ? null : Stream.of(aggregateRoot),
+        tuple == null ? null : Stream.of(tuple));
   }
 
   @Override
   public <D> D to(Class<D> dtoClass) {
     return multipleAssembler.toStreamOf(dtoClass).findFirst()
-      .orElseThrow(() -> new IllegalStateException("Nothing to assemble"));
+        .orElseThrow(() -> new IllegalStateException("Nothing to assemble"));
   }
 
   @Override

@@ -38,7 +38,7 @@ public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>,
    *
    * @param startingOffset the index of first object that will be returned.
    * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-   *   objects returned.
+   *     objects returned.
    */
   LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> byOffset(long startingOffset);
 
@@ -47,7 +47,7 @@ public interface PaginationTypePicker<AggregateRootT extends AggregateRoot<IdT>,
    *
    * @param attributeName the attribute on which the lessThan/greaterThan comparison will be made.
    * @return the next operation of the paginator DSL, allowing to specify the value used as
-   *   boundary.
+   *     boundary.
    */
   KeyValuePicker<AggregateRootT, IdT> byAttribute(String attributeName);
 }

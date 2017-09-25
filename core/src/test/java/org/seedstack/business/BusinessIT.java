@@ -69,7 +69,7 @@ public class BusinessIT extends AbstractSeedIT {
     assertThat(holder.customerRepo).isNotNull();
     assertThat(holder.customerFactory).isNotNull();
     assertThat(CustomerFactoryDefault.class.isAssignableFrom(holder.customerFactory.getClass()))
-      .isTrue();
+        .isTrue();
 
     assertThat(holder.orderRepo).isNotNull();
     assertThat(holder.orderFactory).isNotNull();
@@ -78,30 +78,30 @@ public class BusinessIT extends AbstractSeedIT {
     assertThat(holder.productRepo).isNotNull();
     assertThat(holder.productFactory).isNotNull();
     assertThat(InternalProductFactory.class.isAssignableFrom(holder.productFactory.getClass()))
-      .isTrue();
+        .isTrue();
     assertThat(holder.productNamePolicy).isNotNull();
     assertThat(
-      InternalProductNamePolicy.class.isAssignableFrom(holder.productNamePolicy.getClass()))
-      .isTrue();
+        InternalProductNamePolicy.class.isAssignableFrom(holder.productNamePolicy.getClass()))
+        .isTrue();
 
     // Service
     assertThat(holder.indexService).isNotNull();
     assertThat(IndexServiceInternal.class.isAssignableFrom(holder.indexService.getClass()))
-      .isTrue();
+        .isTrue();
     assertThat(holder.genericService).isNotNull();
     assertThat(GenericServiceInternal.class.isAssignableFrom(holder.genericService.getClass()))
-      .isTrue();
+        .isTrue();
 
     // Service
     assertThat(holder.customerService).isNotNull();
     assertThat(CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerService.getClass()))
-      .isTrue();
+        .isTrue();
 
     // Meta-annotated service
     assertThat(holder.customerDomainService).isNotNull();
     assertThat(
-      CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerDomainService.getClass()))
-      .isTrue();
+        CustomerSampleServiceImpl.class.isAssignableFrom(holder.customerDomainService.getClass()))
+        .isTrue();
   }
 
   @Test

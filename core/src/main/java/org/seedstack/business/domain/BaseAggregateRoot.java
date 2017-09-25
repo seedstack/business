@@ -9,9 +9,10 @@
 package org.seedstack.business.domain;
 
 /**
- * An helper base class that can be extended to create a domain aggregate root. If extending this base class is not
- * desirable, you can instead do one of the following: <ul> <li>Implement {@link AggregateRoot},</li> <li>Annotate your
- * class with {@link DomainAggregateRoot} (but this limits the ability to use framework features).</li> </ul>
+ * An helper base class that can be extended to create a domain aggregate root. If extending this
+ * base class is not desirable, you can instead do one of the following: <ul> <li>Implement {@link
+ * AggregateRoot},</li> <li>Annotate your class with {@link DomainAggregateRoot} (but this limits
+ * the ability to use framework features).</li> </ul>
  *
  * @param <IdT> The type of the aggregate root identifier.
  */

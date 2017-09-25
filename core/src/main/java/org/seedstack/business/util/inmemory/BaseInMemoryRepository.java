@@ -23,25 +23,28 @@ import org.seedstack.business.domain.SortOption;
 import org.seedstack.business.specification.Specification;
 
 /**
- * An helper base class that can be extended to create an in-memory implementation of a {@link Repository}. It is backed
- * by a {@link ConcurrentHashMap} per aggregate root class.
+ * An helper base class that can be extended to create an in-memory implementation of a {@link
+ * Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root class.
  */
 public abstract class BaseInMemoryRepository<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  BaseRepository<AggregateRootT, IdT> {
+    BaseRepository<AggregateRootT, IdT> {
 
   private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
   @SuppressWarnings("unchecked")
   private final Map<IdT, AggregateRootT> bucket = (Map<IdT, AggregateRootT>) buckets
-    .computeIfAbsent(getAggregateRootClass(), key -> new ConcurrentHashMap<IdT, AggregateRootT>());
+      .computeIfAbsent(getAggregateRootClass(),
+          key -> new ConcurrentHashMap<IdT, AggregateRootT>());
 
   /**
-   * Creates a base in-memory repository. Actual classes managed by the repository are determined by reflection.
+   * Creates a base in-memory repository. Actual classes managed by the repository are determined by
+   * reflection.
    */
   protected BaseInMemoryRepository() {
   }
 
   /**
-   * Creates a base in-memory repository. Actual classes managed by the repository are specified explicitly.
+   * Creates a base in-memory repository. Actual classes managed by the repository are specified
+   * explicitly.
    *
    * @param aggregateRootClass the actual aggregate root class.
    * @param idClass            the actual aggregate identifier class.
@@ -56,7 +59,8 @@ public abstract class BaseInMemoryRepository<AggregateRootT extends AggregateRoo
   }
 
   @Override
-  public Stream<AggregateRootT> get(Specification<AggregateRootT> specification, Option... options) {
+  public Stream<AggregateRootT> get(Specification<AggregateRootT> specification,
+      Option... options) {
     Stream<AggregateRootT> stream = bucket.values().stream().filter(specification.asPredicate());
     for (Option option : options) {
       if (option instanceof OffsetOption) {

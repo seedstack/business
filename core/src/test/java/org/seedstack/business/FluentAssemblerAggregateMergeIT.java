@@ -71,7 +71,7 @@ public class FluentAssemblerAggregateMergeIT {
     Order aggregateRoot = null;
     try {
       aggregateRoot = fluently.merge(new OrderDto("1", "light saber")).into(Order.class)
-        .fromRepository().orFail();
+          .fromRepository().orFail();
     } catch (AggregateNotFoundException e) {
       fail();
     }
@@ -116,7 +116,7 @@ public class FluentAssemblerAggregateMergeIT {
     OrderDto dto2 = new OrderDto("2", "light saber", PRICE);
 
     List<Order> aggregateRoots = fluently.merge(Lists.newArrayList(dto1, dto2)).into(Order.class)
-      .fromRepository().orFromFactory().asList();
+        .fromRepository().orFromFactory().asList();
 
     Assertions.assertThat(aggregateRoots).hasSize(2);
     Assertions.assertThat(aggregateRoots.get(0).getId()).isEqualTo("1");

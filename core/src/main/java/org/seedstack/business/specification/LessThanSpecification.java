@@ -9,12 +9,13 @@
 package org.seedstack.business.specification;
 
 /**
- * A specification satisfied only when the candidate value is less than the expected value according to {@link
- * Comparable#compareTo(Object)}.
+ * A specification satisfied only when the candidate value is less than the expected value according
+ * to {@link Comparable#compareTo(Object)}.
  *
  * @param <T> the type of the candidate object the specification applies to.
  */
-public class LessThanSpecification<T extends Comparable<? super T>> extends ComparableSpecification<T> {
+public class LessThanSpecification<T extends Comparable<? super T>> extends
+    ComparableSpecification<T> {
 
   /**
    * Creates a less than specification.

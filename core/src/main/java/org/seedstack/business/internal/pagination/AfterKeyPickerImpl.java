@@ -14,7 +14,8 @@ import org.seedstack.business.pagination.dsl.KeyValuePicker;
 import org.seedstack.business.pagination.dsl.LimitPicker;
 
 class AfterKeyPickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  LimitPickerImpl<Slice<AggregateRootT>, AggregateRootT, IdT> implements KeyValuePicker<AggregateRootT, IdT> {
+    LimitPickerImpl<Slice<AggregateRootT>, AggregateRootT, IdT> implements
+    KeyValuePicker<AggregateRootT, IdT> {
 
   private final PaginatorContext<AggregateRootT, IdT> context;
 
@@ -24,13 +25,17 @@ class AfterKeyPickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
   }
 
   @Override
-  public <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> before(T value) {
+  public <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT,
+      IdT> before(
+      T value) {
     this.context.setBeforeAttributeValue(value);
     return this;
   }
 
   @Override
-  public <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT, IdT> after(T value) {
+  public <T extends Comparable<? super T>> LimitPicker<Slice<AggregateRootT>, AggregateRootT,
+      IdT> after(
+      T value) {
     this.context.setAfterAttributeValue(value);
     return this;
   }

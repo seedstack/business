@@ -15,8 +15,8 @@ import org.seedstack.business.specification.dsl.IdentityPicker;
 import org.seedstack.business.specification.dsl.OperatorPicker;
 
 class IdentityPickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, SelectorT extends
-  AggregateSelector<AggregateRootT, IdT, SelectorT>> implements
-  IdentityPicker<AggregateRootT, IdT, SelectorT> {
+    AggregateSelector<AggregateRootT, IdT, SelectorT>> implements
+    IdentityPicker<AggregateRootT, IdT, SelectorT> {
 
   private final SpecificationBuilderContext<AggregateRootT, SelectorT> context;
 

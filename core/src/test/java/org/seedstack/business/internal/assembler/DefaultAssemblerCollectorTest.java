@@ -41,11 +41,11 @@ public class DefaultAssemblerCollectorTest {
   @Test
   public void testCollect() {
     Collection<BindingStrategy> strategies = underTest
-      .collect(Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
+        .collect(Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
     Assertions.assertThat(strategies).hasSize(2); // 2 default assembler implementation
     Collection<Type[]> typeVariables = Reflection.field("constructorParams")
-      .ofType(new TypeRef<Collection<Type[]>>() {
-      }).in(strategies.iterator().next()).get();
+        .ofType(new TypeRef<Collection<Type[]>>() {
+        }).in(strategies.iterator().next()).get();
     Assertions.assertThat(typeVariables).hasSize(3); // 3 dtos
   }
 
@@ -84,7 +84,7 @@ public class DefaultAssemblerCollectorTest {
   }
 
   private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends
-    BaseAssembler<A, D> {
+      BaseAssembler<A, D> {
 
     @Override
     public D createDtoFromAggregate(A sourceAggregate) {
@@ -101,7 +101,7 @@ public class DefaultAssemblerCollectorTest {
   }
 
   private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends
-    BaseAssembler<A, D> {
+      BaseAssembler<A, D> {
 
     @Override
     public D createDtoFromAggregate(A sourceAggregate) {

@@ -40,7 +40,8 @@ public class IdentityResolver implements AnnotationResolver<Class<?>, Identity> 
    * @return the {@link Field} wrapped in an {@link Optional}.
    */
   public Optional<Field> resolveField(Class<?> someClass) {
-    return Classes.from(someClass).traversingSuperclasses().fields().filter(elementAnnotatedWith(Identity.class, true))
-      .findFirst();
+    return Classes.from(someClass).traversingSuperclasses().fields()
+        .filter(elementAnnotatedWith(Identity.class, true))
+        .findFirst();
   }
 }

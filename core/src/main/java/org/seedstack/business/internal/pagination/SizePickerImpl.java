@@ -14,7 +14,8 @@ import org.seedstack.business.pagination.dsl.SizePicker;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 
 class SizePickerImpl<AggregateRootT extends AggregateRoot<IdT>, IdT> extends
-  SpecificationPickerImpl<Page<AggregateRootT>, AggregateRootT, IdT> implements SizePicker<AggregateRootT, IdT> {
+    SpecificationPickerImpl<Page<AggregateRootT>, AggregateRootT, IdT> implements
+    SizePicker<AggregateRootT, IdT> {
 
   private final PaginatorContext<AggregateRootT, IdT> context;
 

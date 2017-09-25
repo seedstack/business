@@ -28,19 +28,21 @@ import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.util.Tuples;
 
 
-class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple> implements
-  AssembleMultipleWithQualifier {
+class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, TupleT extends Tuple>
+    implements
+    AssembleMultipleWithQualifier {
 
   private final Context context;
   private final Stream<AggregateRootT> aggregates;
   private final Stream<TupleT> aggregateTuples;
 
-  AssembleMultipleImpl(Context context, Stream<AggregateRootT> aggregates, Stream<TupleT> aggregateTuples) {
+  AssembleMultipleImpl(Context context, Stream<AggregateRootT> aggregates,
+      Stream<TupleT> aggregateTuples) {
     this.context = checkNotNull(context, "Context must not be null");
     checkArgument(aggregates != null || aggregateTuples != null,
-      "Cannot assemble null");
+        "Cannot assemble null");
     checkArgument(aggregates == null || aggregateTuples == null,
-      "Cannot specify both aggregates and tuples to assemble");
+        "Cannot specify both aggregates and tuples to assemble");
     this.aggregates = aggregates;
     this.aggregateTuples = aggregateTuples;
   }
@@ -49,17 +51,20 @@ class AssembleMultipleImpl<AggregateRootT extends AggregateRoot<IdT>, IdT, Tuple
   public <DtoT> Stream<DtoT> toStreamOf(Class<DtoT> dtoClass) {
     if (aggregates != null) {
       return aggregates.map(
-        aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass).createDtoFromAggregate(aggregate));
+          aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass)
+              .createDtoFromAggregate(aggregate));
     } else if (aggregateTuples != null) {
       return aggregateTuples
-        .map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass).createDtoFromAggregate(tuple));
+          .map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass)
+              .createDtoFromAggregate(tuple));
     }
     throw new IllegalStateException("Nothing to assemble");
   }
 
   @Override
-  public <DtoT, CollectionT extends Collection<DtoT>> CollectionT toCollectionOf(Class<DtoT> dtoClass,
-    Supplier<CollectionT> collectionSupplier) {
+  public <DtoT, CollectionT extends Collection<DtoT>> CollectionT toCollectionOf(
+      Class<DtoT> dtoClass,
+      Supplier<CollectionT> collectionSupplier) {
     CollectionT collection = collectionSupplier.get();
     toStreamOf(dtoClass).forEach(collection::add);
     return collection;

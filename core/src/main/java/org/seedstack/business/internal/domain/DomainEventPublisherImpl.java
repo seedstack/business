@@ -24,14 +24,17 @@ import org.slf4j.LoggerFactory;
 class DomainEventPublisherImpl implements DomainEventPublisher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
-  private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context = ThreadLocal
-    .withInitial(ArrayListMultimap::create);
-  private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent;
+  private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context =
+      ThreadLocal
+      .withInitial(ArrayListMultimap::create);
+  private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
+      eventHandlerClassesByEvent;
   private final Injector injector;
 
   @Inject
   DomainEventPublisherImpl(Injector injector,
-    Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent) {
+      Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
+          eventHandlerClassesByEvent) {
     this.injector = injector;
     this.eventHandlerClassesByEvent = eventHandlerClassesByEvent;
   }
@@ -49,8 +52,9 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
         try {
           notifyHandlers(eventClass, event);
         } catch (Exception e) {
-          throw BusinessException.wrap(e, BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
-            .put("event", eventClass.getName());
+          throw BusinessException
+              .wrap(e, BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
+              .put("event", eventClass.getName());
         } finally {
           if (isFirstCall) {
             context.remove();
@@ -62,13 +66,15 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
 
   private void checkCyclicCall(Class<? extends DomainEvent> eventClass, DomainEvent domainEvent) {
     if (context.get().get(eventClass).contains(domainEvent)) {
-      throw BusinessException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED).put("event", eventClass);
+      throw BusinessException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED)
+          .put("event", eventClass);
     }
   }
 
   @SuppressWarnings("unchecked")
   private <E extends DomainEvent> void notifyHandlers(Class<? extends E> eventClass, E event) {
-    Collection<Class<? extends DomainEventHandler>> eventHandlers = eventHandlerClassesByEvent.get(eventClass);
+    Collection<Class<? extends DomainEventHandler>> eventHandlers = eventHandlerClassesByEvent
+        .get(eventClass);
     for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlers) {
       LOGGER.debug("Notifying event handler {}", eventHandlerClass.getName());
       DomainEventHandler domainEventHandler = injector.getInstance(eventHandlerClass);

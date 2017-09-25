@@ -14,12 +14,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Base class for specifications that compare their expected and candidate value. Those values must implement {@link
- * Comparable}.
+ * Base class for specifications that compare their expected and candidate value. Those values must
+ * implement {@link Comparable}.
  *
  * @param <T> the type of the compared value.
  */
-public abstract class ComparableSpecification<T extends Comparable<? super T>> implements Specification<T> {
+public abstract class ComparableSpecification<T extends Comparable<? super T>> implements
+    Specification<T> {
 
   private static final Set<Class<?>> convertibleToLong = new HashSet<>();
 
@@ -38,7 +39,8 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
    * Creates a comparable specification.
    *
    * @param expectedValue  the value used to do the comparison against.
-   * @param expectedResult the expected result of the comparison done with {@link Comparable#compareTo(Object)}.
+   * @param expectedResult the expected result of the comparison done with {@link
+   *                       Comparable#compareTo(Object)}.
    */
   protected ComparableSpecification(T expectedValue, int expectedResult) {
     checkNotNull(expectedValue, "Expected value cannot be null");

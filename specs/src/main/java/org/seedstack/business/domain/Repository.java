@@ -86,7 +86,7 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
    *
    * @param specification the specification.
    * @return true if at least one aggregate satisfying the specification is present, false
-   *   otherwise.
+   *     otherwise.
    */
   default boolean contains(Specification<AggregateRootT> specification) {
     return count(specification) > 0;
@@ -162,12 +162,12 @@ public interface Repository<AggregateRootT extends AggregateRoot<IdT>, IdT> {
     long removedCount = remove(new IdentitySpecification<>(id));
     if (removedCount == 0L) {
       throw new AggregateNotFoundException(
-        "Non-existent aggregate " + getAggregateRootClass().getSimpleName() + " identified with "
-          + id + " cannot be removed");
+          "Non-existent aggregate " + getAggregateRootClass().getSimpleName() + " identified with "
+              + id + " cannot be removed");
     } else if (removedCount > 1L) {
       throw new IllegalStateException(
-        "More than one aggregate " + getAggregateRootClass().getSimpleName() + " identified with "
-          + id + " have been removed");
+          "More than one aggregate " + getAggregateRootClass().getSimpleName() + " identified with "
+              + id + " have been removed");
     }
   }
 

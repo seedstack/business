@@ -21,7 +21,7 @@ import org.seedstack.business.specification.Specification;
  * @param <IdT>            the aggregate root identifier type.
  */
 public interface SpecificationPicker<SliceT extends Slice<AggregateRootT>, AggregateRootT extends
-  AggregateRoot<IdT>, IdT> {
+    AggregateRoot<IdT>, IdT> {
 
   /**
    * Restricts objects coming from the repository to ones matching the specification. This is a

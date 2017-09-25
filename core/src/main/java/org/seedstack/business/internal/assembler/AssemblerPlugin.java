@@ -41,7 +41,8 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
   private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
 
   private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
-  private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
+  private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new
+      HashMap<>();
   private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
   @Override
@@ -52,35 +53,39 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
   @Override
   public Collection<ClasspathScanRequest> classpathScanRequests() {
     return classpathScanRequestBuilder().specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
-      .specification(BusinessSpecifications.DEFAULT_ASSEMBLER).specification(BusinessSpecifications.DTO_INFO_RESOLVER)
-      .specification(BusinessSpecifications.DTO_OF).build();
+        .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
+        .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
+        .specification(BusinessSpecifications.DTO_OF).build();
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})
   @Override
   public InitState initialize(InitContext initContext) {
     streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class)
-      .forEach(assemblerClasses::add);
+        .forEach(assemblerClasses::add);
     LOGGER.debug("Assemblers => {}", assemblerClasses);
 
     streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class)
-      .forEach(defaultAssemblerClasses::add);
+        .forEach(defaultAssemblerClasses::add);
     LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
-    streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
+    streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class)
+        .forEach(dtoOfClasses::add);
     LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
 
     streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class)
-      .forEach(dtoInfoResolverClasses::add);
+        .forEach(dtoInfoResolverClasses::add);
     sortByPriority(dtoInfoResolverClasses);
     LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
 
     // Add bindings for explicit assemblers
     bindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, false));
-    overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
+    overridingBindings
+        .putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
 
     // Then add bindings for default assemblers
-    bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
+    bindingStrategies
+        .addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
 
     return InitState.INITIALIZED;
   }

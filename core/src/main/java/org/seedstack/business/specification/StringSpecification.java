@@ -11,8 +11,8 @@ package org.seedstack.business.specification;
 import com.google.common.base.CharMatcher;
 
 /**
- * Base class for specifications that compare strings. Allows to specify string-related comparison options like trimming
- * or case sensitivity.
+ * Base class for specifications that compare strings. Allows to specify string-related comparison
+ * options like trimming or case sensitivity.
  */
 public abstract class StringSpecification implements Specification<String> {
 
@@ -88,7 +88,8 @@ public abstract class StringSpecification implements Specification<String> {
     /**
      * Returns if the comparison should ignore leading and trailing whitespace.
      *
-     * @return true if the comparison should ignore leading and trailing whitespace, false otherwise.
+     * @return true if the comparison should ignore leading and trailing whitespace, false
+     *     otherwise.
      */
     boolean isTrimmed();
 

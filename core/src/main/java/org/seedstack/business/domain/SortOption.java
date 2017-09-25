@@ -122,7 +122,8 @@ public class SortOption implements Repository.Option {
         return false;
       }
       SortedAttribute sortedAttribute = (SortedAttribute) o;
-      return direction == sortedAttribute.direction && Objects.equals(attribute, sortedAttribute.attribute);
+      return direction == sortedAttribute.direction && Objects
+          .equals(attribute, sortedAttribute.attribute);
     }
 
     @Override

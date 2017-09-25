@@ -32,7 +32,8 @@ class IdentityInterceptor implements MethodInterceptor {
   public Object invoke(MethodInvocation invocation) throws Throwable {
     Object object = invocation.proceed();
     if (object instanceof Entity) {
-      LOGGER.trace("Invoking identity service to identify an entity of class {}", object.getClass());
+      LOGGER
+          .trace("Invoking identity service to identify an entity of class {}", object.getClass());
       return identityService.identify(((Entity<?>) object));
     } else {
       return object;

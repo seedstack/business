@@ -19,7 +19,7 @@ import org.seedstack.business.domain.AggregateRoot;
  * @param <SelectorT> the type of the selector.
  */
 public interface AggregateSelector<A extends AggregateRoot<I>, I,
-  SelectorT extends AggregateSelector<A, I, SelectorT>> extends PropertySelector<A, SelectorT> {
+    SelectorT extends AggregateSelector<A, I, SelectorT>> extends PropertySelector<A, SelectorT> {
 
   /**
    * Selects the identity of the aggregate to be the subject of a specification.

@@ -60,70 +60,70 @@ public class FluentAssemblerBenchmark extends AbstractBenchmark {
   @Benchmark
   public void assembleList() {
     fluentAssembler.assemble(orderList)
-      .with(Names.named("noop"))
-      .toStreamOf(OrderDto.class)
-      .parallel()
-      .collect(Collectors.toList());
+        .with(Names.named("noop"))
+        .toStreamOf(OrderDto.class)
+        .parallel()
+        .collect(Collectors.toList());
   }
 
   @Benchmark
   public void mergeAggregateFromFactory() {
     fluentAssembler.merge(orderDto)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromFactory();
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromFactory();
   }
 
   @Benchmark
   public void mergeListFromFactory() {
     fluentAssembler.merge(orderDtoList)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromFactory()
-      .asStream()
-      .parallel()
-      .collect(Collectors.toList());
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromFactory()
+        .asStream()
+        .parallel()
+        .collect(Collectors.toList());
   }
 
   @Benchmark
   public void mergeAggregateFromRepository() {
     fluentAssembler.merge(orderDto)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromRepository()
-      .orFail();
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromRepository()
+        .orFail();
   }
 
   @Benchmark
   public void mergeListFromRepository() {
     fluentAssembler.merge(orderDtoList)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromRepository()
-      .orFail()
-      .asStream()
-      .parallel()
-      .collect(Collectors.toList());
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromRepository()
+        .orFail()
+        .asStream()
+        .parallel()
+        .collect(Collectors.toList());
   }
 
   @Benchmark
   public void mergeAggregateFromRepositoryOrFactory() {
     fluentAssembler.merge(orderDto)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromRepository()
-      .orFromFactory();
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromRepository()
+        .orFromFactory();
   }
 
   @Benchmark
   public void mergeListFromRepositoryOrFactory() {
     fluentAssembler.merge(orderDtoList)
-      .with(Names.named("noop"))
-      .into(Order.class)
-      .fromRepository()
-      .orFromFactory()
-      .asStream()
-      .parallel()
-      .collect(Collectors.toList());
+        .with(Names.named("noop"))
+        .into(Order.class)
+        .fromRepository()
+        .orFromFactory()
+        .asStream()
+        .parallel()
+        .collect(Collectors.toList());
   }
 }

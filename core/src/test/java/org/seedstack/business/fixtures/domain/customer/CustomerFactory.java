@@ -16,7 +16,7 @@ public interface CustomerFactory extends Factory<Customer> {
   Customer createNewCustomer(String entityId, String firstName, String lastName);
 
   Customer createNewCustomer(String entityId, String firstName, String lastName, String addressType,
-    String line1, String line2, String zipCode, String country);
+      String line1, String line2, String zipCode, String country);
 
 }
 

@@ -50,7 +50,7 @@ public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends BaseAs
   private <T> T hodorify(Class<?> clazz, T instance) {
     for (Method method : clazz.getDeclaredMethods()) {
       if (method.getName().startsWith("set") && method.getParameterTypes().length == 1
-        && method.getParameterTypes()[0] == String.class) {
+          && method.getParameterTypes()[0] == String.class) {
         try {
           method.invoke(instance, "hodor");
         } catch (Exception e) {

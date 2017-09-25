@@ -44,7 +44,7 @@ public class IdentityServiceIT {
       Assertions.fail("no exception occured");
     } catch (BusinessException e) {
       Assertions.assertThat(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
-        .isEqualTo(e.getErrorCode());
+          .isEqualTo(e.getErrorCode());
     }
   }
 
@@ -56,7 +56,7 @@ public class IdentityServiceIT {
       Assertions.fail("no exception occured");
     } catch (BusinessException e) {
       Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
-        .isEqualTo(e.getErrorCode());
+          .isEqualTo(e.getErrorCode());
     }
   }
 
@@ -69,7 +69,7 @@ public class IdentityServiceIT {
       Assertions.fail("no exception occured");
     } catch (BusinessException e) {
       Assertions.assertThat(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
-        .isEqualTo(e.getErrorCode());
+          .isEqualTo(e.getErrorCode());
     }
   }
 }

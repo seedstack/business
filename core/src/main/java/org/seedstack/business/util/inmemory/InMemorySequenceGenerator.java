@@ -16,7 +16,8 @@ import org.seedstack.business.domain.SequenceGenerator;
 
 
 /**
- * Identity generator that generates {@link Long} numbers by using an every-incrementing {@link AtomicLong}.
+ * Identity generator that generates {@link Long} numbers by using an every-incrementing {@link
+ * AtomicLong}.
  */
 @Named("inMemorySequence")
 public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
@@ -24,7 +25,8 @@ public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
   private static final AtomicLong sequence = new AtomicLong(1L);
 
   @Override
-  public <E extends Entity<Long>> Long generate(Class<E> entityClass, Map<String, String> entityProperties) {
+  public <E extends Entity<Long>> Long generate(Class<E> entityClass,
+      Map<String, String> entityProperties) {
     return sequence.incrementAndGet();
   }
 }

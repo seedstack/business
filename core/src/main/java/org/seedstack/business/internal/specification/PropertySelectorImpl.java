@@ -15,7 +15,8 @@ import org.seedstack.business.specification.dsl.PropertySelector;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
 import org.seedstack.business.specification.dsl.TerminalOperation;
 
-class PropertySelectorImpl<T, SelectorT extends BaseSelector<T, SelectorT>> implements PropertySelector<T, SelectorT> {
+class PropertySelectorImpl<T, SelectorT extends BaseSelector<T, SelectorT>> implements
+    PropertySelector<T, SelectorT> {
 
   protected final SpecificationBuilderContext<T, SelectorT> context;
 

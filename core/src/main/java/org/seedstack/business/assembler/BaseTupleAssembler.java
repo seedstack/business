@@ -13,12 +13,14 @@ import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.shed.reflect.Classes;
 
 /**
- * An helper base class that can be extended to create an assembler between a tuple of aggregates and a DTO.
+ * An helper base class that can be extended to create an assembler between a tuple of aggregates
+ * and a DTO.
  *
  * @param <TupleT> the tuple of aggregates type.
  * @param <DtoT>   the dto type.
  */
-public abstract class BaseTupleAssembler<TupleT extends Tuple, DtoT> implements Assembler<TupleT, DtoT> {
+public abstract class BaseTupleAssembler<TupleT extends Tuple, DtoT> implements
+    Assembler<TupleT, DtoT> {
 
   private final Class<DtoT> dtoClass;
 
@@ -27,7 +29,8 @@ public abstract class BaseTupleAssembler<TupleT extends Tuple, DtoT> implements 
    */
   @SuppressWarnings("unchecked")
   public BaseTupleAssembler() {
-    this.dtoClass = (Class<DtoT>) BusinessUtils.resolveGenerics(BaseTupleAssembler.class, getClass())[1];
+    this.dtoClass = (Class<DtoT>) BusinessUtils
+        .resolveGenerics(BaseTupleAssembler.class, getClass())[1];
   }
 
   /**

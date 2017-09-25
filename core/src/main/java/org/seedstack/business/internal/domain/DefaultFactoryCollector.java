@@ -33,36 +33,43 @@ class DefaultFactoryCollector {
     this.bindings = bindings;
   }
 
-  Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses, Collection<Class<?>> valueObjectClasses) {
+  Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses,
+      Collection<Class<?>> valueObjectClasses) {
     Collection<BindingStrategy> strategies = new ArrayList<>();
     boolean bindGuiceFactory = true;
 
     if (!aggregateClasses.isEmpty() || !valueObjectClasses.isEmpty()) {
       strategies.add(new GenericBindingStrategy<>(Factory.class, DefaultFactory.class,
-        Stream.concat(aggregateClasses.stream(), valueObjectClasses.stream()).filter(this::isaBoolean)
-          .map(candidate -> new Type[]{candidate}).collect(Collectors.toList())));
+          Stream.concat(aggregateClasses.stream(), valueObjectClasses.stream())
+              .filter(this::isaBoolean)
+              .map(candidate -> new Type[]{candidate}).collect(Collectors.toList())));
       bindGuiceFactory = false;
     }
 
     Multimap<Type, Class<?>> producibleClasses = filterProducibleClasses(bindings);
     if (!producibleClasses.isEmpty()) {
       strategies.add(
-        new DefaultFactoryBindingStrategy<>(Factory.class, DefaultFactory.class, producibleClasses, bindGuiceFactory));
+          new DefaultFactoryBindingStrategy<>(Factory.class, DefaultFactory.class,
+              producibleClasses,
+              bindGuiceFactory));
     }
 
     return strategies;
   }
 
   /**
-   * Filter a map containing pairs of interface/implementation in order to get only producible classes.
+   * Filter a map containing pairs of interface/implementation in order to get only producible
+   * classes.
    *
    * @param bindings map of interface/implementation
    * @return producible pairs
    */
   private Multimap<Type, Class<?>> filterProducibleClasses(Map<Key<?>, Class<?>> bindings) {
     Multimap<Type, Class<?>> defaultFactoryToBind = ArrayListMultimap.create();
-    bindings.entrySet().stream().filter(entry -> isaBoolean(entry.getKey().getTypeLiteral().getType()))
-      .forEach(entry -> defaultFactoryToBind.put(entry.getKey().getTypeLiteral().getType(), entry.getValue()));
+    bindings.entrySet().stream()
+        .filter(entry -> isaBoolean(entry.getKey().getTypeLiteral().getType()))
+        .forEach(entry -> defaultFactoryToBind
+            .put(entry.getKey().getTypeLiteral().getType(), entry.getValue()));
     return defaultFactoryToBind;
   }
 
@@ -71,8 +78,10 @@ class DefaultFactoryCollector {
     if (type instanceof Class<?>) {
       result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy((Class<?>) type);
     } else if (type instanceof ParameterizedType) {
-      result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy((Class<?>) ((ParameterizedType) type).getRawType());
+      result = BusinessSpecifications.PRODUCIBLE
+          .isSatisfiedBy((Class<?>) ((ParameterizedType) type).getRawType());
     }
-    return result && !bindings.containsKey(Key.get(Types.newParameterizedType(Factory.class, type)));
+    return result && !bindings
+        .containsKey(Key.get(Types.newParameterizedType(Factory.class, type)));
   }
 }

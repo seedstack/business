@@ -51,7 +51,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be equal to.
    * @param <V>   the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V> OperatorPicker<T, SelectorT> equalTo(V value);
 
@@ -62,7 +62,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be greater than.
    * @param <V>   the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThan(V value);
 
@@ -73,7 +73,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be greater than or equal to.
    * @param <V>   the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> greaterThanOrEqualTo(V value);
 
@@ -84,7 +84,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be less than.
    * @param <V>   the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThan(V value);
 
@@ -95,7 +95,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param value the value to be less than or equal to.
    * @param <V>   the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> lessThanOrEqualTo(V value);
 
@@ -107,7 +107,7 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    * @param rightValue the value to be less than.
    * @param <V>        the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue, V rightValue);
 
@@ -123,8 +123,8 @@ public interface SpecificationPicker<T, SelectorT extends BaseSelector> {
    *                       otherwise it will be excluded.
    * @param <V>            the type of the value.
    * @return the next operation of the builder DSL, allowing to combine this specification with
-   *   another one.
+   *     another one.
    */
   <V extends Comparable<? super V>> OperatorPicker<T, SelectorT> between(V leftValue, V rightValue,
-    boolean leftInclusive, boolean rightInclusive);
+      boolean leftInclusive, boolean rightInclusive);
 }
