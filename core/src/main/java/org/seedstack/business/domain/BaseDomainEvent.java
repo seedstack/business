@@ -8,7 +8,6 @@
 
 package org.seedstack.business.domain;
 
-
 /**
  * An helper base class that can be extended to create a domain event. If extending this base class
  * is not desirable, you can instead implement {@link org.seedstack.business.domain.DomainEvent}.

@@ -26,41 +26,41 @@ import org.seedstack.business.internal.utils.BusinessUtils;
  */
 public abstract class BaseRepository<A extends AggregateRoot<I>, I> implements Repository<A, I> {
 
-  private static final int AGGREGATE_INDEX = 0;
-  private static final int KEY_INDEX = 1;
-  private final Class<A> aggregateRootClass;
-  private final Class<I> idClass;
+    private static final int AGGREGATE_INDEX = 0;
+    private static final int KEY_INDEX = 1;
+    private final Class<A> aggregateRootClass;
+    private final Class<I> idClass;
 
-  /**
-   * Creates a base domain repository. Actual classes managed by the repository are determined by
-   * reflection.
-   */
-  @SuppressWarnings("unchecked")
-  protected BaseRepository() {
-    Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
-    this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
-    this.idClass = (Class<I>) generics[KEY_INDEX];
-  }
+    /**
+     * Creates a base domain repository. Actual classes managed by the repository are determined by
+     * reflection.
+     */
+    @SuppressWarnings("unchecked")
+    protected BaseRepository() {
+        Type[] generics = BusinessUtils.resolveGenerics(BaseRepository.class, getClass());
+        this.aggregateRootClass = (Class<A>) generics[AGGREGATE_INDEX];
+        this.idClass = (Class<I>) generics[KEY_INDEX];
+    }
 
-  /**
-   * Creates a base domain repository. Actual classes managed by the repository are specified
-   * explicitly. This can be used to create a dynamic implementation of a repository.
-   *
-   * @param aggregateRootClass the aggregate root class.
-   * @param idClass            the aggregate root identifier class.
-   */
-  protected BaseRepository(Class<A> aggregateRootClass, Class<I> idClass) {
-    this.aggregateRootClass = aggregateRootClass;
-    this.idClass = idClass;
-  }
+    /**
+     * Creates a base domain repository. Actual classes managed by the repository are specified
+     * explicitly. This can be used to create a dynamic implementation of a repository.
+     *
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
+     */
+    protected BaseRepository(Class<A> aggregateRootClass, Class<I> idClass) {
+        this.aggregateRootClass = aggregateRootClass;
+        this.idClass = idClass;
+    }
 
-  @Override
-  public Class<A> getAggregateRootClass() {
-    return aggregateRootClass;
-  }
+    @Override
+    public Class<A> getAggregateRootClass() {
+        return aggregateRootClass;
+    }
 
-  @Override
-  public Class<I> getIdentifierClass() {
-    return idClass;
-  }
+    @Override
+    public Class<I> getIdentifierClass() {
+        return idClass;
+    }
 }

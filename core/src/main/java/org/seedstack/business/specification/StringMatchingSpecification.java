@@ -18,49 +18,48 @@ import java.util.regex.Pattern;
  */
 public class StringMatchingSpecification extends StringSpecification {
 
-  /**
-   * Wildcard for matching any zero-length or longer character sequence.
-   */
-  public static final String MULTI_CHARACTER_WILDCARD = "*";
-  /**
-   * Wildcard for matching any character.
-   */
-  public static final String SINGLE_CHARACTER_WILDCARD = "?";
-  private volatile Pattern ignoringCasePattern;
-  private volatile Pattern pattern;
+    /**
+     * Wildcard for matching any zero-length or longer character sequence.
+     */
+    public static final String MULTI_CHARACTER_WILDCARD = "*";
+    /**
+     * Wildcard for matching any character.
+     */
+    public static final String SINGLE_CHARACTER_WILDCARD = "?";
+    private volatile Pattern ignoringCasePattern;
+    private volatile Pattern pattern;
 
-  /**
-   * Creates a string-matching specification.
-   *
-   * @param expectedString the string that the candidate is expected to match.
-   * @param options        the matching options.
-   */
-  public StringMatchingSpecification(String expectedString, Options options) {
-    super(expectedString, options);
-  }
-
-  @Override
-  protected boolean isSatisfiedByString(String candidateString) {
-    if (options.isIgnoringCase()) {
-      if (ignoringCasePattern == null) {
-        ignoringCasePattern = Pattern
-            .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
-                    .replace(SINGLE_CHARACTER_WILDCARD, "."),
-                Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-      }
-      return ignoringCasePattern.matcher(candidateString).matches();
-    } else {
-      if (pattern == null) {
-        pattern = Pattern
-            .compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
-                .replace(SINGLE_CHARACTER_WILDCARD, "."));
-      }
-      return pattern.matcher(candidateString).matches();
+    /**
+     * Creates a string-matching specification.
+     *
+     * @param expectedString the string that the candidate is expected to match.
+     * @param options        the matching options.
+     */
+    public StringMatchingSpecification(String expectedString, Options options) {
+        super(expectedString, options);
     }
-  }
 
-  @Override
-  public String toString() {
-    return "=~ " + String.valueOf(expectedString);
-  }
+    @Override
+    protected boolean isSatisfiedByString(String candidateString) {
+        if (options.isIgnoringCase()) {
+            if (ignoringCasePattern == null) {
+                ignoringCasePattern = Pattern.compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
+                        .replace(SINGLE_CHARACTER_WILDCARD, "."), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+            }
+            return ignoringCasePattern.matcher(candidateString)
+                    .matches();
+        } else {
+            if (pattern == null) {
+                pattern = Pattern.compile(expectedString.replace(MULTI_CHARACTER_WILDCARD, ".*")
+                        .replace(SINGLE_CHARACTER_WILDCARD, "."));
+            }
+            return pattern.matcher(candidateString)
+                    .matches();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "=~ " + String.valueOf(expectedString);
+    }
 }

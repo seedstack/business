@@ -20,12 +20,12 @@ import org.seedstack.business.pagination.Page;
  */
 public interface SizePicker<A extends AggregateRoot<I>, I> {
 
-  /**
-   * Specify the size of the page.
-   *
-   * @param size the size of a page.
-   * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
-   *     objects returned from the repository.
-   */
-  SpecificationPicker<Page<A>, A, I> ofSize(long size);
+    /**
+     * Specify the size of the page.
+     *
+     * @param size the size of a page.
+     * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
+     *         objects returned from the repository.
+     */
+    SpecificationPicker<Page<A>, A, I> ofSize(long size);
 }

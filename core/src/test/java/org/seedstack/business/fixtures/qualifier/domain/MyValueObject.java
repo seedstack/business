@@ -10,23 +10,22 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-
 public class MyValueObject extends BaseValueObject {
 
-  private final String firstName;
+    private final String firstName;
 
-  private final String lastName;
+    private final String lastName;
 
-  public MyValueObject(String firstName, String lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
+    public MyValueObject(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 }

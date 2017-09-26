@@ -22,20 +22,20 @@ import org.seedstack.business.specification.Specification;
  */
 public interface SpecificationPicker<S extends Slice<A>, A extends AggregateRoot<I>, I> {
 
-  /**
-   * Restricts objects coming from the repository to ones matching the specification. This is a
-   * terminal operation of the paginator DSL.
-   *
-   * @param spec the specification that objects must match.
-   * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
-   */
-  S matching(Specification<A> spec);
+    /**
+     * Restricts objects coming from the repository to ones matching the specification. This is a
+     * terminal operation of the paginator DSL.
+     *
+     * @param spec the specification that objects must match.
+     * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
+     */
+    S matching(Specification<A> spec);
 
-  /**
-   * Do not restrict objects coming from the repository. This is a terminal operation of the
-   * paginator DSL.
-   *
-   * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
-   */
-  S all();
+    /**
+     * Do not restrict objects coming from the repository. This is a terminal operation of the
+     * paginator DSL.
+     *
+     * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
+     */
+    S all();
 }

@@ -17,11 +17,11 @@ package org.seedstack.business.domain;
  */
 public interface DomainEventPublisher {
 
-  /**
-   * Publishes an event.
-   *
-   * @param event the published event instance.
-   * @param <E>   the event type.
-   */
-  <E extends DomainEvent> void publish(E event);
+    /**
+     * Publishes an event.
+     *
+     * @param event the published event instance.
+     * @param <E>   the event type.
+     */
+    <E extends DomainEvent> void publish(E event);
 }

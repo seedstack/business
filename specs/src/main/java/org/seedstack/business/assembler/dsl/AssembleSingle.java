@@ -8,18 +8,17 @@
 
 package org.seedstack.business.assembler.dsl;
 
-
 /**
  * An element of the {@link FluentAssembler} DSL allowing to assemble to a single DTO.
  */
 public interface AssembleSingle {
 
-  /**
-   * Assembles to a DTO.
-   *
-   * @param <D>      the type of the DTO.
-   * @param dtoClass the DTO class to assemble.
-   * @return the DTO.
-   */
-  <D> D to(Class<D> dtoClass);
+    /**
+     * Assembles to a DTO.
+     *
+     * @param <D>      the type of the DTO.
+     * @param dtoClass the DTO class to assemble.
+     * @return the DTO.
+     */
+    <D> D to(Class<D> dtoClass);
 }

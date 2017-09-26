@@ -12,12 +12,12 @@ import org.seedstack.business.fixtures.application.GenericService;
 
 public class GenericServiceInternal<T> implements GenericService<T> {
 
-  @Override
-  public T doSomething(Class<T> someClass) {
-    try {
-      return someClass.newInstance();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    @Override
+    public T doSomething(Class<T> someClass) {
+        try {
+            return someClass.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
 }

@@ -10,11 +10,10 @@ package org.seedstack.business.fixtures.repositories;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-
 public class TestAggregate extends BaseAggregateRoot<String> {
 
-  @Override
-  public String getId() {
-    return "test";
-  }
+    @Override
+    public String getId() {
+        return "test";
+    }
 }

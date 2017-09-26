@@ -10,21 +10,19 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import javax.inject.Named;
 
-
 @Named("2")
 public class DomServiceImpl2 extends MyAbstractDomainService implements MyDomainService {
 
-  String message;
+    String message;
 
-  public DomServiceImpl2() {
-  }
+    public DomServiceImpl2() {
+    }
 
+    public DomServiceImpl2(String message) {
+        this.message = message;
+    }
 
-  public DomServiceImpl2(String message) {
-    this.message = message;
-  }
-
-  public String getMessage() {
-    return message;
-  }
+    public String getMessage() {
+        return message;
+    }
 }

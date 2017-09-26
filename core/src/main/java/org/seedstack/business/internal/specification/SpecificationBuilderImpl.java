@@ -15,20 +15,16 @@ import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 class SpecificationBuilderImpl implements SpecificationBuilder {
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public <T, S extends PropertySelector<T, S>> S of(Class<T> anyClass) {
-    return (S) new PropertySelectorImpl<T, S>(
-        new SpecificationBuilderContext<>(anyClass)
-    );
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T, S extends PropertySelector<T, S>> S of(Class<T> anyClass) {
+        return (S) new PropertySelectorImpl<T, S>(new SpecificationBuilderContext<>(anyClass));
+    }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public <A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> S ofAggregate(
-      Class<A> aggregateClass) {
-    return (S) new AggregateSelectorImpl<A, I, S>(
-        new SpecificationBuilderContext<>(aggregateClass)
-    );
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> S ofAggregate(
+            Class<A> aggregateClass) {
+        return (S) new AggregateSelectorImpl<A, I, S>(new SpecificationBuilderContext<>(aggregateClass));
+    }
 }

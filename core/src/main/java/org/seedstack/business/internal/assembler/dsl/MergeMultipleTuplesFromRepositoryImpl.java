@@ -19,81 +19,78 @@ import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
 
+class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements MergeFromRepository<MergeAs<T>>,
+        MergeFromRepositoryOrFactory<MergeAs<T>> {
 
-class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements
-    MergeFromRepository<MergeAs<T>>,
-    MergeFromRepositoryOrFactory<MergeAs<T>> {
+    private final Context context;
+    private final Class<? extends AggregateRoot<?>>[] aggregateClasses;
+    private final Class<?>[] aggregateIdClasses;
+    private final Stream<D> dtoStream;
 
-  private final Context context;
-  private final Class<? extends AggregateRoot<?>>[] aggregateClasses;
-  private final Class<?>[] aggregateIdClasses;
-  private final Stream<D> dtoStream;
+    @SafeVarargs
+    MergeMultipleTuplesFromRepositoryImpl(Context context, Stream<D> dtoStream,
+            Class<? extends AggregateRoot<?>>... aggregateClasses) {
+        this.context = context;
+        this.dtoStream = dtoStream;
+        this.aggregateClasses = aggregateClasses;
+        this.aggregateIdClasses = getAggregateIdClasses(aggregateClasses);
+    }
 
-  @SafeVarargs
-  MergeMultipleTuplesFromRepositoryImpl(Context context, Stream<D> dtoStream,
-      Class<? extends AggregateRoot<?>>... aggregateClasses) {
-    this.context = context;
-    this.dtoStream = dtoStream;
-    this.aggregateClasses = aggregateClasses;
-    this.aggregateIdClasses = getAggregateIdClasses(aggregateClasses);
-  }
+    @Override
+    public MergeFromRepositoryOrFactory<MergeAs<T>> fromRepository() {
+        return this;
+    }
 
-  @Override
-  public MergeFromRepositoryOrFactory<MergeAs<T>> fromRepository() {
-    return this;
-  }
+    @Override
+    public MergeAs<T> fromFactory() {
+        return new MergeAsImpl<>(dtoStream.map(dto -> {
+            AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
+            for (int i = 0; i < aggregateClasses.length; i++) {
+                aggregateRoots[i] = context.create(dto, aggregateClasses[i], i);
+            }
+            T tuple = Tuples.create((Object[]) aggregateRoots);
+            context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
+            return tuple;
+        }));
+    }
 
-  @Override
-  public MergeAs<T> fromFactory() {
-    return new MergeAsImpl<>(dtoStream.map(dto -> {
-      AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
-      for (int i = 0; i < aggregateClasses.length; i++) {
-        aggregateRoots[i] = context.create(dto, aggregateClasses[i], i);
-      }
-      T tuple = Tuples.create((Object[]) aggregateRoots);
-      context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
-      return tuple;
-    }));
-  }
+    @Override
+    public MergeAs<T> orFail() throws AggregateNotFoundException {
+        return new MergeAsImpl<>(dtoStream.map(dto -> {
+            AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
+            for (int i = 0; i < aggregateClasses.length; i++) {
+                Object id = context.resolveId(dto, aggregateIdClasses[i], i);
+                aggregateRoots[i] = load(id, aggregateClasses[i]);
+                if (aggregateRoots[i] == null) {
+                    throw new AggregateNotFoundException(
+                            "Unable to load aggregate " + aggregateClasses[i].getName() + "[" + id + "]");
+                }
+            }
+            T tuple = Tuples.create((Object[]) aggregateRoots);
+            context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
+            return tuple;
+        }));
+    }
 
-  @Override
-  public MergeAs<T> orFail() throws AggregateNotFoundException {
-    return new MergeAsImpl<>(dtoStream.map(dto -> {
-      AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
-      for (int i = 0; i < aggregateClasses.length; i++) {
-        Object id = context.resolveId(dto, aggregateIdClasses[i], i);
-        aggregateRoots[i] = load(id, aggregateClasses[i]);
-        if (aggregateRoots[i] == null) {
-          throw new AggregateNotFoundException(
-              "Unable to load aggregate " + aggregateClasses[i].getName() + "[" + id + "]");
-        }
-      }
-      T tuple = Tuples.create((Object[]) aggregateRoots);
-      context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
-      return tuple;
-    }));
-  }
+    @Override
+    public MergeAs<T> orFromFactory() {
+        return new MergeAsImpl<>(dtoStream.map(dto -> {
+            AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
+            for (int i = 0; i < aggregateClasses.length; i++) {
+                aggregateRoots[i] = load(context.resolveId(dto, aggregateIdClasses[i], i), aggregateClasses[i]);
+                if (aggregateRoots[i] == null) {
+                    aggregateRoots[i] = context.create(dto, aggregateClasses[i], i);
+                }
+            }
+            T tuple = Tuples.create((Object[]) aggregateRoots);
+            context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
+            return tuple;
+        }));
+    }
 
-  @Override
-  public MergeAs<T> orFromFactory() {
-    return new MergeAsImpl<>(dtoStream.map(dto -> {
-      AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
-      for (int i = 0; i < aggregateClasses.length; i++) {
-        aggregateRoots[i] = load(context.resolveId(dto, aggregateIdClasses[i], i),
-            aggregateClasses[i]);
-        if (aggregateRoots[i] == null) {
-          aggregateRoots[i] = context.create(dto, aggregateClasses[i], i);
-        }
-      }
-      T tuple = Tuples.create((Object[]) aggregateRoots);
-      context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
-      return tuple;
-    }));
-  }
-
-  @SuppressWarnings("unchecked")
-  private <A extends AggregateRoot<I>, I> AggregateRoot<?> load(Object id,
-      Class<? extends AggregateRoot<?>> aggregateClass) {
-    return context.load((I) id, (Class<A>) aggregateClass);
-  }
+    @SuppressWarnings("unchecked")
+    private <A extends AggregateRoot<I>, I> AggregateRoot<?> load(Object id,
+            Class<? extends AggregateRoot<?>> aggregateClass) {
+        return context.load((I) id, (Class<A>) aggregateClass);
+    }
 }

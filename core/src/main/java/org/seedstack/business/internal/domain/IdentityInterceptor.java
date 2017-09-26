@@ -24,19 +24,18 @@ import org.slf4j.LoggerFactory;
  */
 class IdentityInterceptor implements MethodInterceptor {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(IdentityInterceptor.class);
-  @Inject
-  private IdentityService identityService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(IdentityInterceptor.class);
+    @Inject
+    private IdentityService identityService;
 
-  @Override
-  public Object invoke(MethodInvocation invocation) throws Throwable {
-    Object object = invocation.proceed();
-    if (object instanceof Entity) {
-      LOGGER
-          .trace("Invoking identity service to identify an entity of class {}", object.getClass());
-      return identityService.identify(((Entity<?>) object));
-    } else {
-      return object;
+    @Override
+    public Object invoke(MethodInvocation invocation) throws Throwable {
+        Object object = invocation.proceed();
+        if (object instanceof Entity) {
+            LOGGER.trace("Invoking identity service to identify an entity of class {}", object.getClass());
+            return identityService.identify(((Entity<?>) object));
+        } else {
+            return object;
+        }
     }
-  }
 }

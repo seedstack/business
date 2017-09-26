@@ -21,33 +21,33 @@ import org.seedstack.seed.it.SeedITRunner;
 @RunWith(SeedITRunner.class)
 public class SpecTranslatorIT {
 
-  @Inject
-  private SpecificationTranslator<StringBuilder, String> dummySpecificationTranslator;
-  @Inject
-  private SpecificationBuilder specificationBuilder;
+    @Inject
+    private SpecificationTranslator<StringBuilder, String> dummySpecificationTranslator;
+    @Inject
+    private SpecificationBuilder specificationBuilder;
 
-  @Test
-  public void translatorIsInjectable() throws Exception {
-    assertThat(dummySpecificationTranslator).isNotNull();
-  }
-
-  @Test
-  public void translatorIsWorking() throws Exception {
-    String result = dummySpecificationTranslator.translate(
-        specificationBuilder.of(SomeAggregateRoot.class)
-            .property("path1").equalTo("value1").and()
-            .property("path2").equalTo("value2")
-            .build(),
-        new StringBuilder()
-    );
-    assertThat(result).isEqualTo("path1 == value1 && path2 == value2");
-  }
-
-  static class SomeAggregateRoot extends BaseAggregateRoot<String> {
-
-    @Override
-    public String getId() {
-      return "one";
+    @Test
+    public void translatorIsInjectable() throws Exception {
+        assertThat(dummySpecificationTranslator).isNotNull();
     }
-  }
+
+    @Test
+    public void translatorIsWorking() throws Exception {
+        String result = dummySpecificationTranslator.translate(specificationBuilder.of(SomeAggregateRoot.class)
+                .property("path1")
+                .equalTo("value1")
+                .and()
+                .property("path2")
+                .equalTo("value2")
+                .build(), new StringBuilder());
+        assertThat(result).isEqualTo("path1 == value1 && path2 == value2");
+    }
+
+    static class SomeAggregateRoot extends BaseAggregateRoot<String> {
+
+        @Override
+        public String getId() {
+            return "one";
+        }
+    }
 }

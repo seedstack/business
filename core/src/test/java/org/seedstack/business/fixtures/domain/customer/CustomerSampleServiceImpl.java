@@ -12,26 +12,25 @@ import org.seedstack.seed.Configuration;
 import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
-public class CustomerSampleServiceImpl implements CustomerSampleService,
-    CustomerSampleDomainService {
+public class CustomerSampleServiceImpl implements CustomerSampleService, CustomerSampleDomainService {
 
-  @Logging
-  private Logger logger;
-  @Configuration("org.seedstack.toto")
-  private String property;
+    @Logging
+    private Logger logger;
+    @Configuration("org.seedstack.toto")
+    private String property;
 
-  public CustomerSampleServiceImpl() {
-  }
+    public CustomerSampleServiceImpl() {
+    }
 
-  @Override
-  public String property() {
-    return property;
-  }
+    @Override
+    public String property() {
+        return property;
+    }
 
-  @Override
-  public String transfer(Customer source, Customer target) {
-    logger.info("Transfering customer " + source.getId() + " to customer " + target.getId());
-    return property;
-  }
+    @Override
+    public String transfer(Customer source, Customer target) {
+        logger.info("Transfering customer " + source.getId() + " to customer " + target.getId());
+        return property;
+    }
 }
 

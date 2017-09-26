@@ -25,95 +25,98 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 
-
 public class DefaultAssemblerCollectorTest {
 
-  private DefaultAssemblerCollector underTest;
+    private DefaultAssemblerCollector underTest;
 
-  @Before
-  public void before() {
-    List<Class<? extends Assembler>> defaultAssemblers = new ArrayList<>();
-    defaultAssemblers.add(DefaultAssemblerFixture1.class);
-    defaultAssemblers.add(DefaultAssemblerFixture2.class);
-    underTest = new DefaultAssemblerCollector(defaultAssemblers);
-  }
-
-  @Test
-  public void testCollect() {
-    Collection<BindingStrategy> strategies = underTest
-        .collect(Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
-    Assertions.assertThat(strategies).hasSize(2); // 2 default assembler implementation
-    Collection<Type[]> typeVariables = Reflection.field("constructorParams")
-        .ofType(new TypeRef<Collection<Type[]>>() {
-        }).in(strategies.iterator().next()).get();
-    Assertions.assertThat(typeVariables).hasSize(3); // 3 dtos
-  }
-
-  @Test
-  public void testCollectIllegalArgument() {
-    Collection<BindingStrategy> strategies = underTest.collect(Lists.newArrayList(Dto4.class));
-    Assertions.assertThat(strategies).isNotNull();
-    Assertions.assertThat(strategies).isEmpty();
-  }
-
-  private static class Agg1 extends BaseAggregateRoot<Integer> {
-
-  }
-
-  private static class Agg2 extends BaseAggregateRoot<Integer> {
-
-  }
-
-  @DtoOf(Agg1.class)
-  private static class Dto1 {
-
-  }
-
-  @DtoOf(Agg1.class)
-  private static class Dto2 {
-
-  }
-
-  @DtoOf(Agg2.class)
-  private static class Dto3 {
-
-  }
-
-  private static class Dto4 {
-
-  }
-
-  private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends
-      BaseAssembler<A, D> {
-
-    @Override
-    public D createDtoFromAggregate(A sourceAggregate) {
-      return null;
+    @Before
+    public void before() {
+        List<Class<? extends Assembler>> defaultAssemblers = new ArrayList<>();
+        defaultAssemblers.add(DefaultAssemblerFixture1.class);
+        defaultAssemblers.add(DefaultAssemblerFixture2.class);
+        underTest = new DefaultAssemblerCollector(defaultAssemblers);
     }
 
-    @Override
-    public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+    @Test
+    public void testCollect() {
+        Collection<BindingStrategy> strategies = underTest.collect(
+                Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
+        Assertions.assertThat(strategies)
+                .hasSize(2); // 2 default assembler implementation
+        Collection<Type[]> typeVariables = Reflection.field("constructorParams")
+                .ofType(new TypeRef<Collection<Type[]>>() {})
+                .in(strategies.iterator()
+                        .next())
+                .get();
+        Assertions.assertThat(typeVariables)
+                .hasSize(3); // 3 dtos
     }
 
-    @Override
-    public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
-    }
-  }
-
-  private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends
-      BaseAssembler<A, D> {
-
-    @Override
-    public D createDtoFromAggregate(A sourceAggregate) {
-      return null;
+    @Test
+    public void testCollectIllegalArgument() {
+        Collection<BindingStrategy> strategies = underTest.collect(Lists.newArrayList(Dto4.class));
+        Assertions.assertThat(strategies)
+                .isNotNull();
+        Assertions.assertThat(strategies)
+                .isEmpty();
     }
 
-    @Override
-    public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+    private static class Agg1 extends BaseAggregateRoot<Integer> {
+
     }
 
-    @Override
-    public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+    private static class Agg2 extends BaseAggregateRoot<Integer> {
+
     }
-  }
+
+    @DtoOf(Agg1.class)
+    private static class Dto1 {
+
+    }
+
+    @DtoOf(Agg1.class)
+    private static class Dto2 {
+
+    }
+
+    @DtoOf(Agg2.class)
+    private static class Dto3 {
+
+    }
+
+    private static class Dto4 {
+
+    }
+
+    private static class DefaultAssemblerFixture1<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
+
+        @Override
+        public D createDtoFromAggregate(A sourceAggregate) {
+            return null;
+        }
+
+        @Override
+        public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+        }
+
+        @Override
+        public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+        }
+    }
+
+    private static class DefaultAssemblerFixture2<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
+
+        @Override
+        public D createDtoFromAggregate(A sourceAggregate) {
+            return null;
+        }
+
+        @Override
+        public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+        }
+
+        @Override
+        public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+        }
+    }
 }

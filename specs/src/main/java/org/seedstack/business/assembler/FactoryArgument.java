@@ -15,7 +15,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 
-
 /**
  * When {@link FluentAssembler} DSL needs to create an aggregate (i.e. when the {@code
  * fromFactory()} method is used), this annotation allows to specify a matching between a DTO getter
@@ -69,21 +68,21 @@ import org.seedstack.business.assembler.dsl.FluentAssembler;
 @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 public @interface FactoryArgument {
 
-  /**
-   * Only used when assembling a tuple of aggregates. This specifies which aggregate in the tuple
-   * (by position) is concerned by the {@link #index()} value.
-   *
-   * @return the concerned aggregate index in the tuple.
-   */
-  int aggregateIndex() default -1;
+    /**
+     * Only used when assembling a tuple of aggregates. This specifies which aggregate in the tuple
+     * (by position) is concerned by the {@link #index()} value.
+     *
+     * @return the concerned aggregate index in the tuple.
+     */
+    int aggregateIndex() default -1;
 
-  /**
-   * Specifies the position of the aggregate factory method argument the getter will match. The
-   * return value of the getter will be used as the value of the corresponding factory method
-   * argument.
-   *
-   * @return the index of the argument to match in the factory method.
-   */
-  int index() default -1;
+    /**
+     * Specifies the position of the aggregate factory method argument the getter will match. The
+     * return value of the getter will be used as the value of the corresponding factory method
+     * argument.
+     *
+     * @return the index of the argument to match in the factory method.
+     */
+    int index() default -1;
 
 }

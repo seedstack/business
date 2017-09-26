@@ -14,7 +14,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
  * Marks a type as a value object. This is the minimal element to apply on a class to make the
  * business framework recognize it as a value object.

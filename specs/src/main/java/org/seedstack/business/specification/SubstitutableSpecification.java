@@ -16,15 +16,15 @@ package org.seedstack.business.specification;
  */
 public interface SubstitutableSpecification<T> extends Specification<T> {
 
-  /**
-   * Returns the specification it can be be substituted with.
-   *
-   * @return the specification this specification can be substituted with.
-   */
-  Specification<T> getSubstitute();
+    /**
+     * Returns the specification it can be be substituted with.
+     *
+     * @return the specification this specification can be substituted with.
+     */
+    Specification<T> getSubstitute();
 
-  @Override
-  default boolean isSatisfiedBy(T candidate) {
-    return getSubstitute().isSatisfiedBy(candidate);
-  }
+    @Override
+    default boolean isSatisfiedBy(T candidate) {
+        return getSubstitute().isSatisfiedBy(candidate);
+    }
 }

@@ -44,17 +44,17 @@ import org.seedstack.business.domain.Producible;
  */
 public class DefaultFactory<T extends Producible> extends BaseFactory<T> {
 
-  private final Class<T> domainObjectClass;
+    private final Class<T> domainObjectClass;
 
-  @SuppressWarnings("unchecked")
-  @Inject
-  DefaultFactory(@Assisted Object[] domainObjectClass) {
-    checkNotNull(domainObjectClass);
-    checkArgument(domainObjectClass.length == 1);
-    this.domainObjectClass = (Class<T>) domainObjectClass[0];
-  }
+    @SuppressWarnings("unchecked")
+    @Inject
+    DefaultFactory(@Assisted Object[] domainObjectClass) {
+        checkNotNull(domainObjectClass);
+        checkArgument(domainObjectClass.length == 1);
+        this.domainObjectClass = (Class<T>) domainObjectClass[0];
+    }
 
-  public Class<T> getProducedClass() {
-    return domainObjectClass;
-  }
+    public Class<T> getProducedClass() {
+        return domainObjectClass;
+    }
 }

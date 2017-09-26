@@ -31,67 +31,72 @@ import org.seedstack.shed.reflect.ReflectUtils;
  */
 public abstract class BaseEntity<I> implements Entity<I> {
 
-  // This unbounded cache of identity fields can only grow up to the number of entity classes in
-  // the system
-  private static final ConcurrentMap<Class<?>, Field> identityFields = new ConcurrentHashMap<>();
+    // This unbounded cache of identity fields can only grow up to the number of entity classes in
+    // the system
+    private static final ConcurrentMap<Class<?>, Field> identityFields = new ConcurrentHashMap<>();
 
-  /**
-   * Returns the identifier of the entity if present. Starting from the current class and going up
-   * in the hierarchy, this method tries to find: <ul> <li>A field annotated with {@link
-   * Identity},</li> <li>Then if not found, a field named "id".</li> </ul>
-   *
-   * <p>If the entity the identity field does not satisfy any of the conditions above, this method
-   * must be overridden to return the entity identity value. </p>
-   *
-   * @return the value of the identity field if found, null otherwise.
-   */
-  @Override
-  public I getId() {
-    Field identityField = identityFields.computeIfAbsent(getClass(),
-        aClass -> IdentityResolver.INSTANCE.resolveField(aClass).map(Optional::of)
-            .orElseGet(() -> findIdentityByName(aClass)).map(ReflectUtils::makeAccessible)
-            .orElse(null));
+    /**
+     * Returns the identifier of the entity if present. Starting from the current class and going up
+     * in the hierarchy, this method tries to find: <ul> <li>A field annotated with {@link
+     * Identity},</li> <li>Then if not found, a field named "id".</li> </ul>
+     *
+     * <p>If the entity the identity field does not satisfy any of the conditions above, this method
+     * must be overridden to return the entity identity value. </p>
+     *
+     * @return the value of the identity field if found, null otherwise.
+     */
+    @Override
+    public I getId() {
+        Field identityField = identityFields.computeIfAbsent(getClass(),
+                aClass -> IdentityResolver.INSTANCE.resolveField(aClass)
+                        .map(Optional::of)
+                        .orElseGet(() -> findIdentityByName(aClass))
+                        .map(ReflectUtils::makeAccessible)
+                        .orElse(null));
 
-    if (identityField != null) {
-      return ReflectUtils.getValue(identityField, this);
-    } else {
-      return null;
+        if (identityField != null) {
+            return ReflectUtils.getValue(identityField, this);
+        } else {
+            return null;
+        }
     }
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(getId());
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (other == this) {
-      // equal reference
-      return true;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
-    if (other == null) {
-      // comparison to null
-      return false;
-    }
-    Class<? extends BaseEntity> thisClass = getClass();
-    Class<?> otherClass = other.getClass();
-    if (!(other instanceof Entity) || (!thisClass.isAssignableFrom(otherClass) && !otherClass
-        .isAssignableFrom(thisClass))) {
-      // objects are not from the same class hierarchy
-      return false;
-    }
-    return Objects.equals(getId(), ((Entity<?>) other).getId());
-  }
 
-  @Override
-  public String toString() {
-    return String.format("%s[%s]", getClass().getSimpleName(), getId());
-  }
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            // equal reference
+            return true;
+        }
+        if (other == null) {
+            // comparison to null
+            return false;
+        }
+        Class<? extends BaseEntity> thisClass = getClass();
+        Class<?> otherClass = other.getClass();
+        if (!(other instanceof Entity) || (!thisClass.isAssignableFrom(otherClass) && !otherClass.isAssignableFrom(
+                thisClass))) {
+            // objects are not from the same class hierarchy
+            return false;
+        }
+        return Objects.equals(getId(), ((Entity<?>) other).getId());
+    }
 
-  private Optional<Field> findIdentityByName(Class<?> someClass) {
-    return Classes.from(someClass).traversingSuperclasses().fields()
-        .filter(field -> field.getName().equals("id"))
-        .findFirst();
-  }
+    @Override
+    public String toString() {
+        return String.format("%s[%s]", getClass().getSimpleName(), getId());
+    }
+
+    private Optional<Field> findIdentityByName(Class<?> someClass) {
+        return Classes.from(someClass)
+                .traversingSuperclasses()
+                .fields()
+                .filter(field -> field.getName()
+                        .equals("id"))
+                .findFirst();
+    }
 }

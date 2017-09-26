@@ -11,7 +11,6 @@ package org.seedstack.business.fixtures.qualifier.domain;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.Producible;
 
-
 @DomainPolicy
 public interface MyDomainPolicy<T> extends Producible {
 

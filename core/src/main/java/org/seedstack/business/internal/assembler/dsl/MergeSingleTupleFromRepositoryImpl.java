@@ -16,37 +16,41 @@ import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 
 class MergeSingleTupleFromRepositoryImpl<T extends Tuple, D> implements MergeFromRepository<T>,
-    MergeFromRepositoryOrFactory<T> {
+        MergeFromRepositoryOrFactory<T> {
 
-  private final MergeMultipleTuplesFromRepositoryImpl<T, D> multipleMerger;
+    private final MergeMultipleTuplesFromRepositoryImpl<T, D> multipleMerger;
 
-  @SafeVarargs
-  MergeSingleTupleFromRepositoryImpl(Context context, D dto,
-      Class<? extends AggregateRoot<?>>... aggregateClasses) {
-    multipleMerger = new MergeMultipleTuplesFromRepositoryImpl<>(context, Stream.of(dto),
-        aggregateClasses);
-  }
+    @SafeVarargs
+    MergeSingleTupleFromRepositoryImpl(Context context, D dto, Class<? extends AggregateRoot<?>>... aggregateClasses) {
+        multipleMerger = new MergeMultipleTuplesFromRepositoryImpl<>(context, Stream.of(dto), aggregateClasses);
+    }
 
-  @Override
-  public MergeFromRepositoryOrFactory<T> fromRepository() {
-    return this;
-  }
+    @Override
+    public MergeFromRepositoryOrFactory<T> fromRepository() {
+        return this;
+    }
 
-  @Override
-  public T fromFactory() {
-    return multipleMerger.fromFactory().asStream().findFirst()
-        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
-  }
+    @Override
+    public T fromFactory() {
+        return multipleMerger.fromFactory()
+                .asStream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+    }
 
-  @Override
-  public T orFail() throws AggregateNotFoundException {
-    return multipleMerger.orFail().asStream().findFirst()
-        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
-  }
+    @Override
+    public T orFail() throws AggregateNotFoundException {
+        return multipleMerger.orFail()
+                .asStream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+    }
 
-  @Override
-  public T orFromFactory() {
-    return multipleMerger.orFromFactory().asStream().findFirst()
-        .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
-  }
+    @Override
+    public T orFromFactory() {
+        return multipleMerger.orFromFactory()
+                .asStream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Nothing to merge"));
+    }
 }

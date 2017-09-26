@@ -8,7 +8,6 @@
 
 package org.seedstack.business.fixtures.qualifier.interfaces;
 
-
 public class InterfServiceImpl2 implements MyInterfaceService {
 
 }

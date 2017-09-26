@@ -15,24 +15,24 @@ package org.seedstack.business.pagination;
  */
 public interface Page<T> extends Slice<T> {
 
-  /**
-   * Returns the index of the page.
-   *
-   * @return the page index.
-   */
-  long getIndex();
+    /**
+     * Returns the index of the page.
+     *
+     * @return the page index.
+     */
+    long getIndex();
 
-  /**
-   * Returns the maximum capacity of the page.
-   *
-   * @return the maximum capacity of the page.
-   */
-  long getCapacity();
+    /**
+     * Returns the maximum capacity of the page.
+     *
+     * @return the maximum capacity of the page.
+     */
+    long getCapacity();
 
-  /**
-   * Returns the total size of the list this page is derived from.
-   *
-   * @return the total size of the bigger list.
-   */
-  long getTotalSize();
+    /**
+     * Returns the total size of the list this page is derived from.
+     *
+     * @return the total size of the bigger list.
+     */
+    long getTotalSize();
 }

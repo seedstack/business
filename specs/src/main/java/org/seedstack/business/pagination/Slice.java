@@ -20,32 +20,32 @@ import java.util.function.Consumer;
  */
 public interface Slice<T> extends Iterable<T> {
 
-  /**
-   * Return items contained in the slice.
-   *
-   * @return the items.
-   */
-  List<T> getItems();
+    /**
+     * Return items contained in the slice.
+     *
+     * @return the items.
+     */
+    List<T> getItems();
 
-  /**
-   * Returns the size of the slice.
-   *
-   * @return the number of items.
-   */
-  long getSize();
+    /**
+     * Returns the size of the slice.
+     *
+     * @return the number of items.
+     */
+    long getSize();
 
-  @Override
-  default Iterator<T> iterator() {
-    return getItems().iterator();
-  }
+    @Override
+    default Iterator<T> iterator() {
+        return getItems().iterator();
+    }
 
-  @Override
-  default void forEach(Consumer<? super T> action) {
-    getItems().forEach(action);
-  }
+    @Override
+    default void forEach(Consumer<? super T> action) {
+        getItems().forEach(action);
+    }
 
-  @Override
-  default Spliterator<T> spliterator() {
-    return getItems().spliterator();
-  }
+    @Override
+    default Spliterator<T> spliterator() {
+        return getItems().spliterator();
+    }
 }

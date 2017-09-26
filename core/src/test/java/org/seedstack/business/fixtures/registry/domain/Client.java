@@ -12,8 +12,8 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class Client extends BaseAggregateRoot<Long> {
 
-  @Override
-  public Long getId() {
-    return 1L;
-  }
+    @Override
+    public Long getId() {
+        return 1L;
+    }
 }

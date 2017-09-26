@@ -8,7 +8,6 @@
 
 package org.seedstack.business.domain;
 
-
 /**
  * A value object measures, quantifies or describes something in the domain. A value object has no
  * lifecycle from the domain perspective. As such we don’t need to provide him an identity. Value
@@ -56,21 +55,21 @@ package org.seedstack.business.domain;
 @DomainValueObject
 public interface ValueObject extends Producible {
 
-  /**
-   * As per Domain-Driven Design semantics, value object equality must be computed on all its
-   * attributes.
-   *
-   * @param other other object.
-   * @return true if the other object is of the same class as this value object and if all
-   *     attributes are equals, false otherwise.
-   */
-  boolean equals(Object other);
+    /**
+     * As per Domain-Driven Design semantics, value object equality must be computed on all its
+     * attributes.
+     *
+     * @param other other object.
+     * @return true if the other object is of the same class as this value object and if all
+     *         attributes are equals, false otherwise.
+     */
+    boolean equals(Object other);
 
-  /**
-   * As per Domain-Driven Design semantics, the hash code of a value object must be computed on all
-   * its attributes.
-   *
-   * @return a hash code value for this value object.
-   */
-  int hashCode();
+    /**
+     * As per Domain-Driven Design semantics, the hash code of a value object must be computed on all
+     * its attributes.
+     *
+     * @return a hash code value for this value object.
+     */
+    int hashCode();
 }

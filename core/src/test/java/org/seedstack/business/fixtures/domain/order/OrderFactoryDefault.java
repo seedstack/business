@@ -13,21 +13,20 @@ import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 public class OrderFactoryDefault extends BaseFactory<Order> implements OrderFactory {
 
-  public OrderFactoryDefault() {
-  }
+    public OrderFactoryDefault() {
+    }
 
-  @Override
-  public Order createOrder(String orderId) {
-    Order order = new Order(new OrderId(orderId));
-    return order;
-  }
+    @Override
+    public Order createOrder(String orderId) {
+        Order order = new Order(new OrderId(orderId));
+        return order;
+    }
 
-  @Override
-  public Order createOrder(String orderId, String customerId) {
-    Order order = createOrder(orderId);
-    order.setCustomerId(new CustomerId(customerId));
-    return order;
-  }
-
+    @Override
+    public Order createOrder(String orderId, String customerId) {
+        Order order = createOrder(orderId);
+        order.setCustomerId(new CustomerId(customerId));
+        return order;
+    }
 
 }

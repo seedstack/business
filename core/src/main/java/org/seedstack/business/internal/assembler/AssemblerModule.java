@@ -26,56 +26,57 @@ import org.slf4j.LoggerFactory;
 
 class AssemblerModule extends AbstractModule {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerModule.class);
-  private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
-  private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses;
-  private final Collection<BindingStrategy> bindingStrategies;
-
-  AssemblerModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings,
-      List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses,
-      Collection<BindingStrategy> bindingStrategies) {
-    this.bindings = bindings;
-    this.dtoInfoResolverClasses = dtoInfoResolverClasses;
-    this.bindingStrategies = bindingStrategies;
-  }
-
-  @Override
-  protected void configure() {
-    install(new AssemblerPrivateModule(dtoInfoResolverClasses));
-
-    for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
-      LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue().getSimpleName());
-      bind(binding.getKey()).to(binding.getValue());
-    }
-
-    // Bind strategies
-    for (BindingStrategy bindingStrategy : bindingStrategies) {
-      bindingStrategy.resolve(binder());
-    }
-  }
-
-  private static class AssemblerPrivateModule extends PrivateModule {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerModule.class);
+    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
     private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses;
+    private final Collection<BindingStrategy> bindingStrategies;
 
-    AssemblerPrivateModule(List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses) {
-      this.dtoInfoResolverClasses = dtoInfoResolverClasses;
+    AssemblerModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings,
+            List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses,
+            Collection<BindingStrategy> bindingStrategies) {
+        this.bindings = bindings;
+        this.dtoInfoResolverClasses = dtoInfoResolverClasses;
+        this.bindingStrategies = bindingStrategies;
     }
 
     @Override
     protected void configure() {
-      bind(AssemblerRegistry.class).to(AssemblerRegistryImpl.class);
-      bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
+        install(new AssemblerPrivateModule(dtoInfoResolverClasses));
 
-      Multibinder<DtoInfoResolver> multibinder = Multibinder
-          .newSetBinder(binder(), DtoInfoResolver.class);
-      for (Class<? extends DtoInfoResolver> dtoInfoResolverClass : dtoInfoResolverClasses) {
-        LOGGER.trace("Binding DTO info resolver {}", dtoInfoResolverClass.getName());
-        multibinder.addBinding().to(dtoInfoResolverClass);
-      }
+        for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
+            LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue()
+                    .getSimpleName());
+            bind(binding.getKey()).to(binding.getValue());
+        }
 
-      expose(AssemblerRegistry.class);
-      expose(FluentAssembler.class);
+        // Bind strategies
+        for (BindingStrategy bindingStrategy : bindingStrategies) {
+            bindingStrategy.resolve(binder());
+        }
     }
-  }
+
+    private static class AssemblerPrivateModule extends PrivateModule {
+
+        private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses;
+
+        AssemblerPrivateModule(List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses) {
+            this.dtoInfoResolverClasses = dtoInfoResolverClasses;
+        }
+
+        @Override
+        protected void configure() {
+            bind(AssemblerRegistry.class).to(AssemblerRegistryImpl.class);
+            bind(FluentAssembler.class).to(FluentAssemblerImpl.class);
+
+            Multibinder<DtoInfoResolver> multibinder = Multibinder.newSetBinder(binder(), DtoInfoResolver.class);
+            for (Class<? extends DtoInfoResolver> dtoInfoResolverClass : dtoInfoResolverClasses) {
+                LOGGER.trace("Binding DTO info resolver {}", dtoInfoResolverClass.getName());
+                multibinder.addBinding()
+                        .to(dtoInfoResolverClass);
+            }
+
+            expose(AssemblerRegistry.class);
+            expose(FluentAssembler.class);
+        }
+    }
 }

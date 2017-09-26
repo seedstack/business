@@ -14,10 +14,10 @@ import org.seedstack.business.fixtures.application.SingletonService;
 @Singleton
 public class SingletonServiceInternal implements SingletonService {
 
-  private Object singletonObject = new Object();
+    private Object singletonObject = new Object();
 
-  @Override
-  public Object getStuff() {
-    return singletonObject;
-  }
+    @Override
+    public Object getStuff() {
+        return singletonObject;
+    }
 }

@@ -17,23 +17,24 @@ import org.slf4j.LoggerFactory;
 
 class DomainOverrideModule extends AbstractModule {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DomainOverrideModule.class);
-  private final Map<Key<?>, Class<?>> bindings;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainOverrideModule.class);
+    private final Map<Key<?>, Class<?>> bindings;
 
-  DomainOverrideModule(Map<Key<?>, Class<?>> bindings) {
-    this.bindings = bindings;
-  }
-
-  @Override
-  protected void configure() {
-    for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
-      LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue().getSimpleName());
-      bind(binding.getKey()).to(cast(binding.getValue()));
+    DomainOverrideModule(Map<Key<?>, Class<?>> bindings) {
+        this.bindings = bindings;
     }
-  }
 
-  @SuppressWarnings("unchecked")
-  private <ClassT extends Class<?>> ClassT cast(Class<?> someClass) {
-    return (ClassT) someClass;
-  }
+    @Override
+    protected void configure() {
+        for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
+            LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue()
+                    .getSimpleName());
+            bind(binding.getKey()).to(cast(binding.getValue()));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Class<?>> T cast(Class<?> someClass) {
+        return (T) someClass;
+    }
 }

@@ -19,21 +19,21 @@ import org.seedstack.business.domain.AggregateRoot;
  */
 public interface IdentityPicker<A extends AggregateRoot<I>, I, S extends BaseSelector> {
 
-  /**
-   * Specify that the identity of the aggregate must be equal to the one passed as argument.
-   *
-   * @param id the identity.
-   * @return the next operation of the builder DSL, allowing to compose the just-defined
-   *     specification with another one.
-   */
-  OperatorPicker<A, S> is(I id);
+    /**
+     * Specify that the identity of the aggregate must be equal to the one passed as argument.
+     *
+     * @param id the identity.
+     * @return the next operation of the builder DSL, allowing to compose the just-defined
+     *         specification with another one.
+     */
+    OperatorPicker<A, S> is(I id);
 
-  /**
-   * Specify that the identity of the aggregate must NOT be equal to the one passed as argument.
-   *
-   * @param id the identity.
-   * @return the next operation of the builder DSL, allowing to compose the just-defined
-   *     specification with another one.
-   */
-  OperatorPicker<A, S> isNot(I id);
+    /**
+     * Specify that the identity of the aggregate must NOT be equal to the one passed as argument.
+     *
+     * @param id the identity.
+     * @return the next operation of the builder DSL, allowing to compose the just-defined
+     *         specification with another one.
+     */
+    OperatorPicker<A, S> isNot(I id);
 }

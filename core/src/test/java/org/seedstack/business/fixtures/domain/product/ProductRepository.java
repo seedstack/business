@@ -12,5 +12,5 @@ import org.seedstack.business.domain.Repository;
 
 public interface ProductRepository extends Repository<Product, ProductId> {
 
-  void dummyMethod();
+    void dummyMethod();
 }

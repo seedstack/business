@@ -8,7 +8,6 @@
 
 package org.seedstack.business.domain;
 
-
 /**
  * A factory is responsible for creating a whole, internally consistent aggregate when it is too
  * complicated to do it in a constructor.
@@ -41,22 +40,22 @@ package org.seedstack.business.domain;
 @DomainFactory
 public interface Factory<P extends Producible> {
 
-  /**
-   * Returns the class produced by the factory.
-   *
-   * @return the produced class
-   */
-  Class<P> getProducedClass();
+    /**
+     * Returns the class produced by the factory.
+     *
+     * @return the produced class
+     */
+    Class<P> getProducedClass();
 
-  /**
-   * Creates an object instance in a generic way, using the given arguments. How are these arguments
-   * used for creation is implementation-dependent.
-   *
-   * @param args the arguments for object creation.
-   * @return an instance of the class produced by the factory.
-   */
-  default P create(Object... args) {
-    throw new UnsupportedOperationException("Generic creation is not supported by this factory");
-  }
+    /**
+     * Creates an object instance in a generic way, using the given arguments. How are these arguments
+     * used for creation is implementation-dependent.
+     *
+     * @param args the arguments for object creation.
+     * @return an instance of the class produced by the factory.
+     */
+    default P create(Object... args) {
+        throw new UnsupportedOperationException("Generic creation is not supported by this factory");
+    }
 }
 

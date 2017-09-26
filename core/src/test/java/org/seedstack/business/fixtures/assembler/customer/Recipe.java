@@ -19,55 +19,55 @@ import org.seedstack.business.assembler.FactoryArgument;
 @DtoOf({Order.class, Customer.class})
 public class Recipe {
 
-  private String customerId;
-  private String customerName;
-  private String product;
-  private String orderId;
+    private String customerId;
+    private String customerName;
+    private String product;
+    private String orderId;
 
-  public Recipe(String customerId, String customerName, String orderId, String product) {
-    this.customerId = customerId;
-    this.customerName = customerName;
-    this.product = product;
-    this.orderId = orderId;
-  }
+    public Recipe(String customerId, String customerName, String orderId, String product) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.product = product;
+        this.orderId = orderId;
+    }
 
-  // The order of the typeIndex depends on the position in @DtoOf
-  @AggregateId(aggregateIndex = 0) // Don't specify the index as it is not a value object id
-  @FactoryArgument(aggregateIndex = 0, index = 0)
-  public String getOrderId() {
-    return orderId;
-  }
+    // The order of the typeIndex depends on the position in @DtoOf
+    @AggregateId(aggregateIndex = 0) // Don't specify the index as it is not a value object id
+    @FactoryArgument(aggregateIndex = 0, index = 0)
+    public String getOrderId() {
+        return orderId;
+    }
 
-  public void setOrderId(String orderId) {
-    this.orderId = orderId;
-  }
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
-  @FactoryArgument(aggregateIndex = 0, index = 1)
-  public String getProduct() {
-    return product;
-  }
+    @FactoryArgument(aggregateIndex = 0, index = 1)
+    public String getProduct() {
+        return product;
+    }
 
-  public void setProduct(String product) {
-    this.product = product;
-  }
+    public void setProduct(String product) {
+        this.product = product;
+    }
 
-  @AggregateId(aggregateIndex = 1)
-  @FactoryArgument(aggregateIndex = 1, index = 0)
-  public String getCustomerId() {
-    return customerId;
-  }
+    @AggregateId(aggregateIndex = 1)
+    @FactoryArgument(aggregateIndex = 1, index = 0)
+    public String getCustomerId() {
+        return customerId;
+    }
 
-  public void setCustomerId(String customerId) {
-    this.customerId = customerId;
-  }
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
-  // No annotation require here as the customer name is not part of
-  // the customer id or factory method
-  public String getCustomerName() {
-    return customerName;
-  }
+    // No annotation require here as the customer name is not part of
+    // the customer id or factory method
+    public String getCustomerName() {
+        return customerName;
+    }
 
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

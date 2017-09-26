@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.domain.multi;
 
 import org.seedstack.business.domain.Factory;
@@ -17,6 +18,6 @@ import org.seedstack.business.domain.Factory;
  */
 public interface MultiFactory extends Factory<Multi> {
 
-  Multi create();
+    Multi create();
 
 }

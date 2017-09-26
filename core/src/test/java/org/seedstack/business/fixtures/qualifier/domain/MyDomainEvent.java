@@ -10,16 +10,15 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import org.seedstack.business.domain.BaseDomainEvent;
 
-
 public class MyDomainEvent extends BaseDomainEvent {
 
-  private String cause;
+    private String cause;
 
-  public MyDomainEvent(String cause) {
-    this.cause = cause;
-  }
+    public MyDomainEvent(String cause) {
+        this.cause = cause;
+    }
 
-  public String getCause() {
-    return cause;
-  }
+    public String getCause() {
+        return cause;
+    }
 }

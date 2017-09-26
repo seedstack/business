@@ -12,9 +12,7 @@ import org.seedstack.business.fixtures.domain.activation.Activation;
 import org.seedstack.business.fixtures.domain.activation.ActivationRepository;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
-
-public class ActivationInMemoryRepository extends
-    BaseInMemoryRepository<Activation, String> implements ActivationRepository {
-
+public class ActivationInMemoryRepository extends BaseInMemoryRepository<Activation, String> implements
+        ActivationRepository {
 
 }

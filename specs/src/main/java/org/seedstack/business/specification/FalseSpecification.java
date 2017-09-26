@@ -15,13 +15,13 @@ package org.seedstack.business.specification;
  */
 public class FalseSpecification<T> implements Specification<T> {
 
-  @Override
-  public boolean isSatisfiedBy(T candidate) {
-    return false;
-  }
+    @Override
+    public boolean isSatisfiedBy(T candidate) {
+        return false;
+    }
 
-  @Override
-  public String toString() {
-    return "⊥";
-  }
+    @Override
+    public String toString() {
+        return "⊥";
+    }
 }

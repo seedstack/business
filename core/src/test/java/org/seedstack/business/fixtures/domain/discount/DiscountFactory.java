@@ -11,9 +11,8 @@ package org.seedstack.business.fixtures.domain.discount;
 import javax.validation.constraints.NotNull;
 import org.seedstack.business.domain.Factory;
 
-
 public interface DiscountFactory extends Factory<Discount> {
 
-  Discount createNewActivation(@NotNull String id, String description);
+    Discount createNewActivation(@NotNull String id, String description);
 
 }

@@ -17,18 +17,19 @@ import org.slf4j.LoggerFactory;
 
 class AssemblerOverridingModule extends AbstractModule {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerOverridingModule.class);
-  private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerOverridingModule.class);
+    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
 
-  AssemblerOverridingModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings) {
-    this.bindings = bindings;
-  }
-
-  @Override
-  protected void configure() {
-    for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
-      LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue().getSimpleName());
-      bind(binding.getKey()).to(binding.getValue());
+    AssemblerOverridingModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings) {
+        this.bindings = bindings;
     }
-  }
+
+    @Override
+    protected void configure() {
+        for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
+            LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue()
+                    .getSimpleName());
+            bind(binding.getKey()).to(binding.getValue());
+        }
+    }
 }

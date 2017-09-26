@@ -12,8 +12,8 @@ import org.seedstack.business.domain.Factory;
 
 public interface ProductFactory extends Factory<Product> {
 
-  Product createProduct(Short storeId, Short productCode);
+    Product createProduct(Short storeId, Short productCode);
 
-  Product createProduct(Short storeId, Short productCode, String name, String description);
+    Product createProduct(Short storeId, Short productCode, String name, String description);
 
 }

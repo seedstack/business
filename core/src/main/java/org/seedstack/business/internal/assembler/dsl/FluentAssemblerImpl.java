@@ -31,69 +31,66 @@ import org.seedstack.business.spi.DtoInfoResolver;
  */
 public class FluentAssemblerImpl implements FluentAssembler {
 
-  private Context context;
+    private Context context;
 
-  @Inject
-  public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry,
-      Set<DtoInfoResolver> dtoInfoResolvers) {
-    context = new Context(domainRegistry, registry, dtoInfoResolvers);
-  }
+    @Inject
+    public FluentAssemblerImpl(DomainRegistry domainRegistry, AssemblerRegistry registry,
+            Set<DtoInfoResolver> dtoInfoResolvers) {
+        context = new Context(domainRegistry, registry, dtoInfoResolvers);
+    }
 
-  @Override
-  public <A extends AggregateRoot<I>, I> AssembleSingleWithQualifier assemble(A aggregateRoot) {
-    return new AssembleSingleImpl<>(context, aggregateRoot, null);
-  }
+    @Override
+    public <A extends AggregateRoot<I>, I> AssembleSingleWithQualifier assemble(A aggregateRoot) {
+        return new AssembleSingleImpl<>(context, aggregateRoot, null);
+    }
 
-  @Override
-  public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(
-      Iterable<A> iterable) {
-    return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false),
-        null);
-  }
+    @Override
+    public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Iterable<A> iterable) {
+        return new AssembleMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false), null);
+    }
 
-  @Override
-  public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Stream<A> stream) {
-    return new AssembleMultipleImpl<>(context, stream, null);
-  }
+    @Override
+    public <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Stream<A> stream) {
+        return new AssembleMultipleImpl<>(context, stream, null);
+    }
 
-  @Override
-  public <A extends AggregateRoot<I>, I> AssemblePageWithQualifier assemble(Page<A> page) {
-    return new AssemblePageImpl<>(context, page, null);
-  }
+    @Override
+    public <A extends AggregateRoot<I>, I> AssemblePageWithQualifier assemble(Page<A> page) {
+        return new AssemblePageImpl<>(context, page, null);
+    }
 
-  @Override
-  public <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple) {
-    return new AssembleSingleImpl<>(context, null, tuple);
-  }
+    @Override
+    public <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple) {
+        return new AssembleSingleImpl<>(context, null, tuple);
+    }
 
-  @Override
-  public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream) {
-    return new AssembleMultipleImpl<>(context, null, stream);
-  }
+    @Override
+    public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream) {
+        return new AssembleMultipleImpl<>(context, null, stream);
+    }
 
-  @Override
-  public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable) {
-    return new AssembleMultipleImpl<>(context, null,
-        StreamSupport.stream(iterable.spliterator(), false));
-  }
+    @Override
+    public <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable) {
+        return new AssembleMultipleImpl<>(context, null, StreamSupport.stream(iterable.spliterator(), false));
+    }
 
-  @Override
-  public <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page) {
-    return new AssemblePageImpl<>(context, null, page);
-  }
+    @Override
+    public <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page) {
+        return new AssemblePageImpl<>(context, null, page);
+    }
 
-  @Override
-  public <D> MergeSingleWithQualifier merge(D dto) {
-    return new MergeSingleImpl<>(context, dto);
-  }
+    @Override
+    public <D> MergeSingleWithQualifier merge(D dto) {
+        return new MergeSingleImpl<>(context, dto);
+    }
 
-  @Override
-  public <D> MergeMultipleWithQualifier merge(Stream<D> stream) {
-    return new MergeMultipleImpl<>(context, stream);
-  }
+    @Override
+    public <D> MergeMultipleWithQualifier merge(Stream<D> stream) {
+        return new MergeMultipleImpl<>(context, stream);
+    }
 
-  @Override
-  public <D> MergeMultipleWithQualifier merge(Iterable<D> iterable) {
-    return new MergeMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false));
-  }
+    @Override
+    public <D> MergeMultipleWithQualifier merge(Iterable<D> iterable) {
+        return new MergeMultipleImpl<>(context, StreamSupport.stream(iterable.spliterator(), false));
+    }
 }

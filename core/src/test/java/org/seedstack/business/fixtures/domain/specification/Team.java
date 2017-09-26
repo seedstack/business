@@ -17,33 +17,33 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class Team extends BaseAggregateRoot<String> {
 
-  private final String name;
-  private Set<Person> members = new HashSet<>();
-  private Person[] vips = new Person[3];
+    private final String name;
+    private Set<Person> members = new HashSet<>();
+    private Person[] vips = new Person[3];
 
-  public Team(String name) {
-    this.name = name;
-  }
+    public Team(String name) {
+        this.name = name;
+    }
 
-  public void addMember(String name, int age, Address address) {
-    members.add(new Person(name, age, address));
-  }
+    public void addMember(String name, int age, Address address) {
+        members.add(new Person(name, age, address));
+    }
 
-  public Set<Person> members() {
-    return Collections.unmodifiableSet(members);
-  }
+    public Set<Person> members() {
+        return Collections.unmodifiableSet(members);
+    }
 
-  public void addVip(int position, String name, int age, Address address) {
-    checkArgument(position >= 0 && position < 3, "position must be in interval [0,3[");
-    vips[position] = new Person(name, age, address);
-  }
+    public void addVip(int position, String name, int age, Address address) {
+        checkArgument(position >= 0 && position < 3, "position must be in interval [0,3[");
+        vips[position] = new Person(name, age, address);
+    }
 
-  public Person[] getVips() {
-    return vips.clone();
-  }
+    public Person[] getVips() {
+        return vips.clone();
+    }
 
-  @Override
-  public String getId() {
-    return name;
-  }
+    @Override
+    public String getId() {
+        return name;
+    }
 }

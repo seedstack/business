@@ -10,19 +10,18 @@ package org.seedstack.business.fixtures.domain.order;
 
 import org.seedstack.business.domain.BaseValueObject;
 
-
 public class OrderId extends BaseValueObject {
 
-  private String value;
+    private String value;
 
-  OrderId() {
-  }
+    OrderId() {
+    }
 
-  public OrderId(String value) {
-    this.value = value;
-  }
+    public OrderId(String value) {
+        this.value = value;
+    }
 
-  public String getValue() {
-    return value;
-  }
+    public String getValue() {
+        return value;
+    }
 }

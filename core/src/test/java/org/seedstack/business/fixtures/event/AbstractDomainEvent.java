@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.domain.DomainEvent;
 
-
 public class AbstractDomainEvent implements DomainEvent {
 
 }

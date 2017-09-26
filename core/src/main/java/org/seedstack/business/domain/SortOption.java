@@ -18,117 +18,116 @@ import java.util.Objects;
  */
 public class SortOption implements Repository.Option {
 
-  private final List<SortedAttribute> sortedAttributes = new ArrayList<>();
-  private final Direction defaultDirection;
-
-  /**
-   * Creates an empty sort option with {@link Direction#ASCENDING} as default sort direction.
-   */
-  public SortOption() {
-    this.defaultDirection = Direction.ASCENDING;
-  }
-
-  /**
-   * Creates an empty sort option with the specified argument as default sort direction.
-   *
-   * @param defaultDirection the default sort direction.
-   */
-  public SortOption(Direction defaultDirection) {
-    this.defaultDirection = defaultDirection;
-  }
-
-  /**
-   * Adds the specified attribute to the list of sorted attributes with the default direction.
-   *
-   * @param attribute the attribute to sort.
-   * @return the sort option itself.
-   */
-  public SortOption add(String attribute) {
-    sortedAttributes.add(new SortedAttribute(attribute, defaultDirection));
-    return this;
-  }
-
-  /**
-   * Adds the specified attribute to the list of sorted attributes with the specified direction.
-   *
-   * @param attribute the attribute to sort.
-   * @param direction the direction this attribute will be sorted with.
-   * @return the sort option itself.
-   */
-  public SortOption add(String attribute, Direction direction) {
-    sortedAttributes.add(new SortedAttribute(attribute, direction));
-    return this;
-  }
-
-  /**
-   * Returns the sorted attributes.
-   *
-   * @return the list of currently registered sorted attributes.
-   */
-  public List<SortedAttribute> getSortedAttributes() {
-    return Collections.unmodifiableList(sortedAttributes);
-  }
-
-  /**
-   * Sort direction associated to a sorted attribute.
-   */
-  public enum Direction {
-    ASCENDING, DESCENDING
-  }
-
-  /**
-   * Represents a specific sorted attribute in a {@link SortOption}.
-   */
-  public static class SortedAttribute {
-
-    private final String attribute;
-    private final Direction direction;
+    private final List<SortedAttribute> sortedAttributes = new ArrayList<>();
+    private final Direction defaultDirection;
 
     /**
-     * Creates a sorted attribute.
-     *
-     * @param attribute the name of the attribute to sort.
-     * @param direction the direction of the sort.
+     * Creates an empty sort option with {@link Direction#ASCENDING} as default sort direction.
      */
-    SortedAttribute(String attribute, Direction direction) {
-      this.direction = direction;
-      this.attribute = attribute;
+    public SortOption() {
+        this.defaultDirection = Direction.ASCENDING;
     }
 
     /**
-     * Returns the sort direction of the attribute.
+     * Creates an empty sort option with the specified argument as default sort direction.
      *
-     * @return the direction the attribute will be sorted with.
+     * @param defaultDirection the default sort direction.
      */
-    public Direction getDirection() {
-      return direction;
+    public SortOption(Direction defaultDirection) {
+        this.defaultDirection = defaultDirection;
     }
 
     /**
-     * Returns the attribute name.
+     * Adds the specified attribute to the list of sorted attributes with the default direction.
      *
-     * @return the sorted attribute name.
+     * @param attribute the attribute to sort.
+     * @return the sort option itself.
      */
-    public String getAttribute() {
-      return attribute;
+    public SortOption add(String attribute) {
+        sortedAttributes.add(new SortedAttribute(attribute, defaultDirection));
+        return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-        return false;
-      }
-      SortedAttribute sortedAttribute = (SortedAttribute) o;
-      return direction == sortedAttribute.direction && Objects
-          .equals(attribute, sortedAttribute.attribute);
+    /**
+     * Adds the specified attribute to the list of sorted attributes with the specified direction.
+     *
+     * @param attribute the attribute to sort.
+     * @param direction the direction this attribute will be sorted with.
+     * @return the sort option itself.
+     */
+    public SortOption add(String attribute, Direction direction) {
+        sortedAttributes.add(new SortedAttribute(attribute, direction));
+        return this;
     }
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(direction, attribute);
+    /**
+     * Returns the sorted attributes.
+     *
+     * @return the list of currently registered sorted attributes.
+     */
+    public List<SortedAttribute> getSortedAttributes() {
+        return Collections.unmodifiableList(sortedAttributes);
     }
-  }
+
+    /**
+     * Sort direction associated to a sorted attribute.
+     */
+    public enum Direction {
+        ASCENDING, DESCENDING
+    }
+
+    /**
+     * Represents a specific sorted attribute in a {@link SortOption}.
+     */
+    public static class SortedAttribute {
+
+        private final String attribute;
+        private final Direction direction;
+
+        /**
+         * Creates a sorted attribute.
+         *
+         * @param attribute the name of the attribute to sort.
+         * @param direction the direction of the sort.
+         */
+        SortedAttribute(String attribute, Direction direction) {
+            this.direction = direction;
+            this.attribute = attribute;
+        }
+
+        /**
+         * Returns the sort direction of the attribute.
+         *
+         * @return the direction the attribute will be sorted with.
+         */
+        public Direction getDirection() {
+            return direction;
+        }
+
+        /**
+         * Returns the attribute name.
+         *
+         * @return the sorted attribute name.
+         */
+        public String getAttribute() {
+            return attribute;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            SortedAttribute sortedAttribute = (SortedAttribute) o;
+            return direction == sortedAttribute.direction && Objects.equals(attribute, sortedAttribute.attribute);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(direction, attribute);
+        }
+    }
 }

@@ -17,21 +17,21 @@ import org.seedstack.business.domain.AggregateNotFoundException;
  **/
 public interface MergeFromRepositoryOrFactory<T> {
 
-  /**
-   * Returns the aggregates or throws an {@link AggregateNotFoundException} if at least one
-   * aggregate cannot be loaded from their repository.
-   *
-   * @return the next element in the DSL.
-   * @throws AggregateNotFoundException if an aggregate cannot be retrieved from the repository.
-   */
-  T orFail() throws AggregateNotFoundException;
+    /**
+     * Returns the aggregates or throws an {@link AggregateNotFoundException} if at least one
+     * aggregate cannot be loaded from their repository.
+     *
+     * @return the next element in the DSL.
+     * @throws AggregateNotFoundException if an aggregate cannot be retrieved from the repository.
+     */
+    T orFail() throws AggregateNotFoundException;
 
-  /**
-   * Returns the aggregates, allowing to create aggregates with its {@link
-   * org.seedstack.business.domain.Factory} when they cannot be loaded from the repository.It uses
-   * the {@link FactoryArgument} annotation on the DTO to find the factory method parameters.
-   *
-   * @return the next element in the DSL.
-   */
-  T orFromFactory();
+    /**
+     * Returns the aggregates, allowing to create aggregates with its {@link
+     * org.seedstack.business.domain.Factory} when they cannot be loaded from the repository.It uses
+     * the {@link FactoryArgument} annotation on the DTO to find the factory method parameters.
+     *
+     * @return the next element in the DSL.
+     */
+    T orFromFactory();
 }

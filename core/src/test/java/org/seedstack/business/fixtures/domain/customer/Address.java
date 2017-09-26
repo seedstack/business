@@ -12,38 +12,37 @@ import org.seedstack.business.domain.BaseValueObject;
 
 public class Address extends BaseValueObject {
 
-  private String address1;
-  private String address2;
-  private String zipcode;
-  private String country;
+    private String address1;
+    private String address2;
+    private String zipcode;
+    private String country;
 
-  protected Address() {
-  }
+    protected Address() {
+    }
 
+    public Address(String address1, String address2, String zipcode, String country) {
+        this.address1 = address1;
+        this.address2 = address2;
+        this.zipcode = zipcode;
+        this.country = country;
+    }
 
-  public Address(String address1, String address2, String zipcode, String country) {
-    this.address1 = address1;
-    this.address2 = address2;
-    this.zipcode = zipcode;
-    this.country = country;
-  }
+    public String getAddress1() {
+        return address1;
+    }
 
-  public String getAddress1() {
-    return address1;
-  }
+    public String getAddress2() {
+        return address2;
+    }
 
-  public String getAddress2() {
-    return address2;
-  }
+    public String getZipcode() {
+        return zipcode;
+    }
 
-  public String getZipcode() {
-    return zipcode;
-  }
+    public String getCountry() {
+        return country;
+    }
 
-  public String getCountry() {
-    return country;
-  }
-
-  public enum AddressType {shipping, billing, contact}
+    public enum AddressType {shipping, billing, contact}
 
 }

@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.identity;
 
 import java.util.Set;
@@ -17,36 +18,36 @@ import org.seedstack.business.domain.Identity;
 
 public class MyAggregateWithBadIdentityManagement extends BaseAggregateRoot<UUID> {
 
-  @Identity(generator = RandomIdentityGenerator.class)
-  private UUID id;
+    @Identity(generator = RandomIdentityGenerator.class)
+    private UUID id;
 
-  private String name;
+    private String name;
 
-  private MyEntity mySubAggregate;
+    private MyEntity mySubAggregate;
 
-  private Set<MyEntity> mySubAggregates;
+    private Set<MyEntity> mySubAggregates;
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public MyEntity getMySubAggregate() {
-    return mySubAggregate;
-  }
+    public MyEntity getMySubAggregate() {
+        return mySubAggregate;
+    }
 
-  public void setMySubAggregate(MyEntity mySubAggregate) {
-    this.mySubAggregate = mySubAggregate;
-  }
+    public void setMySubAggregate(MyEntity mySubAggregate) {
+        this.mySubAggregate = mySubAggregate;
+    }
 
-  public Set<MyEntity> getMySubAggregates() {
-    return mySubAggregates;
-  }
+    public Set<MyEntity> getMySubAggregates() {
+        return mySubAggregates;
+    }
 
-  public void setMySubAggregates(Set<MyEntity> mySubAggregates) {
-    this.mySubAggregates = mySubAggregates;
-  }
+    public void setMySubAggregates(Set<MyEntity> mySubAggregates) {
+        this.mySubAggregates = mySubAggregates;
+    }
 }

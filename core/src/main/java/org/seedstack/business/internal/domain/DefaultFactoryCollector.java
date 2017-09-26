@@ -24,64 +24,65 @@ import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 
-
 class DefaultFactoryCollector {
 
-  private final Map<Key<?>, Class<?>> bindings;
+    private final Map<Key<?>, Class<?>> bindings;
 
-  DefaultFactoryCollector(Map<Key<?>, Class<?>> bindings) {
-    this.bindings = bindings;
-  }
-
-  Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses,
-      Collection<Class<?>> valueObjectClasses) {
-    Collection<BindingStrategy> strategies = new ArrayList<>();
-    boolean bindGuiceFactory = true;
-
-    if (!aggregateClasses.isEmpty() || !valueObjectClasses.isEmpty()) {
-      strategies.add(new GenericBindingStrategy<>(Factory.class, DefaultFactory.class,
-          Stream.concat(aggregateClasses.stream(), valueObjectClasses.stream())
-              .filter(this::isaBoolean)
-              .map(candidate -> new Type[]{candidate}).collect(Collectors.toList())));
-      bindGuiceFactory = false;
+    DefaultFactoryCollector(Map<Key<?>, Class<?>> bindings) {
+        this.bindings = bindings;
     }
 
-    Multimap<Type, Class<?>> producibleClasses = filterProducibleClasses(bindings);
-    if (!producibleClasses.isEmpty()) {
-      strategies.add(
-          new DefaultFactoryBindingStrategy<>(Factory.class, DefaultFactory.class,
-              producibleClasses,
-              bindGuiceFactory));
+    Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses,
+            Collection<Class<?>> valueObjectClasses) {
+        Collection<BindingStrategy> strategies = new ArrayList<>();
+        boolean bindGuiceFactory = true;
+
+        if (!aggregateClasses.isEmpty() || !valueObjectClasses.isEmpty()) {
+            strategies.add(new GenericBindingStrategy<>(Factory.class, DefaultFactory.class,
+                    Stream.concat(aggregateClasses.stream(), valueObjectClasses.stream())
+                            .filter(this::isCandidate)
+                            .map(candidate -> new Type[]{candidate})
+                            .collect(Collectors.toList())));
+            bindGuiceFactory = false;
+        }
+
+        Multimap<Type, Class<?>> producibleClasses = filterProducibleClasses(bindings);
+        if (!producibleClasses.isEmpty()) {
+            strategies.add(new DefaultFactoryBindingStrategy<>(Factory.class, DefaultFactory.class, producibleClasses,
+                    bindGuiceFactory));
+        }
+
+        return strategies;
     }
 
-    return strategies;
-  }
-
-  /**
-   * Filter a map containing pairs of interface/implementation in order to get only producible
-   * classes.
-   *
-   * @param bindings map of interface/implementation
-   * @return producible pairs
-   */
-  private Multimap<Type, Class<?>> filterProducibleClasses(Map<Key<?>, Class<?>> bindings) {
-    Multimap<Type, Class<?>> defaultFactoryToBind = ArrayListMultimap.create();
-    bindings.entrySet().stream()
-        .filter(entry -> isaBoolean(entry.getKey().getTypeLiteral().getType()))
-        .forEach(entry -> defaultFactoryToBind
-            .put(entry.getKey().getTypeLiteral().getType(), entry.getValue()));
-    return defaultFactoryToBind;
-  }
-
-  private boolean isaBoolean(Type type) {
-    boolean result = false;
-    if (type instanceof Class<?>) {
-      result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy((Class<?>) type);
-    } else if (type instanceof ParameterizedType) {
-      result = BusinessSpecifications.PRODUCIBLE
-          .isSatisfiedBy((Class<?>) ((ParameterizedType) type).getRawType());
+    /**
+     * Filter a map containing pairs of interface/implementation in order to get only producible
+     * classes.
+     *
+     * @param bindings map of interface/implementation
+     * @return producible pairs
+     */
+    private Multimap<Type, Class<?>> filterProducibleClasses(Map<Key<?>, Class<?>> bindings) {
+        Multimap<Type, Class<?>> defaultFactoryToBind = ArrayListMultimap.create();
+        bindings.entrySet()
+                .stream()
+                .filter(entry -> isCandidate(entry.getKey()
+                        .getTypeLiteral()
+                        .getType()))
+                .forEach(entry -> defaultFactoryToBind.put(entry.getKey()
+                        .getTypeLiteral()
+                        .getType(), entry.getValue()));
+        return defaultFactoryToBind;
     }
-    return result && !bindings
-        .containsKey(Key.get(Types.newParameterizedType(Factory.class, type)));
-  }
+
+    private boolean isCandidate(Type type) {
+        boolean result = false;
+        if (type instanceof Class<?>) {
+            result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy((Class<?>) type);
+        } else if (type instanceof ParameterizedType) {
+            result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy(
+                    (Class<?>) ((ParameterizedType) type).getRawType());
+        }
+        return result && !bindings.containsKey(Key.get(Types.newParameterizedType(Factory.class, type)));
+    }
 }

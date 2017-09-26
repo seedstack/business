@@ -10,8 +10,6 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import org.seedstack.business.domain.Factory;
 
-
 public interface MyFactory extends Factory<MyDomainPolicy> {
-
 
 }

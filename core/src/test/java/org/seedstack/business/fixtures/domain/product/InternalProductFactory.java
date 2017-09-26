@@ -13,27 +13,27 @@ import org.seedstack.business.domain.BaseFactory;
 
 public class InternalProductFactory extends BaseFactory<Product> implements ProductFactory {
 
-  @Inject
-  ProductNamePolicy productNamePolicy;
+    @Inject
+    ProductNamePolicy productNamePolicy;
 
-  public InternalProductFactory() {
-  }
+    public InternalProductFactory() {
+    }
 
-  @Override
-  public Product createProduct(Short storeId, Short productCode) {
-    ProductId id = new ProductId(storeId, (String) productNamePolicy.transform(productCode));
-    Product product = new Product(id);
+    @Override
+    public Product createProduct(Short storeId, Short productCode) {
+        ProductId id = new ProductId(storeId, (String) productNamePolicy.transform(productCode));
+        Product product = new Product(id);
 
-    return product;
-  }
+        return product;
+    }
 
-  @Override
-  public Product createProduct(Short storeId, Short productCode, String name, String description) {
-    Product product = createProduct(storeId, productCode);
-    product.setName(name);
-    product.setDescription(description);
+    @Override
+    public Product createProduct(Short storeId, Short productCode, String name, String description) {
+        Product product = createProduct(storeId, productCode);
+        product.setName(name);
+        product.setDescription(description);
 
-    return product;
-  }
+        return product;
+    }
 
 }

@@ -18,26 +18,26 @@ import java.util.List;
  */
 public class SimpleSlice<T> implements Slice<T> {
 
-  private final long size;
-  private final List<T> items;
+    private final long size;
+    private final List<T> items;
 
-  /**
-   * This constructor take a list of items that can potentially be huge.
-   *
-   * @param items The big list to be viewed.
-   */
-  public SimpleSlice(List<T> items) {
-    this.items = items;
-    this.size = items.size();
-  }
+    /**
+     * This constructor take a list of items that can potentially be huge.
+     *
+     * @param items The big list to be viewed.
+     */
+    public SimpleSlice(List<T> items) {
+        this.items = items;
+        this.size = items.size();
+    }
 
-  @Override
-  public List<T> getItems() {
-    return Collections.unmodifiableList(this.items);
-  }
+    @Override
+    public List<T> getItems() {
+        return Collections.unmodifiableList(this.items);
+    }
 
-  @Override
-  public long getSize() {
-    return size;
-  }
+    @Override
+    public long getSize() {
+        return size;
+    }
 }

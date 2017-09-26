@@ -13,51 +13,51 @@ import org.seedstack.business.assembler.FactoryArgument;
 
 public class MyCustomerRepresentation {
 
-  private String id;
-  private String name;
-  private String primaryAccountNumber;
+    private String id;
+    private String name;
+    private String primaryAccountNumber;
 
-  @AggregateId
-  @FactoryArgument(index = 0)
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @FactoryArgument(index = 1)
-  public String factoryFirstName() {
-    if (name != null) {
-      return name.split(" ")[0];
+    @AggregateId
+    @FactoryArgument(index = 0)
+    public String getId() {
+        return id;
     }
-    return null;
-  }
 
-  @FactoryArgument(index = 2)
-  public String factoryLastName() {
-    if (name != null) {
-      return name.split(" ")[1];
+    public void setId(String id) {
+        this.id = id;
     }
-    return null;
 
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getPrimaryAccountNumber() {
-    return primaryAccountNumber;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setPrimaryAccountNumber(String primaryAccountNumber) {
-    this.primaryAccountNumber = primaryAccountNumber;
-  }
+    @FactoryArgument(index = 1)
+    public String factoryFirstName() {
+        if (name != null) {
+            return name.split(" ")[0];
+        }
+        return null;
+    }
+
+    @FactoryArgument(index = 2)
+    public String factoryLastName() {
+        if (name != null) {
+            return name.split(" ")[1];
+        }
+        return null;
+
+    }
+
+    public String getPrimaryAccountNumber() {
+        return primaryAccountNumber;
+    }
+
+    public void setPrimaryAccountNumber(String primaryAccountNumber) {
+        this.primaryAccountNumber = primaryAccountNumber;
+    }
 }
 

@@ -10,23 +10,22 @@ package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
 import org.seedstack.business.assembler.AggregateId;
 
-
 public class Case1Dto {
 
-  private int id;
-  private String name;
+    private int id;
+    private String name;
 
-  public Case1Dto(int id, String name) {
-    this.id = id;
-    this.name = name;
-  }
+    public Case1Dto(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-  @AggregateId
-  public int getId() {
-    return id;
-  }
+    @AggregateId
+    public int getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 }

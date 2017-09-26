@@ -10,12 +10,11 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import javax.inject.Named;
 
-
 @Named("2")
 public class FactImpl2 implements MyFactory {
 
-  @Override
-  public Class<MyDomainPolicy> getProducedClass() {
-    return null;
-  }
+    @Override
+    public Class<MyDomainPolicy> getProducedClass() {
+        return null;
+    }
 }

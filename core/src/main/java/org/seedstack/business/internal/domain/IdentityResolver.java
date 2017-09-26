@@ -18,30 +18,32 @@ import org.seedstack.shed.reflect.Classes;
 
 public class IdentityResolver implements AnnotationResolver<Class<?>, Identity> {
 
-  public static final IdentityResolver INSTANCE = new IdentityResolver();
+    public static final IdentityResolver INSTANCE = new IdentityResolver();
 
-  private IdentityResolver() {
-    // no external instantiation allowed
-  }
+    private IdentityResolver() {
+        // no external instantiation allowed
+    }
 
-  @Override
-  public Optional<Identity> apply(Class<?> someClass) {
-    return resolveField(someClass).map(f -> f.getAnnotation(Identity.class));
-  }
+    @Override
+    public Optional<Identity> apply(Class<?> someClass) {
+        return resolveField(someClass).map(f -> f.getAnnotation(Identity.class));
+    }
 
-  @Override
-  public boolean test(Class<?> someClass) {
-    return resolveField(someClass).isPresent();
-  }
+    @Override
+    public boolean test(Class<?> someClass) {
+        return resolveField(someClass).isPresent();
+    }
 
-  /**
-   * Resolves the first field holding annotated or meta-annotated with {@link Identity}.
-   *
-   * @return the {@link Field} wrapped in an {@link Optional}.
-   */
-  public Optional<Field> resolveField(Class<?> someClass) {
-    return Classes.from(someClass).traversingSuperclasses().fields()
-        .filter(elementAnnotatedWith(Identity.class, true))
-        .findFirst();
-  }
+    /**
+     * Resolves the first field holding annotated or meta-annotated with {@link Identity}.
+     *
+     * @return the {@link Field} wrapped in an {@link Optional}.
+     */
+    public Optional<Field> resolveField(Class<?> someClass) {
+        return Classes.from(someClass)
+                .traversingSuperclasses()
+                .fields()
+                .filter(elementAnnotatedWith(Identity.class, true))
+                .findFirst();
+    }
 }

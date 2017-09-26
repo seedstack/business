@@ -12,14 +12,12 @@ import com.google.inject.assistedinject.Assisted;
 import javax.inject.Inject;
 import org.seedstack.business.domain.AggregateRoot;
 
+public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
 
-public abstract class AbstractDefaultRepoSample<A extends AggregateRoot<K>, K> extends
-    DummyRepository<A, K> {
-
-  @Inject
-  @SuppressWarnings("unchecked")
-  public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass,
-      @Assisted("keyClass") Object keyClass) {
-    super((Class) aggregateRootClass, (Class) keyClass);
-  }
+    @Inject
+    @SuppressWarnings("unchecked")
+    public AbstractDefaultRepoSample(@Assisted("aggregateRootClass") Object aggregateRootClass,
+            @Assisted("keyClass") Object keyClass) {
+        super((Class) aggregateRootClass, (Class) keyClass);
+    }
 }

@@ -13,17 +13,17 @@ import org.seedstack.business.assembler.BaseTupleAssembler;
 
 class DefaultTupleAssembler<T extends Tuple, D> extends BaseTupleAssembler<T, D> {
 
-  DefaultTupleAssembler(Class<D> dtoClass) {
-    super(dtoClass);
-  }
+    DefaultTupleAssembler(Class<D> dtoClass) {
+        super(dtoClass);
+    }
 
-  @Override
-  public void mergeAggregateIntoDto(T sourceAggregate, D targetDto) {
+    @Override
+    public void mergeAggregateIntoDto(T sourceAggregate, D targetDto) {
 
-  }
+    }
 
-  @Override
-  public void mergeDtoIntoAggregate(D sourceDto, T targetAggregate) {
+    @Override
+    public void mergeDtoIntoAggregate(D sourceDto, T targetAggregate) {
 
-  }
+    }
 }

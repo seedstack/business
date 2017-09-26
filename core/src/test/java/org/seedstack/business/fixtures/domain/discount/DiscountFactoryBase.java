@@ -10,17 +10,16 @@ package org.seedstack.business.fixtures.domain.discount;
 
 import org.seedstack.business.domain.BaseFactory;
 
-
 public class DiscountFactoryBase extends BaseFactory<Discount> implements DiscountFactory {
 
-  @Override
-  public Discount createNewActivation(String id, String description) {
+    @Override
+    public Discount createNewActivation(String id, String description) {
 
-    Discount discount = new Discount(id);
+        Discount discount = new Discount(id);
 
-    discount.setDescription(description);
+        discount.setDescription(description);
 
-    return discount;
-  }
+        return discount;
+    }
 
 }

@@ -14,16 +14,16 @@ import org.seedstack.business.domain.DomainEventPublisher;
 
 public class Handler1Domain implements DomainEventHandler<Event1> {
 
-  @Inject
-  private DomainEventPublisher domainEventPublisher;
+    @Inject
+    private DomainEventPublisher domainEventPublisher;
 
-  @Override
-  public void onEvent(Event1 event) {
-    domainEventPublisher.publish(new Event2());
-  }
+    @Override
+    public void onEvent(Event1 event) {
+        domainEventPublisher.publish(new Event2());
+    }
 
-  @Override
-  public Class<Event1> getEventClass() {
-    return Event1.class;
-  }
+    @Override
+    public Class<Event1> getEventClass() {
+        return Event1.class;
+    }
 }

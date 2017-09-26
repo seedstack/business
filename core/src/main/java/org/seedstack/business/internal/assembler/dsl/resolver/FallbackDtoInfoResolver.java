@@ -21,41 +21,41 @@ import org.seedstack.business.spi.DtoInfoResolverPriority;
 @Priority(DtoInfoResolverPriority.FALLBACK)
 public class FallbackDtoInfoResolver implements DtoInfoResolver {
 
-  @Inject
-  private DomainRegistry domainRegistry;
+    @Inject
+    private DomainRegistry domainRegistry;
 
-  @Override
-  public <D> boolean supports(D dto) {
-    return true;
-  }
-
-  @Override
-  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
-    return createObject(aggregateIdClass);
-  }
-
-  @Override
-  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
-    return createObject(aggregateIdClass);
-  }
-
-  @Override
-  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
-    return createObject(aggregateRootClass);
-  }
-
-  @Override
-  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
-      int position) {
-    return createObject(aggregateRootClass);
-  }
-
-  @SuppressWarnings("unchecked")
-  private <T> T createObject(Class<T> classToProduce) {
-    if (!Producible.class.isAssignableFrom(classToProduce)) {
-      return instantiateDefault(classToProduce);
-    } else {
-      return (T) domainRegistry.getFactory(classToProduce.asSubclass(Producible.class)).create();
+    @Override
+    public <D> boolean supports(D dto) {
+        return true;
     }
-  }
+
+    @Override
+    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
+        return createObject(aggregateIdClass);
+    }
+
+    @Override
+    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
+        return createObject(aggregateIdClass);
+    }
+
+    @Override
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
+        return createObject(aggregateRootClass);
+    }
+
+    @Override
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position) {
+        return createObject(aggregateRootClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T createObject(Class<T> classToProduce) {
+        if (!Producible.class.isAssignableFrom(classToProduce)) {
+            return instantiateDefault(classToProduce);
+        } else {
+            return (T) domainRegistry.getFactory(classToProduce.asSubclass(Producible.class))
+                    .create();
+        }
+    }
 }

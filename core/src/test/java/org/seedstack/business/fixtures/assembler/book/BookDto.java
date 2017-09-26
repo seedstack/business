@@ -12,40 +12,40 @@ import java.util.Date;
 
 public class BookDto {
 
-  private String title;
-  private String author;
-  private Date publishDate;
-  private String editor;
+    private String title;
+    private String author;
+    private Date publishDate;
+    private String editor;
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public String getAuthor() {
-    return author;
-  }
+    public String getAuthor() {
+        return author;
+    }
 
-  public void setAuthor(String author) {
-    this.author = author;
-  }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-  public Date getPublishDate() {
-    return publishDate;
-  }
+    public Date getPublishDate() {
+        return publishDate;
+    }
 
-  public void setPublishDate(Date publishDate) {
-    this.publishDate = publishDate;
-  }
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
 
-  public String getEditor() {
-    return editor;
-  }
+    public String getEditor() {
+        return editor;
+    }
 
-  public void setEditor(String editor) {
-    this.editor = editor;
-  }
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 }

@@ -20,17 +20,16 @@ import org.seedstack.business.spi.GenericImplementation;
  */
 @GenericImplementation
 @InMemory
-public class DefaultInMemoryRepository<A extends AggregateRoot<I>, I> extends
-    BaseInMemoryRepository<A, I> {
+public class DefaultInMemoryRepository<A extends AggregateRoot<I>, I> extends BaseInMemoryRepository<A, I> {
 
-  /**
-   * Creates a default in-memory repository.
-   *
-   * @param genericClasses the resolved generics for the aggregate root class and the key class
-   */
-  @SuppressWarnings("unchecked")
-  @Inject
-  public DefaultInMemoryRepository(@Assisted Object[] genericClasses) {
-    super((Class<A>) genericClasses[0], (Class<I>) genericClasses[1]);
-  }
+    /**
+     * Creates a default in-memory repository.
+     *
+     * @param genericClasses the resolved generics for the aggregate root class and the key class
+     */
+    @SuppressWarnings("unchecked")
+    @Inject
+    public DefaultInMemoryRepository(@Assisted Object[] genericClasses) {
+        super((Class<A>) genericClasses[0], (Class<I>) genericClasses[1]);
+    }
 }

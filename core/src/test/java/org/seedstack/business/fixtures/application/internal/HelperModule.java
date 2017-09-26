@@ -16,10 +16,9 @@ import org.seedstack.seed.Install;
 @Install
 public class HelperModule extends AbstractModule {
 
-  @Override
-  @SuppressWarnings("unchecked")
-  protected void configure() {
-    bind(new TypeLiteral<GenericService<String>>() {
-    }).to((Class) GenericServiceInternal.class);
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    protected void configure() {
+        bind(new TypeLiteral<GenericService<String>>() {}).to((Class) GenericServiceInternal.class);
+    }
 }

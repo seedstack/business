@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.qualifier.application;
 
 import javax.inject.Named;
 
-
 @Named("2")
 public class AppServiceImpl2 implements MyApplicationService {
 

@@ -15,13 +15,12 @@ import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 import org.seedstack.seed.Logging;
 import org.slf4j.Logger;
 
-public class ProductInMemoryRepository extends BaseInMemoryRepository<Product, ProductId> implements
-    ProductRepository {
+public class ProductInMemoryRepository extends BaseInMemoryRepository<Product, ProductId> implements ProductRepository {
 
-  @Logging
-  private Logger logger;
+    @Logging
+    private Logger logger;
 
-  public void dummyMethod() {
-    logger.info("Very useful method execution.");
-  }
+    public void dummyMethod() {
+        logger.info("Very useful method execution.");
+    }
 }

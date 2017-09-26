@@ -13,35 +13,34 @@ import java.util.List;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
-
 public class Order extends BaseAggregateRoot<OrderId> {
 
-  private OrderId id;
-  private CustomerId customerId;
-  private String description;
-  private List<OrderItem> orderItems = new ArrayList<>();
+    private OrderId id;
+    private CustomerId customerId;
+    private String description;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-  public Order() {
-  }
+    public Order() {
+    }
 
-  Order(OrderId id) {
-    this.id = id;
-  }
+    Order(OrderId id) {
+        this.id = id;
+    }
 
-  public CustomerId getCustomerId() {
-    return customerId;
-  }
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
 
-  public void setCustomerId(CustomerId customerId) {
-    this.customerId = customerId;
-  }
+    public void setCustomerId(CustomerId customerId) {
+        this.customerId = customerId;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

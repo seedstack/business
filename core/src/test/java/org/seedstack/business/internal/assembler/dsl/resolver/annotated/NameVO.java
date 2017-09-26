@@ -8,22 +8,21 @@
 
 package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
-
 public class NameVO {
 
-  private String firstName;
-  private String lastName;
+    private String firstName;
+    private String lastName;
 
-  public NameVO(String firstName, String lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
+    public NameVO(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 }

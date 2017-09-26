@@ -23,8 +23,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface Identity {
 
-  /**
-   * @return the identity generator used to generate identity if any.
-   */
-  Class<? extends IdentityGenerator> generator() default IdentityGenerator.class;
+    /**
+     * @return the identity generator used to generate identity if any.
+     */
+    Class<? extends IdentityGenerator> generator() default IdentityGenerator.class;
 }

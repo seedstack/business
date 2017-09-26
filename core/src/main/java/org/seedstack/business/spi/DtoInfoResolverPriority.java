@@ -18,18 +18,18 @@ import org.seedstack.business.assembler.FactoryArgument;
  */
 public class DtoInfoResolverPriority {
 
-  /**
-   * Matching annotations DTO info resolver uses {@link AggregateId} and {@link FactoryArgument}
-   * annotations to resolve DTO information. It is able to use factories for {@link
-   * org.seedstack.business.domain.ValueObject}s and
-   * {@link org.seedstack.business.domain.AggregateRoot}s
-   * creation.
-   */
-  public static final int MATCHING_ANNOTATIONS = 0;
+    /**
+     * Matching annotations DTO info resolver uses {@link AggregateId} and {@link FactoryArgument}
+     * annotations to resolve DTO information. It is able to use factories for {@link
+     * org.seedstack.business.domain.ValueObject}s and
+     * {@link org.seedstack.business.domain.AggregateRoot}s
+     * creation.
+     */
+    public static final int MATCHING_ANNOTATIONS = 0;
 
-  /**
-   * Fallback DTO info resolver is only capable of instantiating a default value of identifiers and
-   * aggregates by calling their factory without parameter or their default constructor.
-   */
-  public static final int FALLBACK = Integer.MIN_VALUE;
+    /**
+     * Fallback DTO info resolver is only capable of instantiating a default value of identifiers and
+     * aggregates by calling their factory without parameter or their default constructor.
+     */
+    public static final int FALLBACK = Integer.MIN_VALUE;
 }

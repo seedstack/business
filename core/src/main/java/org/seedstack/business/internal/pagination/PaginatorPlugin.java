@@ -20,18 +20,18 @@ import org.seedstack.seed.core.internal.AbstractSeedPlugin;
  */
 public class PaginatorPlugin extends AbstractSeedPlugin {
 
-  @Override
-  public String name() {
-    return "business-pagination";
-  }
+    @Override
+    public String name() {
+        return "business-pagination";
+    }
 
-  @Override
-  public InitState initialize(InitContext initContext) {
-    return InitState.INITIALIZED;
-  }
+    @Override
+    public InitState initialize(InitContext initContext) {
+        return InitState.INITIALIZED;
+    }
 
-  @Override
-  public Object nativeUnitModule() {
-    return new PaginatorModule();
-  }
+    @Override
+    public Object nativeUnitModule() {
+        return new PaginatorModule();
+    }
 }

@@ -11,28 +11,27 @@ package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 import java.util.Date;
 import org.seedstack.business.assembler.AggregateId;
 
-
 public class Case2Dto {
 
-  private String name;
-  private Date birthDate;
+    private String name;
+    private Date birthDate;
 
-  public Case2Dto(String name, Date birthDate) {
-    this.name = name;
-    this.birthDate = birthDate;
-  }
+    public Case2Dto(String name, Date birthDate) {
+        this.name = name;
+        this.birthDate = birthDate;
+    }
 
-  @AggregateId(index = 0)
-  public String getName() {
-    return name;
-  }
+    @AggregateId(index = 0)
+    public String getName() {
+        return name;
+    }
 
-  @AggregateId(index = 1)
-  public Date getBirthDate() {
-    return birthDate;
-  }
+    @AggregateId(index = 1)
+    public Date getBirthDate() {
+        return birthDate;
+    }
 
-  public String otherDetails() {
-    return "something";
-  }
+    public String otherDetails() {
+        return "something";
+    }
 }

@@ -21,25 +21,27 @@ import org.seedstack.seed.it.AbstractSeedIT;
  */
 public class SingletonsIT extends AbstractSeedIT {
 
-  @Inject
-  private SingletonService singletonService;
+    @Inject
+    private SingletonService singletonService;
 
-  @Inject
-  private SingletonService singletonService2;
+    @Inject
+    private SingletonService singletonService2;
 
-  @Inject
-  private IndexService indexService;
+    @Inject
+    private IndexService indexService;
 
-  @Inject
-  private IndexService indexService2;
+    @Inject
+    private IndexService indexService2;
 
-  @Test
-  public void singleton_injection_should_work() throws ActivationException {
-    Assertions.assertThat(singletonService).isEqualTo(singletonService2);
-  }
+    @Test
+    public void singleton_injection_should_work() throws ActivationException {
+        Assertions.assertThat(singletonService)
+                .isEqualTo(singletonService2);
+    }
 
-  @Test
-  public void default_scope_injection_should_work() throws ActivationException {
-    Assertions.assertThat(indexService).isNotEqualTo(indexService2);
-  }
+    @Test
+    public void default_scope_injection_should_work() throws ActivationException {
+        Assertions.assertThat(indexService)
+                .isNotEqualTo(indexService2);
+    }
 }

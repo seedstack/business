@@ -21,6 +21,9 @@ import org.kametic.specifications.Specification;
 import org.seedstack.business.Service;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
+import org.seedstack.business.data.DataExporter;
+import org.seedstack.business.data.DataImporter;
+import org.seedstack.business.data.DataSet;
 import org.seedstack.business.domain.DomainAggregateRoot;
 import org.seedstack.business.domain.DomainEntity;
 import org.seedstack.business.domain.DomainEvent;
@@ -38,154 +41,171 @@ import org.seedstack.business.spi.SpecificationTranslator;
 import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.AnnotationPredicates;
 
-
 /**
  * This class provides all the specifications use by the business plugins.
  */
 public final class BusinessSpecifications {
 
-  /**
-   * The aggregate root specification.
-   */
-  public static final Specification<Class<?>> AGGREGATE_ROOT = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainAggregateRoot.class, true)
-          .and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsInterface().negate())).build();
+    /**
+     * The aggregate root specification.
+     */
+    public static final Specification<Class<?>> AGGREGATE_ROOT = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainAggregateRoot.class, true).and(
+                    classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsInterface().negate())).build();
 
-  /**
-   * The domain entities specification.
-   */
-  public static final Specification<Class<?>> ENTITY = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainEntity.class, true)
-          .and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsInterface().negate())).build();
+    /**
+     * The domain entities specification.
+     */
+    public static final Specification<Class<?>> ENTITY = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainEntity.class, true).and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsInterface().negate())).build();
 
-  /**
-   * The domain value objects specification.
-   */
-  public static final Specification<Class<?>> VALUE_OBJECT = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainValueObject.class, true)
-          .and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsInterface().negate())).build();
+    /**
+     * The domain value objects specification.
+     */
+    public static final Specification<Class<?>> VALUE_OBJECT = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainValueObject.class, true).and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsInterface().negate())).build();
 
-  /**
-   * The domain repository specification.
-   */
-  public static final Specification<Class<?>> REPOSITORY = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainRepository.class, true).and(classIsInterface())
-          .and(classIsAnnotation().negate())).build();
+    /**
+     * The domain repository specification.
+     */
+    public static final Specification<Class<?>> REPOSITORY = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainRepository.class, true).and(classIsInterface())
+                    .and(classIsAnnotation().negate())).build();
 
-  public static final Specification<Class<?>> DEFAULT_REPOSITORY = new SpecificationBuilder<>(
-      AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, true)
-          .and(classIsInterface().negate()).and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classOrAncestorAnnotatedWith(DomainRepository.class, true))).build();
+    public static final Specification<Class<?>> DEFAULT_REPOSITORY = new SpecificationBuilder<>(
+            AnnotationPredicates.<Class<?>>elementAnnotatedWith(GenericImplementation.class, true).and(
+                    classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classOrAncestorAnnotatedWith(DomainRepository.class, true))).build();
 
-  /**
-   * The domain service specification.
-   */
-  public static final Specification<Class<?>> SERVICE = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(Service.class, true).and(classIsInterface())
-          .and(classIsAnnotation().negate()))
-      .build();
+    /**
+     * The domain service specification.
+     */
+    public static final Specification<Class<?>> SERVICE = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(Service.class, true).and(classIsInterface())
+                    .and(classIsAnnotation().negate())).build();
 
-  /**
-   * The policy specification.
-   */
-  public static final Specification<Class<?>> POLICY = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainPolicy.class, true).and(classIsInterface())
-          .and(classIsAnnotation().negate()))
-      .build();
+    /**
+     * The policy specification.
+     */
+    public static final Specification<Class<?>> POLICY = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainPolicy.class, true).and(classIsInterface())
+                    .and(classIsAnnotation().negate())).build();
 
-  /**
-   * The domain factory specification.
-   *
-   * @see #PRODUCIBLE
-   */
-  public static final Specification<Class<?>> FACTORY = new SpecificationBuilder<>(
-      classOrAncestorAnnotatedWith(DomainFactory.class, true).and(classIsInterface())
-          .and(classIsAnnotation().negate()))
-      .build();
+    /**
+     * The domain factory specification.
+     *
+     * @see #PRODUCIBLE
+     */
+    public static final Specification<Class<?>> FACTORY = new SpecificationBuilder<>(
+            classOrAncestorAnnotatedWith(DomainFactory.class, true).and(classIsInterface())
+                    .and(classIsAnnotation().negate())).build();
 
-  /**
-   * The specification for the classes producible by factories.
-   */
-  public static final Specification<Class<?>> PRODUCIBLE = new SpecificationBuilder<>(
-      classIsAssignableFrom(Producible.class)).build();
+    /**
+     * The specification for the classes producible by factories.
+     */
+    public static final Specification<Class<?>> PRODUCIBLE = new SpecificationBuilder<>(
+            classIsAssignableFrom(Producible.class)).build();
 
-  /**
-   * The assembler specification. It accepts all assemblers: default assemblers and explicit
-   * assemblers.
-   */
-  public static final Specification<Class<?>> ASSEMBLER = new SpecificationBuilder<>(
-      classIsDescendantOf(Assembler.class).and(classIsInterface().negate())
-          .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
+    /**
+     * The assembler specification. It accepts all assemblers: default assemblers and explicit
+     * assemblers.
+     */
+    public static final Specification<Class<?>> ASSEMBLER = new SpecificationBuilder<>(
+            classIsDescendantOf(Assembler.class).and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
 
-  /**
-   * The assembler specification matching only the explicit assembler.
-   */
-  public static final Specification<Class<?>> EXPLICIT_ASSEMBLER = ASSEMBLER
-      .and(new SpecificationBuilder<>(
-          elementAnnotatedWith(GenericImplementation.class, true).negate()).build());
+    /**
+     * The assembler specification matching only the explicit assembler.
+     */
+    public static final Specification<Class<?>> EXPLICIT_ASSEMBLER = ASSEMBLER.and(
+            new SpecificationBuilder<>(elementAnnotatedWith(GenericImplementation.class, true).negate()).build());
 
-  /**
-   * The assembler specification matching only the default assemblers. <p> Default assemblers are
-   * assembler implementation which are bound for all the DTOs matching the {@link #DTO_OF}
-   * specification. </p>
-   */
-  public static final Specification<Class<?>> DEFAULT_ASSEMBLER = ASSEMBLER
-      .and(new SpecificationBuilder<>(elementAnnotatedWith(GenericImplementation.class, true))
-          .build());
+    /**
+     * The assembler specification matching only the default assemblers. <p> Default assemblers are
+     * assembler implementation which are bound for all the DTOs matching the {@link #DTO_OF}
+     * specification. </p>
+     */
+    public static final Specification<Class<?>> DEFAULT_ASSEMBLER = ASSEMBLER.and(
+            new SpecificationBuilder<>(elementAnnotatedWith(GenericImplementation.class, true)).build());
 
-  /**
-   * The specification for the DTO which require an default assembler to be bound.
-   *
-   * @see #DEFAULT_ASSEMBLER
-   */
-  public static final Specification<Class<?>> DTO_OF = new SpecificationBuilder<Class<?>>(
-      elementAnnotatedWith(DtoOf.class, true)).build();
+    /**
+     * The specification for the DTO which require an default assembler to be bound.
+     *
+     * @see #DEFAULT_ASSEMBLER
+     */
+    public static final Specification<Class<?>> DTO_OF = new SpecificationBuilder<Class<?>>(
+            elementAnnotatedWith(DtoOf.class, true)).build();
 
-  /**
-   * The specification for specification translators.
-   */
-  public static final Specification<Class<?>> DTO_INFO_RESOLVER = new SpecificationBuilder<>(
-      classIsInterface().negate().and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsDescendantOf(DtoInfoResolver.class))).build();
+    /**
+     * The specification for specification translators.
+     */
+    public static final Specification<Class<?>> DTO_INFO_RESOLVER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(DtoInfoResolver.class))).build();
+    /**
+     * The data importer specification.
+     */
+    public static final Specification<Class<?>> DATA_IMPORTER = new SpecificationBuilder<>(
+            classIsDescendantOf(DataImporter.class).and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
 
-  /**
-   * The specification for identity generators.
-   */
-  public static final Specification<Class<?>> IDENTITY_GENERATOR = new SpecificationBuilder<>(
-      classIsInterface().negate().and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsDescendantOf(IdentityGenerator.class))).build();
+    /**
+     * The data exporter specification.
+     */
+    public static final Specification<Class<?>> DATA_EXPORTER = new SpecificationBuilder<>(
+            classIsDescendantOf(DataExporter.class).and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
 
-  /**
-   * The specification for specification translators.
-   */
-  public static final Specification<Class<?>> SPECIFICATION_TRANSLATOR = new SpecificationBuilder<>(
-      classIsInterface().negate().and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsDescendantOf(SpecificationTranslator.class))).build();
+    /**
+     * The specification matching automatic DTO used for data import/export.
+     */
+    public static final Specification<Class<?>> DATA_SET = DTO_OF.and(new SpecificationBuilder<Class<?>>(
+            elementAnnotatedWith(DataSet.class, true)).build());
 
-  /**
-   * The specification for specification converters.
-   */
-  public static final Specification<Class<?>> SPECIFICATION_CONVERTER = new SpecificationBuilder<>(
-      classIsInterface().negate().and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsDescendantOf(SpecificationConverter.class))).build();
+    /**
+     * The specification for identity generators.
+     */
+    public static final Specification<Class<?>> IDENTITY_GENERATOR = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(IdentityGenerator.class))).build();
 
-  /**
-   * The specification for domain events.
-   */
-  public static final Specification<Class<?>> DOMAIN_EVENT = new SpecificationBuilder<>(
-      classIsAssignableFrom(DomainEvent.class)).build();
+    /**
+     * The specification for specification translators.
+     */
+    public static final Specification<Class<?>> SPECIFICATION_TRANSLATOR = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(SpecificationTranslator.class))).build();
 
-  /**
-   * The specification for domain event handlers.
-   */
-  public static final Specification<Class<?>> DOMAIN_EVENT_HANDLER = new SpecificationBuilder<>(
-      classIsInterface().negate().and(classModifierIs(Modifier.ABSTRACT).negate())
-          .and(classIsAssignableFrom(DomainEventHandler.class))).build();
+    /**
+     * The specification for specification converters.
+     */
+    public static final Specification<Class<?>> SPECIFICATION_CONVERTER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsDescendantOf(SpecificationConverter.class))).build();
 
-  private BusinessSpecifications() {
-    // no instantiation allowed
-  }
+    /**
+     * The specification for domain events.
+     */
+    public static final Specification<Class<?>> DOMAIN_EVENT = new SpecificationBuilder<>(
+            classIsAssignableFrom(DomainEvent.class)).build();
+
+    /**
+     * The specification for domain event handlers.
+     */
+    public static final Specification<Class<?>> DOMAIN_EVENT_HANDLER = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and(classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsAssignableFrom(DomainEventHandler.class))).build();
+
+    private BusinessSpecifications() {
+        // no instantiation allowed
+    }
 }

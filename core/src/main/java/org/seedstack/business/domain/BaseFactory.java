@@ -30,60 +30,60 @@ import org.seedstack.business.internal.utils.MethodMatcher;
  */
 public abstract class BaseFactory<P extends Producible> implements Factory<P> {
 
-  private final Class<P> producedClass;
-  @Inject
-  private IdentityService identityService;
+    private final Class<P> producedClass;
+    @Inject
+    private IdentityService identityService;
 
-  /**
-   * Creates a base domain factory. Actual class produced by the factory is determined by
-   * reflection.
-   */
-  @SuppressWarnings("unchecked")
-  protected BaseFactory() {
-    this.producedClass = (Class<P>) BusinessUtils.resolveGenerics(Factory.class, getClass())[0];
-  }
-
-  /**
-   * Creates a base domain factory. Actual class produced by the factory is specified explicitly.
-   * This can be used to create a dynamic implementation of a factory.
-   *
-   * @param producedClass the produced class.
-   */
-  protected BaseFactory(Class<P> producedClass) {
-    this.producedClass = producedClass;
-  }
-
-  @Override
-  public Class<P> getProducedClass() {
-    return producedClass;
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public P create(Object... args) {
-    Class<P> effectivelyProducedClass = getProducedClass();
-    Constructor<P> constructor = MethodMatcher
-        .findMatchingConstructor(effectivelyProducedClass, args);
-    if (constructor == null) {
-      throw BusinessException.createNew(BusinessErrorCode.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
-          .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
+    /**
+     * Creates a base domain factory. Actual class produced by the factory is determined by
+     * reflection.
+     */
+    @SuppressWarnings("unchecked")
+    protected BaseFactory() {
+        this.producedClass = (Class<P>) BusinessUtils.resolveGenerics(Factory.class, getClass())[0];
     }
 
-    P producedInstance;
-    try {
-      constructor.setAccessible(true);
-      producedInstance = constructor.newInstance(args);
-    } catch (Exception e) {
-      throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INVOKE_CONSTRUCTOR)
-          .put("constructor", constructor)
-          .put("domainObject", effectivelyProducedClass).put("parameters", Arrays.toString(args));
+    /**
+     * Creates a base domain factory. Actual class produced by the factory is specified explicitly.
+     * This can be used to create a dynamic implementation of a factory.
+     *
+     * @param producedClass the produced class.
+     */
+    protected BaseFactory(Class<P> producedClass) {
+        this.producedClass = producedClass;
     }
 
-    if (producedInstance instanceof Entity && IdentityResolver.INSTANCE
-        .test(effectivelyProducedClass)) {
-      producedInstance = (P) identityService.identify((Entity<?>) producedInstance);
+    @Override
+    public Class<P> getProducedClass() {
+        return producedClass;
     }
 
-    return producedInstance;
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    public P create(Object... args) {
+        Class<P> effectivelyProducedClass = getProducedClass();
+        Constructor<P> constructor = MethodMatcher.findMatchingConstructor(effectivelyProducedClass, args);
+        if (constructor == null) {
+            throw BusinessException.createNew(BusinessErrorCode.DOMAIN_OBJECT_CONSTRUCTOR_NOT_FOUND)
+                    .put("domainObject", effectivelyProducedClass)
+                    .put("parameters", Arrays.toString(args));
+        }
+
+        P producedInstance;
+        try {
+            constructor.setAccessible(true);
+            producedInstance = constructor.newInstance(args);
+        } catch (Exception e) {
+            throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_INVOKE_CONSTRUCTOR)
+                    .put("constructor", constructor)
+                    .put("domainObject", effectivelyProducedClass)
+                    .put("parameters", Arrays.toString(args));
+        }
+
+        if (producedInstance instanceof Entity && IdentityResolver.INSTANCE.test(effectivelyProducedClass)) {
+            producedInstance = (P) identityService.identify((Entity<?>) producedInstance);
+        }
+
+        return producedInstance;
+    }
 }

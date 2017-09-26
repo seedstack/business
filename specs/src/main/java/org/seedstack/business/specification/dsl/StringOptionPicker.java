@@ -15,38 +15,37 @@ package org.seedstack.business.specification.dsl;
  * @param <T> the type of the object the specification applies to.
  * @param <S> the type of the selector.
  */
-public interface StringOptionPicker<T, S extends BaseSelector> extends
-    OperatorPicker<T, S> {
+public interface StringOptionPicker<T, S extends BaseSelector> extends OperatorPicker<T, S> {
 
-  /**
-   * Specifies that the value should trimmed of leading and trailing whitespaces before comparison.
-   *
-   * @return the next operation of the builder DSL, allowing to specify more options or compose a
-   *     new specification.
-   */
-  StringOptionPicker<T, S> trimming();
+    /**
+     * Specifies that the value should trimmed of leading and trailing whitespaces before comparison.
+     *
+     * @return the next operation of the builder DSL, allowing to specify more options or compose a
+     *         new specification.
+     */
+    StringOptionPicker<T, S> trimming();
 
-  /**
-   * Specifies that the value should be trimmed of leading whitespace before comparison.
-   *
-   * @return the next operation of the builder DSL, allowing to specify more options or compose a
-   *     new specification.
-   */
-  StringOptionPicker<T, S> trimmingLead();
+    /**
+     * Specifies that the value should be trimmed of leading whitespace before comparison.
+     *
+     * @return the next operation of the builder DSL, allowing to specify more options or compose a
+     *         new specification.
+     */
+    StringOptionPicker<T, S> trimmingLead();
 
-  /**
-   * Specifies that the value should be trimmed of trailing whitespace before comparison.
-   *
-   * @return the next operation of the builder DSL, allowing to specify more options or compose a
-   *     new specification.
-   */
-  StringOptionPicker<T, S> trimmingTail();
+    /**
+     * Specifies that the value should be trimmed of trailing whitespace before comparison.
+     *
+     * @return the next operation of the builder DSL, allowing to specify more options or compose a
+     *         new specification.
+     */
+    StringOptionPicker<T, S> trimmingTail();
 
-  /**
-   * Specifies that the comparison should be done ignoring case.
-   *
-   * @return the next operation of the builder DSL, allowing to specify more options or compose a
-   *     new specification.
-   */
-  StringOptionPicker<T, S> ignoringCase();
+    /**
+     * Specifies that the comparison should be done ignoring case.
+     *
+     * @return the next operation of the builder DSL, allowing to specify more options or compose a
+     *         new specification.
+     */
+    StringOptionPicker<T, S> ignoringCase();
 }

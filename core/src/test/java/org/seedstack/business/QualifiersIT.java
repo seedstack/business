@@ -23,51 +23,62 @@ import org.seedstack.business.fixtures.qualifier.interfaces.MyInterfaceService;
 import org.seedstack.business.fixtures.qualifier.interfaces.Q1;
 import org.seedstack.seed.it.SeedITRunner;
 
-
 @RunWith(SeedITRunner.class)
 public class QualifiersIT {
 
-  @Inject
-  @Named("1")
-  MyApplicationService myApplicationService1;
-  @Inject
-  @Named("1")
-  MyApplicationService myApplicationService2;
-  @Inject
-  MyDomainPolicy<String> myDomainPolicy1; // check with user's generic interface
-  @Inject
-  @Named("2")
-  MyDomainPolicy<Integer> myDomainPolicy2;
-  @Inject
-  MyDomainService myDomainService1;  // case with user's abstract class
-  @Inject
-  @Named("2")
-  MyDomainService myDomainService2;
-  @Inject
-  @Q1
-  MyInterfaceService myInterfaceService1;
-  @Inject
-  MyInterfaceService myInterfaceService2;
-  @Inject
-  MyFactory myFactory1;
-  @Inject
-  @Named("2")
-  MyFactory myFactory2;
+    @Inject
+    @Named("1")
+    MyApplicationService myApplicationService1;
+    @Inject
+    @Named("1")
+    MyApplicationService myApplicationService2;
+    @Inject
+    MyDomainPolicy<String> myDomainPolicy1; // check with user's generic interface
+    @Inject
+    @Named("2")
+    MyDomainPolicy<Integer> myDomainPolicy2;
+    @Inject
+    MyDomainService myDomainService1;  // case with user's abstract class
+    @Inject
+    @Named("2")
+    MyDomainService myDomainService2;
+    @Inject
+    @Q1
+    MyInterfaceService myInterfaceService1;
+    @Inject
+    MyInterfaceService myInterfaceService2;
+    @Inject
+    MyFactory myFactory1;
+    @Inject
+    @Named("2")
+    MyFactory myFactory2;
 
-  @Test
-  public void qualified_implementation_should_be_injected() {
-    Assertions.assertThat(myApplicationService1).isNotNull();
-    Assertions.assertThat(myApplicationService2).isNotNull();
-    Assertions.assertThat(myDomainPolicy1).isNotNull();
-    Assertions.assertThat(myDomainPolicy2).isNotNull();
-    Assertions.assertThat(myDomainService1).isNotNull();
-    Assertions.assertThat(myDomainService2).isNotNull();
-    Assertions.assertThat(myInterfaceService1).isNotNull();
-    Assertions.assertThat(myInterfaceService2).isNotNull();
-    Assertions.assertThat(myFactory1).isNotNull();
-    Assertions.assertThat(myFactory1).isInstanceOf(FactImpl1.class);
-    Assertions.assertThat(myFactory2).isNotNull();
-    Assertions.assertThat(myFactory2).isInstanceOf(FactImpl2.class);
-  }
+    @Test
+    public void qualified_implementation_should_be_injected() {
+        Assertions.assertThat(myApplicationService1)
+                .isNotNull();
+        Assertions.assertThat(myApplicationService2)
+                .isNotNull();
+        Assertions.assertThat(myDomainPolicy1)
+                .isNotNull();
+        Assertions.assertThat(myDomainPolicy2)
+                .isNotNull();
+        Assertions.assertThat(myDomainService1)
+                .isNotNull();
+        Assertions.assertThat(myDomainService2)
+                .isNotNull();
+        Assertions.assertThat(myInterfaceService1)
+                .isNotNull();
+        Assertions.assertThat(myInterfaceService2)
+                .isNotNull();
+        Assertions.assertThat(myFactory1)
+                .isNotNull();
+        Assertions.assertThat(myFactory1)
+                .isInstanceOf(FactImpl1.class);
+        Assertions.assertThat(myFactory2)
+                .isNotNull();
+        Assertions.assertThat(myFactory2)
+                .isInstanceOf(FactImpl2.class);
+    }
 
 }

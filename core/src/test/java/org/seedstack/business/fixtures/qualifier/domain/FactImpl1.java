@@ -8,11 +8,10 @@
 
 package org.seedstack.business.fixtures.qualifier.domain;
 
-
 public class FactImpl1 implements MyFactory {
 
-  @Override
-  public Class<MyDomainPolicy> getProducedClass() {
-    return null;
-  }
+    @Override
+    public Class<MyDomainPolicy> getProducedClass() {
+        return null;
+    }
 }

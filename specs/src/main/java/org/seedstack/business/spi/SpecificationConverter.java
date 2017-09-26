@@ -26,15 +26,15 @@ import org.seedstack.business.specification.Specification;
  */
 public interface SpecificationConverter<S extends Specification<?>, C, T> {
 
-  /**
-   * Invoked by the translator to convert a particular type of specification.
-   *
-   * @param specification the specification to convert.
-   * @param context       the translation context.
-   * @param translator    the specification translator to invoke if the specification contains
-   *                      nested specifications.
-   * @return the target object representing the converted specification.
-   */
-  T convert(S specification, C context, SpecificationTranslator<C, T> translator);
+    /**
+     * Invoked by the translator to convert a particular type of specification.
+     *
+     * @param specification the specification to convert.
+     * @param context       the translation context.
+     * @param translator    the specification translator to invoke if the specification contains
+     *                      nested specifications.
+     * @return the target object representing the converted specification.
+     */
+    T convert(S specification, C context, SpecificationTranslator<C, T> translator);
 
 }

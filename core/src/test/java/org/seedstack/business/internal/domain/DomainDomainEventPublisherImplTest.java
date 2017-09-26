@@ -25,33 +25,32 @@ import org.seedstack.business.fixtures.event.SomeDomainEvent;
 @RunWith(MockitoJUnitRunner.class)
 public class DomainDomainEventPublisherImplTest {
 
-  private DomainEventPublisher underTest;
-  @Mock
-  private Injector injector;
-  @Mock
-  private MyDomainEventHandler myEventHandler;
+    private DomainEventPublisher underTest;
+    @Mock
+    private Injector injector;
+    @Mock
+    private MyDomainEventHandler myEventHandler;
 
-  @Test
-  public void fire_event() {
-    ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap
-        = ArrayListMultimap
-        .create();
-    multiMap.put(SomeDomainEvent.class, MyDomainEventHandler.class);
+    @Test
+    public void fire_event() {
+        ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap =
+                ArrayListMultimap.create();
+        multiMap.put(SomeDomainEvent.class, MyDomainEventHandler.class);
 
-    // provide an handler of MyEvent
-    Mockito.when(injector.getInstance(MyDomainEventHandler.class)).thenReturn(myEventHandler);
+        // provide an handler of MyEvent
+        Mockito.when(injector.getInstance(MyDomainEventHandler.class))
+                .thenReturn(myEventHandler);
 
-    underTest = new DomainEventPublisherImpl(injector, multiMap);
-    underTest.publish(new MyDomainEvent());
-  }
+        underTest = new DomainEventPublisherImpl(injector, multiMap);
+        underTest.publish(new MyDomainEvent());
+    }
 
-  @Test
-  public void fire_event_not_received() {
-    ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap
-        = ArrayListMultimap
-        .create();
-    // no handler provided
-    underTest = new DomainEventPublisherImpl(injector, multiMap);
-    underTest.publish(new MyDomainEvent());
-  }
+    @Test
+    public void fire_event_not_received() {
+        ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap =
+                ArrayListMultimap.create();
+        // no handler provided
+        underTest = new DomainEventPublisherImpl(injector, multiMap);
+        underTest.publish(new MyDomainEvent());
+    }
 }

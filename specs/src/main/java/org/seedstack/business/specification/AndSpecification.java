@@ -15,54 +15,54 @@ package org.seedstack.business.specification;
  */
 public class AndSpecification<T> implements Specification<T> {
 
-  private final Specification<? super T>[] specifications;
+    private final Specification<? super T>[] specifications;
 
-  /**
-   * Creates a specification composing the specifications passed as argument with a logical AND.
-   *
-   * @param specifications the specifications to compose in a logical AND.
-   */
-  @SafeVarargs
-  public AndSpecification(Specification<? super T>... specifications) {
-    this.specifications = specifications.clone();
-  }
-
-  @Override
-  public boolean isSatisfiedBy(T candidate) {
-    for (Specification<? super T> specification : specifications) {
-      if (!specification.isSatisfiedBy(candidate)) {
-        return false;
-      }
+    /**
+     * Creates a specification composing the specifications passed as argument with a logical AND.
+     *
+     * @param specifications the specifications to compose in a logical AND.
+     */
+    @SafeVarargs
+    public AndSpecification(Specification<? super T>... specifications) {
+        this.specifications = specifications.clone();
     }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < specifications.length; i++) {
-      Specification<? super T> term = specifications[i];
-      boolean isNegation = term instanceof NotSpecification;
-      if (!isNegation) {
-        sb.append("(");
-      }
-      sb.append(term.toString());
-      if (!isNegation) {
-        sb.append(")");
-      }
-      if (i < specifications.length - 1) {
-        sb.append(" ∧ ");
-      }
+    @Override
+    public boolean isSatisfiedBy(T candidate) {
+        for (Specification<? super T> specification : specifications) {
+            if (!specification.isSatisfiedBy(candidate)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return sb.toString();
-  }
 
-  /**
-   * Returns the composed specifications.
-   *
-   * @return the array of specifications composed with the logical AND.
-   */
-  public Specification<? super T>[] getSpecifications() {
-    return specifications.clone();
-  }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < specifications.length; i++) {
+            Specification<? super T> term = specifications[i];
+            boolean isNegation = term instanceof NotSpecification;
+            if (!isNegation) {
+                sb.append("(");
+            }
+            sb.append(term.toString());
+            if (!isNegation) {
+                sb.append(")");
+            }
+            if (i < specifications.length - 1) {
+                sb.append(" ∧ ");
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Returns the composed specifications.
+     *
+     * @return the array of specifications composed with the logical AND.
+     */
+    public Specification<? super T>[] getSpecifications() {
+        return specifications.clone();
+    }
 }

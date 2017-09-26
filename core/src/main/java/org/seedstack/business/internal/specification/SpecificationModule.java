@@ -22,39 +22,35 @@ import org.seedstack.business.spi.SpecificationTranslator;
 
 class SpecificationModule extends PrivateModule {
 
-  private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses;
-  private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses;
+    private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses;
+    private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses;
 
-  SpecificationModule(Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses,
-      Set<Class<? extends SpecificationConverter>> specificationConverterClasses) {
-    this.specificationTranslatorClasses = specificationTranslatorClasses;
-    this.specificationConverterClasses = specificationConverterClasses;
-  }
+    SpecificationModule(Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses,
+            Set<Class<? extends SpecificationConverter>> specificationConverterClasses) {
+        this.specificationTranslatorClasses = specificationTranslatorClasses;
+        this.specificationConverterClasses = specificationConverterClasses;
+    }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  protected void configure() {
-    specificationTranslatorClasses.forEach(translatorClass -> {
-      Key<SpecificationTranslator> key = buildKey(SpecificationTranslator.class, translatorClass);
-      bind(key).to(translatorClass);
-      expose(key);
-    });
-    specificationConverterClasses
-        .forEach(converterClass -> bind(buildKey(SpecificationConverter.class, converterClass))
-            .to(converterClass));
+    @Override
+    @SuppressWarnings("unchecked")
+    protected void configure() {
+        specificationTranslatorClasses.forEach(translatorClass -> {
+            Key<SpecificationTranslator> key = buildKey(SpecificationTranslator.class, translatorClass);
+            bind(key).to(translatorClass);
+            expose(key);
+        });
+        specificationConverterClasses.forEach(
+                converterClass -> bind(buildKey(SpecificationConverter.class, converterClass)).to(converterClass));
 
-    bind(SpecificationBuilder.class).to(SpecificationBuilderImpl.class);
-    expose(SpecificationBuilder.class);
-  }
+        bind(SpecificationBuilder.class).to(SpecificationBuilderImpl.class);
+        expose(SpecificationBuilder.class);
+    }
 
-  @SuppressWarnings("unchecked")
-  private <T> Key<T> buildKey(Class<T> someInterface, Class<? extends T> someClass) {
-    return getQualifier(someClass).map(annotation -> Key.get((TypeLiteral<T>) TypeLiteral
-            .get(Types.newParameterizedType(someInterface, resolveGenerics(someInterface,
-                someClass))),
-        annotation)).orElse(
-        Key.get((TypeLiteral<T>) TypeLiteral
-            .get(Types
-                .newParameterizedType(someInterface, resolveGenerics(someInterface, someClass)))));
-  }
+    @SuppressWarnings("unchecked")
+    private <T> Key<T> buildKey(Class<T> someInterface, Class<? extends T> someClass) {
+        return getQualifier(someClass).map(annotation -> Key.get((TypeLiteral<T>) TypeLiteral.get(
+                Types.newParameterizedType(someInterface, resolveGenerics(someInterface, someClass))), annotation))
+                .orElse(Key.get((TypeLiteral<T>) TypeLiteral.get(
+                        Types.newParameterizedType(someInterface, resolveGenerics(someInterface, someClass)))));
+    }
 }

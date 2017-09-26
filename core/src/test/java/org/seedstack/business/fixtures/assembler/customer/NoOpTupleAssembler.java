@@ -15,13 +15,13 @@ import org.seedstack.business.assembler.BaseTupleAssembler;
 @Named("noop")
 public class NoOpTupleAssembler extends BaseTupleAssembler<Pair<Order, Customer>, OrderDto> {
 
-  @Override
-  public void mergeAggregateIntoDto(Pair<Order, Customer> sourceAggregate, OrderDto targetDto) {
+    @Override
+    public void mergeAggregateIntoDto(Pair<Order, Customer> sourceAggregate, OrderDto targetDto) {
 
-  }
+    }
 
-  @Override
-  public void mergeDtoIntoAggregate(OrderDto sourceDto, Pair<Order, Customer> targetAggregate) {
+    @Override
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Pair<Order, Customer> targetAggregate) {
 
-  }
+    }
 }

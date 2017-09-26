@@ -15,47 +15,47 @@ import org.seedstack.business.fixtures.domain.customer.CustomerId;
 
 public class Activation extends BaseAggregateRoot<String> {
 
-  private String id;
-  private Date creationDate;
-  private Date activationDate;
-  @NotBlank
-  private String description;
-  private CustomerId customerId;
+    private String id;
+    private Date creationDate;
+    private Date activationDate;
+    @NotBlank
+    private String description;
+    private CustomerId customerId;
 
-  Activation(String id) {
-    this.id = id;
-  }
+    Activation(String id) {
+        this.id = id;
+    }
 
-  public Date getCreationDate() {
-    return creationDate;
-  }
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-  public void setCreationDate(Date creationDate) {
-    this.creationDate = creationDate;
-  }
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-  public Date getActivationDate() {
-    return activationDate;
-  }
+    public Date getActivationDate() {
+        return activationDate;
+    }
 
-  public void setActivationDate(Date activationDate) {
-    this.activationDate = activationDate;
-  }
+    public void setActivationDate(Date activationDate) {
+        this.activationDate = activationDate;
+    }
 
-  public CustomerId getCustomerId() {
-    return customerId;
-  }
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
 
-  public void setCustomerId(CustomerId customerId) {
-    this.customerId = customerId;
-  }
+    public void setCustomerId(CustomerId customerId) {
+        this.customerId = customerId;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

@@ -8,7 +8,6 @@
 
 package org.seedstack.business.fixtures.qualifier.domain;
 
-
 public class DomServiceImpl1 extends MyAbstractDomainService {
 
 }

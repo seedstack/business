@@ -16,13 +16,13 @@ package org.seedstack.business.domain;
  */
 public interface IdentityService {
 
-  /**
-   * Identifies the given entity
-   *
-   * @param entity the entity to identify
-   * @param <E>    the entity type
-   * @param <I>    the entity key type
-   * @return the identified entity
-   */
-  <E extends Entity<I>, I> E identify(E entity);
+    /**
+     * Identifies the given entity
+     *
+     * @param entity the entity to identify
+     * @param <E>    the entity type
+     * @param <I>    the entity key type
+     * @return the identified entity
+     */
+    <E extends Entity<I>, I> E identify(E entity);
 }

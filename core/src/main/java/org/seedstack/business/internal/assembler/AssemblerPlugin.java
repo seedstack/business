@@ -32,71 +32,68 @@ import org.slf4j.LoggerFactory;
 
 public class AssemblerPlugin extends AbstractSeedPlugin {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
 
-  private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
-  private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
+    private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
+    private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
 
-  private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
-  private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
+    private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
+    private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
 
-  private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
-  private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new
-      HashMap<>();
-  private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
+    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
+    private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
+    private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
-  @Override
-  public String name() {
-    return "business-assemblers";
-  }
+    @Override
+    public String name() {
+        return "business-assemblers";
+    }
 
-  @Override
-  public Collection<ClasspathScanRequest> classpathScanRequests() {
-    return classpathScanRequestBuilder().specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
-        .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
-        .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
-        .specification(BusinessSpecifications.DTO_OF).build();
-  }
+    @Override
+    public Collection<ClasspathScanRequest> classpathScanRequests() {
+        return classpathScanRequestBuilder().specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
+                .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
+                .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
+                .specification(BusinessSpecifications.DTO_OF)
+                .build();
+    }
 
-  @SuppressWarnings({"rawtypes", "unchecked"})
-  @Override
-  public InitState initialize(InitContext initContext) {
-    streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class)
-        .forEach(assemblerClasses::add);
-    LOGGER.debug("Assemblers => {}", assemblerClasses);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public InitState initialize(InitContext initContext) {
+        streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class).forEach(
+                assemblerClasses::add);
+        LOGGER.debug("Assemblers => {}", assemblerClasses);
 
-    streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class)
-        .forEach(defaultAssemblerClasses::add);
-    LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
+        streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class).forEach(
+                defaultAssemblerClasses::add);
+        LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
-    streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class)
-        .forEach(dtoOfClasses::add);
-    LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
+        streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
+        LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
 
-    streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class)
-        .forEach(dtoInfoResolverClasses::add);
-    sortByPriority(dtoInfoResolverClasses);
-    LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
+        streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class).forEach(
+                dtoInfoResolverClasses::add);
+        sortByPriority(dtoInfoResolverClasses);
+        LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);
 
-    // Add bindings for explicit assemblers
-    bindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, false));
-    overridingBindings
-        .putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
+        // Add bindings for explicit assemblers
+        bindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, false));
+        overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
 
-    // Then add bindings for default assemblers
-    bindingStrategies
-        .addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
+        // Then add bindings for default assemblers
+        bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
 
-    return InitState.INITIALIZED;
-  }
+        return InitState.INITIALIZED;
+    }
 
-  @Override
-  public Object nativeUnitModule() {
-    return new AssemblerModule(bindings, dtoInfoResolverClasses, bindingStrategies);
-  }
+    @Override
+    public Object nativeUnitModule() {
+        return new AssemblerModule(bindings, dtoInfoResolverClasses, bindingStrategies);
+    }
 
-  @Override
-  public Object nativeOverridingUnitModule() {
-    return new AssemblerOverridingModule(overridingBindings);
-  }
+    @Override
+    public Object nativeOverridingUnitModule() {
+        return new AssemblerOverridingModule(overridingBindings);
+    }
 }

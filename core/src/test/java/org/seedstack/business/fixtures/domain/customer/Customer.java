@@ -16,66 +16,66 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class Customer extends BaseAggregateRoot<CustomerId> {
 
-  private CustomerId id;
-  private String firstName;
-  private String lastName;
-  private String primaryAccountNumber;
-  private Map<String, Address> addresses = new HashMap<>();
-  @Inject
-  private transient CustomerSampleService service;
+    private CustomerId id;
+    private String firstName;
+    private String lastName;
+    private String primaryAccountNumber;
+    private Map<String, Address> addresses = new HashMap<>();
+    @Inject
+    private transient CustomerSampleService service;
 
-  protected Customer(CustomerId id) {
-    this.id = id;
-  }
+    protected Customer(CustomerId id) {
+        this.id = id;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public String getFullName() {
-    return lastName + ", " + firstName;
-  }
+    public String getFullName() {
+        return lastName + ", " + firstName;
+    }
 
-  public void addAddress(Address.AddressType addressType, Address address) {
-    addresses.put(addressType.toString(), address);
-  }
+    public void addAddress(Address.AddressType addressType, Address address) {
+        addresses.put(addressType.toString(), address);
+    }
 
-  public Address getAddress(Address.AddressType addressType) {
-    return addresses.get(addressType.toString());
-  }
+    public Address getAddress(Address.AddressType addressType) {
+        return addresses.get(addressType.toString());
+    }
 
-  public Map<String, Address> getAddresses() {
-    return addresses;
-  }
+    public Map<String, Address> getAddresses() {
+        return addresses;
+    }
 
-  public Collection<String> getAddressTypes() {
-    return addresses.keySet();
-  }
+    public Collection<String> getAddressTypes() {
+        return addresses.keySet();
+    }
 
-  /**
-   * entities may have method
-   */
-  public void relayInformation(String information) {
-    service.transfer(this, this);
-  }
+    /**
+     * entities may have method
+     */
+    public void relayInformation(String information) {
+        service.transfer(this, this);
+    }
 
-  public String getPrimaryAccountNumber() {
-    return primaryAccountNumber;
-  }
+    public String getPrimaryAccountNumber() {
+        return primaryAccountNumber;
+    }
 
-  public void setPrimaryAccountNumber(String primaryAccountNumber) {
-    this.primaryAccountNumber = primaryAccountNumber;
-  }
+    public void setPrimaryAccountNumber(String primaryAccountNumber) {
+        this.primaryAccountNumber = primaryAccountNumber;
+    }
 }

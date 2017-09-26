@@ -11,22 +11,22 @@ package org.seedstack.business.internal.specification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.OperatorPicker;
 
-class OperatorPickerImpl<T, S extends BaseSelector<T, S>> extends
-    TerminalOperationImpl<T, S> implements OperatorPicker<T, S> {
+class OperatorPickerImpl<T, S extends BaseSelector<T, S>> extends TerminalOperationImpl<T, S> implements
+        OperatorPicker<T, S> {
 
-  OperatorPickerImpl(SpecificationBuilderContext<T, S> context) {
-    super(context);
-  }
+    OperatorPickerImpl(SpecificationBuilderContext<T, S> context) {
+        super(context);
+    }
 
-  @Override
-  public S and() {
-    context.setMode(SpecificationBuilderContext.Mode.CONJUNCTION);
-    return context.getSelector();
-  }
+    @Override
+    public S and() {
+        context.setMode(SpecificationBuilderContext.Mode.CONJUNCTION);
+        return context.getSelector();
+    }
 
-  @Override
-  public S or() {
-    context.setMode(SpecificationBuilderContext.Mode.DISJUNCTION);
-    return context.getSelector();
-  }
+    @Override
+    public S or() {
+        context.setMode(SpecificationBuilderContext.Mode.DISJUNCTION);
+        return context.getSelector();
+    }
 }

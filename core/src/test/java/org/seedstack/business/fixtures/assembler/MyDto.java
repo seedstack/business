@@ -10,32 +10,32 @@ package org.seedstack.business.fixtures.assembler;
 
 public class MyDto {
 
-  int age;
-  private String nom;
-  private String addresse;
+    int age;
+    private String nom;
+    private String addresse;
 
-  public String getNom() {
-    return nom;
-  }
+    public String getNom() {
+        return nom;
+    }
 
-  public void setNom(String nom) {
-    this.nom = nom;
-  }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-  public String getAddresse() {
-    return addresse;
-  }
+    public String getAddresse() {
+        return addresse;
+    }
 
-  public void setAddresse(String addresse) {
-    this.addresse = addresse;
-  }
+    public void setAddresse(String addresse) {
+        this.addresse = addresse;
+    }
 
-  public int getAge() {
-    return age;
-  }
+    public int getAge() {
+        return age;
+    }
 
-  public void setAge(int age) {
-    this.age = age;
-  }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
 }

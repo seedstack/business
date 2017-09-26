@@ -11,10 +11,9 @@ package org.seedstack.business.fixtures.assembler.customer;
 import java.util.Date;
 import org.seedstack.business.domain.Factory;
 
-
 public interface OrderFactory extends Factory<Order> {
 
-  Order create(String id, String product);
+    Order create(String id, String product);
 
-  Order create(String id, String product, Date orderDate);
+    Order create(String id, String product, Date orderDate);
 }

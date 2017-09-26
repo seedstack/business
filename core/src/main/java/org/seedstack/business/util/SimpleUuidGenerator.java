@@ -20,9 +20,8 @@ import org.seedstack.business.domain.UuidGenerator;
 @Named("simpleUUID")
 public class SimpleUuidGenerator implements UuidGenerator {
 
-  @Override
-  public <E extends Entity<UUID>> UUID generate(Class<E> entityClass,
-      Map<String, String> entityProperties) {
-    return UUID.randomUUID();
-  }
+    @Override
+    public <E extends Entity<UUID>> UUID generate(Class<E> entityClass, Map<String, String> entityProperties) {
+        return UUID.randomUUID();
+    }
 }

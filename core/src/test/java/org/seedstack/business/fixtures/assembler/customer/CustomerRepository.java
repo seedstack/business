@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.Repository;
 
-
 public interface CustomerRepository extends Repository<Customer, String> {
 
 }

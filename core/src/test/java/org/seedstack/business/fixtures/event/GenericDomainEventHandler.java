@@ -13,8 +13,8 @@ import org.seedstack.business.domain.BaseDomainEventHandler;
 
 public class GenericDomainEventHandler extends BaseDomainEventHandler<AbstractDomainEvent> {
 
-  @Override
-  public void onEvent(AbstractDomainEvent event) {
-    DomainEventPublisherIT.countGenericEvent++;
-  }
+    @Override
+    public void onEvent(AbstractDomainEvent event) {
+        DomainEventPublisherIT.countGenericEvent++;
+    }
 }

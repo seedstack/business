@@ -20,44 +20,46 @@ import org.seedstack.business.spi.GenericImplementation;
 @Named("Dummy")
 public class DummyDefaultAssembler<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
 
-  @SuppressWarnings("unchecked")
-  @Inject
-  public DummyDefaultAssembler(@Assisted Object[] genericClasses) {
-    super((Class) genericClasses[1]);
-  }
-
-  @Override
-  public D createDtoFromAggregate(A sourceAggregate) {
-    D dto;
-    try {
-      dto = getDtoClass().newInstance();
-    } catch (Exception e) {
-      throw new IllegalStateException(e);
+    @SuppressWarnings("unchecked")
+    @Inject
+    public DummyDefaultAssembler(@Assisted Object[] genericClasses) {
+        super((Class) genericClasses[1]);
     }
-    return hodorify(getDtoClass(), dto);
-  }
 
-  @Override
-  public void mergeAggregateIntoDto(A sourceAggregate, D sourceDto) {
-    hodorify(getDtoClass(), sourceDto);
-  }
-
-  @Override
-  public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
-    hodorify(targetAggregate.getClass(), targetAggregate);
-  }
-
-  private <T> T hodorify(Class<?> clazz, T instance) {
-    for (Method method : clazz.getDeclaredMethods()) {
-      if (method.getName().startsWith("set") && method.getParameterTypes().length == 1
-          && method.getParameterTypes()[0] == String.class) {
+    @Override
+    public D createDtoFromAggregate(A sourceAggregate) {
+        D dto;
         try {
-          method.invoke(instance, "hodor");
+            dto = getDtoClass().newInstance();
         } catch (Exception e) {
-          throw new IllegalStateException(e);
+            throw new IllegalStateException(e);
         }
-      }
+        return hodorify(getDtoClass(), dto);
     }
-    return instance;
-  }
+
+    @Override
+    public void mergeAggregateIntoDto(A sourceAggregate, D sourceDto) {
+        hodorify(getDtoClass(), sourceDto);
+    }
+
+    @Override
+    public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+        hodorify(targetAggregate.getClass(), targetAggregate);
+    }
+
+    private <T> T hodorify(Class<?> clazz, T instance) {
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (method.getName()
+                    .startsWith(
+                            "set") && method.getParameterTypes().length == 1 && method.getParameterTypes()[0] ==
+                    String.class) {
+                try {
+                    method.invoke(instance, "hodor");
+                } catch (Exception e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+        }
+        return instance;
+    }
 }

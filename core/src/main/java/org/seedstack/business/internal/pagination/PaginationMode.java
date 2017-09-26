@@ -9,5 +9,5 @@
 package org.seedstack.business.internal.pagination;
 
 enum PaginationMode {
-  PAGE, OFFSET, ATTRIBUTE, NONE
+    PAGE, OFFSET, ATTRIBUTE, NONE
 }

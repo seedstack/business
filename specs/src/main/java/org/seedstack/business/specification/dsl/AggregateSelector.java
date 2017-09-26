@@ -18,13 +18,13 @@ import org.seedstack.business.domain.AggregateRoot;
  * @param <I> the type of the identifier of the aggregate.
  * @param <S> the type of the selector.
  */
-public interface AggregateSelector<A extends AggregateRoot<I>, I, S extends AggregateSelector<A,
-    I, S>> extends PropertySelector<A, S> {
+public interface AggregateSelector<A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> extends
+        PropertySelector<A, S> {
 
-  /**
-   * Selects the identity of the aggregate to be the subject of a specification.
-   *
-   * @return the next operation of the builder DSL, allowing to choose the specification.
-   */
-  IdentityPicker<A, I, S> identity();
+    /**
+     * Selects the identity of the aggregate to be the subject of a specification.
+     *
+     * @return the next operation of the builder DSL, allowing to choose the specification.
+     */
+    IdentityPicker<A, I, S> identity();
 }

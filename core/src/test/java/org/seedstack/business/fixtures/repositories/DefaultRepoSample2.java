@@ -18,28 +18,27 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.spi.GenericImplementation;
 
-
 @GenericImplementation
 @Named("mock")
 public class DefaultRepoSample2<A extends AggregateRoot<K>, K> extends BaseRepository<A, K> {
 
-  @Inject
-  @SuppressWarnings("unchecked")
-  public DefaultRepoSample2(@Assisted Object[] genericClasses) {
-    super((Class) genericClasses[0], (Class) genericClasses[1]);
-  }
+    @Inject
+    @SuppressWarnings("unchecked")
+    public DefaultRepoSample2(@Assisted Object[] genericClasses) {
+        super((Class) genericClasses[0], (Class) genericClasses[1]);
+    }
 
-  @Override
-  public void add(A a) {
-  }
+    @Override
+    public void add(A a) {
+    }
 
-  @Override
-  public Stream<A> get(Specification<A> specification, Repository.Option... options) {
-    return Stream.empty();
-  }
+    @Override
+    public Stream<A> get(Specification<A> specification, Repository.Option... options) {
+        return Stream.empty();
+    }
 
-  @Override
-  public long remove(Specification<A> specification) {
-    return 0;
-  }
+    @Override
+    public long remove(Specification<A> specification) {
+        return 0;
+    }
 }

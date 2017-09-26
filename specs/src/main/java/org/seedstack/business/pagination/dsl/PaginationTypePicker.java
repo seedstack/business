@@ -23,31 +23,31 @@ import org.seedstack.business.pagination.Slice;
  */
 public interface PaginationTypePicker<A extends AggregateRoot<I>, I> {
 
-  /**
-   * Choose a page-based pagination type. Objects that come before the beginning of specified page
-   * will be skipped.
-   *
-   * @param pageIndex the index of the page containing objects that will be returned.
-   * @return the next operation of the paginator DSL, allowing to specify page size.
-   */
-  SizePicker<A, I> byPage(long pageIndex);
+    /**
+     * Choose a page-based pagination type. Objects that come before the beginning of specified page
+     * will be skipped.
+     *
+     * @param pageIndex the index of the page containing objects that will be returned.
+     * @return the next operation of the paginator DSL, allowing to specify page size.
+     */
+    SizePicker<A, I> byPage(long pageIndex);
 
-  /**
-   * Choose an offset-based pagination type. Objects that come before the specified index will be
-   * skipped.
-   *
-   * @param startingOffset the index of first object that will be returned.
-   * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-   *     objects returned.
-   */
-  LimitPicker<Slice<A>, A, I> byOffset(long startingOffset);
+    /**
+     * Choose an offset-based pagination type. Objects that come before the specified index will be
+     * skipped.
+     *
+     * @param startingOffset the index of first object that will be returned.
+     * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
+     *         objects returned.
+     */
+    LimitPicker<Slice<A>, A, I> byOffset(long startingOffset);
 
-  /**
-   * Choose a key-based pagination type.
-   *
-   * @param attributeName the attribute on which the lessThan/greaterThan comparison will be made.
-   * @return the next operation of the paginator DSL, allowing to specify the value used as
-   *     boundary.
-   */
-  KeyValuePicker<A, I> byAttribute(String attributeName);
+    /**
+     * Choose a key-based pagination type.
+     *
+     * @param attributeName the attribute on which the lessThan/greaterThan comparison will be made.
+     * @return the next operation of the paginator DSL, allowing to specify the value used as
+     *         boundary.
+     */
+    KeyValuePicker<A, I> byAttribute(String attributeName);
 }

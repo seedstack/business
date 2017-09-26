@@ -2,3 +2,4 @@ org.seedstack.business.internal.domain.DomainPlugin
 org.seedstack.business.internal.assembler.AssemblerPlugin
 org.seedstack.business.internal.specification.SpecificationPlugin
 org.seedstack.business.internal.pagination.PaginatorPlugin
+org.seedstack.business.internal.data.DataPlugin

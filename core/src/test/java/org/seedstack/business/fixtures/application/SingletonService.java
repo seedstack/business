@@ -13,5 +13,5 @@ import org.seedstack.business.Service;
 @Service
 public interface SingletonService {
 
-  Object getStuff();
+    Object getStuff();
 }

@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,35 +22,35 @@ import org.seedstack.business.fixtures.identity.MyAggregateFactory;
 import org.seedstack.business.fixtures.identity.MyEntity;
 import org.seedstack.seed.it.SeedITRunner;
 
-
 @RunWith(SeedITRunner.class)
 public class IdentityGeneratorIT {
 
-  @Inject
-  private MyAggregateFactory myAggregateFactory;
-  @Inject
-  private Factory<MyAggregate> factory;
+    @Inject
+    private MyAggregateFactory myAggregateFactory;
+    @Inject
+    private Factory<MyAggregate> factory;
 
-  @Test
-  public void sameClass() {
-    assertThat(myAggregateFactory).isInstanceOf(MyAggregateFactory.class);
-    assertThat(factory).isInstanceOf(MyAggregateFactory.class);
-    assertThat(factory.getClass()).isSameAs(myAggregateFactory.getClass());
-  }
-
-  @Test
-  public void testCustomFactory() {
-    MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
-    assertThat(myAggregate.getId()).isNotNull();
-    assertThat(myAggregate.getMySubEntity().getId()).isNotNull();
-    for (MyEntity entity : myAggregate.getMySubEntities()) {
-      assertThat(entity.getId()).isNotNull();
+    @Test
+    public void sameClass() {
+        assertThat(myAggregateFactory).isInstanceOf(MyAggregateFactory.class);
+        assertThat(factory).isInstanceOf(MyAggregateFactory.class);
+        assertThat(factory.getClass()).isSameAs(myAggregateFactory.getClass());
     }
-  }
 
-  @Test
-  public void testDefaultFactory() {
-    MyAggregate myAggregate = factory.create();
-    assertThat(myAggregate.getId()).isNotNull();
-  }
+    @Test
+    public void testCustomFactory() {
+        MyAggregate myAggregate = myAggregateFactory.createMyAggregate("test");
+        assertThat(myAggregate.getId()).isNotNull();
+        assertThat(myAggregate.getMySubEntity()
+                .getId()).isNotNull();
+        for (MyEntity entity : myAggregate.getMySubEntities()) {
+            assertThat(entity.getId()).isNotNull();
+        }
+    }
+
+    @Test
+    public void testDefaultFactory() {
+        MyAggregate myAggregate = factory.create();
+        assertThat(myAggregate.getId()).isNotNull();
+    }
 }

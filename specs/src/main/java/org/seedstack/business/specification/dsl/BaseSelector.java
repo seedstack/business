@@ -17,27 +17,27 @@ package org.seedstack.business.specification.dsl;
  */
 public interface BaseSelector<T, S extends BaseSelector<T, S>> {
 
-  /**
-   * Define a specification satisfied by any candidate.
-   *
-   * @return the terminal operation of the builder DSL, allowing to build the final specification.
-   */
-  TerminalOperation<T> all();
+    /**
+     * Define a specification satisfied by any candidate.
+     *
+     * @return the terminal operation of the builder DSL, allowing to build the final specification.
+     */
+    TerminalOperation<T> all();
 
-  /**
-   * Define a specification NOT satisfied by any candidate.
-   *
-   * @return the terminal operation of the builder DSL, allowing to build the final specification.
-   */
-  TerminalOperation<T> none();
+    /**
+     * Define a specification NOT satisfied by any candidate.
+     *
+     * @return the terminal operation of the builder DSL, allowing to build the final specification.
+     */
+    TerminalOperation<T> none();
 
-  /**
-   * Selects the whole object to be the subject of a specification. For instance, if an equality
-   * specification is chosen later in the DSL, the equality check will apply at the global object
-   * level.
-   *
-   * @return the next operation of the builder DSL, allowing to choose the specification that will
-   *     apply on the whole object.
-   */
-  SpecificationPicker<T, S> whole();
+    /**
+     * Selects the whole object to be the subject of a specification. For instance, if an equality
+     * specification is chosen later in the DSL, the equality check will apply at the global object
+     * level.
+     *
+     * @return the next operation of the builder DSL, allowing to choose the specification that will
+     *         apply on the whole object.
+     */
+    SpecificationPicker<T, S> whole();
 }

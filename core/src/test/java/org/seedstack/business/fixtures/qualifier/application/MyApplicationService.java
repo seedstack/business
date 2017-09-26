@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.qualifier.application;
 
 import org.seedstack.business.Service;
 
-
 @Service
 public interface MyApplicationService {
 

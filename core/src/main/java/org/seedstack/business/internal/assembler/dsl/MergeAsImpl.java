@@ -21,42 +21,42 @@ import org.seedstack.business.pagination.Slice;
 
 class MergeAsImpl<T> implements MergeAs<T> {
 
-  private final Stream<T> stream;
+    private final Stream<T> stream;
 
-  MergeAsImpl(Stream<T> stream) {
-    this.stream = stream;
-  }
+    MergeAsImpl(Stream<T> stream) {
+        this.stream = stream;
+    }
 
-  @Override
-  public Stream<T> asStream() {
-    return stream;
-  }
+    @Override
+    public Stream<T> asStream() {
+        return stream;
+    }
 
-  @Override
-  public <C extends Collection<T>> C asCollection(Supplier<C> collectionSupplier) {
-    C collection = collectionSupplier.get();
-    stream.forEach(collection::add);
-    return collection;
-  }
+    @Override
+    public <C extends Collection<T>> C asCollection(Supplier<C> collectionSupplier) {
+        C collection = collectionSupplier.get();
+        stream.forEach(collection::add);
+        return collection;
+    }
 
-  @Override
-  public List<T> asList() {
-    return asCollection(ArrayList::new);
-  }
+    @Override
+    public List<T> asList() {
+        return asCollection(ArrayList::new);
+    }
 
-  @Override
-  public Set<T> asSet() {
-    return asCollection(HashSet::new);
-  }
+    @Override
+    public Set<T> asSet() {
+        return asCollection(HashSet::new);
+    }
 
-  @Override
-  public Slice<T> asSlice() {
-    return new SimpleSlice<>(asList());
-  }
+    @Override
+    public Slice<T> asSlice() {
+        return new SimpleSlice<>(asList());
+    }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public T[] asArray() {
-    return stream.toArray(size -> (T[]) new Object[size]);
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] asArray() {
+        return stream.toArray(size -> (T[]) new Object[size]);
+    }
 }
