@@ -11,7 +11,7 @@ package org.seedstack.business.internal.data;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.inject.Inject;
-import org.seedstack.seed.DataManager;
+import org.seedstack.business.data.DataManager;
 import org.seedstack.seed.command.CommandDefinition;
 import org.seedstack.seed.command.Option;
 import org.seedstack.seed.command.StreamCommand;
@@ -19,7 +19,7 @@ import org.seedstack.seed.command.StreamCommand;
 /**
  * Command to import data in the application.
  */
-@CommandDefinition(scope = "data", name = "import", description = "Import application data")
+@CommandDefinition(scope = "business", name = "import", description = "Import application data")
 public class DataImportCommand implements StreamCommand {
     @Inject
     private DataManager dataManager;
@@ -40,7 +40,7 @@ public class DataImportCommand implements StreamCommand {
 
     @Override
     public void execute(InputStream inputStream, OutputStream outputStream, OutputStream errorStream) {
-        dataManager.importData(inputStream, group, name, clear);
+        dataManager.importData(inputStream, group, name);
     }
 
     @Override

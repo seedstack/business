@@ -18,16 +18,15 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.domain.LimitOption;
 import org.seedstack.business.domain.OffsetOption;
-import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.SortOption;
 import org.seedstack.business.specification.Specification;
 
 /**
- * An helper base class that can be extended to create an in-memory implementation of a {@link
- * Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root class.
+ * An helper base class that can be extended to create an in-memory implementation of a
+ * {@link org.seedstack.business.domain.Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root
+ * class.
  */
 public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> extends BaseRepository<A, I> {
-
     private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
     @SuppressWarnings("unchecked")
     private final Map<I, A> bucket = (Map<I, A>) buckets.computeIfAbsent(getAggregateRootClass(),

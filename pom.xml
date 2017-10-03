@@ -25,8 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.3.2-SNAPSHOT</seed.version>
-        <modelmapper.version>1.0.0</modelmapper.version>
+        <seed.version>3.4.0-SNAPSHOT</seed.version>
         <jmh-addon.version>1.0.1</jmh-addon.version>
 
         <compatibility.skip>true</compatibility.skip>
