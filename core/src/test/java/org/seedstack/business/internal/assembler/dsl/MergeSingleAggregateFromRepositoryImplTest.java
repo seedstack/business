@@ -31,81 +31,97 @@ import org.seedstack.business.spi.DtoInfoResolver;
 
 public class MergeSingleAggregateFromRepositoryImplTest {
 
-  private MergeSingleAggregateFromRepositoryImpl<Order, String, OrderDto> underTest;
-  private Order order;
-  private Repository<Order, String> repository;
+    private MergeSingleAggregateFromRepositoryImpl<Order, String, OrderDto> underTest;
+    private Order order;
+    private Repository<Order, String> repository;
 
-  @SuppressWarnings("unchecked")
-  @Before
-  public void before() {
-    DtoInfoResolver dtoInfoResolver = new AnnotationDtoInfoResolver();
-    AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
-    DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
-    Context context = new Context(domainRegistry, assemblerRegistry,
-        Sets.newHashSet(dtoInfoResolver));
-    order = new Order("1", "death star");
-    repository = Mockito.mock(Repository.class);
+    @SuppressWarnings("unchecked")
+    @Before
+    public void before() {
+        DtoInfoResolver dtoInfoResolver = new AnnotationDtoInfoResolver();
+        AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
+        DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
+        Context context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
+        order = new Order("1", "death star");
+        repository = Mockito.mock(Repository.class);
 
-    Mockito.when(domainRegistry.getRepository(Order.class, String.class)).thenReturn(repository);
-    Mockito.when(domainRegistry.getFactory(Order.class)).thenReturn(new OrderFactoryInternal());
-    Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
-    Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-        .thenReturn(new OrderDtoAssembler());
+        Mockito.when(domainRegistry.getRepository(Order.class, String.class))
+                .thenReturn(repository);
+        Mockito.when(domainRegistry.getFactory(Order.class))
+                .thenReturn(new OrderFactoryInternal());
+        Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
+        Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
+                .thenReturn(new OrderDtoAssembler());
 
-    underTest = new MergeSingleAggregateFromRepositoryImpl<>(context,
-        new OrderDto("1", "lightsaber"), Order.class);
-  }
-
-  @Test
-  public void testFromFactory() throws Exception {
-    AggregateRoot<?> aggregateRoot = underTest.fromFactory();
-
-    Assertions.assertThat(aggregateRoot).isNotNull();
-    Assertions.assertThat(aggregateRoot).isEqualTo(order);
-
-    Assertions.assertThat(((Order) aggregateRoot).getProduct()).isEqualTo("lightsaber");
-  }
-
-  @Test
-  public void testOrFailOK() {
-    Mockito.when(repository.get("1")).thenReturn(Optional.of(order));
-
-    AggregateRoot<?> aggregateRoot = null;
-    try {
-      aggregateRoot = underTest.fromRepository().orFail();
-    } catch (AggregateNotFoundException e) {
-      fail();
+        underTest = new MergeSingleAggregateFromRepositoryImpl<>(context, new OrderDto("1", "lightsaber"), Order.class);
     }
 
-    Assertions.assertThat(aggregateRoot).isNotNull();
-    Assertions.assertThat(aggregateRoot).isEqualTo(order);
+    @Test
+    public void testFromFactory() throws Exception {
+        AggregateRoot<?> aggregateRoot = underTest.fromFactory();
 
-    Assertions.assertThat(((Order) aggregateRoot).getProduct()).isEqualTo("lightsaber");
-  }
+        Assertions.assertThat(aggregateRoot)
+                .isNotNull();
+        Assertions.assertThat(aggregateRoot)
+                .isEqualTo(order);
 
-  @Test
-  public void testOrFailKO() {
-    Mockito.when(repository.get("1")).thenReturn(Optional.empty());
-
-    try {
-      underTest.fromRepository().orFail();
-      fail();
-    } catch (AggregateNotFoundException e) {
-      Assertions.assertThat(e.getMessage()).isNotEmpty();
+        Assertions.assertThat(((Order) aggregateRoot).getProduct())
+                .isEqualTo("lightsaber");
     }
 
-  }
+    @Test
+    public void testOrFailOK() {
+        Mockito.when(repository.get("1"))
+                .thenReturn(Optional.of(order));
 
-  @Test
-  public void testOrFromFactory() throws Exception {
-    // Get it by the repository first
-    Mockito.when(repository.get("1")).thenReturn(Optional.of(order));
+        AggregateRoot<?> aggregateRoot = null;
+        try {
+            aggregateRoot = underTest.fromRepository()
+                    .orFail();
+        } catch (AggregateNotFoundException e) {
+            fail();
+        }
 
-    AggregateRoot<?> aggregateRoot = underTest.fromRepository().orFromFactory();
+        Assertions.assertThat(aggregateRoot)
+                .isNotNull();
+        Assertions.assertThat(aggregateRoot)
+                .isEqualTo(order);
 
-    Assertions.assertThat(aggregateRoot).isNotNull();
-    Assertions.assertThat(aggregateRoot).isEqualTo(order);
+        Assertions.assertThat(((Order) aggregateRoot).getProduct())
+                .isEqualTo("lightsaber");
+    }
 
-    Assertions.assertThat(((Order) aggregateRoot).getProduct()).isEqualTo("lightsaber");
-  }
+    @Test
+    public void testOrFailKO() {
+        Mockito.when(repository.get("1"))
+                .thenReturn(Optional.empty());
+
+        try {
+            underTest.fromRepository()
+                    .orFail();
+            fail();
+        } catch (AggregateNotFoundException e) {
+            Assertions.assertThat(e.getMessage())
+                    .isNotEmpty();
+        }
+
+    }
+
+    @Test
+    public void testOrFromFactory() throws Exception {
+        // Get it by the repository first
+        Mockito.when(repository.get("1"))
+                .thenReturn(Optional.of(order));
+
+        AggregateRoot<?> aggregateRoot = underTest.fromRepository()
+                .orFromFactory();
+
+        Assertions.assertThat(aggregateRoot)
+                .isNotNull();
+        Assertions.assertThat(aggregateRoot)
+                .isEqualTo(order);
+
+        Assertions.assertThat(((Order) aggregateRoot).getProduct())
+                .isEqualTo("lightsaber");
+    }
 }

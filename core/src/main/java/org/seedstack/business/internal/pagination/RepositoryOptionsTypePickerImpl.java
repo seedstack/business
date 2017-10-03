@@ -15,17 +15,17 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
 
-class RepositoryOptionsTypePickerImpl<A extends AggregateRoot<I>, I> extends
-    PaginationTypePickerImpl<A, I> implements RepositoryOptionsPicker<A, I> {
+class RepositoryOptionsTypePickerImpl<A extends AggregateRoot<I>, I> extends PaginationTypePickerImpl<A, I>
+        implements RepositoryOptionsPicker<A, I> {
 
-  RepositoryOptionsTypePickerImpl(Repository<A, I> repository) {
-    super(repository);
-  }
+    RepositoryOptionsTypePickerImpl(Repository<A, I> repository) {
+        super(repository);
+    }
 
-  @Override
-  public PaginationTypePicker<A, I> withOptions(Repository.Option... options) {
-    checkNotNull(options, "Options cannot be null");
-    this.options = options;
-    return this;
-  }
+    @Override
+    public PaginationTypePicker<A, I> withOptions(Repository.Option... options) {
+        checkNotNull(options, "Options cannot be null");
+        this.options = options;
+        return this;
+    }
 }

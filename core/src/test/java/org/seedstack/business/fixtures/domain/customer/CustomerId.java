@@ -12,18 +12,17 @@ import org.seedstack.business.domain.BaseValueObject;
 
 public class CustomerId extends BaseValueObject {
 
+    private String customerId;
 
-  private String customerId;
+    CustomerId() {
+    }
 
-  CustomerId() {
-  }
+    public CustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
-  public CustomerId(String customerId) {
-    this.customerId = customerId;
-  }
-
-  public String getCustomerId() {
-    return customerId;
-  }
+    public String getCustomerId() {
+        return customerId;
+    }
 
 }

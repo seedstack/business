@@ -15,7 +15,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 
-
 /**
  * When {@link FluentAssembler} DSL needs to get an aggregate from repository (i.e. when the {@code
  * fromRepository()} method is used), this annotation allows to specify a matching between a DTO
@@ -83,20 +82,20 @@ import org.seedstack.business.assembler.dsl.FluentAssembler;
 @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 public @interface AggregateId {
 
-  /**
-   * When using a tuple assembler, i.e. when assembling a DTO to tuple of aggregate roots. This
-   * index indicates to which aggregate root this id belongs.
-   *
-   * @return the aggregate index
-   */
-  int aggregateIndex() default -1;
+    /**
+     * When using a tuple assembler, i.e. when assembling a DTO to tuple of aggregate roots. This
+     * index indicates to which aggregate root this id belongs.
+     *
+     * @return the aggregate index
+     */
+    int aggregateIndex() default -1;
 
-  /**
-   * If the aggregate root id is composite, i.e it is a value object, this method indicates
-   * constructor parameter of the value object associated to the annotated method.
-   *
-   * @return the parameter index in the id constructor.
-   */
-  int index() default -1;
+    /**
+     * If the aggregate root id is composite, i.e it is a value object, this method indicates
+     * constructor parameter of the value object associated to the annotated method.
+     *
+     * @return the parameter index in the id constructor.
+     */
+    int index() default -1;
 
 }

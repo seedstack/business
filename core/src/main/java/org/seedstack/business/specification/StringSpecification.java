@@ -16,88 +16,88 @@ import com.google.common.base.CharMatcher;
  */
 public abstract class StringSpecification implements Specification<String> {
 
-  protected final String expectedString;
-  protected final Options options;
+    protected final String expectedString;
+    protected final Options options;
 
-  /**
-   * Creates a string specification.
-   *
-   * @param expectedString the string to compare the candidate against.
-   * @param options        the comparison options.
-   */
-  protected StringSpecification(String expectedString, Options options) {
-    this.options = options;
-    this.expectedString = expectedString;
-  }
-
-  @Override
-  public boolean isSatisfiedBy(String candidateValue) {
-    String testValue = candidateValue;
-    if (options.isTrimmed()) {
-      testValue = CharMatcher.WHITESPACE.trimFrom(testValue);
-    } else {
-      if (options.isLeadTrimmed()) {
-        testValue = CharMatcher.WHITESPACE.trimLeadingFrom(testValue);
-      }
-      if (options.isTailTrimmed()) {
-        testValue = CharMatcher.WHITESPACE.trimTrailingFrom(testValue);
-      }
+    /**
+     * Creates a string specification.
+     *
+     * @param expectedString the string to compare the candidate against.
+     * @param options        the comparison options.
+     */
+    protected StringSpecification(String expectedString, Options options) {
+        this.options = options;
+        this.expectedString = expectedString;
     }
-    return isSatisfiedByString(testValue);
-  }
 
-  protected abstract boolean isSatisfiedByString(String candidateString);
+    @Override
+    public boolean isSatisfiedBy(String candidateValue) {
+        String testValue = candidateValue;
+        if (options.isTrimmed()) {
+            testValue = CharMatcher.WHITESPACE.trimFrom(testValue);
+        } else {
+            if (options.isLeadTrimmed()) {
+                testValue = CharMatcher.WHITESPACE.trimLeadingFrom(testValue);
+            }
+            if (options.isTailTrimmed()) {
+                testValue = CharMatcher.WHITESPACE.trimTrailingFrom(testValue);
+            }
+        }
+        return isSatisfiedByString(testValue);
+    }
 
-  /**
-   * Returns the expected string.
-   *
-   * @return the string that is compared against the candidate.
-   */
-  public String getExpectedString() {
-    return expectedString;
-  }
-
-  /**
-   * Returns the comparison options.
-   *
-   * @return the comparison options.
-   */
-  public Options getOptions() {
-    return options;
-  }
-
-  /**
-   * Options used for comparing strings.
-   */
-  public interface Options {
+    protected abstract boolean isSatisfiedByString(String candidateString);
 
     /**
-     * Returns if the comparison should ignore leading whitespace.
+     * Returns the expected string.
      *
-     * @return true if the comparison should ignore leading whitespace, false otherwise.
+     * @return the string that is compared against the candidate.
      */
-    boolean isLeadTrimmed();
+    public String getExpectedString() {
+        return expectedString;
+    }
 
     /**
-     * Returns if the comparison should ignore trailing whitespace.
+     * Returns the comparison options.
      *
-     * @return true if the comparison should ignore trailing whitespace, false otherwise.
+     * @return the comparison options.
      */
-    boolean isTailTrimmed();
+    public Options getOptions() {
+        return options;
+    }
 
     /**
-     * Returns if the comparison should ignore leading and trailing whitespace.
-     *
-     * @return true if the comparison should ignore leading and trailing whitespace, false
-     *     otherwise.
+     * Options used for comparing strings.
      */
-    boolean isTrimmed();
+    public interface Options {
 
-    /**
-     * Returns if the comparison should ignore the case.
-     *
-     * @return true if the comparison should be sensitive to case differences, false otherwise.
-     */
-    boolean isIgnoringCase();
-  }
+        /**
+         * Returns if the comparison should ignore leading whitespace.
+         *
+         * @return true if the comparison should ignore leading whitespace, false otherwise.
+         */
+        boolean isLeadTrimmed();
+
+        /**
+         * Returns if the comparison should ignore trailing whitespace.
+         *
+         * @return true if the comparison should ignore trailing whitespace, false otherwise.
+         */
+        boolean isTailTrimmed();
+
+        /**
+         * Returns if the comparison should ignore leading and trailing whitespace.
+         *
+         * @return true if the comparison should ignore leading and trailing whitespace, false
+         *         otherwise.
+         */
+        boolean isTrimmed();
+
+        /**
+         * Returns if the comparison should ignore the case.
+         *
+         * @return true if the comparison should be sensitive to case differences, false otherwise.
+         */
+        boolean isIgnoringCase();
+    }
 }

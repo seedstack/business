@@ -17,17 +17,17 @@ package org.seedstack.business.specification.dsl;
  */
 public interface OperatorPicker<T, S extends BaseSelector> extends TerminalOperation<T> {
 
-  /**
-   * Compose the current specification with a new one using a logical AND.
-   *
-   * @return the next operation of the builder DSL, allowing to further compose a new specification.
-   */
-  S and();
+    /**
+     * Compose the current specification with a new one using a logical AND.
+     *
+     * @return the next operation of the builder DSL, allowing to further compose a new specification.
+     */
+    S and();
 
-  /**
-   * Compose the current specification with a new one using a logical OR.
-   *
-   * @return the next operation of the builder DSL, allowing to further compose a new specification.
-   */
-  S or();
+    /**
+     * Compose the current specification with a new one using a logical OR.
+     *
+     * @return the next operation of the builder DSL, allowing to further compose a new specification.
+     */
+    S or();
 }

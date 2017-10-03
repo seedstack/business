@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.domain.multi;
 
 import org.seedstack.business.domain.BaseFactory;
@@ -17,8 +18,8 @@ import org.seedstack.business.domain.BaseFactory;
  */
 public class MultiFactoryDefault extends BaseFactory<Multi> implements MultiFactory {
 
-  @Override
-  public Multi create() {
-    return new Multi("test");
-  }
+    @Override
+    public Multi create() {
+        return new Multi("test");
+    }
 }

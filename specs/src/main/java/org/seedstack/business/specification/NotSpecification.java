@@ -15,33 +15,33 @@ package org.seedstack.business.specification;
  */
 public class NotSpecification<T> implements Specification<T> {
 
-  private final Specification<T> specification;
+    private final Specification<T> specification;
 
-  /**
-   * Creates a specification negating the specification passed as argument.
-   *
-   * @param specification the specification to negate.
-   */
-  public NotSpecification(Specification<T> specification) {
-    this.specification = specification;
-  }
+    /**
+     * Creates a specification negating the specification passed as argument.
+     *
+     * @param specification the specification to negate.
+     */
+    public NotSpecification(Specification<T> specification) {
+        this.specification = specification;
+    }
 
-  @Override
-  public boolean isSatisfiedBy(T candidate) {
-    return !specification.isSatisfiedBy(candidate);
-  }
+    @Override
+    public boolean isSatisfiedBy(T candidate) {
+        return !specification.isSatisfiedBy(candidate);
+    }
 
-  @Override
-  public String toString() {
-    return String.format("¬(%s)", specification.toString());
-  }
+    @Override
+    public String toString() {
+        return String.format("¬(%s)", specification.toString());
+    }
 
-  /**
-   * Returns the specification that negated.
-   *
-   * @return the negated specification.
-   */
-  public Specification<T> getSpecification() {
-    return specification;
-  }
+    /**
+     * Returns the specification that negated.
+     *
+     * @return the negated specification.
+     */
+    public Specification<T> getSpecification() {
+        return specification;
+    }
 }

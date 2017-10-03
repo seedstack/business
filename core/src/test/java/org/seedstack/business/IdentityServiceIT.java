@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business;
 
 import java.util.UUID;
@@ -26,50 +27,51 @@ import org.seedstack.seed.it.SeedITRunner;
 @RunWith(SeedITRunner.class)
 public class IdentityServiceIT {
 
-  @Inject
-  private IdentityService identityService;
+    @Inject
+    private IdentityService identityService;
 
-  @Test
-  public void identify_entity() {
-    MyAggregate myAggregate = new MyAggregate();
-    identityService.identify(myAggregate);
-    Assertions.assertThat(myAggregate.getId()).isNotNull();
-  }
-
-  @Test
-  public void allready_identify_entity() {
-    MyAggregate myAggregate = new MyAggregate(UUID.randomUUID());
-    try {
-      identityService.identify(myAggregate);
-      Assertions.fail("no exception occured");
-    } catch (BusinessException e) {
-      Assertions.assertThat(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
-          .isEqualTo(e.getErrorCode());
+    @Test
+    public void identify_entity() {
+        MyAggregate myAggregate = new MyAggregate();
+        identityService.identify(myAggregate);
+        Assertions.assertThat(myAggregate.getId())
+                .isNotNull();
     }
-  }
 
-  @Test
-  public void aggregate_with_bad_identity_Management() {
-    MyAggregateWithBadIdentityManagement myAggregate = new MyAggregateWithBadIdentityManagement();
-    try {
-      identityService.identify(myAggregate);
-      Assertions.fail("no exception occured");
-    } catch (BusinessException e) {
-      Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
-          .isEqualTo(e.getErrorCode());
+    @Test
+    public void allready_identify_entity() {
+        MyAggregate myAggregate = new MyAggregate(UUID.randomUUID());
+        try {
+            identityService.identify(myAggregate);
+            Assertions.fail("no exception occured");
+        } catch (BusinessException e) {
+            Assertions.assertThat(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
+                    .isEqualTo(e.getErrorCode());
+        }
     }
-  }
 
-  @Test
-  public void aggregate_with_no_identity_Management() {
-    MyAggregateWithNoIdentityManagement myAggregate = new MyAggregateWithNoIdentityManagement();
-    try {
-
-      identityService.identify(myAggregate);
-      Assertions.fail("no exception occured");
-    } catch (BusinessException e) {
-      Assertions.assertThat(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
-          .isEqualTo(e.getErrorCode());
+    @Test
+    public void aggregate_with_bad_identity_Management() {
+        MyAggregateWithBadIdentityManagement myAggregate = new MyAggregateWithBadIdentityManagement();
+        try {
+            identityService.identify(myAggregate);
+            Assertions.fail("no exception occured");
+        } catch (BusinessException e) {
+            Assertions.assertThat(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
+                    .isEqualTo(e.getErrorCode());
+        }
     }
-  }
+
+    @Test
+    public void aggregate_with_no_identity_Management() {
+        MyAggregateWithNoIdentityManagement myAggregate = new MyAggregateWithNoIdentityManagement();
+        try {
+
+            identityService.identify(myAggregate);
+            Assertions.fail("no exception occured");
+        } catch (BusinessException e) {
+            Assertions.assertThat(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
+                    .isEqualTo(e.getErrorCode());
+        }
+    }
 }

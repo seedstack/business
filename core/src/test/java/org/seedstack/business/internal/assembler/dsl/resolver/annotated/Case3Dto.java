@@ -10,25 +10,24 @@ package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
 import org.seedstack.business.assembler.AggregateId;
 
-
 public class Case3Dto {
 
-  private String customerName;
-  private String orderItem;
+    private String customerName;
+    private String orderItem;
 
-  public Case3Dto(String customerName, String orderItem) {
-    this.customerName = customerName;
-    this.orderItem = orderItem;
-  }
+    public Case3Dto(String customerName, String orderItem) {
+        this.customerName = customerName;
+        this.orderItem = orderItem;
+    }
 
-  @AggregateId(aggregateIndex = 0)
-  public String getCustomerName() {
-    return customerName;
-  }
+    @AggregateId(aggregateIndex = 0)
+    public String getCustomerName() {
+        return customerName;
+    }
 
-  @AggregateId(aggregateIndex = 1)
-  public String getOrderItem() {
-    return orderItem;
-  }
+    @AggregateId(aggregateIndex = 1)
+    public String getOrderItem() {
+        return orderItem;
+    }
 
 }

@@ -16,42 +16,41 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.SimplePage;
 
-class AssemblePageImpl<A extends AggregateRoot<I>, I, T extends Tuple> extends
-    AssembleMultipleImpl<A, I, T> implements AssemblePageWithQualifier {
+class AssemblePageImpl<A extends AggregateRoot<I>, I, T extends Tuple> extends AssembleMultipleImpl<A, I, T>
+        implements AssemblePageWithQualifier {
 
-  private final Page<A> pageOfAggregates;
-  private final Page<T> pageOfTuples;
+    private final Page<A> pageOfAggregates;
+    private final Page<T> pageOfTuples;
 
-  AssemblePageImpl(Context context, Page<A> pageOfAggregates, Page<T> pageOfTuples) {
-    super(context, pageOfAggregates == null ? null : pageOfAggregates.getItems().stream(),
-        pageOfTuples == null ? null : pageOfTuples.getItems().stream());
-    this.pageOfAggregates = pageOfAggregates;
-    this.pageOfTuples = pageOfTuples;
-  }
-
-  @Override
-  public <D> Page<D> toPageOf(Class<D> dtoClass) {
-    if (pageOfAggregates != null) {
-      return new SimplePage<>(super.toListOf(dtoClass), pageOfAggregates.getIndex(),
-          pageOfAggregates.getCapacity(),
-          pageOfAggregates.getTotalSize());
-    } else if (pageOfTuples != null) {
-      return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(),
-          pageOfTuples.getCapacity(),
-          pageOfTuples.getTotalSize());
+    AssemblePageImpl(Context context, Page<A> pageOfAggregates, Page<T> pageOfTuples) {
+        super(context, pageOfAggregates == null ? null : pageOfAggregates.getItems()
+                .stream(), pageOfTuples == null ? null : pageOfTuples.getItems()
+                .stream());
+        this.pageOfAggregates = pageOfAggregates;
+        this.pageOfTuples = pageOfTuples;
     }
-    throw new IllegalStateException("Nothing to assemble");
-  }
 
-  @Override
-  public AssemblePage with(Annotation qualifier) {
-    getContext().setAssemblerQualifier(qualifier);
-    return this;
-  }
+    @Override
+    public <D> Page<D> toPageOf(Class<D> dtoClass) {
+        if (pageOfAggregates != null) {
+            return new SimplePage<>(super.toListOf(dtoClass), pageOfAggregates.getIndex(),
+                    pageOfAggregates.getCapacity(), pageOfAggregates.getTotalSize());
+        } else if (pageOfTuples != null) {
+            return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(), pageOfTuples.getCapacity(),
+                    pageOfTuples.getTotalSize());
+        }
+        throw new IllegalStateException("Nothing to assemble");
+    }
 
-  @Override
-  public AssemblePage with(Class<? extends Annotation> qualifier) {
-    getContext().setAssemblerQualifierClass(qualifier);
-    return this;
-  }
+    @Override
+    public AssemblePage with(Annotation qualifier) {
+        getContext().setAssemblerQualifier(qualifier);
+        return this;
+    }
+
+    @Override
+    public AssemblePage with(Class<? extends Annotation> qualifier) {
+        getContext().setAssemblerQualifierClass(qualifier);
+        return this;
+    }
 }

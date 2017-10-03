@@ -13,14 +13,13 @@ import javax.inject.Inject;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.spi.GenericImplementation;
 
-
 @GenericImplementation
 @MyQualifier
 public class DefaultRepoSample3<A extends AggregateRoot<K>, K> extends DummyRepository<A, K> {
 
-  @Inject
-  @SuppressWarnings("unchecked")
-  public DefaultRepoSample3(@Assisted Object[] genericClasses) {
-    super((Class) genericClasses[0], (Class) genericClasses[1]);
-  }
+    @Inject
+    @SuppressWarnings("unchecked")
+    public DefaultRepoSample3(@Assisted Object[] genericClasses) {
+        super((Class) genericClasses[0], (Class) genericClasses[1]);
+    }
 }

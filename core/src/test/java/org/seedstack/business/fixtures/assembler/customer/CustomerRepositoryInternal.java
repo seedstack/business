@@ -16,33 +16,34 @@ import org.seedstack.business.domain.BaseRepository;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.specification.Specification;
 
+public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements CustomerRepository {
 
-public class CustomerRepositoryInternal extends BaseRepository<Customer, String> implements
-    CustomerRepository {
+    private static Map<String, Customer> orderMap = new ConcurrentHashMap<>();
 
-  private static Map<String, Customer> orderMap = new ConcurrentHashMap<>();
-
-  @Override
-  public void add(Customer order) {
-    orderMap.put(order.getId(), order);
-  }
-
-  @Override
-  public Stream<Customer> get(Specification<Customer> specification, Repository.Option... options) {
-    return orderMap.values().stream().filter(specification.asPredicate());
-  }
-
-  @Override
-  public long remove(Specification<Customer> specification) {
-    Iterator<Map.Entry<String, Customer>> iterator = orderMap.entrySet().iterator();
-    int count = 0;
-    while (iterator.hasNext()) {
-      Map.Entry<String, Customer> next = iterator.next();
-      if (specification.isSatisfiedBy(next.getValue())) {
-        iterator.remove();
-        count++;
-      }
+    @Override
+    public void add(Customer order) {
+        orderMap.put(order.getId(), order);
     }
-    return count;
-  }
+
+    @Override
+    public Stream<Customer> get(Specification<Customer> specification, Repository.Option... options) {
+        return orderMap.values()
+                .stream()
+                .filter(specification.asPredicate());
+    }
+
+    @Override
+    public long remove(Specification<Customer> specification) {
+        Iterator<Map.Entry<String, Customer>> iterator = orderMap.entrySet()
+                .iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            Map.Entry<String, Customer> next = iterator.next();
+            if (specification.isSatisfiedBy(next.getValue())) {
+                iterator.remove();
+                count++;
+            }
+        }
+        return count;
+    }
 }

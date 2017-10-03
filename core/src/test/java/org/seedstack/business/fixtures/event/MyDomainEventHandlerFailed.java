@@ -12,8 +12,8 @@ import org.seedstack.business.domain.BaseDomainEventHandler;
 
 public class MyDomainEventHandlerFailed extends BaseDomainEventHandler<MyDomainEvent2> {
 
-  @Override
-  public void onEvent(MyDomainEvent2 event) {
-    throw new RuntimeException();
-  }
+    @Override
+    public void onEvent(MyDomainEvent2 event) {
+        throw new RuntimeException();
+    }
 }

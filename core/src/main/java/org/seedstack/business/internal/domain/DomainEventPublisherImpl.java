@@ -23,62 +23,65 @@ import org.slf4j.LoggerFactory;
 
 class DomainEventPublisherImpl implements DomainEventPublisher {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
-  private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context =
-      ThreadLocal
-          .withInitial(ArrayListMultimap::create);
-  private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
-      eventHandlerClassesByEvent;
-  private final Injector injector;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
+    private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context = ThreadLocal
+            .withInitial(
+            ArrayListMultimap::create);
+    private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
+            eventHandlerClassesByEvent;
+    private final Injector injector;
 
-  @Inject
-  DomainEventPublisherImpl(Injector injector,
-      Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
-          eventHandlerClassesByEvent) {
-    this.injector = injector;
-    this.eventHandlerClassesByEvent = eventHandlerClassesByEvent;
-  }
+    @Inject
+    DomainEventPublisherImpl(Injector injector,
+            Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent) {
+        this.injector = injector;
+        this.eventHandlerClassesByEvent = eventHandlerClassesByEvent;
+    }
 
-  @Override
-  public <E extends DomainEvent> void publish(E event) {
-    LOGGER.debug("Firing event {} synchronously", event.getClass().getName());
-    for (Class<? extends DomainEvent> eventClass : eventHandlerClassesByEvent.keys().elementSet()) {
-      if (eventClass.isAssignableFrom(event.getClass())) {
-        checkCyclicCall(eventClass, event);
-        Multimap<Class<? extends DomainEvent>, DomainEvent> currentEventClasses = context.get();
-        boolean isFirstCall = currentEventClasses.isEmpty();
-        context.get().put(eventClass, event);
+    @Override
+    public <E extends DomainEvent> void publish(E event) {
+        LOGGER.debug("Firing event {} synchronously", event.getClass()
+                .getName());
+        for (Class<? extends DomainEvent> eventClass : eventHandlerClassesByEvent.keys()
+                .elementSet()) {
+            if (eventClass.isAssignableFrom(event.getClass())) {
+                checkCyclicCall(eventClass, event);
+                Multimap<Class<? extends DomainEvent>, DomainEvent> currentEventClasses = context.get();
+                boolean isFirstCall = currentEventClasses.isEmpty();
+                context.get()
+                        .put(eventClass, event);
 
-        try {
-          notifyHandlers(eventClass, event);
-        } catch (Exception e) {
-          throw BusinessException
-              .wrap(e, BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
-              .put("event", eventClass.getName());
-        } finally {
-          if (isFirstCall) {
-            context.remove();
-          }
+                try {
+                    notifyHandlers(eventClass, event);
+                } catch (Exception e) {
+                    throw BusinessException.wrap(e,
+                            BusinessErrorCode.EXCEPTION_OCCURRED_DURING_EVENT_HANDLER_INVOCATION)
+                            .put("event", eventClass.getName());
+                } finally {
+                    if (isFirstCall) {
+                        context.remove();
+                    }
+                }
+            }
         }
-      }
     }
-  }
 
-  private void checkCyclicCall(Class<? extends DomainEvent> eventClass, DomainEvent domainEvent) {
-    if (context.get().get(eventClass).contains(domainEvent)) {
-      throw BusinessException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED)
-          .put("event", eventClass);
+    private void checkCyclicCall(Class<? extends DomainEvent> eventClass, DomainEvent domainEvent) {
+        if (context.get()
+                .get(eventClass)
+                .contains(domainEvent)) {
+            throw BusinessException.createNew(BusinessErrorCode.EVENT_CYCLE_DETECTED)
+                    .put("event", eventClass);
+        }
     }
-  }
 
-  @SuppressWarnings("unchecked")
-  private <E extends DomainEvent> void notifyHandlers(Class<? extends E> eventClass, E event) {
-    Collection<Class<? extends DomainEventHandler>> eventHandlers = eventHandlerClassesByEvent
-        .get(eventClass);
-    for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlers) {
-      LOGGER.debug("Notifying event handler {}", eventHandlerClass.getName());
-      DomainEventHandler domainEventHandler = injector.getInstance(eventHandlerClass);
-      domainEventHandler.onEvent(event);
+    @SuppressWarnings("unchecked")
+    private <E extends DomainEvent> void notifyHandlers(Class<? extends E> eventClass, E event) {
+        Collection<Class<? extends DomainEventHandler>> eventHandlers = eventHandlerClassesByEvent.get(eventClass);
+        for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlers) {
+            LOGGER.debug("Notifying event handler {}", eventHandlerClass.getName());
+            DomainEventHandler domainEventHandler = injector.getInstance(eventHandlerClass);
+            domainEventHandler.onEvent(event);
+        }
     }
-  }
 }

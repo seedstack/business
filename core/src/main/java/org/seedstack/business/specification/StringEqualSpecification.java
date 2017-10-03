@@ -14,27 +14,27 @@ package org.seedstack.business.specification;
  */
 public class StringEqualSpecification extends StringSpecification {
 
-  /**
-   * Creates a string-equality specification.
-   *
-   * @param expectedString the string to compare the candidate against.
-   * @param options        the comparison options.
-   */
-  public StringEqualSpecification(String expectedString, Options options) {
-    super(expectedString, options);
-  }
-
-  @Override
-  protected boolean isSatisfiedByString(String candidateString) {
-    if (options.isIgnoringCase()) {
-      return candidateString.equalsIgnoreCase(expectedString);
-    } else {
-      return candidateString.equals(expectedString);
+    /**
+     * Creates a string-equality specification.
+     *
+     * @param expectedString the string to compare the candidate against.
+     * @param options        the comparison options.
+     */
+    public StringEqualSpecification(String expectedString, Options options) {
+        super(expectedString, options);
     }
-  }
 
-  @Override
-  public String toString() {
-    return "= " + String.valueOf(expectedString);
-  }
+    @Override
+    protected boolean isSatisfiedByString(String candidateString) {
+        if (options.isIgnoringCase()) {
+            return candidateString.equalsIgnoreCase(expectedString);
+        } else {
+            return candidateString.equals(expectedString);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "= " + String.valueOf(expectedString);
+    }
 }

@@ -17,23 +17,31 @@ import org.seedstack.business.internal.utils.BusinessUtils;
  *
  * @param <E> the type of the handled event.
  */
-public abstract class BaseDomainEventHandler<E extends DomainEvent> implements
-    DomainEventHandler<E> {
+public abstract class BaseDomainEventHandler<E extends DomainEvent> implements DomainEventHandler<E> {
 
-  private static final int EVENT_INDEX = 0;
-  private final Class<E> eventClass;
+    private static final int EVENT_INDEX = 0;
+    private final Class<E> eventClass;
 
-  /**
-   * Creates a base domain event handler. Actual handled event class is determined by reflection.
-   */
-  @SuppressWarnings("unchecked")
-  protected BaseDomainEventHandler() {
-    this.eventClass = (Class<E>) BusinessUtils
-        .resolveGenerics(DomainEventHandler.class, getClass())[EVENT_INDEX];
-  }
+    /**
+     * Creates a base domain event handler. Actual event class is determined by reflection.
+     */
+    @SuppressWarnings("unchecked")
+    protected BaseDomainEventHandler() {
+        this.eventClass = (Class<E>) BusinessUtils.resolveGenerics(DomainEventHandler.class, getClass())[EVENT_INDEX];
+    }
 
-  @Override
-  public Class<E> getEventClass() {
-    return this.eventClass;
-  }
+    /**
+     * Creates a base domain event handler. Actual event class is specified explicitly. This can be used to create a
+     * dynamic implementation of a domain event handler.
+     *
+     * @param eventClass the event class.
+     */
+    protected BaseDomainEventHandler(Class<E> eventClass) {
+        this.eventClass = eventClass;
+    }
+
+    @Override
+    public Class<E> getEventClass() {
+        return this.eventClass;
+    }
 }

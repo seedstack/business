@@ -1,0 +1,26 @@
+[
+  {
+    "group": "auto",
+    "name": "importTest",
+    "items": [
+      {
+        "id": "jsnow",
+        "firstName": "John",
+        "lastName": "SNOW",
+        "age": 29
+      }
+    ]
+  },
+  {
+    "group": "auto",
+    "name": "ignored",
+    "items": [
+      {
+        "id": "tgreyjoy",
+        "firstName": "Theon",
+        "lastName": "GREYJOY",
+        "age": 31
+      }
+    ]
+  }
+]

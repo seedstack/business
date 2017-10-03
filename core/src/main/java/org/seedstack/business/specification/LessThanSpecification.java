@@ -14,20 +14,19 @@ package org.seedstack.business.specification;
  *
  * @param <T> the type of the candidate object the specification applies to.
  */
-public class LessThanSpecification<T extends Comparable<? super T>> extends
-    ComparableSpecification<T> {
+public class LessThanSpecification<T extends Comparable<? super T>> extends ComparableSpecification<T> {
 
-  /**
-   * Creates a less than specification.
-   *
-   * @param expectedValue the value used to do the comparison against.
-   */
-  public LessThanSpecification(T expectedValue) {
-    super(expectedValue, -1);
-  }
+    /**
+     * Creates a less than specification.
+     *
+     * @param expectedValue the value used to do the comparison against.
+     */
+    public LessThanSpecification(T expectedValue) {
+        super(expectedValue, -1);
+    }
 
-  @Override
-  public String toString() {
-    return "< " + String.valueOf(getExpectedValue());
-  }
+    @Override
+    public String toString() {
+        return "< " + String.valueOf(getExpectedValue());
+    }
 }

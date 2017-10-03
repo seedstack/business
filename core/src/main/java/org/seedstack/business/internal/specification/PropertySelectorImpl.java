@@ -17,34 +17,34 @@ import org.seedstack.business.specification.dsl.TerminalOperation;
 
 class PropertySelectorImpl<T, S extends BaseSelector<T, S>> implements PropertySelector<T, S> {
 
-  protected final SpecificationBuilderContext<T, S> context;
+    protected final SpecificationBuilderContext<T, S> context;
 
-  @SuppressWarnings("unchecked")
-  PropertySelectorImpl(SpecificationBuilderContext<T, S> context) {
-    this.context = context;
-    this.context.setSelector((S) this);
-  }
+    @SuppressWarnings("unchecked")
+    PropertySelectorImpl(SpecificationBuilderContext<T, S> context) {
+        this.context = context;
+        this.context.setSelector((S) this);
+    }
 
-  @Override
-  public TerminalOperation<T> all() {
-    context.addSpecification(new TrueSpecification<>());
-    return new TerminalOperationImpl<>(context);
-  }
+    @Override
+    public TerminalOperation<T> all() {
+        context.addSpecification(new TrueSpecification<>());
+        return new TerminalOperationImpl<>(context);
+    }
 
-  @Override
-  public TerminalOperation<T> none() {
-    context.addSpecification(new FalseSpecification<>());
-    return new TerminalOperationImpl<>(context);
-  }
+    @Override
+    public TerminalOperation<T> none() {
+        context.addSpecification(new FalseSpecification<>());
+        return new TerminalOperationImpl<>(context);
+    }
 
-  @Override
-  public SpecificationPicker<T, S> whole() {
-    return new SpecificationPickerImpl<>(context);
-  }
+    @Override
+    public SpecificationPicker<T, S> whole() {
+        return new SpecificationPickerImpl<>(context);
+    }
 
-  @Override
-  public SpecificationPicker<T, S> property(String path) {
-    context.setProperty(path);
-    return new SpecificationPickerImpl<>(context);
-  }
+    @Override
+    public SpecificationPicker<T, S> property(String path) {
+        context.setProperty(path);
+        return new SpecificationPickerImpl<>(context);
+    }
 }

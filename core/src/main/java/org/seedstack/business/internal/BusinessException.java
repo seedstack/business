@@ -16,32 +16,32 @@ import org.seedstack.shed.exception.ErrorCode;
  */
 public class BusinessException extends BaseException {
 
-  protected BusinessException(ErrorCode errorCode) {
-    super(errorCode);
-  }
+    protected BusinessException(ErrorCode errorCode) {
+        super(errorCode);
+    }
 
-  protected BusinessException(ErrorCode errorCode, Throwable cause) {
-    super(errorCode, cause);
-  }
+    protected BusinessException(ErrorCode errorCode, Throwable cause) {
+        super(errorCode, cause);
+    }
 
-  /**
-   * Create a new BusinessException from an {@link ErrorCode}.
-   *
-   * @param errorCode the error code to set.
-   * @return the created BusinessException.
-   */
-  public static BusinessException createNew(ErrorCode errorCode) {
-    return new BusinessException(errorCode);
-  }
+    /**
+     * Create a new BusinessException from an {@link ErrorCode}.
+     *
+     * @param errorCode the error code to set.
+     * @return the created BusinessException.
+     */
+    public static BusinessException createNew(ErrorCode errorCode) {
+        return new BusinessException(errorCode);
+    }
 
-  /**
-   * Wrap a BusinessException with an {@link ErrorCode} around an existing {@link Throwable}.
-   *
-   * @param throwable the existing throwable to wrap.
-   * @param errorCode the error code to set.
-   * @return the created BusinessException.
-   */
-  public static BusinessException wrap(Throwable throwable, ErrorCode errorCode) {
-    return new BusinessException(errorCode, throwable);
-  }
+    /**
+     * Wrap a BusinessException with an {@link ErrorCode} around an existing {@link Throwable}.
+     *
+     * @param throwable the existing throwable to wrap.
+     * @param errorCode the error code to set.
+     * @return the created BusinessException.
+     */
+    public static BusinessException wrap(Throwable throwable, ErrorCode errorCode) {
+        return new BusinessException(errorCode, throwable);
+    }
 }

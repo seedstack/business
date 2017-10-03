@@ -12,13 +12,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.seedstack.business.util.inmemory.InMemorySequenceGenerator;
 
-
 public class InMemorySequenceHandlerTest {
 
-  @Test
-  public void testInMemorySequenceHandler() {
-    InMemorySequenceGenerator inMemorySequenceHandler = new InMemorySequenceGenerator();
-    Long handle = inMemorySequenceHandler.generate(null, null);
-    Assertions.assertThat(handle).isEqualTo(2);
-  }
+    @Test
+    public void testInMemorySequenceHandler() {
+        InMemorySequenceGenerator inMemorySequenceHandler = new InMemorySequenceGenerator();
+        Long handle = inMemorySequenceHandler.generate(null, null);
+        Assertions.assertThat(handle)
+                .isEqualTo(2);
+    }
 }

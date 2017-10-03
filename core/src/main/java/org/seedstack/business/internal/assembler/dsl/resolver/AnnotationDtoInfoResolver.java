@@ -38,125 +38,123 @@ import org.slf4j.LoggerFactory;
 @Priority(DtoInfoResolverPriority.MATCHING_ANNOTATIONS)
 public class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationDtoInfoResolver.class);
-  private static final Class<? extends Annotation> MATCHING_ENTITY_ID = AggregateId.class;
-  private static final Class<? extends Annotation> MATCHING_FACT_PARAM = FactoryArgument.class;
-  // This unbounded cache of DTO info can only grow up to the number of DTO classes in the system
-  private static final ConcurrentMap<Class<?>, DtoInfo<?>> cache = new ConcurrentHashMap<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationDtoInfoResolver.class);
+    private static final Class<? extends Annotation> MATCHING_ENTITY_ID = AggregateId.class;
+    private static final Class<? extends Annotation> MATCHING_FACT_PARAM = FactoryArgument.class;
+    // This unbounded cache of DTO info can only grow up to the number of DTO classes in the system
+    private static final ConcurrentMap<Class<?>, DtoInfo<?>> cache = new ConcurrentHashMap<>();
 
-  @Override
-  public <D> boolean supports(D dto) {
-    return getCachedInfo(dto).supported;
-  }
-
-  @Override
-  public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
-    ParameterHolder<D> parameterHolder = getCachedInfo(dto).idParameterHolder;
-
-    if (parameterHolder.isEmpty()) {
-      throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
-          .put("dtoClass", dto.getClass().getName()).put("aggregateIdClass", aggregateIdClass);
+    @Override
+    public <D> boolean supports(D dto) {
+        return getCachedInfo(dto).supported;
     }
 
-    if (position == -1) {
-      return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto),
-          parameterHolder.parameters(dto));
-    } else {
-      return createIdentifier(aggregateIdClass,
-          parameterHolder.uniqueElementForAggregate(dto, position),
-          parameterHolder.parametersOfAggregateRoot(dto, position));
-    }
-  }
+    @Override
+    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
+        ParameterHolder<D> parameterHolder = getCachedInfo(dto).idParameterHolder;
 
-  @Override
-  public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
-      int position) {
-    ParameterHolder<D> parameterHolder = getCachedInfo(dto).aggregateParameterHolder;
-
-    if (position == -1) {
-      return createFromFactory(aggregateRootClass, parameterHolder.parameters(dto));
-    } else {
-      return createFromFactory(aggregateRootClass,
-          parameterHolder.parametersOfAggregateRoot(dto, position));
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private <D> DtoInfo<D> getCachedInfo(D dto) {
-    return (DtoInfo<D>) cache.computeIfAbsent(dto.getClass(), dtoClass -> {
-      final ParameterHolder<D> idParameterHolder = new ParameterHolder<>((Class<D>) dtoClass);
-      final ParameterHolder<D> aggregateParameterHolder = new ParameterHolder<>(
-          (Class<D>) dtoClass);
-      final AtomicBoolean supported = new AtomicBoolean(false);
-
-      LOGGER.debug("Resolving DTO information on {}", dtoClass);
-
-      Classes.from(dtoClass).traversingSuperclasses().methods().forEach(method -> {
-        makeAccessible(method);
-
-        AggregateId idAnnotation = method.getAnnotation(AggregateId.class);
-        if (idAnnotation != null) {
-          if (idAnnotation.aggregateIndex() >= 0) {
-            if (idAnnotation.index() >= 0) {
-              idParameterHolder
-                  .addTupleParameter(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(),
-                      idAnnotation.index(), method);
-            } else {
-              idParameterHolder
-                  .addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(), method);
-            }
-          } else {
-            if (idAnnotation.index() >= 0) {
-              idParameterHolder.addParameter(MATCHING_ENTITY_ID, idAnnotation.index(), method);
-            } else {
-              idParameterHolder.addValue(MATCHING_ENTITY_ID, method);
-            }
-          }
-          supported.set(true);
+        if (parameterHolder.isEmpty()) {
+            throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
+                    .put("dtoClass", dto.getClass()
+                            .getName())
+                    .put("aggregateIdClass", aggregateIdClass);
         }
 
-        FactoryArgument factoryAnnotation = method.getAnnotation(FactoryArgument.class);
-        if (factoryAnnotation != null) {
-          if (factoryAnnotation.aggregateIndex() >= 0) {
-            if (factoryAnnotation.index() >= 0) {
-              aggregateParameterHolder
-                  .addTupleParameter(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(),
-                      factoryAnnotation.index(),
-                      method);
-            } else {
-              aggregateParameterHolder
-                  .addTupleValue(MATCHING_FACT_PARAM, factoryAnnotation.aggregateIndex(), method);
-            }
-          } else {
-            if (factoryAnnotation.index() >= 0) {
-              aggregateParameterHolder
-                  .addParameter(MATCHING_FACT_PARAM, factoryAnnotation.index(), method);
-            } else {
-              aggregateParameterHolder.addValue(MATCHING_FACT_PARAM, method);
-            }
-          }
-          supported.set(true);
+        if (position == -1) {
+            return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto),
+                    parameterHolder.parameters(dto));
+        } else {
+            return createIdentifier(aggregateIdClass, parameterHolder.uniqueElementForAggregate(dto, position),
+                    parameterHolder.parametersOfAggregateRoot(dto, position));
         }
-      });
-      if (supported.get()) {
-        return new DtoInfo<>(true, idParameterHolder.freeze(), aggregateParameterHolder.freeze());
-      } else {
-        return new DtoInfo<>(false, null, null);
-      }
-    });
-  }
-
-  private static class DtoInfo<D> {
-
-    final boolean supported;
-    final ParameterHolder<D> idParameterHolder;
-    final ParameterHolder<D> aggregateParameterHolder;
-
-    private DtoInfo(boolean supported, ParameterHolder<D> idParameterHolder,
-        ParameterHolder<D> aggregateParameterHolder) {
-      this.supported = supported;
-      this.idParameterHolder = idParameterHolder;
-      this.aggregateParameterHolder = aggregateParameterHolder;
     }
-  }
+
+    @Override
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position) {
+        ParameterHolder<D> parameterHolder = getCachedInfo(dto).aggregateParameterHolder;
+
+        if (position == -1) {
+            return createFromFactory(aggregateRootClass, parameterHolder.parameters(dto));
+        } else {
+            return createFromFactory(aggregateRootClass, parameterHolder.parametersOfAggregateRoot(dto, position));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <D> DtoInfo<D> getCachedInfo(D dto) {
+        return (DtoInfo<D>) cache.computeIfAbsent(dto.getClass(), dtoClass -> {
+            final ParameterHolder<D> idParameterHolder = new ParameterHolder<>((Class<D>) dtoClass);
+            final ParameterHolder<D> aggregateParameterHolder = new ParameterHolder<>((Class<D>) dtoClass);
+            final AtomicBoolean supported = new AtomicBoolean(false);
+
+            LOGGER.debug("Resolving DTO information on {}", dtoClass);
+
+            Classes.from(dtoClass)
+                    .traversingSuperclasses()
+                    .methods()
+                    .forEach(method -> {
+                        makeAccessible(method);
+
+                        AggregateId idAnnotation = method.getAnnotation(AggregateId.class);
+                        if (idAnnotation != null) {
+                            if (idAnnotation.aggregateIndex() >= 0) {
+                                if (idAnnotation.index() >= 0) {
+                                    idParameterHolder.addTupleParameter(MATCHING_ENTITY_ID,
+                                            idAnnotation.aggregateIndex(), idAnnotation.index(), method);
+                                } else {
+                                    idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(),
+                                            method);
+                                }
+                            } else {
+                                if (idAnnotation.index() >= 0) {
+                                    idParameterHolder.addParameter(MATCHING_ENTITY_ID, idAnnotation.index(), method);
+                                } else {
+                                    idParameterHolder.addValue(MATCHING_ENTITY_ID, method);
+                                }
+                            }
+                            supported.set(true);
+                        }
+
+                        FactoryArgument factoryAnnotation = method.getAnnotation(FactoryArgument.class);
+                        if (factoryAnnotation != null) {
+                            if (factoryAnnotation.aggregateIndex() >= 0) {
+                                if (factoryAnnotation.index() >= 0) {
+                                    aggregateParameterHolder.addTupleParameter(MATCHING_FACT_PARAM,
+                                            factoryAnnotation.aggregateIndex(), factoryAnnotation.index(), method);
+                                } else {
+                                    aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM,
+                                            factoryAnnotation.aggregateIndex(), method);
+                                }
+                            } else {
+                                if (factoryAnnotation.index() >= 0) {
+                                    aggregateParameterHolder.addParameter(MATCHING_FACT_PARAM,
+                                            factoryAnnotation.index(), method);
+                                } else {
+                                    aggregateParameterHolder.addValue(MATCHING_FACT_PARAM, method);
+                                }
+                            }
+                            supported.set(true);
+                        }
+                    });
+            if (supported.get()) {
+                return new DtoInfo<>(true, idParameterHolder.freeze(), aggregateParameterHolder.freeze());
+            } else {
+                return new DtoInfo<>(false, null, null);
+            }
+        });
+    }
+
+    private static class DtoInfo<D> {
+
+        final boolean supported;
+        final ParameterHolder<D> idParameterHolder;
+        final ParameterHolder<D> aggregateParameterHolder;
+
+        private DtoInfo(boolean supported, ParameterHolder<D> idParameterHolder,
+                ParameterHolder<D> aggregateParameterHolder) {
+            this.supported = supported;
+            this.idParameterHolder = idParameterHolder;
+            this.aggregateParameterHolder = aggregateParameterHolder;
+        }
+    }
 }

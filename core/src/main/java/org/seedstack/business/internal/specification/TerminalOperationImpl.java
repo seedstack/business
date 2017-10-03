@@ -14,14 +14,14 @@ import org.seedstack.business.specification.dsl.TerminalOperation;
 
 class TerminalOperationImpl<T, S extends BaseSelector<T, S>> implements TerminalOperation<T> {
 
-  protected final SpecificationBuilderContext<T, S> context;
+    protected final SpecificationBuilderContext<T, S> context;
 
-  TerminalOperationImpl(SpecificationBuilderContext<T, S> context) {
-    this.context = context;
-  }
+    TerminalOperationImpl(SpecificationBuilderContext<T, S> context) {
+        this.context = context;
+    }
 
-  @Override
-  public Specification<T> build() {
-    return context.build();
-  }
+    @Override
+    public Specification<T> build() {
+        return context.build();
+    }
 }

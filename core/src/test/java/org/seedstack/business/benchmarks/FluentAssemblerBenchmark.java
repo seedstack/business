@@ -27,103 +27,105 @@ import org.seedstack.jmh.AbstractBenchmark;
 @State(Scope.Benchmark)
 public class FluentAssemblerBenchmark extends AbstractBenchmark {
 
-  @Inject
-  private FluentAssembler fluentAssembler;
-  @Inject
-  private Repository<Order, String> orderRepository;
-  @Inject
-  private OrderFactory orderFactory;
-  private List<OrderDto> orderDtoList = new ArrayList<>();
-  private List<Order> orderList = new ArrayList<>();
-  private Order order;
-  private OrderDto orderDto;
+    @Inject
+    private FluentAssembler fluentAssembler;
+    @Inject
+    private Repository<Order, String> orderRepository;
+    @Inject
+    private OrderFactory orderFactory;
+    private List<OrderDto> orderDtoList = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
+    private Order order;
+    private OrderDto orderDto;
 
-  @Setup
-  public void setUp() {
-    orderDto = new OrderDto(String.valueOf(1), "light saber", 1);
-    order = orderFactory.create("1", "death star");
-    for (int i = 0; i < 1000; i++) {
-      orderDtoList.add(new OrderDto(String.valueOf(i), "light saber", i));
+    @Setup
+    public void setUp() {
+        orderDto = new OrderDto(String.valueOf(1), "light saber", 1);
+        order = orderFactory.create("1", "death star");
+        for (int i = 0; i < 1000; i++) {
+            orderDtoList.add(new OrderDto(String.valueOf(i), "light saber", i));
+        }
+        for (int i = 0; i < 1000; i++) {
+            Order order = orderFactory.create(String.valueOf(i), "death star");
+            orderRepository.add(order);
+            orderList.add(order);
+        }
     }
-    for (int i = 0; i < 1000; i++) {
-      Order order = orderFactory.create(String.valueOf(i), "death star");
-      orderRepository.add(order);
-      orderList.add(order);
+
+    @Benchmark
+    public void assembleAggregate() {
+        fluentAssembler.assemble(order)
+                .with(Names.named("noop"))
+                .to(OrderDto.class);
     }
-  }
 
-  @Benchmark
-  public void assembleAggregate() {
-    fluentAssembler.assemble(order).with(Names.named("noop")).to(OrderDto.class);
-  }
+    @Benchmark
+    public void assembleList() {
+        fluentAssembler.assemble(orderList)
+                .with(Names.named("noop"))
+                .toStreamOf(OrderDto.class)
+                .parallel()
+                .collect(Collectors.toList());
+    }
 
-  @Benchmark
-  public void assembleList() {
-    fluentAssembler.assemble(orderList)
-        .with(Names.named("noop"))
-        .toStreamOf(OrderDto.class)
-        .parallel()
-        .collect(Collectors.toList());
-  }
+    @Benchmark
+    public void mergeAggregateFromFactory() {
+        fluentAssembler.merge(orderDto)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromFactory();
+    }
 
-  @Benchmark
-  public void mergeAggregateFromFactory() {
-    fluentAssembler.merge(orderDto)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromFactory();
-  }
+    @Benchmark
+    public void mergeListFromFactory() {
+        fluentAssembler.merge(orderDtoList)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromFactory()
+                .asStream()
+                .parallel()
+                .collect(Collectors.toList());
+    }
 
-  @Benchmark
-  public void mergeListFromFactory() {
-    fluentAssembler.merge(orderDtoList)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromFactory()
-        .asStream()
-        .parallel()
-        .collect(Collectors.toList());
-  }
+    @Benchmark
+    public void mergeAggregateFromRepository() {
+        fluentAssembler.merge(orderDto)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromRepository()
+                .orFail();
+    }
 
-  @Benchmark
-  public void mergeAggregateFromRepository() {
-    fluentAssembler.merge(orderDto)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromRepository()
-        .orFail();
-  }
+    @Benchmark
+    public void mergeListFromRepository() {
+        fluentAssembler.merge(orderDtoList)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromRepository()
+                .orFail()
+                .asStream()
+                .parallel()
+                .collect(Collectors.toList());
+    }
 
-  @Benchmark
-  public void mergeListFromRepository() {
-    fluentAssembler.merge(orderDtoList)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromRepository()
-        .orFail()
-        .asStream()
-        .parallel()
-        .collect(Collectors.toList());
-  }
+    @Benchmark
+    public void mergeAggregateFromRepositoryOrFactory() {
+        fluentAssembler.merge(orderDto)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromRepository()
+                .orFromFactory();
+    }
 
-  @Benchmark
-  public void mergeAggregateFromRepositoryOrFactory() {
-    fluentAssembler.merge(orderDto)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromRepository()
-        .orFromFactory();
-  }
-
-  @Benchmark
-  public void mergeListFromRepositoryOrFactory() {
-    fluentAssembler.merge(orderDtoList)
-        .with(Names.named("noop"))
-        .into(Order.class)
-        .fromRepository()
-        .orFromFactory()
-        .asStream()
-        .parallel()
-        .collect(Collectors.toList());
-  }
+    @Benchmark
+    public void mergeListFromRepositoryOrFactory() {
+        fluentAssembler.merge(orderDtoList)
+                .with(Names.named("noop"))
+                .into(Order.class)
+                .fromRepository()
+                .orFromFactory()
+                .asStream()
+                .parallel()
+                .collect(Collectors.toList());
+    }
 }

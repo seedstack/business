@@ -9,4 +9,5 @@
 /**
  * Provides a fluent DSL to paginate domain objects.
  */
+
 package org.seedstack.business.pagination.dsl;

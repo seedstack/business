@@ -13,5 +13,5 @@ import org.seedstack.business.Service;
 @Service
 public interface GenericService<T> {
 
-  T doSomething(Class<T> someClass);
+    T doSomething(Class<T> someClass);
 }

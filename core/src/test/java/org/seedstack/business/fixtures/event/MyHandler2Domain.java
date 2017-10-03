@@ -13,13 +13,13 @@ import org.seedstack.business.domain.DomainEventHandler;
 
 public class MyHandler2Domain implements DomainEventHandler<DomainEvent> {
 
-  @Override
-  public void onEvent(DomainEvent domainEvent) {
-    // do nothing
-  }
+    @Override
+    public void onEvent(DomainEvent domainEvent) {
+        // do nothing
+    }
 
-  @Override
-  public Class<DomainEvent> getEventClass() {
-    return DomainEvent.class;
-  }
+    @Override
+    public Class<DomainEvent> getEventClass() {
+        return DomainEvent.class;
+    }
 }

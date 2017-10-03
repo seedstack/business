@@ -9,6 +9,6 @@
 package org.seedstack.business.fixtures.repositories;
 
 public class TestAggregate3RepositoryImpl extends DummyRepository<TestAggregate3, String> implements
-    TestAggregate3Repository {
+        TestAggregate3Repository {
 
 }

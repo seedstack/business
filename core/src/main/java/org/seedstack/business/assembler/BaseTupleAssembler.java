@@ -21,33 +21,32 @@ import org.seedstack.shed.reflect.Classes;
  */
 public abstract class BaseTupleAssembler<T extends Tuple, D> implements Assembler<T, D> {
 
-  private final Class<D> dtoClass;
+    private final Class<D> dtoClass;
 
-  /**
-   * Creates an assembler with automatic resolution of its DTO class.
-   */
-  @SuppressWarnings("unchecked")
-  public BaseTupleAssembler() {
-    this.dtoClass = (Class<D>) BusinessUtils
-        .resolveGenerics(BaseTupleAssembler.class, getClass())[1];
-  }
+    /**
+     * Creates an assembler with automatic resolution of its DTO class.
+     */
+    @SuppressWarnings("unchecked")
+    public BaseTupleAssembler() {
+        this.dtoClass = (Class<D>) BusinessUtils.resolveGenerics(BaseTupleAssembler.class, getClass())[1];
+    }
 
-  /**
-   * Creates an assembler with the DTO class explicitly specified.
-   *
-   * @param dtoClass the DTO class.
-   */
-  protected BaseTupleAssembler(Class<D> dtoClass) {
-    this.dtoClass = dtoClass;
-  }
+    /**
+     * Creates an assembler with the DTO class explicitly specified.
+     *
+     * @param dtoClass the DTO class.
+     */
+    protected BaseTupleAssembler(Class<D> dtoClass) {
+        this.dtoClass = dtoClass;
+    }
 
-  @Override
-  public Class<D> getDtoClass() {
-    return this.dtoClass;
-  }
+    @Override
+    public Class<D> getDtoClass() {
+        return this.dtoClass;
+    }
 
-  @Override
-  public D createDto() {
-    return Classes.instantiateDefault(getDtoClass());
-  }
+    @Override
+    public D createDto() {
+        return Classes.instantiateDefault(getDtoClass());
+    }
 }

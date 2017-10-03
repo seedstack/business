@@ -43,96 +43,94 @@ import org.slf4j.LoggerFactory;
 
 class DomainModule extends AbstractModule {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DomainModule.class);
-  private final Map<Key<?>, Class<?>> bindings;
-  private final Collection<BindingStrategy> bindingStrategies;
-  private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses;
-  private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainModule.class);
+    private final Map<Key<?>, Class<?>> bindings;
+    private final Collection<BindingStrategy> bindingStrategies;
+    private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses;
+    private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses;
 
-  DomainModule(Map<Key<?>, Class<?>> bindings, Collection<BindingStrategy> bindingStrategies,
-      Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses,
-      Collection<Class<? extends DomainEventHandler>> eventHandlerClasses) {
-    this.bindings = bindings;
-    this.bindingStrategies = bindingStrategies;
-    this.identityGeneratorClasses = identityGeneratorClasses;
-    this.eventHandlerClasses = eventHandlerClasses;
-  }
-
-  @Override
-  protected void configure() {
-    bind(DomainRegistry.class).to(DomainRegistryImpl.class);
-
-    // Simple bindings
-    for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
-      LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue().getSimpleName());
-      bind(binding.getKey()).to(cast(binding.getValue()));
+    DomainModule(Map<Key<?>, Class<?>> bindings, Collection<BindingStrategy> bindingStrategies,
+            Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses,
+            Collection<Class<? extends DomainEventHandler>> eventHandlerClasses) {
+        this.bindings = bindings;
+        this.bindingStrategies = bindingStrategies;
+        this.identityGeneratorClasses = identityGeneratorClasses;
+        this.eventHandlerClasses = eventHandlerClasses;
     }
 
-    // Binding strategies
-    for (BindingStrategy bindingStrategy : bindingStrategies) {
-      bindingStrategy.resolve(binder());
+    @Override
+    protected void configure() {
+        bind(DomainRegistry.class).to(DomainRegistryImpl.class);
+
+        // Simple bindings
+        for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
+            LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue()
+                    .getSimpleName());
+            bind(binding.getKey()).to(cast(binding.getValue()));
+        }
+
+        // Binding strategies
+        for (BindingStrategy bindingStrategy : bindingStrategies) {
+            bindingStrategy.resolve(binder());
+        }
+
+        // Identity generation
+        for (Class<? extends IdentityGenerator> identityGeneratorClass : identityGeneratorClasses) {
+            bind(identityGeneratorClass);
+            Named named = identityGeneratorClass.getAnnotation(Named.class);
+            if (named != null) {
+                bind(findIdentityGeneratorInterface(identityGeneratorClass)).annotatedWith(Names.named(named.value()))
+                        .to(identityGeneratorClass);
+            }
+        }
+        bind(IdentityService.class).to(IdentityServiceImpl.class);
+        IdentityInterceptor identityInterceptor = new IdentityInterceptor();
+        requestInjection(identityInterceptor);
+        bindInterceptor(Matchers.subclassesOf(Factory.class), factoryMethods(), identityInterceptor);
+
+        // Domain events
+        Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent =
+                HashMultimap.create();
+        for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlerClasses) {
+            eventHandlersByEvent.put(getEventClass(eventHandlerClass), eventHandlerClass);
+            bind(eventHandlerClass);
+        }
+        bind(new EventHandlersByEventTypeLiteral()).toInstance(eventHandlersByEvent);
+        bind(DomainEventPublisher.class).to(DomainEventPublisherImpl.class)
+                .in(Scopes.SINGLETON);
     }
 
-    // Identity generation
-    for (Class<? extends IdentityGenerator> identityGeneratorClass : identityGeneratorClasses) {
-      bind(identityGeneratorClass);
-      Named named = identityGeneratorClass.getAnnotation(Named.class);
-      if (named != null) {
-        bind(findIdentityGeneratorInterface(identityGeneratorClass))
-            .annotatedWith(Names.named(named.value()))
-            .to(identityGeneratorClass);
-      }
+    @SuppressWarnings("unchecked")
+    private <T extends Class<?>> T cast(Class<?> someClass) {
+        return (T) someClass;
     }
-    bind(IdentityService.class).to(IdentityServiceImpl.class);
-    IdentityInterceptor identityInterceptor = new IdentityInterceptor();
-    requestInjection(identityInterceptor);
-    bindInterceptor(Matchers.subclassesOf(Factory.class), factoryMethods(), identityInterceptor);
 
-    // Domain events
-    Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
-        eventHandlersByEvent = HashMultimap
-        .create();
-    for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlerClasses) {
-      eventHandlersByEvent.put(getEventClass(eventHandlerClass), eventHandlerClass);
-      bind(eventHandlerClass);
+    @SuppressWarnings("unchecked")
+    private Class<DomainEvent> getEventClass(Class<? extends DomainEventHandler> domainEventHandlerClass) {
+        return (Class<DomainEvent>) BusinessUtils.resolveGenerics(DomainEventHandler.class, domainEventHandlerClass)[0];
     }
-    bind(new EventHandlersByEventTypeLiteral()).toInstance(eventHandlersByEvent);
-    bind(DomainEventPublisher.class).to(DomainEventPublisherImpl.class).in(Scopes.SINGLETON);
-  }
 
-  @SuppressWarnings("unchecked")
-  private <ClassT extends Class<?>> ClassT cast(Class<?> someClass) {
-    return (ClassT) someClass;
-  }
+    @SuppressWarnings("unchecked")
+    private Class<IdentityGenerator> findIdentityGeneratorInterface(
+            Class<? extends IdentityGenerator> identityGeneratorClass) {
+        return (Class<IdentityGenerator>) Classes.from(identityGeneratorClass)
+                .traversingInterfaces()
+                .traversingSuperclasses()
+                .classes()
+                .filter(ClassPredicates.classIsInterface()
+                        .and(ClassPredicates.classIsAssignableFrom(IdentityGenerator.class)))
+                .findFirst().<BaseException>orElseThrow(
+                        () -> BusinessException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_GENERATOR)
+                                .put("class", identityGeneratorClass));
+    }
 
-  @SuppressWarnings("unchecked")
-  private Class<DomainEvent> getEventClass(
-      Class<? extends DomainEventHandler> domainEventHandlerClass) {
-    return (Class<DomainEvent>) BusinessUtils
-        .resolveGenerics(DomainEventHandler.class, domainEventHandlerClass)[0];
-  }
+    private Matcher<Method> factoryMethods() {
+        return new MethodMatcherBuilder(
+                ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class).and(
+                        CreateResolver.INSTANCE)).build();
+    }
 
-  @SuppressWarnings("unchecked")
-  private Class<IdentityGenerator> findIdentityGeneratorInterface(
-      Class<? extends IdentityGenerator> identityGeneratorClass) {
-    return (Class<IdentityGenerator>) Classes.from(identityGeneratorClass).traversingInterfaces()
-        .traversingSuperclasses().classes()
-        .filter(ClassPredicates.classIsInterface()
-            .and(ClassPredicates.classIsAssignableFrom(IdentityGenerator.class)))
-        .findFirst().<BaseException>orElseThrow(
-            () -> BusinessException.createNew(BusinessErrorCode.ILLEGAL_IDENTITY_GENERATOR)
-                .put("class", identityGeneratorClass));
-  }
-
-  private Matcher<Method> factoryMethods() {
-    return new MethodMatcherBuilder(
-        ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class)
-            .and(CreateResolver.INSTANCE))
-        .build();
-  }
-
-  private static class EventHandlersByEventTypeLiteral extends
-      TypeLiteral<Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>> {
-
-  }
+    private static class EventHandlersByEventTypeLiteral extends TypeLiteral<Multimap<Class<? extends DomainEvent>,
+            Class<? extends DomainEventHandler>>> {
+    }
 }

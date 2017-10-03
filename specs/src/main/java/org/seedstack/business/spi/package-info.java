@@ -9,4 +9,5 @@
 /**
  * Provides classes, interfaces and annotations to extend the business framework.
  */
+
 package org.seedstack.business.spi;

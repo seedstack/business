@@ -9,4 +9,5 @@
 /**
  * Provides general purpose classes, interfaces and annotations.
  */
+
 package org.seedstack.business;

@@ -31,41 +31,37 @@ import org.slf4j.LoggerFactory;
  */
 public class SpecificationPlugin extends AbstractSeedPlugin {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SpecificationPlugin.class);
-  private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses =
-      new HashSet<>();
-  private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses = new
-      HashSet<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpecificationPlugin.class);
+    private final Set<Class<? extends SpecificationTranslator>> specificationTranslatorClasses = new HashSet<>();
+    private final Set<Class<? extends SpecificationConverter>> specificationConverterClasses = new HashSet<>();
 
-  @Override
-  public String name() {
-    return "business-specification";
-  }
+    @Override
+    public String name() {
+        return "business-specification";
+    }
 
-  @Override
-  public Collection<ClasspathScanRequest> classpathScanRequests() {
-    return classpathScanRequestBuilder()
-        .specification(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
-        .specification(BusinessSpecifications.SPECIFICATION_CONVERTER).build();
-  }
+    @Override
+    public Collection<ClasspathScanRequest> classpathScanRequests() {
+        return classpathScanRequestBuilder().specification(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
+                .specification(BusinessSpecifications.SPECIFICATION_CONVERTER)
+                .build();
+    }
 
-  @Override
-  public InitState initialize(InitContext initContext) {
-    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_TRANSLATOR,
-        SpecificationTranslator.class)
-        .forEach(specificationTranslatorClasses::add);
-    LOGGER.debug("Specification translator classes => {}", specificationTranslatorClasses);
+    @Override
+    public InitState initialize(InitContext initContext) {
+        streamClasses(initContext, BusinessSpecifications.SPECIFICATION_TRANSLATOR,
+                SpecificationTranslator.class).forEach(specificationTranslatorClasses::add);
+        LOGGER.debug("Specification translator classes => {}", specificationTranslatorClasses);
 
-    streamClasses(initContext, BusinessSpecifications.SPECIFICATION_CONVERTER,
-        SpecificationConverter.class)
-        .forEach(specificationConverterClasses::add);
-    LOGGER.debug("Specification converter classes => {}", specificationConverterClasses);
+        streamClasses(initContext, BusinessSpecifications.SPECIFICATION_CONVERTER,
+                SpecificationConverter.class).forEach(specificationConverterClasses::add);
+        LOGGER.debug("Specification converter classes => {}", specificationConverterClasses);
 
-    return InitState.INITIALIZED;
-  }
+        return InitState.INITIALIZED;
+    }
 
-  @Override
-  public Object nativeUnitModule() {
-    return new SpecificationModule(specificationTranslatorClasses, specificationConverterClasses);
-  }
+    @Override
+    public Object nativeUnitModule() {
+        return new SpecificationModule(specificationTranslatorClasses, specificationConverterClasses);
+    }
 }

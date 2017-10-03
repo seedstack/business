@@ -10,22 +10,21 @@ package org.seedstack.business.fixtures.assembler.customer;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
-
 public class Customer extends BaseAggregateRoot<String> {
 
-  private String id;
-  private String name;
+    private String id;
+    private String name;
 
-  public Customer(String id) {
-    this.id = id;
-    this.name = id;
-  }
+    public Customer(String id) {
+        this.id = id;
+        this.name = id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

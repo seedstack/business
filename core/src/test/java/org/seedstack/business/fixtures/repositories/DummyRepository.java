@@ -16,24 +16,24 @@ import org.seedstack.business.specification.Specification;
 
 public class DummyRepository<A extends AggregateRoot<ID>, ID> extends BaseRepository<A, ID> {
 
-  public DummyRepository() {
-  }
+    public DummyRepository() {
+    }
 
-  public DummyRepository(Class<A> aggregateRootClass, Class<ID> idClass) {
-    super(aggregateRootClass, idClass);
-  }
+    public DummyRepository(Class<A> aggregateRootClass, Class<ID> idClass) {
+        super(aggregateRootClass, idClass);
+    }
 
-  @Override
-  public void add(A aggregate) {
-  }
+    @Override
+    public void add(A aggregate) {
+    }
 
-  @Override
-  public Stream<A> get(Specification<A> specification, Repository.Option... options) {
-    return Stream.empty();
-  }
+    @Override
+    public Stream<A> get(Specification<A> specification, Repository.Option... options) {
+        return Stream.empty();
+    }
 
-  @Override
-  public long remove(Specification<A> specification) {
-    return 0;
-  }
+    @Override
+    public long remove(Specification<A> specification) {
+        return 0;
+    }
 }

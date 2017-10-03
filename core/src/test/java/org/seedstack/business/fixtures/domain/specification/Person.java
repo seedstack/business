@@ -12,18 +12,18 @@ import org.seedstack.business.domain.BaseEntity;
 
 public class Person extends BaseEntity<String> {
 
-  private final String name;
-  private final int age;
-  private final Address address;
+    private final String name;
+    private final int age;
+    private final Address address;
 
-  public Person(String name, int age, Address address) {
-    this.name = name;
-    this.age = age;
-    this.address = address;
-  }
+    public Person(String name, int age, Address address) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+    }
 
-  @Override
-  public String getId() {
-    return name;
-  }
+    @Override
+    public String getId() {
+        return name;
+    }
 }

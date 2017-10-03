@@ -12,18 +12,17 @@ import javax.inject.Inject;
 import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.seed.it.ITBind;
 
-
 @ITBind
 public class SomeService {
 
-  @Inject
-  private DomainEventPublisher domainEventPublisher;
+    @Inject
+    private DomainEventPublisher domainEventPublisher;
 
-  public void callBusinessStuff(String someParam) {
-    domainEventPublisher.publish(new SomeDomainEvent(someParam));
-  }
+    public void callBusinessStuff(String someParam) {
+        domainEventPublisher.publish(new SomeDomainEvent(someParam));
+    }
 
-  public void doNothing() {
-    // do nothing
-  }
+    public void doNothing() {
+        // do nothing
+    }
 }

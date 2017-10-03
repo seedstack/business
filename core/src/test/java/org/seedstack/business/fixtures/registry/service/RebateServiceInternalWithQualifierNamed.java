@@ -8,7 +8,6 @@
 
 package org.seedstack.business.fixtures.registry.service;
 
-
 import javax.inject.Named;
 import org.seedstack.business.fixtures.registry.domain.Client;
 

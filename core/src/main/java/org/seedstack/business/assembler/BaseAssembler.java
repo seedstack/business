@@ -20,34 +20,34 @@ import org.seedstack.shed.reflect.Classes;
  */
 public abstract class BaseAssembler<A extends AggregateRoot<?>, D> implements Assembler<A, D> {
 
-  private final Class<D> dtoClass;
+    private final Class<D> dtoClass;
 
-  /**
-   * Creates a base assembler. Actual classes handled by the assembler are determined by
-   * reflection.
-   */
-  @SuppressWarnings("unchecked")
-  public BaseAssembler() {
-    this.dtoClass = (Class<D>) BusinessUtils.resolveGenerics(BaseAssembler.class, getClass())[1];
-  }
+    /**
+     * Creates a base assembler. Actual classes handled by the assembler are determined by
+     * reflection.
+     */
+    @SuppressWarnings("unchecked")
+    public BaseAssembler() {
+        this.dtoClass = (Class<D>) BusinessUtils.resolveGenerics(BaseAssembler.class, getClass())[1];
+    }
 
-  /**
-   * Creates a base assembler. Actual classes handled by the assembler are specified explicitly.
-   * This can be used to create a dynamic implementation of an assembler.
-   *
-   * @param dtoClass the DTO class.
-   */
-  protected BaseAssembler(Class<D> dtoClass) {
-    this.dtoClass = dtoClass;
-  }
+    /**
+     * Creates a base assembler. Actual classes handled by the assembler are specified explicitly.
+     * This can be used to create a dynamic implementation of an assembler.
+     *
+     * @param dtoClass the DTO class.
+     */
+    protected BaseAssembler(Class<D> dtoClass) {
+        this.dtoClass = dtoClass;
+    }
 
-  @Override
-  public Class<D> getDtoClass() {
-    return this.dtoClass;
-  }
+    @Override
+    public Class<D> getDtoClass() {
+        return this.dtoClass;
+    }
 
-  @Override
-  public D createDto() {
-    return Classes.instantiateDefault(getDtoClass());
-  }
+    @Override
+    public D createDto() {
+        return Classes.instantiateDefault(getDtoClass());
+    }
 }

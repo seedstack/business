@@ -10,42 +10,40 @@ package org.seedstack.business.fixtures.event;
 
 import org.seedstack.business.domain.DomainEvent;
 
-
 public class SomeDomainEvent implements DomainEvent {
 
-  public String businessInfo;
+    public String businessInfo;
 
-  public SomeDomainEvent(String businessInfo) {
+    public SomeDomainEvent(String businessInfo) {
 
-    this.businessInfo = businessInfo;
-  }
-
-  public String getBusinessInfo() {
-
-    return businessInfo;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+        this.businessInfo = businessInfo;
     }
 
-    SomeDomainEvent someEvent = (SomeDomainEvent) o;
+    public String getBusinessInfo() {
 
-    if (businessInfo != null ? !businessInfo.equals(someEvent.businessInfo)
-        : someEvent.businessInfo != null) {
-      return false;
+        return businessInfo;
     }
 
-    return true;
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-  @Override
-  public int hashCode() {
-    return businessInfo != null ? businessInfo.hashCode() : 0;
-  }
+        SomeDomainEvent someEvent = (SomeDomainEvent) o;
+
+        if (businessInfo != null ? !businessInfo.equals(someEvent.businessInfo) : someEvent.businessInfo != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return businessInfo != null ? businessInfo.hashCode() : 0;
+    }
 }

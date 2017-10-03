@@ -18,12 +18,12 @@ package org.seedstack.business.domain;
  */
 public interface DomainEventHandler<E extends DomainEvent> {
 
-  /**
-   * Called when an event of the correct type must be handled.
-   *
-   * @param event the event to handle.
-   */
-  void onEvent(E event);
+    /**
+     * Called when an event of the correct type must be handled.
+     *
+     * @param event the event to handle.
+     */
+    void onEvent(E event);
 
-  Class<E> getEventClass();
+    Class<E> getEventClass();
 }

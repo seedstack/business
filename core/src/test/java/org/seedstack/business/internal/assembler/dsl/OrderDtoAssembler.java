@@ -14,18 +14,18 @@ import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 
 class OrderDtoAssembler extends BaseAssembler<Order, OrderDto> {
 
-  @Override
-  public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
-    targetDto.setOrderId(sourceAggregate.getId());
-    targetDto.setOrderDate(sourceAggregate.getOrderDate());
-    targetDto.setPrice(sourceAggregate.getPrice());
-    targetDto.setProduct(sourceAggregate.getProduct());
-  }
+    @Override
+    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
+        targetDto.setOrderId(sourceAggregate.getId());
+        targetDto.setOrderDate(sourceAggregate.getOrderDate());
+        targetDto.setPrice(sourceAggregate.getPrice());
+        targetDto.setProduct(sourceAggregate.getProduct());
+    }
 
-  @Override
-  public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
-    targetAggregate.setProduct(sourceDto.getProduct());
-    targetAggregate.setPrice(sourceDto.getPrice());
-    targetAggregate.setOrderDate(sourceDto.getOrderDate());
-  }
+    @Override
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
+        targetAggregate.setProduct(sourceDto.getProduct());
+        targetAggregate.setPrice(sourceDto.getPrice());
+        targetAggregate.setOrderDate(sourceDto.getOrderDate());
+    }
 }

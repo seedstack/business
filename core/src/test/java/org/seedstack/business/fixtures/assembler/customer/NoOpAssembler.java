@@ -14,13 +14,13 @@ import org.seedstack.business.assembler.BaseAssembler;
 @Named("noop")
 public class NoOpAssembler extends BaseAssembler<Order, OrderDto> {
 
-  @Override
-  public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
+    @Override
+    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
 
-  }
+    }
 
-  @Override
-  public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
+    @Override
+    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
 
-  }
+    }
 }

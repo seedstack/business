@@ -17,5 +17,5 @@ import org.seedstack.business.fixtures.registry.domain.Product;
 @DomainPolicy
 public interface RebatePolicy {
 
-  float calculateRebate(Product product, float quantity);
+    float calculateRebate(Product product, float quantity);
 }

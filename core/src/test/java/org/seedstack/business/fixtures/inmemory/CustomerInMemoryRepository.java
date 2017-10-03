@@ -16,12 +16,12 @@ import org.seedstack.business.fixtures.domain.customer.CustomerRepository;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
 
-public class CustomerInMemoryRepository extends
-    BaseInMemoryRepository<Customer, CustomerId> implements CustomerRepository {
+public class CustomerInMemoryRepository extends BaseInMemoryRepository<Customer, CustomerId> implements
+        CustomerRepository {
 
-  @Override
-  public Collection<Customer> findAll() {
-    return get(Specification.any()).collect(Collectors.toList());
-  }
+    @Override
+    public Collection<Customer> findAll() {
+        return get(Specification.any()).collect(Collectors.toList());
+    }
 }
 

@@ -27,85 +27,79 @@ import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.util.Tuples;
 
+class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements AssembleMultipleWithQualifier {
 
-class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple>
-    implements AssembleMultipleWithQualifier {
+    private final Context context;
+    private final Stream<A> aggregates;
+    private final Stream<T> aggregateTuples;
 
-  private final Context context;
-  private final Stream<A> aggregates;
-  private final Stream<T> aggregateTuples;
-
-  AssembleMultipleImpl(Context context, Stream<A> aggregates, Stream<T> aggregateTuples) {
-    this.context = checkNotNull(context, "Context must not be null");
-    checkArgument(aggregates != null || aggregateTuples != null,
-        "Cannot assemble null");
-    checkArgument(aggregates == null || aggregateTuples == null,
-        "Cannot specify both aggregates and tuples to assemble");
-    this.aggregates = aggregates;
-    this.aggregateTuples = aggregateTuples;
-  }
-
-  @Override
-  public <D> Stream<D> toStreamOf(Class<D> dtoClass) {
-    if (aggregates != null) {
-      return aggregates.map(
-          aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass)
-              .createDtoFromAggregate(aggregate));
-    } else if (aggregateTuples != null) {
-      return aggregateTuples
-          .map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass)
-              .createDtoFromAggregate(tuple));
+    AssembleMultipleImpl(Context context, Stream<A> aggregates, Stream<T> aggregateTuples) {
+        this.context = checkNotNull(context, "Context must not be null");
+        checkArgument(aggregates != null || aggregateTuples != null, "Cannot assemble null");
+        checkArgument(aggregates == null || aggregateTuples == null,
+                "Cannot specify both aggregates and tuples to assemble");
+        this.aggregates = aggregates;
+        this.aggregateTuples = aggregateTuples;
     }
-    throw new IllegalStateException("Nothing to assemble");
-  }
 
-  @Override
-  public <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass,
-      Supplier<C> collectionSupplier) {
-    C collection = collectionSupplier.get();
-    toStreamOf(dtoClass).forEach(collection::add);
-    return collection;
-  }
+    @Override
+    public <D> Stream<D> toStreamOf(Class<D> dtoClass) {
+        if (aggregates != null) {
+            return aggregates.map(aggregate -> context.assemblerOf(getAggregateClass(aggregate), dtoClass)
+                    .createDtoFromAggregate(aggregate));
+        } else if (aggregateTuples != null) {
+            return aggregateTuples.map(tuple -> context.tupleAssemblerOf(Tuples.itemClasses(tuple), dtoClass)
+                    .createDtoFromAggregate(tuple));
+        }
+        throw new IllegalStateException("Nothing to assemble");
+    }
 
-  @Override
-  public <D> List<D> toListOf(Class<D> dtoClass) {
-    return toCollectionOf(dtoClass, ArrayList::new);
-  }
+    @Override
+    public <D, C extends Collection<D>> C toCollectionOf(Class<D> dtoClass, Supplier<C> collectionSupplier) {
+        C collection = collectionSupplier.get();
+        toStreamOf(dtoClass).forEach(collection::add);
+        return collection;
+    }
 
-  @Override
-  public <D> Set<D> toSetOf(Class<D> dtoClass) {
-    return toCollectionOf(dtoClass, HashSet::new);
-  }
+    @Override
+    public <D> List<D> toListOf(Class<D> dtoClass) {
+        return toCollectionOf(dtoClass, ArrayList::new);
+    }
 
-  @Override
-  public <D> Slice<D> toSliceOf(Class<D> dtoClass) {
-    return new SimpleSlice<>(toListOf(dtoClass));
-  }
+    @Override
+    public <D> Set<D> toSetOf(Class<D> dtoClass) {
+        return toCollectionOf(dtoClass, HashSet::new);
+    }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public <D> D[] toArrayOf(Class<D> dtoClass) {
-    return toStreamOf(dtoClass).toArray(size -> (D[]) new Object[size]);
-  }
+    @Override
+    public <D> Slice<D> toSliceOf(Class<D> dtoClass) {
+        return new SimpleSlice<>(toListOf(dtoClass));
+    }
 
-  @Override
-  public AssembleMultiple with(Annotation qualifier) {
-    context.setAssemblerQualifier(qualifier);
-    return this;
-  }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <D> D[] toArrayOf(Class<D> dtoClass) {
+        return toStreamOf(dtoClass).toArray(size -> (D[]) new Object[size]);
+    }
 
-  @Override
-  public AssembleMultiple with(Class<? extends Annotation> qualifier) {
-    context.setAssemblerQualifierClass(qualifier);
-    return this;
-  }
+    @Override
+    public AssembleMultiple with(Annotation qualifier) {
+        context.setAssemblerQualifier(qualifier);
+        return this;
+    }
 
-  Context getContext() {
-    return context;
-  }
+    @Override
+    public AssembleMultiple with(Class<? extends Annotation> qualifier) {
+        context.setAssemblerQualifierClass(qualifier);
+        return this;
+    }
 
-  @SuppressWarnings("unchecked")
-  private Class<A> getAggregateClass(A aggregate) {
-    return (Class<A>) aggregate.getClass();
-  }
+    Context getContext() {
+        return context;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<A> getAggregateClass(A aggregate) {
+        return (Class<A>) aggregate.getClass();
+    }
 }

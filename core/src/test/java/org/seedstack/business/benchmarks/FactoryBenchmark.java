@@ -20,23 +20,23 @@ import org.seedstack.jmh.AbstractBenchmark;
 @State(Scope.Benchmark)
 public class FactoryBenchmark extends AbstractBenchmark {
 
-  @Inject
-  private Factory<MyFactoryAggregate> myAggregateAutoFactory;
-  @Inject
-  private MyAggregateFactory myAggregateFactory;
+    @Inject
+    private Factory<MyFactoryAggregate> myAggregateAutoFactory;
+    @Inject
+    private MyAggregateFactory myAggregateFactory;
 
-  @Benchmark
-  public void createWithoutIdentityManagement() {
-    myAggregateAutoFactory.create("id");
-  }
+    @Benchmark
+    public void createWithoutIdentityManagement() {
+        myAggregateAutoFactory.create("id");
+    }
 
-  @Benchmark
-  public void createWithIdentityManagement() {
-    myAggregateFactory.createMyAggregate();
-  }
+    @Benchmark
+    public void createWithIdentityManagement() {
+        myAggregateFactory.createMyAggregate();
+    }
 
-  @Benchmark
-  public void createWithComplexIdentityManagement() {
-    myAggregateFactory.createMyAggregate("someName");
-  }
+    @Benchmark
+    public void createWithComplexIdentityManagement() {
+        myAggregateFactory.createMyAggregate("someName");
+    }
 }

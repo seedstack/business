@@ -12,48 +12,48 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class MyAggregateRoot extends BaseAggregateRoot<String> {
 
-  private String firstName;
-  private String lastName;
-  private String address;
-  private int age;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private int age;
 
-  public MyAggregateRoot() {
-  }
+    public MyAggregateRoot() {
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public String getAddress() {
+        return address;
+    }
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-  public int getAge() {
-    return age;
-  }
+    public int getAge() {
+        return age;
+    }
 
-  public void setAge(int age) {
-    this.age = age;
-  }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-  @Override
-  public String getId() {
-    return firstName + "-" + lastName;
-  }
+    @Override
+    public String getId() {
+        return firstName + "-" + lastName;
+    }
 }

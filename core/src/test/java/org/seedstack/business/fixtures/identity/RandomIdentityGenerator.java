@@ -14,9 +14,8 @@ import org.seedstack.business.domain.IdentityGenerator;
 
 public class RandomIdentityGenerator implements IdentityGenerator<Double> {
 
-  @Override
-  public <E extends Entity<Double>> Double generate(Class<E> entityClass,
-      Map<String, String> entityProperties) {
-    return Math.random();
-  }
+    @Override
+    public <E extends Entity<Double>> Double generate(Class<E> entityClass, Map<String, String> entityProperties) {
+        return Math.random();
+    }
 }

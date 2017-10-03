@@ -30,90 +30,99 @@ import org.seedstack.seed.it.SeedITRunner;
 @RunWith(SeedITRunner.class)
 public class AssemblerRegistryIT {
 
-  @Inject
-  private AssemblerRegistry registry;
-  @Inject
-  private Assembler<MyAggregateRoot, MyUnrestrictedDto> expectedAssembler;
-  @Inject
-  @Named("special")
-  private Assembler<Order, OrderDto> expectedSpecialAssembler;
+    @Inject
+    private AssemblerRegistry registry;
+    @Inject
+    private Assembler<MyAggregateRoot, MyUnrestrictedDto> expectedAssembler;
+    @Inject
+    @Named("special")
+    private Assembler<Order, OrderDto> expectedSpecialAssembler;
 
-  @Test
-  public void testAssemblerOfWithProvidedAssembler() {
-    Assembler<?, ?> assembler = registry
-        .getAssembler(MyAggregateRoot.class, MyUnrestrictedDto.class);
-    Assertions.assertThat(assembler).isNotNull();
-    Assertions.assertThat(assembler).isInstanceOf(BaseAssembler.class);
-    Assertions.assertThat(assembler).isInstanceOf(MyAssembler.class);
+    @Test
+    public void testAssemblerOfWithProvidedAssembler() {
+        Assembler<?, ?> assembler = registry.getAssembler(MyAggregateRoot.class, MyUnrestrictedDto.class);
+        Assertions.assertThat(assembler)
+                .isNotNull();
+        Assertions.assertThat(assembler)
+                .isInstanceOf(BaseAssembler.class);
+        Assertions.assertThat(assembler)
+                .isInstanceOf(MyAssembler.class);
 
-    Assertions.assertThat(expectedAssembler).isNotNull();
-    Assertions.assertThat(assembler.getClass()).isEqualTo(expectedAssembler.getClass());
-  }
+        Assertions.assertThat(expectedAssembler)
+                .isNotNull();
+        Assertions.assertThat(assembler.getClass())
+                .isEqualTo(expectedAssembler.getClass());
+    }
 
-  @Test
-  public void testAssemblerOfWithDefaultAssembler() {
-    Assembler<?, ?> assembler = registry
-        .getAssembler(Order.class, OrderDto.class, Names.named("special"));
-    Assertions.assertThat(assembler).isNotNull();
-    Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
-    Assertions.assertThat(assembler).isInstanceOf(DefaultSpecialAssembler.class);
+    @Test
+    public void testAssemblerOfWithDefaultAssembler() {
+        Assembler<?, ?> assembler = registry.getAssembler(Order.class, OrderDto.class, Names.named("special"));
+        Assertions.assertThat(assembler)
+                .isNotNull();
+        Assertions.assertThat(assembler)
+                .isInstanceOf(SpecialAssembler.class);
+        Assertions.assertThat(assembler)
+                .isInstanceOf(DefaultSpecialAssembler.class);
 
-    Assertions.assertThat(expectedSpecialAssembler).isNotNull();
-    Assertions.assertThat(assembler.getClass()).isEqualTo(expectedSpecialAssembler.getClass());
-  }
+        Assertions.assertThat(expectedSpecialAssembler)
+                .isNotNull();
+        Assertions.assertThat(assembler.getClass())
+                .isEqualTo(expectedSpecialAssembler.getClass());
+    }
 
-  @Test
-  @SuppressWarnings("unchecked")
-  public void testAssemblerOfTuple() {
-    Class<? extends AggregateRoot<?>>[] aggregateRootTuple = new Class[]{Order.class,
-        Customer.class};
-    Assembler<?, ?> assembler = registry.getTupleAssembler(aggregateRootTuple, OrderDto.class);
-    Assertions.assertThat(assembler).isNotNull();
-  }
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testAssemblerOfTuple() {
+        Class<? extends AggregateRoot<?>>[] aggregateRootTuple = new Class[]{Order.class, Customer.class};
+        Assembler<?, ?> assembler = registry.getTupleAssembler(aggregateRootTuple, OrderDto.class);
+        Assertions.assertThat(assembler)
+                .isNotNull();
+    }
 
-  @Test
-  public void testAssemblerOfWithAutomaticAssembler() {
-    Assembler<?, ?> assembler = registry
-        .getAssembler(Order.class, OrderDto.class, Names.named("custom"));
-    Assertions.assertThat(assembler).isNotNull();
-    Assertions.assertThat(assembler).isInstanceOf(SpecialAssembler.class);
-    Assertions.assertThat(assembler).isNotInstanceOf(DefaultSpecialAssembler.class);
+    @Test
+    public void testAssemblerOfWithAutomaticAssembler() {
+        Assembler<?, ?> assembler = registry.getAssembler(Order.class, OrderDto.class, Names.named("custom"));
+        Assertions.assertThat(assembler)
+                .isNotNull();
+        Assertions.assertThat(assembler)
+                .isInstanceOf(SpecialAssembler.class);
+        Assertions.assertThat(assembler)
+                .isNotInstanceOf(DefaultSpecialAssembler.class);
 
-    Assertions.assertThat(assembler).isInstanceOf(CustomSpecialAssembler.class);
-  }
+        Assertions.assertThat(assembler)
+                .isInstanceOf(CustomSpecialAssembler.class);
+    }
 
-  static abstract class SpecialAssembler<A extends AggregateRoot<?>, D> extends
-      BaseAssembler<A, D> {
-
-  }
-
-  @Named("custom")
-  static class CustomSpecialAssembler extends SpecialAssembler<Order, OrderDto> {
-
-    @Override
-    public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
+    static abstract class SpecialAssembler<A extends AggregateRoot<?>, D> extends BaseAssembler<A, D> {
 
     }
 
-    @Override
-    public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
+    @Named("custom")
+    static class CustomSpecialAssembler extends SpecialAssembler<Order, OrderDto> {
 
-    }
-  }
+        @Override
+        public void mergeAggregateIntoDto(Order sourceAggregate, OrderDto targetDto) {
 
-  @GenericImplementation
-  @Named("special")
-  public static class DefaultSpecialAssembler<A extends AggregateRoot<?>, D> extends
-      SpecialAssembler<A, D> {
+        }
 
-    @Override
-    public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+        @Override
+        public void mergeDtoIntoAggregate(OrderDto sourceDto, Order targetAggregate) {
 
+        }
     }
 
-    @Override
-    public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+    @GenericImplementation
+    @Named("special")
+    public static class DefaultSpecialAssembler<A extends AggregateRoot<?>, D> extends SpecialAssembler<A, D> {
 
+        @Override
+        public void mergeAggregateIntoDto(A sourceAggregate, D targetDto) {
+
+        }
+
+        @Override
+        public void mergeDtoIntoAggregate(D sourceDto, A targetAggregate) {
+
+        }
     }
-  }
 }

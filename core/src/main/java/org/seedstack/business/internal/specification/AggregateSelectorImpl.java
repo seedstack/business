@@ -12,16 +12,15 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.specification.dsl.AggregateSelector;
 import org.seedstack.business.specification.dsl.IdentityPicker;
 
-class AggregateSelectorImpl<A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>>
-    extends PropertySelectorImpl<A, S>
-    implements AggregateSelector<A, I, S> {
+class AggregateSelectorImpl<A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> extends
+        PropertySelectorImpl<A, S> implements AggregateSelector<A, I, S> {
 
-  AggregateSelectorImpl(SpecificationBuilderContext<A, S> context) {
-    super(context);
-  }
+    AggregateSelectorImpl(SpecificationBuilderContext<A, S> context) {
+        super(context);
+    }
 
-  @Override
-  public IdentityPicker<A, I, S> identity() {
-    return new IdentityPickerImpl<>(context);
-  }
+    @Override
+    public IdentityPicker<A, I, S> identity() {
+        return new IdentityPickerImpl<>(context);
+    }
 }

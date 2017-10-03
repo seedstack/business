@@ -22,48 +22,48 @@ import org.seedstack.business.assembler.dsl.FluentAssembler;
  */
 public interface Assembler<A, D> {
 
-  /**
-   * Creates a new DTO and merge the given aggregate into it. Method {@link #createDto()} is called
-   * to create the DTO instance, then {@link #mergeAggregateIntoDto(Object, Object)} is called to do
-   * the merge.
-   *
-   * @param sourceAggregate the source aggregate.
-   * @return the resulting dto.
-   */
-  default D createDtoFromAggregate(A sourceAggregate) {
-    D dto = createDto();
-    mergeAggregateIntoDto(sourceAggregate, dto);
-    return dto;
-  }
+    /**
+     * Creates a new DTO and merge the given aggregate into it. Method {@link #createDto()} is called
+     * to create the DTO instance, then {@link #mergeAggregateIntoDto(Object, Object)} is called to do
+     * the merge.
+     *
+     * @param sourceAggregate the source aggregate.
+     * @return the resulting dto.
+     */
+    default D createDtoFromAggregate(A sourceAggregate) {
+        D dto = createDto();
+        mergeAggregateIntoDto(sourceAggregate, dto);
+        return dto;
+    }
 
-  /**
-   * Merge a source aggregate into an existing target DTO.
-   *
-   * @param sourceAggregate the source aggregate.
-   * @param targetDto       the target dto.
-   */
-  void mergeAggregateIntoDto(A sourceAggregate, D targetDto);
+    /**
+     * Merge a source aggregate into an existing target DTO.
+     *
+     * @param sourceAggregate the source aggregate.
+     * @param targetDto       the target dto.
+     */
+    void mergeAggregateIntoDto(A sourceAggregate, D targetDto);
 
-  /**
-   * Merges a source DTO into an existing target aggregate root.
-   *
-   * @param sourceDto       the source dto.
-   * @param targetAggregate the target aggregate.
-   */
-  void mergeDtoIntoAggregate(D sourceDto, A targetAggregate);
+    /**
+     * Merges a source DTO into an existing target aggregate root.
+     *
+     * @param sourceDto       the source dto.
+     * @param targetAggregate the target aggregate.
+     */
+    void mergeDtoIntoAggregate(D sourceDto, A targetAggregate);
 
-  /**
-   * This method is responsible for creating a new DTO instance during the assembling task.
-   *
-   * @return a newly-created DTO instance.
-   * @see #createDtoFromAggregate(Object)
-   */
-  D createDto();
+    /**
+     * This method is responsible for creating a new DTO instance during the assembling task.
+     *
+     * @return a newly-created DTO instance.
+     * @see #createDtoFromAggregate(Object)
+     */
+    D createDto();
 
-  /**
-   * The DTO class the assemblers works on.
-   *
-   * @return the DTO class.
-   */
-  Class<D> getDtoClass();
+    /**
+     * The DTO class the assemblers works on.
+     *
+     * @return the DTO class.
+     */
+    Class<D> getDtoClass();
 }

@@ -18,33 +18,33 @@ import java.util.Objects;
  */
 public class EqualSpecification<T> implements Specification<T> {
 
-  private final T expectedValue;
+    private final T expectedValue;
 
-  /**
-   * Creates an specification of equality.
-   *
-   * @param expectedValue the value used to do the equality check against.
-   */
-  public EqualSpecification(T expectedValue) {
-    this.expectedValue = expectedValue;
-  }
+    /**
+     * Creates an specification of equality.
+     *
+     * @param expectedValue the value used to do the equality check against.
+     */
+    public EqualSpecification(T expectedValue) {
+        this.expectedValue = expectedValue;
+    }
 
-  @Override
-  public boolean isSatisfiedBy(T candidate) {
-    return Objects.equals(candidate, expectedValue);
-  }
+    @Override
+    public boolean isSatisfiedBy(T candidate) {
+        return Objects.equals(candidate, expectedValue);
+    }
 
-  /**
-   * Returns the expected value.
-   *
-   * @return the value equality is checked against.
-   */
-  public T getExpectedValue() {
-    return expectedValue;
-  }
+    /**
+     * Returns the expected value.
+     *
+     * @return the value equality is checked against.
+     */
+    public T getExpectedValue() {
+        return expectedValue;
+    }
 
-  @Override
-  public String toString() {
-    return "= " + String.valueOf(expectedValue);
-  }
+    @Override
+    public String toString() {
+        return "= " + String.valueOf(expectedValue);
+    }
 }

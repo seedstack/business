@@ -11,9 +11,8 @@ package org.seedstack.business.fixtures.domain.customer;
 import java.util.Collection;
 import org.seedstack.business.domain.Repository;
 
-
 public interface CustomerRepository extends Repository<Customer, CustomerId> {
 
-  Collection<Customer> findAll();
+    Collection<Customer> findAll();
 
 }

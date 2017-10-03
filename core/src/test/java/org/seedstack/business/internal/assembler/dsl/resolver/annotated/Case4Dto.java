@@ -16,35 +16,35 @@ import org.seedstack.business.assembler.AggregateId;
  */
 public class Case4Dto {
 
-  private String firstName;
-  private String lastName;
-  private String orderItem;
-  private String orderDescription;
+    private String firstName;
+    private String lastName;
+    private String orderItem;
+    private String orderDescription;
 
-  public Case4Dto(String firstName, String lastName, String orderItem, String orderDescription) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.orderItem = orderItem;
-    this.orderDescription = orderDescription;
-  }
+    public Case4Dto(String firstName, String lastName, String orderItem, String orderDescription) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.orderItem = orderItem;
+        this.orderDescription = orderDescription;
+    }
 
-  @AggregateId(index = 0, aggregateIndex = 0)
-  public String getFirstName() {
-    return firstName;
-  }
+    @AggregateId(index = 0, aggregateIndex = 0)
+    public String getFirstName() {
+        return firstName;
+    }
 
-  @AggregateId(index = 1, aggregateIndex = 0)
-  public String getLastName() {
-    return lastName;
-  }
+    @AggregateId(index = 1, aggregateIndex = 0)
+    public String getLastName() {
+        return lastName;
+    }
 
-  @AggregateId(index = 0, aggregateIndex = 1)
-  public String getOrderItem() {
-    return orderItem;
-  }
+    @AggregateId(index = 0, aggregateIndex = 1)
+    public String getOrderItem() {
+        return orderItem;
+    }
 
-  @AggregateId(index = 1, aggregateIndex = 1)
-  public String getOrderDescription() {
-    return orderDescription;
-  }
+    @AggregateId(index = 1, aggregateIndex = 1)
+    public String getOrderDescription() {
+        return orderDescription;
+    }
 }

@@ -19,16 +19,15 @@ import org.seedstack.business.domain.Repository;
  */
 public interface Paginator {
 
-  /**
-   * Initiate a pagination operation using the specified repository.
-   *
-   * @param repository the repository where the domain objects come from.
-   * @param <A>        the aggregate root type that is paginated.
-   * @param <I>        the aggregate root identifier type.
-   * @return the next operation of the paginator DSL, allowing to specify repository options.
-   */
-  <A extends AggregateRoot<I>, I> RepositoryOptionsPicker<A, I> paginate(
-      Repository<A, I> repository);
+    /**
+     * Initiate a pagination operation using the specified repository.
+     *
+     * @param repository the repository where the domain objects come from.
+     * @param <A>        the aggregate root type that is paginated.
+     * @param <I>        the aggregate root identifier type.
+     * @return the next operation of the paginator DSL, allowing to specify repository options.
+     */
+    <A extends AggregateRoot<I>, I> RepositoryOptionsPicker<A, I> paginate(Repository<A, I> repository);
 }
 
 

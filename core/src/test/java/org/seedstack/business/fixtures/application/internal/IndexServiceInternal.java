@@ -15,11 +15,11 @@ import org.slf4j.Logger;
 
 public class IndexServiceInternal implements IndexService {
 
-  @Logging
-  private Logger logger;
+    @Logging
+    private Logger logger;
 
-  @Override
-  public void index(Customer customer) {
-    logger.info("Indexing " + customer.getId());
-  }
+    @Override
+    public void index(Customer customer) {
+        logger.info("Indexing " + customer.getId());
+    }
 }

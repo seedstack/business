@@ -20,30 +20,34 @@ import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderDtoAssembler;
 import org.seedstack.seed.it.SeedITRunner;
 
-
 @RunWith(SeedITRunner.class)
 public class DefaultAssemblerSpiIT {
 
-  @Inject
-  @Named("Dummy")
-  private Assembler<Order, OrderDto> defaultAssembler;
+    @Inject
+    @Named("Dummy")
+    private Assembler<Order, OrderDto> defaultAssembler;
 
-  @Inject
-  @Named("Order")
-  private Assembler<Order, OrderDto> customAssembler;
+    @Inject
+    @Named("Order")
+    private Assembler<Order, OrderDto> customAssembler;
 
-  @Test
-  public void test_using_custom_default_assembler() {
-    Assertions.assertThat(defaultAssembler).isNotNull();
-    Assertions.assertThat(defaultAssembler).isInstanceOf(DummyDefaultAssembler.class);
-    OrderDto orderDto = defaultAssembler.createDtoFromAggregate(new Order("id", "product"));
-    Assertions.assertThat(orderDto.getOrderId()).isEqualTo("hodor");
-  }
+    @Test
+    public void test_using_custom_default_assembler() {
+        Assertions.assertThat(defaultAssembler)
+                .isNotNull();
+        Assertions.assertThat(defaultAssembler)
+                .isInstanceOf(DummyDefaultAssembler.class);
+        OrderDto orderDto = defaultAssembler.createDtoFromAggregate(new Order("id", "product"));
+        Assertions.assertThat(orderDto.getOrderId())
+                .isEqualTo("hodor");
+    }
 
-  @Test
-  public void test_custom_assembler() {
-    Assertions.assertThat(customAssembler).isNotNull();
-    Assertions.assertThat(customAssembler).isInstanceOf(OrderDtoAssembler.class);
-    customAssembler.createDtoFromAggregate(new Order("id", "product"));
-  }
+    @Test
+    public void test_custom_assembler() {
+        Assertions.assertThat(customAssembler)
+                .isNotNull();
+        Assertions.assertThat(customAssembler)
+                .isInstanceOf(OrderDtoAssembler.class);
+        customAssembler.createDtoFromAggregate(new Order("id", "product"));
+    }
 }

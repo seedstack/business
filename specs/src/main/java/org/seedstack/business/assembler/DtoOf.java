@@ -42,8 +42,8 @@ import org.seedstack.business.domain.AggregateRoot;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 public @interface DtoOf {
 
-  /**
-   * @return the aggregate classes needed to assemble this dto
-   */
-  Class<? extends AggregateRoot<?>>[] value();
+    /**
+     * @return the aggregate classes needed to assemble this dto
+     */
+    Class<? extends AggregateRoot<?>>[] value();
 }

@@ -17,10 +17,10 @@ import org.seedstack.business.specification.Specification;
  */
 public interface TerminalOperation<T> {
 
-  /**
-   * Build the final composite specification as defined by previous DSL operations.
-   *
-   * @return the final composite specification.
-   */
-  Specification<T> build();
+    /**
+     * Build the final composite specification as defined by previous DSL operations.
+     *
+     * @return the final composite specification.
+     */
+    Specification<T> build();
 }

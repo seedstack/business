@@ -11,9 +11,9 @@ package org.seedstack.business.fixtures.domain.customer;
 @DomainService
 public interface CustomerSampleDomainService {
 
-  String transfer(Customer source, Customer target);
+    String transfer(Customer source, Customer target);
 
-  String property();
+    String property();
 
 }
 

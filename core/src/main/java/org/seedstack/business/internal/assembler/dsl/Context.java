@@ -27,94 +27,90 @@ import org.seedstack.business.spi.DtoInfoResolver;
  */
 class Context {
 
-  private final DomainRegistry domainRegistry;
-  private final AssemblerRegistry assemblerRegistry;
-  private final Set<DtoInfoResolver> dtoInfoResolvers;
-  private Annotation assemblerQualifier;
-  private Class<? extends Annotation> assemblerQualifierClass;
+    private final DomainRegistry domainRegistry;
+    private final AssemblerRegistry assemblerRegistry;
+    private final Set<DtoInfoResolver> dtoInfoResolvers;
+    private Annotation assemblerQualifier;
+    private Class<? extends Annotation> assemblerQualifierClass;
 
-  public Context(DomainRegistry domainRegistry, AssemblerRegistry assemblerRegistry,
-      Set<DtoInfoResolver> dtoInfoResolvers) {
-    this.domainRegistry = domainRegistry;
-    this.assemblerRegistry = assemblerRegistry;
-    this.dtoInfoResolvers = dtoInfoResolvers;
-  }
-
-  void setAssemblerQualifier(Annotation assemblerQualifier) {
-    this.assemblerQualifier = assemblerQualifier;
-  }
-
-  void setAssemblerQualifierClass(Class<? extends Annotation> assemblerQualifierClass) {
-    this.assemblerQualifierClass = assemblerQualifierClass;
-  }
-
-  <A extends AggregateRoot<I>, I, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot,
-      Class<D> dto) {
-    if (assemblerQualifierClass != null) {
-      return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
-    } else if (assemblerQualifier != null) {
-      return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifier);
+    public Context(DomainRegistry domainRegistry, AssemblerRegistry assemblerRegistry,
+            Set<DtoInfoResolver> dtoInfoResolvers) {
+        this.domainRegistry = domainRegistry;
+        this.assemblerRegistry = assemblerRegistry;
+        this.dtoInfoResolvers = dtoInfoResolvers;
     }
-    return assemblerRegistry.getAssembler(aggregateRoot, dto);
-  }
 
-  <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(
-      Class<? extends AggregateRoot<?>>[] aggregateRootTuple, Class<D> dto) {
-    if (assemblerQualifierClass != null) {
-      return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
-    } else if (assemblerQualifier != null) {
-      return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifier);
+    void setAssemblerQualifier(Annotation assemblerQualifier) {
+        this.assemblerQualifier = assemblerQualifier;
     }
-    return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
-  }
 
-  <D, A extends AggregateRoot<I>, I> A create(D dto, Class<A> aggregateClass) {
-    return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
-  }
-
-  <D, A extends AggregateRoot<?>> A create(D dto, Class<A> aggregateClass, int indexInTuple) {
-    return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
-  }
-
-  <A extends AggregateRoot<I>, I> A load(I id, Class<A> aggregateClass) {
-    return domainRegistry
-        .getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass)).get(id)
-        .orElse(null);
-  }
-
-  <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
-    return findResolverFor(dto).resolveId(dto, aggregateIdClass);
-  }
-
-  <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
-    return findResolverFor(dto).resolveId(dto, aggregateIdClass, position);
-  }
-
-  @SuppressWarnings("unchecked")
-  <A extends AggregateRoot<I>, I, D> void mergeDtoIntoAggregate(D dto, A aggregateRoot) {
-    checkNotNull(dto);
-    checkNotNull(aggregateRoot);
-    Assembler<A, D> assembler = assemblerOf(
-        (Class<A>) aggregateRoot.getClass(),
-        (Class<D>) dto.getClass());
-    assembler.mergeDtoIntoAggregate(dto, aggregateRoot);
-  }
-
-  @SuppressWarnings("unchecked")
-  <D, T extends Tuple> void mergeDtoIntoTuple(D dto, T tuple,
-      Class<? extends AggregateRoot<?>>[] aggregateClasses) {
-    Assembler<Tuple, D> tupleAssembler = tupleAssemblerOf(aggregateClasses,
-        (Class<D>) dto.getClass());
-    tupleAssembler.mergeDtoIntoAggregate(dto, tuple);
-  }
-
-  private <D> DtoInfoResolver findResolverFor(D dto) {
-    for (DtoInfoResolver dtoInfoResolver : dtoInfoResolvers) {
-      if (dtoInfoResolver.supports(dto)) {
-        return dtoInfoResolver;
-      }
+    void setAssemblerQualifierClass(Class<? extends Annotation> assemblerQualifierClass) {
+        this.assemblerQualifierClass = assemblerQualifierClass;
     }
-    throw BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_SUITABLE_DTO_INFO_RESOLVER)
-        .put("dtoClass", dto.getClass().getName());
-  }
+
+    <A extends AggregateRoot<I>, I, D> Assembler<A, D> assemblerOf(Class<A> aggregateRoot, Class<D> dto) {
+        if (assemblerQualifierClass != null) {
+            return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
+        } else if (assemblerQualifier != null) {
+            return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifier);
+        }
+        return assemblerRegistry.getAssembler(aggregateRoot, dto);
+    }
+
+    <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple,
+            Class<D> dto) {
+        if (assemblerQualifierClass != null) {
+            return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
+        } else if (assemblerQualifier != null) {
+            return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifier);
+        }
+        return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
+    }
+
+    <D, A extends AggregateRoot<I>, I> A create(D dto, Class<A> aggregateClass) {
+        return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
+    }
+
+    <D, A extends AggregateRoot<?>> A create(D dto, Class<A> aggregateClass, int indexInTuple) {
+        return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
+    }
+
+    <A extends AggregateRoot<I>, I> A load(I id, Class<A> aggregateClass) {
+        return domainRegistry.getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass))
+                .get(id)
+                .orElse(null);
+    }
+
+    <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
+        return findResolverFor(dto).resolveId(dto, aggregateIdClass);
+    }
+
+    <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
+        return findResolverFor(dto).resolveId(dto, aggregateIdClass, position);
+    }
+
+    @SuppressWarnings("unchecked")
+    <A extends AggregateRoot<I>, I, D> void mergeDtoIntoAggregate(D dto, A aggregateRoot) {
+        checkNotNull(dto);
+        checkNotNull(aggregateRoot);
+        Assembler<A, D> assembler = assemblerOf((Class<A>) aggregateRoot.getClass(), (Class<D>) dto.getClass());
+        assembler.mergeDtoIntoAggregate(dto, aggregateRoot);
+    }
+
+    @SuppressWarnings("unchecked")
+    <D, T extends Tuple> void mergeDtoIntoTuple(D dto, T tuple, Class<? extends AggregateRoot<?>>[] aggregateClasses) {
+        Assembler<Tuple, D> tupleAssembler = tupleAssemblerOf(aggregateClasses, (Class<D>) dto.getClass());
+        tupleAssembler.mergeDtoIntoAggregate(dto, tuple);
+    }
+
+    private <D> DtoInfoResolver findResolverFor(D dto) {
+        for (DtoInfoResolver dtoInfoResolver : dtoInfoResolvers) {
+            if (dtoInfoResolver.supports(dto)) {
+                return dtoInfoResolver;
+            }
+        }
+        throw BusinessException.createNew(BusinessErrorCode.UNABLE_TO_FIND_SUITABLE_DTO_INFO_RESOLVER)
+                .put("dtoClass", dto.getClass()
+                        .getName());
+    }
 }

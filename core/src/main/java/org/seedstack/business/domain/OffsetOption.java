@@ -13,23 +13,23 @@ package org.seedstack.business.domain;
  */
 public class OffsetOption implements Repository.Option {
 
-  private final long offset;
+    private final long offset;
 
-  /**
-   * Creates an offset option.
-   *
-   * @param offset the number of aggregates to skip.
-   */
-  public OffsetOption(long offset) {
-    this.offset = offset;
-  }
+    /**
+     * Creates an offset option.
+     *
+     * @param offset the number of aggregates to skip.
+     */
+    public OffsetOption(long offset) {
+        this.offset = offset;
+    }
 
-  /**
-   * Returns the offset.
-   *
-   * @return the number of aggregates to skip.
-   */
-  public long getOffset() {
-    return offset;
-  }
+    /**
+     * Returns the offset.
+     *
+     * @return the number of aggregates to skip.
+     */
+    public long getOffset() {
+        return offset;
+    }
 }

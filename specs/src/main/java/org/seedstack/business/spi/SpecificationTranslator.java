@@ -19,28 +19,28 @@ import org.seedstack.business.specification.Specification;
  */
 public interface SpecificationTranslator<C, T> {
 
-  /**
-   * Translates the specified composite specification into a target object.
-   *
-   * @param specification the {@link Specification} to translate.
-   * @param context       the translation context.
-   * @param <S>           the type of the specification to translate.
-   * @return the target object representing the fully translated specification.
-   */
-  <S extends Specification<?>> T translate(S specification, C context);
+    /**
+     * Translates the specified composite specification into a target object.
+     *
+     * @param specification the {@link Specification} to translate.
+     * @param context       the translation context.
+     * @param <S>           the type of the specification to translate.
+     * @return the target object representing the fully translated specification.
+     */
+    <S extends Specification<?>> T translate(S specification, C context);
 
-  /**
-   * Returns the class of translation context.
-   *
-   * @return the class of the translation context object.
-   */
-  Class<C> getContextClass();
+    /**
+     * Returns the class of translation context.
+     *
+     * @return the class of the translation context object.
+     */
+    Class<C> getContextClass();
 
-  /**
-   * Returns the class of target object.
-   *
-   * @return the class of the target object.
-   */
-  Class<T> getTargetClass();
+    /**
+     * Returns the class of target object.
+     *
+     * @return the class of the target object.
+     */
+    Class<T> getTargetClass();
 
 }

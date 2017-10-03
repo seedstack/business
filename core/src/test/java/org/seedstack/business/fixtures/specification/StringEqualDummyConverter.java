@@ -12,12 +12,14 @@ import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
 
-public class StringEqualDummyConverter implements
-    SpecificationConverter<StringEqualSpecification, StringBuilder, String> {
+public class StringEqualDummyConverter implements SpecificationConverter<StringEqualSpecification, StringBuilder,
+        String> {
 
-  @Override
-  public String convert(StringEqualSpecification specification, StringBuilder context,
-      SpecificationTranslator<StringBuilder, String> translator) {
-    return context.append(" == ").append(specification.getExpectedString()).toString();
-  }
+    @Override
+    public String convert(StringEqualSpecification specification, StringBuilder context,
+            SpecificationTranslator<StringBuilder, String> translator) {
+        return context.append(" == ")
+                .append(specification.getExpectedString())
+                .toString();
+    }
 }

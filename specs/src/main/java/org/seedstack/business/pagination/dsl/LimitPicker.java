@@ -19,15 +19,14 @@ import org.seedstack.business.pagination.Slice;
  * @param <A> the aggregate root type that is paginated.
  * @param <I> the aggregate root identifier type.
  */
-public interface LimitPicker<S extends Slice<A>, A extends AggregateRoot<I>, I>
-    extends SpecificationPicker<S, A, I> {
+public interface LimitPicker<S extends Slice<A>, A extends AggregateRoot<I>, I> extends SpecificationPicker<S, A, I> {
 
-  /**
-   * Specify a limit on the number of objects returned.
-   *
-   * @param limit the limit.
-   * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
-   *     objects returned from the repository.
-   */
-  SpecificationPicker<S, A, I> limit(long limit);
+    /**
+     * Specify a limit on the number of objects returned.
+     *
+     * @param limit the limit.
+     * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
+     *         objects returned from the repository.
+     */
+    SpecificationPicker<S, A, I> limit(long limit);
 }

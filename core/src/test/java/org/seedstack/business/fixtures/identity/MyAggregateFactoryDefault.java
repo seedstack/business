@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.identity;
 
 import java.util.HashSet;
@@ -15,32 +16,30 @@ import java.util.Set;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.Create;
 
+public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implements MyAggregateFactory {
 
-public class MyAggregateFactoryDefault extends BaseFactory<MyAggregate> implements
-    MyAggregateFactory {
+    @Override
+    public MyAggregate createMyAggregate(String name) {
+        MyAggregate myAggregate = new MyAggregate();
+        myAggregate.setName(name);
+        MyEntity mySubAggregate = createMySubAggregate();
+        myAggregate.setMySubEntity(mySubAggregate);
+        Set<MyEntity> mySubAggregates = new HashSet<>();
+        mySubAggregates.add(createMySubAggregate());
+        mySubAggregates.add(mySubAggregate);
+        mySubAggregates.add(createMySubAggregate());
+        mySubAggregates.add(createMySubAggregate());
+        myAggregate.setMySubAggregates(mySubAggregates);
+        return myAggregate;
+    }
 
-  @Override
-  public MyAggregate createMyAggregate(String name) {
-    MyAggregate myAggregate = new MyAggregate();
-    myAggregate.setName(name);
-    MyEntity mySubAggregate = createMySubAggregate();
-    myAggregate.setMySubEntity(mySubAggregate);
-    Set<MyEntity> mySubAggregates = new HashSet<>();
-    mySubAggregates.add(createMySubAggregate());
-    mySubAggregates.add(mySubAggregate);
-    mySubAggregates.add(createMySubAggregate());
-    mySubAggregates.add(createMySubAggregate());
-    myAggregate.setMySubAggregates(mySubAggregates);
-    return myAggregate;
-  }
+    @Override
+    public MyAggregate createMyAggregate() {
+        return new MyAggregate();
+    }
 
-  @Override
-  public MyAggregate createMyAggregate() {
-    return new MyAggregate();
-  }
-
-  @Create
-  MyEntity createMySubAggregate() {
-    return new MyEntity();
-  }
+    @Create
+    MyEntity createMySubAggregate() {
+        return new MyEntity();
+    }
 }

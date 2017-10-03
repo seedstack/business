@@ -14,9 +14,9 @@ import org.seedstack.shed.reflect.StandardAnnotationResolver;
 
 class CreateResolver extends StandardAnnotationResolver<Method, Create> {
 
-  static CreateResolver INSTANCE = new CreateResolver();
+    static CreateResolver INSTANCE = new CreateResolver();
 
-  private CreateResolver() {
-    // no external instantiation allowed
-  }
+    private CreateResolver() {
+        // no external instantiation allowed
+    }
 }

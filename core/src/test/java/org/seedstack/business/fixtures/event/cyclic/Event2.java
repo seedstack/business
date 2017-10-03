@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.event.cyclic;
 
 import org.seedstack.business.domain.BaseDomainEvent;
 
-
 public class Event2 extends BaseDomainEvent {
 
 }

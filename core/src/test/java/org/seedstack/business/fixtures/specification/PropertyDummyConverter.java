@@ -12,13 +12,14 @@ import org.seedstack.business.specification.AttributeSpecification;
 import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
 
-public class PropertyDummyConverter implements
-    SpecificationConverter<AttributeSpecification<?, ?>, StringBuilder, String> {
+public class PropertyDummyConverter implements SpecificationConverter<AttributeSpecification<?, ?>, StringBuilder,
+        String> {
 
-  @Override
-  public String convert(AttributeSpecification<?, ?> specification, StringBuilder context,
-      SpecificationTranslator<StringBuilder, String> translator) {
-    return context.append(specification.getPath())
-        .append(translator.translate(specification.getValueSpecification(), context)).toString();
-  }
+    @Override
+    public String convert(AttributeSpecification<?, ?> specification, StringBuilder context,
+            SpecificationTranslator<StringBuilder, String> translator) {
+        return context.append(specification.getPath())
+                .append(translator.translate(specification.getValueSpecification(), context))
+                .toString();
+    }
 }

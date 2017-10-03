@@ -11,7 +11,6 @@ package org.seedstack.business.fixtures.qualifier.domain;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.Producible;
 
-
 @Service
 public interface MyDomainService extends Producible {
 

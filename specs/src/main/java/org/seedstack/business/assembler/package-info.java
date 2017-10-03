@@ -10,4 +10,5 @@
  * Provides classes, interfaces and annotations to map the domain layer to Data Transfer Objects
  * (DTO) and back.
  */
+
 package org.seedstack.business.assembler;

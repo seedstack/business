@@ -8,18 +8,19 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.factory;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class MyFactoryAggregate extends BaseAggregateRoot<String> {
 
-  private String id;
+    private String id;
 
-  public MyFactoryAggregate() {
-  }
+    public MyFactoryAggregate() {
+    }
 
-  public MyFactoryAggregate(String id) {
-    this.id = id;
-  }
+    public MyFactoryAggregate(String id) {
+        this.id = id;
+    }
 }

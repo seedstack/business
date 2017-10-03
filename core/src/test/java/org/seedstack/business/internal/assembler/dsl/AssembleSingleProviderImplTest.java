@@ -26,80 +26,95 @@ import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.spi.DtoInfoResolver;
 import org.seedstack.business.util.Tuples;
 
-
 public class AssembleSingleProviderImplTest {
 
-  private AssembleSingleImpl<Order, String, Tuple> underTest;
-  private AssembleMultipleImpl<Order, String, Tuple> underTest2;
-  private Context context;
+    private AssembleSingleImpl<Order, String, Tuple> underTest;
+    private AssembleMultipleImpl<Order, String, Tuple> underTest2;
+    private Context context;
 
-  @Before
-  @SuppressWarnings("unchecked")
-  public void before() {
-    DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
-    AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
-    Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-        .thenReturn(new OrderDtoAssembler());
-    DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
-    context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
+    @Before
+    @SuppressWarnings("unchecked")
+    public void before() {
+        DtoInfoResolver dtoInfoResolver = Mockito.mock(DtoInfoResolver.class);
+        AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
+        Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
+                .thenReturn(new OrderDtoAssembler());
+        DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
+        context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
-    Mockito.when(
-        assemblerRegistry.getTupleAssembler(
-            (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class},
-            OrderDto.class)
-    ).thenReturn((Assembler) new OrderDtoTupleAssembler());
-  }
+        Mockito.when(assemblerRegistry.getTupleAssembler(
+                (Class<? extends AggregateRoot<?>>[]) new Class<?>[]{Order.class, Customer.class}, OrderDto.class))
+                .thenReturn((Assembler) new OrderDtoTupleAssembler());
+    }
 
-  @Test
-  public void testToDto() {
-    underTest = new AssembleSingleImpl<>(context, new Order("lightsaber"), null);
+    @Test
+    public void testToDto() {
+        underTest = new AssembleSingleImpl<>(context, new Order("lightsaber"), null);
 
-    OrderDto orderDto = underTest.to(OrderDto.class);
+        OrderDto orderDto = underTest.to(OrderDto.class);
 
-    Assertions.assertThat(orderDto).isNotNull();
-    Assertions.assertThat(orderDto.getProduct()).isEqualTo("lightsaber");
-  }
+        Assertions.assertThat(orderDto)
+                .isNotNull();
+        Assertions.assertThat(orderDto.getProduct())
+                .isEqualTo("lightsaber");
+    }
 
-  @Test
-  public void testToDtoWithTuple() {
-    Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
+    @Test
+    public void testToDtoWithTuple() {
+        Tuple tuple = Tuples.create(new Order("lightsaber"), new Customer("luke"));
 
-    underTest = new AssembleSingleImpl<>(context, null, tuple);
-    OrderDto orderDto = underTest.to(OrderDto.class);
+        underTest = new AssembleSingleImpl<>(context, null, tuple);
+        OrderDto orderDto = underTest.to(OrderDto.class);
 
-    Assertions.assertThat(orderDto).isNotNull();
-    Assertions.assertThat(orderDto.getProduct()).isEqualTo("lightsaber");
-    Assertions.assertThat(orderDto.getCustomerName()).isEqualTo("luke");
-  }
+        Assertions.assertThat(orderDto)
+                .isNotNull();
+        Assertions.assertThat(orderDto.getProduct())
+                .isEqualTo("lightsaber");
+        Assertions.assertThat(orderDto.getCustomerName())
+                .isEqualTo("luke");
+    }
 
-  @Test
-  public void testToDtos() {
-    underTest2 = new AssembleMultipleImpl<>(context, Stream.of(
-        new Order("lightsaber"),
-        new Order("death star")
-    ), null);
+    @Test
+    public void testToDtos() {
+        underTest2 = new AssembleMultipleImpl<>(context, Stream.of(new Order("lightsaber"), new Order("death star")),
+                null);
 
-    List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
-    Assertions.assertThat(orderDtos).isNotNull();
-    Assertions.assertThat(orderDtos).isNotEmpty();
-    Assertions.assertThat(orderDtos.get(0).getProduct()).isEqualTo("lightsaber");
-    Assertions.assertThat(orderDtos.get(1).getProduct()).isEqualTo("death star");
-  }
+        List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
+        Assertions.assertThat(orderDtos)
+                .isNotNull();
+        Assertions.assertThat(orderDtos)
+                .isNotEmpty();
+        Assertions.assertThat(orderDtos.get(0)
+                .getProduct())
+                .isEqualTo("lightsaber");
+        Assertions.assertThat(orderDtos.get(1)
+                .getProduct())
+                .isEqualTo("death star");
+    }
 
-  @Test
-  public void testToDtosWithTuple() {
-    underTest2 = new AssembleMultipleImpl<>(context, null, Stream.of(
-        Tuples.create(new Order("lightsaber"), new Customer("luke")),
-        Tuples.create(new Order("death star"), new Customer("dark vador"))
-    ));
+    @Test
+    public void testToDtosWithTuple() {
+        underTest2 = new AssembleMultipleImpl<>(context, null,
+                Stream.of(Tuples.create(new Order("lightsaber"), new Customer("luke")),
+                        Tuples.create(new Order("death star"), new Customer("dark vador"))));
 
-    List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
-    Assertions.assertThat(orderDtos).isNotNull();
-    Assertions.assertThat(orderDtos).isNotEmpty();
-    Assertions.assertThat(orderDtos.get(0).getProduct()).isEqualTo("lightsaber");
-    Assertions.assertThat(orderDtos.get(0).getCustomerName()).isEqualTo("luke");
-    Assertions.assertThat(orderDtos.get(1).getProduct()).isEqualTo("death star");
-    Assertions.assertThat(orderDtos.get(1).getCustomerName()).isEqualTo("dark vador");
-  }
+        List<OrderDto> orderDtos = underTest2.toListOf(OrderDto.class);
+        Assertions.assertThat(orderDtos)
+                .isNotNull();
+        Assertions.assertThat(orderDtos)
+                .isNotEmpty();
+        Assertions.assertThat(orderDtos.get(0)
+                .getProduct())
+                .isEqualTo("lightsaber");
+        Assertions.assertThat(orderDtos.get(0)
+                .getCustomerName())
+                .isEqualTo("luke");
+        Assertions.assertThat(orderDtos.get(1)
+                .getProduct())
+                .isEqualTo("death star");
+        Assertions.assertThat(orderDtos.get(1)
+                .getCustomerName())
+                .isEqualTo("dark vador");
+    }
 
 }

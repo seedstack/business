@@ -12,19 +12,19 @@ import org.seedstack.business.domain.BaseValueObject;
 
 public class BookId extends BaseValueObject {
 
-  private String title;
-  private String author;
+    private String title;
+    private String author;
 
-  public BookId(String title, String author) {
-    this.title = title;
-    this.author = author;
-  }
+    public BookId(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getAuthor() {
-    return author;
-  }
+    public String getAuthor() {
+        return author;
+    }
 }

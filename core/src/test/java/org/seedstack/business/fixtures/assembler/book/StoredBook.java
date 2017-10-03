@@ -13,27 +13,27 @@ import org.seedstack.business.domain.BaseAggregateRoot;
 
 public class StoredBook extends BaseAggregateRoot<BookId> {
 
-  private BookId id;
-  private Date publishDate;
-  private String editor;
+    private BookId id;
+    private Date publishDate;
+    private String editor;
 
-  public StoredBook(BookId id) {
-    this.id = id;
-  }
+    public StoredBook(BookId id) {
+        this.id = id;
+    }
 
-  public Date getPublishDate() {
-    return publishDate;
-  }
+    public Date getPublishDate() {
+        return publishDate;
+    }
 
-  public void setPublishDate(Date publishDate) {
-    this.publishDate = publishDate;
-  }
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
 
-  public String getEditor() {
-    return editor;
-  }
+    public String getEditor() {
+        return editor;
+    }
 
-  public void setEditor(String editor) {
-    this.editor = editor;
-  }
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 }

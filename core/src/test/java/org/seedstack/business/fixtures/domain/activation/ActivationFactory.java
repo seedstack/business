@@ -12,5 +12,5 @@ import org.seedstack.business.domain.Factory;
 
 public interface ActivationFactory extends Factory<Activation> {
 
-  Activation createNewActivation(String id, String description) throws ActivationException;
+    Activation createNewActivation(String id, String description) throws ActivationException;
 }

@@ -8,4 +8,5 @@
 /**
  * Provides in-memory implementations of some business concepts.
  */
+
 package org.seedstack.business.util.inmemory;

@@ -10,7 +10,6 @@ package org.seedstack.business.fixtures.qualifier.domain;
 
 import javax.inject.Named;
 
-
 @Named("2")
 public class DomPolicyImpl2 implements MyDomainPolicy<Integer> {
 

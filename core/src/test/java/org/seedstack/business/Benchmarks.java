@@ -12,7 +12,8 @@ import org.seedstack.seed.core.Seed;
 
 public class Benchmarks {
 
-  public static void main(String[] args) throws Exception {
-    Seed.getLauncher().launch(new String[0]);
-  }
+    public static void main(String[] args) throws Exception {
+        Seed.getLauncher()
+                .launch(new String[0]);
+    }
 }

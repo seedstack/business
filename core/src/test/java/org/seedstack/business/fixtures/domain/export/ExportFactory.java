@@ -11,9 +11,8 @@ package org.seedstack.business.fixtures.domain.export;
 import javax.validation.constraints.NotNull;
 import org.seedstack.business.domain.Factory;
 
-
 public interface ExportFactory extends Factory<Export> {
 
-  Export createNewActivation(@NotNull String id, String description);
+    Export createNewActivation(@NotNull String id, String description);
 
 }

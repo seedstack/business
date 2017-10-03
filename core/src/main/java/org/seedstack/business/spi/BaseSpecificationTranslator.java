@@ -34,76 +34,72 @@ import org.seedstack.business.specification.SubstitutableSpecification;
  */
 public abstract class BaseSpecificationTranslator<C, T> implements SpecificationTranslator<C, T> {
 
-  private final Class<C> contextClass;
-  private final Class<T> targetClass;
-  private final Annotation qualifier;
-  @Inject
-  private Injector injector;
+    private final Class<C> contextClass;
+    private final Class<T> targetClass;
+    private final Annotation qualifier;
+    @Inject
+    private Injector injector;
 
-  /**
-   * Creates a base specification translator. Actual classes used for translation are determined by
-   * reflection.
-   */
-  @SuppressWarnings("unchecked")
-  protected BaseSpecificationTranslator() {
-    Type[] generics = BusinessUtils.resolveGenerics(BaseSpecificationTranslator.class, getClass());
-    this.contextClass = (Class<C>) generics[0];
-    this.targetClass = (Class<T>) generics[1];
-    this.qualifier = getQualifier(getClass()).orElse(null);
-  }
-
-  /**
-   * Find and invoke the relevant {@link SpecificationConverter} for the given specification to
-   * convert it into an object of type {@link T}.
-   *
-   * @param specification the specification to convert.
-   * @param context       the translation context.
-   * @param <S>           the type of the specification to convert.
-   * @return the converted target object representing the given specification.
-   */
-  protected <S extends Specification<?>> T convert(S specification, C context) {
-    if (specification instanceof SubstitutableSpecification) {
-      return convert(((SubstitutableSpecification<?>) specification).getSubstitute(), context);
-    } else {
-      SpecificationConverter<S, C, T> converter;
-      Class<? extends Specification> specificationClass = specification.getClass();
-      try {
-        converter = injector.getInstance(buildKey(specificationClass));
-      } catch (ConfigurationException e) {
-        throw BusinessException.wrap(e, BusinessErrorCode.NO_CONVERTER_FOUND)
-            .put("contextClass", contextClass)
-            .put("targetClass", targetClass)
-            .put("specificationClass", specificationClass);
-      }
-      return converter.convert(specification, context, this);
+    /**
+     * Creates a base specification translator. Actual classes used for translation are determined by
+     * reflection.
+     */
+    @SuppressWarnings("unchecked")
+    protected BaseSpecificationTranslator() {
+        Type[] generics = BusinessUtils.resolveGenerics(BaseSpecificationTranslator.class, getClass());
+        this.contextClass = (Class<C>) generics[0];
+        this.targetClass = (Class<T>) generics[1];
+        this.qualifier = getQualifier(getClass()).orElse(null);
     }
-  }
 
-  @Override
-  public Class<C> getContextClass() {
-    return contextClass;
-  }
-
-  @Override
-  public Class<T> getTargetClass() {
-    return targetClass;
-  }
-
-  @SuppressWarnings("unchecked")
-  private <S extends Specification<?>> Key<SpecificationConverter<S, C, T>> buildKey(
-      Class<? extends Specification> specificationClass) {
-    if (qualifier != null) {
-      return Key.get((TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral
-              .get(Types
-                  .newParameterizedType(SpecificationConverter.class, specificationClass,
-                      contextClass,
-                      targetClass)),
-          qualifier);
-    } else {
-      return Key.get((TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral
-          .get(
-              Types.newParameterizedType(SpecificationConverter.class, specificationClass,
-                  contextClass, targetClass)));
+    /**
+     * Find and invoke the relevant {@link SpecificationConverter} for the given specification to
+     * convert it into an object of type {@link T}.
+     *
+     * @param specification the specification to convert.
+     * @param context       the translation context.
+     * @param <S>           the type of the specification to convert.
+     * @return the converted target object representing the given specification.
+     */
+    protected <S extends Specification<?>> T convert(S specification, C context) {
+        if (specification instanceof SubstitutableSpecification) {
+            return convert(((SubstitutableSpecification<?>) specification).getSubstitute(), context);
+        } else {
+            SpecificationConverter<S, C, T> converter;
+            Class<? extends Specification> specificationClass = specification.getClass();
+            try {
+                converter = injector.getInstance(buildKey(specificationClass));
+            } catch (ConfigurationException e) {
+                throw BusinessException.wrap(e, BusinessErrorCode.NO_CONVERTER_FOUND)
+                        .put("contextClass", contextClass)
+                        .put("targetClass", targetClass)
+                        .put("specificationClass", specificationClass);
+            }
+            return converter.convert(specification, context, this);
+        }
     }
-  }
+
+    @Override
+    public Class<C> getContextClass() {
+        return contextClass;
+    }
+
+    @Override
+    public Class<T> getTargetClass() {
+        return targetClass;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <S extends Specification<?>> Key<SpecificationConverter<S, C, T>> buildKey(
+            Class<? extends Specification> specificationClass) {
+        if (qualifier != null) {
+            return Key.get((TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral.get(
+                    Types.newParameterizedType(SpecificationConverter.class, specificationClass, contextClass,
+                            targetClass)), qualifier);
+        } else {
+            return Key.get((TypeLiteral<SpecificationConverter<S, C, T>>) TypeLiteral.get(
+                    Types.newParameterizedType(SpecificationConverter.class, specificationClass, contextClass,
+                            targetClass)));
+        }
+    }
 }

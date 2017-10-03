@@ -10,14 +10,14 @@ package org.seedstack.business.fixtures.domain.specification;
 
 public class TeamWithLeader extends Team {
 
-  private Person leader;
+    private Person leader;
 
-  public TeamWithLeader(String name, String leaderName, int leaderAge, Address leaderAddress) {
-    super(name);
-    this.leader = new Person(leaderName, leaderAge, leaderAddress);
-  }
+    public TeamWithLeader(String name, String leaderName, int leaderAge, Address leaderAddress) {
+        super(name);
+        this.leader = new Person(leaderName, leaderAge, leaderAddress);
+    }
 
-  public Person leader() {
-    return leader;
-  }
+    public Person leader() {
+        return leader;
+    }
 }

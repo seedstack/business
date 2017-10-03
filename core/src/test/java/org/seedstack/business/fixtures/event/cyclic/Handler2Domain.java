@@ -12,19 +12,18 @@ import javax.inject.Inject;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
 
-
 public class Handler2Domain implements DomainEventHandler<Event2> {
 
-  @Inject
-  private DomainEventPublisher domainEventPublisher;
+    @Inject
+    private DomainEventPublisher domainEventPublisher;
 
-  @Override
-  public void onEvent(Event2 event) {
-    domainEventPublisher.publish(new Event1());
-  }
+    @Override
+    public void onEvent(Event2 event) {
+        domainEventPublisher.publish(new Event1());
+    }
 
-  @Override
-  public Class<Event2> getEventClass() {
-    return Event2.class;
-  }
+    @Override
+    public Class<Event2> getEventClass() {
+        return Event2.class;
+    }
 }

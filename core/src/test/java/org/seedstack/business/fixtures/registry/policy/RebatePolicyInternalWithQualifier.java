@@ -16,9 +16,9 @@ import org.seedstack.business.fixtures.registry.domain.Product;
 @PolicyQualifier
 public class RebatePolicyInternalWithQualifier implements RebatePolicy {
 
-  @Override
-  public float calculateRebate(Product product, float quantity) {
-    return quantity / 10;
-  }
+    @Override
+    public float calculateRebate(Product product, float quantity) {
+        return quantity / 10;
+    }
 
 }

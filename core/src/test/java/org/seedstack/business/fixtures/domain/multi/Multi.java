@@ -8,6 +8,7 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.domain.multi;
 
 import org.seedstack.business.domain.BaseAggregateRoot;
@@ -17,9 +18,9 @@ import org.seedstack.business.domain.BaseAggregateRoot;
  */
 public class Multi extends BaseAggregateRoot<String> {
 
-  private String id;
+    private String id;
 
-  public Multi(String id) {
-    this.id = id;
-  }
+    public Multi(String id) {
+        this.id = id;
+    }
 }

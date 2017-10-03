@@ -22,64 +22,63 @@ import org.seedstack.business.domain.AggregateRoot;
  */
 public interface DtoInfoResolver {
 
-  /**
-   * Returns whether the resolver supports the DTO instance passed as argument. The first resolver
-   * to support a particular DTO is used.
-   *
-   * @param dto the DTO to check for.
-   * @param <D> the type of the DTO.
-   * @return true if the resolver supports this particular DTO, false otherwise.
-   */
-  <D> boolean supports(D dto);
+    /**
+     * Returns whether the resolver supports the DTO instance passed as argument. The first resolver
+     * to support a particular DTO is used.
+     *
+     * @param dto the DTO to check for.
+     * @param <D> the type of the DTO.
+     * @return true if the resolver supports this particular DTO, false otherwise.
+     */
+    <D> boolean supports(D dto);
 
-  /**
-   * Returns the identifier instance derived from the DTO instance passed as first argument.
-   *
-   * @param dto              the DTO used to resolve the identifier.
-   * @param aggregateIdClass the identifier class.
-   * @param <D>              the type of the DTO.
-   * @param <I>              the type of the identifier.
-   * @return the newly created identifier derived from the DTO.
-   */
-  <D, I> I resolveId(D dto, Class<I> aggregateIdClass);
+    /**
+     * Returns the identifier instance derived from the DTO instance passed as first argument.
+     *
+     * @param dto              the DTO used to resolve the identifier.
+     * @param aggregateIdClass the identifier class.
+     * @param <D>              the type of the DTO.
+     * @param <I>              the type of the identifier.
+     * @return the newly created identifier derived from the DTO.
+     */
+    <D, I> I resolveId(D dto, Class<I> aggregateIdClass);
 
-  /**
-   * Similar to {@link #resolveId(Object, Class)} but used in the case where a {@link
-   * org.javatuples.Tuple} of multiple aggregates corresponds to a single DTO. The position argument
-   * specifies the index of the identifier in the tuple.
-   *
-   * @param dto              the DTO used to resolve the identifier.
-   * @param aggregateIdClass the identifier class.
-   * @param position         the position in the tuple of the aggregate this identifier relates to.
-   * @param <D>              the type of the DTO.
-   * @param <I>              the type of the identifier.
-   * @return the newly created identifier derived from the DTO.
-   */
-  <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position);
+    /**
+     * Similar to {@link #resolveId(Object, Class)} but used in the case where a {@link
+     * org.javatuples.Tuple} of multiple aggregates corresponds to a single DTO. The position argument
+     * specifies the index of the identifier in the tuple.
+     *
+     * @param dto              the DTO used to resolve the identifier.
+     * @param aggregateIdClass the identifier class.
+     * @param position         the position in the tuple of the aggregate this identifier relates to.
+     * @param <D>              the type of the DTO.
+     * @param <I>              the type of the identifier.
+     * @return the newly created identifier derived from the DTO.
+     */
+    <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position);
 
-  /**
-   * Returns the aggregate instance derived from the DTO instance passed as first argument.
-   *
-   * @param dto                the DTO sued to resolve the aggregate.
-   * @param aggregateRootClass the aggregate root class.
-   * @param <D>                the type of the DTO.
-   * @param <A>                the type of the aggregate root.
-   * @return the newly created aggregate derived from the DTO.
-   */
-  <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass);
+    /**
+     * Returns the aggregate instance derived from the DTO instance passed as first argument.
+     *
+     * @param dto                the DTO sued to resolve the aggregate.
+     * @param aggregateRootClass the aggregate root class.
+     * @param <D>                the type of the DTO.
+     * @param <A>                the type of the aggregate root.
+     * @return the newly created aggregate derived from the DTO.
+     */
+    <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass);
 
-  /**
-   * Similar to {@link #resolveAggregate(Object, Class)} but used in the case where a {@link
-   * org.javatuples.Tuple} of multiple aggregates corresponds to a single DTO. The position argument
-   * specifies the index of the aggregate in the tuple.
-   *
-   * @param dto                the DTO sued to resolve the aggregate.
-   * @param aggregateRootClass the aggregate root class.
-   * @param position           the position in the tuple of the aggregate to create.
-   * @param <D>                the type of the DTO.
-   * @param <A>                the type of the aggregate root.
-   * @return the newly created aggregate derived from the DTO.
-   */
-  <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass,
-      int position);
+    /**
+     * Similar to {@link #resolveAggregate(Object, Class)} but used in the case where a {@link
+     * org.javatuples.Tuple} of multiple aggregates corresponds to a single DTO. The position argument
+     * specifies the index of the aggregate in the tuple.
+     *
+     * @param dto                the DTO sued to resolve the aggregate.
+     * @param aggregateRootClass the aggregate root class.
+     * @param position           the position in the tuple of the aggregate to create.
+     * @param <D>                the type of the DTO.
+     * @param <A>                the type of the aggregate root.
+     * @return the newly created aggregate derived from the DTO.
+     */
+    <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position);
 }

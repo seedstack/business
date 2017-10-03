@@ -18,35 +18,34 @@ import org.seedstack.business.pagination.dsl.LimitPicker;
 import org.seedstack.business.pagination.dsl.PaginationTypePicker;
 import org.seedstack.business.pagination.dsl.SizePicker;
 
-class PaginationTypePickerImpl<A extends AggregateRoot<I>, I> implements
-    PaginationTypePicker<A, I> {
+class PaginationTypePickerImpl<A extends AggregateRoot<I>, I> implements PaginationTypePicker<A, I> {
 
-  private final Repository<A, I> repository;
-  protected Repository.Option[] options = new Repository.Option[0];
+    private final Repository<A, I> repository;
+    protected Repository.Option[] options = new Repository.Option[0];
 
-  PaginationTypePickerImpl(Repository<A, I> repository) {
-    checkNotNull(repository, "Repository cannot be null");
-    this.repository = repository;
-  }
+    PaginationTypePickerImpl(Repository<A, I> repository) {
+        checkNotNull(repository, "Repository cannot be null");
+        this.repository = repository;
+    }
 
-  @Override
-  public SizePicker<A, I> byPage(long pageIndex) {
-    PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
-    builder.setPageIndex(pageIndex);
-    return new SizePickerImpl<>(builder);
-  }
+    @Override
+    public SizePicker<A, I> byPage(long pageIndex) {
+        PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
+        builder.setPageIndex(pageIndex);
+        return new SizePickerImpl<>(builder);
+    }
 
-  @Override
-  public LimitPicker<Slice<A>, A, I> byOffset(long startingOffset) {
-    PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
-    builder.setOffset(startingOffset);
-    return new LimitPickerImpl<>(builder, PaginationMode.OFFSET);
-  }
+    @Override
+    public LimitPicker<Slice<A>, A, I> byOffset(long startingOffset) {
+        PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
+        builder.setOffset(startingOffset);
+        return new LimitPickerImpl<>(builder, PaginationMode.OFFSET);
+    }
 
-  @Override
-  public KeyValuePicker<A, I> byAttribute(String attributeName) {
-    PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
-    builder.setAttribute(attributeName);
-    return new AfterKeyPickerImpl<>(builder, PaginationMode.ATTRIBUTE);
-  }
+    @Override
+    public KeyValuePicker<A, I> byAttribute(String attributeName) {
+        PaginatorContext<A, I> builder = new PaginatorContext<>(repository, options);
+        builder.setAttribute(attributeName);
+        return new AfterKeyPickerImpl<>(builder, PaginationMode.ATTRIBUTE);
+    }
 }

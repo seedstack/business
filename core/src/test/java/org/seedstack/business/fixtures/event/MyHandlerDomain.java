@@ -14,15 +14,15 @@ import org.slf4j.LoggerFactory;
 
 public class MyHandlerDomain implements DomainEventHandler<SomeDomainEvent> {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MyHandlerDomain.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyHandlerDomain.class);
 
-  @Override
-  public void onEvent(SomeDomainEvent event) {
-    LOGGER.info("MyHandler gets a MyEvent event.");
-  }
+    @Override
+    public void onEvent(SomeDomainEvent event) {
+        LOGGER.info("MyHandler gets a MyEvent event.");
+    }
 
-  @Override
-  public Class<SomeDomainEvent> getEventClass() {
-    return SomeDomainEvent.class;
-  }
+    @Override
+    public Class<SomeDomainEvent> getEventClass() {
+        return SomeDomainEvent.class;
+    }
 }

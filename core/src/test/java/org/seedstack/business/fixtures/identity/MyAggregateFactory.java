@@ -8,17 +8,17 @@
 /**
  *
  */
+
 package org.seedstack.business.fixtures.identity;
 
 import org.seedstack.business.domain.Create;
 import org.seedstack.business.domain.Factory;
 
-
 @Create
 public interface MyAggregateFactory extends Factory<MyAggregate> {
 
-  MyAggregate createMyAggregate(String name);
+    MyAggregate createMyAggregate(String name);
 
-  MyAggregate createMyAggregate();
+    MyAggregate createMyAggregate();
 
 }

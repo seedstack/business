@@ -18,13 +18,13 @@ import java.util.Map;
  */
 public interface IdentityGenerator<I> {
 
-  /**
-   * Generate a new identifier for an entity of the specified class.
-   *
-   * @param <E>              the entity type.
-   * @param entityClass      the entity class to generate an identity for.
-   * @param entityProperties configuration properties for the entity class.
-   * @return the generated identifier.
-   */
-  <E extends Entity<I>> I generate(Class<E> entityClass, Map<String, String> entityProperties);
+    /**
+     * Generate a new identifier for an entity of the specified class.
+     *
+     * @param <E>              the entity type.
+     * @param entityClass      the entity class to generate an identity for.
+     * @param entityProperties configuration properties for the entity class.
+     * @return the generated identifier.
+     */
+    <E extends Entity<I>> I generate(Class<E> entityClass, Map<String, String> entityProperties);
 }

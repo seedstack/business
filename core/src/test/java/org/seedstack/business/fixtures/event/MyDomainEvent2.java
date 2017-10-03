@@ -8,7 +8,6 @@
 
 package org.seedstack.business.fixtures.event;
 
-
 public class MyDomainEvent2 extends AbstractDomainEvent {
 
 }

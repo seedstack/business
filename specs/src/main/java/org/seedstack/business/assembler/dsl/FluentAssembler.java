@@ -24,106 +24,106 @@ import org.seedstack.business.pagination.Page;
  */
 public interface FluentAssembler {
 
-  /**
-   * Assembles an aggregate.
-   *
-   * @param <A>           the type of the aggregate root.
-   * @param <I>           the type of the aggregate root identifier.
-   * @param aggregateRoot the aggregate root to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <A extends AggregateRoot<I>, I> AssembleSingleWithQualifier assemble(A aggregateRoot);
+    /**
+     * Assembles an aggregate.
+     *
+     * @param <A>           the type of the aggregate root.
+     * @param <I>           the type of the aggregate root identifier.
+     * @param aggregateRoot the aggregate root to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <A extends AggregateRoot<I>, I> AssembleSingleWithQualifier assemble(A aggregateRoot);
 
-  /**
-   * Assembles a stream of aggregates.
-   *
-   * @param <A>    the type of the aggregate root.
-   * @param <I>    the type of the aggregate root identifier.
-   * @param stream the stream of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Stream<A> stream);
+    /**
+     * Assembles a stream of aggregates.
+     *
+     * @param <A>    the type of the aggregate root.
+     * @param <I>    the type of the aggregate root identifier.
+     * @param stream the stream of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Stream<A> stream);
 
-  /**
-   * Assembles an iterable of aggregates.
-   *
-   * @param <A>      the type of the aggregate root.
-   * @param <I>      the type of the aggregate root identifier.
-   * @param iterable the iterable of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Iterable<A> iterable);
+    /**
+     * Assembles an iterable of aggregates.
+     *
+     * @param <A>      the type of the aggregate root.
+     * @param <I>      the type of the aggregate root identifier.
+     * @param iterable the iterable of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <A extends AggregateRoot<I>, I> AssembleMultipleWithQualifier assemble(Iterable<A> iterable);
 
-  /**
-   * Assembles a page of aggregates.
-   *
-   * @param <A>  the type of the aggregate root.
-   * @param <I>  the type of the aggregate root identifier.
-   * @param page the page of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <A extends AggregateRoot<I>, I> AssemblePageWithQualifier assemble(Page<A> page);
+    /**
+     * Assembles a page of aggregates.
+     *
+     * @param <A>  the type of the aggregate root.
+     * @param <I>  the type of the aggregate root identifier.
+     * @param page the page of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <A extends AggregateRoot<I>, I> AssemblePageWithQualifier assemble(Page<A> page);
 
-  /**
-   * Assembles a tuple of aggregates into a single DTO.
-   *
-   * @param <T>   the type of the tuple.
-   * @param tuple the tuple of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple);
+    /**
+     * Assembles a tuple of aggregates into a single DTO.
+     *
+     * @param <T>   the type of the tuple.
+     * @param tuple the tuple of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <T extends Tuple> AssembleSingleWithQualifier assembleTuple(T tuple);
 
-  /**
-   * Assembles a stream of tuple of aggregates.
-   *
-   * @param <T>    the type of the tuple.
-   * @param stream the stream of tuples of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream);
+    /**
+     * Assembles a stream of tuple of aggregates.
+     *
+     * @param <T>    the type of the tuple.
+     * @param stream the stream of tuples of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Stream<T> stream);
 
-  /**
-   * Assembles an iterable of tuple of aggregates.
-   *
-   * @param <T>      the type of the tuple.
-   * @param iterable the iterable of tuples of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable);
+    /**
+     * Assembles an iterable of tuple of aggregates.
+     *
+     * @param <T>      the type of the tuple.
+     * @param iterable the iterable of tuples of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <T extends Tuple> AssembleMultipleWithQualifier assembleTuples(Iterable<T> iterable);
 
-  /**
-   * Assembles a page of tuple of aggregates.
-   *
-   * @param <T>  the type of the tuple.
-   * @param page the page of tuples of aggregate roots to assemble.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page);
+    /**
+     * Assembles a page of tuple of aggregates.
+     *
+     * @param <T>  the type of the tuple.
+     * @param page the page of tuples of aggregate roots to assemble.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <T extends Tuple> AssemblePageWithQualifier assembleTuples(Page<T> page);
 
-  /**
-   * Merges a DTO back into an aggregate.
-   *
-   * @param <D> the DTO type.
-   * @param dto the dto to merge
-   * @return the next type for FluentAssembler DSL.
-   */
-  <D> MergeSingleWithQualifier merge(D dto);
+    /**
+     * Merges a DTO back into an aggregate.
+     *
+     * @param <D> the DTO type.
+     * @param dto the dto to merge
+     * @return the next type for FluentAssembler DSL.
+     */
+    <D> MergeSingleWithQualifier merge(D dto);
 
-  /**
-   * Merges a stream of DTO back into aggregates.
-   *
-   * @param <D>    the DTO type.
-   * @param stream the stream of DTO.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <D> MergeMultipleWithQualifier merge(Stream<D> stream);
+    /**
+     * Merges a stream of DTO back into aggregates.
+     *
+     * @param <D>    the DTO type.
+     * @param stream the stream of DTO.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <D> MergeMultipleWithQualifier merge(Stream<D> stream);
 
-  /**
-   * Merges an iterable of DTO back into aggregates.
-   *
-   * @param <D>      the DTO type.
-   * @param iterable the iterable of DTO.
-   * @return the next type for FluentAssembler DSL.
-   */
-  <D> MergeMultipleWithQualifier merge(Iterable<D> iterable);
+    /**
+     * Merges an iterable of DTO back into aggregates.
+     *
+     * @param <D>      the DTO type.
+     * @param iterable the iterable of DTO.
+     * @return the next type for FluentAssembler DSL.
+     */
+    <D> MergeMultipleWithQualifier merge(Iterable<D> iterable);
 }

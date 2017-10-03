@@ -8,21 +8,20 @@
 
 package org.seedstack.business.internal.assembler.dsl.resolver.annotated;
 
-
 import java.util.Date;
 import org.javatuples.Pair;
 
 public class PersonFactory {
 
-  public PersonId createPersonId(Pair<String, String> name) {
-    return new PersonId(new NameVO(name.getValue0(), name.getValue1()));
-  }
+    public PersonId createPersonId(Pair<String, String> name) {
+        return new PersonId(new NameVO(name.getValue0(), name.getValue1()));
+    }
 
-  public PersonId createPersonId(String firstName, String lastName) {
-    return new PersonId(firstName, lastName);
-  }
+    public PersonId createPersonId(String firstName, String lastName) {
+        return new PersonId(firstName, lastName);
+    }
 
-  public PersonId createPersonId(String firstName, Date birthDate) {
-    return new PersonId(firstName, birthDate);
-  }
+    public PersonId createPersonId(String firstName, Date birthDate) {
+        return new PersonId(firstName, birthDate);
+    }
 }

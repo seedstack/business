@@ -19,38 +19,37 @@ import org.seedstack.business.domain.AggregateRoot;
  * @param <A> the aggregate type this specification applies to.
  * @param <I> the aggregate identifier type.
  */
-public class IdentitySpecification<A extends AggregateRoot<I>, I> implements
-    Specification<A> {
+public class IdentitySpecification<A extends AggregateRoot<I>, I> implements Specification<A> {
 
-  private final I expectedIdentifier;
+    private final I expectedIdentifier;
 
-  /**
-   * Creates a specification satisfied only if the candidate aggregate has an identifier equal to
-   * the identifier passed as argument.
-   *
-   * @param expectedIdentifier the expected identifier.
-   */
-  public IdentitySpecification(I expectedIdentifier) {
-    requireNonNull(expectedIdentifier, "Expected identifier cannot be null");
-    this.expectedIdentifier = expectedIdentifier;
-  }
+    /**
+     * Creates a specification satisfied only if the candidate aggregate has an identifier equal to
+     * the identifier passed as argument.
+     *
+     * @param expectedIdentifier the expected identifier.
+     */
+    public IdentitySpecification(I expectedIdentifier) {
+        requireNonNull(expectedIdentifier, "Expected identifier cannot be null");
+        this.expectedIdentifier = expectedIdentifier;
+    }
 
-  @Override
-  public boolean isSatisfiedBy(A candidate) {
-    return expectedIdentifier.equals(candidate.getId());
-  }
+    @Override
+    public boolean isSatisfiedBy(A candidate) {
+        return expectedIdentifier.equals(candidate.getId());
+    }
 
-  @Override
-  public String toString() {
-    return String.valueOf(expectedIdentifier);
-  }
+    @Override
+    public String toString() {
+        return String.valueOf(expectedIdentifier);
+    }
 
-  /**
-   * Returns the identifier that is expected.
-   *
-   * @return the expected identifier.
-   */
-  public I getExpectedIdentifier() {
-    return expectedIdentifier;
-  }
+    /**
+     * Returns the identifier that is expected.
+     *
+     * @return the expected identifier.
+     */
+    public I getExpectedIdentifier() {
+        return expectedIdentifier;
+    }
 }
