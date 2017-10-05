@@ -9,16 +9,20 @@
 package org.seedstack.business.internal.assembler;
 
 import com.google.common.reflect.TypeToken;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.util.Types;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.DtoOf;
-import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.util.Tuples;
+import org.seedstack.seed.Application;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 
@@ -26,7 +30,7 @@ import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
  * Collects the binding strategies for default assemblers.
  */
 class DefaultAssemblerCollector {
-
+    private static final String DEFAULT_ASSEMBLER_KEY = "defaultAssembler";
     private final Collection<Class<? extends Assembler>> defaultAssemblersClasses;
 
     public DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
@@ -41,24 +45,29 @@ class DefaultAssemblerCollector {
      * @return collection of default assembler binding strategies
      * @}DtoOf.
      */
-    public Collection<BindingStrategy> collect(Collection<Class<?>> dtoClasses) {
+    public Collection<BindingStrategy> collect(Application application, Collection<Class<?>> dtoClasses) {
         // Contains pairs of aggregateClass/dtoClass
-        Set<Type[]> autoAssemblerGenerics = new HashSet<>();
+        Map<Type[], Key<?>> autoAssemblerGenerics = new HashMap<>();
         // Contains pairs of aggregateTuple/dtoClass
-        Set<Type[]> autoTupleAssemblerGenerics = new HashSet<>();
+        Map<Type[], Key<?>> autoTupleAssemblerGenerics = new HashMap<>();
 
         // Extract pair of aggregateClass/dtoClass
         for (Class<?> dtoClass : dtoClasses) {
             DtoOf dtoOf = dtoClass.getAnnotation(DtoOf.class);
-            // Silently ignore bad arguments
-            if (dtoOf == null) {
-                continue;
-            }
-            if (dtoOf.value().length == 1) {
-                Class<? extends AggregateRoot<?>> aggregateClass = dtoOf.value()[0];
-                autoAssemblerGenerics.add(new Type[]{aggregateClass, dtoClass});
-            } else if (dtoOf.value().length > 1) {
-                autoTupleAssemblerGenerics.add(new Type[]{Tuples.typeOfTuple(dtoOf.value()), dtoClass});
+            if (dtoOf != null) {
+                if (dtoOf.value().length == 1) {
+                    Type[] params = new Type[]{dtoOf.value()[0], dtoClass};
+                    autoAssemblerGenerics.put(params, BusinessUtils.defaultQualifier(application,
+                            DEFAULT_ASSEMBLER_KEY,
+                            dtoClass,
+                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))));
+                } else if (dtoOf.value().length > 1) {
+                    Type[] params = {Tuples.typeOfTuple(dtoOf.value()), dtoClass};
+                    autoTupleAssemblerGenerics.put(params, BusinessUtils.defaultQualifier(application,
+                            DEFAULT_ASSEMBLER_KEY,
+                            dtoClass,
+                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))));
+                }
             }
         }
 

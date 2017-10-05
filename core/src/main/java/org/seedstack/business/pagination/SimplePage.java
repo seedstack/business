@@ -18,7 +18,7 @@ import java.util.List;
 public class SimplePage<T> extends SimpleSlice<T> implements Page<T> {
 
     private final long index;
-    private final long capacity;
+    private final long maxSize;
     private final long totalSize;
 
     /**
@@ -26,13 +26,13 @@ public class SimplePage<T> extends SimpleSlice<T> implements Page<T> {
      *
      * @param items     the sub list of item
      * @param index     the page index
-     * @param capacity  the maximum capacity of a page
+     * @param maxSize   the maximum size of a page
      * @param totalSize the total size of the bigger list.
      */
-    public SimplePage(List<T> items, long index, long capacity, long totalSize) {
+    public SimplePage(List<T> items, long index, long maxSize, long totalSize) {
         super(items);
         this.index = index;
-        this.capacity = capacity;
+        this.maxSize = maxSize;
         this.totalSize = totalSize;
     }
 
@@ -42,8 +42,8 @@ public class SimplePage<T> extends SimpleSlice<T> implements Page<T> {
     }
 
     @Override
-    public long getCapacity() {
-        return capacity;
+    public long getMaxSize() {
+        return maxSize;
     }
 
     @Override

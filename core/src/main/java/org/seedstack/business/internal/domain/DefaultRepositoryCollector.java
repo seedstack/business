@@ -25,7 +25,6 @@ import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 
 class DefaultRepositoryCollector {
-
     private static final String DEFAULT_REPOSITORY_KEY = "defaultRepository";
     private final Collection<Class<? extends Repository>> defaultRepositoryImplementations;
     private final Application application;

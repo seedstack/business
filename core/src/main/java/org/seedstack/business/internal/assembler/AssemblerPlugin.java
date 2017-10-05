@@ -82,7 +82,8 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
         overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
 
         // Then add bindings for default assemblers
-        bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(dtoOfClasses));
+        bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(getApplication(),
+                dtoOfClasses));
 
         return InitState.INITIALIZED;
     }

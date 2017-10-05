@@ -109,10 +109,10 @@ public final class BusinessUtils {
      * Returns the Guice key qualified with the default qualifier configured for the specified class.
      */
     @SuppressWarnings("unchecked")
-    public static Key<?> defaultQualifier(Application application, String key, Class<?> aggregateClass,
+    public static Key<?> defaultQualifier(Application application, String key, Class<?> someClass,
             TypeLiteral<?> genericInterface) {
         Key<?> defaultKey = null;
-        ClassConfiguration<?> configuration = application.getConfiguration(aggregateClass);
+        ClassConfiguration<?> configuration = application.getConfiguration(someClass);
         if (configuration != null && !configuration.isEmpty()) {
             String qualifierName = configuration.get(key);
             if (qualifierName != null && !"".equals(qualifierName)) {
@@ -123,8 +123,8 @@ public final class BusinessUtils {
                         defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
                     } else {
                         throw BusinessException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
-                                .put("aggregateClass", aggregateClass.getName())
-                                .put("qualifierClass", qualifierName);
+                                .put("class", someClass)
+                                .put("qualifier", qualifierName);
                     }
                 } catch (ClassNotFoundException e) {
                     defaultKey = Key.get(genericInterface, Names.named(qualifierName));

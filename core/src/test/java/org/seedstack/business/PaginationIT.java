@@ -89,13 +89,13 @@ public class PaginationIT {
                 .all())
                 .with(Names.named("Order"))
                 .toPageOf(OrderDto.class);
-        assertThat(dtoPage.getCapacity()).isEqualTo(2);
+        assertThat(dtoPage.getMaxSize()).isEqualTo(2);
         assertThat(dtoPage.getItems()
                 .get(0)
                 .getClass()
                 .isInstance(OrderDto.class));
         assertThat(dtoPage.getIndex()).isEqualTo(2);
-        assertThat(dtoPage.getCapacity()).isEqualTo(2);
+        assertThat(dtoPage.getMaxSize()).isEqualTo(2);
         assertThat(dtoPage.getItems()
                 .size()).isEqualTo(2);
         assertThat(dtoPage.getItems()
@@ -147,7 +147,7 @@ public class PaginationIT {
                 .all();
         assertThat(page.getIndex()).isEqualTo(2);
         assertThat(page.getSize()).isEqualTo(2);
-        assertThat(page.getCapacity()).isEqualTo(2);
+        assertThat(page.getMaxSize()).isEqualTo(2);
         assertThat(page.getItems()
                 .size()).isEqualTo(2);
         assertThat(page.getItems()
@@ -270,7 +270,7 @@ public class PaginationIT {
                 .all();
         assertThat(page.getIndex()).isEqualTo(3);
         assertThat(page.getSize()).isEqualTo(1);
-        assertThat(page.getCapacity()).isEqualTo(3);
+        assertThat(page.getMaxSize()).isEqualTo(3);
         assertThat(page.getItems()
                 .size()).isEqualTo(1);
         assertThat(page.getItems()

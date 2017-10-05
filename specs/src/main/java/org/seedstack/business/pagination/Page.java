@@ -23,11 +23,11 @@ public interface Page<T> extends Slice<T> {
     long getIndex();
 
     /**
-     * Returns the maximum capacity of the page.
+     * Returns the maximum size of the page.
      *
-     * @return the maximum capacity of the page.
+     * @return the maximum size of the page.
      */
-    long getCapacity();
+    long getMaxSize();
 
     /**
      * Returns the total size of the list this page is derived from.

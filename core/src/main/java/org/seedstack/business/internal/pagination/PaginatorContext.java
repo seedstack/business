@@ -61,15 +61,13 @@ class PaginatorContext<A extends AggregateRoot<I>, I> {
 
     void setPageIndex(long page) {
         checkState(mode == PaginationMode.NONE, "Pagination mode cannot be changed");
-        checkArgument(page > 0, "Page index must be greater than 0");
-        this.pageIndex = page;
+        this.pageIndex = page <= 0 ? 1 : page;
         this.mode = PaginationMode.PAGE;
     }
 
     void setOffset(long offset) {
         checkState(mode == PaginationMode.NONE, "Pagination mode cannot be changed");
-        checkArgument(offset >= 0, "Offset must be equal or greater than 0");
-        this.offset = offset;
+        this.offset = offset < 0 ? 0 : offset;
         this.mode = PaginationMode.OFFSET;
     }
 

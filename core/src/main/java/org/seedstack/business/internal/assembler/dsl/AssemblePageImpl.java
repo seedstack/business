@@ -34,9 +34,9 @@ class AssemblePageImpl<A extends AggregateRoot<I>, I, T extends Tuple> extends A
     public <D> Page<D> toPageOf(Class<D> dtoClass) {
         if (pageOfAggregates != null) {
             return new SimplePage<>(super.toListOf(dtoClass), pageOfAggregates.getIndex(),
-                    pageOfAggregates.getCapacity(), pageOfAggregates.getTotalSize());
+                    pageOfAggregates.getMaxSize(), pageOfAggregates.getTotalSize());
         } else if (pageOfTuples != null) {
-            return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(), pageOfTuples.getCapacity(),
+            return new SimplePage<>(super.toListOf(dtoClass), pageOfTuples.getIndex(), pageOfTuples.getMaxSize(),
                     pageOfTuples.getTotalSize());
         }
         throw new IllegalStateException("Nothing to assemble");
