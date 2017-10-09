@@ -8,15 +8,19 @@
 
 package org.seedstack.business.internal.pagination;
 
+import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.dsl.Paginator;
 import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
+import org.seedstack.seed.Configuration;
 
 class PaginatorImpl implements Paginator {
+    @Configuration
+    private BusinessConfig.PaginationConfig paginationConfig;
 
     @Override
     public <A extends AggregateRoot<I>, I> RepositoryOptionsPicker<A, I> paginate(Repository<A, I> repository) {
-        return new RepositoryOptionsTypePickerImpl<>(repository);
+        return new RepositoryOptionsTypePickerImpl<>(paginationConfig, repository);
     }
 }

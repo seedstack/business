@@ -33,7 +33,7 @@ class DefaultAssemblerCollector {
     private static final String DEFAULT_ASSEMBLER_KEY = "defaultAssembler";
     private final Collection<Class<? extends Assembler>> defaultAssemblersClasses;
 
-    public DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
+    DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
         this.defaultAssemblersClasses = defaultAssemblersClasses;
     }
 
@@ -45,7 +45,7 @@ class DefaultAssemblerCollector {
      * @return collection of default assembler binding strategies
      * @}DtoOf.
      */
-    public Collection<BindingStrategy> collect(Application application, Collection<Class<?>> dtoClasses) {
+    Collection<BindingStrategy> collect(Application application, Collection<Class<?>> dtoClasses) {
         // Contains pairs of aggregateClass/dtoClass
         Map<Type[], Key<?>> autoAssemblerGenerics = new HashMap<>();
         // Contains pairs of aggregateTuple/dtoClass

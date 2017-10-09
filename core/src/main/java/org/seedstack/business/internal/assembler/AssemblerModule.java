@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class AssemblerModule extends AbstractModule {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerModule.class);
     private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
     private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses;

@@ -25,12 +25,11 @@ import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.util.Tuples;
 
-public class AssemblerRegistryImpl implements AssemblerRegistry {
-
+class AssemblerRegistryImpl implements AssemblerRegistry {
     private final Injector injector;
 
     @Inject
-    public AssemblerRegistryImpl(Injector injector) {
+    AssemblerRegistryImpl(Injector injector) {
         this.injector = injector;
     }
 

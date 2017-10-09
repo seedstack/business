@@ -26,7 +26,6 @@ import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderDtoAssembler;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactoryInternal;
-import org.seedstack.business.internal.assembler.dsl.resolver.AnnotationDtoInfoResolver;
 import org.seedstack.business.spi.DtoInfoResolver;
 
 public class MergeSingleAggregateFromRepositoryImplTest {

@@ -19,22 +19,49 @@ public interface DomainProvider {
     /**
      * Returns a collection of all aggregate root classes.
      *
-     * @return the aggregate root class collection.
+     * @return the aggregate root classes collection.
      */
     Collection<Class<?>> aggregateRoots();
 
     /**
      * Returns a collection of all entity classes (including aggregate roots).
      *
-     * @return the entity class collection.
+     * @return the entity classes collection.
      */
     Collection<Class<?>> entities();
 
     /**
      * Returns a collection of all value object classes.
      *
-     * @return the value object class collection.
+     * @return the value object classes collection.
      */
     Collection<Class<?>> valueObjects();
 
+    /**
+     * Returns a collection of all repository interfaces.
+     *
+     * @return the repository interfaces collection.
+     */
+    Collection<Class<?>> repositories();
+
+    /**
+     * Returns a collection of all factory interfaces.
+     *
+     * @return the factory interfaces collection.
+     */
+    Collection<Class<?>> factories();
+
+    /**
+     * Returns a collection of all service interfaces.
+     *
+     * @return the service interfaces collection.
+     */
+    Collection<Class<?>> services();
+
+    /**
+     * Returns a collection of all policy interfaces.
+     *
+     * @return the policy interfaces collection.
+     */
+    Collection<Class<?>> policies();
 }

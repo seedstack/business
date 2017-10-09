@@ -208,4 +208,24 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     public Collection<Class<?>> valueObjects() {
         return Collections.unmodifiableCollection(valueObjectClasses);
     }
+
+    @Override
+    public Collection<Class<?>> repositories() {
+        return Collections.unmodifiableCollection(repositoryInterfaces);
+    }
+
+    @Override
+    public Collection<Class<?>> factories() {
+        return Collections.unmodifiableCollection(factoryInterfaces);
+    }
+
+    @Override
+    public Collection<Class<?>> services() {
+        return Collections.unmodifiableCollection(serviceInterfaces);
+    }
+
+    @Override
+    public Collection<Class<?>> policies() {
+        return Collections.unmodifiableCollection(policyInterfaces);
+    }
 }

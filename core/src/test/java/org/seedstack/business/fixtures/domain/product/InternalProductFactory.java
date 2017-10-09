@@ -21,7 +21,7 @@ public class InternalProductFactory extends BaseFactory<Product> implements Prod
 
     @Override
     public Product createProduct(Short storeId, Short productCode) {
-        ProductId id = new ProductId(storeId, (String) productNamePolicy.transform(productCode));
+        ProductId id = new ProductId(storeId, productNamePolicy.transform(productCode));
         Product product = new Product(id);
 
         return product;

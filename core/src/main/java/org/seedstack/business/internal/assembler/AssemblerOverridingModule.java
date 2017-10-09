@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class AssemblerOverridingModule extends AbstractModule {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerOverridingModule.class);
     private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
 
