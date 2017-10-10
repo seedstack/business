@@ -28,19 +28,8 @@ import org.seedstack.shed.reflect.ReflectUtils;
  * DtoInfoResolver}.
  */
 public abstract class BaseDtoInfoResolver implements DtoInfoResolver {
-
     @Inject
     private DomainRegistry domainRegistry;
-
-    @Override
-    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
-        return resolveId(dto, aggregateIdClass, -1);
-    }
-
-    @Override
-    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
-        return resolveAggregate(dto, aggregateRootClass, -1);
-    }
 
     /**
      * Implements the logic to create an aggregate identifier, using a factory if the identifier class

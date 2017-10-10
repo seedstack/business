@@ -1,0 +1,10 @@
+{
+  "id": "seed-business",
+  "name": "SeedStack business framework",
+  "modules": {
+    "seed-business": {
+      "path": "{seed-business}/seed-business",
+      "autoload": true
+    }
+  }
+}

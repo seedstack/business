@@ -12,6 +12,19 @@ import org.seedstack.coffig.Config;
 
 @Config("business")
 public class BusinessConfig {
+    @Config("pagination")
+    public static class PaginationConfig {
+        private boolean zeroBasedPageIndex = false;
+
+        public boolean isZeroBasedPageIndex() {
+            return zeroBasedPageIndex;
+        }
+
+        public PaginationConfig setZeroBasedPageIndex(boolean zeroBasedPageIndex) {
+            this.zeroBasedPageIndex = zeroBasedPageIndex;
+            return this;
+        }
+    }
 
     @Config("data")
     public static class DataConfig {

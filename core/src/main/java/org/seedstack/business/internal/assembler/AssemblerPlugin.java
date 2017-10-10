@@ -31,15 +31,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AssemblerPlugin extends AbstractSeedPlugin {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerPlugin.class);
-
     private final Collection<Class<? extends Assembler>> assemblerClasses = new HashSet<>();
     private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
-
     private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
     private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
-
     private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
     private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();

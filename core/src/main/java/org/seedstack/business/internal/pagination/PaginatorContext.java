@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkState;
 import com.google.common.collect.ObjectArrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.LimitOption;
 import org.seedstack.business.domain.OffsetOption;
@@ -29,7 +30,7 @@ import org.seedstack.business.specification.LessThanSpecification;
 import org.seedstack.business.specification.Specification;
 
 class PaginatorContext<A extends AggregateRoot<I>, I> {
-
+    private final BusinessConfig.PaginationConfig paginationConfig;
     private final Repository<A, I> repository;
     private final Repository.Option[] options;
     private PaginationMode mode = PaginationMode.NONE;
@@ -45,10 +46,11 @@ class PaginatorContext<A extends AggregateRoot<I>, I> {
     private String attribute;
     private Specification<A> attributeSpecification;
 
-    PaginatorContext(Repository<A, I> repository, Repository.Option... options) {
-        checkNotNull(repository, "Repository cannot be null");
+    PaginatorContext(BusinessConfig.PaginationConfig paginationConfig, Repository<A, I> repository,
+            Repository.Option... options) {
+        this.paginationConfig = checkNotNull(paginationConfig, "Pagination configuration cannot be null");
+        this.repository = checkNotNull(repository, "Repository cannot be null");
         checkNotNull(options, "Options cannot be null");
-        this.repository = repository;
         for (Repository.Option option : options) {
             if (option instanceof OffsetOption) {
                 throw new IllegalArgumentException("Cannot specify an offset when using pagination");
@@ -61,7 +63,11 @@ class PaginatorContext<A extends AggregateRoot<I>, I> {
 
     void setPageIndex(long page) {
         checkState(mode == PaginationMode.NONE, "Pagination mode cannot be changed");
-        this.pageIndex = page <= 0 ? 1 : page;
+        if (paginationConfig.isZeroBasedPageIndex()) {
+            this.pageIndex = page < 0 ? 0 : page;
+        } else {
+            this.pageIndex = page <= 0 ? 1 : page;
+        }
         this.mode = PaginationMode.PAGE;
     }
 
@@ -111,7 +117,10 @@ class PaginatorContext<A extends AggregateRoot<I>, I> {
             streamRepo = repository.get(specification, applyLimit(applyOffset(options, offset), limit));
         } else if (mode.equals(PaginationMode.PAGE)) {
             streamRepo = repository.get(specification,
-                    applyLimit(applyOffset(options, (pageIndex - 1) * limit), limit));
+                    applyLimit(applyOffset(
+                            options,
+                            (paginationConfig.isZeroBasedPageIndex() ? pageIndex : pageIndex - 1) * limit
+                    ), limit));
         } else {
             throw new IllegalStateException("Unknown pagination mode " + mode);
         }

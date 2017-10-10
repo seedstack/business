@@ -26,7 +26,6 @@ import org.seedstack.business.spi.DtoInfoResolver;
  * Context used by the DSL to carry the internal registry and the qualifier it uses.
  */
 class Context {
-
     private final DomainRegistry domainRegistry;
     private final AssemblerRegistry assemblerRegistry;
     private final Set<DtoInfoResolver> dtoInfoResolvers;

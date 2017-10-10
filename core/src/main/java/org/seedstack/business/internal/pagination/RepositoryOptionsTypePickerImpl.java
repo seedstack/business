@@ -10,6 +10,7 @@ package org.seedstack.business.internal.pagination;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.pagination.dsl.PaginationTypePicker;
@@ -18,8 +19,8 @@ import org.seedstack.business.pagination.dsl.RepositoryOptionsPicker;
 class RepositoryOptionsTypePickerImpl<A extends AggregateRoot<I>, I> extends PaginationTypePickerImpl<A, I>
         implements RepositoryOptionsPicker<A, I> {
 
-    RepositoryOptionsTypePickerImpl(Repository<A, I> repository) {
-        super(repository);
+    RepositoryOptionsTypePickerImpl(BusinessConfig.PaginationConfig paginationConfig, Repository<A, I> repository) {
+        super(paginationConfig, repository);
     }
 
     @Override
