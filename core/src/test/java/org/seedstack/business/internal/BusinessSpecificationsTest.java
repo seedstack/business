@@ -28,6 +28,7 @@ import org.seedstack.business.domain.DomainValueObject;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 import org.seedstack.business.spi.GenericImplementation;
 import org.seedstack.seed.Ignore;
 
@@ -285,6 +286,11 @@ public class BusinessSpecificationsTest {
 
         @Override
         public Class<K> getIdentifierClass() {
+            return null;
+        }
+
+        @Override
+        public SpecificationBuilder getSpecificationBuilder() {
             return null;
         }
     }

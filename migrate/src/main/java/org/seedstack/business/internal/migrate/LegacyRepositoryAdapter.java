@@ -16,6 +16,7 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.LegacyRepository;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 class LegacyRepositoryAdapter<A extends AggregateRoot<I>, I> implements LegacyRepository<A, I> {
     private final Repository<A, I> repository;
@@ -102,5 +103,10 @@ class LegacyRepositoryAdapter<A extends AggregateRoot<I>, I> implements LegacyRe
     @Override
     public Class<I> getIdentifierClass() {
         return repository.getIdentifierClass();
+    }
+
+    @Override
+    public SpecificationBuilder getSpecificationBuilder() {
+        return repository.getSpecificationBuilder();
     }
 }

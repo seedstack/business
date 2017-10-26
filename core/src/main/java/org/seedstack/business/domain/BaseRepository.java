@@ -9,7 +9,9 @@
 package org.seedstack.business.domain;
 
 import java.lang.reflect.Type;
+import javax.inject.Inject;
 import org.seedstack.business.internal.utils.BusinessUtils;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 /**
  * An helper base class that can be extended to create an <strong>implementation</strong> of a
@@ -30,6 +32,8 @@ public abstract class BaseRepository<A extends AggregateRoot<I>, I> implements R
     private static final int KEY_INDEX = 1;
     private final Class<A> aggregateRootClass;
     private final Class<I> idClass;
+    @Inject
+    private SpecificationBuilder specificationBuilder;
 
     /**
      * Creates a base domain repository. Actual classes managed by the repository are determined by
@@ -62,5 +66,10 @@ public abstract class BaseRepository<A extends AggregateRoot<I>, I> implements R
     @Override
     public Class<I> getIdentifierClass() {
         return idClass;
+    }
+
+    @Override
+    public SpecificationBuilder getSpecificationBuilder() {
+        return specificationBuilder;
     }
 }

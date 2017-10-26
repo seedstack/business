@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import org.seedstack.business.specification.IdentitySpecification;
 import org.seedstack.business.specification.Specification;
+import org.seedstack.business.specification.dsl.SpecificationBuilder;
 
 /**
  * A repository is responsible for consistently storing and retrieving a whole aggregate. It has a
@@ -212,6 +213,12 @@ public interface Repository<A extends AggregateRoot<I>, I> {
      * @return the aggregate root identifier.
      */
     Class<I> getIdentifierClass();
+
+    /**
+     * Access to the specification builder.
+     * @return the specification builder.
+     */
+    SpecificationBuilder getSpecificationBuilder();
 
     interface Option {
 
