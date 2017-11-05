@@ -18,6 +18,7 @@ import org.seedstack.business.finder.Result;
  */
 @Deprecated
 public class PaginatedView<I> extends AbstractView<I> {
+    private static final long serialVersionUID = 1L;
 
     private final long pageIndex;
 

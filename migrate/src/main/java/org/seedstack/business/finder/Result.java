@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Deprecated
 public final class Result<I> {
-    protected final List<I> list;
+    private final List<I> list;
     private final long fullSize;
     private final long offset;
 

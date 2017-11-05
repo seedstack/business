@@ -8,31 +8,39 @@
 
 package org.seedstack.business.internal.domain;
 
-import com.google.common.reflect.TypeToken;
+import static com.google.inject.util.Types.newParameterizedType;
+import static org.seedstack.business.internal.utils.BusinessUtils.resolveDefaultQualifier;
+
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
-import com.google.inject.util.Types;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Application;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class DefaultRepositoryCollector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRepositoryCollector.class);
     private static final String DEFAULT_REPOSITORY_KEY = "defaultRepository";
-    private final Collection<Class<? extends Repository>> defaultRepositoryImplementations;
     private final Application application;
+    private final Map<Key<?>, Class<?>> bindings;
+    private final Collection<Class<? extends Repository>> defaultRepositoryImplementations;
 
-    DefaultRepositoryCollector(Collection<Class<? extends Repository>> defaultRepositoryImplementations,
-            Application application) {
-        this.defaultRepositoryImplementations = defaultRepositoryImplementations;
+    DefaultRepositoryCollector(Application application,
+            Map<Key<?>, Class<?>> bindings,
+            Collection<Class<? extends Repository>> defaultRepositoryImplementations) {
         this.application = application;
+        this.bindings = bindings;
+        this.defaultRepositoryImplementations = defaultRepositoryImplementations;
     }
 
     /**
@@ -42,28 +50,68 @@ class DefaultRepositoryCollector {
      * @param aggregateClasses the aggregates classes to collect repositories from.
      * @return a binding strategy
      */
-    Collection<BindingStrategy> collect(Collection<Class<?>> aggregateClasses) {
+    Collection<BindingStrategy> collectFromAggregates(Collection<Class<? extends AggregateRoot>> aggregateClasses) {
         Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
+        Map<Type[], Key<?>> allGenerics = new HashMap<>();
 
-        // Extract the type variables which will be passed to the constructor
-        Map<Type[], Key<?>> generics = new HashMap<>();
-        for (Class<?> aggregateClass : BusinessUtils.includeSuperClasses(aggregateClasses)) {
-            Class<?> aggregateKey = TypeToken.of(aggregateClass)
-                    .resolveType(AggregateRoot.class.getTypeParameters()[0])
-                    .getRawType();
-            Type[] params = {aggregateClass, aggregateKey};
-
-            TypeLiteral<?> genericInterface = TypeLiteral.get(Types.newParameterizedType(Repository.class, params));
-            Key<?> defaultKey = BusinessUtils.defaultQualifier(application, DEFAULT_REPOSITORY_KEY, aggregateClass,
-                    genericInterface);
-
-            generics.put(params, defaultKey);
+        for (Class<? extends AggregateRoot<?>> aggregateClass : BusinessUtils.includeSuperClasses(aggregateClasses)) {
+            Type[] generics = getTypes(aggregateClass);
+            TypeLiteral<?> genericInterface = TypeLiteral.get(newParameterizedType(Repository.class, generics));
+            allGenerics.put(generics, resolveDefaultQualifier(
+                    application,
+                    DEFAULT_REPOSITORY_KEY,
+                    aggregateClass,
+                    genericInterface)
+            );
         }
 
         // Create a binding strategy for each default repository implementation
-        for (Class<? extends Repository> defaultRepoIml : defaultRepositoryImplementations) {
-            bindingStrategies.add(new GenericBindingStrategy<>(Repository.class, defaultRepoIml, generics));
+        for (Class<? extends Repository> defaultRepoImpl : defaultRepositoryImplementations) {
+            bindingStrategies.add(new GenericBindingStrategy<>(
+                    Repository.class,
+                    defaultRepoImpl,
+                    allGenerics)
+            );
+        }
+
+        return bindingStrategies;
+    }
+
+    Collection<BindingStrategy> collectFromInterfaces(Collection<Class<? extends Repository>> repositoryInterfaces) {
+        Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
+        for (Class<? extends Repository> repositoryInterface : repositoryInterfaces) {
+            if (bindings.containsKey(Key.get(repositoryInterface))) {
+                LOGGER.info("Skipping implementation generation for repository {}: an explicit implementation already "
+                        + "exists", repositoryInterface.getName());
+            } else {
+                bindingStrategies.add(collectFromInterface(
+                        repositoryInterface,
+                        BusinessUtils.resolveGenerics(Repository.class, repositoryInterface)
+                ));
+            }
         }
         return bindingStrategies;
+    }
+
+    private <T extends Repository> BindingStrategy collectFromInterface(Class<T> repoInterface, Type[] generics) {
+        DefaultRepositoryGenerator<T> defaultRepositoryGenerator = new DefaultRepositoryGenerator<>(repoInterface);
+        return new DefaultRepositoryStrategy<>(
+                repoInterface,
+                generics,
+                defaultRepositoryImplementations.stream()
+                        .map(defaultRepositoryGenerator::generate)
+                        .collect(Collectors.toList()),
+                resolveDefaultQualifier(
+                        application,
+                        DEFAULT_REPOSITORY_KEY,
+                        (Class<?>) generics[0],
+                        TypeLiteral.get(repoInterface))
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private Type[] getTypes(Class aggregateClass) {
+        Class<?> aggregateIdClass = BusinessUtils.resolveAggregateIdClass(aggregateClass);
+        return new Type[]{aggregateClass, aggregateIdClass};
     }
 }

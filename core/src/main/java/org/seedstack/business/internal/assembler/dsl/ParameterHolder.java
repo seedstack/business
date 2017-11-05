@@ -173,7 +173,7 @@ class ParameterHolder<D> {
         checkNotNull(dto, "DTO cannot be null");
         checkArgument(aggregateIndex >= 0, "Aggregate index must be greater than or equal to zero");
 
-        if (aggregateIndex < tupleGetter.length) {
+        if (tupleGetter != null && aggregateIndex < tupleGetter.length) {
             Method method = tupleGetter[aggregateIndex];
             if (method != null) {
                 return ReflectUtils.invoke(method, dto);
