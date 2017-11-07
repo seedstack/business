@@ -8,6 +8,9 @@
 
 package org.seedstack.business.internal.domain;
 
+import static org.seedstack.business.internal.utils.BusinessUtils.streamClasses;
+import static org.seedstack.business.internal.utils.PluginUtils.associateInterfacesToImplementations;
+
 import com.google.inject.Key;
 import io.nuun.kernel.api.plugin.InitState;
 import io.nuun.kernel.api.plugin.context.InitContext;
@@ -19,12 +22,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.kametic.specifications.Specification;
+import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessSpecifications;
-import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.internal.utils.PluginUtils;
 import org.seedstack.business.spi.DomainProvider;
 import org.seedstack.seed.core.internal.AbstractSeedPlugin;
@@ -104,45 +108,48 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     @Override
     public InitState initialize(InitContext initContext) {
         if (round.isFirst()) {
+            Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+
             // Scan interfaces
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.AGGREGATE_ROOT, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.AGGREGATE_ROOT), Object.class)
                     .forEach(aggregateClasses::add);
             LOGGER.debug("Aggregate roots => {}", aggregateClasses);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.ENTITY, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.ENTITY), Object.class)
                     .forEach(entityClasses::add);
             LOGGER.debug("Entities => {}", entityClasses);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.VALUE_OBJECT, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.VALUE_OBJECT), Object.class)
                     .forEach(valueObjectClasses::add);
             LOGGER.debug("Value objects => {}", valueObjectClasses);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.REPOSITORY, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.REPOSITORY), Object.class)
                     .forEach(repositoryInterfaces::add);
             LOGGER.debug("Repositories => {}", repositoryInterfaces);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.FACTORY, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.FACTORY), Object.class)
                     .forEach(factoryInterfaces::add);
             LOGGER.debug("Factories => {}", factoryInterfaces);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.SERVICE, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.SERVICE), Object.class)
                     .forEach(serviceInterfaces::add);
             LOGGER.debug("Services => {}", serviceInterfaces);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.POLICY, Object.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.POLICY), Object.class)
                     .forEach(policyInterfaces::add);
             LOGGER.debug("Policies => {}", policyInterfaces);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.DEFAULT_REPOSITORY, Repository.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.DEFAULT_REPOSITORY), Repository.class)
                     .forEach(defaultRepositoryClasses::add);
             LOGGER.debug("Default repositories => {}", defaultRepositoryClasses);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.DOMAIN_EVENT_HANDLER,
+            streamClasses(classesBySpec.get(BusinessSpecifications.DOMAIN_EVENT_HANDLER),
                     DomainEventHandler.class)
                     .forEach(eventHandlerClasses::add);
             LOGGER.debug("Domain event handlers => {}", eventHandlerClasses);
 
-            BusinessUtils.streamClasses(initContext, BusinessSpecifications.IDENTITY_GENERATOR, IdentityGenerator.class)
+            streamClasses(classesBySpec.get(BusinessSpecifications.IDENTITY_GENERATOR),
+                    IdentityGenerator.class)
                     .forEach(identityGeneratorClasses::add);
             LOGGER.debug("Identity generators => {}", identityGeneratorClasses);
 
@@ -150,35 +157,42 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
         } else {
             // Then add bindings for explicit implementations
             bindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs,
+                    associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs,
                             false));
             overridingBindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs,
+                    associateInterfacesToImplementations(initContext, repositoryInterfaces, repositorySpecs,
                             true));
             bindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs,
+                    associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs,
                             false));
             overridingBindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs,
+                    associateInterfacesToImplementations(initContext, factoryInterfaces, factorySpecs,
                             true));
             bindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs,
+                    associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs,
                             false));
             overridingBindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs,
+                    associateInterfacesToImplementations(initContext, serviceInterfaces, serviceSpecs,
                             true));
-            bindings.putAll(PluginUtils.associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs,
+            bindings.putAll(associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs,
                     false));
             overridingBindings.putAll(
-                    PluginUtils.associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs, true));
+                    associateInterfacesToImplementations(initContext, policyInterfaces, policySpecs, true));
 
             // Then add bindings for default repositories
-            bindingStrategies.addAll(new DefaultRepositoryCollector(defaultRepositoryClasses, getApplication()).collect(
-                    aggregateClasses));
+            DefaultRepositoryCollector defaultRepositoryCollector = new DefaultRepositoryCollector(
+                    getApplication(),
+                    bindings,
+                    defaultRepositoryClasses
+            );
+            bindingStrategies.addAll(defaultRepositoryCollector.collectFromAggregates(
+                    streamClasses(aggregateClasses, AggregateRoot.class).collect(Collectors.toSet())));
+            bindingStrategies.addAll(defaultRepositoryCollector.collectFromInterfaces(
+                    streamClasses(repositoryInterfaces, Repository.class).collect(Collectors.toSet())));
 
             // Then add bindings for default factories when no explicit factory has been defined
-            bindingStrategies.addAll(
-                    new DefaultFactoryCollector(bindings).collect(aggregateClasses, valueObjectClasses));
+            DefaultFactoryCollector defaultFactoryCollector = new DefaultFactoryCollector(bindings);
+            bindingStrategies.addAll(defaultFactoryCollector.collect(aggregateClasses, valueObjectClasses));
 
             return InitState.INITIALIZED;
         }

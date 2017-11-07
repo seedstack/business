@@ -8,14 +8,14 @@
 
 package org.seedstack.business.internal.pagination;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 import org.seedstack.business.specification.Specification;
 
-class SpecificationPickerImpl<S extends Slice<A>, A extends AggregateRoot<I>, I> implements SpecificationPicker<S, A,
-        I> {
-
+class SpecificationPickerImpl<S extends Slice<A>, A extends AggregateRoot<I>, I>
+        implements SpecificationPicker<S, A, I> {
     private final PaginatorContext<A, I> context;
     private final PaginationMode mode;
 
@@ -35,6 +35,7 @@ class SpecificationPickerImpl<S extends Slice<A>, A extends AggregateRoot<I>, I>
     }
 
     @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification = "Better this than falling through cases")
     private S buildView(Specification<A> spec) {
         switch (mode) {
             case ATTRIBUTE:

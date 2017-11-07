@@ -75,7 +75,7 @@ class Context {
     }
 
     <A extends AggregateRoot<I>, I> A load(I id, Class<A> aggregateClass) {
-        return domainRegistry.getRepository(aggregateClass, BusinessUtils.getAggregateIdClass(aggregateClass))
+        return domainRegistry.getRepository(aggregateClass, BusinessUtils.resolveAggregateIdClass(aggregateClass))
                 .get(id)
                 .orElse(null);
     }

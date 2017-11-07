@@ -8,15 +8,17 @@
 
 package org.seedstack.business.internal.domain;
 
+import static com.google.inject.util.Types.newParameterizedType;
+
 import com.google.common.collect.Multimap;
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.google.inject.util.Types;
 import java.lang.reflect.Type;
 import java.util.Map;
+import org.seedstack.business.domain.Factory;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
 import org.seedstack.seed.core.internal.guice.GenericGuiceFactory;
@@ -47,7 +49,7 @@ import org.seedstack.seed.core.internal.guice.GenericGuiceProvider;
  * MyPolicyImpl.class}). <p> Notice that if {@code MyPolicyImpl} is qualified, the factory injectee
  * point should be also qualified. </p>
  */
-class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
+class DefaultFactoryStrategy<T extends Factory<?>> implements BindingStrategy {
 
     private static final Class<?> FACTORY_CLASS = GenericGuiceFactory.class;
     private final Class<T> injecteeClass;
@@ -63,7 +65,7 @@ class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
      * @param producedTypeMap  the map of produced type and produced type implementation
      * @param bindGuiceFactory allow to control the binding of the Guice assisted factory
      */
-    DefaultFactoryBindingStrategy(Class<T> injecteeClass, Class<? extends T> injectedClass,
+    DefaultFactoryStrategy(Class<T> injecteeClass, Class<? extends T> injectedClass,
             Multimap<Type, Class<?>> producedTypeMap, boolean bindGuiceFactory) {
         this.injecteeClass = injecteeClass;
         this.injectedClass = injectedClass;
@@ -77,21 +79,18 @@ class DefaultFactoryBindingStrategy<T> implements BindingStrategy {
         FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
         for (Map.Entry<Type, Class<?>> classes : typeVariables.entries()) {
             Type producedType = classes.getKey();
-            Class<Object> producedImplementationType = (Class<Object>) classes.getValue();
+            Class<? extends T> producedImplementationType = (Class<? extends T>) classes.getValue();
 
-            Key<Object> key = BindingUtils.resolveKey((Class<Object>) injecteeClass, producedImplementationType,
-                    producedType);
-            Provider<Object> provider = new GenericGuiceProvider<>(injectedClass, producedImplementationType);
+            Key<T> key = BindingUtils.resolveKey(injecteeClass, producedImplementationType, producedType);
+            Provider<T> provider = new GenericGuiceProvider<>(injectedClass, producedImplementationType);
             binder.requestInjection(provider);
-            binder.bind(key)
-                    .toProvider(provider);
+            binder.bind(key).toProvider(provider);
             guiceFactoryBuilder.implement(key, injectedClass);
         }
 
         // Assisted factory should not be bound twice
         if (bindGuiceFactory) {
-            TypeLiteral<?> guiceAssistedFactory = TypeLiteral.get(
-                    Types.newParameterizedType(FACTORY_CLASS, injectedClass));
+            TypeLiteral<?> guiceAssistedFactory = TypeLiteral.get(newParameterizedType(FACTORY_CLASS, injectedClass));
             binder.install(guiceFactoryBuilder.build(guiceAssistedFactory));
         }
     }

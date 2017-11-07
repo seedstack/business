@@ -18,6 +18,8 @@ import org.seedstack.business.finder.Result;
  */
 @Deprecated
 public abstract class AbstractView<I> implements View<I> {
+    private static final long serialVersionUID = 1L;
+
     protected final VirtualList<I> resultList;
     protected final long resultSize;
     protected final long resultViewOffset;

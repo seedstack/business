@@ -18,6 +18,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,14 +44,19 @@ public class DefaultRepositoryCollectorTest {
     @SuppressWarnings("unchecked")
     public void before() {
         application = mock(Application.class);
-        underTest = new DefaultRepositoryCollector(Lists.newArrayList(MyDefaultRepo.class), application);
+        Map<Key<?>, Class<?>> bindings = new HashMap<>();
+        underTest = new DefaultRepositoryCollector(
+                application,
+                bindings,
+                Lists.newArrayList(MyDefaultRepo.class)
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testCollectSuperclasses() throws Exception {
-        Collection<BindingStrategy> bindingStrategies = underTest.collect(
-                Lists.newArrayList(MySubAgg1.class, MySubAgg2.class));
+        Collection<BindingStrategy> bindingStrategies = underTest
+                .collectFromAggregates(Lists.newArrayList(MySubAgg1.class, MySubAgg2.class));
         assertThat(((Map<?, ?>) Whitebox.getInternalState(bindingStrategies.iterator()
                 .next(), "constructorParamsMap")).size()).isEqualTo(3);
     }
@@ -59,7 +65,8 @@ public class DefaultRepositoryCollectorTest {
     public void testGetDefaultWithQualifierString() {
         when(application.getConfiguration(MyAgg.class)).thenReturn(
                 ClassConfiguration.of(MyAgg.class, "defaultRepository", "my-qualifier"));
-        Key<?> key = BusinessUtils.defaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
+        Key<?> key = BusinessUtils
+                .resolveDefaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
         assertThat(key.getAnnotation()).isEqualTo(Names.named("my-qualifier"));
     }
 
@@ -68,7 +75,8 @@ public class DefaultRepositoryCollectorTest {
         when(application.getConfiguration(MyAgg.class)).thenReturn(
                 ClassConfiguration.of(MyAgg.class, "defaultRepository",
                         "org.seedstack.business.fixtures.repositories.MyQualifier"));
-        Key<?> key = BusinessUtils.defaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
+        Key<?> key = BusinessUtils
+                .resolveDefaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
         assertThat(key.getAnnotationType()).isEqualTo(MyQualifier.class);
     }
 

@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
+import org.kametic.specifications.Specification;
 import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.data.DataExporter;
 import org.seedstack.business.data.DataImporter;
@@ -77,17 +78,19 @@ public class DataPlugin extends AbstractSeedPlugin {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        streamClasses(initContext, BusinessSpecifications.DATA_IMPORTER, DataImporter.class)
+        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+
+        streamClasses(classesBySpec.get(BusinessSpecifications.DATA_IMPORTER), DataImporter.class)
                 .filter(importerClass -> !DefaultDataImporter.class.isAssignableFrom(importerClass))
                 .forEach(importerClasses::add);
         LOGGER.debug("Data importers => {}", importerClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DATA_EXPORTER, DataExporter.class)
+        streamClasses(classesBySpec.get(BusinessSpecifications.DATA_EXPORTER), DataExporter.class)
                 .filter(exporterClass -> !DefaultDataExporter.class.isAssignableFrom(exporterClass))
                 .forEach(exporterClasses::add);
         LOGGER.debug("Data exporters => {}", exporterClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DATA_SET, Object.class).forEach(
+        streamClasses(classesBySpec.get(BusinessSpecifications.DATA_SET), Object.class).forEach(
                 dataClasses::add);
         LOGGER.debug("DTO classes with default importer/exporter => {}", dataClasses);
 
@@ -171,7 +174,7 @@ public class DataPlugin extends AbstractSeedPlugin {
     private String getPackageName(Class<?> someClass) {
         String className = someClass.getName();
         if (className.contains(".")) {
-            return className.substring(0, className.lastIndexOf("."));
+            return className.substring(0, className.lastIndexOf('.'));
         } else {
             return className;
         }

@@ -28,7 +28,7 @@ class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<I>, I, D
         this.context = context;
         this.dtoStream = dtoStream;
         this.aggregateClass = aggregateClass;
-        this.aggregateClassId = BusinessUtils.getAggregateIdClass(aggregateClass);
+        this.aggregateClassId = BusinessUtils.resolveAggregateIdClass(aggregateClass);
     }
 
     @Override

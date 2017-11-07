@@ -25,7 +25,6 @@ import org.seedstack.seed.core.internal.guice.BindingStrategy;
 import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
 
 class DefaultFactoryCollector {
-
     private final Map<Key<?>, Class<?>> bindings;
 
     DefaultFactoryCollector(Map<Key<?>, Class<?>> bindings) {
@@ -48,7 +47,7 @@ class DefaultFactoryCollector {
 
         Multimap<Type, Class<?>> producibleClasses = filterProducibleClasses(bindings);
         if (!producibleClasses.isEmpty()) {
-            strategies.add(new DefaultFactoryBindingStrategy<>(Factory.class, DefaultFactory.class, producibleClasses,
+            strategies.add(new DefaultFactoryStrategy<>(Factory.class, DefaultFactory.class, producibleClasses,
                     bindGuiceFactory));
         }
 

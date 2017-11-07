@@ -19,6 +19,8 @@ import org.seedstack.business.finder.Result;
  */
 @Deprecated
 public class ChunkedView<T> extends AbstractView<T> {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructor.
      *

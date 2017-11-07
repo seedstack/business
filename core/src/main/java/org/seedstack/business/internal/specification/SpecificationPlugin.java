@@ -18,7 +18,9 @@ import io.nuun.kernel.api.plugin.context.InitContext;
 import io.nuun.kernel.api.plugin.request.ClasspathScanRequest;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import org.kametic.specifications.Specification;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
@@ -49,11 +51,13 @@ public class SpecificationPlugin extends AbstractSeedPlugin {
 
     @Override
     public InitState initialize(InitContext initContext) {
-        streamClasses(initContext, BusinessSpecifications.SPECIFICATION_TRANSLATOR,
+        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+
+        streamClasses(classesBySpec.get(BusinessSpecifications.SPECIFICATION_TRANSLATOR),
                 SpecificationTranslator.class).forEach(specificationTranslatorClasses::add);
         LOGGER.debug("Specification translator classes => {}", specificationTranslatorClasses);
 
-        streamClasses(initContext, BusinessSpecifications.SPECIFICATION_CONVERTER,
+        streamClasses(classesBySpec.get(BusinessSpecifications.SPECIFICATION_CONVERTER),
                 SpecificationConverter.class).forEach(specificationConverterClasses::add);
         LOGGER.debug("Specification converter classes => {}", specificationConverterClasses);
 

@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import org.kametic.specifications.Specification;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.spi.DtoInfoResolver;
@@ -57,18 +58,20 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        streamClasses(initContext, BusinessSpecifications.EXPLICIT_ASSEMBLER, Assembler.class).forEach(
+        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+
+        streamClasses(classesBySpec.get(BusinessSpecifications.EXPLICIT_ASSEMBLER), Assembler.class).forEach(
                 assemblerClasses::add);
         LOGGER.debug("Assemblers => {}", assemblerClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DEFAULT_ASSEMBLER, Assembler.class).forEach(
+        streamClasses(classesBySpec.get(BusinessSpecifications.DEFAULT_ASSEMBLER), Assembler.class).forEach(
                 defaultAssemblerClasses::add);
         LOGGER.debug("Default assemblers => {}", defaultAssemblerClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DTO_OF, Object.class).forEach(dtoOfClasses::add);
+        streamClasses(classesBySpec.get(BusinessSpecifications.DTO_OF), Object.class).forEach(dtoOfClasses::add);
         LOGGER.debug("DTO classes mappable with default assemblers => {}", dtoOfClasses);
 
-        streamClasses(initContext, BusinessSpecifications.DTO_INFO_RESOLVER, DtoInfoResolver.class).forEach(
+        streamClasses(classesBySpec.get(BusinessSpecifications.DTO_INFO_RESOLVER), DtoInfoResolver.class).forEach(
                 dtoInfoResolverClasses::add);
         sortByPriority(dtoInfoResolverClasses);
         LOGGER.debug("DTO info resolvers => {}", dtoInfoResolverClasses);

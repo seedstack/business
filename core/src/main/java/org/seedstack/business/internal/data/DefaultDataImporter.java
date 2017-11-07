@@ -10,7 +10,7 @@ package org.seedstack.business.internal.data;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static org.seedstack.business.internal.utils.BusinessUtils.getAggregateIdClass;
+import static org.seedstack.business.internal.utils.BusinessUtils.resolveAggregateIdClass;
 
 import com.google.inject.assistedinject.Assisted;
 import java.util.stream.Stream;
@@ -37,7 +37,7 @@ public class DefaultDataImporter<A extends AggregateRoot<I>, I, D> extends BaseD
         checkState(annotation.value().length > 0, "An aggregate must be specified in the @DtoOf annotation");
         checkState(annotation.value().length < 2, "Default data importer doesn't support tuples");
         this.aggregateRootClass = (Class<A>) annotation.value()[0];
-        this.repository = domainRegistry.getRepository(aggregateRootClass, getAggregateIdClass(aggregateRootClass));
+        this.repository = domainRegistry.getRepository(aggregateRootClass, resolveAggregateIdClass(aggregateRootClass));
         this.fluentAssembler = fluentAssembler;
     }
 

@@ -22,11 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class DomainEventPublisherImpl implements DomainEventPublisher {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
     private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context = ThreadLocal
-            .withInitial(
-            ArrayListMultimap::create);
+            .withInitial(ArrayListMultimap::create);
     private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
             eventHandlerClassesByEvent;
     private final Injector injector;

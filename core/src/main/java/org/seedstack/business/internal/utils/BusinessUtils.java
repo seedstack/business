@@ -13,18 +13,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
-import io.nuun.kernel.api.plugin.context.InitContext;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import javax.inject.Qualifier;
 import net.jodah.typetools.TypeResolver;
-import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
@@ -35,6 +32,7 @@ import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.shed.ClassLoaders;
 import org.seedstack.shed.reflect.AnnotationPredicates;
 import org.seedstack.shed.reflect.Annotations;
+import org.seedstack.shed.reflect.ClassPredicates;
 
 public final class BusinessUtils {
 
@@ -62,7 +60,7 @@ public final class BusinessUtils {
      * Returns the identifier class for an aggregate root class.
      */
     @SuppressWarnings("unchecked")
-    public static <A extends AggregateRoot<I>, I> Class<I> getAggregateIdClass(Class<A> aggregateRootClass) {
+    public static <A extends AggregateRoot<I>, I> Class<I> resolveAggregateIdClass(Class<A> aggregateRootClass) {
         checkNotNull(aggregateRootClass, "aggregateRootClass should not be null");
         return (Class<I>) resolveGenerics(AggregateRoot.class, aggregateRootClass)[0];
     }
@@ -85,13 +83,11 @@ public final class BusinessUtils {
      * typed stream of it.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Stream<Class<? extends T>> streamClasses(InitContext initContext, Specification<Class<?>> spec,
-            Class<T> baseClass) {
-        Map<Specification, Collection<Class<?>>> scannedTypesBySpecification = initContext
-                .scannedTypesBySpecification();
-        return scannedTypesBySpecification.get(spec)
+    public static <T> Stream<Class<? extends T>> streamClasses(Collection<Class<?>> classes,
+            Class<? extends T> baseClass) {
+        return classes
                 .stream()
-                .filter(baseClass::isAssignableFrom)
+                .filter(ClassPredicates.classIsDescendantOf(baseClass))
                 .map(c -> (Class<T>) c);
     }
 
@@ -109,9 +105,9 @@ public final class BusinessUtils {
      * Returns the Guice key qualified with the default qualifier configured for the specified class.
      */
     @SuppressWarnings("unchecked")
-    public static Key<?> defaultQualifier(Application application, String key, Class<?> someClass,
-            TypeLiteral<?> genericInterface) {
-        Key<?> defaultKey = null;
+    public static <T> Key<T> resolveDefaultQualifier(Application application, String key, Class<?> someClass,
+            TypeLiteral<T> genericInterface) {
+        Key<T> defaultKey = null;
         ClassConfiguration<?> configuration = application.getConfiguration(someClass);
         if (configuration != null && !configuration.isEmpty()) {
             String qualifierName = configuration.get(key);
@@ -138,14 +134,16 @@ public final class BusinessUtils {
      * Walks the class hierarchy of each class in the given collection and adds its superclasses to
      * the mix.
      */
-    public static Set<Class<?>> includeSuperClasses(Collection<Class<?>> aggregateClasses) {
-        Set<Class<?>> results = new HashSet<>();
+    @SuppressWarnings("unchecked")
+    public static Set<Class<? extends AggregateRoot<?>>> includeSuperClasses(
+            Collection<Class<? extends AggregateRoot>> aggregateClasses) {
+        Set<Class<? extends AggregateRoot<?>>> results = new HashSet<>();
         for (Class<?> aggregateClass : aggregateClasses) {
             Class<?> classToAdd = aggregateClass;
             while (classToAdd != null) {
                 if (AggregateRoot.class.isAssignableFrom(classToAdd) && !classToAdd.equals(
                         BaseAggregateRoot.class) && !classToAdd.equals(AggregateRoot.class)) {
-                    results.add(classToAdd);
+                    results.add((Class<? extends AggregateRoot<?>>) classToAdd);
                     classToAdd = classToAdd.getSuperclass();
                 } else {
                     break;
