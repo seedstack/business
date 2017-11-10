@@ -37,7 +37,7 @@ class IdentityServiceImpl implements IdentityService {
             new ConcurrentHashMap<>();
     private static final String ENTITY_CLASS = "entityClass";
     private static final String GENERATOR_CLASS = "generatorClass";
-    private static final String IDENTITY_GENERATOR_KEY = "identityGenerator";
+    private static final String IDENTITY_GENERATOR_KEY = "defaultGenerator";
     private static final String FIELD = "field";
     private static final int ID_TYPE_INDEX = 0;
     @Inject

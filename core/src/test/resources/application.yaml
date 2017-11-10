@@ -25,7 +25,7 @@ classes:
               defaultRepository:
           identity:
             MyAggregateWithConfiguration:
-              identityGenerator: simpleUUID
+              defaultGenerator: simpleUUID
 
 org:
   seedstack:
