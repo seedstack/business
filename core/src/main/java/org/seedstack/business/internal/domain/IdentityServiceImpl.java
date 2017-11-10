@@ -29,7 +29,6 @@ import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.seed.Application;
-import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.shed.exception.BaseException;
 
 class IdentityServiceImpl implements IdentityService {
@@ -55,7 +54,7 @@ class IdentityServiceImpl implements IdentityService {
         if (id == null) {
             setValue(identityInfo.identityField,
                     entity,
-                    identityGenerator.generate(identityInfo.entityClass, identityInfo.entityConfiguration.asMap())
+                    identityGenerator.generate(identityInfo.entityClass)
             );
         } else {
             throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
@@ -68,7 +67,6 @@ class IdentityServiceImpl implements IdentityService {
     @SuppressWarnings("unchecked")
     private <T extends IdentityGenerator<I>, E extends Entity<I>, I> IdentityInfo<E, I> getIdentityInfo(E entity) {
         return (IdentityInfo<E, I>) cache.computeIfAbsent(entity.getClass(), entityClass -> {
-            ClassConfiguration<E> classConfiguration = application.getConfiguration((Class<E>) entityClass);
             Field identityField = getIdentityField(entityClass);
             Class<?> identityClass = identityField.getType();
             Identity identityAnnotation = getIdentityAnnotation(entityClass, identityField);
@@ -93,7 +91,8 @@ class IdentityServiceImpl implements IdentityService {
             } else {
                 key = BusinessUtils.getQualifier(identityField)
                         .map(qualifier -> Key.get(identityGeneratorClass, qualifier))
-                        .orElseGet(() -> BusinessUtils.resolveDefaultQualifier(classConfiguration,
+                        .orElseGet(() -> BusinessUtils.resolveDefaultQualifier(
+                                application.getConfiguration((Class<E>) entityClass),
                                 IDENTITY_GENERATOR_KEY,
                                 entityClass,
                                 TypeLiteral.get(identityGeneratorClass))
@@ -105,7 +104,7 @@ class IdentityServiceImpl implements IdentityService {
                         .put(ENTITY_CLASS, entityClass);
             }
 
-            return new IdentityInfo<>((Class<E>) entityClass, identityField, classConfiguration, key);
+            return new IdentityInfo<>((Class<E>) entityClass, identityField, key);
         });
     }
 
@@ -129,14 +128,12 @@ class IdentityServiceImpl implements IdentityService {
     private static class IdentityInfo<E extends Entity<I>, I> {
         final Class<E> entityClass;
         final Field identityField;
-        final ClassConfiguration<E> entityConfiguration;
         final Key<? extends IdentityGenerator<I>> generatorKey;
 
-        private IdentityInfo(Class<E> entityClass, Field identityField, ClassConfiguration<E> entityConfiguration,
+        private IdentityInfo(Class<E> entityClass, Field identityField,
                 Key<? extends IdentityGenerator<I>> generatorKey) {
             this.entityClass = entityClass;
             this.generatorKey = generatorKey;
-            this.entityConfiguration = entityConfiguration;
             this.identityField = identityField;
         }
     }

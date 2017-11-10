@@ -8,7 +8,6 @@
 
 package org.seedstack.business.util;
 
-import java.util.Map;
 import java.util.UUID;
 import javax.inject.Named;
 import org.seedstack.business.domain.Entity;
@@ -19,9 +18,8 @@ import org.seedstack.business.domain.UuidGenerator;
  */
 @Named("simpleUUID")
 public class SimpleUuidGenerator implements UuidGenerator {
-
     @Override
-    public <E extends Entity<UUID>> UUID generate(Class<E> entityClass, Map<String, String> entityProperties) {
+    public <E extends Entity<UUID>> UUID generate(Class<E> entityClass) {
         return UUID.randomUUID();
     }
 }

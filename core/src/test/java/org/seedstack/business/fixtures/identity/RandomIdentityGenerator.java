@@ -8,14 +8,12 @@
 
 package org.seedstack.business.fixtures.identity;
 
-import java.util.Map;
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.IdentityGenerator;
 
 public class RandomIdentityGenerator implements IdentityGenerator<Double> {
-
     @Override
-    public <E extends Entity<Double>> Double generate(Class<E> entityClass, Map<String, String> entityProperties) {
+    public <E extends Entity<Double>> Double generate(Class<E> entityClass) {
         return Math.random();
     }
 }

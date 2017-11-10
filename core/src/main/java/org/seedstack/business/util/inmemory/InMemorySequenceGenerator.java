@@ -8,7 +8,6 @@
 
 package org.seedstack.business.util.inmemory;
 
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.SequenceGenerator;
@@ -19,11 +18,10 @@ import org.seedstack.business.domain.SequenceGenerator;
  */
 @InMemory
 public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
-
     private static final AtomicLong sequence = new AtomicLong(1L);
 
     @Override
-    public <E extends Entity<Long>> Long generate(Class<E> entityClass, Map<String, String> entityProperties) {
+    public <E extends Entity<Long>> Long generate(Class<E> entityClass) {
         return sequence.incrementAndGet();
     }
 }
