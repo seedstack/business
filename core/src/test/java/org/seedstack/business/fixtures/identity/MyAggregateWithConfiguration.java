@@ -13,24 +13,22 @@ package org.seedstack.business.fixtures.identity;
 
 import java.util.Set;
 import java.util.UUID;
-import javax.inject.Named;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.UuidGenerator;
 
-public class MyAggregate extends BaseAggregateRoot<UUID> {
+public class MyAggregateWithConfiguration extends BaseAggregateRoot<UUID> {
 
     @Identity(generator = UuidGenerator.class)
-    @Named("simpleUUID")
     private UUID id;
     private String name;
     private MyEntity mySubEntity;
     private Set<MyEntity> mySubEntities;
 
-    public MyAggregate() {
+    public MyAggregateWithConfiguration() {
     }
 
-    public MyAggregate(UUID id) {
+    public MyAggregateWithConfiguration(UUID id) {
         this.id = id;
     }
 

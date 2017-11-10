@@ -8,17 +8,19 @@
 
 package org.seedstack.business.internal.domain;
 
+import static org.seedstack.business.internal.utils.BusinessUtils.resolveGenerics;
 import static org.seedstack.shed.reflect.ReflectUtils.getValue;
 import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
 import static org.seedstack.shed.reflect.ReflectUtils.setValue;
 
-import com.google.common.base.Strings;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.name.Names;
+import com.google.inject.TypeLiteral;
 import java.lang.reflect.Field;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import javax.inject.Inject;
-import net.jodah.typetools.TypeResolver;
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.IdentityGenerator;
@@ -31,11 +33,14 @@ import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.shed.exception.BaseException;
 
 class IdentityServiceImpl implements IdentityService {
-
+    // This unbounded cache of identity info can only grow up to the number of entity classes in the system
+    private static final ConcurrentMap<Class<? extends Entity>, IdentityInfo<? extends Entity, ?>> cache =
+            new ConcurrentHashMap<>();
     private static final String ENTITY_CLASS = "entityClass";
     private static final String GENERATOR_CLASS = "generatorClass";
     private static final String IDENTITY_GENERATOR_KEY = "identityGenerator";
-    private static final int IDENTITY_TYPE_INDEX = 0;
+    private static final String FIELD = "field";
+    private static final int ID_TYPE_INDEX = 0;
     @Inject
     private Injector injector;
     @Inject
@@ -43,86 +48,96 @@ class IdentityServiceImpl implements IdentityService {
 
     @Override
     public <E extends Entity<I>, I> E identify(E entity) {
-        Class<E> entityClass = getEntityClass(entity);
-        Field entityIdField = getIdentityField(entityClass);
-        Identity identity = getIdentityAnnotation(entityClass);
-        ClassConfiguration<E> entityConfiguration = application.getConfiguration(entityClass);
-        IdentityGenerator<I> identityGenerator = getIdentityGenerator(identity, entityClass, entityConfiguration);
+        IdentityInfo<E, I> identityInfo = getIdentityInfo(entity);
 
-        compareIdType(entityClass, identityGenerator);
-        makeAccessible(entityIdField);
-
-        Object id = getValue(entityIdField, entity);
+        IdentityGenerator<I> identityGenerator = injector.getInstance(identityInfo.generatorKey);
+        Object id = getValue(identityInfo.identityField, entity);
         if (id == null) {
-            setValue(entityIdField, entity, identityGenerator.generate(entityClass, entityConfiguration.asMap()));
+            setValue(identityInfo.identityField,
+                    entity,
+                    identityGenerator.generate(identityInfo.entityClass, identityInfo.entityConfiguration.asMap())
+            );
         } else {
             throw BusinessException.createNew(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY)
-                    .put(ENTITY_CLASS, entityClass);
+                    .put(ENTITY_CLASS, identityInfo.entityClass);
         }
 
         return entity;
     }
 
-    private <E extends Entity<I>, I> void compareIdType(Class<E> entityClass, IdentityGenerator<I> identityGenerator) {
-        Class<?> entityIdClass = getEntityIdClass(entityClass);
-        Class<?> identityGeneratorIdClass = getGeneratorIdClass(identityGenerator);
-        if (!entityIdClass.isAssignableFrom(identityGeneratorIdClass)) {
-            throw BusinessException.createNew(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
-                    .put(ENTITY_CLASS, entityClass)
-                    .put(GENERATOR_CLASS, identityGenerator.getClass())
-                    .put("entityIdClass", entityIdClass)
-                    .put("generatorIdClass", identityGeneratorIdClass);
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    private <E extends Entity<I>, I> Class<E> getEntityClass(E entity) {
-        return (Class<E>) entity.getClass();
-    }
+    private <T extends IdentityGenerator<I>, E extends Entity<I>, I> IdentityInfo<E, I> getIdentityInfo(E entity) {
+        return (IdentityInfo<E, I>) cache.computeIfAbsent(entity.getClass(), entityClass -> {
+            ClassConfiguration<E> classConfiguration = application.getConfiguration((Class<E>) entityClass);
+            Field identityField = getIdentityField(entityClass);
+            Class<?> identityClass = identityField.getType();
+            Identity identityAnnotation = getIdentityAnnotation(entityClass, identityField);
+            Class<T> identityGeneratorClass = getIdentityGeneratorClass(identityAnnotation);
+            Class<?> generatorIdClass = resolveGenerics(IdentityGenerator.class, identityGeneratorClass)[ID_TYPE_INDEX];
 
-    private <E extends Entity<I>, I> Class<?> getEntityIdClass(Class<E> entityClass) {
-        return TypeResolver.resolveRawArguments(Entity.class, entityClass)[0];
-    }
+            if (IdentityGenerator.class.equals(identityGeneratorClass)) {
+                throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_GENERATOR_SPECIFIED)
+                        .put(ENTITY_CLASS, entityClass);
+            }
+            if (!identityClass.isAssignableFrom(generatorIdClass)) {
+                throw BusinessException.createNew(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED)
+                        .put(ENTITY_CLASS, entityClass)
+                        .put(GENERATOR_CLASS, identityGeneratorClass)
+                        .put("entityIdClass", identityClass)
+                        .put("generatorIdClass", generatorIdClass);
+            }
 
-    private <I> Class<?> getGeneratorIdClass(IdentityGenerator<I> identityGenerator) {
-        return (Class<?>) BusinessUtils.resolveGenerics(IdentityGenerator.class,
-                identityGenerator.getClass())[IDENTITY_TYPE_INDEX];
+            Key<T> key;
+            if (!identityAnnotation.generator().isInterface()) {
+                key = Key.get(identityGeneratorClass);
+            } else {
+                key = BusinessUtils.getQualifier(identityField)
+                        .map(qualifier -> Key.get(identityGeneratorClass, qualifier))
+                        .orElseGet(() -> BusinessUtils.resolveDefaultQualifier(classConfiguration,
+                                IDENTITY_GENERATOR_KEY,
+                                entityClass,
+                                TypeLiteral.get(identityGeneratorClass))
+                                .orElse(null));
+            }
+            if (key == null) {
+                throw BusinessException.createNew(BusinessErrorCode.UNQUALIFIED_IDENTITY_GENERATOR)
+                        .put(FIELD, identityField.getName())
+                        .put(ENTITY_CLASS, entityClass);
+            }
+
+            return new IdentityInfo<>((Class<E>) entityClass, identityField, classConfiguration, key);
+        });
     }
 
     private Field getIdentityField(Class<? extends Entity> entityClass) {
-        return IdentityResolver.INSTANCE.resolveField(entityClass).<BaseException>orElseThrow(
+        return makeAccessible(IdentityResolver.INSTANCE.resolveField(entityClass).<BaseException>orElseThrow(
                 () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
-                        .put(ENTITY_CLASS, entityClass));
+                        .put(ENTITY_CLASS, entityClass)));
     }
 
-    private Identity getIdentityAnnotation(Class<? extends Entity> entityClass) {
-        return IdentityResolver.INSTANCE.apply(entityClass).<BaseException>orElseThrow(
+    private Identity getIdentityAnnotation(Class<? extends Entity> entityClass, Field identityField) {
+        return Optional.ofNullable(identityField.getAnnotation(Identity.class)).<BaseException>orElseThrow(
                 () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
                         .put(ENTITY_CLASS, entityClass));
     }
 
     @SuppressWarnings("unchecked")
-    private <E extends Entity<I>, I> IdentityGenerator<I> getIdentityGenerator(Identity identity, Class<E> entityClass,
-            ClassConfiguration<E> entityConfiguration) {
-        IdentityGenerator<I> identityGenerator;
-        if (!identity.generator()
-                .isInterface()) {
-            identityGenerator = (IdentityGenerator<I>) injector.getInstance(identity.generator());
-        } else if (IdentityGenerator.class.equals(identity.generator())) {
-            throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_GENERATOR_SPECIFIED)
-                    .put(ENTITY_CLASS, entityClass);
-        } else {
-            String identityQualifier = entityConfiguration.get(IDENTITY_GENERATOR_KEY);
+    private <T extends IdentityGenerator<I>, I> Class<T> getIdentityGeneratorClass(Identity identity) {
+        return (Class<T>) identity.generator();
+    }
 
-            if (!Strings.isNullOrEmpty(identityQualifier)) {
-                identityGenerator = (IdentityGenerator<I>) injector.getInstance(
-                        Key.get(identity.generator(), Names.named(identityQualifier)));
-            } else {
-                throw BusinessException.createNew(BusinessErrorCode.UNQUALIFIED_IDENTITY_GENERATOR)
-                        .put(GENERATOR_CLASS, identity.generator())
-                        .put(ENTITY_CLASS, entityClass);
-            }
+    private static class IdentityInfo<E extends Entity<I>, I> {
+        final Class<E> entityClass;
+        final Field identityField;
+        final ClassConfiguration<E> entityConfiguration;
+        final Key<? extends IdentityGenerator<I>> generatorKey;
+
+        private IdentityInfo(Class<E> entityClass, Field identityField, ClassConfiguration<E> entityConfiguration,
+                Key<? extends IdentityGenerator<I>> generatorKey) {
+            this.entityClass = entityClass;
+            this.generatorKey = generatorKey;
+            this.entityConfiguration = entityConfiguration;
+            this.identityField = identityField;
         }
-        return identityGenerator;
     }
 }

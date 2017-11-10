@@ -65,8 +65,12 @@ public class DefaultRepositoryCollectorTest {
     public void testGetDefaultWithQualifierString() {
         when(application.getConfiguration(MyAgg.class)).thenReturn(
                 ClassConfiguration.of(MyAgg.class, "defaultRepository", "my-qualifier"));
-        Key<?> key = BusinessUtils
-                .resolveDefaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
+        Key<?> key = BusinessUtils.resolveDefaultQualifier(
+                application.getConfiguration(MyAgg.class),
+                "defaultRepository",
+                MyAgg.class,
+                genericInterface
+        ).orElse(null);
         assertThat(key.getAnnotation()).isEqualTo(Names.named("my-qualifier"));
     }
 
@@ -75,8 +79,12 @@ public class DefaultRepositoryCollectorTest {
         when(application.getConfiguration(MyAgg.class)).thenReturn(
                 ClassConfiguration.of(MyAgg.class, "defaultRepository",
                         "org.seedstack.business.fixtures.repositories.MyQualifier"));
-        Key<?> key = BusinessUtils
-                .resolveDefaultQualifier(application, "defaultRepository", MyAgg.class, genericInterface);
+        Key<?> key = BusinessUtils.resolveDefaultQualifier(
+                application.getConfiguration(MyAgg.class),
+                "defaultRepository",
+                MyAgg.class,
+                genericInterface
+        ).orElse(null);
         assertThat(key.getAnnotationType()).isEqualTo(MyQualifier.class);
     }
 

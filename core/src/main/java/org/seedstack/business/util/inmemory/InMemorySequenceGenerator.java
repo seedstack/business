@@ -10,7 +10,6 @@ package org.seedstack.business.util.inmemory;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-import javax.inject.Named;
 import org.seedstack.business.domain.Entity;
 import org.seedstack.business.domain.SequenceGenerator;
 
@@ -18,7 +17,7 @@ import org.seedstack.business.domain.SequenceGenerator;
  * Identity generator that generates {@link Long} numbers by using an every-incrementing {@link
  * AtomicLong}.
  */
-@Named("inMemorySequence")
+@InMemory
 public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
 
     private static final AtomicLong sequence = new AtomicLong(1L);

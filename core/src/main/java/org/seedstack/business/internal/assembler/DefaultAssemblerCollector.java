@@ -57,16 +57,20 @@ class DefaultAssemblerCollector {
             if (dtoOf != null) {
                 if (dtoOf.value().length == 1) {
                     Type[] params = new Type[]{dtoOf.value()[0], dtoClass};
-                    autoAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(application,
+                    autoAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(
+                            application.getConfiguration(dtoClass),
                             DEFAULT_ASSEMBLER_KEY,
                             dtoClass,
-                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))));
+                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))
+                    ).orElse(null));
                 } else if (dtoOf.value().length > 1) {
                     Type[] params = {Tuples.typeOfTuple(dtoOf.value()), dtoClass};
-                    autoTupleAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(application,
+                    autoTupleAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(
+                            application.getConfiguration(dtoClass),
                             DEFAULT_ASSEMBLER_KEY,
                             dtoClass,
-                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))));
+                            TypeLiteral.get(Types.newParameterizedType(Assembler.class, params))
+                    ).orElse(null));
                 }
             }
         }

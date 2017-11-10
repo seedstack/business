@@ -14,7 +14,7 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
+import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -26,7 +26,6 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
-import org.seedstack.seed.Application;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.shed.ClassLoaders;
@@ -48,7 +47,7 @@ public final class BusinessUtils {
      * @param <T>       the type of the superclass.
      * @return the resolved types.
      */
-    public static <T> Type[] resolveGenerics(Class<T> superType, Class<? extends T> subType) {
+    public static <T> Class<?>[] resolveGenerics(Class<T> superType, Class<? extends T> subType) {
         checkNotNull(superType, "superType should not be null");
         checkNotNull(subType, "subType should not be null");
         Class<?> subTypeWithoutProxy = ProxyUtils.cleanProxy(subType);
@@ -94,8 +93,11 @@ public final class BusinessUtils {
     /**
      * Optionally returns the qualifier annotation of a class.
      */
-    public static Optional<Annotation> getQualifier(Class<?> someClass) {
-        return Annotations.on(ProxyUtils.cleanProxy(someClass))
+    public static Optional<Annotation> getQualifier(AnnotatedElement annotatedElement) {
+        if (annotatedElement instanceof Class<?>) {
+            annotatedElement = ProxyUtils.cleanProxy((Class<?>) annotatedElement);
+        }
+        return Annotations.on(annotatedElement)
                 .findAll()
                 .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false))
                 .findFirst();
@@ -105,29 +107,27 @@ public final class BusinessUtils {
      * Returns the Guice key qualified with the default qualifier configured for the specified class.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Key<T> resolveDefaultQualifier(Application application, String key, Class<?> someClass,
-            TypeLiteral<T> genericInterface) {
-        Key<T> defaultKey = null;
-        ClassConfiguration<?> configuration = application.getConfiguration(someClass);
-        if (configuration != null && !configuration.isEmpty()) {
-            String qualifierName = configuration.get(key);
+    public static <T> Optional<Key<T>> resolveDefaultQualifier(ClassConfiguration<?> classConfiguration, String key,
+            Class<?> someClass, TypeLiteral<T> genericInterface) {
+        if (classConfiguration != null && !classConfiguration.isEmpty()) {
+            String qualifierName = classConfiguration.get(key);
             if (qualifierName != null && !"".equals(qualifierName)) {
                 try {
                     ClassLoader classLoader = ClassLoaders.findMostCompleteClassLoader(BusinessUtils.class);
                     Class<?> qualifierClass = classLoader.loadClass(qualifierName);
                     if (Annotation.class.isAssignableFrom(qualifierClass)) {
-                        defaultKey = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
+                        return Optional.of(Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass));
                     } else {
                         throw BusinessException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
                                 .put("class", someClass)
                                 .put("qualifier", qualifierName);
                     }
                 } catch (ClassNotFoundException e) {
-                    defaultKey = Key.get(genericInterface, Names.named(qualifierName));
+                    return Optional.of(Key.get(genericInterface, Names.named(qualifierName)));
                 }
             }
         }
-        return defaultKey;
+        return Optional.empty();
     }
 
     /**

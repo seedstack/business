@@ -50,7 +50,6 @@ class DefaultRepositoryStrategy<T extends Repository> implements BindingStrategy
                 LOGGER.warn("Skipping default repository implementation {}: abstract methods are still present",
                         impl.getName());
             } else {
-                FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
                 Key<T> key = BusinessUtils.getQualifier(impl)
                         .map(qualifier -> Key.get(repositoryInterface, qualifier))
                         .orElseThrow(() -> new IllegalStateException("Missing qualifier on implementation" + impl));
@@ -63,8 +62,8 @@ class DefaultRepositoryStrategy<T extends Repository> implements BindingStrategy
                 binder.requestInjection(provider);
                 binder.bind(key).toProvider(provider);
 
+                FactoryModuleBuilder guiceFactoryBuilder = new FactoryModuleBuilder();
                 guiceFactoryBuilder.implement(key, impl);
-
                 binder.install(guiceFactoryBuilder.build(
                         TypeLiteral.get(Types.newParameterizedType(FACTORY_CLASS, impl))
                 ));

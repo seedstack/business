@@ -37,6 +37,7 @@ public class IdentityResolver implements AnnotationResolver<Class<?>, Identity> 
     /**
      * Resolves the first field holding annotated or meta-annotated with {@link Identity}.
      *
+     * @param someClass the class to search for identity field.
      * @return the {@link Field} wrapped in an {@link Optional}.
      */
     public Optional<Field> resolveField(Class<?> someClass) {

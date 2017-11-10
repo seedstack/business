@@ -12,6 +12,7 @@
 package org.seedstack.business.fixtures.identity;
 
 import java.util.UUID;
+import javax.inject.Named;
 import org.seedstack.business.domain.BaseEntity;
 import org.seedstack.business.domain.Identity;
 import org.seedstack.business.domain.UuidGenerator;
@@ -19,5 +20,6 @@ import org.seedstack.business.domain.UuidGenerator;
 public class MyEntity extends BaseEntity<UUID> {
 
     @Identity(generator = UuidGenerator.class)
+    @Named("simpleUUID")
     private UUID id;
 }

@@ -58,10 +58,11 @@ class DefaultRepositoryCollector {
             Type[] generics = getTypes(aggregateClass);
             TypeLiteral<?> genericInterface = TypeLiteral.get(newParameterizedType(Repository.class, generics));
             allGenerics.put(generics, resolveDefaultQualifier(
-                    application,
+                    application.getConfiguration(aggregateClass),
                     DEFAULT_REPOSITORY_KEY,
                     aggregateClass,
-                    genericInterface)
+                    genericInterface
+                    ).orElse(null)
             );
         }
 
@@ -95,6 +96,7 @@ class DefaultRepositoryCollector {
 
     private <T extends Repository> BindingStrategy collectFromInterface(Class<T> repoInterface, Type[] generics) {
         DefaultRepositoryGenerator<T> defaultRepositoryGenerator = new DefaultRepositoryGenerator<>(repoInterface);
+        Class<?> aggregateClass = (Class<?>) generics[0];
         return new DefaultRepositoryStrategy<>(
                 repoInterface,
                 generics,
@@ -102,10 +104,11 @@ class DefaultRepositoryCollector {
                         .map(defaultRepositoryGenerator::generate)
                         .collect(Collectors.toList()),
                 resolveDefaultQualifier(
-                        application,
+                        application.getConfiguration(aggregateClass),
                         DEFAULT_REPOSITORY_KEY,
-                        (Class<?>) generics[0],
-                        TypeLiteral.get(repoInterface))
+                        aggregateClass,
+                        TypeLiteral.get(repoInterface)
+                ).orElse(null)
         );
     }
 

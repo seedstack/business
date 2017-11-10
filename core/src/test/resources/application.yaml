@@ -24,6 +24,7 @@ classes:
             TestAggregate3:
               defaultRepository:
           identity:
+            MyAggregateWithConfiguration:
               identityGenerator: simpleUUID
 
 org:

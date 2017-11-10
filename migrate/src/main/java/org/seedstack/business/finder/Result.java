@@ -45,10 +45,10 @@ public final class Result<I> {
      * @param result          the list of item
      * @param offset          the offset
      * @param fullRequestSize the number of item available
-     * @param <Item>          the item type
+     * @param <I>             the item type
      * @return the result range
      */
-    public static <Item> Result<Item> rangeResult(List<Item> result, long offset, long fullRequestSize) {
+    public static <I> Result<I> rangeResult(List<I> result, long offset, long fullRequestSize) {
         return new Result<>(result, offset, fullRequestSize);
     }
 
