@@ -11,9 +11,9 @@ package org.seedstack.business.domain;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import org.seedstack.business.internal.domain.IdentityResolver;
+import org.seedstack.shed.cache.Cache;
+import org.seedstack.shed.cache.CacheParameters;
 import org.seedstack.shed.reflect.Classes;
 import org.seedstack.shed.reflect.ReflectUtils;
 
@@ -30,10 +30,12 @@ import org.seedstack.shed.reflect.ReflectUtils;
  * @param <I> The type of the entity identifier.
  */
 public abstract class BaseEntity<I> implements Entity<I> {
-
-    // This unbounded cache of identity fields can only grow up to the number of entity classes in
-    // the system
-    private static final ConcurrentMap<Class<?>, Field> identityFields = new ConcurrentHashMap<>();
+    private static final Cache<Class<?>, Optional<Field>> identityFields = Cache.create(
+            new CacheParameters<Class<?>, Optional<Field>>()
+                    .setInitialSize(256)
+                    .setMaxSize(1024)
+                    .setLoadingFunction(BaseEntity::resolveIdentityField)
+    );
 
     /**
      * Returns the identifier of the entity if present. Starting from the current class and going up
@@ -46,19 +48,11 @@ public abstract class BaseEntity<I> implements Entity<I> {
      * @return the value of the identity field if found, null otherwise.
      */
     @Override
+    @SuppressWarnings("unchecked")
     public I getId() {
-        Field identityField = identityFields.computeIfAbsent(getClass(),
-                aClass -> IdentityResolver.INSTANCE.resolveField(aClass)
-                        .map(Optional::of)
-                        .orElseGet(() -> findIdentityByName(aClass))
-                        .map(ReflectUtils::makeAccessible)
-                        .orElse(null));
-
-        if (identityField != null) {
-            return ReflectUtils.getValue(identityField, this);
-        } else {
-            return null;
-        }
+        return identityFields.get(getClass())
+                .map(f -> (I) ReflectUtils.getValue(f, this))
+                .orElse(null);
     }
 
     @Override
@@ -91,12 +85,13 @@ public abstract class BaseEntity<I> implements Entity<I> {
         return String.format("%s[%s]", getClass().getSimpleName(), getId());
     }
 
-    private Optional<Field> findIdentityByName(Class<?> someClass) {
-        return Classes.from(someClass)
-                .traversingSuperclasses()
-                .fields()
-                .filter(field -> field.getName()
-                        .equals("id"))
-                .findFirst();
+    private static Optional<Field> resolveIdentityField(Class<?> entityClass) {
+        Optional<Field> field = IdentityResolver.INSTANCE.resolveField(entityClass);
+        if (!field.isPresent()) {
+            field = Classes.from(entityClass)
+                    .traversingSuperclasses()
+                    .field("id");
+        }
+        return field.map(ReflectUtils::makeAccessible);
     }
 }

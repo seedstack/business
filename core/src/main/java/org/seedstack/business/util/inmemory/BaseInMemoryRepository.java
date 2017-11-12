@@ -66,7 +66,7 @@ public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> exte
             } else if (option instanceof LimitOption) {
                 stream = stream.limit(((LimitOption) option).getLimit());
             } else if (option instanceof SortOption) {
-                throw new UnsupportedOperationException("Sorting is not supported by in-memory repository");
+                stream = stream.sorted();
             }
         }
         return stream;

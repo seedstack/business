@@ -18,9 +18,8 @@ package org.seedstack.business.domain;
  * events.</li> </ul> <p> Note that non-root entities are not produced by factories but should be
  * created by their aggregate root. </p>
  *
- * <p> Being responsible for creating valid aggregates, factories may need to create their identity.
- * This can be done from input parameters given to the factory or by using a generation mechanism.
- * This mechanism can be automated by the business framework, see below. </p>
+ * <p> Being responsible for creating valid aggregates, factories may need to create their identity. This can be done
+ * from input parameters given to the factory or by using an {@link IdentityGenerator}.</p>
  *
  * <p> Example: </p>
  * <pre>
@@ -39,7 +38,6 @@ package org.seedstack.business.domain;
  */
 @DomainFactory
 public interface Factory<P extends Producible> {
-
     /**
      * Returns the class produced by the factory.
      *
@@ -54,6 +52,7 @@ public interface Factory<P extends Producible> {
      * @param args the arguments for object creation.
      * @return an instance of the class produced by the factory.
      */
+    @Create
     default P create(Object... args) {
         throw new UnsupportedOperationException("Generic creation is not supported by this factory");
     }

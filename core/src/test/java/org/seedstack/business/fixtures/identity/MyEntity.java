@@ -12,14 +12,14 @@
 package org.seedstack.business.fixtures.identity;
 
 import java.util.UUID;
-import javax.inject.Named;
 import org.seedstack.business.domain.BaseEntity;
 import org.seedstack.business.domain.Identity;
-import org.seedstack.business.domain.UuidGenerator;
+import org.seedstack.business.util.UuidGenerator;
+import org.seedstack.business.util.random.Random;
 
 public class MyEntity extends BaseEntity<UUID> {
 
     @Identity(generator = UuidGenerator.class)
-    @Named("simpleUUID")
+    @Random
     private UUID id;
 }

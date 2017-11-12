@@ -25,17 +25,16 @@ classes:
               defaultRepository:
           identity:
             MyAggregateWithConfiguration:
-              defaultGenerator: simpleUUID
+              defaultGenerator: org.seedstack.business.util.random.Random
 
 org:
   seedstack:
     toto: toto
 
 jmh:
-  include: FluentAssemblerBenchmark
   mode: Throughput
   timeUnit: SECONDS
   warmup:
     iterations: 2
   measurement:
-    iterations: 2
+    iterations: 5

@@ -17,7 +17,6 @@ import org.seedstack.shed.reflect.AnnotationResolver;
 import org.seedstack.shed.reflect.Classes;
 
 public class IdentityResolver implements AnnotationResolver<Class<?>, Identity> {
-
     public static final IdentityResolver INSTANCE = new IdentityResolver();
 
     private IdentityResolver() {

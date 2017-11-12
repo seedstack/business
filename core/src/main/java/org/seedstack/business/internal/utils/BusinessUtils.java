@@ -72,7 +72,7 @@ public final class BusinessUtils {
         checkNotNull(aggregateRootClasses, "aggregateRootClasses should not be null");
         Class<?>[] result = new Class<?>[aggregateRootClasses.length];
         for (int i = 0; i < aggregateRootClasses.length; i++) {
-            result[i] = (Class<?>) resolveGenerics(AggregateRoot.class, aggregateRootClasses[i])[0];
+            result[i] = resolveGenerics(AggregateRoot.class, aggregateRootClasses[i])[0];
         }
         return result;
     }
@@ -94,10 +94,13 @@ public final class BusinessUtils {
      * Optionally returns the qualifier annotation of a class.
      */
     public static Optional<Annotation> getQualifier(AnnotatedElement annotatedElement) {
+        AnnotatedElement cleanedAnnotatedElement;
         if (annotatedElement instanceof Class<?>) {
-            annotatedElement = ProxyUtils.cleanProxy((Class<?>) annotatedElement);
+            cleanedAnnotatedElement = ProxyUtils.cleanProxy((Class<?>) annotatedElement);
+        } else {
+            cleanedAnnotatedElement = annotatedElement;
         }
-        return Annotations.on(annotatedElement)
+        return Annotations.on(cleanedAnnotatedElement)
                 .findAll()
                 .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false))
                 .findFirst();

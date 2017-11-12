@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
+import org.seedstack.shed.cache.Cache;
+import org.seedstack.shed.cache.CacheParameters;
 import org.seedstack.shed.reflect.Classes;
 
 /**
@@ -27,9 +27,14 @@ import org.seedstack.shed.reflect.Classes;
  * @param <V> the type of the attribute which is targeted by this specification.
  */
 public class AttributeSpecification<T, V> implements Specification<T> {
-
     private static final String ATTRIBUTE_PATH_PATTERN = "\\.";
-    private static final ConcurrentMap<FieldReference, Optional<Field>> fieldCache = new ConcurrentHashMap<>();
+    private static final Cache<FieldReference, Optional<Field>> fieldCache = Cache.create(
+            new CacheParameters<FieldReference, Optional<Field>>()
+                    .setInitialSize(256)
+                    .setMaxSize(1024)
+                    .setLoadingFunction(AttributeSpecification::resolveField)
+    );
+
     private final String path;
     private final String[] splitPath;
     private final Specification<V> valueSpecification;
@@ -73,7 +78,8 @@ public class AttributeSpecification<T, V> implements Specification<T> {
 
     private boolean isSatisfiedBy(Object candidate, int pathIndex) {
         if (candidate != null) {
-            Optional<Field> fieldOptional = findField(candidate.getClass(), splitPath[pathIndex]);
+            Optional<Field> fieldOptional = fieldCache
+                    .get(new FieldReference(candidate.getClass(), splitPath[pathIndex]));
             if (fieldOptional.isPresent()) {
                 Object result = getFieldValue(candidate, fieldOptional.get());
                 if (pathIndex < splitPath.length - 1) {
@@ -103,20 +109,6 @@ public class AttributeSpecification<T, V> implements Specification<T> {
         return path + " " + String.valueOf(valueSpecification);
     }
 
-    private Optional<Field> findField(Class<?> someClass, String fieldName) {
-        FieldReference fieldReference = new FieldReference(someClass, fieldName);
-        Optional<Field> field;
-        if ((field = fieldCache.get(fieldReference)) == null) {
-            fieldCache.put(fieldReference, field = Classes.from(someClass)
-                    .traversingSuperclasses()
-                    .fields()
-                    .filter(f -> f.getName()
-                            .equals(fieldName))
-                    .findFirst());
-        }
-        return field;
-    }
-
     private Object getFieldValue(Object candidate, Field field) {
         field.setAccessible(true);
         try {
@@ -134,8 +126,15 @@ public class AttributeSpecification<T, V> implements Specification<T> {
         return valueSpecification.isSatisfiedBy((V) result);
     }
 
-    private static class FieldReference {
+    private static Optional<Field> resolveField(FieldReference fieldReference) {
+        return Classes.from(fieldReference.someClass)
+                .traversingSuperclasses()
+                .fields()
+                .filter(f -> f.getName().equals(fieldReference.fieldName))
+                .findFirst();
+    }
 
+    private static class FieldReference {
         final Class<?> someClass;
         final String fieldName;
 

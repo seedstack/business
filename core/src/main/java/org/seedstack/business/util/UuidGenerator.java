@@ -6,13 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.seedstack.business.domain;
+package org.seedstack.business.util;
+
+import java.util.UUID;
+import org.seedstack.business.domain.IdentityGenerator;
 
 /**
- * Interface for generating ever-incrementing numbers to be used as identity of entities.
- *
- * @param <I> the type of generated numbers.
+ * Interface for generating UUID to be used as identity.
  */
-public interface SequenceGenerator<I extends Number> extends IdentityGenerator<I> {
+public interface UuidGenerator extends IdentityGenerator<UUID> {
 
 }

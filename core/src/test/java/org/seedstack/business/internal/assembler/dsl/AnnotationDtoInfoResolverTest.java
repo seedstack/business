@@ -20,7 +20,6 @@ import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.BaseValueObject;
 import org.seedstack.business.domain.DomainRegistry;
-import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.fixtures.assembler.annotated.Case1Dto;
 import org.seedstack.business.fixtures.assembler.annotated.Case2Dto;
 import org.seedstack.business.fixtures.assembler.annotated.Case3Dto;
@@ -28,7 +27,7 @@ import org.seedstack.business.fixtures.assembler.annotated.Case4Dto;
 import org.seedstack.business.fixtures.assembler.annotated.CaseFail1Dto;
 import org.seedstack.business.fixtures.assembler.annotated.CaseFail2Dto;
 import org.seedstack.business.fixtures.assembler.annotated.CaseFail3Dto;
-import org.seedstack.business.internal.assembler.dsl.AnnotationDtoInfoResolver;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.spi.DtoInfoResolver;
 
 public class AnnotationDtoInfoResolverTest {
@@ -137,11 +136,11 @@ public class AnnotationDtoInfoResolverTest {
         }
     }
 
-    private static class Case4DtoVOFactory extends BaseFactory<Case4DtoVO> {
+    static class Case4DtoVOFactory extends BaseFactory<Case4DtoVO> {
 
     }
 
-    private static class Case2DtoVOFactory extends BaseFactory<Case2DtoVO> {
+    static class Case2DtoVOFactory extends BaseFactory<Case2DtoVO> {
 
     }
 }

@@ -16,12 +16,10 @@ import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
-import com.google.inject.name.Names;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.inject.Named;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
@@ -42,8 +40,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class DomainModule extends AbstractModule {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainModule.class);
+    public static final String GET_PRODUCED_CLASS = "getProducedClass";
     private final Map<Key<?>, Class<?>> bindings;
     private final Collection<BindingStrategy> bindingStrategies;
     private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses;
@@ -77,11 +75,11 @@ class DomainModule extends AbstractModule {
         // Identity generation
         for (Class<? extends IdentityGenerator> identityGeneratorClass : identityGeneratorClasses) {
             bind(identityGeneratorClass);
-            Named named = identityGeneratorClass.getAnnotation(Named.class);
-            if (named != null) {
-                bind(findIdentityGeneratorInterface(identityGeneratorClass)).annotatedWith(Names.named(named.value()))
+            BusinessUtils.getQualifier(identityGeneratorClass).ifPresent(qualifier -> {
+                bind(findIdentityGeneratorInterface(identityGeneratorClass))
+                        .annotatedWith(qualifier)
                         .to(identityGeneratorClass);
-            }
+            });
         }
         bind(IdentityService.class).to(IdentityServiceImpl.class);
         IdentityInterceptor identityInterceptor = new IdentityInterceptor();
@@ -125,9 +123,10 @@ class DomainModule extends AbstractModule {
     }
 
     private Matcher<Method> factoryMethods() {
-        return new MethodMatcherBuilder(
-                ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class).and(
-                        CreateResolver.INSTANCE)).build();
+        return new MethodMatcherBuilder(ExecutablePredicates.<Method>executableBelongsToClassAssignableTo(Factory.class)
+                .and(m -> !m.getName().equals(GET_PRODUCED_CLASS))
+                .and(CreateResolver.INSTANCE)
+        ).build();
     }
 
     private static class EventHandlersByEventTypeLiteral extends TypeLiteral<Multimap<Class<? extends DomainEvent>,

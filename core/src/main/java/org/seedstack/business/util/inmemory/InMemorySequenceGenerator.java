@@ -10,14 +10,14 @@ package org.seedstack.business.util.inmemory;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.seedstack.business.domain.Entity;
-import org.seedstack.business.domain.SequenceGenerator;
+import org.seedstack.business.util.SequenceGenerator;
 
 /**
  * Identity generator that generates {@link Long} numbers by using an every-incrementing {@link
  * AtomicLong}.
  */
 @InMemory
-public class InMemorySequenceGenerator implements SequenceGenerator<Long> {
+public class InMemorySequenceGenerator implements SequenceGenerator {
     private static final AtomicLong sequence = new AtomicLong(1L);
 
     @Override

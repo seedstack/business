@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.domain.IdentityExistsException;
 import org.seedstack.business.domain.IdentityService;
 import org.seedstack.business.fixtures.identity.MyAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
@@ -39,16 +40,11 @@ public class IdentityServiceIT {
                 .isNotNull();
     }
 
-    @Test
+    @Test(expected = IdentityExistsException.class)
     public void allready_identify_entity() {
         MyAggregate myAggregate = new MyAggregate(UUID.randomUUID());
-        try {
-            identityService.identify(myAggregate);
-            Assertions.fail("no exception occured");
-        } catch (BusinessException e) {
-            Assertions.assertThat(e.getErrorCode())
-                    .isEqualTo(BusinessErrorCode.ENTITY_ALREADY_HAS_AN_IDENTITY);
-        }
+        identityService.identify(myAggregate);
+        Assertions.fail("no exception occured");
     }
 
     @Test
@@ -64,22 +60,16 @@ public class IdentityServiceIT {
         MyAggregateWithBadIdentityManagement myAggregate = new MyAggregateWithBadIdentityManagement();
         try {
             identityService.identify(myAggregate);
-            Assertions.fail("no exception occured");
+            Assertions.fail("no exception occurred");
         } catch (BusinessException e) {
             Assertions.assertThat(e.getErrorCode())
-                    .isEqualTo(BusinessErrorCode.IDENTITY_TYPE_CANNOT_BE_GENERATED);
+                    .isEqualTo(BusinessErrorCode.INCOMPATIBLE_IDENTITY_TYPES);
         }
     }
 
     @Test
     public void aggregate_with_no_identity_Management() {
         MyAggregateWithNoIdentityManagement myAggregate = new MyAggregateWithNoIdentityManagement();
-        try {
-            identityService.identify(myAggregate);
-            Assertions.fail("no exception occured");
-        } catch (BusinessException e) {
-            Assertions.assertThat(e.getErrorCode())
-                    .isEqualTo(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY);
-        }
+        identityService.identify(myAggregate);
     }
 }

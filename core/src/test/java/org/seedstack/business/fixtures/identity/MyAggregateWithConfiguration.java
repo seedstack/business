@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Identity;
-import org.seedstack.business.domain.UuidGenerator;
+import org.seedstack.business.util.UuidGenerator;
 
 public class MyAggregateWithConfiguration extends BaseAggregateRoot<UUID> {
 
