@@ -14,9 +14,11 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Qualifier;
 
 /**
- * Qualifier annotation that can be used at {@link org.seedstack.business.domain.Repository}
- * injection points to specify that the {@link DefaultInMemoryRepository} implementation should be
+ * Qualifier annotation that can be used at injection points to specify that an in-memory implementation should be
  * injected.
+ *
+ * @see InMemorySequenceGenerator
+ * @see DefaultInMemoryRepository
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

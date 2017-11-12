@@ -12,12 +12,12 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import javax.inject.Qualifier;
-import org.seedstack.business.util.inmemory.DefaultInMemoryRepository;
 
 /**
- * Qualifier annotation that can be used at {@link org.seedstack.business.domain.Repository}
- * injection points to specify that the {@link DefaultInMemoryRepository} implementation should be
- * injected.
+ * Qualifier annotation that can be used at injection points to specify that an implementation exhibiting a random
+ * behavior should be injected.
+ *
+ * @see RandomUuidGenerator
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
