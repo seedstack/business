@@ -68,6 +68,7 @@ public interface Repository<A extends AggregateRoot<I>, I> {
      * @param specification the specification aggregates must satisfy.
      * @param options       result options.
      * @return a stream of aggregates.
+     * @see Option
      */
     Stream<A> get(Specification<A> specification, Option... options);
 
@@ -216,10 +217,16 @@ public interface Repository<A extends AggregateRoot<I>, I> {
 
     /**
      * Access to the specification builder.
+     *
      * @return the specification builder.
      */
     SpecificationBuilder getSpecificationBuilder();
 
+    /**
+     * Marker interface for options that can be used to alter the results of some repository methods.
+     *
+     * @see #get(Specification, Option...)
+     */
     interface Option {
 
     }
