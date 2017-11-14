@@ -37,7 +37,7 @@ class SpecificationPickerImpl<T, S extends BaseSelector<T, S>> implements Specif
 
     @Override
     public OperatorPicker<T, S> satisfying(Specification<T> specification) {
-        context.addSpecification(specification);
+        context.addSpecification(processSpecification(specification));
         return new OperatorPickerImpl<>(context);
     }
 
