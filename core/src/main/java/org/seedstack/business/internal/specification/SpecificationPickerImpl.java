@@ -36,6 +36,12 @@ class SpecificationPickerImpl<T, S extends BaseSelector<T, S>> implements Specif
     }
 
     @Override
+    public OperatorPicker<T, S> satisfying(Specification<T> specification) {
+        context.addSpecification(specification);
+        return new OperatorPickerImpl<>(context);
+    }
+
+    @Override
     public StringOptionPicker<T, S> matching(String pattern) {
         StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
         context.addSpecification(processSpecification(new StringMatchingSpecification(pattern, stringValueOptions)));

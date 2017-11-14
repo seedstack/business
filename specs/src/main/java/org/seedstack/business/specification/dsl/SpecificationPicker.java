@@ -8,6 +8,8 @@
 
 package org.seedstack.business.specification.dsl;
 
+import org.seedstack.business.specification.Specification;
+
 /**
  * An element of the {@link SpecificationBuilder} DSL to pick the specification that will apply to
  * the current selection.
@@ -16,13 +18,21 @@ package org.seedstack.business.specification.dsl;
  * @param <S> the type of the selector.
  */
 public interface SpecificationPicker<T, S extends BaseSelector> {
-
     /**
      * Negates the specification that will be picked.
      *
      * @return the next operation of the builder DSL, allowing to pick the negated specification.
      */
     SpecificationPicker<T, S> not();
+
+    /**
+     * Picks a custom specification.
+     *
+     * @param specification the custom specification.
+     * @return the next operation of the builder DSL, allowing to combine this specification with
+     *         another one.
+     */
+    OperatorPicker<T, S> satisfying(Specification<T> specification);
 
     /**
      * Picks a {@link String}-specific matching specification that will be satisfied if the current
