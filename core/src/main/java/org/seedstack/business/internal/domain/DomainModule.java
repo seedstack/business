@@ -64,7 +64,7 @@ class DomainModule extends AbstractModule {
         for (Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue()
                     .getSimpleName());
-            bind(binding.getKey()).to(cast(binding.getValue()));
+            bind(binding.getKey()).to(Classes.cast(binding.getValue()));
         }
 
         // Binding strategies
@@ -75,11 +75,10 @@ class DomainModule extends AbstractModule {
         // Identity generation
         for (Class<? extends IdentityGenerator> identityGeneratorClass : identityGeneratorClasses) {
             bind(identityGeneratorClass);
-            BusinessUtils.getQualifier(identityGeneratorClass).ifPresent(qualifier -> {
-                bind(findIdentityGeneratorInterface(identityGeneratorClass))
-                        .annotatedWith(qualifier)
-                        .to(identityGeneratorClass);
-            });
+            BusinessUtils.getQualifier(identityGeneratorClass)
+                    .ifPresent(qualifier -> bind(findIdentityGeneratorInterface(identityGeneratorClass))
+                            .annotatedWith(qualifier)
+                            .to(identityGeneratorClass));
         }
         bind(IdentityService.class).to(IdentityServiceImpl.class);
         IdentityInterceptor identityInterceptor = new IdentityInterceptor();
@@ -96,11 +95,6 @@ class DomainModule extends AbstractModule {
         bind(new EventHandlersByEventTypeLiteral()).toInstance(eventHandlersByEvent);
         bind(DomainEventPublisher.class).to(DomainEventPublisherImpl.class)
                 .in(Scopes.SINGLETON);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T extends Class<?>> T cast(Class<?> someClass) {
-        return (T) someClass;
     }
 
     @SuppressWarnings("unchecked")

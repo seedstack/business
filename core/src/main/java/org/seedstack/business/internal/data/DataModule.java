@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Map;
 import org.seedstack.business.data.DataManager;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
+import org.seedstack.shed.reflect.Classes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ class DataModule extends AbstractModule {
         for (Map.Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue()
                     .getSimpleName());
-            bind(binding.getKey()).to(cast(binding.getValue()));
+            bind(binding.getKey()).to(Classes.cast(binding.getValue()));
         }
 
         // Bind strategies
@@ -53,11 +54,6 @@ class DataModule extends AbstractModule {
         // Bind internal maps
         bind(new ImporterMapTypeLiteral()).toInstance(importerDefs);
         bind(new ExporterMapTypeLiteral()).toInstance(exporterDefs);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T extends Class<?>> T cast(Class<?> someClass) {
-        return (T) someClass;
     }
 
     private static class ImporterMapTypeLiteral extends TypeLiteral<Map<String, Map<String,

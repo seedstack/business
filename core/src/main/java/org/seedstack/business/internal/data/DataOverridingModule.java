@@ -11,6 +11,7 @@ package org.seedstack.business.internal.data;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import java.util.Map;
+import org.seedstack.shed.reflect.Classes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,13 +29,7 @@ class DataOverridingModule extends AbstractModule {
         for (Map.Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue()
                     .getSimpleName());
-            bind(binding.getKey()).to(cast(binding.getValue()));
+            bind(binding.getKey()).to(Classes.cast(binding.getValue()));
         }
     }
-
-    @SuppressWarnings("unchecked")
-    private <T extends Class<?>> T cast(Class<?> someClass) {
-        return (T) someClass;
-    }
-
 }
