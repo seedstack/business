@@ -187,11 +187,13 @@ public interface Repository<A extends AggregateRoot<I>, I> {
      * Updates an existing aggregate with the specified instance.
      *
      * @param aggregate the aggregate to update.
+     * @return the update aggregate.
      * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
      */
-    default void update(A aggregate) throws AggregateNotFoundException {
+    default A update(A aggregate) throws AggregateNotFoundException {
         remove(aggregate);
         add(aggregate);
+        return aggregate;
     }
 
     /**

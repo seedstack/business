@@ -86,8 +86,8 @@ class LegacyRepositoryAdapter<A extends AggregateRoot<I>, I> implements LegacyRe
     }
 
     @Override
-    public void update(A aggregate) throws AggregateNotFoundException {
-        repository.update(aggregate);
+    public A update(A aggregate) throws AggregateNotFoundException {
+        return repository.update(aggregate);
     }
 
     @Override
