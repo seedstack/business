@@ -15,11 +15,15 @@ import static org.seedstack.shed.reflect.ReflectUtils.invoke;
 import com.google.inject.assistedinject.Assisted;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtNewConstructor;
+import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 import javassist.bytecode.AnnotationsAttribute;
 import javassist.bytecode.ClassFile;
@@ -35,7 +39,8 @@ import org.seedstack.shed.ClassLoaders;
 import org.seedstack.shed.reflect.Classes;
 
 class DefaultRepositoryGenerator<T extends Repository> {
-    private static final String GENERATED_PACKAGE_NAME = "org.seedstack.business.__generated.repository";
+    private static final String GENERATED_PACKAGE_NAME = "org.seedstack.__generated.business.repository";
+    private static final ConcurrentMap<String, AtomicInteger> counters = new ConcurrentHashMap<>();
     private final ClassPool classPool;
     private final Class<T> repositoryInterface;
     private final ClassLoader classLoader;
@@ -43,18 +48,23 @@ class DefaultRepositoryGenerator<T extends Repository> {
     DefaultRepositoryGenerator(Class<T> repositoryInterface) {
         this.repositoryInterface = repositoryInterface;
         this.classLoader = ClassLoaders.findMostCompleteClassLoader(DefaultRepositoryCollector.class);
-        this.classPool = new ClassPool(true);
+        this.classPool = new ClassPool(false);
+        this.classPool.appendClassPath(new LoaderClassPath(this.classLoader));
     }
 
     @SuppressWarnings("unchecked")
     Class<? extends T> generate(Class<? extends Repository> baseImpl) {
-        String className = getClassName(baseImpl);
-
         try {
-            return (Class<? extends T>) classLoader.loadClass(className);
+            return (Class<? extends T>) classLoader.loadClass(getClassName(
+                    baseImpl,
+                    getCounter(repositoryInterface).get()
+            ));
         } catch (ClassNotFoundException ignore) {
             try {
-                CtClass cc = createClass(baseImpl);
+                CtClass cc = createClass(
+                        getClassName(baseImpl, getCounter(repositoryInterface).incrementAndGet()),
+                        baseImpl
+                );
                 ClassFile cf = cc.getClassFile();
                 ConstPool constPool = cf.getConstPool();
 
@@ -90,23 +100,21 @@ class DefaultRepositoryGenerator<T extends Repository> {
         return attr;
     }
 
-    private CtClass createClass(
-            Class<? extends Repository> defaultRepositoryImplementation) throws NotFoundException,
+    private CtClass createClass(String className, Class<? extends Repository> baseClassName) throws NotFoundException,
             CannotCompileException {
-        CtClass cc = classPool.makeClass(
-                getClassName(defaultRepositoryImplementation),
-                classPool.getCtClass(defaultRepositoryImplementation.getName())
-        );
+        CtClass cc = classPool.makeClass(className, classPool.getCtClass(baseClassName.getName()));
         classPool.makePackage(classPool.getClassLoader(), GENERATED_PACKAGE_NAME);
         return cc;
     }
 
-    private String getClassName(Class<? extends Repository> defaultRepositoryImplementation) {
+    private String getClassName(Class<? extends Repository> defaultRepositoryImplementation, int generation) {
         return GENERATED_PACKAGE_NAME
                 + "."
                 + repositoryInterface.getSimpleName()
                 + "_"
-                + defaultRepositoryImplementation.getSimpleName();
+                + defaultRepositoryImplementation.getSimpleName()
+                + "_"
+                + generation;
     }
 
     private Annotation copyAnnotation(ConstPool constPool,
@@ -192,5 +200,9 @@ class DefaultRepositoryGenerator<T extends Repository> {
                 ParameterAnnotationsAttribute.visibleTag);
         attribute.setAnnotations(new Annotation[][]{{createAnnotation(constPool, Assisted.class)}});
         cc.getMethodInfo().addAttribute(attribute);
+    }
+
+    private static AtomicInteger getCounter(Class<?> repositoryInterface) {
+        return counters.computeIfAbsent(repositoryInterface.getName(), key -> new AtomicInteger());
     }
 }
