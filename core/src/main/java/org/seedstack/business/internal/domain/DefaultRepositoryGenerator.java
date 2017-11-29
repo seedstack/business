@@ -36,13 +36,14 @@ import org.seedstack.shed.reflect.Classes;
 
 class DefaultRepositoryGenerator<T extends Repository> {
     private static final String GENERATED_PACKAGE_NAME = "org.seedstack.business.__generated.repository";
-    private final ClassPool classPool = ClassPool.getDefault();
+    private final ClassPool classPool;
     private final Class<T> repositoryInterface;
     private final ClassLoader classLoader;
 
     DefaultRepositoryGenerator(Class<T> repositoryInterface) {
         this.repositoryInterface = repositoryInterface;
         this.classLoader = ClassLoaders.findMostCompleteClassLoader(DefaultRepositoryCollector.class);
+        this.classPool = new ClassPool(true);
     }
 
     @SuppressWarnings("unchecked")
