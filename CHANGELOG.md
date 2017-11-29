@@ -1,4 +1,4 @@
-# Version 4.0.0 (2016-07-??)
+# Version 4.0.0 (2017-11-29)
 
 * [new] A default implementation of `getId()` has been added in `BaseEntity` which searches for a field named "id" or annotated with `@Identity`. 
 * [new] DDD specifications have been added.
