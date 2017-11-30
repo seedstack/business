@@ -197,6 +197,24 @@ public interface Repository<A extends AggregateRoot<I>, I> {
     }
 
     /**
+     * Adds an aggregate to the repository or updates it if it already exists. This operation can be useful in some
+     * circumstances but operations with clearer semantics like {@link #add} and {@link #update(AggregateRoot)} should
+     * be preferred.
+     *
+     * @param aggregate the aggregate to update.
+     * @return the update aggregate.
+     * @throws AggregateNotFoundException if the repository doesn't contain the aggregate.
+     */
+    default A addOrUpdate(A aggregate) {
+        if (!contains(aggregate.getId())) {
+            add(aggregate);
+            return aggregate;
+        } else {
+            return update(aggregate);
+        }
+    }
+
+    /**
      * Removes all aggregates from the repository.
      */
     default void clear() {

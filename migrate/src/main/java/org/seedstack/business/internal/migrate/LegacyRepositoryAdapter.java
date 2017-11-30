@@ -91,6 +91,11 @@ class LegacyRepositoryAdapter<A extends AggregateRoot<I>, I> implements LegacyRe
     }
 
     @Override
+    public A addOrUpdate(A aggregate) {
+        return repository.addOrUpdate(aggregate);
+    }
+
+    @Override
     public void clear() {
         repository.clear();
     }
