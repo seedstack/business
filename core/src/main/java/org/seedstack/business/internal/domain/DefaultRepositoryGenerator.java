@@ -39,7 +39,7 @@ import org.seedstack.shed.ClassLoaders;
 import org.seedstack.shed.reflect.Classes;
 
 class DefaultRepositoryGenerator<T extends Repository> {
-    private static final String GENERATED_PACKAGE_NAME = "org.seedstack.__generated.business.repository";
+    private static final String GENERATED_PACKAGE_NAME = "org.seedstack.business.__generated.repository";
     private static final ConcurrentMap<String, AtomicInteger> counters = new ConcurrentHashMap<>();
     private final ClassPool classPool;
     private final Class<T> repositoryInterface;
@@ -55,41 +55,34 @@ class DefaultRepositoryGenerator<T extends Repository> {
     @SuppressWarnings("unchecked")
     Class<? extends T> generate(Class<? extends Repository> baseImpl) {
         try {
-            return (Class<? extends T>) classLoader.loadClass(getClassName(
-                    baseImpl,
-                    getCounter(repositoryInterface).get()
-            ));
-        } catch (ClassNotFoundException ignore) {
-            try {
-                CtClass cc = createClass(
-                        getClassName(baseImpl, getCounter(repositoryInterface).incrementAndGet()),
-                        baseImpl
-                );
-                ClassFile cf = cc.getClassFile();
-                ConstPool constPool = cf.getConstPool();
+            CtClass cc = createClass(
+                    getClassName(baseImpl, getCounter(repositoryInterface).incrementAndGet()),
+                    baseImpl
+            );
+            ClassFile cf = cc.getClassFile();
+            ConstPool constPool = cf.getConstPool();
 
-                cc.setModifiers(Modifier.PUBLIC);
+            cc.setModifiers(Modifier.PUBLIC);
 
-                cc.setInterfaces(new CtClass[]{classPool.getCtClass(repositoryInterface.getName())});
+            cc.setInterfaces(new CtClass[]{classPool.getCtClass(repositoryInterface.getName())});
 
-                if (hasGenericConstructor(baseImpl)) {
-                    cc.addConstructor(createConstructor(constPool, cc));
-                } else {
-                    cc.addConstructor(createDefaultConstructor(cc));
-                }
-
-                cf.addAttribute(createQualifierAttribute(constPool, getQualifier(baseImpl)
-                        .orElseThrow(() -> new NotFoundException("Qualifier annotation not found"))));
-
-                return cc.toClass(
-                        classLoader,
-                        DefaultRepositoryCollector.class.getProtectionDomain()
-                );
-            } catch (NoSuchMethodException | CannotCompileException | NotFoundException e) {
-                throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_DEFAULT_IMPLEMENTATION)
-                        .put("interface", repositoryInterface)
-                        .put("base", baseImpl);
+            if (hasGenericConstructor(baseImpl)) {
+                cc.addConstructor(createConstructor(constPool, cc));
+            } else {
+                cc.addConstructor(createDefaultConstructor(cc));
             }
+
+            cf.addAttribute(createQualifierAttribute(constPool, getQualifier(baseImpl)
+                    .orElseThrow(() -> new NotFoundException("Qualifier annotation not found"))));
+
+            return cc.toClass(
+                    classLoader,
+                    DefaultRepositoryCollector.class.getProtectionDomain()
+            );
+        } catch (NoSuchMethodException | CannotCompileException | NotFoundException e) {
+            throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_DEFAULT_IMPLEMENTATION)
+                    .put("interface", repositoryInterface)
+                    .put("base", baseImpl);
         }
     }
 
