@@ -1,3 +1,7 @@
+# Version 4.1.0 (2017-12-01)
+
+* [new] Add `business-migrate` module to help migration from 3.x based projects.
+
 # Version 4.0.0 (2017-11-29)
 
 * [new] A default implementation of `getId()` has been added in `BaseEntity` which searches for a field named "id" or annotated with `@Identity`. 
