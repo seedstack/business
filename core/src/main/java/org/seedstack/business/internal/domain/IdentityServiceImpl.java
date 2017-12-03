@@ -16,6 +16,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.inject.Inject;
@@ -111,6 +112,7 @@ class IdentityServiceImpl implements IdentityService {
                 key = BusinessUtils.getQualifier(identityField)
                         .map(qualifier -> Key.get(identityGeneratorClass, qualifier))
                         .orElseGet(() -> BusinessUtils.resolveDefaultQualifier(
+                                new HashMap<>(),
                                 classInfo.classConfigurationSupplier.get(),
                                 IDENTITY_GENERATOR_KEY,
                                 classInfo.entityClass,
@@ -154,11 +156,13 @@ class IdentityServiceImpl implements IdentityService {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             ClassInfo<?> classInfo = (ClassInfo<?>) o;
-
             return entityClass.equals(classInfo.entityClass);
         }
 

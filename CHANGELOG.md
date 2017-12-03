@@ -1,3 +1,7 @@
+# Version 4.1.1 (2017-12-01)
+
+* [chg] The class configuration `defaultRepository` and `defaultAssembler` are now real defaults and don't clash with code-based bindings anymore.
+
 # Version 4.1.0 (2017-12-01)
 
 * [new] Add `business-migrate` module to help migration from 3.x based projects.

@@ -17,6 +17,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -110,27 +111,35 @@ public final class BusinessUtils {
      * Returns the Guice key qualified with the default qualifier configured for the specified class.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Optional<Key<T>> resolveDefaultQualifier(ClassConfiguration<?> classConfiguration, String key,
-            Class<?> someClass, TypeLiteral<T> genericInterface) {
+    public static <T> Optional<Key<T>> resolveDefaultQualifier(Map<Key<?>, Class<?>> bindings,
+            ClassConfiguration<?> classConfiguration, String property, Class<?> qualifiedClass,
+            TypeLiteral<T> genericInterface) {
+        Key<T> key = null;
+
         if (classConfiguration != null && !classConfiguration.isEmpty()) {
-            String qualifierName = classConfiguration.get(key);
+            String qualifierName = classConfiguration.get(property);
             if (qualifierName != null && !"".equals(qualifierName)) {
                 try {
                     ClassLoader classLoader = ClassLoaders.findMostCompleteClassLoader(BusinessUtils.class);
                     Class<?> qualifierClass = classLoader.loadClass(qualifierName);
                     if (Annotation.class.isAssignableFrom(qualifierClass)) {
-                        return Optional.of(Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass));
+                        key = Key.get(genericInterface, (Class<? extends Annotation>) qualifierClass);
                     } else {
                         throw BusinessException.createNew(BusinessErrorCode.CLASS_IS_NOT_AN_ANNOTATION)
-                                .put("class", someClass)
+                                .put("class", qualifiedClass)
                                 .put("qualifier", qualifierName);
                     }
                 } catch (ClassNotFoundException e) {
-                    return Optional.of(Key.get(genericInterface, Names.named(qualifierName)));
+                    key = Key.get(genericInterface, Names.named(qualifierName));
                 }
             }
         }
-        return Optional.empty();
+
+        if (key == null || bindings.containsKey(Key.get(key.getTypeLiteral()))) {
+            return Optional.empty();
+        } else {
+            return Optional.of(key);
+        }
     }
 
     /**

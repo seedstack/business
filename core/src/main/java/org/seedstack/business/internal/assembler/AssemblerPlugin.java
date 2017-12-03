@@ -37,8 +37,8 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
     private final Collection<Class<? extends Assembler>> defaultAssemblerClasses = new HashSet<>();
     private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses = new ArrayList<>();
     private final Collection<Class<?>> dtoOfClasses = new HashSet<>();
-    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings = new HashMap<>();
-    private final Map<Key<Assembler>, Class<? extends Assembler>> overridingBindings = new HashMap<>();
+    private final Map<Key<?>, Class<?>> bindings = new HashMap<>();
+    private final Map<Key<?>, Class<?>> overridingBindings = new HashMap<>();
     private final Collection<BindingStrategy> bindingStrategies = new ArrayList<>();
 
     @Override
@@ -81,8 +81,9 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
         overridingBindings.putAll(associateInterfaceToImplementations(Assembler.class, assemblerClasses, true));
 
         // Then add bindings for default assemblers
-        bindingStrategies.addAll(new DefaultAssemblerCollector(defaultAssemblerClasses).collect(getApplication(),
-                dtoOfClasses));
+        bindingStrategies.addAll(new DefaultAssemblerCollector(getApplication(), bindings, defaultAssemblerClasses)
+                .collect(dtoOfClasses)
+        );
 
         return InitState.INITIALIZED;
     }

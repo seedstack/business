@@ -31,9 +31,14 @@ import org.seedstack.seed.core.internal.guice.GenericBindingStrategy;
  */
 class DefaultAssemblerCollector {
     private static final String DEFAULT_ASSEMBLER_KEY = "defaultAssembler";
+    private final Application application;
+    private final Map<Key<?>, Class<?>> bindings;
     private final Collection<Class<? extends Assembler>> defaultAssemblersClasses;
 
-    DefaultAssemblerCollector(Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
+    DefaultAssemblerCollector(Application application, Map<Key<?>, Class<?>> bindings,
+            Collection<Class<? extends Assembler>> defaultAssemblersClasses) {
+        this.application = application;
+        this.bindings = bindings;
         this.defaultAssemblersClasses = defaultAssemblersClasses;
     }
 
@@ -45,7 +50,7 @@ class DefaultAssemblerCollector {
      * @return collection of default assembler binding strategies
      * @}DtoOf.
      */
-    Collection<BindingStrategy> collect(Application application, Collection<Class<?>> dtoClasses) {
+    Collection<BindingStrategy> collect(Collection<Class<?>> dtoClasses) {
         // Contains pairs of aggregateClass/dtoClass
         Map<Type[], Key<?>> autoAssemblerGenerics = new HashMap<>();
         // Contains pairs of aggregateTuple/dtoClass
@@ -58,6 +63,7 @@ class DefaultAssemblerCollector {
                 if (dtoOf.value().length == 1) {
                     Type[] params = new Type[]{dtoOf.value()[0], dtoClass};
                     autoAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(
+                            bindings,
                             application.getConfiguration(dtoClass),
                             DEFAULT_ASSEMBLER_KEY,
                             dtoClass,
@@ -66,6 +72,7 @@ class DefaultAssemblerCollector {
                 } else if (dtoOf.value().length > 1) {
                     Type[] params = {Tuples.typeOfTuple(dtoOf.value()), dtoClass};
                     autoTupleAssemblerGenerics.put(params, BusinessUtils.resolveDefaultQualifier(
+                            bindings,
                             application.getConfiguration(dtoClass),
                             DEFAULT_ASSEMBLER_KEY,
                             dtoClass,

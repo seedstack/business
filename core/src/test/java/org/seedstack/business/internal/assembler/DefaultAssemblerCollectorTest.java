@@ -15,6 +15,7 @@ import com.google.inject.Key;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -32,21 +33,19 @@ import org.seedstack.seed.core.internal.guice.BindingStrategy;
 
 public class DefaultAssemblerCollectorTest {
     private DefaultAssemblerCollector underTest;
-    private Application application;
 
     @Before
     public void before() {
         List<Class<? extends Assembler>> defaultAssemblers = new ArrayList<>();
         defaultAssemblers.add(DefaultAssemblerFixture1.class);
         defaultAssemblers.add(DefaultAssemblerFixture2.class);
-        underTest = new DefaultAssemblerCollector(defaultAssemblers);
-        application = mock(Application.class);
+        underTest = new DefaultAssemblerCollector(mock(Application.class), new HashMap<>(), defaultAssemblers);
     }
 
     @Test
     public void testCollect() {
-        Collection<BindingStrategy> strategies = underTest.collect(application,
-                Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
+        Collection<BindingStrategy> strategies = underTest
+                .collect(Lists.newArrayList(Dto1.class, Dto2.class, Dto3.class));
         Assertions.assertThat(strategies)
                 .hasSize(2); // 2 default assembler implementation
         Map<Type[], Key<?>> typeVariables = Reflection.field("constructorParamsMap")
@@ -59,7 +58,7 @@ public class DefaultAssemblerCollectorTest {
 
     @Test
     public void testCollectIllegalArgument() {
-        Collection<BindingStrategy> strategies = underTest.collect(application, Lists.newArrayList(Dto4.class));
+        Collection<BindingStrategy> strategies = underTest.collect(Lists.newArrayList(Dto4.class));
         Assertions.assertThat(strategies)
                 .isNotNull();
         Assertions.assertThat(strategies)

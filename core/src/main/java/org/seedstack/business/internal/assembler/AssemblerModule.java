@@ -15,22 +15,22 @@ import com.google.inject.multibindings.Multibinder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.internal.assembler.dsl.FluentAssemblerImpl;
 import org.seedstack.business.spi.DtoInfoResolver;
 import org.seedstack.seed.core.internal.guice.BindingStrategy;
+import org.seedstack.shed.reflect.Classes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class AssemblerModule extends AbstractModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerModule.class);
-    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
+    private final Map<Key<?>, Class<?>> bindings;
     private final List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses;
     private final Collection<BindingStrategy> bindingStrategies;
 
-    AssemblerModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings,
+    AssemblerModule(Map<Key<?>, Class<?>> bindings,
             List<Class<? extends DtoInfoResolver>> dtoInfoResolverClasses,
             Collection<BindingStrategy> bindingStrategies) {
         this.bindings = bindings;
@@ -42,10 +42,10 @@ class AssemblerModule extends AbstractModule {
     protected void configure() {
         install(new AssemblerPrivateModule(dtoInfoResolverClasses));
 
-        for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
+        for (Map.Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Binding {} to {}", binding.getKey(), binding.getValue()
                     .getSimpleName());
-            bind(binding.getKey()).to(binding.getValue());
+            bind(binding.getKey()).to(Classes.cast(binding.getValue()));
         }
 
         // Bind strategies

@@ -13,6 +13,8 @@ classes:
   org:
     seedstack:
       business:
+        DefaultAssemblerIT$ConfiguredDto:
+          defaultAssembler: configured
         fixtures:
           data:
             defaultRepository: org.seedstack.business.util.inmemory.InMemory
@@ -20,9 +22,8 @@ classes:
             defaultRepository: DefaultRepo
             TestAggregate2:
               defaultRepository: org.seedstack.business.fixtures.repositories.MyQualifier
-            # TODO: improve bindings to bind default repositories only if no custom one exists
             TestAggregate3:
-              defaultRepository:
+              defaultRepository: org.seedstack.business.util.inmemory.InMemory
           identity:
             MyAggregateWithConfiguration:
               defaultGenerator: org.seedstack.business.util.random.Random

@@ -11,24 +11,24 @@ package org.seedstack.business.internal.assembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import java.util.Map;
-import org.seedstack.business.assembler.Assembler;
+import org.seedstack.shed.reflect.Classes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class AssemblerOverridingModule extends AbstractModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblerOverridingModule.class);
-    private final Map<Key<Assembler>, Class<? extends Assembler>> bindings;
+    private final Map<Key<?>, Class<?>> bindings;
 
-    AssemblerOverridingModule(Map<Key<Assembler>, Class<? extends Assembler>> bindings) {
+    AssemblerOverridingModule(Map<Key<?>, Class<?>> bindings) {
         this.bindings = bindings;
     }
 
     @Override
     protected void configure() {
-        for (Map.Entry<Key<Assembler>, Class<? extends Assembler>> binding : bindings.entrySet()) {
+        for (Map.Entry<Key<?>, Class<?>> binding : bindings.entrySet()) {
             LOGGER.trace("Overriding {} with {}", binding.getKey(), binding.getValue()
                     .getSimpleName());
-            bind(binding.getKey()).to(binding.getValue());
+            bind(binding.getKey()).to(Classes.cast(binding.getValue()));
         }
     }
 }

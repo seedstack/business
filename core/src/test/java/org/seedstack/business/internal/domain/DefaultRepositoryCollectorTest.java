@@ -66,6 +66,7 @@ public class DefaultRepositoryCollectorTest {
         when(application.getConfiguration(MyAgg.class)).thenReturn(
                 ClassConfiguration.of(MyAgg.class, "defaultRepository", "my-qualifier"));
         Key<?> key = BusinessUtils.resolveDefaultQualifier(
+                new HashMap<>(),
                 application.getConfiguration(MyAgg.class),
                 "defaultRepository",
                 MyAgg.class,
@@ -80,6 +81,7 @@ public class DefaultRepositoryCollectorTest {
                 ClassConfiguration.of(MyAgg.class, "defaultRepository",
                         "org.seedstack.business.fixtures.repositories.MyQualifier"));
         Key<?> key = BusinessUtils.resolveDefaultQualifier(
+                new HashMap<>(),
                 application.getConfiguration(MyAgg.class),
                 "defaultRepository",
                 MyAgg.class,

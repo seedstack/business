@@ -58,6 +58,7 @@ class DefaultRepositoryCollector {
             Type[] generics = getTypes(aggregateClass);
             TypeLiteral<?> genericInterface = TypeLiteral.get(newParameterizedType(Repository.class, generics));
             allGenerics.put(generics, resolveDefaultQualifier(
+                    bindings,
                     application.getConfiguration(aggregateClass),
                     DEFAULT_REPOSITORY_KEY,
                     aggregateClass,
@@ -104,6 +105,7 @@ class DefaultRepositoryCollector {
                         .map(defaultRepositoryGenerator::generate)
                         .collect(Collectors.toList()),
                 resolveDefaultQualifier(
+                        bindings,
                         application.getConfiguration(aggregateClass),
                         DEFAULT_REPOSITORY_KEY,
                         aggregateClass,

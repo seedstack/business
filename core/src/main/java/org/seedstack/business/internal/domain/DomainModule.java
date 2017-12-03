@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 
 class DomainModule extends AbstractModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainModule.class);
-    public static final String GET_PRODUCED_CLASS = "getProducedClass";
+    private static final String GET_PRODUCED_CLASS = "getProducedClass";
     private final Map<Key<?>, Class<?>> bindings;
     private final Collection<BindingStrategy> bindingStrategies;
     private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses;
