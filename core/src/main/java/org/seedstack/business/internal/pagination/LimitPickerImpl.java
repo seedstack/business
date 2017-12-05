@@ -8,23 +8,22 @@
 
 package org.seedstack.business.internal.pagination;
 
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.pagination.dsl.LimitPicker;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 
-class LimitPickerImpl<S extends Slice<A>, A extends AggregateRoot<I>, I> extends SpecificationPickerImpl<S, A, I>
-        implements LimitPicker<S, A, I> {
+class LimitPickerImpl<S extends Slice<T>, T> extends SpecificationPickerImpl<S, T>
+        implements LimitPicker<S, T> {
 
-    private final PaginatorContext<A, I> context;
+    private final AbstractPaginatorContext<T> context;
 
-    LimitPickerImpl(PaginatorContext<A, I> context, PaginationMode mode) {
+    LimitPickerImpl(AbstractPaginatorContext<T> context, PaginationMode mode) {
         super(context, mode);
         this.context = context;
     }
 
     @Override
-    public SpecificationPicker<S, A, I> limit(long limit) {
+    public SpecificationPicker<S, T> limit(long limit) {
         this.context.setLimit(limit);
         return this;
     }

@@ -17,7 +17,7 @@ import org.seedstack.business.domain.Repository;
  * @param <A> the aggregate root type that is paginated.
  * @param <I> the aggregate root identifier type.
  */
-public interface RepositoryOptionsPicker<A extends AggregateRoot<I>, I> extends PaginationTypePicker<A, I> {
+public interface RepositoryOptionsPicker<A extends AggregateRoot<I>, I> extends PaginationTypePicker<A> {
 
     /**
      * Allows to specify the repository options used when invoking the repository {@link
@@ -27,5 +27,5 @@ public interface RepositoryOptionsPicker<A extends AggregateRoot<I>, I> extends 
      * @param options the options to use.
      * @return the next operation of the paginator DSL, allowing to specify the pagination type.
      */
-    PaginationTypePicker<A, I> withOptions(Repository.Option... options);
+    PaginationTypePicker<A> withOptions(Repository.Option... options);
 }

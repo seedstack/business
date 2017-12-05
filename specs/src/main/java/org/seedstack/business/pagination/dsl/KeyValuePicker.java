@@ -8,37 +8,35 @@
 
 package org.seedstack.business.pagination.dsl;
 
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Slice;
 
 /**
  * An element of the {@link Paginator} DSL allowing to specify the value used as boundary in the
  * case of a key-based pagination.
  *
- * @param <A> the aggregate root type that is paginated.
- * @param <I> the aggregate root identifier type.
+ * @param <T> the type of the paginated object.
  */
-public interface KeyValuePicker<A extends AggregateRoot<I>, I> {
+public interface KeyValuePicker<T> {
 
     /**
      * Specify the value used as upper-boundary of the previously specified attribute. Objects having
      * an attribute value that is greater than or equal to specified value will be skipped.
      *
      * @param value the value used as upper-boundary.
-     * @param <T>   the type of the value.
+     * @param <C>   the type of the value.
      * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
      *         objects returned.
      */
-    <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, I> before(T value);
+    <C extends Comparable<? super C>> LimitPicker<Slice<T>, T> before(C value);
 
     /**
      * Specify the value used as lower-boundary of the previously specified attribute. Objects having
      * an attribute value that is less than or equal to specified value will be skipped.
      *
      * @param value the value used as lower-boundary.
-     * @param <T>   the type of the value.
+     * @param <C>   the type of the value.
      * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
      *         objects returned.
      */
-    <T extends Comparable<? super T>> LimitPicker<Slice<A>, A, I> after(T value);
+    <C extends Comparable<? super C>> LimitPicker<Slice<T>, T> after(C value);
 }

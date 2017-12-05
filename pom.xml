@@ -20,7 +20,7 @@
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
+    <version>4.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
@@ -28,7 +28,7 @@
         <seed.version>3.4.0</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
 
-        <compatibility.skip>true</compatibility.skip>
+        <compatibility.version>4.0.0</compatibility.version>
 
         <bintray.package>business</bintray.package>
     </properties>
@@ -77,6 +77,19 @@
                             <licenseMerge>MIT|MIT License</licenseMerge>
                             <licenseMerge>IGNORED_LICENSE|Eclipse Public License - v 1.0</licenseMerge>
                         </licenseMerges>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.siom79.japicmp</groupId>
+                    <artifactId>japicmp-maven-plugin</artifactId>
+                    <configuration>
+                        <parameter>
+                            <excludes>
+                                <exclude>*.internal.*</exclude>
+                                <!-- Methods were extracted to a super-interface -->
+                                <exclude>org.seedstack.business.pagination.dsl.PaginationTypePicker</exclude>
+                            </excludes>
+                        </parameter>
                     </configuration>
                 </plugin>
             </plugins>

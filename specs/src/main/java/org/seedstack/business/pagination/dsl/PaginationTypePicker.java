@@ -8,9 +8,6 @@
 
 package org.seedstack.business.pagination.dsl;
 
-import org.seedstack.business.domain.AggregateRoot;
-import org.seedstack.business.pagination.Slice;
-
 /**
  * An element of the {@link Paginator} DSL allowing to choose the pagination type. Three pagination
  * types are supported: <ul> <li>Offset-based which allows to skip a specified amount of
@@ -18,10 +15,9 @@ import org.seedstack.business.pagination.Slice;
  * skipped objects as a number of pages,</li> <li>Key-based which allows to select objects that come
  * after a specific value of a specific attribute.</li> </ul>
  *
- * @param <A> the aggregate root type that is paginated.
- * @param <I> the aggregate root identifier type.
+ * @param <T> the type of the paginated object.
  */
-public interface PaginationTypePicker<A extends AggregateRoot<I>, I> {
+public interface PaginationTypePicker<T> extends SlicePaginationPicker<T> {
 
     /**
      * Choose a page-based pagination type. Objects that come before the beginning of specified page
@@ -30,24 +26,6 @@ public interface PaginationTypePicker<A extends AggregateRoot<I>, I> {
      * @param pageIndex the index of the page containing objects that will be returned.
      * @return the next operation of the paginator DSL, allowing to specify page size.
      */
-    SizePicker<A, I> byPage(long pageIndex);
+    SizePicker<T> byPage(long pageIndex);
 
-    /**
-     * Choose an offset-based pagination type. Objects that come before the specified index will be
-     * skipped.
-     *
-     * @param startingOffset the index of first object that will be returned.
-     * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-     *         objects returned.
-     */
-    LimitPicker<Slice<A>, A, I> byOffset(long startingOffset);
-
-    /**
-     * Choose a key-based pagination type.
-     *
-     * @param attributeName the attribute on which the lessThan/greaterThan comparison will be made.
-     * @return the next operation of the paginator DSL, allowing to specify the value used as
-     *         boundary.
-     */
-    KeyValuePicker<A, I> byAttribute(String attributeName);
 }

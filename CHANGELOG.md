@@ -1,3 +1,7 @@
+# Version 4.2.0 (2017-12-05)
+
+* [new] Paginator can now paginate streams and iterables of arbitrary objects (not only aggregates through repositories).
+
 # Version 4.1.1 (2017-12-01)
 
 * [chg] The class configuration `defaultRepository` and `defaultAssembler` are now real defaults and don't clash with code-based bindings anymore.

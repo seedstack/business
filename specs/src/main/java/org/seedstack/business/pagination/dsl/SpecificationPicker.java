@@ -8,7 +8,6 @@
 
 package org.seedstack.business.pagination.dsl;
 
-import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.specification.Specification;
 
@@ -17,10 +16,9 @@ import org.seedstack.business.specification.Specification;
  * to retrieve objects from the repository.
  *
  * @param <S> the type of the slice.
- * @param <A> the aggregate root type that is paginated.
- * @param <I> the aggregate root identifier type.
+ * @param <T> the type of the paginated object.
  */
-public interface SpecificationPicker<S extends Slice<A>, A extends AggregateRoot<I>, I> {
+public interface SpecificationPicker<S extends Slice<T>, T> {
 
     /**
      * Restricts objects coming from the repository to ones matching the specification. This is a
@@ -29,7 +27,7 @@ public interface SpecificationPicker<S extends Slice<A>, A extends AggregateRoot
      * @param spec the specification that objects must match.
      * @return the {@link Slice} or {@link org.seedstack.business.pagination.Page}.
      */
-    S matching(Specification<A> spec);
+    S matching(Specification<T> spec);
 
     /**
      * Do not restrict objects coming from the repository. This is a terminal operation of the
