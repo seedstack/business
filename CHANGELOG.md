@@ -1,3 +1,7 @@
+# Version 4.2.1 (2018-01-30)
+
+* [new] Java 9 compatibility.
+
 # Version 4.2.0 (2017-12-05)
 
 * [new] Paginator can now paginate streams and iterables of arbitrary objects (not only aggregates through repositories).

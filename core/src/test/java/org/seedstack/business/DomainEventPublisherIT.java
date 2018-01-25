@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,17 +19,15 @@ import org.seedstack.business.fixtures.event.MyDomainEvent;
 import org.seedstack.business.fixtures.event.MyDomainEvent2;
 import org.seedstack.business.fixtures.event.cyclic.Event1;
 import org.seedstack.business.internal.BusinessException;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 /**
  * Tests fire event whether the handler throws an exception or not.
  */
 @RunWith(SeedITRunner.class)
 public class DomainEventPublisherIT {
-
     public static int countMyEvent = 0;
     public static int countGenericEvent = 0;
-
     @Inject
     private DomainEventPublisher domainEventPublisher;
 
@@ -50,7 +48,7 @@ public class DomainEventPublisherIT {
     }
 
     @Test
-    public void fireEventThenHandlerFailed() throws InterruptedException {
+    public void fireEventThenHandlerFailed() {
         try {
             domainEventPublisher.publish(new MyDomainEvent2());
             fail();

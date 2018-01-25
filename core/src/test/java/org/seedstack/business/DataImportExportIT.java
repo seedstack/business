@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,7 +33,7 @@ import org.seedstack.business.fixtures.data.SomeDto;
 import org.seedstack.business.internal.data.DefaultDataExporter;
 import org.seedstack.business.internal.data.DefaultDataImporter;
 import org.seedstack.business.specification.Specification;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @RunWith(SeedITRunner.class)
@@ -65,7 +65,7 @@ public class DataImportExportIT {
     private DataManager dataManager;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         someAggregateRepository.clear();
     }
 
@@ -82,7 +82,7 @@ public class DataImportExportIT {
     }
 
     @Test
-    public void defaultImporter() throws Exception {
+    public void defaultImporter() {
         SomeDto someDto = new SomeDto();
         someDto.setId("test1");
         defaultDataImporter.importData(Stream.of(someDto));
@@ -90,7 +90,7 @@ public class DataImportExportIT {
     }
 
     @Test
-    public void defaultExporter() throws Exception {
+    public void defaultExporter() {
         someAggregateRepository.add(createSomeAggregate("tlannister", "Tyrion", "LANNISTER", 37));
         SomeDto exportedDto = defaultDataExporter.exportData()
                 .collect(Collectors.toList())
@@ -114,7 +114,7 @@ public class DataImportExportIT {
     }
 
     @Test
-    public void dataImport() throws JSONException {
+    public void dataImport() {
         someAggregateRepository.add(createSomeAggregate("rbaratheon", "Robert", "BARATHEON", 55));
         dataManager.importData(new ByteArrayInputStream(IMPORTED.getBytes()));
         List<SomeAggregate> someAggregatesFromImporter = ((SomeCustomDtoImporter) dataImporter).getSomeAggregates();

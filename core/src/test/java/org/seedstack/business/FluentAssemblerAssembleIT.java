@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,16 +29,14 @@ import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
 import org.seedstack.business.specification.Specification;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 @RunWith(SeedITRunner.class)
 public class FluentAssemblerAssembleIT {
-
     private static final String ALEXANDRE_DUMAS = "Alexandre Dumas";
     private static final String THE_THREE_MUSKETEERS = "The Three Musketeers";
     private static final Date PUBLISH_DATE = new Date();
     private static final String THE_COUNT_OF_MONTE_CRISTO = "The Count of Monte Cristo";
-
     @Inject
     private FluentAssembler fluently;
     @Inject
@@ -47,12 +45,12 @@ public class FluentAssemblerAssembleIT {
     private OrderFactory orderFactory;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         orderRepository.clear();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         orderRepository.clear();
     }
 
@@ -122,7 +120,7 @@ public class FluentAssemblerAssembleIT {
     }
 
     @Test
-    public void assembleStreamFromRepositoryToDto() throws Exception {
+    public void assembleStreamFromRepositoryToDto() {
         Order order1 = orderFactory.create("1", "death star");
         Order order2 = orderFactory.create("2", "death star");
 

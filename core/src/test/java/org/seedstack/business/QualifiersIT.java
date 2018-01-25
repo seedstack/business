@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,11 +21,10 @@ import org.seedstack.business.fixtures.qualifier.domain.MyDomainService;
 import org.seedstack.business.fixtures.qualifier.domain.MyFactory;
 import org.seedstack.business.fixtures.qualifier.interfaces.MyInterfaceService;
 import org.seedstack.business.fixtures.qualifier.interfaces.Q1;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 @RunWith(SeedITRunner.class)
 public class QualifiersIT {
-
     @Inject
     @Named("1")
     MyApplicationService myApplicationService1;

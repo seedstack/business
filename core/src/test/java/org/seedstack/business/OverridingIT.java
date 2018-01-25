@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.BaseAssembler;
 import org.seedstack.business.domain.BaseAggregateRoot;
@@ -20,10 +21,10 @@ import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.util.inmemory.BaseInMemoryRepository;
-import org.seedstack.seed.it.AbstractSeedIT;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
-public class OverridingIT extends AbstractSeedIT {
-
+@RunWith(SeedITRunner.class)
+public class OverridingIT {
     @Inject
     private SomeRepository someRepository;
     @Inject
@@ -40,29 +41,29 @@ public class OverridingIT extends AbstractSeedIT {
     private Assembler<SomeAggregate, SomeCustomDto> someDtoAssembler;
 
     @Test
-    public void overrideRepository() throws Exception {
+    public void overrideRepository() {
         assertThat(someRepository).isInstanceOf(SomeTestRepository.class);
         assertThat(someAggregateRepository).isInstanceOf(SomeTestRepository.class);
     }
 
     @Test
-    public void overrideFactory() throws Exception {
+    public void overrideFactory() {
         assertThat(someAggregateFactory).isInstanceOf(SomeTestFactory.class);
         assertThat(someFactory).isInstanceOf(SomeTestFactory.class);
     }
 
     @Test
-    public void overrideService() throws Exception {
+    public void overrideService() {
         assertThat(someService).isInstanceOf(SomeTestService.class);
     }
 
     @Test
-    public void overridePolicy() throws Exception {
+    public void overridePolicy() {
         assertThat(somePolicy).isInstanceOf(SomeTestPolicy.class);
     }
 
     @Test
-    public void overrideAssembler() throws Exception {
+    public void overrideAssembler() {
         assertThat(someDtoAssembler).isInstanceOf(SomeTestAssembler.class);
     }
 

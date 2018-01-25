@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,7 +16,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
@@ -29,7 +28,6 @@ import org.seedstack.business.fixtures.assembler.customer.OrderFactoryInternal;
 import org.seedstack.business.spi.DtoInfoResolver;
 
 public class MergeSingleAggregateFromRepositoryImplTest {
-
     private MergeSingleAggregateFromRepositoryImpl<Order, String, OrderDto> underTest;
     private Order order;
     private Repository<Order, String> repository;
@@ -37,26 +35,24 @@ public class MergeSingleAggregateFromRepositoryImplTest {
     @SuppressWarnings("unchecked")
     @Before
     public void before() {
-        DtoInfoResolver dtoInfoResolver = new AnnotationDtoInfoResolver();
-        AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
-        DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
-        Context context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
-        order = new Order("1", "death star");
         repository = Mockito.mock(Repository.class);
+        order = new Order("1", "death star");
 
-        Mockito.when(domainRegistry.getRepository(Order.class, String.class))
-                .thenReturn(repository);
-        Mockito.when(domainRegistry.getFactory(Order.class))
-                .thenReturn(new OrderFactoryInternal());
-        Whitebox.setInternalState(dtoInfoResolver, "domainRegistry", domainRegistry);
-        Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class))
-                .thenReturn(new OrderDtoAssembler());
+        DomainRegistry domainRegistry = Mockito.mock(DomainRegistry.class);
+        Mockito.when(domainRegistry.getRepository(Order.class, String.class)).thenReturn(repository);
+        Mockito.when(domainRegistry.getFactory(Order.class)).thenReturn(new OrderFactoryInternal());
+
+        AssemblerRegistry assemblerRegistry = Mockito.mock(AssemblerRegistry.class);
+        Mockito.when(assemblerRegistry.getAssembler(Order.class, OrderDto.class)).thenReturn(new OrderDtoAssembler());
+
+        DtoInfoResolver dtoInfoResolver = new AnnotationDtoInfoResolver(domainRegistry);
+        Context context = new Context(domainRegistry, assemblerRegistry, Sets.newHashSet(dtoInfoResolver));
 
         underTest = new MergeSingleAggregateFromRepositoryImpl<>(context, new OrderDto("1", "lightsaber"), Order.class);
     }
 
     @Test
-    public void testFromFactory() throws Exception {
+    public void testFromFactory() {
         AggregateRoot<?> aggregateRoot = underTest.fromFactory();
 
         Assertions.assertThat(aggregateRoot)
@@ -96,8 +92,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
                 .thenReturn(Optional.empty());
 
         try {
-            underTest.fromRepository()
-                    .orFail();
+            underTest.fromRepository().orFail();
             fail();
         } catch (AggregateNotFoundException e) {
             Assertions.assertThat(e.getMessage())
@@ -107,7 +102,7 @@ public class MergeSingleAggregateFromRepositoryImplTest {
     }
 
     @Test
-    public void testOrFromFactory() throws Exception {
+    public void testOrFromFactory() {
         // Get it by the repository first
         Mockito.when(repository.get("1"))
                 .thenReturn(Optional.of(order));

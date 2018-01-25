@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,9 +20,9 @@ import com.google.inject.util.Types;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import mockit.Deencapsulation;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseAggregateRoot;
 import org.seedstack.business.domain.Repository;
@@ -54,10 +54,10 @@ public class DefaultRepositoryCollectorTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCollectSuperclasses() throws Exception {
+    public void testCollectSuperclasses() {
         Collection<BindingStrategy> bindingStrategies = underTest
                 .collectFromAggregates(Lists.newArrayList(MySubAgg1.class, MySubAgg2.class));
-        assertThat(((Map<?, ?>) Whitebox.getInternalState(bindingStrategies.iterator()
+        assertThat(((Map<?, ?>) Deencapsulation.getField(bindingStrategies.iterator()
                 .next(), "constructorParamsMap")).size()).isEqualTo(3);
     }
 

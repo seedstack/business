@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,13 +24,11 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 @RunWith(SeedITRunner.class)
 public class FluentAssemblerAggregateMergeIT {
-
     private static final int PRICE = 10000;
-
     @Inject
     private Repository<Order, String> orderRepository;
     @Inject
@@ -44,7 +42,7 @@ public class FluentAssemblerAggregateMergeIT {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         orderRepository.clear();
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,17 +15,17 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>3.1.1</version>
+        <version>3.2.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.4.0</seed.version>
+        <seed.version>3.5.0-SNAPSHOT</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
 
         <compatibility.version>4.0.0</compatibility.version>
@@ -88,6 +88,8 @@
                                 <exclude>*.internal.*</exclude>
                                 <!-- Methods were extracted to a super-interface -->
                                 <exclude>org.seedstack.business.pagination.dsl.PaginationTypePicker</exclude>
+                                <!-- Using constructor injection -->
+                                <exclude>org.seedstack.business.spi.BaseDtoInfoResolver</exclude>
                             </excludes>
                         </parameter>
                     </configuration>

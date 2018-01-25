@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,7 +24,7 @@ public class SpecificationsTest {
     private Team blueTeam;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         redTeam = new TeamWithLeader("RED", "Alice", 23, new Address(20, "Tulip street", "SinCity"));
         redTeam.addMember("Roger", 41, new Address(40, "Some street", "SomeCity"));
         redTeam.addMember("Cynthia", 34, new Address(45, "Some street", "SomeCity"));
@@ -36,20 +36,20 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testSimpleEquality() throws Exception {
+    public void testSimpleEquality() {
         Specification<Team> equalSpecification = new AttributeSpecification<>("name", new EqualSpecification<>("RED"));
         assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
         assertThat(equalSpecification.isSatisfiedBy(blueTeam)).isFalse();
     }
 
     @Test
-    public void testNullCandidate() throws Exception {
+    public void testNullCandidate() {
         Specification<Team> equalSpecification = new AttributeSpecification<>("name", new EqualSpecification<>("RED"));
         assertThat(equalSpecification.isSatisfiedBy(null)).isFalse();
     }
 
     @Test
-    public void testNestedEquality() throws Exception {
+    public void testNestedEquality() {
         Specification<Team> equalSpecification = new AttributeSpecification<>("leader.name",
                 new EqualSpecification<>("Alice"));
         assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
@@ -57,7 +57,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testNestedArrayEquality() throws Exception {
+    public void testNestedArrayEquality() {
         Specification<Team> equalSpecification = new AttributeSpecification<>("vips.address.city",
                 new EqualSpecification<>("OtherCity"));
         assertThat(equalSpecification.isSatisfiedBy(redTeam)).isFalse();
@@ -65,7 +65,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testNestedCollectionEquality() throws Exception {
+    public void testNestedCollectionEquality() {
         Specification<Team> equalSpecification = new AttributeSpecification<>("members.address.city",
                 new EqualSpecification<>("SomeCity"));
         assertThat(equalSpecification.isSatisfiedBy(redTeam)).isTrue();
@@ -73,7 +73,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testEqualityAsPredicate() throws Exception {
+    public void testEqualityAsPredicate() {
         Specification<Team> equalSpecification = new AttributeSpecification<Team, String>("leader.name",
                 new EqualSpecification<>("Alice")).and(
                 new AttributeSpecification<Team, String>("members.address.street",
@@ -84,7 +84,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testGreaterThan() throws Exception {
+    public void testGreaterThan() {
         assertThat(Stream.of(redTeam, blueTeam)
                 .filter(new AttributeSpecification<>("members.address.number",
                         new GreaterThanSpecification<>(60)).asPredicate())
@@ -96,7 +96,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testGreaterThanOrEqual() throws Exception {
+    public void testGreaterThanOrEqual() {
         assertThat(Stream.of(redTeam, blueTeam)
                 .filter(new AttributeSpecification<>("members.address.number", new GreaterThanSpecification<>(60)).or(
                         new AttributeSpecification<>("members.address.number", new EqualSpecification<>(60)))
@@ -110,7 +110,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testLessThan() throws Exception {
+    public void testLessThan() {
         assertThat(Stream.of(redTeam, blueTeam)
                 .filter(new AttributeSpecification<>("members.address.number",
                         new LessThanSpecification<>(40)).asPredicate())
@@ -122,7 +122,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testLessThanOrEqual() throws Exception {
+    public void testLessThanOrEqual() {
         assertThat(Stream.of(redTeam, blueTeam)
                 .filter(new AttributeSpecification<>("members.address.number", new LessThanSpecification<>(39)).or(
                         new AttributeSpecification<>("members.address.number", new EqualSpecification<>(39)))
@@ -136,7 +136,7 @@ public class SpecificationsTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         Specification<Team> spec = new AttributeSpecification<Team, Integer>("members.address.number",
                 new LessThanSpecification<>(40)).and(new AttributeSpecification<Team, Integer>("members.address.number",
                 new GreaterThanSpecification<>(20)).or(

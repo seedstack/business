@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9,14 +9,13 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import static junit.framework.TestCase.fail;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.seedstack.business.domain.BaseFactory;
 import org.seedstack.business.domain.BaseValueObject;
 import org.seedstack.business.domain.DomainRegistry;
@@ -45,8 +44,7 @@ public class AnnotationDtoInfoResolverTest {
     @Before
     public void setup() {
         domainRegistry = mock(DomainRegistry.class);
-        underTest = new AnnotationDtoInfoResolver();
-        Whitebox.setInternalState(underTest, "domainRegistry", domainRegistry);
+        underTest = new AnnotationDtoInfoResolver(domainRegistry);
 
         caseFail1Dto = new CaseFail1Dto(firstName, lastName);
         caseFail2Dto = new CaseFail2Dto(firstName, lastName);

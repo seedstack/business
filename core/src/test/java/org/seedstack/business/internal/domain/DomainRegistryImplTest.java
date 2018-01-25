@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,9 +19,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import mockit.Deencapsulation;
+import mockit.Expectations;
 import mockit.Mocked;
-import mockit.StrictExpectations;
+import mockit.integration.junit4.JMockit;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainPolicy;
@@ -33,8 +35,8 @@ import org.seedstack.business.internal.BusinessException;
 /**
  * Unit test for {@link DomainRegistryImpl}
  */
+@RunWith(JMockit.class)
 public class DomainRegistryImplTest {
-
     @Mocked
     private Injector injector;
 
@@ -54,7 +56,7 @@ public class DomainRegistryImplTest {
     public void testGetRepositoryTypeOf(final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
                 result = repository1;
@@ -72,7 +74,7 @@ public class DomainRegistryImplTest {
             final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
                 result = repository1;
@@ -89,7 +91,7 @@ public class DomainRegistryImplTest {
     public void testGetRepositoryTypeOfOfTString(final @Mocked Repository<AggregateRoot<Long>, Long> repository1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
                 result = repository1;
@@ -107,7 +109,7 @@ public class DomainRegistryImplTest {
             final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
                 result = repository;
@@ -124,7 +126,7 @@ public class DomainRegistryImplTest {
             final @Mocked Repository<AggregateRoot<Long>, Long> repository) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Repository<AggregateRoot<Long>, Long>>) any);
                 result = repository;
@@ -140,7 +142,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryTypeOfOfT(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory1;
@@ -157,7 +159,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryTypeOfOfTClassOfQextendsAnnotation(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory1;
@@ -174,7 +176,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryTypeOfOfTString(final @Mocked Factory<?> factory1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory1;
@@ -191,7 +193,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryClassOfT(final @Mocked Factory<?> factory) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory;
@@ -206,7 +208,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryClassOfTClassOfQextendsAnnotation(final @Mocked Factory<?> factory) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory;
@@ -221,7 +223,7 @@ public class DomainRegistryImplTest {
     public void testGetFactoryClassOfTString(final @Mocked Factory<?> factory) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<Factory<AggregateRoot<Long>>>) any);
                 result = factory;
@@ -236,7 +238,7 @@ public class DomainRegistryImplTest {
     public void testGetServiceTypeOfOfT(final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
                 result = service1;
@@ -254,7 +256,7 @@ public class DomainRegistryImplTest {
             final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
                 result = service1;
@@ -271,7 +273,7 @@ public class DomainRegistryImplTest {
     public void testGetServiceTypeOfOfTString(final @Mocked MockedServiceParameterized<Long> service1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedServiceParameterized<Long>>) any);
                 result = service1;
@@ -288,7 +290,7 @@ public class DomainRegistryImplTest {
     public void testGetServiceClassOfT(final @Mocked MockedService service) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedService>) any);
                 result = service;
@@ -310,7 +312,7 @@ public class DomainRegistryImplTest {
     public void testGetServiceClassOfTClassOfQextendsAnnotation(final @Mocked MockedService service) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedService>) any);
                 result = service;
@@ -325,7 +327,7 @@ public class DomainRegistryImplTest {
     public void testGetServiceClassOfTString(final @Mocked MockedService service) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedService>) any);
                 result = service;
@@ -340,7 +342,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyClassOfT(final @Mocked MockedPolicy policy) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicy>) any);
                 result = policy;
@@ -355,7 +357,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyClassOfTClassOfQextendsAnnotation(final @Mocked MockedPolicy policy) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicy>) any);
                 result = policy;
@@ -370,7 +372,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyClassOfTString(final @Mocked MockedPolicy policy) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicy>) any);
                 result = policy;
@@ -392,7 +394,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyTypeOfOfT(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
                 result = policy1;
@@ -409,7 +411,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyTypeOfOfTClassOfQextendsAnnotation(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
                 result = policy1;
@@ -426,7 +428,7 @@ public class DomainRegistryImplTest {
     public void testGetPolicyTypeOfOfTString(final @Mocked MockedPolicyParameterized<Long> policy1) {
         DomainRegistry domainRegistry = createDomainRegistry();
 
-        new StrictExpectations() {
+        new Expectations() {
             {
                 injector.getInstance((Key<MockedPolicyParameterized<Long>>) any);
                 result = policy1;

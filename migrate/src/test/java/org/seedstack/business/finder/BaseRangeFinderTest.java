@@ -1,10 +1,11 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.finder;
 
 import com.google.common.collect.Lists;
@@ -16,7 +17,7 @@ import org.seedstack.seed.Ignore;
 
 public class BaseRangeFinderTest {
     @Test
-    public void testFind() throws Exception {
+    public void testFind() {
         MyRangeFinder myRangeFinder = new MyRangeFinder();
         Result<String> result = myRangeFinder.find(new Range(0, 2), "o");
         Assertions.assertThat(result.getResult()).hasSize(2);
@@ -24,7 +25,7 @@ public class BaseRangeFinderTest {
     }
 
     @Test
-    public void testFindWithOffset() throws Exception {
+    public void testFindWithOffset() {
         MyRangeFinder myRangeFinder = new MyRangeFinder();
         Result<String> result = myRangeFinder.find(new Range(1, 2), "o");
         Assertions.assertThat(result.getResult()).hasSize(2);

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -35,7 +35,7 @@ public class SpecificationBuilderTest {
     private Team greenTeam;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         specificationBuilder = new SpecificationBuilderImpl();
 
         redTeam = new TeamWithLeader("RED", "Alice", 23, new Address(20, "Tulip street", "SinCity"));
@@ -49,7 +49,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void testBetween() throws Exception {
+    public void testBetween() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.age")
                 .between(20, 40)
@@ -60,7 +60,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void testStringOptions() throws Exception {
+    public void testStringOptions() {
         Specification<Team> specEqual = specificationBuilder.of(Team.class)
                 .property("leader.name")
                 .equalTo("ALICE")
@@ -82,7 +82,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.name")
                 .not()
@@ -108,7 +108,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void testIdentity() throws Exception {
+    public void testIdentity() {
         Specification<Team> spec = specificationBuilder.ofAggregate(Team.class)
                 .identity()
                 .is("BLUE")
@@ -122,7 +122,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildTrueSpecification() throws Exception {
+    public void buildTrueSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .all()
                 .build();
@@ -131,7 +131,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildFalseSpecification() throws Exception {
+    public void buildFalseSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .none()
                 .build();
@@ -140,7 +140,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildUnitarySpecification() throws Exception {
+    public void buildUnitarySpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.name")
                 .equalTo("ALICE")
@@ -151,7 +151,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildBinaryAndSpecification() throws Exception {
+    public void buildBinaryAndSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.name")
                 .not()
@@ -166,7 +166,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void buildBinaryOrSpecification() throws Exception {
+    public void buildBinaryOrSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .property("leader.name")
                 .equalTo("ALICE")
@@ -182,7 +182,7 @@ public class SpecificationBuilderTest {
     }
 
     @Test
-    public void testWhole() throws Exception {
+    public void testWhole() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
                 .whole()
                 .equalTo(new Team("BLUE"))

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,8 +13,7 @@ import com.google.inject.Injector;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventPublisher;
@@ -24,22 +23,15 @@ import org.seedstack.business.fixtures.event.SomeDomainEvent;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DomainDomainEventPublisherImplTest {
-
     private DomainEventPublisher underTest;
     @Mock
     private Injector injector;
-    @Mock
-    private MyDomainEventHandler myEventHandler;
 
     @Test
     public void fire_event() {
         ArrayListMultimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> multiMap =
                 ArrayListMultimap.create();
         multiMap.put(SomeDomainEvent.class, MyDomainEventHandler.class);
-
-        // provide an handler of MyEvent
-        Mockito.when(injector.getInstance(MyDomainEventHandler.class))
-                .thenReturn(myEventHandler);
 
         underTest = new DomainEventPublisherImpl(injector, multiMap);
         underTest.publish(new MyDomainEvent());

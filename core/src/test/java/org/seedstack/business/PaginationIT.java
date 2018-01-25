@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Stream;
 import javax.inject.Inject;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +29,7 @@ import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.pagination.dsl.Paginator;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.dsl.SpecificationBuilder;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 @RunWith(SeedITRunner.class)
 public class PaginationIT {
@@ -82,7 +81,7 @@ public class PaginationIT {
     }
 
     @Test
-    public void testPageAssembler() throws Exception {
+    public void testPageAssembler() {
         Page<OrderDto> dtoPage = fluentAssembler.assemble(paginator.paginate(orderRepository)
                 .byPage(2)
                 .ofSize(2)
@@ -99,7 +98,7 @@ public class PaginationIT {
     }
 
     @Test
-    public void testSliceAssembler() throws Exception {
+    public void testSliceAssembler() {
         Slice<OrderDto> dtoSlice = fluentAssembler.assemble(paginator.paginate(orderRepository)
                 .byOffset(2)
                 .all())
@@ -116,7 +115,7 @@ public class PaginationIT {
     }
 
     @Test
-    public void testPageWithoutSpec() throws Exception {
+    public void testPageWithoutSpec() {
         Page<Order> page = paginator.paginate(orderRepository)
                 .byPage(2)
                 .ofSize(2)
@@ -128,7 +127,7 @@ public class PaginationIT {
     }
 
     @Test
-    public void testOffsetWithSpec() throws Exception {
+    public void testOffsetWithSpec() {
         Slice<Order> slice = paginator.paginate(orderRepository)
                 .byOffset(2)
                 .matching(specFilterProduct);
@@ -137,7 +136,7 @@ public class PaginationIT {
     }
 
     @Test
-    public void testOffsetWithoutSpec() throws Exception {
+    public void testOffsetWithoutSpec() {
         Slice<Order> slice = paginator.paginate(orderRepository)
                 .byOffset(2)
                 .limit(2)
@@ -179,7 +178,9 @@ public class PaginationIT {
                     .after("3")
                     .all();
         } catch (Exception e) {
-            Assertions.assertThat(e).hasMessageContaining("java.lang.String cannot be cast to java.util.Date");
+            assertThat(e)
+                    .hasMessageContaining("String cannot be cast to")
+                    .hasMessageEndingWith("java.util.Date");
         }
     }
 

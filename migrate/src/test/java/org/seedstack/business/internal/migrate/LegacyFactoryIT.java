@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.seedstack.business.domain.Factory;
 import org.seedstack.business.domain.GenericFactory;
 import org.seedstack.business.fixtures.OtherAggregate;
@@ -19,9 +20,10 @@ import org.seedstack.business.fixtures.OtherAggregateFactory;
 import org.seedstack.business.fixtures.OtherAggregateFactoryImpl;
 import org.seedstack.business.fixtures.SomeAggregate;
 import org.seedstack.business.internal.domain.DefaultFactory;
-import org.seedstack.seed.it.AbstractSeedIT;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
-public class LegacyFactoryIT extends AbstractSeedIT {
+@RunWith(SeedITRunner.class)
+public class LegacyFactoryIT {
     @Inject
     private Factory<SomeAggregate> someAggregateFactory;
     @Inject
@@ -34,7 +36,7 @@ public class LegacyFactoryIT extends AbstractSeedIT {
     private GenericFactory<OtherAggregate> otherAggregateGenericFactory;
 
     @Test
-    public void factoriesAreInjected() throws Exception {
+    public void factoriesAreInjected() {
         assertThat(someAggregateFactory).isInstanceOf(DefaultFactory.class);
         assertThat(someAggregateGenericFactory).isInstanceOf(GenericFactoryAdapter.class);
 
@@ -44,7 +46,7 @@ public class LegacyFactoryIT extends AbstractSeedIT {
     }
 
     @Test
-    public void factoriesAreWorking() throws Exception {
+    public void factoriesAreWorking() {
         assertThat(someAggregateFactory.create(1L).getEntityId()).isEqualTo(1L);
         assertThat(someAggregateGenericFactory.create(1L).getEntityId()).isEqualTo(1L);
 

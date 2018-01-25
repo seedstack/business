@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,11 +29,10 @@ import org.seedstack.business.fixtures.repositories.TestAggregate4;
 import org.seedstack.business.fixtures.repositories.TestAggregate4Repository;
 import org.seedstack.business.util.inmemory.DefaultInMemoryRepository;
 import org.seedstack.business.util.inmemory.InMemory;
-import org.seedstack.seed.it.SeedITRunner;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 @RunWith(SeedITRunner.class)
 public class RepositoryIT {
-
     @Inject
     @Named("DefaultRepo")
     private Repository<TestAggregate, String> testRepo;
@@ -62,7 +61,7 @@ public class RepositoryIT {
     private TestAggregate4Repository testRepo7;
 
     @Test
-    public void testDefaultImplementations() throws Exception {
+    public void testDefaultImplementations() {
         assertThat(testRepo).isInstanceOf(DefaultRepoSample.class);
         assertThat(testRepo2).isInstanceOf(DefaultRepoSample2.class);
         assertThat(customerRepo).isInstanceOf(CustomerInMemoryRepository.class);
@@ -71,12 +70,12 @@ public class RepositoryIT {
     }
 
     @Test
-    public void testExplicitImplementations() throws Exception {
+    public void testExplicitImplementations() {
         assertThat(testRepo5).isInstanceOf(TestAggregate3RepositoryImpl.class);
     }
 
     @Test
-    public void testGeneratedImplementations() throws Exception {
+    public void testGeneratedImplementations() {
         assertThat(testRepo6).isInstanceOf(DefaultInMemoryRepository.class);
         testRepo6.add(new TestAggregate4("someValue"));
         assertThat(testRepo6.someMethod("someValue")).containsExactly(new TestAggregate4("someValue"));

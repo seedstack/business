@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 import javax.inject.Inject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.seedstack.business.fixtures.application.GenericService;
 import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.application.internal.GenericServiceInternal;
@@ -46,16 +47,16 @@ import org.seedstack.business.fixtures.standalone.StandaloneFactory;
 import org.seedstack.business.fixtures.standalone.StandaloneFactoryImpl;
 import org.seedstack.business.fixtures.standalone.StandaloneRepository;
 import org.seedstack.business.fixtures.standalone.StandaloneRepositoryImpl;
-import org.seedstack.seed.it.AbstractSeedIT;
-import org.seedstack.seed.it.ITBind;
+import org.seedstack.seed.Bind;
+import org.seedstack.seed.testing.junit4.SeedITRunner;
 
-public class BusinessIT extends AbstractSeedIT {
-
+@RunWith(SeedITRunner.class)
+public class BusinessIT {
     @Inject
     private Holder holder;
 
     @Test
-    public void standaloneBindings() throws Exception {
+    public void standaloneBindings() {
         assertThat(holder.standaloneFactory).isInstanceOf(StandaloneFactoryImpl.class);
         assertThat(holder.standaloneRepository).isInstanceOf(StandaloneRepositoryImpl.class);
     }
@@ -189,9 +190,8 @@ public class BusinessIT extends AbstractSeedIT {
         holder.activationRepository.add(activation);
     }
 
-    @ITBind
+    @Bind
     static class Holder {
-
         @Inject
         ActivationRepository activationRepository;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -79,7 +79,7 @@ public class BaseEntityTest {
     }
 
     @Test
-    public void inheritingEntityCanBeCompared() throws Exception {
+    public void inheritingEntityCanBeCompared() {
         TestEntity entity = new TestEntity(1L);
         InheritingTestEntity inheritingEntity = new InheritingTestEntity(1L);
         assertThat(entity.equals(inheritingEntity)).isTrue();
@@ -87,7 +87,7 @@ public class BaseEntityTest {
     }
 
     @Test
-    public void cannotBeComparedWithNonEntity() throws Exception {
+    public void cannotBeComparedWithNonEntity() {
         TestEntity entity = new TestEntity(1L);
         Object nonEntity = new Object();
         assertThat(entity.equals(nonEntity)).isFalse();

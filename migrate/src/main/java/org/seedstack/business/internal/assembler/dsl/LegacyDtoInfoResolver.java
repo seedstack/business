@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,9 +13,11 @@ import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import org.seedstack.business.assembler.MatchingEntityId;
 import org.seedstack.business.assembler.MatchingFactoryParameter;
 import org.seedstack.business.domain.AggregateRoot;
+import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.spi.BaseDtoInfoResolver;
@@ -45,6 +47,11 @@ class LegacyDtoInfoResolver extends BaseDtoInfoResolver {
                     .setMaxSize(1024)
                     .setLoadingFunction(LegacyDtoInfoResolver::resolveDtoInfo)
     );
+
+    @Inject
+    LegacyDtoInfoResolver(DomainRegistry domainRegistry) {
+        super(domainRegistry);
+    }
 
     @Override
     public <D> boolean supports(D dto) {

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2017, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,7 +10,6 @@ package org.seedstack.business.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,25 +67,6 @@ public class SortOption implements Repository.Option {
     public List<SortedAttribute> getSortedAttributes() {
         return Collections.unmodifiableList(sortedAttributes);
     }
-
-//    /**
-//     * Returns a comparator derived from the sort options.
-//     *
-//     * @param <T> the type of compared object.
-//     * @return the comparator.
-//     */
-//    public <T> Comparator<T> asComparator() {
-//        if (sortedAttributes.isEmpty()) {
-//            return (o1, o2) -> 0;
-//        } else if (sortedAttributes.size() == 1) {
-//            return buildComparator(sortedAttributes.get(0));
-//        } else {
-//            Comparator<T> comparator;
-//        }
-//    }
-//
-//    private <T> Comparator<T> buildComparator(SortedAttribute sortedAttribute) {
-//    }
 
     /**
      * Sort direction associated to a sorted attribute.
