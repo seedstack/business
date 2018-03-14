@@ -1,6 +1,8 @@
 # Version 4.2.1 (2018-01-30)
 
 * [new] Java 9 compatibility.
+* [chg] Make `SizePicker` (specialization for page-based pagination) extend `LimitPicker`.
+* [fix] `ComparableSpecification` and its descendant were not properly evaluating the comparison result.
 
 # Version 4.2.0 (2017-12-05)
 

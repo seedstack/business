@@ -22,7 +22,12 @@ public class LessThanSpecification<T extends Comparable<? super T>> extends Comp
      * @param expectedValue the value used to do the comparison against.
      */
     public LessThanSpecification(T expectedValue) {
-        super(expectedValue, -1);
+        super(expectedValue);
+    }
+
+    @Override
+    protected boolean isExpected(int compareToResult) {
+        return compareToResult < 0;
     }
 
     @Override

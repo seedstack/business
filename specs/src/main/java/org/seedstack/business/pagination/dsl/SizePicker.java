@@ -16,7 +16,7 @@ import org.seedstack.business.pagination.Page;
  *
  * @param <T> the type of the paginated object.
  */
-public interface SizePicker<T> {
+public interface SizePicker<T> extends LimitPicker<Page<T>, T> {
 
     /**
      * Specify the size of the page.
@@ -25,5 +25,7 @@ public interface SizePicker<T> {
      * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
      *         objects returned from the repository.
      */
-    SpecificationPicker<Page<T>, T> ofSize(long size);
+    default SpecificationPicker<Page<T>, T> ofSize(long size) {
+        return limit(size);
+    }
 }

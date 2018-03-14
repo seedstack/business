@@ -32,16 +32,13 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
 
     private final T expectedValue;
     private final Class<? extends Comparable> expectedValueClass;
-    private final int expectedResult;
 
     /**
      * Creates a comparable specification.
      *
-     * @param expectedValue  the value used to do the comparison against.
-     * @param expectedResult the expected result of the comparison done with {@link
-     *                       Comparable#compareTo(Object)}.
+     * @param expectedValue the value used to do the comparison against.
      */
-    protected ComparableSpecification(T expectedValue, int expectedResult) {
+    protected ComparableSpecification(T expectedValue) {
         checkNotNull(expectedValue, "Expected value cannot be null");
         Class<? extends Comparable> expectedValueClass = expectedValue.getClass();
         if (convertibleToLong.contains(expectedValueClass)) {
@@ -50,16 +47,15 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
             this.expectedValue = expectedValue;
         }
         this.expectedValueClass = this.expectedValue.getClass();
-        this.expectedResult = expectedResult;
     }
 
     @Override
     public boolean isSatisfiedBy(T candidate) {
         Class<? extends Comparable> candidateClass = candidate.getClass();
         if (!candidateClass.equals(expectedValueClass) && convertibleToLong.contains(candidateClass)) {
-            return asLong((Number) candidate).compareTo(expectedValue) == expectedResult;
+            return isExpected(asLong((Number) candidate).compareTo(expectedValue));
         } else {
-            return candidate.compareTo(expectedValue) == expectedResult;
+            return isExpected(candidate.compareTo(expectedValue));
         }
     }
 
@@ -73,13 +69,12 @@ public abstract class ComparableSpecification<T extends Comparable<? super T>> i
     }
 
     /**
-     * Returns the expected result of the comparison.
+     * Returns if the comparison result returned by {@link Comparable#compareTo(Object)} is the one expected.
      *
-     * @return the expected result of the comparison done with {@link Comparable#compareTo(Object)}.
+     * @param compareToResult the result returned by {@link Comparable#compareTo(Object)}
+     * @return true if the result is expected, false otherwise.
      */
-    public int getExpectedResult() {
-        return expectedResult;
-    }
+    protected abstract boolean isExpected(int compareToResult);
 
     @SuppressWarnings("unchecked")
     private T asLong(Number expectedValue) {

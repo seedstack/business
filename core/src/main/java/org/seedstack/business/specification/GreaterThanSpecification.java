@@ -22,7 +22,12 @@ public class GreaterThanSpecification<T extends Comparable<? super T>> extends C
      * @param expectedValue the value used to do the comparison against.
      */
     public GreaterThanSpecification(T expectedValue) {
-        super(expectedValue, 1);
+        super(expectedValue);
+    }
+
+    @Override
+    protected boolean isExpected(int compareToResult) {
+        return compareToResult > 0;
     }
 
     @Override

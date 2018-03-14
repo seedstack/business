@@ -90,6 +90,8 @@
                                 <exclude>org.seedstack.business.pagination.dsl.PaginationTypePicker</exclude>
                                 <!-- Using constructor injection -->
                                 <exclude>org.seedstack.business.spi.BaseDtoInfoResolver</exclude>
+                                <!-- Incorrect assumption about the comparison result -->
+                                <exclude>org.seedstack.business.specification.ComparableSpecification</exclude>
                             </excludes>
                         </parameter>
                     </configuration>

@@ -12,8 +12,7 @@ import org.seedstack.business.pagination.Page;
 import org.seedstack.business.pagination.dsl.SizePicker;
 import org.seedstack.business.pagination.dsl.SpecificationPicker;
 
-class SizePickerImpl<T> extends SpecificationPickerImpl<Page<T>, T> implements
-        SizePicker<T> {
+class SizePickerImpl<T> extends SpecificationPickerImpl<Page<T>, T> implements SizePicker<T> {
 
     private final AbstractPaginatorContext<T> context;
 
@@ -23,7 +22,7 @@ class SizePickerImpl<T> extends SpecificationPickerImpl<Page<T>, T> implements
     }
 
     @Override
-    public SpecificationPicker<Page<T>, T> ofSize(long size) {
+    public SpecificationPicker<Page<T>, T> limit(long size) {
         this.context.setLimit(size);
         return this;
     }
