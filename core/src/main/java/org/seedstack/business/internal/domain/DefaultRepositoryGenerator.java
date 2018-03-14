@@ -79,7 +79,7 @@ class DefaultRepositoryGenerator<T extends Repository> {
                     classLoader,
                     DefaultRepositoryCollector.class.getProtectionDomain()
             );
-        } catch (NoSuchMethodException | CannotCompileException | NotFoundException e) {
+        } catch (CannotCompileException | NotFoundException e) {
             throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_DEFAULT_IMPLEMENTATION)
                     .put("interface", repositoryInterface)
                     .put("base", baseImpl);
@@ -87,17 +87,14 @@ class DefaultRepositoryGenerator<T extends Repository> {
     }
 
     private AnnotationsAttribute createQualifierAttribute(ConstPool constPool,
-            java.lang.annotation.Annotation qualifier) throws NotFoundException, NoSuchMethodException {
+            java.lang.annotation.Annotation qualifier) throws NotFoundException {
         AnnotationsAttribute attr = new AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag);
         attr.setAnnotation(copyAnnotation(constPool, qualifier));
         return attr;
     }
 
-    private CtClass createClass(String className, Class<? extends Repository> baseClassName) throws NotFoundException,
-            CannotCompileException {
-        CtClass cc = classPool.makeClass(className, classPool.getCtClass(baseClassName.getName()));
-        classPool.makePackage(classPool.getClassLoader(), GENERATED_PACKAGE_NAME);
-        return cc;
+    private CtClass createClass(String className, Class<? extends Repository> baseClassName) throws NotFoundException {
+        return classPool.makeClass(className, classPool.getCtClass(baseClassName.getName()));
     }
 
     private String getClassName(Class<? extends Repository> defaultRepositoryImplementation, int generation) {
