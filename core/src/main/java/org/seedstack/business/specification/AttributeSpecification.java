@@ -8,16 +8,14 @@
 
 package org.seedstack.business.specification;
 
+import static org.seedstack.business.internal.utils.FieldUtils.getFieldValue;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import org.seedstack.business.internal.BusinessErrorCode;
-import org.seedstack.business.internal.BusinessException;
-import org.seedstack.shed.cache.Cache;
-import org.seedstack.shed.cache.CacheParameters;
-import org.seedstack.shed.reflect.Classes;
+import org.seedstack.business.internal.utils.FieldUtils;
 
 /**
  * A specification that restricts the application of another specification to an attribute of the
@@ -28,12 +26,6 @@ import org.seedstack.shed.reflect.Classes;
  */
 public class AttributeSpecification<T, V> implements Specification<T> {
     private static final String ATTRIBUTE_PATH_PATTERN = "\\.";
-    private static final Cache<FieldReference, Optional<Field>> fieldCache = Cache.create(
-            new CacheParameters<FieldReference, Optional<Field>>()
-                    .setInitialSize(256)
-                    .setMaxSize(1024)
-                    .setLoadingFunction(AttributeSpecification::resolveField)
-    );
 
     private final String path;
     private final String[] splitPath;
@@ -78,8 +70,7 @@ public class AttributeSpecification<T, V> implements Specification<T> {
 
     private boolean isSatisfiedBy(Object candidate, int pathIndex) {
         if (candidate != null) {
-            Optional<Field> fieldOptional = fieldCache
-                    .get(new FieldReference(candidate.getClass(), splitPath[pathIndex]));
+            Optional<Field> fieldOptional = FieldUtils.resolveField(candidate.getClass(), splitPath[pathIndex]);
             if (fieldOptional.isPresent()) {
                 Object result = getFieldValue(candidate, fieldOptional.get());
                 if (pathIndex < splitPath.length - 1) {
@@ -109,59 +100,8 @@ public class AttributeSpecification<T, V> implements Specification<T> {
         return path + " " + String.valueOf(valueSpecification);
     }
 
-    private Object getFieldValue(Object candidate, Field field) {
-        field.setAccessible(true);
-        try {
-            return field.get(candidate);
-        } catch (Exception e) {
-            throw BusinessException.wrap(e, BusinessErrorCode.ERROR_ACCESSING_FIELD)
-                    .put("className", candidate.getClass()
-                            .getName())
-                    .put("fieldName", field.getName());
-        }
-    }
-
     @SuppressWarnings("unchecked")
     private boolean isSatisfiedByValue(Object result) {
         return valueSpecification.isSatisfiedBy((V) result);
-    }
-
-    private static Optional<Field> resolveField(FieldReference fieldReference) {
-        return Classes.from(fieldReference.someClass)
-                .traversingSuperclasses()
-                .fields()
-                .filter(f -> f.getName().equals(fieldReference.fieldName))
-                .findFirst();
-    }
-
-    private static class FieldReference {
-        final Class<?> someClass;
-        final String fieldName;
-
-        public FieldReference(Class<?> someClass, String fieldName) {
-            this.someClass = someClass;
-            this.fieldName = fieldName;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            FieldReference that = (FieldReference) o;
-
-            return someClass.equals(that.someClass) && fieldName.equals(that.fieldName);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = someClass.hashCode();
-            result = 31 * result + fieldName.hashCode();
-            return result;
-        }
     }
 }

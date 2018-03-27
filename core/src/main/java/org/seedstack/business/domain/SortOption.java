@@ -8,15 +8,22 @@
 
 package org.seedstack.business.domain;
 
+import static org.seedstack.business.internal.utils.FieldUtils.resolveField;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
+import org.seedstack.business.internal.utils.FieldUtils;
 
 /**
  * {@link Repository} option for sorting aggregates.
  */
 public class SortOption implements Repository.Option {
+    private static final String ATTRIBUTE_PATH_PATTERN = "\\.";
     private final List<SortedAttribute> sortedAttributes = new ArrayList<>();
     private final Direction defaultDirection;
 
@@ -66,6 +73,65 @@ public class SortOption implements Repository.Option {
      */
     public List<SortedAttribute> getSortedAttributes() {
         return Collections.unmodifiableList(sortedAttributes);
+    }
+
+    /**
+     * Builds a comparator allowing the sorting of objects according to the sort criteria.
+     *
+     * @param <T> the type of the object to compare.
+     * @return the comparator.
+     */
+    public <T> Comparator<T> buildComparator() {
+        if (sortedAttributes.isEmpty()) {
+            return (o1, o2) -> 0;
+        } else {
+            Comparator<T> comparator = null;
+            for (SortedAttribute sortedAttribute : sortedAttributes) {
+                if (comparator == null) {
+                    comparator = buildComparator(sortedAttribute);
+                } else {
+                    comparator = comparator.thenComparing(buildComparator(sortedAttribute));
+                }
+            }
+            return comparator;
+        }
+    }
+
+    private <T> Comparator<T> buildComparator(SortedAttribute sortedAttribute) {
+        final String[] parts = sortedAttribute.getAttribute().split(ATTRIBUTE_PATH_PATTERN);
+        Comparator<T> comparator = (t1, t2) -> {
+            Object val1 = t1;
+            Object val2 = t2;
+            for (String part : parts) {
+                val1 = accessValue(val1, part);
+                val2 = accessValue(val2, part);
+            }
+            return ensureComparable(val1).compareTo(val2);
+        };
+        if (sortedAttribute.getDirection() == Direction.DESCENDING) {
+            return comparator.reversed();
+        } else {
+            return comparator;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> Comparable<T> ensureComparable(Object o) {
+        if (o instanceof Comparable) {
+            return (Comparable<T>) o;
+        } else {
+            throw BusinessException.createNew(BusinessErrorCode.VALUE_CANNOT_BE_COMPARED)
+                    .put("value", String.valueOf(o))
+                    .put("valueType", o.getClass());
+        }
+    }
+
+    private Object accessValue(Object o, String part) {
+        return resolveField(o.getClass(), part)
+                .map(f -> FieldUtils.getFieldValue(o, f))
+                .orElseThrow(() -> BusinessException.createNew(BusinessErrorCode.UNRESOLVED_FIELD)
+                        .put("className", o.getClass())
+                        .put("fieldName", part));
     }
 
     /**
