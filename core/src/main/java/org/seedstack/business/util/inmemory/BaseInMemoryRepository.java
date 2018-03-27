@@ -24,7 +24,7 @@ import org.seedstack.business.specification.Specification;
 /**
  * An helper base class that can be extended to create an in-memory implementation of a
  * {@link org.seedstack.business.domain.Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root
- * class.
+ * class. As such, insertion order is NOT guaranteed to be maintained through the repository lifecycle.
  */
 public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> extends BaseRepository<A, I> {
     private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
@@ -66,7 +66,7 @@ public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> exte
             } else if (option instanceof LimitOption) {
                 stream = stream.limit(((LimitOption) option).getLimit());
             } else if (option instanceof SortOption) {
-                stream = stream.sorted();
+                stream = stream.sorted(((SortOption) option).buildComparator());
             }
         }
         return stream;

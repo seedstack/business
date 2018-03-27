@@ -1,6 +1,7 @@
 # Version 4.2.1 (2018-01-30)
 
 * [new] Java 9 compatibility.
+* [new] Add sorting support to `BaseInMemoryRepository`.
 * [chg] Make `SizePicker` (specialization for page-based pagination) extend `LimitPicker`.
 * [fix] `ComparableSpecification` and its descendant were not properly evaluating the comparison result.
 
