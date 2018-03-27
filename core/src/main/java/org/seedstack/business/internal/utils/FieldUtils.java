@@ -17,10 +17,6 @@ import org.seedstack.shed.cache.CacheParameters;
 import org.seedstack.shed.reflect.Classes;
 
 public final class FieldUtils {
-    private FieldUtils() {
-        // no instantiation allowed
-    }
-
     private static final Cache<FieldReference, Optional<Field>> fieldCache = Cache.create(
             new CacheParameters<FieldReference, Optional<Field>>()
                     .setInitialSize(256)
@@ -31,6 +27,10 @@ public final class FieldUtils {
                             .filter(f -> f.getName().equals(fieldReference.fieldName))
                             .findFirst())
     );
+
+    private FieldUtils() {
+        // no instantiation allowed
+    }
 
     /**
      * Return the value contained in the specified field of the candidate object.
