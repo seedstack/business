@@ -9,6 +9,7 @@
 package org.seedstack.business;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,6 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seedstack.business.domain.AggregateExistsException;
 import org.seedstack.business.domain.IdentityService;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.domain.SortOption;
@@ -89,7 +91,7 @@ public class InMemoryIT {
                 .build())
         ).containsExactly(product1, product2, product3, product4, product5, product6);
     }
-
+    
     @Test
     public void testFalse() throws Exception {
         assertThat(repository.get(specificationBuilder.of(Product.class)
@@ -108,6 +110,15 @@ public class InMemoryIT {
                 .identity().isNot(3L)
                 .build())
         ).containsExactly(product1, product2, product4, product5, product6);
+    }
+
+    @Test(expected= AggregateExistsException.class)
+    public void testDuplicated() throws Exception{
+        repository.clear();
+        repository.add(product1);
+        repository.add(product1);
+        fail("Product1 has been added twice");
+        
     }
 
     @Test
