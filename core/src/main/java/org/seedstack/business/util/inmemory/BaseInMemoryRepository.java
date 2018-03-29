@@ -22,9 +22,11 @@ import org.seedstack.business.domain.SortOption;
 import org.seedstack.business.specification.Specification;
 
 /**
- * An helper base class that can be extended to create an in-memory implementation of a
- * {@link org.seedstack.business.domain.Repository}. It is backed by a {@link ConcurrentHashMap} per aggregate root
- * class. As such, insertion order is NOT guaranteed to be maintained through the repository lifecycle.
+ * An helper base class that can be extended to create an in-memory
+ * implementation of a {@link org.seedstack.business.domain.Repository}. It is
+ * backed by a {@link ConcurrentHashMap} per aggregate root class. As such,
+ * insertion order is NOT guaranteed to be maintained through the repository
+ * lifecycle.
  */
 public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> extends BaseRepository<A, I> {
     private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
@@ -33,18 +35,20 @@ public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> exte
             key -> new ConcurrentHashMap<I, A>());
 
     /**
-     * Creates a base in-memory repository. Actual classes managed by the repository are determined by
-     * reflection.
+     * Creates a base in-memory repository. Actual classes managed by the repository
+     * are determined by reflection.
      */
     protected BaseInMemoryRepository() {
     }
 
     /**
-     * Creates a base in-memory repository. Actual classes managed by the repository are specified
-     * explicitly.
+     * Creates a base in-memory repository. Actual classes managed by the repository
+     * are specified explicitly.
      *
-     * @param aggregateRootClass the actual aggregate root class.
-     * @param idClass            the actual aggregate identifier class.
+     * @param aggregateRootClass
+     *            the actual aggregate root class.
+     * @param idClass
+     *            the actual aggregate identifier class.
      */
     protected BaseInMemoryRepository(Class<A> aggregateRootClass, Class<I> idClass) {
         super(aggregateRootClass, idClass);
@@ -52,6 +56,9 @@ public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> exte
 
     @Override
     public void add(A a) throws AggregateExistsException {
+        if (bucket.containsKey(a.getId())) {
+            throw new AggregateExistsException("Value already exist on repository");
+        }
         bucket.put(a.getId(), a);
     }
 
