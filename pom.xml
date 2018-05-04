@@ -25,7 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.5.1-SNAPSHOT</seed.version>
+        <seed.version>3.5.1</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
 
         <compatibility.version>4.0.0</compatibility.version>

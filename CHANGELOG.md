@@ -1,4 +1,4 @@
-# Version 4.2.1 (2018-01-30)
+# Version 4.2.1 (2018-05-04)
 
 * [new] Java 9 compatibility.
 * [new] Add sorting support to `BaseInMemoryRepository`.
