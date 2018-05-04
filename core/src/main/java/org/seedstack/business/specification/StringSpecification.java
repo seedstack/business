@@ -34,13 +34,13 @@ public abstract class StringSpecification implements Specification<String> {
     public boolean isSatisfiedBy(String candidateValue) {
         String testValue = candidateValue;
         if (options.isTrimmed()) {
-            testValue = CharMatcher.WHITESPACE.trimFrom(testValue);
+            testValue = CharMatcher.whitespace().trimFrom(testValue);
         } else {
             if (options.isLeadTrimmed()) {
-                testValue = CharMatcher.WHITESPACE.trimLeadingFrom(testValue);
+                testValue = CharMatcher.whitespace().trimLeadingFrom(testValue);
             }
             if (options.isTailTrimmed()) {
-                testValue = CharMatcher.WHITESPACE.trimTrailingFrom(testValue);
+                testValue = CharMatcher.whitespace().trimTrailingFrom(testValue);
             }
         }
         return isSatisfiedByString(testValue);

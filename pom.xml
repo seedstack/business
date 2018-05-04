@@ -25,7 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.5.0</seed.version>
+        <seed.version>3.5.1-SNAPSHOT</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
 
         <compatibility.version>4.0.0</compatibility.version>
@@ -50,6 +50,7 @@
                             <includedLicense>Apache 2</includedLicense>
                             <includedLicense>BSD</includedLicense>
                             <includedLicense>CDDL</includedLicense>
+                            <includedLicense>GPL2 CPE</includedLicense>
                             <includedLicense>LGPL 2.1</includedLicense>
                             <includedLicense>LGPL 3.0</includedLicense>
                             <includedLicense>MIT</includedLicense>
@@ -68,13 +69,16 @@
                             <licenseMerge>Apache 2|Apache License 2.0</licenseMerge>
                             <licenseMerge>Apache 2|Apache License, version 2.0</licenseMerge>
                             <licenseMerge>Apache 2|Apache License Version 2.0</licenseMerge>
+                            <licenseMerge>Apache 2|Apache 2.0</licenseMerge>
                             <licenseMerge>BSD|The New BSD License</licenseMerge>
                             <licenseMerge>BSD|BSD License</licenseMerge>
                             <licenseMerge>CDDL|CDDL + GPLv2 with classpath exception</licenseMerge>
+                            <licenseMerge>GPL2 CPE|GNU General Public License, version 2 (GPL2), with the classpath exception</licenseMerge>
                             <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
                             <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                             <licenseMerge>MIT|MIT license</licenseMerge>
                             <licenseMerge>MIT|MIT License</licenseMerge>
+                            <licenseMerge>MIT|The MIT License</licenseMerge>
                             <licenseMerge>IGNORED_LICENSE|Eclipse Public License - v 1.0</licenseMerge>
                         </licenseMerges>
                     </configuration>
