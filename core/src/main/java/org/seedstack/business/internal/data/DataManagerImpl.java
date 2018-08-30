@@ -134,12 +134,11 @@ class DataManagerImpl implements DataManager {
 
     @Override
     public void importData(InputStream inputStream, String acceptGroup, String acceptName) {
-        try {
+        try (JsonParser jsonParser = this.jsonFactory.createParser(
+                    new InputStreamReader(inputStream, Charset.forName(UTF_8)))){
             ParsingState state = ParsingState.START;
             String group = null;
             String name = null;
-            JsonParser jsonParser = this.jsonFactory.createParser(
-                    new InputStreamReader(inputStream, Charset.forName(UTF_8)));
             JsonToken jsonToken = jsonParser.nextToken();
 
             while (jsonToken != null) {
@@ -318,9 +317,8 @@ class DataManagerImpl implements DataManager {
     }
 
     private void dumpAll(List<DataSetMarker<?>> dataSetMarker, OutputStream outputStream) {
-        try {
-            JsonGenerator jsonGenerator = this.jsonFactory.createGenerator(
-                    new OutputStreamWriter(outputStream, Charset.forName(UTF_8)));
+        try(JsonGenerator jsonGenerator = this.jsonFactory.createGenerator(
+                new OutputStreamWriter(outputStream, Charset.forName(UTF_8)))) {
             ObjectWriter objectWriter = objectMapper.writer();
 
             jsonGenerator.writeStartArray();
