@@ -1,3 +1,7 @@
+# Version 4.2.2 (2018-09-??)
+
+* [fix] Fix potential resource leak in `DataManagerImpl`.
+
 # Version 4.2.1 (2018-05-04)
 
 * [new] Java 9 compatibility.
