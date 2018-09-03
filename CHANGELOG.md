@@ -1,4 +1,4 @@
-# Version 4.2.2 (2018-09-??)
+# Version 4.2.2 (2018-09-03)
 
 * [fix] Fix potential resource leak in `DataManagerImpl`.
 
