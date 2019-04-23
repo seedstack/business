@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,17 +15,17 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.6</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>4.2.2-SNAPSHOT</version>
+    <version>4.2.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.5.1</seed.version>
+        <seed.version>3.8.2</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
 
         <compatibility.version>4.0.0</compatibility.version>

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -28,6 +28,15 @@ public class StringMatchingSpecification extends StringSpecification {
     public static final String SINGLE_CHARACTER_WILDCARD = "?";
     private volatile Pattern ignoringCasePattern;
     private volatile Pattern pattern;
+
+    /**
+     * Creates a string-matching specification.
+     *
+     * @param expectedString the string that the candidate is expected to match.
+     */
+    public StringMatchingSpecification(String expectedString) {
+        super(expectedString);
+    }
 
     /**
      * Creates a string-matching specification.

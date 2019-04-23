@@ -1,11 +1,10 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package org.seedstack.business.internal.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,9 +20,7 @@ import java.lang.annotation.Target;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.integration.junit4.JMockit;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.seedstack.business.Service;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainPolicy;
@@ -35,7 +32,6 @@ import org.seedstack.business.internal.BusinessException;
 /**
  * Unit test for {@link DomainRegistryImpl}
  */
-@RunWith(JMockit.class)
 public class DomainRegistryImplTest {
     @Mocked
     private Injector injector;

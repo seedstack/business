@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -133,6 +133,21 @@ public class SpecificationsTest {
                         new AttributeSpecification<>("members.address.number", new EqualSpecification<>(55)))
                         .asPredicate())
                 .collect(Collectors.toList())).containsExactly(redTeam, blueTeam);
+    }
+
+    @Test
+    public void testAnd() {
+        Team red2 = new Team("RED2");
+        Team red22 = new Team("RED22");
+        AttributeSpecification<Team, String> spec1 = new AttributeSpecification<>("name",
+                new StringMatchingSpecification("RED*"));
+        AttributeSpecification<Team, String> spec2 = new AttributeSpecification<>("name",
+                new StringMatchingSpecification("*2"));
+        AttributeSpecification<Team, String> spec3 = new AttributeSpecification<>("name",
+                new StringMatchingSpecification("*22"));
+        assertThat(Stream.of(redTeam, red2, red22)
+                .filter(spec1.and(spec2).and(spec3).asPredicate())
+                .collect(Collectors.toList())).containsExactly(red22);
     }
 
     @Test

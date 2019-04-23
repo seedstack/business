@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,6 +13,15 @@ package org.seedstack.business.specification;
  * strings are equal according to the given {@link StringSpecification.Options}.
  */
 public class StringEqualSpecification extends StringSpecification {
+
+    /**
+     * Creates a string-equality specification.
+     *
+     * @param expectedString the string to compare the candidate against.
+     */
+    public StringEqualSpecification(String expectedString) {
+        super(expectedString);
+    }
 
     /**
      * Creates a string-equality specification.

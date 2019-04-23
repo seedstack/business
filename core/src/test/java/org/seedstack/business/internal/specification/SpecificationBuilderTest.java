@@ -1,11 +1,10 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package org.seedstack.business.internal.specification;
 
 import static java.util.stream.Collectors.toList;
@@ -57,6 +56,17 @@ public class SpecificationBuilderTest {
         assertThat(Stream.of(redTeam, blueTeam, greenTeam)
                 .filter(spec.asPredicate())
                 .collect(toList())).containsExactly(redTeam, greenTeam);
+    }
+
+    @Test
+    public void testGreaterOrEqual() {
+        Specification<Team> spec = specificationBuilder.of(Team.class)
+                .property("leader.age")
+                .greaterThanOrEqualTo(36)
+                .build();
+        assertThat(Stream.of(redTeam, blueTeam, greenTeam)
+                .filter(spec.asPredicate())
+                .collect(toList())).containsExactly(blueTeam, greenTeam);
     }
 
     @Test
@@ -177,8 +187,9 @@ public class SpecificationBuilderTest {
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(OrSpecification.class);
         assertThat(
-                ((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0]).isInstanceOf(
-                AttributeSpecification.class);
+                ((OrSpecification<Team>) ((SubstitutableSpecification<Team>) spec).getSubstitute()).getSpecifications()[0])
+                .isInstanceOf(
+                        AttributeSpecification.class);
     }
 
     @Test

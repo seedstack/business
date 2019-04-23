@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -23,11 +23,21 @@ public abstract class StringSpecification implements Specification<String> {
      * Creates a string specification.
      *
      * @param expectedString the string to compare the candidate against.
+     */
+    protected StringSpecification(String expectedString) {
+        this.expectedString = expectedString;
+        this.options = Options.empty();
+    }
+
+    /**
+     * Creates a string specification.
+     *
+     * @param expectedString the string to compare the candidate against.
      * @param options        the comparison options.
      */
     protected StringSpecification(String expectedString, Options options) {
-        this.options = options;
         this.expectedString = expectedString;
+        this.options = options;
     }
 
     @Override
@@ -69,35 +79,94 @@ public abstract class StringSpecification implements Specification<String> {
     /**
      * Options used for comparing strings.
      */
-    public interface Options {
+    public static class Options {
+        private boolean leadTrimmed;
+        private boolean tailTrimmed;
+        private boolean ignoringCase;
+
+        public static Options empty() {
+            return new Options();
+        }
 
         /**
          * Returns if the comparison should ignore leading whitespace.
          *
          * @return true if the comparison should ignore leading whitespace, false otherwise.
          */
-        boolean isLeadTrimmed();
+        public boolean isLeadTrimmed() {
+            return leadTrimmed;
+        }
+
+        /**
+         * Sets if the comparison should ignore leading whitespace.
+         *
+         * @param leadTrimmed true if the comparison should ignore leading whitespace, false otherwise.
+         * @return itself for chaining.
+         */
+        public Options setLeadTrimmed(boolean leadTrimmed) {
+            this.leadTrimmed = leadTrimmed;
+            return this;
+        }
 
         /**
          * Returns if the comparison should ignore trailing whitespace.
          *
          * @return true if the comparison should ignore trailing whitespace, false otherwise.
          */
-        boolean isTailTrimmed();
+        public boolean isTailTrimmed() {
+            return tailTrimmed;
+        }
+
+        /**
+         * Sets if the comparison should ignore trailing whitespace.
+         *
+         * @param tailTrimmed true if the comparison should ignore trailing whitespace, false otherwise.
+         * @return itself for chaining.
+         */
+        public Options setTailTrimmed(boolean tailTrimmed) {
+            this.tailTrimmed = tailTrimmed;
+            return this;
+        }
 
         /**
          * Returns if the comparison should ignore leading and trailing whitespace.
          *
-         * @return true if the comparison should ignore leading and trailing whitespace, false
-         *         otherwise.
+         * @return true if the comparison should ignore leading and trailing whitespace, false otherwise.
          */
-        boolean isTrimmed();
+        public boolean isTrimmed() {
+            return isLeadTrimmed() && isTailTrimmed();
+        }
+
+        /**
+         * Sets if the comparison should ignore leading and trailing whitespace.
+         *
+         * @param trimmed true if the comparison should ignore leading and trailing whitespace, false otherwise.
+         * @return itself for chaining.
+         */
+        public Options setTrimmed(boolean trimmed) {
+            setLeadTrimmed(trimmed);
+            setTailTrimmed(trimmed);
+            return this;
+        }
 
         /**
          * Returns if the comparison should ignore the case.
          *
          * @return true if the comparison should be sensitive to case differences, false otherwise.
          */
-        boolean isIgnoringCase();
+        public boolean isIgnoringCase() {
+            return ignoringCase;
+        }
+
+        /**
+         * Sets if the comparison should ignore the case.
+         *
+         * @param ignoringCase true if the comparison should be sensitive to case differences, false otherwise.
+         * @return itself for chaining.
+         */
+        public Options setIgnoringCase(boolean ignoringCase) {
+            this.ignoringCase = ignoringCase;
+            return this;
+        }
     }
 }

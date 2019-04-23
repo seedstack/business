@@ -1,15 +1,16 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package org.seedstack.business.internal.domain;
 
 import static javassist.bytecode.annotation.Annotation.createMemberValue;
 import static org.seedstack.business.internal.utils.BusinessUtils.getQualifier;
+import static org.seedstack.shed.reflect.Classes.cast;
+import static org.seedstack.shed.reflect.Classes.from;
 import static org.seedstack.shed.reflect.ReflectUtils.invoke;
 
 import com.google.inject.assistedinject.Assisted;
@@ -36,7 +37,6 @@ import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.ClassLoaders;
-import org.seedstack.shed.reflect.Classes;
 
 class DefaultRepositoryGenerator<T extends Repository> {
     private static final String GENERATED_PACKAGE_NAME = "org.seedstack.business.__generated.repository";
@@ -52,7 +52,6 @@ class DefaultRepositoryGenerator<T extends Repository> {
         this.classPool.appendClassPath(new LoaderClassPath(this.classLoader));
     }
 
-    @SuppressWarnings("unchecked")
     Class<? extends T> generate(Class<? extends Repository> baseImpl) {
         try {
             CtClass cc = createClass(
@@ -75,9 +74,9 @@ class DefaultRepositoryGenerator<T extends Repository> {
             cf.addAttribute(createQualifierAttribute(constPool, getQualifier(baseImpl)
                     .orElseThrow(() -> new NotFoundException("Qualifier annotation not found"))));
 
-            return cc.toClass(
+            return cast(cc.toClass(
                     classLoader,
-                    DefaultRepositoryCollector.class.getProtectionDomain()
+                    DefaultRepositoryCollector.class.getProtectionDomain())
             );
         } catch (CannotCompileException | NotFoundException e) {
             throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_DEFAULT_IMPLEMENTATION)
@@ -123,8 +122,8 @@ class DefaultRepositoryGenerator<T extends Repository> {
                     classPool.get(value.getClass().getName())
             );
 
-            invoke(Classes.from(memberValue.getClass())
-                            .method("setValue", value.getClass())
+            invoke(from(memberValue.getClass())
+                            .method("setValue", new Class[]{value.getClass()})
                             .orElseThrow(() -> new NotFoundException("Cannot copy value of qualifier parameter "
                                     + m.getName())),
                     memberValue,

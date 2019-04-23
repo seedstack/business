@@ -1,11 +1,10 @@
 /*
- * Copyright © 2013-2018, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package org.seedstack.business.internal.specification;
 
 import org.seedstack.business.specification.AttributeSpecification;
@@ -15,6 +14,7 @@ import org.seedstack.business.specification.LessThanSpecification;
 import org.seedstack.business.specification.Specification;
 import org.seedstack.business.specification.StringEqualSpecification;
 import org.seedstack.business.specification.StringMatchingSpecification;
+import org.seedstack.business.specification.StringSpecification;
 import org.seedstack.business.specification.dsl.BaseSelector;
 import org.seedstack.business.specification.dsl.OperatorPicker;
 import org.seedstack.business.specification.dsl.SpecificationPicker;
@@ -43,14 +43,14 @@ class SpecificationPickerImpl<T, S extends BaseSelector<T, S>> implements Specif
 
     @Override
     public StringOptionPicker<T, S> matching(String pattern) {
-        StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
+        StringSpecification.Options stringValueOptions = new StringSpecification.Options();
         context.addSpecification(processSpecification(new StringMatchingSpecification(pattern, stringValueOptions)));
         return new StringOptionPickerImpl<>(context, stringValueOptions);
     }
 
     @Override
     public StringOptionPicker<T, S> equalTo(String value) {
-        StringValueOptionsImpl stringValueOptions = new StringValueOptionsImpl();
+        StringSpecification.Options stringValueOptions = new StringSpecification.Options();
         context.addSpecification(processSpecification(new StringEqualSpecification(value, stringValueOptions)));
         return new StringOptionPickerImpl<>(context, stringValueOptions);
     }
