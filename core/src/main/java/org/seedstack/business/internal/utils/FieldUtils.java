@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.utils;
 
 import java.lang.reflect.Field;
@@ -14,6 +15,7 @@ import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.cache.Cache;
 import org.seedstack.shed.cache.CacheParameters;
 import org.seedstack.shed.reflect.Classes;
+import org.seedstack.shed.reflect.ReflectUtils;
 
 public final class FieldUtils {
     private static final Cache<FieldReference, Optional<Field>> fieldCache = Cache.create(
@@ -39,9 +41,8 @@ public final class FieldUtils {
      * @return the value contained in the field of the candidate.
      */
     public static Object getFieldValue(Object candidate, Field field) {
-        field.setAccessible(true);
         try {
-            return field.get(candidate);
+            return ReflectUtils.getValue(ReflectUtils.makeAccessible(field), candidate);
         } catch (Exception e) {
             throw BusinessException.wrap(e, BusinessErrorCode.ERROR_ACCESSING_FIELD)
                     .put("className", candidate.getClass())

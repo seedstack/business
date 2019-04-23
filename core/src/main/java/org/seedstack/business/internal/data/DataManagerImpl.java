@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.data;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -18,6 +19,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.util.Types;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -132,9 +134,11 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
+    @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE",
+            justification = "False positive due to Java 11")
     public void importData(InputStream inputStream, String acceptGroup, String acceptName) {
         try (JsonParser jsonParser = this.jsonFactory.createParser(
-                    new InputStreamReader(inputStream, Charset.forName(UTF_8)))){
+                new InputStreamReader(inputStream, Charset.forName(UTF_8)))) {
             ParsingState state = ParsingState.START;
             String group = null;
             String name = null;
@@ -315,8 +319,10 @@ class DataManagerImpl implements DataManager {
         return getImporterInstance(dataImporterDefinition.getImportedClass()).isInitialized();
     }
 
+    @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE",
+            justification = "False positive due to Java 11")
     private void dumpAll(List<DataSetMarker<?>> dataSetMarker, OutputStream outputStream) {
-        try(JsonGenerator jsonGenerator = this.jsonFactory.createGenerator(
+        try (JsonGenerator jsonGenerator = this.jsonFactory.createGenerator(
                 new OutputStreamWriter(outputStream, Charset.forName(UTF_8)))) {
             ObjectWriter objectWriter = objectMapper.writer();
 
