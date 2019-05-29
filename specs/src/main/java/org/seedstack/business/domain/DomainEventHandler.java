@@ -25,4 +25,5 @@ public interface DomainEventHandler<E extends DomainEvent> {
     void onEvent(E event);
 
     Class<E> getEventClass();
+        
 }
