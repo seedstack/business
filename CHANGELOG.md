@@ -1,6 +1,9 @@
 # Version 4.2.3 (2019-??-??)
 
 * [chg] Built and tested with OpenJDK 11 (target is still 1.8).
+* [chg] Updated Seed version to 3.8.5
+* [new] DomainEventHandler has a priority field to allow fine-grained control over execution order
+* [new] Events can now be annotated with `@PriorizedEvent`, that allows an instance of  `DomainEventInterceptor` to take control of event handlers that are launched (By default, `PriorityEventHandlerInterceptor`is being used if not stated explicitly)
 
 # Version 4.2.2 (2018-09-03)
 

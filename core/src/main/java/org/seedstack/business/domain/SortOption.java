@@ -128,7 +128,7 @@ public class SortOption implements Repository.Option {
     private Object accessValue(Object o, String part) {
         return resolveField(o.getClass(), part)
                 .map(f -> FieldUtils.getFieldValue(o, f))
-                .orElseThrow(() -> BusinessException.createNew(BusinessErrorCode.UNRESOLVED_FIELD)
+                .<BusinessException>orElseThrow(() -> BusinessException.createNew(BusinessErrorCode.UNRESOLVED_FIELD)
                         .put("className", o.getClass())
                         .put("fieldName", part));
     }

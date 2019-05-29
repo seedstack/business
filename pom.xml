@@ -25,7 +25,7 @@
     <name>business</name>
 
     <properties>
-        <seed.version>3.8.2</seed.version>
+        <seed.version>3.8.5</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
         <testArgLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar</testArgLine>
         <compatibility.version>4.0.0</compatibility.version>

@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
+import org.seedstack.business.domain.DomainEventInterceptor;
 import org.seedstack.business.domain.DomainEventPublisher;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
@@ -38,6 +39,7 @@ import org.seedstack.shed.reflect.ExecutablePredicates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("rawtypes")
 class DomainModule extends AbstractModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainModule.class);
     private static final String GET_PRODUCED_CLASS = "getProducedClass";
@@ -45,13 +47,16 @@ class DomainModule extends AbstractModule {
     private final Collection<BindingStrategy> bindingStrategies;
     private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses;
     private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses;
+    private final Collection<Class<? extends DomainEventInterceptor>> eventInterceptors;
 
     DomainModule(Map<Key<?>, Class<?>> bindings, Collection<BindingStrategy> bindingStrategies,
             Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses,
+            Collection<Class<? extends DomainEventInterceptor>> eventInterceptors,
             Collection<Class<? extends DomainEventHandler>> eventHandlerClasses) {
         this.bindings = bindings;
         this.bindingStrategies = bindingStrategies;
         this.identityGeneratorClasses = identityGeneratorClasses;
+        this.eventInterceptors = eventInterceptors;
         this.eventHandlerClasses = eventHandlerClasses;
     }
 
@@ -84,6 +89,8 @@ class DomainModule extends AbstractModule {
         requestInjection(identityInterceptor);
         bindInterceptor(Matchers.subclassesOf(Factory.class), factoryMethods(), identityInterceptor);
 
+        
+        
         // Domain events
         Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent =
                 HashMultimap.create();
@@ -91,6 +98,13 @@ class DomainModule extends AbstractModule {
             eventHandlersByEvent.put(getEventClass(eventHandlerClass), eventHandlerClass);
             bind(eventHandlerClass);
         }
+        // Domain Event Intercepter
+        for (Class<? extends DomainEventInterceptor> eventInterceptorClass : eventInterceptors) {
+            bind(eventInterceptorClass);
+            
+        }
+        
+        
         bind(new EventHandlersByEventTypeLiteral()).toInstance(eventHandlersByEvent);
         bind(DomainEventPublisher.class).to(DomainEventPublisherImpl.class)
                 .in(Scopes.SINGLETON);

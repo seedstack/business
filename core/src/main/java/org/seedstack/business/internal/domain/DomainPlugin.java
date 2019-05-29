@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainEventHandler;
+import org.seedstack.business.domain.DomainEventInterceptor;
 import org.seedstack.business.domain.IdentityGenerator;
 import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessSpecifications;
@@ -62,6 +63,8 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     private final Map<Class<?>, Specification<? extends Class<?>>> policySpecs = new HashMap<>();
 
     private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses = new HashSet<>();
+    
+    private final Collection<Class<? extends DomainEventInterceptor>> domainInterceptorClasses = new HashSet<>();    
 
     private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses = new HashSet<>();
 
@@ -88,6 +91,7 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
                     .specification(BusinessSpecifications.POLICY)
                     .specification(BusinessSpecifications.DOMAIN_EVENT)
                     .specification(BusinessSpecifications.DOMAIN_EVENT_HANDLER)
+                    .specification(BusinessSpecifications.DOMAIN_EVENT_INTERCEPTOR)
                     .build();
         } else {
             ClasspathScanRequestBuilder classpathScanRequestBuilder = classpathScanRequestBuilder();
@@ -146,7 +150,12 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
                     DomainEventHandler.class)
                     .forEach(eventHandlerClasses::add);
             LOGGER.debug("Domain event handlers => {}", eventHandlerClasses);
-
+            
+            streamClasses(classesBySpec.get(BusinessSpecifications.DOMAIN_EVENT_INTERCEPTOR),
+                    DomainEventInterceptor.class)
+                    .forEach(domainInterceptorClasses::add);
+            LOGGER.debug("Domain event interceptors => {}", domainInterceptorClasses);
+            
             streamClasses(classesBySpec.get(BusinessSpecifications.IDENTITY_GENERATOR),
                     IdentityGenerator.class)
                     .forEach(identityGeneratorClasses::add);
@@ -199,7 +208,8 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
 
     @Override
     public Object nativeUnitModule() {
-        return new DomainModule(bindings, bindingStrategies, identityGeneratorClasses, eventHandlerClasses);
+        return new DomainModule(bindings, bindingStrategies, identityGeneratorClasses,
+                domainInterceptorClasses, eventHandlerClasses);
     }
 
     @Override
