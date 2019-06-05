@@ -1,5 +1,7 @@
 # Version 4.2.3 (2019-??-??)
 
+* [new] Fluent assembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers
+* [chg] `BaseAssembler` and `BaseTupleAssembler` now has a default implementation that simplifies the creation of one way assemblers
 * [chg] Built and tested with OpenJDK 11 (target is still 1.8).
 
 # Version 4.2.2 (2018-09-03)

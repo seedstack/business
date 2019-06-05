@@ -9,10 +9,13 @@ package org.seedstack.business.internal.assembler.dsl;
 
 import java.lang.annotation.Annotation;
 import java.util.stream.Stream;
+
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleSingle;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
+
+import com.google.inject.name.Names;
 
 class AssembleSingleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements AssembleSingleWithQualifier {
 
@@ -41,6 +44,12 @@ class AssembleSingleImpl<A extends AggregateRoot<I>, I, T extends Tuple> impleme
     @Override
     public AssembleSingle with(Class<? extends Annotation> qualifier) {
         context.setAssemblerQualifierClass(qualifier);
+        return this;
+    }
+
+    @Override
+    public AssembleSingle with(String qualifier) {
+        context.setAssemblerQualifier(Names.named(qualifier));
         return this;
     }
 }

@@ -8,6 +8,8 @@
 package org.seedstack.business.assembler;
 
 import org.javatuples.Tuple;
+import org.seedstack.business.internal.BusinessErrorCode;
+import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.shed.reflect.Classes;
 
@@ -37,6 +39,20 @@ public abstract class BaseTupleAssembler<T extends Tuple, D> implements Assemble
      */
     protected BaseTupleAssembler(Class<D> dtoClass) {
         this.dtoClass = dtoClass;
+    }
+
+    @Override
+    public void mergeAggregateIntoDto(T sourceAggregate, D targetDto) {
+        throw BusinessException.createNew(BusinessErrorCode.ASSEMBLE_NOT_IMPLEMENTED)
+                .put("className", this.dtoClass.getName());
+
+    }
+
+    @Override
+    public void mergeDtoIntoAggregate(D sourceDto, T targetAggregate) {
+        throw BusinessException.createNew(BusinessErrorCode.MERGE_NOT_IMPLEMENTED)
+                .put("className", getClass().getName());
+
     }
 
     @Override

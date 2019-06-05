@@ -24,6 +24,16 @@ public interface MergeMultipleWithQualifier extends MergeMultiple {
     MergeMultiple with(Annotation qualifier);
 
     /**
+     * Allows to specify the qualifier of the assembler to use with Named annotation.
+     *
+     * @param qualifier
+     *            the value of javax.inject.Named annotation.
+     * @return the next element of the DSL.
+     */
+    MergeMultiple with(String qualifier);
+    
+
+    /**
      * Allows to specify the qualifier class of the assembler to use.
      *
      * @param qualifier the qualifier annotation class.
