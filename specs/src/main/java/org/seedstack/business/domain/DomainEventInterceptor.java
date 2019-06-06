@@ -11,6 +11,15 @@ import java.util.Collection;
 import java.util.List;
 
 
+
+/***
+ * Interface for Interceptors, which handles the execution order of the EventHandlers
+ * that are fired. 
+ * 
+ * @see DomainEvent
+ * @see DomainEventHandler
+ * @see PriorizedEvent
+ */
 @SuppressWarnings("rawtypes")
 public interface DomainEventInterceptor {
 

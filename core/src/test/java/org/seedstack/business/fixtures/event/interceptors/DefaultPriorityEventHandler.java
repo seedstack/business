@@ -9,6 +9,11 @@ package org.seedstack.business.fixtures.event.interceptors;
 
 import org.seedstack.business.domain.DomainEventHandler;
 
+/***
+ * Test fixture handler that has no priority specified, so it uses the default
+ * {@link Integer.MinValue}
+ *
+ */
 public class DefaultPriorityEventHandler implements DomainEventHandler<PriorizedFixtureEvent> {
 
     public static int lastEvent;
