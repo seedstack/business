@@ -19,6 +19,9 @@ import java.lang.annotation.Target;
  * {@link DomainEvent} and alter the {@link DomainEventHandler} properties (Skip / Add one / Order
  * are examples of what can be achieved with DomainEventHandlerInterceptors)
  * 
+ * @see DomainEvent
+ * @see DomainEventHandler
+ * @see DomainEventInterceptor
  */
 @Documented
 @Retention(RUNTIME)
