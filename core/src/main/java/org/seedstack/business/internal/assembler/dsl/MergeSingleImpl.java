@@ -8,6 +8,7 @@
 package org.seedstack.business.internal.assembler.dsl;
 
 import java.lang.annotation.Annotation;
+
 import org.javatuples.Decade;
 import org.javatuples.Ennead;
 import org.javatuples.Octet;
@@ -23,6 +24,8 @@ import org.seedstack.business.assembler.dsl.MergeSingle;
 import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
+
+import com.google.inject.name.Names;
 
 class MergeSingleImpl<D> implements MergeSingleWithQualifier {
 
@@ -363,6 +366,12 @@ class MergeSingleImpl<D> implements MergeSingleWithQualifier {
     @Override
     public MergeSingle with(Class<? extends Annotation> qualifier) {
         context.setAssemblerQualifierClass(qualifier);
+        return this;
+    }
+
+    @Override
+    public MergeSingle with(String qualifier) {
+        context.setAssemblerQualifier(Names.named(qualifier));
         return this;
     }
 }
