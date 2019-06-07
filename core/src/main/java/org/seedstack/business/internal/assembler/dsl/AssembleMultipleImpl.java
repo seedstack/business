@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleMultiple;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
@@ -25,6 +26,8 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.util.Tuples;
+
+import com.google.inject.name.Names;
 
 class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements AssembleMultipleWithQualifier {
 
@@ -100,5 +103,11 @@ class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple> imple
     @SuppressWarnings("unchecked")
     private Class<A> getAggregateClass(A aggregate) {
         return (Class<A>) aggregate.getClass();
+    }
+
+    @Override
+    public AssembleMultiple with(String qualifier) {
+        context.setAssemblerQualifier(Names.named(qualifier));
+        return this;
     }
 }

@@ -24,6 +24,8 @@ import org.seedstack.business.assembler.dsl.MergeMultiple;
 import org.seedstack.business.assembler.dsl.MergeMultipleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 
+import com.google.inject.name.Names;
+
 class MergeMultipleImpl<D> implements MergeMultipleWithQualifier {
 
     private final Context context;
@@ -161,5 +163,11 @@ class MergeMultipleImpl<D> implements MergeMultipleWithQualifier {
 
     Context getContext() {
         return context;
+    }
+
+    @Override
+    public MergeMultiple with(String qualifier) {
+        getContext().setAssemblerQualifier(Names.named(qualifier));
+        return this;
     }
 }
