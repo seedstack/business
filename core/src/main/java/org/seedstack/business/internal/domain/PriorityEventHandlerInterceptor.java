@@ -7,16 +7,14 @@
  */
 package org.seedstack.business.internal.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.annotation.Priority;
-
-import org.javatuples.Pair;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventInterceptor;
+import org.seedstack.shed.misc.PriorityUtils;
 
 public class PriorityEventHandlerInterceptor implements DomainEventInterceptor {
 
@@ -28,22 +26,9 @@ public class PriorityEventHandlerInterceptor implements DomainEventInterceptor {
         if (handlers == null) {
             return Collections.emptyList();
         }
-
-        return handlers.stream().map(PriorityEventHandlerInterceptor::mapToPriority)
-                .sorted((x, y) -> x.getValue1().compareTo(y.getValue1()))
-                .map(Pair<DomainEventHandler, Integer>::getValue0)
-                .collect(Collectors.toList());
-
-    }
-
-    @SuppressWarnings("rawtypes")
-    private static Pair<DomainEventHandler, Integer> mapToPriority(DomainEventHandler deh) {
-        Priority priority = deh.getClass().getAnnotation(Priority.class);
-
-        if (priority == null) {
-            return Pair.with(deh, Integer.MIN_VALUE);
-        }
-        return Pair.with(deh, priority.value());
+        List<DomainEventHandler> lResult = new ArrayList<>(handlers);
+        PriorityUtils.sortByClassPriority(lResult);
+        return lResult;
 
     }
 

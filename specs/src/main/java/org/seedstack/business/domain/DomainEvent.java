@@ -51,6 +51,7 @@ package org.seedstack.business.domain;
  *
  * @see DomainEventHandler
  * @see DomainEventPublisher
+ * @see DomainEventInterceptor
  * @see ValueObject
  */
 public interface DomainEvent extends ValueObject {
