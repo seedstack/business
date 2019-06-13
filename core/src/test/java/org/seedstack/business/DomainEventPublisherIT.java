@@ -83,12 +83,10 @@ public class DomainEventPublisherIT {
 
         domainEventPublisher.publish(new PriorizedFixtureEvent());
 
-        Assertions.assertThat(DefaultPriorityEventHandler.lastEvent)
-                .isLessThan(Priority10EventHandler.lastEvent);
-
-        Assertions.assertThat(Priority10EventHandler.lastEvent)
-                .isLessThan(Priority100EventHandler.lastEvent);
-
+        Assertions.assertThat(Priority100EventHandler.lastEvent).isEqualTo(1);
+        Assertions.assertThat(Priority10EventHandler.lastEvent).isEqualTo(2);
+        Assertions.assertThat(DefaultPriorityEventHandler.lastEvent).isEqualTo(3);
+        
         Assertions.assertThat(PriorizedFixtureEvent.peekInvocationCount()).isEqualTo(3);
     }
 
@@ -104,16 +102,13 @@ public class DomainEventPublisherIT {
         Assertions.assertThat(Priority10EventHandler.lastEvent).isEqualTo(0);
         Assertions.assertThat(Priority100EventHandler.lastEvent).isEqualTo(0);
 
-        Assertions.assertThat(Priority10EventHandler.lastEvent)
-                .isEqualTo(Priority100EventHandler.lastEvent);
-
         // Publish
         domainEventPublisher.publish(new InterceptedPriorizedEvent());
 
-        Assertions.assertThat(DefaultPriorityEventHandler.lastEvent)
-                .isGreaterThan(Priority10EventHandler.lastEvent);
-        Assertions.assertThat(Priority10EventHandler.lastEvent)
-                .isGreaterThan(Priority100EventHandler.lastEvent);
+        Assertions.assertThat(DefaultPriorityEventHandler.lastEvent).isEqualTo(1);
+        Assertions.assertThat(Priority10EventHandler.lastEvent).isEqualTo(2);
+        Assertions.assertThat(Priority100EventHandler.lastEvent).isEqualTo(3);
+
 
         Assertions.assertThat(PriorizedFixtureEvent.peekInvocationCount()).isEqualTo(3);
     }

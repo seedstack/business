@@ -34,7 +34,11 @@
             <artifactId>seed-core</artifactId>
             <version>${seed.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.seedstack.shed</groupId>
+            <artifactId>shed</artifactId>
+            <version>1.1.6</version>
+        </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-testing-junit4</artifactId>

@@ -1,11 +1,11 @@
 # Version 4.2.3 (2019-??-??)
 
 * [new] Fluent assembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers
+* [new] DomainEventHandler has a priority field to allow fine-grained control over execution order
+* [new] Events can now be annotated with `@PriorizedEvent`, that allows an instance of  `DomainEventInterceptor` to take control of event handlers that are launched (By default, `PriorityEventHandlerInterceptor`is being used if not stated explicitly)
 * [chg] `BaseAssembler` and `BaseTupleAssembler` now has a default implementation that simplifies the creation of one way assemblers
 * [chg] Built and tested with OpenJDK 11 (target is still 1.8).
 * [chg] Updated Seed version to 3.8.5
-* [new] DomainEventHandler has a priority field to allow fine-grained control over execution order
-* [new] Events can now be annotated with `@PriorizedEvent`, that allows an instance of  `DomainEventInterceptor` to take control of event handlers that are launched (By default, `PriorityEventHandlerInterceptor`is being used if not stated explicitly)
 
 # Version 4.2.2 (2018-09-03)
 
