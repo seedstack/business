@@ -20,12 +20,12 @@
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>4.2.3-SNAPSHOT</version>
+    <version>4.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.8.5</seed.version>
+        <seed.version>3.9.1-SNAPSHOT</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
         <testArgLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar</testArgLine>
         <compatibility.version>4.0.0</compatibility.version>

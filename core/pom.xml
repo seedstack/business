@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.seedstack.business</groupId>
         <artifactId>business</artifactId>
-        <version>4.2.3-SNAPSHOT</version>
+        <version>4.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>business-core</artifactId>
@@ -33,11 +33,6 @@
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-core</artifactId>
             <version>${seed.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seedstack.shed</groupId>
-            <artifactId>shed</artifactId>
-            <version>1.1.6</version>
         </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>

@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -16,10 +17,12 @@ import java.util.Date;
 import java.util.stream.Stream;
 import javax.inject.Inject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.domain.Repository;
+import org.seedstack.business.domain.SortOption;
 import org.seedstack.business.fixtures.assembler.customer.Order;
 import org.seedstack.business.fixtures.assembler.customer.OrderDto;
 import org.seedstack.business.fixtures.assembler.customer.OrderFactory;
@@ -70,6 +73,7 @@ public class PaginationIT {
         order6 = orderFactory.create("6", "death star", orderDateNew);
         order7 = orderFactory.create("7", "C3PO", orderDateNew);
 
+        orderRepository.clear();
         orderRepository.add(order1);
         orderRepository.add(order2);
         orderRepository.add(order3);
@@ -238,5 +242,16 @@ public class PaginationIT {
 
         assertThat(slice.getSize()).isEqualTo(2);
         assertThat(slice.getItems()).containsExactly(order3, order4);
+    }
+
+    @Test
+    @Ignore("not working, a refactor may be needed to allow sub-sorting")
+    public void testOrderIsAppliedToSubSpecification() {
+        Slice<Order> slice = paginator.paginate(orderRepository)
+                .withOptions(new SortOption().add("id", SortOption.Direction.DESCENDING))
+                .byOffset(2)
+                .matching(specFilterProduct);
+        assertThat(slice.getSize()).isEqualTo(4);
+        assertThat(slice.getItems()).containsExactly(order6, order5, order4, order3);
     }
 }
