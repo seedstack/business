@@ -1,4 +1,4 @@
-# Version 4.2.3 (2019-12-13)
+# Version 4.3.0 (2019-12-17)
 
 * [new] Fluent assembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers
 * [new] DomainEventHandler has a priority field to allow fine-grained control over execution order
