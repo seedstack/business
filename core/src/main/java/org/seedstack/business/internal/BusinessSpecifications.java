@@ -27,6 +27,7 @@ import org.seedstack.business.domain.DomainAggregateRoot;
 import org.seedstack.business.domain.DomainEntity;
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
+import org.seedstack.business.domain.DomainEventInterceptor;
 import org.seedstack.business.domain.DomainFactory;
 import org.seedstack.business.domain.DomainPolicy;
 import org.seedstack.business.domain.DomainRepository;
@@ -204,6 +205,14 @@ public final class BusinessSpecifications {
                     .and(classModifierIs(Modifier.ABSTRACT).negate())
                     .and(classIsAssignableFrom(DomainEventHandler.class))).build();
 
+    /**
+     * The specification for domain interceptors;
+     */
+    public static final Specification<Class<?>> DOMAIN_EVENT_INTERCEPTOR = new SpecificationBuilder<>(
+            classIsInterface().negate()
+                    .and((classModifierIs(Modifier.ABSTRACT).negate())
+                    .and(classIsAssignableFrom(DomainEventInterceptor.class)))).build();
+    
     private BusinessSpecifications() {
         // no instantiation allowed
     }

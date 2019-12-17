@@ -5,13 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.fixtures.domain.export;
 
-import javax.validation.constraints.NotNull;
 import org.seedstack.business.domain.Factory;
 
 public interface ExportFactory extends Factory<Export> {
 
-    Export createNewActivation(@NotNull String id, String description);
+    Export createNewActivation(String id, String description);
 
 }

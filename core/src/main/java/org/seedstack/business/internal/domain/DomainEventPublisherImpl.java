@@ -7,14 +7,19 @@
  */
 package org.seedstack.business.internal.domain;
 
+import java.util.List;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Injector;
-import java.util.Collection;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
+
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
+import org.seedstack.business.domain.DomainEventInterceptor;
 import org.seedstack.business.domain.DomainEventPublisher;
+import org.seedstack.business.domain.PriorizedEvent;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.slf4j.Logger;
@@ -24,8 +29,7 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventPublisherImpl.class);
     private static final ThreadLocal<Multimap<Class<? extends DomainEvent>, DomainEvent>> context = ThreadLocal
             .withInitial(ArrayListMultimap::create);
-    private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>>
-            eventHandlerClassesByEvent;
+    private final Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlerClassesByEvent;
     private final Injector injector;
 
     @Inject
@@ -43,7 +47,8 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
                 .elementSet()) {
             if (eventClass.isAssignableFrom(event.getClass())) {
                 checkCyclicCall(eventClass, event);
-                Multimap<Class<? extends DomainEvent>, DomainEvent> currentEventClasses = context.get();
+                Multimap<Class<? extends DomainEvent>, DomainEvent> currentEventClasses = context
+                        .get();
                 boolean isFirstCall = currentEventClasses.isEmpty();
                 context.get()
                         .put(eventClass, event);
@@ -74,11 +79,26 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
 
     @SuppressWarnings("unchecked")
     private <E extends DomainEvent> void notifyHandlers(Class<? extends E> eventClass, E event) {
-        Collection<Class<? extends DomainEventHandler>> eventHandlers = eventHandlerClassesByEvent.get(eventClass);
-        for (Class<? extends DomainEventHandler> eventHandlerClass : eventHandlers) {
-            LOGGER.debug("Notifying event handler {}", eventHandlerClass.getName());
-            DomainEventHandler domainEventHandler = injector.getInstance(eventHandlerClass);
+
+        DomainEventInterceptor interceptor = getInterceptor(event);
+        List<DomainEventHandler> handlers = eventHandlerClassesByEvent.get(eventClass)
+                .stream().map(injector::getInstance)
+                .collect(Collectors.toList());
+
+        handlers = interceptor.interceptDomainHandler(handlers);
+
+        for (DomainEventHandler domainEventHandler : handlers) {
+            LOGGER.debug("Notifying event handler {}", domainEventHandler.getClass().getName());
             domainEventHandler.onEvent(event);
         }
+    }
+
+    private <E extends DomainEvent> DomainEventInterceptor getInterceptor(E event) {
+        
+        PriorizedEvent annotation = event.getClass().getAnnotation(PriorizedEvent.class);
+        if (annotation != null && annotation.priorizator() != null) {
+            return injector.getInstance(annotation.priorizator());
+        }
+        return injector.getInstance(PriorityEventHandlerInterceptor.class);
     }
 }
