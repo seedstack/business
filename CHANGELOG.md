@@ -1,3 +1,7 @@
+# Version 4.3.1 (2020-02-01)
+
+* [fix] Accept Guice-specific `@Named` annotation as qualifier, in addition to all JSR-330 qualifiers.
+
 # Version 4.3.0 (2019-12-17)
 
 * [new] Fluent assembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers

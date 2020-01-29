@@ -5,12 +5,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.utils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.seedstack.shed.reflect.AnnotationPredicates.annotationAnnotatedWith;
+import static org.seedstack.shed.reflect.AnnotationPredicates.annotationIsOfClass;
 
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -29,7 +33,6 @@ import org.seedstack.business.internal.BusinessException;
 import org.seedstack.seed.ClassConfiguration;
 import org.seedstack.seed.core.internal.guice.ProxyUtils;
 import org.seedstack.shed.ClassLoaders;
-import org.seedstack.shed.reflect.AnnotationPredicates;
 import org.seedstack.shed.reflect.Annotations;
 import org.seedstack.shed.reflect.ClassPredicates;
 
@@ -102,7 +105,7 @@ public final class BusinessUtils {
         }
         return Annotations.on(cleanedAnnotatedElement)
                 .findAll()
-                .filter(AnnotationPredicates.annotationAnnotatedWith(Qualifier.class, false))
+                .filter(annotationAnnotatedWith(Qualifier.class, false).or(annotationIsOfClass(Named.class)))
                 .findFirst();
     }
 
