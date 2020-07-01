@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13,8 +13,8 @@ import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.function.Predicate;
 import javax.inject.Inject;
-import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
 import org.seedstack.business.domain.Factory;
@@ -202,9 +202,9 @@ class DomainRegistryImpl implements DomainRegistry {
         return Types.newParameterizedType(rawType, typeArguments);
     }
 
-    private void checkType(Type type, Specification<Class<?>> spec, ErrorCode errorCode) {
+    private void checkType(Type type, Predicate<Class<?>> spec, ErrorCode errorCode) {
         Class<?> rawClass = org.seedstack.shed.reflect.Types.rawClassOf(type);
-        if (!spec.isSatisfiedBy(rawClass)) {
+        if (!spec.test(rawClass)) {
             throw BusinessException.createNew(errorCode)
                     .put("class", rawClass);
         }

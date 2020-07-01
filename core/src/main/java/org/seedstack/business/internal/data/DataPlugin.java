@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.inject.Inject;
-import org.kametic.specifications.Specification;
 import org.seedstack.business.BusinessConfig;
 import org.seedstack.business.data.DataExporter;
 import org.seedstack.business.data.DataImporter;
@@ -68,16 +68,16 @@ public class DataPlugin extends AbstractSeedPlugin {
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
         return classpathScanRequestBuilder()
-                .specification(BusinessSpecifications.DATA_IMPORTER)
-                .specification(BusinessSpecifications.DATA_EXPORTER)
-                .specification(BusinessSpecifications.DATA_SET)
+                .predicate(BusinessSpecifications.DATA_IMPORTER)
+                .predicate(BusinessSpecifications.DATA_EXPORTER)
+                .predicate(BusinessSpecifications.DATA_SET)
                 .build();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+        Map<Predicate<Class<?>>, Collection<Class<?>>> classesBySpec = initContext.scannedTypesByPredicate();
 
         streamClasses(classesBySpec.get(BusinessSpecifications.DATA_IMPORTER), DataImporter.class)
                 .filter(importerClass -> !DefaultDataImporter.class.isAssignableFrom(importerClass))

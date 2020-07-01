@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -163,13 +163,9 @@ public class SpecificationBuilderTest {
     @Test
     public void buildBinaryAndSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
-                .property("leader.name")
-                .not()
-                .equalTo("aliCe")
+                .property("leader.name").not().equalTo("aliCe")
                 .and()
-                .property("leader.name")
-                .equalTo("ALICE")
-                .ignoringCase()
+                .property("leader.name").equalTo("ALICE").ignoringCase()
                 .build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(AndSpecification.class);
@@ -178,11 +174,9 @@ public class SpecificationBuilderTest {
     @Test
     public void buildBinaryOrSpecification() {
         Specification<Team> spec = specificationBuilder.of(Team.class)
-                .property("leader.name")
-                .equalTo("ALICE")
+                .property("leader.name").equalTo("ALICE")
                 .or()
-                .property("leader.name")
-                .equalTo("Alice")
+                .property("leader.name").equalTo("Alice")
                 .build();
         assertThat(spec).isInstanceOf(SubstitutableSpecification.class);
         assertThat(((SubstitutableSpecification<Team>) spec).getSubstitute()).isInstanceOf(OrSpecification.class);
@@ -203,5 +197,26 @@ public class SpecificationBuilderTest {
         assertThat(Stream.of(redTeam, blueTeam, greenTeam)
                 .filter(spec.asPredicate())
                 .collect(toList())).containsExactly(blueTeam);
+    }
+
+    @Test
+    public void testCombine() {
+        Specification<Team> spec1 = specificationBuilder.of(Team.class)
+                .property("leader.name").equalTo("Alice")
+                .build();
+        Specification<Team> spec2 = specificationBuilder.of(Team.class)
+                .whole()
+                .satisfying(spec1)
+                .or()
+                .property("leader.name").equalTo("Bob")
+                .build();
+        Specification<Team> spec3 = specificationBuilder.satisfying(spec1)
+                .or()
+                .property("leader.name").equalTo("Bob")
+                .build();
+        assertThat(Stream.of(this.redTeam, blueTeam, greenTeam).filter(spec2.asPredicate()).collect(toList()))
+                .containsExactly(this.redTeam, this.blueTeam);
+        assertThat(Stream.of(this.redTeam, blueTeam, greenTeam).filter(spec3.asPredicate()).collect(toList()))
+                .containsExactly(this.redTeam, this.blueTeam);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.kametic.specifications.Specification;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventInterceptor;
@@ -51,20 +51,20 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
 
     private final Collection<Class<?>> repositoryInterfaces = new HashSet<>();
     private final Collection<Class<? extends Repository>> defaultRepositoryClasses = new HashSet<>();
-    private final Map<Class<?>, Specification<? extends Class<?>>> repositorySpecs = new HashMap<>();
+    private final Map<Class<?>, Predicate<? extends Class<?>>> repositorySpecs = new HashMap<>();
 
     private final Collection<Class<?>> factoryInterfaces = new HashSet<>();
-    private final Map<Class<?>, Specification<? extends Class<?>>> factorySpecs = new HashMap<>();
+    private final Map<Class<?>, Predicate<? extends Class<?>>> factorySpecs = new HashMap<>();
 
     private final Collection<Class<?>> serviceInterfaces = new HashSet<>();
-    private final Map<Class<?>, Specification<? extends Class<?>>> serviceSpecs = new HashMap<>();
+    private final Map<Class<?>, Predicate<? extends Class<?>>> serviceSpecs = new HashMap<>();
 
     private final Collection<Class<?>> policyInterfaces = new HashSet<>();
-    private final Map<Class<?>, Specification<? extends Class<?>>> policySpecs = new HashMap<>();
+    private final Map<Class<?>, Predicate<? extends Class<?>>> policySpecs = new HashMap<>();
 
     private final Collection<Class<? extends IdentityGenerator>> identityGeneratorClasses = new HashSet<>();
-    
-    private final Collection<Class<? extends DomainEventInterceptor>> domainInterceptorClasses = new HashSet<>();    
+
+    private final Collection<Class<? extends DomainEventInterceptor>> domainInterceptorClasses = new HashSet<>();
 
     private final Collection<Class<? extends DomainEventHandler>> eventHandlerClasses = new HashSet<>();
 
@@ -80,18 +80,19 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
         if (round.isFirst()) {
-            return classpathScanRequestBuilder().specification(BusinessSpecifications.AGGREGATE_ROOT)
-                    .specification(BusinessSpecifications.ENTITY)
-                    .specification(BusinessSpecifications.VALUE_OBJECT)
-                    .specification(BusinessSpecifications.REPOSITORY)
-                    .specification(BusinessSpecifications.DEFAULT_REPOSITORY)
-                    .specification(BusinessSpecifications.FACTORY)
-                    .specification(BusinessSpecifications.IDENTITY_GENERATOR)
-                    .specification(BusinessSpecifications.SERVICE)
-                    .specification(BusinessSpecifications.POLICY)
-                    .specification(BusinessSpecifications.DOMAIN_EVENT)
-                    .specification(BusinessSpecifications.DOMAIN_EVENT_HANDLER)
-                    .specification(BusinessSpecifications.DOMAIN_EVENT_INTERCEPTOR)
+            return classpathScanRequestBuilder()
+                    .predicate(BusinessSpecifications.AGGREGATE_ROOT)
+                    .predicate(BusinessSpecifications.ENTITY)
+                    .predicate(BusinessSpecifications.VALUE_OBJECT)
+                    .predicate(BusinessSpecifications.REPOSITORY)
+                    .predicate(BusinessSpecifications.DEFAULT_REPOSITORY)
+                    .predicate(BusinessSpecifications.FACTORY)
+                    .predicate(BusinessSpecifications.IDENTITY_GENERATOR)
+                    .predicate(BusinessSpecifications.SERVICE)
+                    .predicate(BusinessSpecifications.POLICY)
+                    .predicate(BusinessSpecifications.DOMAIN_EVENT)
+                    .predicate(BusinessSpecifications.DOMAIN_EVENT_HANDLER)
+                    .predicate(BusinessSpecifications.DOMAIN_EVENT_INTERCEPTOR)
                     .build();
         } else {
             ClasspathScanRequestBuilder classpathScanRequestBuilder = classpathScanRequestBuilder();
@@ -111,7 +112,7 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
     @Override
     public InitState initialize(InitContext initContext) {
         if (round.isFirst()) {
-            Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+            Map<Predicate<Class<?>>, Collection<Class<?>>> classesBySpec = initContext.scannedTypesByPredicate();
 
             // Scan interfaces
             streamClasses(classesBySpec.get(BusinessSpecifications.AGGREGATE_ROOT), Object.class)
@@ -150,12 +151,12 @@ public class DomainPlugin extends AbstractSeedPlugin implements DomainProvider {
                     DomainEventHandler.class)
                     .forEach(eventHandlerClasses::add);
             LOGGER.debug("Domain event handlers => {}", eventHandlerClasses);
-            
+
             streamClasses(classesBySpec.get(BusinessSpecifications.DOMAIN_EVENT_INTERCEPTOR),
                     DomainEventInterceptor.class)
                     .forEach(domainInterceptorClasses::add);
             LOGGER.debug("Domain event interceptors => {}", domainInterceptorClasses);
-            
+
             streamClasses(classesBySpec.get(BusinessSpecifications.IDENTITY_GENERATOR),
                     IdentityGenerator.class)
                     .forEach(identityGeneratorClasses::add);

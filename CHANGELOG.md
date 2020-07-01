@@ -1,10 +1,14 @@
+# Version 4.3.2 (2020-07-31)
+
+* [new] Specifications can be 
+
 # Version 4.3.1 (2020-02-01)
 
 * [fix] Accept Guice-specific `@Named` annotation as qualifier, in addition to all JSR-330 qualifiers.
 
 # Version 4.3.0 (2019-12-17)
 
-* [new] Fluent assembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers
+* [new] FluentAssembler now has a String based argument on the DSL chain to simplify the use of `Named` Assemblers
 * [new] DomainEventHandler has a priority field to allow fine-grained control over execution order
 * [new] Events can now be annotated with `@PriorizedEvent`, that allows an instance of  `DomainEventInterceptor` to take control of event handlers that are launched (By default, `PriorityEventHandlerInterceptor`is being used if not stated explicitly)
 * [chg] `BaseAssembler` and `BaseTupleAssembler` now has a default implementation that simplifies the creation of one way assemblers

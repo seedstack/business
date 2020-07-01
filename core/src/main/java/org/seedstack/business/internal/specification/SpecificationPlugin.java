@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,7 +8,6 @@
 /**
  *
  */
-
 
 package org.seedstack.business.internal.specification;
 
@@ -21,7 +20,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.kametic.specifications.Specification;
+import java.util.function.Predicate;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.spi.SpecificationConverter;
 import org.seedstack.business.spi.SpecificationTranslator;
@@ -45,14 +44,15 @@ public class SpecificationPlugin extends AbstractSeedPlugin {
 
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
-        return classpathScanRequestBuilder().specification(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
-                .specification(BusinessSpecifications.SPECIFICATION_CONVERTER)
+        return classpathScanRequestBuilder()
+                .predicate(BusinessSpecifications.SPECIFICATION_TRANSLATOR)
+                .predicate(BusinessSpecifications.SPECIFICATION_CONVERTER)
                 .build();
     }
 
     @Override
     public InitState initialize(InitContext initContext) {
-        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+        Map<Predicate<Class<?>>, Collection<Class<?>>> classesBySpec = initContext.scannedTypesByPredicate();
 
         streamClasses(classesBySpec.get(BusinessSpecifications.SPECIFICATION_TRANSLATOR),
                 SpecificationTranslator.class).forEach(specificationTranslatorClasses::add);

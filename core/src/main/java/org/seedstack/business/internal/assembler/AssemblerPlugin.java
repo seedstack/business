@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import org.kametic.specifications.Specification;
+import java.util.function.Predicate;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.internal.BusinessSpecifications;
 import org.seedstack.business.spi.DtoInfoResolver;
@@ -47,17 +47,18 @@ public class AssemblerPlugin extends AbstractSeedPlugin {
 
     @Override
     public Collection<ClasspathScanRequest> classpathScanRequests() {
-        return classpathScanRequestBuilder().specification(BusinessSpecifications.EXPLICIT_ASSEMBLER)
-                .specification(BusinessSpecifications.DEFAULT_ASSEMBLER)
-                .specification(BusinessSpecifications.DTO_INFO_RESOLVER)
-                .specification(BusinessSpecifications.DTO_OF)
+        return classpathScanRequestBuilder()
+                .predicate(BusinessSpecifications.EXPLICIT_ASSEMBLER)
+                .predicate(BusinessSpecifications.DEFAULT_ASSEMBLER)
+                .predicate(BusinessSpecifications.DTO_INFO_RESOLVER)
+                .predicate(BusinessSpecifications.DTO_OF)
                 .build();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public InitState initialize(InitContext initContext) {
-        Map<Specification, Collection<Class<?>>> classesBySpec = initContext.scannedTypesBySpecification();
+        Map<Predicate<Class<?>>, Collection<Class<?>>> classesBySpec = initContext.scannedTypesByPredicate();
 
         streamClasses(classesBySpec.get(BusinessSpecifications.EXPLICIT_ASSEMBLER), Assembler.class).forEach(
                 assemblerClasses::add);

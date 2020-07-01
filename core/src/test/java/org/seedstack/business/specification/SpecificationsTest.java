@@ -1,11 +1,10 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package org.seedstack.business.specification;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -158,5 +157,16 @@ public class SpecificationsTest {
                 new AttributeSpecification<>("members.address.number", new EqualSpecification<>(20))));
         assertThat(spec.toString()).isEqualTo(
                 "(members.address.number < 40) ∧ ((members.address.number > 20) ∨ (members.address.number =" + " 20))");
+    }
+
+    @Test
+    public void testNested() {
+        Specification<Team> spec1 = new AttributeSpecification<>("leader.name", new EqualSpecification<>("Alice"));
+        Specification<Team> spec2 = new AttributeSpecification<>("leader.name",
+                new NotSpecification<>(new EqualSpecification<>("Alice")));
+        AndSpecification<Team> finalSpec = new AndSpecification<>(spec1, spec2);
+        assertThat(Stream.of(redTeam, blueTeam)
+                .filter(finalSpec.asPredicate())).isEmpty();
+        System.out.println(finalSpec);
     }
 }

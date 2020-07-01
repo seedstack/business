@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -115,7 +115,7 @@ class SpecificationBuilderContext<T, S extends BaseSelector<T, S>> {
         DISJUNCTION, CONJUNCTION, NONE
     }
 
-    private static class ClassSpecification<C> implements SubstitutableSpecification<C> {
+    static class ClassSpecification<C> implements SubstitutableSpecification<C> {
 
         private final Class<C> targetClass;
         private final Specification<C> delegate;
@@ -123,6 +123,10 @@ class SpecificationBuilderContext<T, S extends BaseSelector<T, S>> {
         private ClassSpecification(Class<C> targetClass, Specification<C> delegate) {
             this.targetClass = targetClass;
             this.delegate = delegate;
+        }
+
+        Class<C> getTargetClass() {
+            return targetClass;
         }
 
         @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -20,10 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.kametic.specifications.Specification;
 import org.seedstack.business.Overriding;
 import org.seedstack.seed.core.internal.guice.BindingUtils;
-import org.seedstack.seed.core.internal.utils.SpecificationBuilder;
 import org.seedstack.shed.reflect.Annotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,19 +41,18 @@ public final class PluginUtils {
      * @param classpathScanRequestBuilder the Nuun classpath scan request builder.
      * @param interfaces                  the interfaces.
      * @return a map where the key is an interface and the value is a specification matching
-     *         descendants of this interface.
+     * descendants of this interface.
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Class<?>> Map<T, Specification<? extends T>> classpathRequestForDescendantTypesOf(
+    public static <T extends Class<?>> Map<T, Predicate<? extends T>> classpathRequestForDescendantTypesOf(
             ClasspathScanRequestBuilder classpathScanRequestBuilder, Collection<T> interfaces) {
-        Map<T, Specification<? extends T>> specsByInterface = new HashMap<>();
+        Map<T, Predicate<? extends T>> specsByInterface = new HashMap<>();
         for (T anInterface : interfaces) {
             LOGGER.trace("Request implementations of: {}", anInterface.getName());
-            Specification<Class<?>> spec = new SpecificationBuilder<>(
-                    classIsDescendantOf(anInterface).and(classIsInterface().negate())
-                            .and(classModifierIs(Modifier.ABSTRACT).negate())).build();
-            classpathScanRequestBuilder.specification(spec);
-            specsByInterface.put(anInterface, (Specification<? extends T>) spec);
+            Predicate<Class<?>> p = classIsDescendantOf(anInterface).and(classIsInterface().negate())
+                    .and(classModifierIs(Modifier.ABSTRACT).negate());
+            classpathScanRequestBuilder.predicate(p);
+            specsByInterface.put(anInterface, (Predicate<? extends T>) p);
         }
         return specsByInterface;
     }
@@ -78,11 +75,11 @@ public final class PluginUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Class> Map<Key<T>, ? extends T> associateInterfacesToImplementations(
-            InitContext initContext, Collection<T> interfaces, Map<T, Specification<? extends T>> specsByInterface,
+            InitContext initContext, Collection<T> interfaces, Map<T, Predicate<? extends T>> specsByInterface,
             boolean overridingMode) {
         Map<Key<T>, ? extends T> keyMap = new HashMap<>();
         for (T anInterface : interfaces) {
-            keyMap.putAll(associateInterfaceToImplementations(anInterface, initContext.scannedTypesBySpecification()
+            keyMap.putAll(associateInterfaceToImplementations(anInterface, initContext.scannedTypesByPredicate()
                     .get(specsByInterface.get(anInterface)), overridingMode));
 
         }

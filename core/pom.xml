@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -33,6 +33,11 @@
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-core</artifactId>
             <version>${seed.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2019, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2020, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -76,10 +76,9 @@ class DefaultFactoryCollector {
     private boolean isCandidate(Type type) {
         boolean result = false;
         if (type instanceof Class<?>) {
-            result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy((Class<?>) type);
+            result = BusinessSpecifications.PRODUCIBLE.test((Class<?>) type);
         } else if (type instanceof ParameterizedType) {
-            result = BusinessSpecifications.PRODUCIBLE.isSatisfiedBy(
-                    (Class<?>) ((ParameterizedType) type).getRawType());
+            result = BusinessSpecifications.PRODUCIBLE.test((Class<?>) ((ParameterizedType) type).getRawType());
         }
         return result && !bindings.containsKey(Key.get(Types.newParameterizedType(Factory.class, type)));
     }
