@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.fixtures.identity;
 
 import org.seedstack.business.domain.Create;

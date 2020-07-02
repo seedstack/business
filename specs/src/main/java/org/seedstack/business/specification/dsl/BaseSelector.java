@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.specification.dsl;
 
 /**
@@ -36,7 +37,7 @@ public interface BaseSelector<T, S extends BaseSelector<T, S>> {
      * level.
      *
      * @return the next operation of the builder DSL, allowing to choose the specification that will
-     *         apply on the whole object.
+     * apply on the whole object.
      */
     SpecificationPicker<T, S> whole();
 }

@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.internal.domain;
 
 import javax.inject.Inject;

@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.domain;
 
 import static javassist.bytecode.annotation.Annotation.createMemberValue;
@@ -50,6 +51,10 @@ class DefaultRepositoryGenerator<T extends Repository> {
         this.classLoader = ClassLoaders.findMostCompleteClassLoader(DefaultRepositoryCollector.class);
         this.classPool = new ClassPool(false);
         this.classPool.appendClassPath(new LoaderClassPath(this.classLoader));
+    }
+
+    private static AtomicInteger getCounter(Class<?> repositoryInterface) {
+        return counters.computeIfAbsent(repositoryInterface.getName(), key -> new AtomicInteger());
     }
 
     Class<? extends T> generate(Class<? extends Repository> baseImpl) {
@@ -189,9 +194,5 @@ class DefaultRepositoryGenerator<T extends Repository> {
                 ParameterAnnotationsAttribute.visibleTag);
         attribute.setAnnotations(new Annotation[][]{{createAnnotation(constPool, Assisted.class)}});
         cc.getMethodInfo().addAttribute(attribute);
-    }
-
-    private static AtomicInteger getCounter(Class<?> repositoryInterface) {
-        return counters.computeIfAbsent(repositoryInterface.getName(), key -> new AtomicInteger());
     }
 }

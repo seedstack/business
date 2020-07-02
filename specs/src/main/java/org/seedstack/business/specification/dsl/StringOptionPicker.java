@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.specification.dsl;
 
 /**
@@ -20,7 +21,7 @@ public interface StringOptionPicker<T, S extends BaseSelector> extends OperatorP
      * Specifies that the value should trimmed of leading and trailing whitespaces before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a
-     *         new specification.
+     * new specification.
      */
     StringOptionPicker<T, S> trimming();
 
@@ -28,7 +29,7 @@ public interface StringOptionPicker<T, S extends BaseSelector> extends OperatorP
      * Specifies that the value should be trimmed of leading whitespace before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a
-     *         new specification.
+     * new specification.
      */
     StringOptionPicker<T, S> trimmingLead();
 
@@ -36,7 +37,7 @@ public interface StringOptionPicker<T, S extends BaseSelector> extends OperatorP
      * Specifies that the value should be trimmed of trailing whitespace before comparison.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a
-     *         new specification.
+     * new specification.
      */
     StringOptionPicker<T, S> trimmingTail();
 
@@ -44,7 +45,7 @@ public interface StringOptionPicker<T, S extends BaseSelector> extends OperatorP
      * Specifies that the comparison should be done ignoring case.
      *
      * @return the next operation of the builder DSL, allowing to specify more options or compose a
-     *         new specification.
+     * new specification.
      */
     StringOptionPicker<T, S> ignoringCase();
 }

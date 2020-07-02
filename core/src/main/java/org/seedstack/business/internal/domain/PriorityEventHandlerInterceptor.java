@@ -5,13 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventInterceptor;
 import org.seedstack.shed.misc.PriorityUtils;

@@ -10,5 +10,4 @@
  * (DTO) and back.
  */
 
-
 package org.seedstack.business.assembler;

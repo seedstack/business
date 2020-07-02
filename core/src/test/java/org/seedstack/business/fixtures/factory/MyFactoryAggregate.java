@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.fixtures.factory;
 
 import org.seedstack.business.domain.BaseAggregateRoot;

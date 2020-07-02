@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.pagination.dsl;
 
 import org.seedstack.business.pagination.Slice;
@@ -24,7 +25,7 @@ public interface KeyValuePicker<T> {
      * @param value the value used as upper-boundary.
      * @param <C>   the type of the value.
      * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-     *         objects returned.
+     * objects returned.
      */
     <C extends Comparable<? super C>> LimitPicker<Slice<T>, T> before(C value);
 
@@ -35,7 +36,7 @@ public interface KeyValuePicker<T> {
      * @param value the value used as lower-boundary.
      * @param <C>   the type of the value.
      * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-     *         objects returned.
+     * objects returned.
      */
     <C extends Comparable<? super C>> LimitPicker<Slice<T>, T> after(C value);
 }

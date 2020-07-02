@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.fixtures.assembler;
 
 public class MyUnrestrictedDto {

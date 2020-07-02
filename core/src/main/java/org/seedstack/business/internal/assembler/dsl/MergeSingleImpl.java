@@ -5,10 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
+import com.google.inject.name.Names;
 import java.lang.annotation.Annotation;
-
 import org.javatuples.Decade;
 import org.javatuples.Ennead;
 import org.javatuples.Octet;
@@ -24,8 +25,6 @@ import org.seedstack.business.assembler.dsl.MergeSingle;
 import org.seedstack.business.assembler.dsl.MergeSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
-
-import com.google.inject.name.Names;
 
 class MergeSingleImpl<D> implements MergeSingleWithQualifier {
 

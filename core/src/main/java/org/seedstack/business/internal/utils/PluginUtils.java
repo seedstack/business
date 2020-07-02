@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.utils;
 
 import static org.seedstack.shed.reflect.ClassPredicates.classIsDescendantOf;
@@ -40,8 +41,8 @@ public final class PluginUtils {
      * @param <T>                         the class of the interface.
      * @param classpathScanRequestBuilder the Nuun classpath scan request builder.
      * @param interfaces                  the interfaces.
-     * @return a map where the key is an interface and the value is a specification matching
-     * descendants of this interface.
+     * @return a map where the key is an interface and the value is a specification matching descendants of this
+     *     interface.
      */
     @SuppressWarnings("unchecked")
     public static <T extends Class<?>> Map<T, Predicate<? extends T>> classpathRequestForDescendantTypesOf(

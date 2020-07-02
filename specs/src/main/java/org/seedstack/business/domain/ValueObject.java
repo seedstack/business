@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.domain;
 
 /**
@@ -60,7 +61,7 @@ public interface ValueObject extends Producible {
      *
      * @param other other object.
      * @return true if the other object is of the same class as this value object and if all
-     *         attributes are equals, false otherwise.
+     * attributes are equals, false otherwise.
      */
     boolean equals(Object other);
 

@@ -9,5 +9,4 @@
  * Provides useful utilities for business code.
  */
 
-
 package org.seedstack.business.util;

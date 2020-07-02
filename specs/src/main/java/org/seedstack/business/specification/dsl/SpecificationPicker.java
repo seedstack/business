@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.specification.dsl;
 
 import org.seedstack.business.specification.Specification;
@@ -29,7 +30,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      *
      * @param specification the custom specification.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     OperatorPicker<T, S> satisfying(Specification<T> specification);
 
@@ -60,7 +61,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param value the value to be equal to.
      * @param <V>   the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V> OperatorPicker<T, S> equalTo(V value);
 
@@ -71,7 +72,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param value the value to be greater than.
      * @param <V>   the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThan(V value);
 
@@ -82,7 +83,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param value the value to be greater than or equal to.
      * @param <V>   the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> greaterThanOrEqualTo(V value);
 
@@ -93,7 +94,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param value the value to be less than.
      * @param <V>   the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> lessThan(V value);
 
@@ -104,7 +105,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param value the value to be less than or equal to.
      * @param <V>   the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> lessThanOrEqualTo(V value);
 
@@ -116,7 +117,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      * @param rightValue the value to be less than.
      * @param <V>        the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue, V rightValue);
 
@@ -132,7 +133,7 @@ public interface SpecificationPicker<T, S extends BaseSelector> {
      *                       otherwise it will be excluded.
      * @param <V>            the type of the value.
      * @return the next operation of the builder DSL, allowing to combine this specification with
-     *         another one.
+     * another one.
      */
     <V extends Comparable<? super V>> OperatorPicker<T, S> between(V leftValue, V rightValue, boolean leftInclusive,
             boolean rightInclusive);

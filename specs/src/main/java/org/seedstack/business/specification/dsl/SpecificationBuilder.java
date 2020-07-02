@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.specification.dsl;
 
 import org.seedstack.business.domain.AggregateRoot;
@@ -28,7 +29,7 @@ public interface SpecificationBuilder {
      * @param <T>      the type of the object the specification applies to.
      * @param <S>      the type of the selector.
      * @return the next operation of the builder DSL, allowing to select all or a part of the object
-     *         the specification will apply to.
+     * the specification will apply to.
      */
     <T, S extends PropertySelector<T, S>> S of(Class<T> anyClass);
 
@@ -40,7 +41,7 @@ public interface SpecificationBuilder {
      * @param <I>            the type of the identifier of the aggregate.
      * @param <S>            the type of the selector.
      * @return the next operation of the builder DSL, allowing to select all or a part of the object
-     *         the specification will apply to.
+     * the specification will apply to.
      */
     <A extends AggregateRoot<I>, I, S extends AggregateSelector<A, I, S>> S ofAggregate(Class<A> aggregateClass);
 

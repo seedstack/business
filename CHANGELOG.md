@@ -1,6 +1,6 @@
 # Version 4.3.2 (2020-07-31)
 
-* [new] Specifications can be 
+* [new] Shortcut to combine two specifications 
 
 # Version 4.3.1 (2020-02-01)
 

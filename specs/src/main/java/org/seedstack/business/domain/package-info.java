@@ -9,5 +9,4 @@
  * Provides classes, interfaces and annotations for building the domain layer.
  */
 
-
 package org.seedstack.business.domain;

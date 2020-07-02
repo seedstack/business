@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.domain;
 
 import java.util.Optional;
@@ -87,7 +88,7 @@ public interface Repository<A extends AggregateRoot<I>, I> {
      *
      * @param specification the specification.
      * @return true if at least one aggregate satisfying the specification is present, false
-     *         otherwise.
+     * otherwise.
      */
     default boolean contains(Specification<A> specification) {
         return count(specification) > 0;

@@ -5,12 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
 import static org.junit.Assert.fail;
 
 import javax.inject.Inject;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,7 +86,7 @@ public class DomainEventPublisherIT {
         Assertions.assertThat(Priority100EventHandler.lastEvent).isEqualTo(1);
         Assertions.assertThat(Priority10EventHandler.lastEvent).isEqualTo(2);
         Assertions.assertThat(DefaultPriorityEventHandler.lastEvent).isEqualTo(3);
-        
+
         Assertions.assertThat(PriorizedFixtureEvent.peekInvocationCount()).isEqualTo(3);
     }
 
@@ -108,7 +108,6 @@ public class DomainEventPublisherIT {
         Assertions.assertThat(DefaultPriorityEventHandler.lastEvent).isEqualTo(1);
         Assertions.assertThat(Priority10EventHandler.lastEvent).isEqualTo(2);
         Assertions.assertThat(Priority100EventHandler.lastEvent).isEqualTo(3);
-
 
         Assertions.assertThat(PriorizedFixtureEvent.peekInvocationCount()).isEqualTo(3);
     }

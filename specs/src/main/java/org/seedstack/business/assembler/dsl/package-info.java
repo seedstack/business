@@ -9,5 +9,4 @@
  * Provides a fluent DSL to do advanced domain-object/DTO mapping operations.
  */
 
-
 package org.seedstack.business.assembler.dsl;

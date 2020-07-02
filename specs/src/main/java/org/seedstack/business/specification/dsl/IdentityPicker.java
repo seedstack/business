@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.specification.dsl;
 
 import org.seedstack.business.domain.AggregateRoot;
@@ -23,7 +24,7 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, S extends BaseSel
      *
      * @param id the identity.
      * @return the next operation of the builder DSL, allowing to compose the just-defined
-     *         specification with another one.
+     * specification with another one.
      */
     OperatorPicker<A, S> is(I id);
 
@@ -32,7 +33,7 @@ public interface IdentityPicker<A extends AggregateRoot<I>, I, S extends BaseSel
      *
      * @param id the identity.
      * @return the next operation of the builder DSL, allowing to compose the just-defined
-     *         specification with another one.
+     * specification with another one.
      */
     OperatorPicker<A, S> isNot(I id);
 }

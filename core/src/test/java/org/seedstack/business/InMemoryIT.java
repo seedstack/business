@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -90,7 +91,7 @@ public class InMemoryIT {
                 .build())
         ).containsExactly(product1, product2, product3, product4, product5, product6);
     }
-    
+
     @Test
     public void testFalse() throws Exception {
         assertThat(repository.get(specificationBuilder.of(Product.class)
@@ -111,13 +112,13 @@ public class InMemoryIT {
         ).containsExactly(product1, product2, product4, product5, product6);
     }
 
-    @Test(expected= AggregateExistsException.class)
-    public void testDuplicated() throws Exception{
+    @Test(expected = AggregateExistsException.class)
+    public void testDuplicated() throws Exception {
         repository.clear();
         repository.add(product1);
         repository.add(product1);
         fail("Product1 has been added twice");
-        
+
     }
 
     @Test

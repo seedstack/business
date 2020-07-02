@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.domain;
 
 import static java.lang.annotation.ElementType.TYPE;
@@ -18,7 +19,7 @@ import java.lang.annotation.Target;
  * This annotations allows to set a {@link DomainEventInterceptor} to intercept
  * {@link DomainEvent} and alter the {@link DomainEventHandler} properties (Skip / Add one / Order
  * are examples of what can be achieved with DomainEventHandlerInterceptors)
- * 
+ *
  * @see DomainEvent
  * @see DomainEventHandler
  * @see DomainEventInterceptor

@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.assembler.dsl;
 
 import java.lang.annotation.Annotation;
@@ -30,7 +31,6 @@ public interface AssembleSingleWithQualifier extends AssembleSingle {
      * @return the next element of the DSL.
      */
     AssembleSingle with(String qualifier);
-
 
     /**
      * Allows to specify the qualifier class of the assembler to use.

@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.domain;
 
 import java.lang.reflect.Field;
@@ -35,6 +36,16 @@ public abstract class BaseEntity<I> implements Entity<I> {
                     .setMaxSize(1024)
                     .setLoadingFunction(BaseEntity::resolveIdentityField)
     );
+
+    private static Optional<Field> resolveIdentityField(Class<?> entityClass) {
+        Optional<Field> field = IdentityResolver.INSTANCE.resolveField(entityClass);
+        if (!field.isPresent()) {
+            field = Classes.from(entityClass)
+                    .traversingSuperclasses()
+                    .field("id");
+        }
+        return field.map(ReflectUtils::makeAccessible);
+    }
 
     /**
      * Returns the identifier of the entity if present. Starting from the current class and going up
@@ -82,15 +93,5 @@ public abstract class BaseEntity<I> implements Entity<I> {
     @Override
     public String toString() {
         return String.format("%s[%s]", getClass().getSimpleName(), getId());
-    }
-
-    private static Optional<Field> resolveIdentityField(Class<?> entityClass) {
-        Optional<Field> field = IdentityResolver.INSTANCE.resolveField(entityClass);
-        if (!field.isPresent()) {
-            field = Classes.from(entityClass)
-                    .traversingSuperclasses()
-                    .field("id");
-        }
-        return field.map(ReflectUtils::makeAccessible);
     }
 }

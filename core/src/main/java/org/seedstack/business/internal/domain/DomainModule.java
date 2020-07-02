@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.domain;
 
 import com.google.common.collect.HashMultimap;
@@ -89,8 +90,6 @@ class DomainModule extends AbstractModule {
         requestInjection(identityInterceptor);
         bindInterceptor(Matchers.subclassesOf(Factory.class), factoryMethods(), identityInterceptor);
 
-        
-        
         // Domain events
         Multimap<Class<? extends DomainEvent>, Class<? extends DomainEventHandler>> eventHandlersByEvent =
                 HashMultimap.create();
@@ -101,10 +100,9 @@ class DomainModule extends AbstractModule {
         // Domain Event Intercepter
         for (Class<? extends DomainEventInterceptor> eventInterceptorClass : eventInterceptors) {
             bind(eventInterceptorClass);
-            
+
         }
-        
-        
+
         bind(new EventHandlersByEventTypeLiteral()).toInstance(eventHandlersByEvent);
         bind(DomainEventPublisher.class).to(DomainEventPublisherImpl.class)
                 .in(Scopes.SINGLETON);

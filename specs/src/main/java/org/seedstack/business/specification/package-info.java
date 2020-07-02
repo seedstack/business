@@ -9,5 +9,4 @@
  * Provides classes, interfaces and annotations to create composite specifications.
  */
 
-
 package org.seedstack.business.specification;

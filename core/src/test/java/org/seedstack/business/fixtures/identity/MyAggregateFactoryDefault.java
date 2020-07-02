@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.fixtures.identity;
 
 import java.util.HashSet;

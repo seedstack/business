@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.pagination.dsl;
 
 import org.seedstack.business.pagination.Slice;
@@ -24,7 +25,7 @@ public interface SlicePaginationPicker<T> {
      *
      * @param startingOffset the index of first object that will be returned.
      * @return the next operation of the paginator DSL, allowing to specify a limit to the number of
-     *         objects returned.
+     * objects returned.
      */
     LimitPicker<Slice<T>, T> byOffset(long startingOffset);
 
@@ -33,7 +34,7 @@ public interface SlicePaginationPicker<T> {
      *
      * @param attributeName the attribute on which the lessThan/greaterThan comparison will be made.
      * @return the next operation of the paginator DSL, allowing to specify the value used as
-     *         boundary.
+     * boundary.
      */
     KeyValuePicker<T> byAttribute(String attributeName);
 }

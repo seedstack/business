@@ -9,5 +9,4 @@
  * Provides classes for CQRS-style queries.
  */
 
-
 package org.seedstack.business.finder;

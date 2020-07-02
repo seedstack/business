@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.spi;
 
 import java.lang.annotation.Documented;
@@ -27,7 +28,7 @@ import java.lang.annotation.Target;
  * <p> A generic implementation often exist along with user-defined explicit implementations of the
  * same interface, so it is recommended to annotate it with a {@code javax.inject.Qualifier},
  * leaving the unqualified implementation for user code.
- *
+ * <p>
  * A generic implementation is instantiated through assisted injection, invoking a constructor whose
  * unique parameter must be an array of the classes it will work on. Consider the following example:
  * </p>

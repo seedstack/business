@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.assembler.dsl;
 
 import java.lang.annotation.Annotation;
@@ -26,8 +27,7 @@ public interface MergeSingleWithQualifier extends MergeSingle {
     /**
      * Allows to specify the qualifier of the assembler to use with Named annotation.
      *
-     * @param qualifier
-     *            the value of javax.inject.Named annotation.
+     * @param qualifier the value of javax.inject.Named annotation.
      * @return the next element of the DSL.
      */
     MergeSingle with(String qualifier);

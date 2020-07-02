@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business;
 
 import javax.inject.Inject;
@@ -13,7 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seedstack.business.fixtures.application.IndexService;
 import org.seedstack.business.fixtures.application.SingletonService;
-import org.seedstack.business.fixtures.domain.activation.ActivationException;
 import org.seedstack.seed.testing.junit4.SeedITRunner;
 
 /**

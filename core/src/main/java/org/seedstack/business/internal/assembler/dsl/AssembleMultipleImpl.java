@@ -5,11 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.inject.name.Names;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleMultiple;
 import org.seedstack.business.assembler.dsl.AssembleMultipleWithQualifier;
@@ -26,8 +27,6 @@ import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.pagination.SimpleSlice;
 import org.seedstack.business.pagination.Slice;
 import org.seedstack.business.util.Tuples;
-
-import com.google.inject.name.Names;
 
 class AssembleMultipleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements AssembleMultipleWithQualifier {
 

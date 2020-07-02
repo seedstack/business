@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
 import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
@@ -50,56 +51,6 @@ class LegacyDtoInfoResolver extends BaseDtoInfoResolver {
     @Inject
     LegacyDtoInfoResolver(DomainRegistry domainRegistry) {
         super(domainRegistry);
-    }
-
-    @Override
-    public <D> boolean supports(D dto) {
-        return getDtoInfo(dto).supported;
-    }
-
-    @Override
-    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
-        ParameterHolder<D> parameterHolder = getIdParameterHolder(dto, aggregateIdClass);
-        return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto),
-                parameterHolder.parameters(dto));
-    }
-
-    @Override
-    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
-        ParameterHolder<D> parameterHolder = getIdParameterHolder(dto, aggregateIdClass);
-        return createIdentifier(aggregateIdClass, parameterHolder.uniqueElementForAggregate(dto, position),
-                parameterHolder.parametersOfAggregateRoot(dto, position));
-    }
-
-    @Override
-    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
-        return createFromFactory(aggregateRootClass, getAggregateParameterHolder(dto).parameters(dto));
-    }
-
-    @Override
-    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position) {
-        return createFromFactory(aggregateRootClass,
-                getAggregateParameterHolder(dto).parametersOfAggregateRoot(dto, position));
-    }
-
-    private <D, I> ParameterHolder<D> getIdParameterHolder(D dto, Class<I> aggregateIdClass) {
-        ParameterHolder<D> parameterHolder = getDtoInfo(dto).idParameterHolder;
-        if (parameterHolder.isEmpty()) {
-            throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
-                    .put("dtoClass", dto.getClass()
-                            .getName())
-                    .put("aggregateIdClass", aggregateIdClass);
-        }
-        return parameterHolder;
-    }
-
-    private <D> ParameterHolder<D> getAggregateParameterHolder(D dto) {
-        return getDtoInfo(dto).aggregateParameterHolder;
-    }
-
-    @SuppressWarnings("unchecked")
-    private <D> DtoInfo<D> getDtoInfo(D dto) {
-        return (DtoInfo<D>) dtoInfo.get(dto.getClass());
     }
 
     private static <D> DtoInfo<D> resolveDtoInfo(Class<D> dtoClass) {
@@ -162,6 +113,56 @@ class LegacyDtoInfoResolver extends BaseDtoInfoResolver {
         } else {
             return new DtoInfo<>(false, null, null);
         }
+    }
+
+    @Override
+    public <D> boolean supports(D dto) {
+        return getDtoInfo(dto).supported;
+    }
+
+    @Override
+    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {
+        ParameterHolder<D> parameterHolder = getIdParameterHolder(dto, aggregateIdClass);
+        return createIdentifier(aggregateIdClass, parameterHolder.uniqueElement(dto),
+                parameterHolder.parameters(dto));
+    }
+
+    @Override
+    public <D, I> I resolveId(D dto, Class<I> aggregateIdClass, int position) {
+        ParameterHolder<D> parameterHolder = getIdParameterHolder(dto, aggregateIdClass);
+        return createIdentifier(aggregateIdClass, parameterHolder.uniqueElementForAggregate(dto, position),
+                parameterHolder.parametersOfAggregateRoot(dto, position));
+    }
+
+    @Override
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass) {
+        return createFromFactory(aggregateRootClass, getAggregateParameterHolder(dto).parameters(dto));
+    }
+
+    @Override
+    public <D, A extends AggregateRoot<?>> A resolveAggregate(D dto, Class<A> aggregateRootClass, int position) {
+        return createFromFactory(aggregateRootClass,
+                getAggregateParameterHolder(dto).parametersOfAggregateRoot(dto, position));
+    }
+
+    private <D, I> ParameterHolder<D> getIdParameterHolder(D dto, Class<I> aggregateIdClass) {
+        ParameterHolder<D> parameterHolder = getDtoInfo(dto).idParameterHolder;
+        if (parameterHolder.isEmpty()) {
+            throw BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_CAN_BE_RESOLVED_FROM_DTO)
+                    .put("dtoClass", dto.getClass()
+                            .getName())
+                    .put("aggregateIdClass", aggregateIdClass);
+        }
+        return parameterHolder;
+    }
+
+    private <D> ParameterHolder<D> getAggregateParameterHolder(D dto) {
+        return getDtoInfo(dto).aggregateParameterHolder;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <D> DtoInfo<D> getDtoInfo(D dto) {
+        return (DtoInfo<D>) dtoInfo.get(dto.getClass());
     }
 
     private static class DtoInfo<D> {

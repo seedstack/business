@@ -9,5 +9,4 @@
  * Provides classes, interfaces and annotations to paginate domain objects.
  */
 
-
 package org.seedstack.business.pagination;

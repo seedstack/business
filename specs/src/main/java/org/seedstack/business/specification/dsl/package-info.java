@@ -9,5 +9,4 @@
  * Provides a fluent DSL that facilitates the creation of complex composite specifications.
  */
 
-
 package org.seedstack.business.specification.dsl;

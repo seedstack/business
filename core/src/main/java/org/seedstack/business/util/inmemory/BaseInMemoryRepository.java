@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.util.inmemory;
 
 import java.util.Iterator;
@@ -44,10 +45,8 @@ public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> exte
      * Creates a base in-memory repository. Actual classes managed by the repository
      * are specified explicitly.
      *
-     * @param aggregateRootClass
-     *            the actual aggregate root class.
-     * @param idClass
-     *            the actual aggregate identifier class.
+     * @param aggregateRootClass the actual aggregate root class.
+     * @param idClass            the actual aggregate identifier class.
      */
     protected BaseInMemoryRepository(Class<A> aggregateRootClass, Class<I> idClass) {
         super(aggregateRootClass, idClass);

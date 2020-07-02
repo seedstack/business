@@ -5,17 +5,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
+import com.google.inject.name.Names;
 import java.lang.annotation.Annotation;
 import java.util.stream.Stream;
-
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.AssembleSingle;
 import org.seedstack.business.assembler.dsl.AssembleSingleWithQualifier;
 import org.seedstack.business.domain.AggregateRoot;
-
-import com.google.inject.name.Names;
 
 class AssembleSingleImpl<A extends AggregateRoot<I>, I, T extends Tuple> implements AssembleSingleWithQualifier {
 

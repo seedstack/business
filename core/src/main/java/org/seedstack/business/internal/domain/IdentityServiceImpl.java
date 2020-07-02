@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.domain;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -52,45 +53,6 @@ class IdentityServiceImpl implements IdentityService {
     private Injector injector;
     @Inject
     private Application application;
-
-    @Override
-    public <E extends Entity<I>, I> E identify(E entity) throws IdentityExistsException {
-        IdentityInfo<E, I> identityInfo = getIdentityInfo(checkNotNull(entity, "Entity must not be null"));
-
-        if (identityInfo.hasIdentity()) {
-            IdentityGenerator<I> identityGenerator = injector.getInstance(identityInfo.generatorKey);
-            Object id = getValue(identityInfo.identityField, entity);
-            if (id == null) {
-                I generatedValue = identityGenerator.generate(identityInfo.entityClass);
-                try {
-                    setValue(identityInfo.identityField,
-                            entity,
-                            generatedValue
-                    );
-                } catch (IllegalArgumentException e) {
-                    throw BusinessException.wrap(e, BusinessErrorCode.INCOMPATIBLE_IDENTITY_TYPES)
-                            .put(ENTITY_CLASS, identityInfo.entityClass)
-                            .put(GENERATOR_CLASS, identityGenerator.getClass())
-                            .put(EXPECTED_CLASS, identityInfo.identityField.getType())
-                            .put(ACTUAL_CLASS, generatedValue.getClass());
-                }
-            } else {
-                throw new IdentityExistsException("Entity " + String.valueOf(entity) + " already has an identity");
-            }
-        }
-
-        return entity;
-    }
-
-    @SuppressWarnings("unchecked")
-    private <E extends Entity<I>, I> IdentityInfo<E, I> getIdentityInfo(E entity) {
-        return (IdentityInfo<E, I>) cache.get(
-                new ClassInfo<>(
-                        (Class<E>) entity.getClass(),
-                        () -> application.getConfiguration((Class<E>) entity.getClass())
-                )
-        );
-    }
 
     @SuppressWarnings("unchecked")
     private static <T extends IdentityGenerator<I>, E extends Entity<I>, I> IdentityInfo<E, I> resolveIdentityInfo(
@@ -141,6 +103,45 @@ class IdentityServiceImpl implements IdentityService {
         return Optional.ofNullable(identityField.getAnnotation(Identity.class)).<BaseException>orElseThrow(
                 () -> BusinessException.createNew(BusinessErrorCode.NO_IDENTITY_FIELD_DECLARED_FOR_ENTITY)
                         .put(ENTITY_CLASS, entityClass));
+    }
+
+    @Override
+    public <E extends Entity<I>, I> E identify(E entity) throws IdentityExistsException {
+        IdentityInfo<E, I> identityInfo = getIdentityInfo(checkNotNull(entity, "Entity must not be null"));
+
+        if (identityInfo.hasIdentity()) {
+            IdentityGenerator<I> identityGenerator = injector.getInstance(identityInfo.generatorKey);
+            Object id = getValue(identityInfo.identityField, entity);
+            if (id == null) {
+                I generatedValue = identityGenerator.generate(identityInfo.entityClass);
+                try {
+                    setValue(identityInfo.identityField,
+                            entity,
+                            generatedValue
+                    );
+                } catch (IllegalArgumentException e) {
+                    throw BusinessException.wrap(e, BusinessErrorCode.INCOMPATIBLE_IDENTITY_TYPES)
+                            .put(ENTITY_CLASS, identityInfo.entityClass)
+                            .put(GENERATOR_CLASS, identityGenerator.getClass())
+                            .put(EXPECTED_CLASS, identityInfo.identityField.getType())
+                            .put(ACTUAL_CLASS, generatedValue.getClass());
+                }
+            } else {
+                throw new IdentityExistsException("Entity " + String.valueOf(entity) + " already has an identity");
+            }
+        }
+
+        return entity;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <E extends Entity<I>, I> IdentityInfo<E, I> getIdentityInfo(E entity) {
+        return (IdentityInfo<E, I>) cache.get(
+                new ClassInfo<>(
+                        (Class<E>) entity.getClass(),
+                        () -> application.getConfiguration((Class<E>) entity.getClass())
+                )
+        );
     }
 
     private static class ClassInfo<E extends Entity<?>> {

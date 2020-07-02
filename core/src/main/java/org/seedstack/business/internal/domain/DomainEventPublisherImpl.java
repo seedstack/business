@@ -5,16 +5,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.seedstack.business.internal.domain;
 
-import java.util.List;
+package org.seedstack.business.internal.domain;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Injector;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
-
 import org.seedstack.business.domain.DomainEvent;
 import org.seedstack.business.domain.DomainEventHandler;
 import org.seedstack.business.domain.DomainEventInterceptor;
@@ -94,7 +93,7 @@ class DomainEventPublisherImpl implements DomainEventPublisher {
     }
 
     private <E extends DomainEvent> DomainEventInterceptor getInterceptor(E event) {
-        
+
         PriorizedEvent annotation = event.getClass().getAnnotation(PriorizedEvent.class);
         if (annotation != null && annotation.priorizator() != null) {
             return injector.getInstance(annotation.priorizator());

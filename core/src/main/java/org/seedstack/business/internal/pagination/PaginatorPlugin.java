@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.internal.pagination;
 
 import io.nuun.kernel.api.plugin.InitState;

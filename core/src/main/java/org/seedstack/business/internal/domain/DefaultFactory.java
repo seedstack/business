@@ -9,7 +9,6 @@
  *
  */
 
-
 package org.seedstack.business.internal.domain;
 
 import static com.google.common.base.Preconditions.checkArgument;

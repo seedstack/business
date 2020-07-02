@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.internal.assembler.dsl;
 
 import static org.seedstack.shed.reflect.ReflectUtils.makeAccessible;
@@ -50,6 +51,67 @@ class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
     @Inject
     AnnotationDtoInfoResolver(DomainRegistry domainRegistry) {
         super(domainRegistry);
+    }
+
+    private static <D> DtoInfo<D> resolveDtoInfo(Class<D> dtoClass) {
+        final ParameterHolder<D> idParameterHolder = new ParameterHolder<>(dtoClass);
+        final ParameterHolder<D> aggregateParameterHolder = new ParameterHolder<>(dtoClass);
+        final AtomicBoolean supported = new AtomicBoolean(false);
+
+        LOGGER.debug("Resolving DTO information on {}", dtoClass);
+
+        Classes.from(dtoClass)
+                .traversingSuperclasses()
+                .methods()
+                .forEach(method -> {
+                    makeAccessible(method);
+
+                    AggregateId idAnnotation = method.getAnnotation(AggregateId.class);
+                    if (idAnnotation != null) {
+                        if (idAnnotation.aggregateIndex() >= 0) {
+                            if (idAnnotation.index() >= 0) {
+                                idParameterHolder.addTupleParameter(MATCHING_ENTITY_ID,
+                                        idAnnotation.aggregateIndex(), idAnnotation.index(), method);
+                            } else {
+                                idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(),
+                                        method);
+                            }
+                        } else {
+                            if (idAnnotation.index() >= 0) {
+                                idParameterHolder.addParameter(MATCHING_ENTITY_ID, idAnnotation.index(), method);
+                            } else {
+                                idParameterHolder.addValue(MATCHING_ENTITY_ID, method);
+                            }
+                        }
+                        supported.set(true);
+                    }
+
+                    FactoryArgument factoryAnnotation = method.getAnnotation(FactoryArgument.class);
+                    if (factoryAnnotation != null) {
+                        if (factoryAnnotation.aggregateIndex() >= 0) {
+                            if (factoryAnnotation.index() >= 0) {
+                                aggregateParameterHolder.addTupleParameter(MATCHING_FACT_PARAM,
+                                        factoryAnnotation.aggregateIndex(), factoryAnnotation.index(), method);
+                            } else {
+                                aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM,
+                                        factoryAnnotation.aggregateIndex(), method);
+                            }
+                        } else {
+                            if (factoryAnnotation.index() >= 0) {
+                                aggregateParameterHolder.addParameter(MATCHING_FACT_PARAM,
+                                        factoryAnnotation.index(), method);
+                            } else {
+                                aggregateParameterHolder.addValue(MATCHING_FACT_PARAM, method);
+                            }
+                        }
+                        supported.set(true);
+                    }
+                });
+        if (supported.get()) {
+            return new DtoInfo<>(true, idParameterHolder.freeze(), aggregateParameterHolder.freeze());
+        } else {
+            return new DtoInfo<>(false, null, null);
+        }
     }
 
     @Override
@@ -112,67 +174,6 @@ class AnnotationDtoInfoResolver extends BaseDtoInfoResolver {
             this.supported = supported;
             this.idParameterHolder = idParameterHolder;
             this.aggregateParameterHolder = aggregateParameterHolder;
-        }
-    }
-
-    private static <D> DtoInfo<D> resolveDtoInfo(Class<D> dtoClass) {
-        final ParameterHolder<D> idParameterHolder = new ParameterHolder<>(dtoClass);
-        final ParameterHolder<D> aggregateParameterHolder = new ParameterHolder<>(dtoClass);
-        final AtomicBoolean supported = new AtomicBoolean(false);
-
-        LOGGER.debug("Resolving DTO information on {}", dtoClass);
-
-        Classes.from(dtoClass)
-                .traversingSuperclasses()
-                .methods()
-                .forEach(method -> {
-                    makeAccessible(method);
-
-                    AggregateId idAnnotation = method.getAnnotation(AggregateId.class);
-                    if (idAnnotation != null) {
-                        if (idAnnotation.aggregateIndex() >= 0) {
-                            if (idAnnotation.index() >= 0) {
-                                idParameterHolder.addTupleParameter(MATCHING_ENTITY_ID,
-                                        idAnnotation.aggregateIndex(), idAnnotation.index(), method);
-                            } else {
-                                idParameterHolder.addTupleValue(MATCHING_ENTITY_ID, idAnnotation.aggregateIndex(),
-                                        method);
-                            }
-                        } else {
-                            if (idAnnotation.index() >= 0) {
-                                idParameterHolder.addParameter(MATCHING_ENTITY_ID, idAnnotation.index(), method);
-                            } else {
-                                idParameterHolder.addValue(MATCHING_ENTITY_ID, method);
-                            }
-                        }
-                        supported.set(true);
-                    }
-
-                    FactoryArgument factoryAnnotation = method.getAnnotation(FactoryArgument.class);
-                    if (factoryAnnotation != null) {
-                        if (factoryAnnotation.aggregateIndex() >= 0) {
-                            if (factoryAnnotation.index() >= 0) {
-                                aggregateParameterHolder.addTupleParameter(MATCHING_FACT_PARAM,
-                                        factoryAnnotation.aggregateIndex(), factoryAnnotation.index(), method);
-                            } else {
-                                aggregateParameterHolder.addTupleValue(MATCHING_FACT_PARAM,
-                                        factoryAnnotation.aggregateIndex(), method);
-                            }
-                        } else {
-                            if (factoryAnnotation.index() >= 0) {
-                                aggregateParameterHolder.addParameter(MATCHING_FACT_PARAM,
-                                        factoryAnnotation.index(), method);
-                            } else {
-                                aggregateParameterHolder.addValue(MATCHING_FACT_PARAM, method);
-                            }
-                        }
-                        supported.set(true);
-                    }
-                });
-        if (supported.get()) {
-            return new DtoInfo<>(true, idParameterHolder.freeze(), aggregateParameterHolder.freeze());
-        } else {
-            return new DtoInfo<>(false, null, null);
         }
     }
 }

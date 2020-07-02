@@ -5,6 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 package org.seedstack.business.pagination.dsl;
 
 import org.seedstack.business.pagination.Page;
@@ -22,7 +23,7 @@ public interface SizePicker<T> extends LimitPicker<Page<T>, T> {
      *
      * @param size the size of a page.
      * @return the next operation of the paginator DSL, allowing to pick a specification for selecting
-     *         objects returned from the repository.
+     * objects returned from the repository.
      */
     default SpecificationPicker<Page<T>, T> ofSize(long size) {
         return limit(size);
