@@ -8,9 +8,7 @@
 
 package org.seedstack.business.internal.assembler.dsl;
 
-import static org.seedstack.business.internal.utils.BusinessUtils.getAggregateIdClasses;
-
-import java.util.stream.Stream;
+import com.google.inject.name.Names;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.dsl.MergeAs;
 import org.seedstack.business.assembler.dsl.MergeFromRepository;
@@ -18,6 +16,11 @@ import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
 import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.util.Tuples;
+
+import java.lang.annotation.Annotation;
+import java.util.stream.Stream;
+
+import static org.seedstack.business.internal.utils.BusinessUtils.getAggregateIdClasses;
 
 class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements MergeFromRepository<MergeAs<T>>,
         MergeFromRepositoryOrFactory<MergeAs<T>> {
@@ -42,6 +45,24 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
     }
 
     @Override
+    public MergeFromRepositoryOrFactory<MergeAs<T>> fromRepository(Annotation qualifier) {
+        this.context.setRepoQualifier(qualifier);
+        return this;
+    }
+
+    @Override
+    public MergeFromRepositoryOrFactory<MergeAs<T>> fromRepository(String qualifier) {
+        this.context.setRepoQualifier(Names.named(qualifier));
+        return this;
+    }
+
+    @Override
+    public MergeFromRepositoryOrFactory<MergeAs<T>> fromRepository(Class<? extends Annotation> qualifier) {
+        this.context.setRepoQualifierClass(qualifier);
+        return this;
+    }
+
+    @Override
     public MergeAs<T> fromFactory() {
         return new MergeAsImpl<>(dtoStream.map(dto -> {
             AggregateRoot<?>[] aggregateRoots = new AggregateRoot<?>[aggregateClasses.length];
@@ -52,6 +73,24 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
             context.mergeDtoIntoTuple(dto, tuple, aggregateClasses);
             return tuple;
         }));
+    }
+
+    @Override
+    public MergeAs<T> fromFactory(Annotation qualifier) {
+        this.context.setFactoryQualifier(qualifier);
+        return fromFactory();
+    }
+
+    @Override
+    public MergeAs<T> fromFactory(String qualifier) {
+        this.context.setFactoryQualifier(Names.named(qualifier));
+        return fromFactory();
+    }
+
+    @Override
+    public MergeAs<T> fromFactory(Class<? extends Annotation> qualifier) {
+        this.context.setFactoryQualifierClass(qualifier);
+        return fromFactory();
     }
 
     @Override
@@ -88,8 +127,26 @@ class MergeMultipleTuplesFromRepositoryImpl<T extends Tuple, D> implements Merge
         }));
     }
 
+    @Override
+    public MergeAs<T> orFromFactory(Annotation qualifier) {
+        this.context.setFactoryQualifier(qualifier);
+        return orFromFactory();
+    }
+
+    @Override
+    public MergeAs<T> orFromFactory(String qualifier) {
+        this.context.setFactoryQualifier(Names.named(qualifier));
+        return orFromFactory();
+    }
+
+    @Override
+    public MergeAs<T> orFromFactory(Class<? extends Annotation> qualifier) {
+        this.context.setFactoryQualifierClass(qualifier);
+        return orFromFactory();
+    }
+
     @SuppressWarnings("unchecked")
-    private <A extends AggregateRoot<I>, I> AggregateRoot<?> load(Object id,
+    private <A extends AggregateRoot<I>, I> A load(Object id,
             Class<? extends AggregateRoot<?>> aggregateClass) {
         return context.load((I) id, (Class<A>) aggregateClass);
     }
