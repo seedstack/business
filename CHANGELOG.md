@@ -1,9 +1,6 @@
-# Version 4.3.2 (2020-08-06)
+# Version 4.3.1 (2020-08-06)
 
 * [new] Shortcut to combine two specifications in the specification builder DSL.
-
-# Version 4.3.1 (2020-02-01)
-
 * [fix] Accept Guice-specific `@Named` annotation as qualifier, in addition to all JSR-330 qualifiers.
 
 # Version 4.3.0 (2019-12-17)
