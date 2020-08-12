@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.seedstack.business</groupId>
         <artifactId>business</artifactId>
-        <version>4.3.1-SNAPSHOT</version>
+        <version>4.3.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>business-core</artifactId>
@@ -35,11 +35,6 @@
             <groupId>org.seedstack.seed</groupId>
             <artifactId>seed-core</artifactId>
             <version>${seed.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seedstack.seed</groupId>

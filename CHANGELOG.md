@@ -1,3 +1,7 @@
+# Version 4.3.2 (2020-08-12)
+
+* [chg] Remove unused commons-lang3 dependency
+
 # Version 4.3.1 (2020-08-06)
 
 * [new] Shortcut to combine two specifications in the specification builder DSL.
