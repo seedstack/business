@@ -61,6 +61,11 @@ class DomainRegistryImpl implements DomainRegistry {
     }
 
     @Override
+    public <A extends AggregateRoot<I>, I> Repository<A, I> getRepository(Class<A> aggregateRootClass, Class<I> idClass, Annotation qualifier) {
+        return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
+    }
+
+    @Override
     public <A extends AggregateRoot<K>, K> Repository<A, K> getRepository(Class<A> aggregateRootClass, Class<K> idClass,
             Class<? extends Annotation> qualifier) {
         return getInstance(getKey(getType(Repository.class, aggregateRootClass, idClass), qualifier));
@@ -182,6 +187,10 @@ class DomainRegistryImpl implements DomainRegistry {
     @SuppressWarnings("unchecked")
     private <T> T getInstance(Key<?> key) {
         return (T) injector.getInstance(key);
+    }
+
+    private Key<?> getKey(Type type, Annotation qualifier) {
+        return Key.get(type, qualifier);
     }
 
     private Key<?> getKey(Type type, Class<? extends Annotation> qualifier) {

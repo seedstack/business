@@ -8,7 +8,7 @@
 
 package org.seedstack.business.internal.assembler.dsl;
 
-import java.util.stream.Stream;
+import com.google.inject.name.Names;
 import org.seedstack.business.assembler.dsl.MergeAs;
 import org.seedstack.business.assembler.dsl.MergeFromRepository;
 import org.seedstack.business.assembler.dsl.MergeFromRepositoryOrFactory;
@@ -16,9 +16,11 @@ import org.seedstack.business.domain.AggregateNotFoundException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.internal.utils.BusinessUtils;
 
+import java.lang.annotation.Annotation;
+import java.util.stream.Stream;
+
 class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<I>, I, D> implements
         MergeFromRepository<MergeAs<A>>, MergeFromRepositoryOrFactory<MergeAs<A>> {
-
     private final Context context;
     private final Class<A> aggregateClass;
     private final Class<I> aggregateClassId;
@@ -37,12 +39,48 @@ class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<I>, I, D
     }
 
     @Override
+    public MergeFromRepositoryOrFactory<MergeAs<A>> fromRepository(Annotation qualifier) {
+        this.context.setRepoQualifier(qualifier);
+        return this;
+    }
+
+    @Override
+    public MergeFromRepositoryOrFactory<MergeAs<A>> fromRepository(String qualifier) {
+        this.context.setRepoQualifier(Names.named(qualifier));
+        return this;
+    }
+
+    @Override
+    public MergeFromRepositoryOrFactory<MergeAs<A>> fromRepository(Class<? extends Annotation> qualifier) {
+        this.context.setRepoQualifierClass(qualifier);
+        return this;
+    }
+
+    @Override
     public MergeAs<A> fromFactory() {
         return new MergeAsImpl<>(dtoStream.map(dto -> {
             A a = context.create(dto, aggregateClass);
             context.mergeDtoIntoAggregate(dto, a);
             return a;
         }));
+    }
+
+    @Override
+    public MergeAs<A> fromFactory(Annotation qualifier) {
+        this.context.setFactoryQualifier(qualifier);
+        return fromFactory();
+    }
+
+    @Override
+    public MergeAs<A> fromFactory(String qualifier) {
+        this.context.setFactoryQualifier(Names.named(qualifier));
+        return fromFactory();
+    }
+
+    @Override
+    public MergeAs<A> fromFactory(Class<? extends Annotation> qualifier) {
+        this.context.setFactoryQualifierClass(qualifier);
+        return fromFactory();
     }
 
     @Override
@@ -69,5 +107,23 @@ class MergeMultipleAggregatesFromRepositoryImpl<A extends AggregateRoot<I>, I, D
             context.mergeDtoIntoAggregate(dto, a);
             return a;
         }));
+    }
+
+    @Override
+    public MergeAs<A> orFromFactory(Annotation qualifier) {
+        this.context.setFactoryQualifier(qualifier);
+        return orFromFactory();
+    }
+
+    @Override
+    public MergeAs<A> orFromFactory(String qualifier) {
+        this.context.setFactoryQualifier(Names.named(qualifier));
+        return orFromFactory();
+    }
+
+    @Override
+    public MergeAs<A> orFromFactory(Class<? extends Annotation> qualifier) {
+        this.context.setFactoryQualifierClass(qualifier);
+        return orFromFactory();
     }
 }

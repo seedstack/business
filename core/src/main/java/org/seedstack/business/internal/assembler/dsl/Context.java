@@ -8,19 +8,21 @@
 
 package org.seedstack.business.internal.assembler.dsl;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.lang.annotation.Annotation;
-import java.util.Set;
 import org.javatuples.Tuple;
 import org.seedstack.business.assembler.Assembler;
 import org.seedstack.business.assembler.AssemblerRegistry;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.DomainRegistry;
+import org.seedstack.business.domain.Repository;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.business.internal.utils.BusinessUtils;
 import org.seedstack.business.spi.DtoInfoResolver;
+
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Context used by the DSL to carry the internal registry and the qualifier it uses.
@@ -29,14 +31,34 @@ class Context {
     private final DomainRegistry domainRegistry;
     private final AssemblerRegistry assemblerRegistry;
     private final Set<DtoInfoResolver> dtoInfoResolvers;
+    private Annotation repoQualifier;
+    private Class<? extends Annotation> repoQualifierClass;
+    private Annotation factoryQualifier;
+    private Class<? extends Annotation> factoryQualifierClass;
     private Annotation assemblerQualifier;
     private Class<? extends Annotation> assemblerQualifierClass;
 
     public Context(DomainRegistry domainRegistry, AssemblerRegistry assemblerRegistry,
-            Set<DtoInfoResolver> dtoInfoResolvers) {
+                   Set<DtoInfoResolver> dtoInfoResolvers) {
         this.domainRegistry = domainRegistry;
         this.assemblerRegistry = assemblerRegistry;
         this.dtoInfoResolvers = dtoInfoResolvers;
+    }
+
+    public void setRepoQualifier(Annotation repoQualifier) {
+        this.repoQualifier = repoQualifier;
+    }
+
+    public void setRepoQualifierClass(Class<? extends Annotation> repoQualifierClass) {
+        this.repoQualifierClass = repoQualifierClass;
+    }
+
+    public void setFactoryQualifier(Annotation factoryQualifier) {
+        this.factoryQualifier = factoryQualifier;
+    }
+
+    public void setFactoryQualifierClass(Class<? extends Annotation> factoryQualifierClass) {
+        this.factoryQualifierClass = factoryQualifierClass;
     }
 
     void setAssemblerQualifier(Annotation assemblerQualifier) {
@@ -52,32 +74,54 @@ class Context {
             return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifierClass);
         } else if (assemblerQualifier != null) {
             return assemblerRegistry.getAssembler(aggregateRoot, dto, assemblerQualifier);
+        } else {
+            return assemblerRegistry.getAssembler(aggregateRoot, dto);
         }
-        return assemblerRegistry.getAssembler(aggregateRoot, dto);
     }
 
     <T extends Tuple, D> Assembler<T, D> tupleAssemblerOf(Class<? extends AggregateRoot<?>>[] aggregateRootTuple,
-            Class<D> dto) {
+                                                          Class<D> dto) {
         if (assemblerQualifierClass != null) {
             return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifierClass);
         } else if (assemblerQualifier != null) {
             return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto, assemblerQualifier);
+        } else {
+            return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
         }
-        return assemblerRegistry.getTupleAssembler(aggregateRootTuple, dto);
     }
 
     <D, A extends AggregateRoot<I>, I> A create(D dto, Class<A> aggregateClass) {
-        return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
+        // TODO: implement qualifier in resolvers
+        if (factoryQualifierClass != null) {
+            throw new UnsupportedOperationException("Factory qualifiers are not supported from FluentAssembler DSL yet");
+        } else if (factoryQualifier != null) {
+            throw new UnsupportedOperationException("Factory qualifiers are not supported from FluentAssembler DSL yet");
+        } else {
+            return findResolverFor(dto).resolveAggregate(dto, aggregateClass);
+        }
     }
 
     <D, A extends AggregateRoot<?>> A create(D dto, Class<A> aggregateClass, int indexInTuple) {
-        return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
+        // TODO: implement qualifier in resolvers
+        if (factoryQualifierClass != null) {
+            throw new UnsupportedOperationException("Factory qualifiers are not supported from FluentAssembler DSL yet");
+        } else if (factoryQualifier != null) {
+            throw new UnsupportedOperationException("Factory qualifiers are not supported from FluentAssembler DSL yet");
+        } else {
+            return findResolverFor(dto).resolveAggregate(dto, aggregateClass, indexInTuple);
+        }
     }
 
     <A extends AggregateRoot<I>, I> A load(I id, Class<A> aggregateClass) {
-        return domainRegistry.getRepository(aggregateClass, BusinessUtils.resolveAggregateIdClass(aggregateClass))
-                .get(id)
-                .orElse(null);
+        Repository<A, I> repo;
+        if (repoQualifierClass != null) {
+            repo = domainRegistry.getRepository(aggregateClass, BusinessUtils.resolveAggregateIdClass(aggregateClass), repoQualifierClass);
+        } else if (repoQualifier != null) {
+            repo = domainRegistry.getRepository(aggregateClass, BusinessUtils.resolveAggregateIdClass(aggregateClass), repoQualifier);
+        } else {
+            repo = domainRegistry.getRepository(aggregateClass, BusinessUtils.resolveAggregateIdClass(aggregateClass));
+        }
+        return repo.get(id).orElse(null);
     }
 
     <D, I> I resolveId(D dto, Class<I> aggregateIdClass) {

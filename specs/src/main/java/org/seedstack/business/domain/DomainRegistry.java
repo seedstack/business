@@ -56,6 +56,19 @@ public interface DomainRegistry {
      * @return an instance of the repository.
      */
     <A extends AggregateRoot<I>, I> Repository<A, I> getRepository(Class<A> aggregateRootClass, Class<I> idClass,
+            Annotation qualifier);
+
+    /**
+     * Get the {@link Repository} for an aggregate root and a qualifier.
+     *
+     * @param <A>                the type of the aggregate root.
+     * @param <I>                the type of the aggregate root identifier.
+     * @param aggregateRootClass the aggregate root class.
+     * @param idClass            the aggregate root identifier class.
+     * @param qualifier          the repository qualifier.
+     * @return an instance of the repository.
+     */
+    <A extends AggregateRoot<I>, I> Repository<A, I> getRepository(Class<A> aggregateRootClass, Class<I> idClass,
             Class<? extends Annotation> qualifier);
 
     /**
