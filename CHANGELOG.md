@@ -1,3 +1,7 @@
+# Version 4.4.0 (2020-11-30)
+
+* [new] Support qualifiers for repositories and factories in FluentAssembler DSL.
+
 # Version 4.3.1 (2020-08-06)
 
 * [new] Shortcut to combine two specifications in the specification builder DSL.
