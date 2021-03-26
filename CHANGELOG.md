@@ -1,6 +1,7 @@
 # Version 4.4.0 (2020-11-30)
 
 * [new] Support qualifiers for repositories and factories in FluentAssembler DSL.
+* [new] Support `@identity` generators in composite embedded identifiers.
 
 # Version 4.3.1 (2020-08-06)
 
