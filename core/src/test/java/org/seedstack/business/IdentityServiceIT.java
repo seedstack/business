@@ -22,6 +22,8 @@ import org.seedstack.business.fixtures.identity.MyAggregate;
 import org.seedstack.business.fixtures.identity.MyAggregateWithBadIdentityManagement;
 import org.seedstack.business.fixtures.identity.MyAggregateWithConfiguration;
 import org.seedstack.business.fixtures.identity.MyAggregateWithNoIdentityManagement;
+import org.seedstack.business.fixtures.identity.embedded.MyAggregateWithCompositeId;
+import org.seedstack.business.fixtures.identity.embedded.MyCompositeId;
 import org.seedstack.business.internal.BusinessErrorCode;
 import org.seedstack.business.internal.BusinessException;
 import org.seedstack.seed.testing.junit4.SeedITRunner;
@@ -71,5 +73,31 @@ public class IdentityServiceIT {
     public void aggregate_with_no_identity_Management() {
         MyAggregateWithNoIdentityManagement myAggregate = new MyAggregateWithNoIdentityManagement();
         identityService.identify(myAggregate);
+    }
+
+    @Test
+    public void test_embedded_identity(){
+        final String ID_TEST_STRING="ID_TEST_STRING";
+        final String ID_TEST_DESCRIPTION="ID_TEST_DESCRIPTION";
+        MyCompositeId identifier = new MyCompositeId(ID_TEST_STRING);
+        MyCompositeId identifier2 = new MyCompositeId(ID_TEST_STRING);
+        MyAggregateWithCompositeId aggregate = new MyAggregateWithCompositeId(identifier,ID_TEST_DESCRIPTION);
+        MyAggregateWithCompositeId aggregate2 = new MyAggregateWithCompositeId(identifier2,ID_TEST_DESCRIPTION);
+        identityService.identify(aggregate);
+        identityService.identify(aggregate2);
+        Assertions.assertThat(aggregate.getId()).isNotNull();
+        Assertions.assertThat(aggregate.getId().getSeq()).isEqualTo(Long.valueOf(0));
+        Assertions.assertThat(aggregate2.getId()).isNotNull();
+        Assertions.assertThat(aggregate2.getId().getSeq()).isEqualTo(Long.valueOf(1));
+
+        boolean exceptionThrown=false;
+        try{
+            identityService.identify(aggregate);
+        }
+        catch(IdentityExistsException identityExistsException){
+            Assertions.assertThat(identityExistsException.getMessage()).isEqualTo("Composite identifier MyCompositeId[aTextInTheId=ID_TEST_STRING,seq=0] already has an identity");
+            exceptionThrown=true;
+        }
+        Assertions.assertThat(exceptionThrown).isTrue();
     }
 }
