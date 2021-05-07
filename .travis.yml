@@ -8,11 +8,14 @@ cache:
   directories:
     - "$HOME/.m2/repository"
 
-install:
-  - echo "<settings><servers><server><id>bintray</id><username>\${env.BINTRAY_USER}</username><password>\${env.BINTRAY_KEY}</password></server></servers></settings>" > ~/.m2/settings.xml
-  - if [[ $TRAVIS_PULL_REQUEST = false ]] && [[ $TRAVIS_BRANCH = master || $TRAVIS_BRANCH = dev-* ]] || [[ $TRAVIS_TAG = v* ]]; then GOAL=deploy; else GOAL=install; fi
-  - if [[ $TRAVIS_TAG = v* ]]; then ADDITIONAL_PROFILES=release; mvn -q -U org.seedstack:seedstack-maven-plugin:release; else ADDITIONAL_PROFILES=snapshots; fi
+before_install:
+  - gpg --fast-import gpg.asc
 
-script: mvn -q -U -Pbuild-number,compatibility,quality,bintray,javadoc,$ADDITIONAL_PROFILES $GOAL jacoco:report
+install:
+  - echo "<settings><servers><server><id>ossrh</id><username>\${env.SONATYPE_USER}</username><password>\${env.SONATYPE_PASSWORD}</password></server></servers></settings>" > ~/.m2/settings.xml
+  - if [[ $TRAVIS_PULL_REQUEST = false ]] && [[ $TRAVIS_BRANCH = master || $TRAVIS_BRANCH = dev-* ]] || [[ $TRAVIS_TAG = v* ]]; then GOAL=deploy; else GOAL=install; fi
+  - if [[ $TRAVIS_TAG = v* ]]; then ADDITIONAL_PROFILES=release; mvn -q -U org.seedstack:seedstack-maven-plugin:release; fi
+
+script: mvn -q -U -Pbuild-number,compatibility,quality,javadoc,$ADDITIONAL_PROFILES $GOAL jacoco:report
 
 after_success: mvn -q coveralls:report -DrepoToken=$COVERALLS_TOKEN
