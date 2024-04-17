@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright © 2013-2021, The SeedStack authors <http://seedstack.org>
+    Copyright © 2013-2024, The SeedStack authors <http://seedstack.org>
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,21 +15,23 @@
     <parent>
         <groupId>org.seedstack.poms</groupId>
         <artifactId>parent-internal</artifactId>
-        <version>4.0.2</version>
+        <version>4.1.0</version>
     </parent>
 
     <groupId>org.seedstack.business</groupId>
     <artifactId>business</artifactId>
-    <version>4.4.0-SNAPSHOT</version>
+    <version>4.5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>business</name>
 
     <properties>
-        <seed.version>3.12.0</seed.version>
+        <seed.version>3.15.0</seed.version>
         <jmh-addon.version>1.0.2</jmh-addon.version>
         <commons-lang3.version>3.10</commons-lang3.version>
 
-        <testArgLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar</testArgLine>
+        <testArgLine>
+            -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+        </testArgLine>
         <compatibility.version>4.0.0</compatibility.version>
         <bintray.package>business</bintray.package>
     </properties>
@@ -74,7 +76,9 @@
                             <licenseMerge>BSD|The New BSD License</licenseMerge>
                             <licenseMerge>BSD|BSD License</licenseMerge>
                             <licenseMerge>CDDL|CDDL + GPLv2 with classpath exception</licenseMerge>
-                            <licenseMerge>GPL2 CPE|GNU General Public License, version 2 (GPL2), with the classpath exception</licenseMerge>
+                            <licenseMerge>GPL2 CPE|GNU General Public License, version 2 (GPL2), with the classpath
+                                exception
+                            </licenseMerge>
                             <licenseMerge>LGPL 2.1|GNU Lesser General Public License</licenseMerge>
                             <licenseMerge>LGPL 3.0|GNU Lesser Public License</licenseMerge>
                             <licenseMerge>MIT|MIT license</licenseMerge>
@@ -97,6 +101,7 @@
                                 <exclude>org.seedstack.business.spi.BaseDtoInfoResolver</exclude>
                                 <!-- Incorrect assumption about the comparison result -->
                                 <exclude>org.seedstack.business.specification.ComparableSpecification</exclude>
+                                <exclude>org.seedstack.business.specification.StringSpecification$Options</exclude>
                             </excludes>
                         </parameter>
                     </configuration>

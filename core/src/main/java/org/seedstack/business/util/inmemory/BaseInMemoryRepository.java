@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2021, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2024, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Stream;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.seedstack.business.domain.AggregateExistsException;
 import org.seedstack.business.domain.AggregateRoot;
 import org.seedstack.business.domain.BaseRepository;
@@ -27,6 +29,7 @@ import org.seedstack.business.specification.Specification;
  * insertion order is NOT guaranteed to be maintained through the repository
  * lifecycle.
  */
+@SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR")
 public abstract class BaseInMemoryRepository<A extends AggregateRoot<I>, I> extends BaseRepository<A, I> {
     private static final ConcurrentMap<Class<?>, Map<?, ?>> buckets = new ConcurrentHashMap<>();
     @SuppressWarnings("unchecked")

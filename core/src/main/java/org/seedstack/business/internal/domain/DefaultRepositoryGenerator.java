@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2021, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2024, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -39,7 +39,6 @@ import org.seedstack.business.internal.BusinessException;
 import org.seedstack.shed.ClassLoaders;
 
 class DefaultRepositoryGenerator<T extends Repository> {
-    private static final String GENERATED_PACKAGE_NAME = "org.seedstack.business.__generated.repository";
     private static final ConcurrentMap<String, AtomicInteger> counters = new ConcurrentHashMap<>();
     private final ClassPool classPool;
     private final Class<T> repositoryInterface;
@@ -78,10 +77,7 @@ class DefaultRepositoryGenerator<T extends Repository> {
             cf.addAttribute(createQualifierAttribute(constPool, getQualifier(baseImpl)
                     .orElseThrow(() -> new NotFoundException("Qualifier annotation not found"))));
 
-            return cast(cc.toClass(
-                    classLoader,
-                    DefaultRepositoryCollector.class.getProtectionDomain())
-            );
+            return cast(cc.toClass(getClass()));
         } catch (CannotCompileException | NotFoundException e) {
             throw BusinessException.wrap(e, BusinessErrorCode.UNABLE_TO_CREATE_DEFAULT_IMPLEMENTATION)
                     .put("interface", repositoryInterface)
@@ -101,7 +97,7 @@ class DefaultRepositoryGenerator<T extends Repository> {
     }
 
     private String getClassName(Class<? extends Repository> defaultRepositoryImplementation, int generation) {
-        return GENERATED_PACKAGE_NAME
+        return getClass().getPackage().getName()
                 + "."
                 + repositoryInterface.getSimpleName()
                 + "_"

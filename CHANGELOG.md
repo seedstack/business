@@ -1,3 +1,8 @@
+# Version 4.5.0 (2024-04-17)
+
+* [chg] Java 21 support.
+* [chg] Update Seed version to 3.15.0.
+
 # Version 4.4.0 (2020-11-30)
 
 * [new] Support qualifiers for repositories and factories in FluentAssembler DSL.

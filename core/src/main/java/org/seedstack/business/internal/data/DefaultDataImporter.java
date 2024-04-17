@@ -1,5 +1,5 @@
 /*
- * Copyright © 2013-2021, The SeedStack authors <http://seedstack.org>
+ * Copyright © 2013-2024, The SeedStack authors <http://seedstack.org>
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,6 +14,8 @@ import static org.seedstack.business.internal.utils.BusinessUtils.resolveAggrega
 import com.google.inject.assistedinject.Assisted;
 import java.util.stream.Stream;
 import javax.inject.Inject;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.seedstack.business.assembler.DtoOf;
 import org.seedstack.business.assembler.dsl.FluentAssembler;
 import org.seedstack.business.data.BaseDataImporter;
@@ -28,6 +30,7 @@ public class DefaultDataImporter<A extends AggregateRoot<I>, I, D> extends BaseD
 
     @Inject
     @SuppressWarnings("unchecked")
+    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR")
     DefaultDataImporter(@Assisted Object[] genericClasses, DomainRegistry domainRegistry,
             FluentAssembler fluentAssembler) {
         super((Class<D>) genericClasses[0]);
